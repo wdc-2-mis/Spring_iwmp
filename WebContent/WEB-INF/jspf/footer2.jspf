@@ -1,0 +1,107 @@
+<%@include file="/WEB-INF/jsp/lastModify.jsp"%>
+
+
+<link rel="stylesheet" href='<c:url  value="/resources/css/custom.css"/>' >
+</div></div></div></div>
+<div class="text-center footer">
+<div class="container-fluid"
+	style="padding: 0.5%; background-image: linear-gradient(180deg, #12616d, #fff); background-repeat: no-repeatborder:2px solid blue;">
+	<div class="row"></div>
+</div>
+
+<div  class="panel-footer panel-default">
+
+	<div class="panel-heading">
+		<br/><span>Data presented in this site has been updated by respective State Governments/UT Administration and Department of Land Resources, Ministry of Rural Development(MoRD), Government of India.</span>
+<br/><span>Website hosted and maintained by National Informatics Center. Best viewed on Google Chrome Version 50 or above and Mozilla Firefox 50 or above versions of these browsers with resolution 1024 X 768</span>
+<br/><span>Copyright 2019 © Department of Land Resources. All Rights Reserved.</span>
+	</div>
+  
+</div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h5 class="w-100 text-center modal-title" style="color: #6b83c8;font-weight: 600;" id="exampleModalLabel">
+      <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="120" alt=""> Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size: 1vw; font-weight: bold;text-align:center;">
+        ...
+      </div>
+      <div class="modal-footer">
+      	<a href="#" id="ok" class="btn btn-primary">Ok</a>
+      	<a href="#" id="successok" class="btn btn-primary">Ok</a>
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Model ended -->
+
+<!-- Modal for popup report-->
+<div class="modal fade bd-example-modal-lg" id="popupreport" tabindex="-1" role="dialog" aria-labelledby="popupreporttitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h5 class="w-100 text-center modal-title" style="color: #6b83c8;font-weight: 600;" id="popupreporttitle">
+      Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size: 1vw;color:#031529;">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Model ended -->
+<!-- <script src="js/pdf.min.js"></script>
+<script src="js/pdf.worker.min.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script> 
+<script src='<c:url value="/resources/js/successStories.js" />'></script>
+<script src='<c:url value="/resources/js/custom.js" />'></script>
+<script src='<c:url value="/resources/js/jquery.marquee.js" />'></script>
+<script src='<c:url value="/resources/js/login.js" />'></script>
+<script src='<c:url value="/resources/js/registation.js" />'></script>
+<script src='<c:url value="/resources/js/SHA512.js" />'></script>
+<script src='<c:url value="/resources/js/alert.js" />'></script>
+<script src='<c:url value="/resources/js/validationrules.js" />'></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+<!-- <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css"> -->
+
+<!-- ------------------ Script to convert html table into datatable with pdf excel button -->
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+<!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+<script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    function disablePrev() { window.history.forward() }
+    window.onload = disablePrev();
+    window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+ });
+</script>

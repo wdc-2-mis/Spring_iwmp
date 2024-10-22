@@ -1,0 +1,158 @@
+
+
+<link rel="stylesheet" href='<c:url  value="/resources/css/custom.css"/>' >
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<div class="container-fluid"
+	style="padding: 0.5%; /* background-image: linear-gradient(180deg, #12616d, #fff); */background-image: linear-gradient(180deg, #e1f2ef, #fff); background-repeat: no-repeatborder:2px solid blue;">
+	<div class="row"></div>
+</div>
+
+<div  class="panel-footer panel-default">
+<div class="container-fluid">
+<div class="row">
+<div class="offset-md-1"></div>
+<div class="col" ><li><a href="./"><spring:message code="label.home"/></a></li><li><a href="aboutus"><spring:message code="label.aboutus"/></a></li></div>
+<div class="col" ><li><a href="reports"><spring:message code="label.report"/></a></li><li><a href="whatsNew"><spring:message code="label.whatsnew"/></a></li></div>
+<div class="col" ><li><a href="gallery"><spring:message code="label.gallery"/></a></li><li><a href="successStories"><spring:message code="label.successsty"/></a></li></div>
+<div class="col" ><li><a href="login"><spring:message code="label.login"/></a></li><li><a href="register"><spring:message code="label.register"/></a></li></div>
+<input type="hidden" value="${pageContext.request.servletPath}" class="path"/>
+
+
+</div>
+</div>
+	<div class="panel-heading">
+		<br/><span><spring:message code="label.footerdtlL1"/></span>
+<br/><span><spring:message code="label.footerdtlL2"/></span>
+<br/><span><spring:message code="label.footerdtlL3"/></span>
+<br/><spring:message code="label.lastmodify"/> <span class="lastModify"></span>
+	</div>
+	<div class="modal fade bd-example-modal-lg" id="popupreport" tabindex="-1" role="dialog" aria-labelledby="popupreporttitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h3 class="w-100 text-center modal-title" style="background-color:#134f5c; color: #f3f6f4;font-weight: 600;" id="popupreporttitle">
+     STATE WISE DATA </h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body " style="font-size: 1vw;color:#031529;text-align:center;margin:auto;">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger"  data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="popupDreport" tabindex="-1" role="dialog" aria-labelledby="popupDreporttitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h3 class="w-100 text-center modal-title" style="background-color:#134f5c; color: #f3f6f4;font-weight: 600;" id="popupreporttitle">
+     DISTRICT WISE DATA </h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body " style="font-size: 1vw;color:#031529;text-align:center;margin:auto;">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  	<%-- <div class="panel-body">
+  		
+  		<div class="row">
+  			<div class="col-xs-6 col-2">
+  			<a href="http://www.nic.in/" target="_blank">
+   			<img class="nic-logo footerimg" src='<c:url value="/resources/images/nic_logo_footer.jpg" />' alt="NIC Logo" >
+   			</a>
+   			</div>
+   		
+   			<div class="col-xs-6 col-2">
+			<a href="http://apps.nic.in/" target="_blank">
+   			<img class="img-responsive footerimg" src='<c:url value="/resources/images/app_store.jpg" />' alt="Appstore" >
+  			</a>
+  			</div>
+  		
+  			<div class="clearfix visible-xs"></div>
+  			<div class="col-xs-6 col-2">
+  			<a href="http://india.gov.in/" target="_blank">
+			<img class="img-responsive footerimg" src='<c:url value="/resources/images/indiagov.jpg" />' alt="India.gov.in">
+			</a>
+			</div>
+		
+			<div class="col-xs-6 col-2">
+   			<a href="http://digitalindia.gov.in/" target="_blank">
+			<img class="img-responsive footerimg" src='<c:url value="/resources/images/digitalindia.png" />' alt="Digital India">
+			</a>
+			</div>
+		
+		 	<div class="clearfix visible-xs"></div>
+			<div class="col-xs-6 col-2">
+			<a href="https://www.mygov.in/" target="_blank">
+    		<img class="img-responsive footerimg" src='<c:url value="/resources/images/mygov.jpg" />' alt="MyGov">
+   		 	</a>  	
+   			</div>
+   			
+   			<div class="clearfix visible-xs"></div>
+			<div class="col-xs-6 col-2">
+			<a href="https://www.data.gov.in/" target="_blank">
+    		<img class="img-responsive footerimg" src='<c:url value="/resources/images/data-gov.jpg" />' width="130" height="37"  alt="DataGov">
+   		 	</a>  	
+   			</div>
+   		 
+   			
+   		</div>
+   			
+  	</div> --%>
+</div>
+
+
+<script src='<c:url value="/resources/js/pdf.worker.min.js" />'></script>
+<script src='<c:url value="/resources/js/pdf.min.js" />'></script> 
+<script src='<c:url value="/resources/js/successStories.js" />'></script>
+<script src='<c:url value="/resources/js/custom.js" />'></script>
+<script src='<c:url value="/resources/js/jquery.marquee.js" />'></script>
+<script src='<c:url value="/resources/js/login.js" />'></script>
+<script src='<c:url value="/resources/js/registation.js" />'></script>
+<script src='<c:url value="/resources/js/SHA512.js" />'></script>
+<script src='<c:url value="/resources/js/masterscript.js" />'></script>
+<script src='<c:url value="/resources/js/alert.js" />'></script>
+<script type="text/javascript" src="<c:url value="/resources/js/lastModify.js" />"></script>
+
+<!-- ------------------ Script to convert html table into datatable with pdf excel button -->
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css"> -->
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/jquery.dataTables.min.css" />">
+
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css"> -->
+<link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/buttons.dataTables.min.css" />">
+<link rel="shortcut icon" href="#">
+ <!--<script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+<script src="resources/js/export/jquery.dataTables.min.js"></script>
+
+<script src='<c:url value="/resources/js/alert.js" />'></script>
+
+<script src="resources/js/export/dataTables.buttons.min.js"></script>
+<script src="resources/js/jszip.min.js"></script>
+<script src="resources/js/1.53pdfmake.min.js"></script>
+
+<script src="resources/js/1.53vfs_fonts.js"></script>
+<script src="resources/js/buttons.html5.min.js"></script>
+
+
+<script>
+/* $(document).ready(function() {
+    function disablePrev() { window.history.forward() }
+    window.onload = disablePrev();
+    window.onpageshow = function(evt) { if (evt.persisted) disableBack() }
+ }); */
+</script>

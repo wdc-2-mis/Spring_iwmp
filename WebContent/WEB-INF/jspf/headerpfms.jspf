@@ -1,0 +1,306 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+	    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	
+<!DOCTYPE html>
+<html lang="en">
+
+<%
+response.addHeader("X-Frame-Options", "DENY");
+response.addHeader("Referrer-Policy", "origin-when-cross-origin");
+response.addHeader("Content-Security-Policy", "self");
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+response.setHeader("X-Frame-Options", "SAMEORIGIN");
+response.setHeader("X-Powered-By", "unset");
+response.setHeader("Server", "unset");
+response.addHeader("X-XSS-Protection: 1", "mode=block");
+/* response.addHeader("Content-Security-Policy", "self"); */
+response.addHeader("referrer", "no referrer");
+response.addHeader("X-Content-Type-Options", "nosniff");
+response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+%>
+
+<head>
+<title>Watershed Development Component-Pradhan Mantri Krishi
+	Sinchayee Yojana (WDC-PMKSY)</title>
+<meta name="description"
+	content="Integrated Watershed Management Programme (IWMP) of Department of Land Resources (DoLR).">
+<meta name="keywords"
+	content="iwmp,IWMP Web,Watershed Management Programme,Integrated Watershed Management Programme,Department of Land Resources,DOLR,Watershed Development Component">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<%-- <link rel="icon" type="image/gif/png"
+	href='<c:url value="/resources/images/iwmp.gif" />' /> --%>
+	<link rel="shortcut icon" href="#">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.min.css"/>">
+
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/custom.css" />">
+	<%-- <link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/all.css" />"> --%>
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/styles.css" />" />
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/afterlogin.css" />" />
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/maticon.css" />" />
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/multiselect.css" />" />
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/reportstyle.css" />" />
+	
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/pdfViewer.css" />" />
+
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/loginstyle.css" />" />
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
+<!-- <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"> -->
+<!--        <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+ -->      <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script> 
+ <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+
+<%-- <script src='<c:url value="/resources/js/jquery.min.js" />'></script> --%> 
+<%-- <script src='<c:url value="/resources/js/bootstrap.min.js" />'></script> --%> 
+<script src='<c:url value="/resources/js/getMenuAfterLogin.js" />'></script>
+<script src='<c:url value="/resources/js/custom.js" />'></script>
+<script src='<c:url value="/resources/js/jquery.multi-select.js" />'></script> 
+
+
+<style>
+body.impaired-view, body.impaired-view * {
+    font-size: 1%;
+}
+</style>
+<script>
+ $(document).ready(function(){
+	 $('#loading').hide();
+	 elem = $(".menu")[0]; 
+	 let lastHeight = $(".menu").height(); 
+	 let winHeight = $(window).height();
+	 //alert(lastHeight+" : "+winHeight);
+	 if(lastHeight<winHeight){$('.menu').css("height",(winHeight-winHeight/2.8)+"px");}
+	 if(lastHeight>0)
+	 $('.maincontent').css('max-height',lastHeight);
+	 else{
+		 $('.maincontent').css('max-height',''); 
+	 $('.maincontent').css('height',winHeight);
+	 } 
+	 let resizeObserver = new ResizeObserver(() => { 
+		 newHeight = $(".menu").height(); 
+		 if (lastHeight != newHeight) {  
+	  				lastHeight = newHeight;
+	  				$('.maincontent').css('max-height',lastHeight);
+	  				//alert(lastHeight);
+	            } 
+	 }); 
+
+	 resizeObserver.observe(elem);
+	 });
+
+ 
+
+ window.onscroll = function() {scrollFunction()};
+
+ function scrollFunction() {
+   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+     document.getElementById("sidebar-menu").style.top = "0";
+   } else {
+     document.getElementById("menulist").style.top = "-50px";
+   }
+ }
+ </script>
+
+
+
+</head>
+
+<body>
+
+<div class="container-fluid gap">
+<div class="row">
+<div class="col-1" >
+				
+			</div>
+			<div class=" col-9" >
+				
+			</div>
+			<div class=" col-2" >
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="decrease">A-</span>
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="reset">A</span>
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="increase">A+</span>
+			<!-- <span style="border: 1px solid black;padding:3px;cursor:pointer;color:#000;">English/Hindi</span> -->	
+			</div>
+</div>
+</div>
+
+<div class="container-fluid top-header">
+<div class="row">
+			<div class="col-1" >
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="120" alt="">
+				</a>
+			</div>
+			<div class=" col-9 inline-title" >
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana 2.0 - MIS</span><br /> 
+						
+						<span class="title2">Department of Land
+						Resources( भूमि संसाधन विभाग )</span><br /> 
+						<!-- ********************For Testing Page*********************************** -->			
+			<!-- <span class="title2">Department of Land
+						Resources (भूमि संसाधन विभाग) &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color:red;font-size:28px;">(TESTING SITE)</span> </span><br /> 
+			 -->
+						
+						<span class="title2">Ministry
+						of Rural Development(ग्रामीण विकास मंत्रालय )</span><br /> <span
+					class="title2">Government of India( भारत सरकार )</span>
+				</a>
+			</div>
+			<div class=" col-2" >
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class="digi-india" width="150" height="100" alt="">
+				</a>
+			</div>
+		</div>
+
+</div>
+
+<%-- 	 <nav class="navbar navbar-light  top-header ">
+		<div class="row">
+			<div class="col-1 inline-babbar-sher">
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="120" alt="">
+				</a>
+			</div>
+			<div class=" col-10 inline-title">
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana
+						(WDC-PMKSY)</span><br /> <span class="title2">Department of Land
+						Resources( भूमि संसाधन विभाग )</span><br /> <span class="title2">Ministry
+						of Rural Development(ग्रामीण विकास मंत्रालय )</span><br /> <span
+					class="title2">Government of India( भारत सरकार )</span>
+				</a>
+			</div>
+			<div class=" col-1 inline-digi-india">
+				<a class="" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class=" digi-india" width="150" height="100" alt="">
+				</a>
+			</div>
+		</div>
+	</nav> 
+ --%>	
+ <nav class="navbar navbar-expand-lg navbar-light nav-menu" >
+		<a class="navbar-brand" href="#"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+								<!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> -->
+			</ul>
+			<!-- <form class="form-inline my-lg-0 navbar-left">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+    
+			<ul class="navbar-nav  navbar-right">
+				<c:choose>
+					<c:when test="${sessionScope.loginid eq null }">
+						<li class="nav-item"><a class="nav-link" href="login"><span class="material-icons">login</span>LOGIN
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="register"><span class="material-icons">perm_identity</span>REGISTER</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+					<!-- <div class="sidebar-btn">
+                     <i class="fa fa-bars"></i>
+
+                     </div> -->
+                     
+					<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;">Welcome, ${sessionScope.username}(${sessionScope.roleName})</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="editprofile">Profile</a>
+						<a class="dropdown-item" href="logout">LogOut</a>
+					</div></li>
+					<div id="navbarDropdownAfterLogin" class="navbarDropdownAfterLogin">
+					<!-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;">Main Menu</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="editprofile">Profile</a>
+						<a class="dropdown-item" href="logout">LogOut</a>
+					</div></li> -->
+					</div>
+						<%-- <li class="nav-item"><a class="nav-link" href="#">Hi,
+								${sessionScope.user}</a></li> 
+						<li class="nav-item"><a class="nav-link" href="logout">
+								Logout</a></li>--%>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+
+
+		</div>
+	</nav>
+	
+<div class="container-fluid">
+<div class="row">
+<div class="col-3 wrapper normalmenu" style="margin-left:-15px;">
+      <div class="main menu" style="background-color: #161925;">
+        <aside>
+          <div class="sidebar left " style="height: 100%;">
+           
+            <ul class="list-sidebar bg-defoult" id="sidemenu">
+            
+    </ul>
+    </div>
+    </aside>
+    </div>
+  </div>
+  <%-- <div class="col-3 wrapper menu">
+ <div class="sidebar">
+<div class="sidebar-menu">
+
+<ul style="list-style:none" id="">
+ <c:forEach var="list" items="${menu}">
+<li class="item" id="${list.key}">
+<a href="#${list.key}" class="menu-btn">
+<i class="fa fa-book-open"></i>
+<span>${list.key}<i class="fa fa-chevron-down drop-down"></i></span></a>
+<c:forEach var="menulist" items="${list.value}">
+<div class="sub-menu">
+<a href="${menulist.target}"><i class="fa fa-image"></i><span><c:out value="${menulist.menuname }"></c:out></span></a>
+</div>
+</c:forEach>
+</li>
+</c:forEach> 
+</ul>
+</div>
+
+</div>
+</div>   --%>
+
+<div class="col maincontent" style="overflow-y:auto;max-height:500px;font-family: Arial, Helvetica, sans-serif;">
+<div class="main-container">
+<div id="loading" class="col">
+    <img id="loading-image" src="<c:url value="/resources/images/loading.gif" />" alt="Loading..." />
+</div>

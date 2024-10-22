@@ -1,0 +1,15 @@
+package app.dao.reports;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import app.bean.reports.ActivityWiseUptoPlanAchieveWorkBean;
+import app.bean.reports.PhysicalActionAchievementBean;
+
+public interface PhysicalActionAchievementDao {
+	
+	LinkedHashMap<Integer, String> getYearForPhysicalActionAchievementReport(Integer pCode);
+	List<PhysicalActionAchievementBean> getPhysicalActionAchievementReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
+	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
+	LinkedHashMap<Integer, String> getYearForAchDashboard();
+}

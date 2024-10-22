@@ -1,0 +1,321 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>	
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<%
+response.addHeader("X-Frame-Options", "DENY");
+response.addHeader("Referrer-Policy", "origin-when-cross-origin");
+response.addHeader("Content-Security-Policy", "self");
+response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+response.setDateHeader("Expires", 0); // Proxies.
+response.setHeader("X-Frame-Options", "SAMEORIGIN");
+response.setHeader("X-Powered-By", "unset");
+response.setHeader("Server", "unset");
+response.addHeader("X-XSS-Protection: 1", "mode=block");
+/* response.addHeader("Content-Security-Policy", "self"); */
+response.addHeader("referrer", "no referrer");
+response.addHeader("X-Content-Type-Options", "nosniff");
+response.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+
+%>
+
+<head>
+<%-- <title><spring:message code="label.title"/></title> --%>
+<meta name="description"
+	content="Integrated Watershed Management Programme (IWMP) of Department of Land Resources (DoLR).">
+	<meta name="robots" content="noarchive">
+<meta name="keywords"
+	content="iwmp,IWMP Web,Watershed Management Programme,Integrated Watershed Management Programme,Department of Land Resources,DOLR,Watershed Development Component">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<%-- <link rel="icon" type="image/gif/png"
+	href='<c:url value="/resources/images/iwmp.gif" />' />  --%>
+	<link rel="shortcut icon" href="#">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/custom.css" />">
+	
+	<!-- <link href="/resources/css/all.css" rel="stylesheet" type="text/css" /> -->
+   
+    <link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/styles.css" />" />
+
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/maticon.css" />" />
+	
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/reportstyle.css" />" />
+	
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/pdfViewer.css" />" />
+
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/loginstyle.css" />" />
+
+<script src='<c:url value="/resources/js/jquery.min.js" />'></script>
+<script src='<c:url value="/resources/js/bootstrap.min.js" />'></script>
+<script src='<c:url value="/resources/js/custom.js" />'></script>
+<%-- <script src='<c:url value="resources/js/bootstrap-select.js" />'></script> --%>
+
+
+<style>
+body.impaired-view, body.impaired-view * {
+    font-size: 1%;
+}
+</style>
+<script>
+ $(document).ready(function(){
+	 $('#loading').hide();
+ });
+ </script>
+ 
+</head>
+
+<body>
+
+<div class="container-fluid gap">
+<div class="row">
+<div class="col-1" >
+				
+			</div>
+			<div class=" col-9" >
+				
+			</div>
+			<div class=" col-2" >
+			<span style="border: 1px solid black;cursor:pointer;background:#000; color:#fff;" class="decrease">A-</span>
+			<span style="border: 1px solid black;cursor:pointer;background:#000; color:#fff;" class="reset">A</span>
+			<span style="border: 1px solid black;cursor:pointer;background:#000; color:#fff;" class="increase">A+</span>
+			<span style="border: 1px solid black;cursor:pointer;color:#000;"><a href="${pageContext.request.contextPath}/index3?lang=en">English</a></span> 
+			<span style="border: 1px solid black;cursor:pointer;color:#000;"><a href="${pageContext.request.contextPath}/index3?lang=hi">Hindi</a></span>	
+			
+			<!-- <span style="border: 1px solid black;cursor:pointer;color:#000;">English/Hindi</span> -->	
+			</div>
+</div>
+</div>
+
+<div class="container-fluid top-header">
+<div class="row">
+
+			<div class="col-1" style="margin-left:20px;" >
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="100" alt="">
+				</a>
+			</div>
+			<div class=" col-8 inline-title"  style="margin-top:3px;">
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana 2.0 - MIS</span><br /> 
+						<!-- ********************Comment For Testing Page*********************************** -->	
+						<span class="title2">Department of Land
+						Resources (भूमि संसाधन विभाग)  </span><br />
+						<!-- ********************Uncomment For Testing Page*********************************** -->			
+			<!-- <span class="title2">Department of Land
+						Resources (भूमि संसाधन विभाग) &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span style="color:red;font-size:24px;">(TESTING SITE)</span> </span><br /> 
+			 -->
+						
+						 <span class="title2">Ministry
+						of Rural Development (ग्रामीण विकास मंत्रालय)      </span><br /> <span
+					class="title2">Government of India (भारत सरकार)  </span>
+				</a>
+			</div>
+			<div>
+			<a class="" href="#"> <img
+					src="<c:url value="/resources/images/g20-logo.png" />"
+					class="g20-logo" width="120" height="100" alt="">
+				</a>
+				<a class="" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class="digi-india" width="100" height="100">
+				</a>
+			
+				
+			</div>
+		</div>
+
+</div>
+
+<%-- 	 <nav class="navbar navbar-light  top-header ">
+		<div class="row">
+			<div class="col-1 inline-babbar-sher">
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="120" alt="">
+				</a>
+			</div>
+			<div class=" col-10 inline-title">
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana
+						(WDC-PMKSY)</span><br /> <span class="title2">Department of Land
+						Resources( भूमि संसाधन विभाग )</span><br /> <span class="title2">Ministry
+						of Rural Development(ग्रामीण विकास मंत्रालय )</span><br /> <span
+					class="title2">Government of India( भारत सरकार )</span>
+				</a>
+			</div>
+			<div class=" col-1 inline-digi-india">
+				<a class="" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class=" digi-india" width="150" height="100" alt="">
+				</a>
+			</div>
+		</div>
+	</nav> 
+ --%>	
+ <nav class="navbar navbar-expand-lg navbar-light nav-menu" >
+		<a class="navbar-brand" href="#"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				<a class="nav-link" href="./"><span class="material-icons"  style="font-size:24px;line-height:16px;">home</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="aboutus" style="font-size:17px; line-height:16px;"><i class="material-icons">supervisor_account</i><spring:message code="label.about"/></a></li>
+				<li class="nav-item"><a class="nav-link" href="reports" style="font-size:16px; line-height:16px;"><span class="material-icons">assignment</span><spring:message code="label.report"/></a></li>
+				<li class="nav-item"><a class="nav-link" href="dolrDashBoard" style="font-size:16px; line-height:16px;"><span class="material-icons">leaderboard</span><spring:message code="label.dashboard"/></a>
+				
+				</li>
+				<li class="nav-item"><a class="nav-link" href="tejasBharatMap" style="font-size:16px; line-height:16px;"><span class="material-icons">map</span><spring:message code="label.map"/></a>
+				
+				</li>
+				
+				<%-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">leaderboard</span> <spring:message code="label.dashboard"/> </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="dolrDashBoard"><spring:message code="label.dolrlevel"/></a> <a
+							class="dropdown-item" href="#"><spring:message code="label.statelevel"/></a>
+					</div></li> --%>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"> <span class="material-icons">language</span><spring:message code="label.sites"/> </a>
+					<div class="dropdown-menu dropdown-menu-index" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="http://dolr.gov.in/"target="_blank" rel="noopener noreferrer"><spring:message code="label.dolr"/></a> 
+						<a class="dropdown-item" href="https://rural.gov.in/" target="_blank" rel="noopener noreferrer"><spring:message code="label.mord"/></a> 
+						<a class="dropdown-item" href="https://pfms.nic.in/" target="_blank" rel="noopener noreferrer"><spring:message code="label.pfms"/></a> 
+						<a class="dropdown-item" href="https://bhuvan-app1.nrsc.gov.in/wdc2.0/" target="_blank" rel="noopener noreferrer"><spring:message code="label.sristi"/></a>
+						<a class="dropdown-item" href="https://iwmpmis.nic.in/" target="_blank" rel="noopener noreferrer"><spring:message code="label.wdc1.0"/></a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">wysiwyg</span> <spring:message code="label.document"/> </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+
+						<a target="_blank" class="dropdown-item" href="reference/UserManual.pdf">User
+							Manual</a>
+							<a class="dropdown-item" href="reference/WDCPMKSY2.0_Guidelines.pdf"><spring:message code="label.guidelines"/></a>
+							
+							 <!-- <a class="dropdown-item"
+                        
+						<a class="dropdown-item" href="handleError404">User
+							Manual - WDC-PMKSY-MIS</a> <!-- <a class="dropdown-item"
+
+						<a class="dropdown-item" href="handleError404"><spring:message code="label.usermanual"/></a> <!-- <a class="dropdown-item"
+
+							href="CommonGuidelines2008English.pdf">Common Guidelines 2008
+							(English)</a> <a class="dropdown-item"
+							href="CommonGuidelines2008Hindi.pdf">Common Guidelines 2008
+							(Hindi)</a> -->
+
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">contact_page</span> <spring:message code="label.contactus"/> </a>
+					<div class="dropdown-menu dropdown-menu-index" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="technicalsupport"><spring:message code="label.techsupport"/></a> 
+						<a class="dropdown-item" href="dolrSupport"><spring:message code="label.dolrsupport"/></a> 
+						<a class="dropdown-item" href="slnacoordinatorsdetails"><spring:message code="label.slnacoordinators"/></a>
+					</div></li>
+					
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">wysiwyg</span> <spring:message code="label.frequentlyasked"/></a>
+					<div class="dropdown-menu dropdown-menu-index" aria-labelledby="navbarDropdown">
+
+						<a target="_blank" class="dropdown-item" href="reference/FAQs-MIS-WDC.pdf"><spring:message code="label.freqasked"/></a> <!-- <a class="dropdown-item"
+							href="CommonGuidelines2008English.pdf">Common Guidelines 2008
+							(English)</a> <a class="dropdown-item"
+							href="CommonGuidelines2008Hindi.pdf">Common Guidelines 2008
+							(Hindi)</a> -->
+
+					</div></li>	
+					
+					<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class='material-icons'>videocam</span> <spring:message code="label.video"/></a>
+					
+					<div class="dropdown-menu dropdown-menu-index" aria-labelledby="navbarDropdown">
+
+						<a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=JQl4V2EjvPI">Project Location</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=GT9chndoKf0">Base Line Survey Details Part-1(Plot Wise Detail)</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=AeaKDxsBNMg">Base Line Survey Details Part-2</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=BDfMIxTh3mU">Physical Action Plan And Achievement Part-1</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=p_vGeO3lVy4">Physical Action Plan And Achievement Part-2</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=WXJYNWOTyZ0">Physical Action Plan And Achievement Part-3</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=6hQg_fkKgnA">Physical Action Plan And Achievement Part-4</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=lJpO4dANR4Y">Physical Action Plan And Achievement Part-5</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=O3965CqAjWw">Project Implementation- Updation of Plotwise Details</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=kf-oNZKjBBw">Project Implementation Outcome Details</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=8U4cSiMPHHc">Progress Implementation - Ground Water Table and Newly Created SHGs Details</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=QImO4CCAYpE">Project Implementation - User Groups and Newly FPO Created</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=TfQte4IEPA8">Project Implementation EPAs or Livelihood Activities or Production System</a>
+                        <a target="_blank" class="dropdown-item" href="https://www.youtube.com/watch?v=ne2vQ-vXaf0">Mapping of PFMS Transaction with Project and WorkId of the Projects</a>
+                       
+                        
+                   </div></li>
+					
+					<!-- ********************For Testing Page*********************************** -->
+					<!-- &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<h2 style="color:red;"><b>TESTING SITE</b></h2>
+			 -->
+					
+				<!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> -->
+			</ul>
+			<!-- <form class="form-inline my-lg-0 navbar-left">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+			<ul class="navbar-nav  navbar-right">
+				<c:choose>
+					<c:when test="${sessionScope.loginid eq null }">
+						<li class="nav-item"><a class="nav-link" href="login"><span class="material-icons">login</span><spring:message code="label.loginn"/>
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="register"><span class="material-icons">perm_identity</span><spring:message code="label.register"/></a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="loginsuccess">Hi,
+								${sessionScope.loginid}</a></li>
+						<li class="nav-item"><a class="nav-link" href="logout">
+								Logout</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+
+
+		</div>
+		
+		
+	</nav>
+	
+	
+	<div style="font-family: Arial, Helvetica, sans-serif;">
+	<div id="loading" class="col">
+    <img id="loading-image" src="<c:url value="/resources/images/loading.gif" />" alt="Loading..." />
+</div>

@@ -1,0 +1,84 @@
+.orange-fade {
+    background: #00332e;
+    background: linear-gradient(135deg,#00332e 0,#00332e 100%);
+}
+.pos-r {
+    position: relative!important;
+}
+.white {
+    background: #fff;
+}
+.text-white {
+    color: #fff!important;
+}
+.text-gray {
+    color: #363636;
+}
+.testimonial {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.separator {
+    width: 84%;
+    height: 2px;
+    margin: 1.2em auto 1em;
+    background: #ffc53a;
+}
+.one-slide {
+  border-radius: 2px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  font-size: 0.3rem;
+  height: 250px;
+}
+.one-slide img {
+  width: 100%;
+}
+.carousel-controls .control {
+  position: absolute;
+  cursor: pointer;
+  top: 56.4%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  
+}
+.prev {
+  left: -1.475rem;
+}
+.next {
+  right: -1.475rem;
+}
+
+ .message {
+    width: auto;
+     height: auto;
+    font-size: .9rem;
+  }
+  .brand {
+    width: auto;
+    height: auto;
+  
+  }
+  @media (max-width: 975px) {
+    .one-slide {
+	    height: 200px;
+	  }
+    img {
+  	    width: 60%;
+  	  }
+  }
+
+
+.card-body {
+  display: flex;
+}
+
+.card-title {
+  margin-left: auto;
+  font-family: 'Yatra One', cursive;
+}

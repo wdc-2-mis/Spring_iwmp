@@ -1,0 +1,260 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Watershed Development Component-Pradhan Mantri Krishi
+	Sinchayee Yojana (WDC-PMKSY)</title>
+	<meta name="robots" content="noarchive">
+<meta name="description"
+	content="Integrated Watershed Management Programme (IWMP) of Department of Land Resources (DoLR).">
+<meta name="keywords"
+	content="iwmp,IWMP Web,Watershed Management Programme,Integrated Watershed Management Programme,Department of Land Resources,DOLR,Watershed Development Component">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/gif/png"
+	href='<c:url value="/resources/images/iwmp.gif" />' />
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/custom.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/all.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/styles.css" />" />
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/maticon.css" />" />
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/reportstyle.css" />" />
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/pdfViewer.css" />" />
+
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/loginstyle.css" />" />
+
+<script src='<c:url value="/resources/js/jquery.min.js" />'></script>
+<script src='<c:url value="/resources/js/bootstrap.min.js" />'></script>
+
+<style>
+body.impaired-view, body.impaired-view * {
+	font-size: 1%;
+}
+</style>
+<style>
+<script>
+ $(document).ready(function(){
+	 $('#loading').hide();
+ });
+ </script>
+
+</style>
+
+</head>
+
+<body>
+<form:form action="dolrDashBoard" method="post"
+			modelAttribute="dashboard">
+
+	<!-- <div class="container-fluid gap">
+<div class="row">
+<div class="col-1" >
+				
+			</div>
+			<div class=" col-9" >
+				
+			</div>
+			<div class=" col-2" >
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="decrease">A-</span>
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="reset">A</span>
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;background:#000; color:#fff;" class="increase">A+</span>
+			<span style="border: 1px solid black;padding:3px;cursor:pointer;color:#000;">English/Hindi</span>	
+			</div>
+</div>
+</div> -->
+
+	<div class="container-fluid top-header">
+		<div class="row">
+			<div class="col-1">
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="100" alt="">
+				</a>
+			</div>
+			<div class=" col-9 inline-title">
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana
+						(WDC-PMKSY)</span><br /> <span class="title2">Department of Land
+						Resources( भूमि संसाधन विभाग )</span><br /> <span class="title2">Ministry
+						of Rural Development(ग्रामीण विकास मंत्रालय )</span><br /> <span
+					class="title2">Government of India( भारत सरकार )</span>
+				</a>
+			</div>
+			<div class=" col-2">
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class="digi-india" width="150" height="100" alt="">
+				</a>
+			</div>
+		</div>
+
+	</div>
+
+	<%-- 	 <nav class="navbar navbar-light  top-header ">
+		<div class="row">
+			<div class="col-1 inline-babbar-sher">
+				<a class="navbar-brand" href="#"> <img
+					src="<c:url value="/resources/images/tiranga_national_emblem.png" />"
+					class=" babbar-sher" width="70" height="120" alt="">
+				</a>
+			</div>
+			<div class=" col-10 inline-title">
+				<a class="navbar-brand" href="#"> <span class="title1">Watershed
+						Development Component-Pradhan Mantri Krishi Sinchayee Yojana
+						(WDC-PMKSY)</span><br /> <span class="title2">Department of Land
+						Resources( भूमि संसाधन विभाग )</span><br /> <span class="title2">Ministry
+						of Rural Development(ग्रामीण विकास मंत्रालय )</span><br /> <span
+					class="title2">Government of India( भारत सरकार )</span>
+				</a>
+			</div>
+			<div class=" col-1 inline-digi-india">
+				<a class="" href="#"> <img
+					src="<c:url value="/resources/images/digi-india3.png" />"
+					class=" digi-india" width="150" height="100" alt="">
+				</a>
+			</div>
+		</div>
+	</nav> 
+ --%>
+	<nav class="navbar navbar-expand-lg navbar-light nav-menu">
+		<a class="navbar-brand" href="#"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		
+	
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+				<a class="nav-link" href="./"><span class="material-icons"  style="font-size:24px;line-height:16px;">home</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="aboutus" style="font-size:17px; line-height:16px;"><i class="material-icons">supervisor_account</i><spring:message code="label.about"/></a></li>
+				<li class="nav-item"><a class="nav-link" href="reports" style="font-size:16px; line-height:16px;"><span class="material-icons">assignment</span><spring:message code="label.report"/></a></li>
+					<li class="nav-item"> <a class="nav-link" href="#" style="font-size:16px; line-height:16px;"><span class="material-icons">leaderboard</span><b>DASHBOARD</b></a></li>
+					<li class="nav-item"> <a class="nav-link" href="tejasBharatMap" style="font-size:16px; line-height:16px;"><span class="material-icons">map</span><b>MAP</b></a></li>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<li class="nav-item text-center" style="color: red; font-size:16px; line-height:16px;"><b></b></li>
+				</ul>
+				
+				
+<!-- 				<ul class="navbar-nav  navbar-right"> -->
+<%-- 					<li class="nav-item dropdown"><form:select id="mySelect" --%>
+<%-- 							class="form-control" path="stateCode"> --%>
+<%-- 							<form:option value="0" label="---All State---"></form:option> --%>
+<%-- 							<form:options items="${statelist}" /> --%>
+<%-- 						</form:select> </li> &nbsp;&nbsp;&nbsp;&nbsp; --%>
+<%-- 					<li class="nav-item dropdown"><form:select --%>
+<%-- 							class="form-control" path="finyear"> --%>
+<%-- 							<form:option value="0" label="---Financial Year---"></form:option> --%>
+<%-- 							<form:options items="${financialYear}" itemLabel="finYrDesc" --%>
+<%-- 								itemValue="finYrCd"></form:options> --%>
+<%-- 						</form:select></li> &nbsp;&nbsp;&nbsp;&nbsp; --%>
+<!-- 				</ul> -->
+			</div>
+		
+
+
+		<%-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+				<a class="nav-link" href="./"><span class="material-icons"  style="font-size:24px;line-height:16px;">home</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="aboutus" style="font-size:17px; line-height:16px;"><i class="material-icons">supervisor_account</i>ABOUT</a></li>
+				<li class="nav-item"><a class="nav-link" href="reports" style="font-size:16px; line-height:16px;"><span class="material-icons">assignment</span>REPORTS</a></li>
+				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">leaderboard</span> DASHBOARD </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">DoLR Level</a> <a
+							class="dropdown-item" href="#">State Level</a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"> <span class="material-icons">language</span>SITES </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="http://dolr.nic.in/"
+							target="_blank">Dept. of Land Resources, DoLR</a> <a
+							class="dropdown-item" href="http://rural.nic.in/" target="_blank">Ministry
+							of Rural Development</a> <a class="dropdown-item"
+							href="http://pgportal.gov.in/" target="_blank">Public
+							Grievances</a> <a class="dropdown-item" href="http://india.gov.in/"
+							target="_blank">India Gov</a>
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">wysiwyg</span> DOCUMENTS </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+						<a class="dropdown-item" href="IWMP-MIS-UserManual.pdf">User
+							Manual - IWMP MIS</a> <a class="dropdown-item"
+							href="CommonGuidelines2008English.pdf">Common Guidelines 2008
+							(English)</a> <a class="dropdown-item"
+							href="CommonGuidelines2008Hindi.pdf">Common Guidelines 2008
+							(Hindi)</a>
+
+					</div></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" style="font-size:16px; line-height:16px;"><span class="material-icons">contact_page</span> CONTACT US </a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="technicalsupport">Technical
+							Support</a> <a class="dropdown-item" href="dolrSupport">DoLR
+							Support</a> <a class="dropdown-item" href="slnacoordinators">List
+							of SLNA MIS-Coordinators</a>
+					</div></li>
+				<!-- <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li> -->
+			</ul>
+			<!-- <form class="form-inline my-lg-0 navbar-left">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+			<ul class="navbar-nav  navbar-right">
+				<c:choose>
+					<c:when test="${sessionScope.loginid eq null }">
+						<li class="nav-item"><a class="nav-link" href="login"><span class="material-icons">login</span>LOGIN
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="register"><span class="material-icons">perm_identity</span>REGISTER</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="nav-item"><a class="nav-link" href="#">Hi,
+								${sessionScope.loginid}</a></li>
+						<li class="nav-item"><a class="nav-link" href="logout">
+								Logout</a></li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+
+
+		</div> --%>
+		
+		
+	</nav></form:form>
+	</body>
+	<div style="font-family: Arial, Helvetica, sans-serif;">
+	<div id="loading" class="col">
+    <img id="loading-image" src="<c:url value="/resources/images/loading.gif" />" alt="Loading..." />
+</div>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:context="http://www.springframework.org/schema/context"
+	    xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans  
+					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+					http://www.springframework.org/schema/context  
+					http://www.springframework.org/schema/context/spring-context-4.0.xsd
+					
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/jdbc 
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="app" />
+	<mvc:resources mapping="/resources/**" location="/WEB-INF/resources/" />
+	<mvc:resources mapping="/webjars/**"  location="/webjars/" />
+	
+	<mvc:annotation-driven />
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	<!-- <import resource="classpath:jbr/config/user-beans.xml" /> -->
+	
+	<security:http auto-config="true">
+        <!-- Other security configurations -->
+        <security:headers>
+            <!-- Enable XSS protection -->
+            <security:xss-protection/>
+            
+            <!-- Prevent content type sniffing -->
+            <security:content-type-options/>
+            
+            <!-- Enable X-Frame-Options -->
+            <security:frame-options policy="SAMEORIGIN"/>
+            
+            <!-- Enable HTTP Strict Transport Security -->
+            <security:hsts max-age-seconds="31536000" include-subdomains="true"/>
+            
+            <!-- Enable Content Security Policy-->
+            <security:content-security-policy policy-directives="script-src 'self' https://trustedscripts.example.com; object-src https://trustedplugins.example.com;"/>
+            
+            <!-- Enable Referrer Policy-->
+            <security:referrer-policy policy="no-referrer" />
+            
+            <!-- Enable Cache Control (disable caching for sensitive resources) -->
+            <security:cache-control disabled="true"/>
+        </security:headers>
+    </security:http>
+    
+    <security:authentication-manager>  
+      <security:authentication-provider>  
+        <security:user-service>  
+        <security:user name="/" password="" authorities="hasRole(ROLE_ADMIN)" />  
+        </security:user-service>  
+      </security:authentication-provider>  
+    </security:authentication-manager>  
+
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/properties/database.properties</value>
+				<value>/WEB-INF/properties/common.properties</value>
+				<value>/WEB-INF/properties/sql.properties</value>
+				<value>/WEB-INF/properties/messages.properties</value>
+			</list>
+			
+		</property>
+	</bean>
+
+		
+	  <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"> 
+        <property name="basename" value="application"></property> 
+        <property name="defaultEncoding" value="UTF-8" />
+        </bean>   
+		
+		  <bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="en" />
+		<property name="cookieName" value="myAppLocaleCookie"></property>
+		<property name="cookieMaxAge" value="3600"></property>
+	</bean> 
+	
+	<mvc:interceptors>
+       <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+       <property name="paramName" value="lang"></property>
+       </bean>
+    </mvc:interceptors>
+
+<!-- <bean id="messageSource"
+class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+p:basename="classpath:messages/messages">
+</bean> -->
+
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		p:driverClassName="${database.driver}" p:url="${database.url}"
+		p:username="${database.username}" p:password="${database.password}" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+		<property name="packagesToScan">
+            <list>
+                <value>app.model</value>
+                <value>app.bean</value>
+            </list>
+        </property>
+		<property name="hibernateProperties">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+		 <!-- setting maximum upload size -->
+		<property name="maxUploadSize" value="20000000" />
+		</bean>
+
+	
+	<bean name="User" class="app.bean.User" /> 
+	<bean name="userBean" class="app.bean.UserBean" /> 
+	<bean name="commonUtility" class="app.util.CommonUtility" />
+	<bean name="userReg" class="app.model.UserReg" />
+	<bean name="userMap" class="app.model.UserMap" />
+	<bean name="galleryBean" class="app.bean.GalleryBean" />
+	<bean name="iwmpUserProjectMap" class="app.model.IwmpUserProjectMap" />
+	<bean name="iwmpMProject" class="app.model.IwmpMProject" />
+	<bean name="changePassword" class="app.bean.Changepassword" />
+	<bean name="projectState" class="app.bean.ProjectState" />
+	<bean name="profileBean" class="app.bean.ProfileBean" />
+	<bean name="lastActionLogBean" class="app.bean.LastActionLogBean" />
+	<bean name="StateToVillageBean" class="app.bean.StateToVillageBean" />
+	<bean name="finYearBean" class="app.bean.FinYearBean" />
+	<bean name="WcdcPiaUserBean" class="app.bean.WcdcPiaUserBean" />
+	<bean name="WdcpmksyPrdouctionWorkid" class="app.model.project.WdcpmksyPrdouctionWorkid" />
+	<bean name="WdcpmksyLivelihoodWorkid" class="app.model.project.WdcpmksyLivelihoodWorkid" />
+	<bean name="WdcpmksyEpaWorkid" class="app.model.project.WdcpmksyEpaWorkid" />
+	<bean name="EPAWorkIdBean" class="app.bean.reports.LivelihoodPrdouctionEPAWorkIdBean" />
+	
+	
+	
+	
+</beans>

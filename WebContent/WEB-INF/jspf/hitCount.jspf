@@ -1,0 +1,43 @@
+<p>You are visitor number: <span style="background:#040404;color:#fff;font-size:1vw;font-weight:bold;">${hitCount}</span></p>
+
+<div class="modal fade bd-example-modal-lg" id="popupreport" tabindex="-1" role="dialog" aria-labelledby="popupreporttitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg"  role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h3 class="w-100 text-center modal-title" style="background-color:#134f5c; color: #f3f6f4;font-weight: 600;" id="popupreporttitle">
+     STATE WISE DATA </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body " style="font-size: 1vw;color:#031529;text-align:center;margin:auto;">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger"  data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade bd-example-modal-lg" id="popupDreport" tabindex="-1" role="dialog" aria-labelledby="popupDreporttitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" style="background-color:#c3e7ec">
+      <div class="modal-header">
+       <h3 class="w-100 text-center modal-title" style="background-color:#134f5c; color: #f3f6f4;font-weight: 600;" id="popupDreporttitle">
+     DISTRICT WISE DATA </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="font-size: 1vw;color:#031529;text-align:center;margin:auto;">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="cancel" name="cancel" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

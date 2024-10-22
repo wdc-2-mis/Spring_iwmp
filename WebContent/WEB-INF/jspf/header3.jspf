@@ -1,0 +1,57 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" errorPage="error.jsp"%>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Watershed Development Component-Pradhan Mantri Krishi
+	Sinchayee Yojana (WDC-PMKSY)</title>
+<meta name="description"
+	content="Integrated Watershed Management Programme (IWMP) of Department of Land Resources (DoLR).">
+<meta name="keywords"
+	content="iwmp,IWMP Web,Watershed Management Programme,Integrated Watershed Management Programme,Department of Land Resources,DOLR,Watershed Development Component">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="icon" type="image/gif/png"
+	href='<c:url value="/resources/images/iwmp.gif" />' />
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.min.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/custom.css" />">
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/all.css" />">
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/afterlogin.css" />">
+<link rel="stylesheet" type="text/css"
+href="<c:url  value="/resources/css/styles.css" />" />
+	<link rel="stylesheet" type="text/css"
+	href="<c:url  value="/resources/css/loginstyle.css" />" />
+<script src='<c:url value="/resources/js/jquery.min.js" />'></script>
+<script src='<c:url value="/resources/js/bootstrap.min.js" />'></script>
+
+
+
+</head>
+
+<body>
+<div class="container-fluid">
+<div class="row">
+<img src="<c:url value="/resources/images/iwmp_long4.png" />"
+					class="w-100 d-block img-fluid" height="150" alt="">
+					</div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="./">HOME
+						<span class="sr-only">(current)</span>
+				</a></li>
+				</ul>
+				</div>
+				
+	</div>
+					
+	
+	</body>
+	</html>
+	
