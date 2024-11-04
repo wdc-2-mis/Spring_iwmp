@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import app.PfmsTreasureBean;
 import app.TargetAchievementQuarterBean;
 import app.bean.PrayasAchievementBean;
+import app.bean.reports.QuarterlyTargetBean;
 import app.model.IwmpMFinYear;
 
 @Service("TargetAchievementQuarterService")
@@ -22,4 +23,5 @@ public interface TargetAchievementQuarterService {
 	public List<IwmpMFinYear> getYearonward22();
 	public List<PrayasAchievementBean> finddistWisemonthachdata(Integer stCode, Integer finCode, Integer month);
 	Integer getnoofStateProj(Integer state);
+	public List<QuarterlyTargetBean> fetchquartargetrpt(Integer userState, Integer year);
 }
