@@ -25,7 +25,7 @@ public interface QuarterlyTargetService {
 	String SLNAAllQuadApproveService(String quardDtl, String status);
 	List<WdcpmksyMQuadIndicators> getSLNACompleteData(Integer stcode);
 	List<WdcpmksyMQuadIndicators> getcompletedquaddata(String quarterdtl);
-	
+	List<WdcpmksyQuadTarget> getcompletedstatus(Integer project, Integer financial);
 	
 
 	

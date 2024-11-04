@@ -34,4 +34,6 @@ public interface QuarterlyTargetDao {
 
 	List<WdcpmksyMQuadIndicators> getcompletedquaddata(String quarterdtl);
 
+	List<WdcpmksyQuadTarget> getcompletedstatus(Integer project, Integer financial);
+
 }

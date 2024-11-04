@@ -92,6 +92,8 @@ public class QuarterlyTargetDaoImpl implements QuarterlyTargetDao{
 	@Value("${getCompleteQuadData}")
 	String getCompleteQuadData;
 	
+	@Value("${checkcompletedstatus}")
+	String checkcompletedstatus;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getQuarterList() {
@@ -634,7 +636,26 @@ public class QuarterlyTargetDaoImpl implements QuarterlyTargetDao{
 		return getcompletedquadsdata;
 	}
 
-	
+	@Override
+	public List<WdcpmksyQuadTarget> getcompletedstatus(Integer project, Integer financial) {
+		Session session = sessionFactory.getCurrentSession();
+		boolean userFound = false;
+		String hql = checkcompletedstatus;
+		List<WdcpmksyQuadTarget> list=null;
+		try {
+		session.beginTransaction();
+		list = session.createQuery(hql).setParameter("projId", project).setParameter("finYrCd", financial).list();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			 session.getTransaction().commit();
+		}
+       
+		return list; 
+	}
 
 }
 
