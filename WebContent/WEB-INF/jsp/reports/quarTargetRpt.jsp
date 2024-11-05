@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Report O12- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators</title>
+<title>Report T3- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators</title>
 <meta charset="ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
@@ -50,7 +50,7 @@ function exportExcel( stCode,year,stName,finName) {
 
 <body>
  <br>
-<div class="offset-md-2 col-8 formheading" style="text-align:center;"  ><h5><label id="head"></label>Report O12- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators</h5></div>
+<div class="offset-md-2 col-8 formheading" style="text-align:center;"  ><h5><label id="head"></label>Report T3- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators</h5></div>
 
 <br>
 <div class ="card">

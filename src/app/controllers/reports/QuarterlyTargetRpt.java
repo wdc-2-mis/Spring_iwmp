@@ -129,7 +129,7 @@ public class QuarterlyTargetRpt {
 		        Rectangle layout = new Rectangle(PageSize.A4.rotate());
 		        layout.setBackgroundColor(new BaseColor(255, 255, 255));
 		        Document document = new Document(layout, 25, 10, 10, 0);
-		        document.addTitle("O12-Report");
+		        document.addTitle("T3-Report");
 		        document.addCreationDate();
 		        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		        PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -147,7 +147,7 @@ public class QuarterlyTargetRpt {
 		        Paragraph paragraph3 = null;
 		        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-		        paragraph3 = new Paragraph("Report O12- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators ", f3);
+		        paragraph3 = new Paragraph("Report T3- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators ", f3);
 
 		        paragraph2.setAlignment(Element.ALIGN_CENTER);
 		        paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -245,11 +245,11 @@ public class QuarterlyTargetRpt {
 				
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report O12- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators");   
+			Sheet sheet = workbook.createSheet("Report T3- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 		    
-			String rptName = "Report O12- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators";
+			String rptName = "Report T3- State-wise, Year-wise Targets on Output Outcome Monitoring Framework(OOMF) Indicators";
 			String areaAmtValDetail ="";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -338,7 +338,7 @@ public class QuarterlyTargetRpt {
 			style1.setFont(font1);
 
 		    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 6);
-		    String fileName = "attachment; filename=Report O12- State.xlsx";
+		    String fileName = "attachment; filename=Report T3- State.xlsx";
 		    
 		    CommonFunctions.downloadExcel(response, workbook, fileName);
 
