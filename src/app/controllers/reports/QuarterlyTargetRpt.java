@@ -63,9 +63,34 @@ public class QuarterlyTargetRpt {
 	public ModelAndView quarterlyTargetrpt(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView mav = new ModelAndView();
+		String stName = "--All State--";
+		String finName = "--All Financial Year--";
+		Integer userState = 0;
+		Integer year = 0;
+		String str[] = null;
+		List<String[]> dataList = new ArrayList<String[]>();
 		mav = new ModelAndView("reports/quarTargetRpt");
+		List<QuarterlyTargetBean> list=ser.fetchquartargetrpt(userState,year);
+		for(QuarterlyTargetBean bean : list) 
+		{
+			str = new String[8];
+			str[0] = bean.getIndicators_group();
+			str[1] = bean.getQuad1().toString();
+			str[2] = bean.getQuad2().toString();
+			str[3] = bean.getQuad3().toString();
+			str[4] = bean.getQuad4().toString();
+			str[5] = bean.getTotal_quad().toString();
+		    dataList.add(str);
+		}
+		
 		mav.addObject("stateList",stateMasterService.getAllState());
 		mav.addObject("financialYear", ser.getFinancialYearonward21());
+		mav.addObject("dataList", dataList);
+		mav.addObject("dataListSize",dataList.size());
+		mav.addObject("stCode", userState);
+		mav.addObject("year", year);
+		mav.addObject("stName", stName);
+		mav.addObject("finName", finName);
 		return mav;
 	}
 
