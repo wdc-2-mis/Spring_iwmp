@@ -5,6 +5,7 @@ import java.util.List;
 import app.PfmsTreasureBean;
 import app.TargetAchievementQuarterBean;
 import app.bean.PrayasAchievementBean;
+import app.bean.reports.QuarterlyTargetBean;
 import app.model.IwmpMFinYear;
 
 public interface TargetAchievementQuarterDao {
@@ -20,4 +21,5 @@ public interface TargetAchievementQuarterDao {
 	public List<PrayasAchievementBean> finddistWisemonthachdata(Integer stCode, Integer finCode, Integer month);
 	
 	Integer getnoofStateProj(Integer state);
+	public List<QuarterlyTargetBean> fetchquartargetrpt(Integer userState, Integer year);
 }

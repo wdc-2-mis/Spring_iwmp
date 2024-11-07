@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import app.PfmsTreasureBean;
 import app.TargetAchievementQuarterBean;
 import app.bean.PrayasAchievementBean;
+import app.bean.reports.QuarterlyTargetBean;
 import app.dao.reports.TargetAchievementQuarterDao;
 import app.model.IwmpMFinYear;
 import app.service.reports.TargetAchievementQuarterService;
@@ -77,7 +78,10 @@ public class TargetAchievementQuarterServiceImpl implements TargetAchievementQua
 		// TODO Auto-generated method stub
 		return dao.getnoofStateProj(state);
 	}
-
+	@Override
+	public List<QuarterlyTargetBean> fetchquartargetrpt(Integer userState, Integer year) {
+		return dao.fetchquartargetrpt(userState, year);
+	}
 
 
 

@@ -711,12 +711,20 @@ function savequadTarget(e){
 			<div class="left">
 				&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 
+<c:if test="${checkstatus != 0}">
+    <input type="button" name="save" id="quarterlyDraft" value="Draft"
+           class="btn btn-info" onclick="savequadDraftTarget();" disabled/>
+    <input type="button" name="save" id="quarterlyForward" value="Forward to SLNA"
+           class="btn btn-info" onclick="savequadTarget();" disabled />
+</c:if>
+<c:if test="${checkstatus == 0}">    
+    <input type="button" name="save" id="quarterlyDraft" value="Draft"
+           class="btn btn-info" onclick="savequadDraftTarget();" />
+    <input type="button" name="save" id="quarterlyForward" value="Forward to SLNA"
+           class="btn btn-info" onclick="savequadTarget();" />
+</c:if>
 
-				<input type="button" name="save" id="quarterlytar" value="Draft"
-					class="btn btn-info" onclick="savequadDraftTarget();" /> <input
-					type="button" name="save" id="quarterlytar" value="Forward to SLNA"
-					class="btn btn-info" onclick="savequadTarget();" />
-
+			
 			</div>
 		</c:if>
 

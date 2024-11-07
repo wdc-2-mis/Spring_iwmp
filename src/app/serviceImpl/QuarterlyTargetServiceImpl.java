@@ -88,6 +88,12 @@ public class QuarterlyTargetServiceImpl implements QuarterlyTargetService{
 		// TODO Auto-generated method stub
 		return quarterlyTargetDao.getcompletedquaddata(quarterdtl);
 	}
+
+	@Override
+	public List<WdcpmksyQuadTarget> getcompletedstatus(Integer project, Integer financial) {
+		// TODO Auto-generated method stub
+		return quarterlyTargetDao.getcompletedstatus(project, financial);
+	}
 	
 	
 }

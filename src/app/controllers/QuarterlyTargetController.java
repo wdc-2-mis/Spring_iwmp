@@ -48,44 +48,55 @@ public class QuarterlyTargetController {
 	HttpSession session;
 	
 	@RequestMapping(value = "/quadtarget", method = RequestMethod.GET)
-	public ModelAndView quadtarget(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		 session = request.getSession(true);
-		 String project = request.getParameter("project");
-		 String financial = request.getParameter("financial");
-		 List<WdcpmksyMQuadIndicators>indicators = null;
-		 LinkedHashMap<Integer,List<WdcpmksyMQuadIndicators>>quadTar = null;
-		 LinkedHashMap<Integer,List<WdcpmksyMQuadIndicators>> data = new LinkedHashMap<Integer,List<WdcpmksyMQuadIndicators>>();
-		
-        if(session!=null && session.getAttribute("loginID")!=null) {
-        	int regId = (int)session.getAttribute("regId"); 
-        	mav = new ModelAndView("quarterlytarget");
-        	
-        	if(project!= null && financial!=null) {
-        		
-        		quadTar = quarterlyTargetService.getAnnualTargetData(Integer.parseInt(project), Integer.parseInt(financial));
-        		mav.addObject("QuadTarget", quadTar);
-        		indicators = quarterlyTargetService.getindicatorsdata(Integer.parseInt(project), Integer.parseInt(financial));
-        	}
-        	
-        	mav.addObject("projectList",  projectMasterService.getProjectByRegId(regId));
-        	//mav.addObject("quadList", quarterlyTargetService.getQuarterList());
-        	if(financial != null) {
-        	mav.addObject("financialYear", physicalActionPlanService.getFinYearProjectWise(Integer.parseInt(project)));
-        	}
-        	mav.addObject("Target", quarterlyTargetService.getTargetData());
-        	mav.addObject("project", project);
-        	mav.addObject("financial", financial);
-        	mav.addObject("indi", indicators);
-        	
-        }
-        else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-			
-		}
-		return mav; 
+	public ModelAndView quadTarget(HttpServletRequest request) {
+	    ModelAndView mav = new ModelAndView();
+	    HttpSession session = request.getSession(false);  // Avoids creating a new session unnecessarily
+
+	    if (session != null && session.getAttribute("loginID") != null) {
+	        try {
+	            int regId = (int) session.getAttribute("regId");
+	            mav.setViewName("quarterlytarget");
+
+	            // Parse and validate input parameters
+	            String projectParam = request.getParameter("project");
+	            String financialParam = request.getParameter("financial");
+	            Integer project = projectParam != null ? Integer.parseInt(projectParam) : null;
+	            Integer financial = financialParam != null ? Integer.parseInt(financialParam) : null;
+
+	            // Fetch data if project and financial parameters are provided
+	            if (project != null && financial != null) {
+	                LinkedHashMap<Integer, List<WdcpmksyMQuadIndicators>> quadTar = 
+	                    quarterlyTargetService.getAnnualTargetData(project, financial);
+	                List<WdcpmksyMQuadIndicators> indicators = 
+	                    quarterlyTargetService.getindicatorsdata(project, financial);
+	                List<WdcpmksyQuadTarget> checkstatus = 
+	                    quarterlyTargetService.getcompletedstatus(project, financial);
+                    
+	                 mav.addObject("QuadTarget", quadTar);
+	                mav.addObject("checkstatus", checkstatus.size());
+	                mav.addObject("indi", indicators);
+	                mav.addObject("financialYear", 
+	                    physicalActionPlanService.getFinYearProjectWise(project));
+	            }
+
+	            // Always add these attributes, regardless of specific project/financial parameters
+	            mav.addObject("projectList", projectMasterService.getProjectByRegId(regId));
+	            mav.addObject("Target", quarterlyTargetService.getTargetData());
+	            mav.addObject("project", projectParam);
+	            mav.addObject("financial", financialParam);
+
+	        } catch (NumberFormatException e) {
+	            mav.setViewName("error");
+	            mav.addObject("errorMessage", "Invalid project or financial year format.");
+	        }
+	    } else {
+	        mav.setViewName("login");
+	        mav.addObject("login", new Login());
+	    }
+
+	    return mav;
 	}
+
 	@RequestMapping(value="/getFinYearProjWise", method = RequestMethod.POST)
 	@ResponseBody
 	public LinkedHashMap<Integer,String> getFinYearProjectWise(HttpServletRequest request, HttpServletResponse response,@RequestParam(value ="projId") Integer projectId)

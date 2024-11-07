@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import app.PfmsTreasureBean;
 import app.TargetAchievementQuarterBean;
 import app.bean.PrayasAchievementBean;
+import app.bean.reports.QuarterlyTargetBean;
 import app.dao.reports.TargetAchievementQuarterDao;
 import app.model.IwmpMFinYear;
 import app.model.IwmpMMonth;
@@ -82,7 +83,8 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	@Value("${getdistmonthachdata}") 
 	String getdistmonthachdata;
 	
-	
+	@Value("${getquarttargetdata}") 
+	String getquarttargetdata;
 	
 	@Override
 	public List<IwmpMFinYear> getFinancialYearonward21() {
@@ -604,7 +606,40 @@ return result;
         return result;
 	}	
 	
-	
+	@Override
+	public List<QuarterlyTargetBean> fetchquartargetrpt(Integer userState, Integer year) {
+	    List<QuarterlyTargetBean> result = new ArrayList<>();
+	    Transaction tx = null; 
+	    try (Session session = sessionFactory.getCurrentSession()) {
+	        tx = session.beginTransaction(); 
+
+	        String hql = getquarttargetdata;
+	       
+	        SQLQuery query;
+	             query = session.createSQLQuery(hql);
+	            query.setInteger("state", userState);
+		        query.setInteger("finyear", year);
+	       
+	        
+	        query.setResultTransformer(Transformers.aliasToBean(QuarterlyTargetBean.class));
+
+	        result = query.list();
+
+	        tx.commit(); 
+	    } catch (HibernateException e) {
+	        if (tx != null) {
+	            tx.rollback(); 
+	        }
+	        System.err.println("Hibernate error");
+	        e.printStackTrace();
+	    } catch (Exception ex) {
+	        if (tx != null) {
+	            tx.rollback(); // Rollback on any other exceptions
+	        }
+	        ex.printStackTrace();
+	    }
+	    return result;
+	}
 	
 	
 
