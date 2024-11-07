@@ -43,9 +43,9 @@ public class AdditionalBroughtFarmerCropAreaServiceImpl implements AdditionalBro
 	@Override
 	public String saveAdditionalBroughtFarmerCropArea(Integer projId, Integer month, Integer year,
 			BigDecimal diversified, BigDecimal chnagesingle, BigDecimal farmer, BigDecimal changecorp, Character status,
-			String loginId, Integer additionalid, String atype) {
+			String loginId, Integer additionalid, String atype, BigDecimal pulses, BigDecimal oilseeds) {
 		// TODO Auto-generated method stub
-		return dao.saveAdditionalBroughtFarmerCropArea(projId, month, year, diversified, chnagesingle, farmer, changecorp, status, loginId, additionalid, atype);
+		return dao.saveAdditionalBroughtFarmerCropArea(projId, month, year, diversified, chnagesingle, farmer, changecorp, status, loginId, additionalid, atype, pulses, oilseeds);
 	}
 
 

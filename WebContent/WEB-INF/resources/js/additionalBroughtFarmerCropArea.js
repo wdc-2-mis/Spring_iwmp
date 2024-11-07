@@ -14,6 +14,8 @@ $(function(){
 		$('#chnagesingle').val('');
 		$('#farmer').val('');
 		$('#changecorp').val('');
+		$('#pulses').val('');
+		$('#oilseeds').val('');
 		
 		if($gType==='fy')
 		{
@@ -75,14 +77,6 @@ $(function(){
 				}
 			}
 		});
-		
-		
-		
-		
-		
-		
-		
-		
 				
 		});
 
@@ -135,6 +129,18 @@ $(function(){
 					$('#chnagesingle').focus();
 					return false;
 			}
+			if($('#pulses').val()==='')
+			{
+				alert('please fill Increase in Pulses Area');
+				$('#pulses').focus();
+				return false;
+			}
+			if($('#oilseeds').val()==='')
+			{
+				alert('please fill Increase in Oilseeds Area');
+				$('#oilseeds').focus();
+				return false;
+			}
 		}
 		
 		if($('#groupType').val()==='fy')
@@ -153,7 +159,7 @@ $(function(){
 			}
 		}				
         
-        if (confirm('Are you sure to wants to Save this Record ?')) 
+        if (confirm('Do you want to Save this Record ?')) 
         {
 			$project = $('#project').val();
 			$type=$('#groupType').val();
@@ -165,6 +171,8 @@ $(function(){
 			$changecorp = $('#changecorp').val();
 			$status = 'D';
 			$additional_brought_id=$('#additional_brought_id').val();
+			$pulses = $('#pulses').val();
+			$oilseeds = $('#oilseeds').val();
 		
 			if($month == null || $month =='')
 			{
@@ -190,11 +198,19 @@ $(function(){
 			{
 				$additional_brought_id = 0;
 			}
-		
+			if($pulses == null || $pulses =='')
+			{
+				$pulses = 0;
+			}
+			if($oilseeds == null || $oilseeds =='')
+			{
+				$oilseeds = 0;
+			}
+									
 		$.ajax({ 
 			url:"saveAdditionalBroughtFarmerCropArea",
             type: "post", 
-			data:{projId:$project, month:$month, year:$financial, diversified:$diversified, chnagesingle:$chnagesingle, farmer:$farmer, changecorp:$changecorp, status:$status, additionalid:$additional_brought_id, atype:$type}, 
+			data:{projId:$project, month:$month, year:$financial, diversified:$diversified, chnagesingle:$chnagesingle, farmer:$farmer, changecorp:$changecorp, status:$status, additionalid:$additional_brought_id, atype:$type, pulses:$pulses, oilseeds:$oilseeds}, 
             error:function(xhr,status,er){
                 console.log(er);
             },
@@ -356,6 +372,9 @@ $(function(){
 								$('#diversified').val(data[key].diversified); 
 								$('#chnagesingle').val(data[key].chnagesingle); 
 								$('.complete').removeClass('d-none');
+								
+								$('#pulses').val(data[key].pulses); 
+								$('#oilseeds').val(data[key].oilseeds); 
 							}
 					}
 				}
@@ -364,6 +383,9 @@ $(function(){
 						$('#diversified').val(''); 
 						$('#chnagesingle').val('');
 						$('.complete').addClass('d-none');
+						
+						$('#pulses').val(''); 
+						$('#oilseeds').val(''); 
 				}
 				
 				}
@@ -389,6 +411,8 @@ $(function(){
 								$('#additional_brought_id').val(data[key].additional_brought_id); 
 								$('#diversified').val(data[key].diversified); 
 								$('#chnagesingle').val(data[key].chnagesingle); 
+								$('#pulses').val(data[key].pulses); 
+								$('#oilseeds').val(data[key].oilseeds); 
 								$('.complete').addClass('d-none');
 								$('.draft').addClass('d-none');
 								$('.error').css("background-color","rgb(123 144 57)");
@@ -399,6 +423,7 @@ $(function(){
 				}
 				else{
 					$('.draft').removeClass('d-none');
+				//	$('.error').addClass('d-none');
 				}
 				}
 			});

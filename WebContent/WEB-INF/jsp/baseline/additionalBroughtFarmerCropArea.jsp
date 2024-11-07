@@ -158,6 +158,14 @@ function checkValue(temp) {
 			<td width="40%"><b> Area brought from no crop/single crop to single/multiple crop (in ha.)</b></td>
 			<td>  <input type="text" id="chnagesingle" name="chnagesingle"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  /></td>
 		</tr>
+		<tr class="d-none montt">
+			<td width="40%"><b>Increase in Pulses Area</b></td>
+			<td><input type="text" id="pulses" name="pulses" autocomplete = "off" onfocusin="decimalToFourPlace(event)" /></td>
+		</tr>
+		<tr class="d-none montt">
+			<td width="40%"><b> Increase in Oilseeds Area</b></td>
+			<td>  <input type="text" id="oilseeds" name="oilseeds"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  /></td>
+		</tr>
 		<tr class="d-none trk">
 			<td width="40%"><b>Change in Farmer Income (in %)</b></td>
 			<td><input type="text" id="farmer" name="farmer" autocomplete = "off" onfocusin="decimalToFourPlace(event)"  /></td>
@@ -238,6 +246,8 @@ function checkValue(temp) {
                         <th align="center" width="8">Area brought from no crop/single crop to single/multiple crop</th>
                         <th align="center" width="8">Change in Farmer Income</th> 
                         <th align="center" width="8">Change in Cropped Area</th>
+                        <th align="center" width="8">Increase in Pulses Area</th> 
+                        <th align="center" width="8">Increase in Oilseeds Area</th>
                		</tr>	</thead>
                	<tbody>	
                		<tr>
@@ -250,6 +260,8 @@ function checkValue(temp) {
 	               		<th align="center"><b> 7 </b></th>
 	               		<th align="center"><b> 8 </b></th>
 	               		<th align="center"><b> 9 </b></th>
+	               		<th align="center"><b> 10 </b></th>
+	               		<th align="center"><b> 11 </b></th>
                		</tr><c:set var="proj" value="" />
                		<c:set var="fin" value="" />
 						<c:forEach items="${complete}" var="dataV" varStatus="count">
@@ -292,6 +304,8 @@ function checkValue(temp) {
 								<td align="center"><c:out value='${dataV.chnagesingle}' /></td>
 								<td align="center"><c:out value='${dataV.farmer_income}' /></td>
 								<td align="center"><c:out value='${dataV.change_corp}' /></td>
+								<td align="center"><c:out value='${dataV.pulses}' /></td>
+								<td align="center"><c:out value='${dataV.oilseeds}' /></td>
 							</tr>
 						</c:forEach>
 					

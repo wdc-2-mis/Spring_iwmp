@@ -38,14 +38,15 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
     private String createdBy;
     private String updatedBy;
     private String achievType;
-   
+    private BigDecimal pulses;
+    private BigDecimal oilseeds;
     
    public WdcpmksyAdditionalBroughtFarmerCrop() {
    }
    public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId) {
        this.additionalBroughtId = additionalBroughtId;
    }
-   public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, IwmpMProject iwmpMProject, BigDecimal diversified,  BigDecimal chnagesingle, BigDecimal farmerIncome, BigDecimal changeCorp, Character status, Date createdOn, Date updatedOn, String requestIp, String createdBy, String updatedBy, String achievType) {
+   public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, IwmpMProject iwmpMProject, BigDecimal diversified,  BigDecimal chnagesingle, BigDecimal farmerIncome, BigDecimal changeCorp, Character status, Date createdOn, Date updatedOn, String requestIp, String createdBy, String updatedBy, String achievType, BigDecimal pulses, BigDecimal oilseeds) {
       this.additionalBroughtId = additionalBroughtId;
       this.iwmpMFinYear = iwmpMFinYear;
       this.iwmpMMonth = iwmpMMonth;
@@ -61,6 +62,8 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
       this.createdBy = createdBy;
       this.updatedBy = updatedBy;
       this.achievType=achievType;
+      this.pulses=pulses;
+      this.oilseeds=oilseeds;
    }
 
    @Id 
@@ -188,6 +191,22 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
 	}
 	public void setAchievType(String achievType) {
 		this.achievType = achievType;
+	}
+	
+	@Column(name="pulses", precision=20, scale=4)
+	public BigDecimal getPulses() {
+		return pulses;
+	}
+	public void setPulses(BigDecimal pulses) {
+		this.pulses = pulses;
+	}
+	
+	@Column(name="oilseeds", precision=20, scale=4)
+	public BigDecimal getOilseeds() {
+		return oilseeds;
+	}
+	public void setOilseeds(BigDecimal oilseeds) {
+		this.oilseeds = oilseeds;
 	}
 	
 	

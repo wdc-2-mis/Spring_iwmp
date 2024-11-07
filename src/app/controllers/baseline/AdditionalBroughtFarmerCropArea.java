@@ -122,13 +122,14 @@ public class AdditionalBroughtFarmerCropArea {
 	@ResponseBody
 	public String saveAdditionalBroughtFarmerCropArea(HttpServletRequest request, HttpServletResponse response, @RequestParam("projId") Integer projId, @RequestParam("month") Integer month,
 			@RequestParam("year") Integer year, @RequestParam("diversified") BigDecimal diversified, @RequestParam("chnagesingle") BigDecimal chnagesingle, @RequestParam("farmer") BigDecimal farmer,
-			@RequestParam("changecorp") BigDecimal changecorp, @RequestParam("status") Character status, @RequestParam("additionalid") Integer additionalid, @RequestParam("atype") String atype )
+			@RequestParam("changecorp") BigDecimal changecorp, @RequestParam("status") Character status, @RequestParam("additionalid") Integer additionalid, @RequestParam("atype") String atype,
+			@RequestParam("pulses") BigDecimal pulses, @RequestParam("oilseeds") BigDecimal oilseeds)
 	{
 		ModelAndView mav = new ModelAndView();
 		session = request.getSession(true);
 		String res = new String("fail");
 		if(session!=null && session.getAttribute("loginID")!=null) { 
-			res  = Ser.saveAdditionalBroughtFarmerCropArea(projId, month, year, diversified, chnagesingle, farmer, changecorp, status, session.getAttribute("loginID").toString(), additionalid, atype);
+			res  = Ser.saveAdditionalBroughtFarmerCropArea(projId, month, year, diversified, chnagesingle, farmer, changecorp, status, session.getAttribute("loginID").toString(), additionalid, atype, pulses, oilseeds);
 		}
 		return res;
 	}
@@ -179,8 +180,7 @@ public class AdditionalBroughtFarmerCropArea {
 		if(session!=null && session.getAttribute("loginID")!=null) 
 		{
 			Integer regid = Integer.parseInt(session.getAttribute("regId").toString());
-			
-				list=Ser.getAdditionalBroughtMonthComplt(project, atline, fyear, month);
+			list=Ser.getAdditionalBroughtMonthComplt(project, atline, fyear, month);
 		}
 		
 		return list; 

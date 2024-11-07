@@ -170,7 +170,7 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 	@Override
 	public String saveAdditionalBroughtFarmerCropArea(Integer projId, Integer month, Integer year,
 			BigDecimal diversified, BigDecimal chnagesingle, BigDecimal farmer, BigDecimal changecorp, Character status,
-			String loginId, Integer additionalid, String atype) 
+			String loginId, Integer additionalid, String atype, BigDecimal pulses, BigDecimal oilseeds) 
 	{
 		
 		Session session = sessionFactory.getCurrentSession();
@@ -251,7 +251,9 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 					 wdcdata.setCreatedBy(loginId);
 					 wdcdata.setCreatedOn(new Date());
 					 wdcdata.setRequestIp(ipAddr);
-					
+					 wdcdata.setPulses(pulses);
+					 wdcdata.setOilseeds(oilseeds);
+					 
 					 session.saveOrUpdate(wdcdata);
 					 res="success";
 				} 
