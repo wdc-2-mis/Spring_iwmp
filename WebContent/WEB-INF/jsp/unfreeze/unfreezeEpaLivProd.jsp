@@ -193,7 +193,7 @@ function completebsl()
 	<hr>
 	<div style="width: 100%;">
 		<c:if test="${head!=null}">
-			<c:if test="${head=='livelihood'}">
+			<c:if test="${head=='l'}">
 				<table id="tbleLivelihoodDetails">
 					<thead>
 						<tr>
@@ -253,7 +253,7 @@ function completebsl()
 				</table>
 			</c:if>
 			
-			<c:if test="${head=='production'}">
+			<c:if test="${head=='p'}">
 				<table id="tbleProductionDetails">
 					<thead>
 						<tr>
@@ -316,7 +316,7 @@ function completebsl()
 				</table>
 			</c:if>
 			
-			<c:if test="${head=='epa'}">
+			<c:if test="${head=='e'}">
 				<table id="tbleEPADetails" style="width: 100%;">
 					<thead>
 						<tr>

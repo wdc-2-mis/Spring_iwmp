@@ -24,5 +24,15 @@ public class UnfreezeEpaLivProdServiceImpl implements UnfreezeEpaLivProdService{
 	public boolean unfreezeEpaLivProdData(String[] actCode, String head) {
 		return elpdao.unfreezeEpaLivProdData(actCode, head);
 	}
+	
+	@Override
+	public List<UnfreezeEpaLivProdBean> getUnfreezeWorkIdEpaLivProd(Integer projid, String head, Integer act) {
+		return elpdao.getUnfreezeWorkIdEpaLivProd(projid, head, act);
+	}
+	
+	@Override
+	public boolean unfreezeWorkIdEpaLivProdData(String[] actCode, String head) {
+		return elpdao.unfreezeWorkIdEpaLivProdData(actCode, head);
+	}
 
 }
