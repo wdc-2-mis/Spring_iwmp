@@ -12,4 +12,6 @@ public interface PhysicalActionAchievementDao {
 	List<PhysicalActionAchievementBean> getPhysicalActionAchievementReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
 	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
 	LinkedHashMap<Integer, String> getYearForAchDashboard();
+	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseEPALivProdWorkReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear, String headType);
+	
 }

@@ -54,6 +54,33 @@ public class PhysicalActionAchievementDaoImpl implements PhysicalActionAchieveme
 	@Value("${activtiyWiseUptoPlanAchievWorkProj}")
 	String activtiyWiseUptoPlanAchievWorkProj;
 	
+	@Value("${activtiyWiseYrlyEpaWork}")
+	String activtiyWiseYrlyEpaWork;
+	
+	@Value("${distWiseYrlyEpaActWork}")
+	String distWiseYrlyEpaActWork;
+	
+	@Value("${projWiseYrlyEpaActWork}")
+	String projWiseYrlyEpaActWork;
+	
+	@Value("${activtiyWiseYrlyLivWork}")
+	String activtiyWiseYrlyLivWork;
+	
+	@Value("${distWiseYrlyLivActWork}")
+	String distWiseYrlyLivActWork;
+	
+	@Value("${projWiseYrlyLivActWork}")
+	String projWiseYrlyLivActWork;
+	
+	@Value("${activityWiseYrlyProdWork}")
+	String activityWiseYrlyProdWork;
+	
+	@Value("${distWiseYrlyProdActWork}")
+	String distWiseYrlyProdActWork;
+	
+	@Value("${projWiseYrlyProdActWork}")
+	String projWiseYrlyProdActWork;
+	
 	@Override
 	public LinkedHashMap<Integer, String> getYearForPhysicalActionAchievementReport(Integer pCode) {
 		// TODO Auto-generated method stub
@@ -229,6 +256,107 @@ public class PhysicalActionAchievementDaoImpl implements PhysicalActionAchieveme
 			ex.printStackTrace();
 		}
 		return map;
+	}
+
+	@Override
+	public List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseEPALivProdWorkReport(Integer stCode,
+			Integer distCode, Integer projId, Integer fromYear, String headType) {
+		
+		String getReport=null;
+		Session session = sessionFactory.getCurrentSession();
+		List<ActivityWiseUptoPlanAchieveWorkBean> list = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
+		SQLQuery query;
+		try {
+			session.beginTransaction();   
+			if (headType.equals("E")) {
+				if (distCode == 0) {
+					getReport = activtiyWiseYrlyEpaWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("stcd", stCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (distCode != 0 && projId == 0) {
+					getReport = distWiseYrlyEpaActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("distcd", distCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (projId != 0) {
+					getReport = projWiseYrlyEpaActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("projid", projId);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+			}
+			if (headType.equals("L")) {
+				if (distCode == 0) {
+					getReport = activtiyWiseYrlyLivWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("stcd", stCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (distCode != 0 && projId == 0) {
+					getReport = distWiseYrlyLivActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("distcd", distCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (projId != 0) {
+					getReport = projWiseYrlyLivActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("projid", projId);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+			}if (headType.equals("P")) {
+				if (distCode == 0) {
+					getReport = activityWiseYrlyProdWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("stcd", stCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (distCode != 0 && projId == 0) {
+					getReport = distWiseYrlyProdActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("distcd", distCode);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if (projId != 0) {
+					getReport = projWiseYrlyProdActWork;
+					query = session.createSQLQuery(getReport);
+					query.setInteger("projid", projId);
+					query.setInteger("finyr", fromYear);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+			}
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }

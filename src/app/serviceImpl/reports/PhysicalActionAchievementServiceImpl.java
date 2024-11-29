@@ -41,4 +41,11 @@ public class PhysicalActionAchievementServiceImpl implements PhysicalActionAchie
 		return dao.getYearForAchDashboard();
 	}
 
+	@Override
+	public List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseEPALivProdWorkReport(Integer stCode,
+			Integer distCode, Integer projId, Integer fromYear, String headType) {
+		// TODO Auto-generated method stub
+		return dao.getActivityWiseEPALivProdWorkReport(stCode, distCode, projId, fromYear, headType);
+	}
+
 }
