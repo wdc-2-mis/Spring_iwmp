@@ -162,12 +162,12 @@ public class ProfileController
 		String tbUName=null;
 		int his=0;
 		String captcha = request.getParameter("CAPTCHAcode");
-		if(app.util.Util.getCSRFflag(captcha, session, request) == false)
-		{
-			System.out.println("csrf error >>>>>>>>>>");
-			mav =  new ModelAndView("CSRFerror");
-		}
-		else {
+//		if(app.util.Util.getCSRFflag(captcha, session, request) == false)
+//		{
+//			System.out.println("csrf error >>>>>>>>>>");
+//			mav =  new ModelAndView("CSRFerror");
+//		}
+//		else {
 	//	String sutype=session.getAttribute("userType").toString().toUpperCase();
 		//String utype=request.getParameter("userType");
 		int j=0;
@@ -212,7 +212,7 @@ public class ProfileController
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}
-		}
+//		}
 		//mav.addObject("menu", menuController.getMenuUserId(request));
 		mav.addObject("loginId", session.getAttribute("loginID"));
 		
