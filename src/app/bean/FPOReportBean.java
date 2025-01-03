@@ -27,6 +27,17 @@ public class FPOReportBean {
 	private Integer no_of_farmer_associated;
 	private String status;
 	private String dept_org;
+	private int totalno;
+	
+	
+	
+	
+	public int getTotalno() {
+		return totalno;
+	}
+	public void setTotalno(int totalno) {
+		this.totalno = totalno;
+	}
 	public String getDept_org() {
 		return dept_org;
 	}
