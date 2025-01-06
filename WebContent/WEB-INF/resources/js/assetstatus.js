@@ -43,6 +43,7 @@ var date = day+'-'+month+'-'+today.getFullYear();
  
  	var yrdt1 = new Date();
 	var onGoingDate = new Date();
+	var crntDate = new Date($.datepicker.parseDate('dd-mm-yy', "10-01-"+today.getFullYear()));
  $(document).on('click', '#complete', function(e){ 
 	
 	var yrdt = '';
@@ -66,13 +67,14 @@ var date = day+'-'+month+'-'+today.getFullYear();
 					} else {
 						confirmAssignee = false;
 						cnt = 1;
-						if (key < mnth) {
+						if (key < mnth || (key >3 && mnth <4)) {
 							mnth = key;
 							yrdt = 20 + '' + data[key];
 						}
 					}
 				}
 			}
+//			alert('curntdate '+onGoingDate +' '+crntDate);
 			if (confirmAssignee) {
 				yrdt1 = 01 + "-" + 12 + "-" + yrdt;
 			} else {
