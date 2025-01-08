@@ -1,23 +1,21 @@
 package app.watershedyatra.model;
 
-import java.util.Date;
+import java.time.*;
 import javax.persistence.*;
 
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
-import app.model.master.IwmpGramPanchayat;
-import app.model.master.IwmpVillage;
 
 @Entity
-@Table(name = "watershed_yatra_village_level")
-public class WatershedYatraVillageLevel {
+@Table(name = "watershed_yatra_inauguaration", schema = "public")
+public class WatershedYatraInauguaration {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long watershedYatraId;
-
-    @Column(name = "st_code")
+    private Integer inauguarationId;
+	
+	@Column(name = "st_code")
     private Integer stCode;
 
     @Column(name = "dcode")
@@ -26,20 +24,11 @@ public class WatershedYatraVillageLevel {
     @Column(name = "bcode")
     private Integer bCode;
 
-    @Column(name = "gcode")
-    private Integer gCode;
+    @Column(name = "inauguaration_date")
+    private LocalDateTime inauguarationDate;
 
-    @Column(name = "vcode")
-    private Integer vCode;
-
-    @Column(name = "yatra_date1")
-    private Date yatraDate1;
-
-    @Column(name = "yatra_date2")
-    private Date yatraDate2;
-
-    @Column(name = "yatra_location")
-    private String yatraLocation;
+    @Column(name = "inauguaration_location")
+    private String inauguarationLocation;
 
     @Column(name = "male_participants")
     private Integer maleParticipants;
@@ -68,50 +57,23 @@ public class WatershedYatraVillageLevel {
     @Column(name = "gov_officials")
     private Integer govOfficials;
 
-    @Column(name = "no_of_ar_experience_people")
-    private Integer noOfArExperiencePeople;
+    @Column(name = "van_flag_off")
+    private Boolean vanFlagOff;
 
-    @Column(name = "ar_experience_path1")
-    private String arExperiencePath1;
+    @Column(name = "van_flag_path1")
+    private String vanFlagPath1;
 
-    @Column(name = "ar_experience_path2")
-    private String arExperiencePath2;
+    @Column(name = "van_flag_path2")
+    private String vanFlagPath2;
 
-    @Column(name = "bhumi_jal_sanrakshan")
-    private Boolean bhumiJalSanrakshan;
+    @Column(name = "theme_song")
+    private Boolean themeSong;
 
-    @Column(name = "bhumi_jal_sanrakshan_path1")
-    private String bhumiJalSanrakshanPath1;
+    @Column(name = "theme_song_path1")
+    private String themeSongPath1;
 
-    @Column(name = "bhumi_jal_sanrakshan_path2")
-    private String bhumiJalSanrakshanPath2;
-
-    @Column(name = "watershed_yatra_film")
-    private Boolean watershedYatraFilm;
-
-    @Column(name = "yatra_film_path1")
-    private String yatraFilmPath1;
-
-    @Column(name = "yatra_film_path2")
-    private String yatraFilmPath2;
-
-    @Column(name = "quiz_participants")
-    private Integer quizParticipants;
-
-    @Column(name = "quiz_participants_path1")
-    private String quizParticipantsPath1;
-
-    @Column(name = "quiz_participants_path2")
-    private String quizParticipantsPath2;
-
-    @Column(name = "cultural_activity")
-    private String culturalActivity;
-
-    @Column(name = "cultural_activity_path1")
-    private String culturalActivityPath1;
-
-    @Column(name = "cultural_activity_path2")
-    private String culturalActivityPath2;
+    @Column(name = "theme_song_path2")
+    private String themeSongPath2;
 
     @Column(name = "bhoomi_poojan_no_of_works")
     private Integer bhoomiPoojanNoOfWorks;
@@ -148,7 +110,7 @@ public class WatershedYatraVillageLevel {
 
     @Column(name = "shramdaan_path2")
     private String shramdaanPath2;
-    
+
     @Column(name = "plantation_area")
     private Integer plantationArea;
 
@@ -180,13 +142,13 @@ public class WatershedYatraVillageLevel {
     private String updatedBy;
 
     @Column(name = "updated_date")
-    private Date updatedDate;
+    private LocalDate updatedDate;
 
     @Column(name = "created_by")
     private String createdBy;
 
     @Column(name = "created_date")
-    private Date createdDate;
+    private LocalDate createdDate;
 
     @ManyToOne
     @JoinColumn(name = "st_code", referencedColumnName = "st_code", insertable = false, updatable = false)
@@ -199,22 +161,14 @@ public class WatershedYatraVillageLevel {
     @ManyToOne
     @JoinColumn(name = "bcode", referencedColumnName = "bcode", insertable = false, updatable = false)
     private IwmpBlock iwmpBlock;
-
-    @ManyToOne
-    @JoinColumn(name = "gcode", referencedColumnName = "gcode", insertable = false, updatable = false)
-    private IwmpGramPanchayat iwmpGramPanchayat;
-
-    @ManyToOne
-    @JoinColumn(name = "vcode", referencedColumnName = "vcode", insertable = false, updatable = false)
-    private IwmpVillage iwmpVillage;
     
     
-	public Long getWatershedYatraId() {
-		return watershedYatraId;
+	public Integer getInauguarationId() {
+		return inauguarationId;
 	}
 
-	public void setWatershedYatraId(Long watershedYatraId) {
-		this.watershedYatraId = watershedYatraId;
+	public void setInauguarationId(Integer inauguarationId) {
+		this.inauguarationId = inauguarationId;
 	}
 
 	public Integer getStCode() {
@@ -241,44 +195,20 @@ public class WatershedYatraVillageLevel {
 		this.bCode = bCode;
 	}
 
-	public Integer getgCode() {
-		return gCode;
+	public LocalDateTime getInauguarationDate() {
+		return inauguarationDate;
 	}
 
-	public void setgCode(Integer gCode) {
-		this.gCode = gCode;
+	public void setInauguarationDate(LocalDateTime inauguarationDate) {
+		this.inauguarationDate = inauguarationDate;
 	}
 
-	public Integer getvCode() {
-		return vCode;
+	public String getInauguarationLocation() {
+		return inauguarationLocation;
 	}
 
-	public void setvCode(Integer vCode) {
-		this.vCode = vCode;
-	}
-
-	public Date getYatraDate1() {
-		return yatraDate1;
-	}
-
-	public void setYatraDate1(Date yatraDate1) {
-		this.yatraDate1 = yatraDate1;
-	}
-
-	public Date getYatraDate2() {
-		return yatraDate2;
-	}
-
-	public void setYatraDate2(Date yatraDate2) {
-		this.yatraDate2 = yatraDate2;
-	}
-
-	public String getYatraLocation() {
-		return yatraLocation;
-	}
-
-	public void setYatraLocation(String yatraLocation) {
-		this.yatraLocation = yatraLocation;
+	public void setInauguarationLocation(String inauguarationLocation) {
+		this.inauguarationLocation = inauguarationLocation;
 	}
 
 	public Integer getMaleParticipants() {
@@ -353,124 +283,52 @@ public class WatershedYatraVillageLevel {
 		this.govOfficials = govOfficials;
 	}
 
-	public Integer getNoOfArExperiencePeople() {
-		return noOfArExperiencePeople;
+	public Boolean getVanFlagOff() {
+		return vanFlagOff;
 	}
 
-	public void setNoOfArExperiencePeople(Integer noOfArExperiencePeople) {
-		this.noOfArExperiencePeople = noOfArExperiencePeople;
+	public void setVanFlagOff(Boolean vanFlagOff) {
+		this.vanFlagOff = vanFlagOff;
 	}
 
-	public String getArExperiencePath1() {
-		return arExperiencePath1;
+	public String getVanFlagPath1() {
+		return vanFlagPath1;
 	}
 
-	public void setArExperiencePath1(String arExperiencePath1) {
-		this.arExperiencePath1 = arExperiencePath1;
+	public void setVanFlagPath1(String vanFlagPath1) {
+		this.vanFlagPath1 = vanFlagPath1;
 	}
 
-	public String getArExperiencePath2() {
-		return arExperiencePath2;
+	public String getVanFlagPath2() {
+		return vanFlagPath2;
 	}
 
-	public void setArExperiencePath2(String arExperiencePath2) {
-		this.arExperiencePath2 = arExperiencePath2;
+	public void setVanFlagPath2(String vanFlagPath2) {
+		this.vanFlagPath2 = vanFlagPath2;
 	}
 
-	public Boolean getBhumiJalSanrakshan() {
-		return bhumiJalSanrakshan;
+	public Boolean getThemeSong() {
+		return themeSong;
 	}
 
-	public void setBhumiJalSanrakshan(Boolean bhumiJalSanrakshan) {
-		this.bhumiJalSanrakshan = bhumiJalSanrakshan;
+	public void setThemeSong(Boolean themeSong) {
+		this.themeSong = themeSong;
 	}
 
-	public String getBhumiJalSanrakshanPath1() {
-		return bhumiJalSanrakshanPath1;
+	public String getThemeSongPath1() {
+		return themeSongPath1;
 	}
 
-	public void setBhumiJalSanrakshanPath1(String bhumiJalSanrakshanPath1) {
-		this.bhumiJalSanrakshanPath1 = bhumiJalSanrakshanPath1;
+	public void setThemeSongPath1(String themeSongPath1) {
+		this.themeSongPath1 = themeSongPath1;
 	}
 
-	public String getBhumiJalSanrakshanPath2() {
-		return bhumiJalSanrakshanPath2;
+	public String getThemeSongPath2() {
+		return themeSongPath2;
 	}
 
-	public void setBhumiJalSanrakshanPath2(String bhumiJalSanrakshanPath2) {
-		this.bhumiJalSanrakshanPath2 = bhumiJalSanrakshanPath2;
-	}
-
-	public Boolean getWatershedYatraFilm() {
-		return watershedYatraFilm;
-	}
-
-	public void setWatershedYatraFilm(Boolean watershedYatraFilm) {
-		this.watershedYatraFilm = watershedYatraFilm;
-	}
-
-	public String getYatraFilmPath1() {
-		return yatraFilmPath1;
-	}
-
-	public void setYatraFilmPath1(String yatraFilmPath1) {
-		this.yatraFilmPath1 = yatraFilmPath1;
-	}
-
-	public String getYatraFilmPath2() {
-		return yatraFilmPath2;
-	}
-
-	public void setYatraFilmPath2(String yatraFilmPath2) {
-		this.yatraFilmPath2 = yatraFilmPath2;
-	}
-
-	public Integer getQuizParticipants() {
-		return quizParticipants;
-	}
-
-	public void setQuizParticipants(Integer quizParticipants) {
-		this.quizParticipants = quizParticipants;
-	}
-
-	public String getQuizParticipantsPath1() {
-		return quizParticipantsPath1;
-	}
-
-	public void setQuizParticipantsPath1(String quizParticipantsPath1) {
-		this.quizParticipantsPath1 = quizParticipantsPath1;
-	}
-
-	public String getQuizParticipantsPath2() {
-		return quizParticipantsPath2;
-	}
-
-	public void setQuizParticipantsPath2(String quizParticipantsPath2) {
-		this.quizParticipantsPath2 = quizParticipantsPath2;
-	}
-
-	public String getCulturalActivity() {
-		return culturalActivity;
-	}
-
-	public void setCulturalActivity(String culturalActivity) {
-		this.culturalActivity = culturalActivity;
-	}
-
-	public String getCulturalActivityPath1() {
-		return culturalActivityPath1;
-	}
-
-	public void setCulturalActivityPath1(String culturalActivityPath1) {
-		this.culturalActivityPath1 = culturalActivityPath1;
-	}
-
-	public String getCulturalActivityPath2() {
-		return culturalActivityPath2;
-	}
-
-	public void setCulturalActivityPath2(String culturalActivityPath2) {
-		this.culturalActivityPath2 = culturalActivityPath2;
+	public void setThemeSongPath2(String themeSongPath2) {
+		this.themeSongPath2 = themeSongPath2;
 	}
 
 	public Integer getBhoomiPoojanNoOfWorks() {
@@ -649,11 +507,11 @@ public class WatershedYatraVillageLevel {
 		this.updatedBy = updatedBy;
 	}
 
-	public Date getUpdatedDate() {
+	public LocalDate getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(LocalDate updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -665,11 +523,11 @@ public class WatershedYatraVillageLevel {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedDate() {
+	public LocalDate getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
 
@@ -696,22 +554,6 @@ public class WatershedYatraVillageLevel {
 	public void setIwmpBlock(IwmpBlock iwmpBlock) {
 		this.iwmpBlock = iwmpBlock;
 	}
-
-	public IwmpGramPanchayat getIwmpGramPanchayat() {
-		return iwmpGramPanchayat;
-	}
-
-	public void setIwmpGramPanchayat(IwmpGramPanchayat iwmpGramPanchayat) {
-		this.iwmpGramPanchayat = iwmpGramPanchayat;
-	}
-
-	public IwmpVillage getIwmpVillage() {
-		return iwmpVillage;
-	}
-
-	public void setIwmpVillage(IwmpVillage iwmpVillage) {
-		this.iwmpVillage = iwmpVillage;
-	}
     
-    
+
 }
