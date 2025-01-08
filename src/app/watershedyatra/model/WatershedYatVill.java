@@ -11,7 +11,7 @@ import app.model.master.IwmpVillage;
 
 @Entity
 @Table(name = "watershed_yatra_village_level")
-public class WatershedYatraVillageLevel {
+public class WatershedYatVill {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
