@@ -1,8 +1,13 @@
 package app.watershedyatra.service;
 
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+
+import app.watershedyatra.bean.NodalOfficerBean;
 
 
 @Service("WatershedYatraService")
@@ -15,5 +20,13 @@ public interface WatershedYatraService {
 	LinkedHashMap<String, Integer> getWatershedYatraGPs(Integer blkCode);
 	
 	LinkedHashMap<String, Integer> getWatershedYatraVillage(Integer gpCode);
+	
+	String saveNodalOfficerLMS(String level, String state, Integer district, Integer block, String name, 
+			String designation, String mob, String email, HttpSession session);
+	
+	List<NodalOfficerBean> getDraftListofNodalOfficer(Integer stcd);
+	
+	String completeApproveNodalOfficer(List<Integer>  assetid, String userid);
+	String deleteApproveNodalOfficer(List<Integer>  assetid, String userid);
 
 }

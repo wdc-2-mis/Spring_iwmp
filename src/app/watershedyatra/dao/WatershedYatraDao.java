@@ -1,6 +1,11 @@
 package app.watershedyatra.dao;
 
 import java.util.LinkedHashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import app.watershedyatra.bean.NodalOfficerBean;
 
 public interface WatershedYatraDao {
 	
@@ -9,5 +14,12 @@ public interface WatershedYatraDao {
 	
 	LinkedHashMap<String, Integer> getWatershedYatraGPs(Integer blkCode);
 	LinkedHashMap<String, Integer> getWatershedYatraVillage(Integer gpCode);
+	
+	String saveNodalOfficerLMS(String level, String state, Integer district, Integer block, String name, 
+			String designation, String mob, String email, HttpSession session);
+	
+	List<NodalOfficerBean> getDraftListofNodalOfficer(Integer stcd);
+	String completeApproveNodalOfficer(List<Integer>  assetid, String userid);
+	String deleteApproveNodalOfficer(List<Integer>  assetid, String userid);
 
 }

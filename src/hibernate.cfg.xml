@@ -85,6 +85,9 @@
         <mapping class="app.projectevaluation.model.WdcpmksyEcologicalPerspective"  />
         <mapping class="app.projectevaluation.model.WdcpmksyEquityAspect"  />
         <mapping class="app.projectevaluation.model.WdcpmksyProductionDetails"  />
+        <mapping class="app.watershedyatra.model.NodalOfficer"  />
+        <mapping class="app.watershedyatra.model.RoutePlanVanTravel"  />
+        
         
         
         

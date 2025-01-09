@@ -166,6 +166,9 @@ p:basename="classpath:messages/messages">
 	<bean name="WdcpmksyLivelihoodWorkid" class="app.model.project.WdcpmksyLivelihoodWorkid" />
 	<bean name="WdcpmksyEpaWorkid" class="app.model.project.WdcpmksyEpaWorkid" />
 	<bean name="EPAWorkIdBean" class="app.bean.reports.LivelihoodPrdouctionEPAWorkIdBean" />
+	<bean name="NodalOfficer" class="app.watershedyatra.model.NodalOfficer" />
+	<bean name="RoutePlanVanTravel" class="app.watershedyatra.model.RoutePlanVanTravel" />
+	
 	
 	
 	
