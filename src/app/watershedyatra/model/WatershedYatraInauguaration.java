@@ -11,158 +11,126 @@ import app.model.master.IwmpBlock;
 @Table(name = "watershed_yatra_inauguaration", schema = "public")
 public class WatershedYatraInauguaration {
 	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer inauguarationId;
 	
-	@Column(name = "st_code")
-    private Integer stCode;
-
-    @Column(name = "dcode")
-    private Integer dCode;
-
-    @Column(name = "bcode")
-    private Integer bCode;
-
-    @Column(name = "inauguaration_date")
+    private Integer inauguarationId;
     private LocalDateTime inauguarationDate;
-
-    @Column(name = "inauguaration_location")
     private String inauguarationLocation;
-
-    @Column(name = "male_participants")
     private Integer maleParticipants;
-
-    @Column(name = "female_participants")
     private Integer femaleParticipants;
-
-    @Column(name = "central_minister")
     private Integer centralMinister;
-
-    @Column(name = "state_minister")
     private Integer stateMinister;
-
-    @Column(name = "parliament_members")
     private Integer parliamentMembers;
-
-    @Column(name = "legislative_assembly_members")
     private Integer legislativeAssemblyMembers;
-
-    @Column(name = "legislative_council_members")
     private Integer legislativeCouncilMembers;
-
-    @Column(name = "other_public_representatives")
     private Integer otherPublicRepresentatives;
-
-    @Column(name = "gov_officials")
     private Integer govOfficials;
-
-    @Column(name = "van_flag_off")
     private Boolean vanFlagOff;
-
-    @Column(name = "van_flag_path1")
     private String vanFlagPath1;
-
-    @Column(name = "van_flag_path2")
     private String vanFlagPath2;
-
-    @Column(name = "theme_song")
     private Boolean themeSong;
-
-    @Column(name = "theme_song_path1")
     private String themeSongPath1;
-
-    @Column(name = "theme_song_path2")
     private String themeSongPath2;
-
-    @Column(name = "bhoomi_poojan_no_of_works")
     private Integer bhoomiPoojanNoOfWorks;
-
-    @Column(name = "bhoomi_poojan_cost_of_works")
     private Integer bhoomiPoojanCostOfWorks;
-
-    @Column(name = "bhoomi_poojan_path1")
     private String bhoomiPoojanPath1;
-
-    @Column(name = "bhoomi_poojan_path2")
     private String bhoomiPoojanPath2;
-
-    @Column(name = "lokarpan_no_of_works")
     private Integer lokarpanNoOfWorks;
-
-    @Column(name = "lokarpan_cost_of_works")
     private Integer lokarpanCostOfWorks;
-
-    @Column(name = "lokarpan_path1")
     private String lokarpanPath1;
-
-    @Column(name = "lokarpan_path2")
     private String lokarpanPath2;
-
-    @Column(name = "shramdaan_no_of_location")
     private Integer shramdaanNoOfLocation;
-
-    @Column(name = "shramdaan_no_of_participated_people")
     private Integer shramdaanNoOfParticipatedPeople;
-
-    @Column(name = "shramdaan_path1")
     private String shramdaanPath1;
-
-    @Column(name = "shramdaan_path2")
     private String shramdaanPath2;
-
-    @Column(name = "plantation_area")
     private Integer plantationArea;
-
-    @Column(name = "no_of_agro_forsetry")
     private Integer noOfAgroForsetry;
-
-    @Column(name = "plantation_path1")
     private String plantationPath1;
-
-    @Column(name = "plantation_path2")
     private String plantationPath2;
-
-    @Column(name = "award_distribution")
     private Integer awardDistribution;
-
-    @Column(name = "award_distribution_path1")
     private String awardDistributionPath1;
-
-    @Column(name = "award_distribution_path2")
     private String awardDistributionPath2;
-
-    @Column(name = "status")
     private String status;
-
-    @Column(name = "requested_ip")
     private String requestedIp;
-
-    @Column(name = "updated_by")
     private String updatedBy;
-
-    @Column(name = "updated_date")
     private LocalDate updatedDate;
-
-    @Column(name = "created_by")
     private String createdBy;
-
-    @Column(name = "created_date")
     private LocalDate createdDate;
-
-    @ManyToOne
-    @JoinColumn(name = "st_code", referencedColumnName = "st_code", insertable = false, updatable = false)
     private IwmpState iwmpState;
-
-    @ManyToOne
-    @JoinColumn(name = "dcode", referencedColumnName = "dcode", insertable = false, updatable = false)
     private IwmpDistrict iwmpDistrict;
-
-    @ManyToOne
-    @JoinColumn(name = "bcode", referencedColumnName = "bcode", insertable = false, updatable = false)
     private IwmpBlock iwmpBlock;
     
+    public WatershedYatraInauguaration() { }
+   
+    public WatershedYatraInauguaration(Integer inauguarationId) {
+    	this.inauguarationId = inauguarationId;
+    }
     
+	public WatershedYatraInauguaration(Integer inauguarationId,
+			LocalDateTime inauguarationDate, String inauguarationLocation, Integer maleParticipants,
+			Integer femaleParticipants, Integer centralMinister, Integer stateMinister, Integer parliamentMembers,
+			Integer legislativeAssemblyMembers, Integer legislativeCouncilMembers, Integer otherPublicRepresentatives,
+			Integer govOfficials, Boolean vanFlagOff, String vanFlagPath1, String vanFlagPath2, Boolean themeSong,
+			String themeSongPath1, String themeSongPath2, Integer bhoomiPoojanNoOfWorks,
+			Integer bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
+			Integer lokarpanNoOfWorks, Integer lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
+			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, String shramdaanPath1,
+			String shramdaanPath2, Integer plantationArea, Integer noOfAgroForsetry, String plantationPath1,
+			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
+			String awardDistributionPath2, String status, String requestedIp, String updatedBy, LocalDate updatedDate,
+			String createdBy, LocalDate createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
+			IwmpBlock iwmpBlock) {
+		this.inauguarationId = inauguarationId;
+		this.inauguarationDate = inauguarationDate;
+		this.inauguarationLocation = inauguarationLocation;
+		this.maleParticipants = maleParticipants;
+		this.femaleParticipants = femaleParticipants;
+		this.centralMinister = centralMinister;
+		this.stateMinister = stateMinister;
+		this.parliamentMembers = parliamentMembers;
+		this.legislativeAssemblyMembers = legislativeAssemblyMembers;
+		this.legislativeCouncilMembers = legislativeCouncilMembers;
+		this.otherPublicRepresentatives = otherPublicRepresentatives;
+		this.govOfficials = govOfficials;
+		this.vanFlagOff = vanFlagOff;
+		this.vanFlagPath1 = vanFlagPath1;
+		this.vanFlagPath2 = vanFlagPath2;
+		this.themeSong = themeSong;
+		this.themeSongPath1 = themeSongPath1;
+		this.themeSongPath2 = themeSongPath2;
+		this.bhoomiPoojanNoOfWorks = bhoomiPoojanNoOfWorks;
+		this.bhoomiPoojanCostOfWorks = bhoomiPoojanCostOfWorks;
+		this.bhoomiPoojanPath1 = bhoomiPoojanPath1;
+		this.bhoomiPoojanPath2 = bhoomiPoojanPath2;
+		this.lokarpanNoOfWorks = lokarpanNoOfWorks;
+		this.lokarpanCostOfWorks = lokarpanCostOfWorks;
+		this.lokarpanPath1 = lokarpanPath1;
+		this.lokarpanPath2 = lokarpanPath2;
+		this.shramdaanNoOfLocation = shramdaanNoOfLocation;
+		this.shramdaanNoOfParticipatedPeople = shramdaanNoOfParticipatedPeople;
+		this.shramdaanPath1 = shramdaanPath1;
+		this.shramdaanPath2 = shramdaanPath2;
+		this.plantationArea = plantationArea;
+		this.noOfAgroForsetry = noOfAgroForsetry;
+		this.plantationPath1 = plantationPath1;
+		this.plantationPath2 = plantationPath2;
+		this.awardDistribution = awardDistribution;
+		this.awardDistributionPath1 = awardDistributionPath1;
+		this.awardDistributionPath2 = awardDistributionPath2;
+		this.status = status;
+		this.requestedIp = requestedIp;
+		this.updatedBy = updatedBy;
+		this.updatedDate = updatedDate;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.iwmpState = iwmpState;
+		this.iwmpDistrict = iwmpDistrict;
+		this.iwmpBlock = iwmpBlock;
+	}
+	
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="inauguaration_id", unique=true, nullable=false)
 	public Integer getInauguarationId() {
 		return inauguarationId;
 	}
@@ -171,30 +139,7 @@ public class WatershedYatraInauguaration {
 		this.inauguarationId = inauguarationId;
 	}
 
-	public Integer getStCode() {
-		return stCode;
-	}
-
-	public void setStCode(Integer stCode) {
-		this.stCode = stCode;
-	}
-
-	public Integer getdCode() {
-		return dCode;
-	}
-
-	public void setdCode(Integer dCode) {
-		this.dCode = dCode;
-	}
-
-	public Integer getbCode() {
-		return bCode;
-	}
-
-	public void setbCode(Integer bCode) {
-		this.bCode = bCode;
-	}
-
+    @Column(name = "inauguaration_date")
 	public LocalDateTime getInauguarationDate() {
 		return inauguarationDate;
 	}
@@ -203,6 +148,7 @@ public class WatershedYatraInauguaration {
 		this.inauguarationDate = inauguarationDate;
 	}
 
+	@Column(name = "inauguaration_location")
 	public String getInauguarationLocation() {
 		return inauguarationLocation;
 	}
@@ -211,6 +157,7 @@ public class WatershedYatraInauguaration {
 		this.inauguarationLocation = inauguarationLocation;
 	}
 
+	@Column(name = "male_participants")
 	public Integer getMaleParticipants() {
 		return maleParticipants;
 	}
@@ -219,6 +166,7 @@ public class WatershedYatraInauguaration {
 		this.maleParticipants = maleParticipants;
 	}
 
+	@Column(name = "female_participants")
 	public Integer getFemaleParticipants() {
 		return femaleParticipants;
 	}
@@ -227,6 +175,7 @@ public class WatershedYatraInauguaration {
 		this.femaleParticipants = femaleParticipants;
 	}
 
+	@Column(name = "central_minister")
 	public Integer getCentralMinister() {
 		return centralMinister;
 	}
@@ -235,6 +184,7 @@ public class WatershedYatraInauguaration {
 		this.centralMinister = centralMinister;
 	}
 
+	@Column(name = "state_minister")
 	public Integer getStateMinister() {
 		return stateMinister;
 	}
@@ -243,6 +193,7 @@ public class WatershedYatraInauguaration {
 		this.stateMinister = stateMinister;
 	}
 
+	@Column(name = "parliament_members")
 	public Integer getParliamentMembers() {
 		return parliamentMembers;
 	}
@@ -251,6 +202,7 @@ public class WatershedYatraInauguaration {
 		this.parliamentMembers = parliamentMembers;
 	}
 
+	@Column(name = "legislative_assembly_members")
 	public Integer getLegislativeAssemblyMembers() {
 		return legislativeAssemblyMembers;
 	}
@@ -259,6 +211,7 @@ public class WatershedYatraInauguaration {
 		this.legislativeAssemblyMembers = legislativeAssemblyMembers;
 	}
 
+	@Column(name = "legislative_council_members")
 	public Integer getLegislativeCouncilMembers() {
 		return legislativeCouncilMembers;
 	}
@@ -267,6 +220,7 @@ public class WatershedYatraInauguaration {
 		this.legislativeCouncilMembers = legislativeCouncilMembers;
 	}
 
+	@Column(name = "other_public_representatives")
 	public Integer getOtherPublicRepresentatives() {
 		return otherPublicRepresentatives;
 	}
@@ -275,6 +229,7 @@ public class WatershedYatraInauguaration {
 		this.otherPublicRepresentatives = otherPublicRepresentatives;
 	}
 
+	@Column(name = "gov_officials")
 	public Integer getGovOfficials() {
 		return govOfficials;
 	}
@@ -283,6 +238,7 @@ public class WatershedYatraInauguaration {
 		this.govOfficials = govOfficials;
 	}
 
+	@Column(name = "van_flag_off")
 	public Boolean getVanFlagOff() {
 		return vanFlagOff;
 	}
@@ -291,6 +247,7 @@ public class WatershedYatraInauguaration {
 		this.vanFlagOff = vanFlagOff;
 	}
 
+	@Column(name = "van_flag_path1")
 	public String getVanFlagPath1() {
 		return vanFlagPath1;
 	}
@@ -299,6 +256,7 @@ public class WatershedYatraInauguaration {
 		this.vanFlagPath1 = vanFlagPath1;
 	}
 
+	 @Column(name = "van_flag_path2")
 	public String getVanFlagPath2() {
 		return vanFlagPath2;
 	}
@@ -307,6 +265,7 @@ public class WatershedYatraInauguaration {
 		this.vanFlagPath2 = vanFlagPath2;
 	}
 
+	@Column(name = "theme_song")
 	public Boolean getThemeSong() {
 		return themeSong;
 	}
@@ -315,6 +274,7 @@ public class WatershedYatraInauguaration {
 		this.themeSong = themeSong;
 	}
 
+	@Column(name = "theme_song_path1")
 	public String getThemeSongPath1() {
 		return themeSongPath1;
 	}
@@ -323,6 +283,7 @@ public class WatershedYatraInauguaration {
 		this.themeSongPath1 = themeSongPath1;
 	}
 
+	@Column(name = "theme_song_path2")
 	public String getThemeSongPath2() {
 		return themeSongPath2;
 	}
@@ -331,6 +292,7 @@ public class WatershedYatraInauguaration {
 		this.themeSongPath2 = themeSongPath2;
 	}
 
+	@Column(name = "bhoomi_poojan_no_of_works")
 	public Integer getBhoomiPoojanNoOfWorks() {
 		return bhoomiPoojanNoOfWorks;
 	}
@@ -339,6 +301,7 @@ public class WatershedYatraInauguaration {
 		this.bhoomiPoojanNoOfWorks = bhoomiPoojanNoOfWorks;
 	}
 
+	@Column(name = "bhoomi_poojan_cost_of_works")
 	public Integer getBhoomiPoojanCostOfWorks() {
 		return bhoomiPoojanCostOfWorks;
 	}
@@ -347,6 +310,7 @@ public class WatershedYatraInauguaration {
 		this.bhoomiPoojanCostOfWorks = bhoomiPoojanCostOfWorks;
 	}
 
+	@Column(name = "bhoomi_poojan_path1")
 	public String getBhoomiPoojanPath1() {
 		return bhoomiPoojanPath1;
 	}
@@ -355,6 +319,7 @@ public class WatershedYatraInauguaration {
 		this.bhoomiPoojanPath1 = bhoomiPoojanPath1;
 	}
 
+	@Column(name = "bhoomi_poojan_path2")
 	public String getBhoomiPoojanPath2() {
 		return bhoomiPoojanPath2;
 	}
@@ -363,6 +328,7 @@ public class WatershedYatraInauguaration {
 		this.bhoomiPoojanPath2 = bhoomiPoojanPath2;
 	}
 
+	@Column(name = "lokarpan_no_of_works")
 	public Integer getLokarpanNoOfWorks() {
 		return lokarpanNoOfWorks;
 	}
@@ -371,6 +337,7 @@ public class WatershedYatraInauguaration {
 		this.lokarpanNoOfWorks = lokarpanNoOfWorks;
 	}
 
+	@Column(name = "lokarpan_cost_of_works")
 	public Integer getLokarpanCostOfWorks() {
 		return lokarpanCostOfWorks;
 	}
@@ -379,6 +346,7 @@ public class WatershedYatraInauguaration {
 		this.lokarpanCostOfWorks = lokarpanCostOfWorks;
 	}
 
+	@Column(name = "lokarpan_path1")
 	public String getLokarpanPath1() {
 		return lokarpanPath1;
 	}
@@ -387,6 +355,7 @@ public class WatershedYatraInauguaration {
 		this.lokarpanPath1 = lokarpanPath1;
 	}
 
+	@Column(name = "lokarpan_path2")
 	public String getLokarpanPath2() {
 		return lokarpanPath2;
 	}
@@ -395,6 +364,7 @@ public class WatershedYatraInauguaration {
 		this.lokarpanPath2 = lokarpanPath2;
 	}
 
+	@Column(name = "shramdaan_no_of_location")
 	public Integer getShramdaanNoOfLocation() {
 		return shramdaanNoOfLocation;
 	}
@@ -403,6 +373,7 @@ public class WatershedYatraInauguaration {
 		this.shramdaanNoOfLocation = shramdaanNoOfLocation;
 	}
 
+	@Column(name = "shramdaan_no_of_participated_people")
 	public Integer getShramdaanNoOfParticipatedPeople() {
 		return shramdaanNoOfParticipatedPeople;
 	}
@@ -411,6 +382,7 @@ public class WatershedYatraInauguaration {
 		this.shramdaanNoOfParticipatedPeople = shramdaanNoOfParticipatedPeople;
 	}
 
+	@Column(name = "shramdaan_path1")
 	public String getShramdaanPath1() {
 		return shramdaanPath1;
 	}
@@ -419,6 +391,7 @@ public class WatershedYatraInauguaration {
 		this.shramdaanPath1 = shramdaanPath1;
 	}
 
+	@Column(name = "shramdaan_path2")
 	public String getShramdaanPath2() {
 		return shramdaanPath2;
 	}
@@ -427,6 +400,7 @@ public class WatershedYatraInauguaration {
 		this.shramdaanPath2 = shramdaanPath2;
 	}
 
+	@Column(name = "plantation_area")
 	public Integer getPlantationArea() {
 		return plantationArea;
 	}
@@ -435,6 +409,7 @@ public class WatershedYatraInauguaration {
 		this.plantationArea = plantationArea;
 	}
 
+	@Column(name = "no_of_agro_forsetry")
 	public Integer getNoOfAgroForsetry() {
 		return noOfAgroForsetry;
 	}
@@ -443,6 +418,7 @@ public class WatershedYatraInauguaration {
 		this.noOfAgroForsetry = noOfAgroForsetry;
 	}
 
+	@Column(name = "plantation_path1")
 	public String getPlantationPath1() {
 		return plantationPath1;
 	}
@@ -451,6 +427,7 @@ public class WatershedYatraInauguaration {
 		this.plantationPath1 = plantationPath1;
 	}
 
+	@Column(name = "plantation_path2")
 	public String getPlantationPath2() {
 		return plantationPath2;
 	}
@@ -459,6 +436,7 @@ public class WatershedYatraInauguaration {
 		this.plantationPath2 = plantationPath2;
 	}
 
+	@Column(name = "award_distribution")
 	public Integer getAwardDistribution() {
 		return awardDistribution;
 	}
@@ -467,6 +445,7 @@ public class WatershedYatraInauguaration {
 		this.awardDistribution = awardDistribution;
 	}
 
+	@Column(name = "award_distribution_path1")
 	public String getAwardDistributionPath1() {
 		return awardDistributionPath1;
 	}
@@ -475,6 +454,7 @@ public class WatershedYatraInauguaration {
 		this.awardDistributionPath1 = awardDistributionPath1;
 	}
 
+	@Column(name = "award_distribution_path2")
 	public String getAwardDistributionPath2() {
 		return awardDistributionPath2;
 	}
@@ -483,6 +463,7 @@ public class WatershedYatraInauguaration {
 		this.awardDistributionPath2 = awardDistributionPath2;
 	}
 
+	@Column(name = "status")
 	public String getStatus() {
 		return status;
 	}
@@ -491,6 +472,7 @@ public class WatershedYatraInauguaration {
 		this.status = status;
 	}
 
+	@Column(name = "requested_ip", length=20)
 	public String getRequestedIp() {
 		return requestedIp;
 	}
@@ -499,6 +481,7 @@ public class WatershedYatraInauguaration {
 		this.requestedIp = requestedIp;
 	}
 
+	@Column(name = "updated_by", length=25)
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
@@ -507,6 +490,7 @@ public class WatershedYatraInauguaration {
 		this.updatedBy = updatedBy;
 	}
 
+    @Column(name="updated_date")
 	public LocalDate getUpdatedDate() {
 		return updatedDate;
 	}
@@ -515,6 +499,7 @@ public class WatershedYatraInauguaration {
 		this.updatedDate = updatedDate;
 	}
 
+	@Column(name = "created_by", length=25)
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -523,6 +508,7 @@ public class WatershedYatraInauguaration {
 		this.createdBy = createdBy;
 	}
 
+    @Column(name = "created_date")
 	public LocalDate getCreatedDate() {
 		return createdDate;
 	}
@@ -531,6 +517,8 @@ public class WatershedYatraInauguaration {
 		this.createdDate = createdDate;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "st_code")
 	public IwmpState getIwmpState() {
 		return iwmpState;
 	}
@@ -539,6 +527,8 @@ public class WatershedYatraInauguaration {
 		this.iwmpState = iwmpState;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "dcode")
 	public IwmpDistrict getIwmpDistrict() {
 		return iwmpDistrict;
 	}
@@ -547,6 +537,8 @@ public class WatershedYatraInauguaration {
 		this.iwmpDistrict = iwmpDistrict;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "bcode")
 	public IwmpBlock getIwmpBlock() {
 		return iwmpBlock;
 	}
@@ -554,6 +546,6 @@ public class WatershedYatraInauguaration {
 	public void setIwmpBlock(IwmpBlock iwmpBlock) {
 		this.iwmpBlock = iwmpBlock;
 	}
-    
+
 
 }
