@@ -168,7 +168,7 @@ p:basename="classpath:messages/messages">
 	<bean name="EPAWorkIdBean" class="app.bean.reports.LivelihoodPrdouctionEPAWorkIdBean" />
 	<bean name="NodalOfficer" class="app.watershedyatra.model.NodalOfficer" />
 	<bean name="RoutePlanVanTravel" class="app.watershedyatra.model.RoutePlanVanTravel" />
-	
+	<bean name="WatershedYatraInauguaration" class="app.watershedyatra.model.WatershedYatraInauguaration" />
 	
 	
 	

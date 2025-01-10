@@ -87,7 +87,7 @@
         <mapping class="app.projectevaluation.model.WdcpmksyProductionDetails"  />
         <mapping class="app.watershedyatra.model.NodalOfficer"  />
         <mapping class="app.watershedyatra.model.RoutePlanVanTravel"  />
-        
+        <mapping class="app.watershedyatra.model.WatershedYatraInauguaration"  />
         
         
         
