@@ -25,7 +25,7 @@ public class RoutePlanVanTravel {
     private Timestamp date1;
     private String location2;
     private Timestamp date2;
-    private String status;
+    private Character status;
     private Date createdDate;
     private String createdBy;
     private String requestedIp;
@@ -41,7 +41,7 @@ public class RoutePlanVanTravel {
 	}
 	
 	public RoutePlanVanTravel(Integer routePlanId, IwmpState iwmpState,IwmpDistrict iwmpDistrict,IwmpBlock iwmpBlock, IwmpGramPanchayat iwmpGramPanchayat,Timestamp date1, Timestamp date2,
-			IwmpVillage iwmpVillage, String location1, String location2, String status, Date createdDate,String createdBy,String requestedIp,String updatedBy,Date updatedDate) {
+			IwmpVillage iwmpVillage, String location1, String location2, Character status, Date createdDate,String createdBy,String requestedIp,String updatedBy,Date updatedDate) {
 		
 		this.routePlanId=routePlanId;
 		this.iwmpState=iwmpState;
@@ -142,11 +142,11 @@ public class RoutePlanVanTravel {
 	}
 
 	@Column(name="status", length=1)
-	public String getStatus() {
+	public Character getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Character status) {
 		this.status = status;
 	}
 	@Temporal(TemporalType.DATE)
