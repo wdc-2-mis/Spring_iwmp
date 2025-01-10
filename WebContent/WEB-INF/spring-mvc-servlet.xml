@@ -169,6 +169,7 @@ p:basename="classpath:messages/messages">
 	<bean name="NodalOfficer" class="app.watershedyatra.model.NodalOfficer" />
 	<bean name="RoutePlanVanTravel" class="app.watershedyatra.model.RoutePlanVanTravel" />
 	<bean name="WatershedYatraInauguaration" class="app.watershedyatra.model.WatershedYatraInauguaration" />
+	<bean name="WatershedYatVill" class="app.watershedyatra.model.WatershedYatVill" />
 	
 	
 	

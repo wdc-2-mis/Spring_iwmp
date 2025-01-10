@@ -24,6 +24,8 @@ import javax.validation.constraints.Min;
 import app.model.master.IwmpBlock;
 import app.model.master.PfmsEatmisdataDetail;
 import app.watershedyatra.model.NodalOfficer;
+import app.watershedyatra.model.RoutePlanVanTravel;
+import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
 /**
@@ -76,6 +78,8 @@ public class IwmpDistrict  implements java.io.Serializable {
      private List<UserMap> userMaps;
      private Set<NodalOfficer> nodalOfficer = new HashSet<NodalOfficer>(0);
      private Set<WatershedYatraInauguaration> WatershedYatraInauguaration = new HashSet<WatershedYatraInauguaration>(0);
+     private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
+     private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
 
     public IwmpDistrict() {
     }
@@ -93,7 +97,7 @@ public class IwmpDistrict  implements java.io.Serializable {
     		String stateCode2001, Boolean distproj, String stateCode2011, String districtCode2001, String districtCode2011, String censusCodePortedData, 
     		String stateCodelgd, Integer districtCodelgd, String lgdCodePortedData, BigDecimal jalShakati, Set<IwmpMProject> iwmpMProjects, 
     		Set<IwmpBlock> iwmpBlocks, Set<IwmpActPlan> iwmpActPlans, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer, 
-    		Set<WatershedYatraInauguaration> WatershedYatraInauguaration) {
+    		Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<RoutePlanVanTravel> routePlanVanTravel) {
        this.dcode = dcode;
        this.iwmpState = iwmpState;
        this.distCode = distCode;
@@ -129,6 +133,8 @@ public class IwmpDistrict  implements java.io.Serializable {
        this.pfmsEatmisdataDetails = pfmsEatmisdataDetails;
        this.nodalOfficer=nodalOfficer;
        this.WatershedYatraInauguaration=WatershedYatraInauguaration;
+       this.watershedYatVill=watershedYatVill;
+       this.routePlanVanTravel=routePlanVanTravel;
     }
    
     @Id 
@@ -512,6 +518,26 @@ public class IwmpDistrict  implements java.io.Serializable {
 
 	public void setWatershedYatraInauguaration(Set<WatershedYatraInauguaration> watershedYatraInauguaration) {
 		this.WatershedYatraInauguaration = watershedYatraInauguaration;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpDistrict")
+	public Set<WatershedYatVill> getWatershedYatVill() {
+		return watershedYatVill;
+	}
+
+
+	public void setWatershedYatVill(Set<WatershedYatVill> watershedYatVill) {
+		this.watershedYatVill = watershedYatVill;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpDistrict")
+	public Set<RoutePlanVanTravel> getRoutePlanVanTravel() {
+		return routePlanVanTravel;
+	}
+
+
+	public void setRoutePlanVanTravel(Set<RoutePlanVanTravel> routePlanVanTravel) {
+		this.routePlanVanTravel = routePlanVanTravel;
 	}
     
     
