@@ -674,5 +674,85 @@ public class CommonFunctions {
 				style.setFont(font);
 				return style;
 		 }
+		 
+		 public String uploadFileforLMS(MultipartFile mfile,String filePath) throws Exception
+		 {
+				int mid=0, k=0;
+				String ext="", file_name = "", concatinate = ".";
+				try {
+						float size = mfile.getSize();
+						size = size / 1024;
+						if(size/1024 > 20)
+						{
+							return "File size should be less than 20 MB";
+						}
+						byte[] bytes = mfile.getBytes();
+						String s1 = new String(bytes);
+						if (s1 != null && !s1.equals(""))
+						s1 = s1.substring(0, 2);
+
+						if (s1.startsWith("mz") || s1.startsWith("MZ") || s1.startsWith("4d5a")
+							|| s1.startsWith("7f454c46") || s1.startsWith("7F454C46")
+							|| s1.startsWith("cafebabe") || s1.startsWith("CAFEBABE") 
+							|| s1.startsWith("feedface") || s1.startsWith("FEEDFACE")) 
+						{
+							return "Please select Only .jpg,.jpeg,.png, file for upload!"+"\\n file content exe/malware or Others";
+						}
+								
+						//filePath="D:\\CircularMessageAlert\\";
+						String fileName = mfile.getOriginalFilename();
+						
+						MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+					    String mimeType = fileTypeMap.getContentType(fileName);
+					    
+					  //  application/octet-stream
+						
+						Pattern p = Pattern.compile("[.]");
+					    Matcher matcher = p.matcher(fileName);
+					    while(matcher.find()) {
+					        k++;
+					    }
+					    if(k>1)
+					    	return "Please upload a valid file";
+						
+						if(mfile.isEmpty() || fileName.isEmpty())
+						{
+							return "Please upload a valid file";
+						}
+						File file = new File(filePath);
+						if (!file.exists()) 
+						{
+							file.mkdir();
+						}
+						mid = fileName.lastIndexOf(".");
+						ext = fileName.substring(mid + 1, fileName.length()); 
+						if ((ext.compareToIgnoreCase("") == 0) || (ext.compareToIgnoreCase("jpg") == 0)
+							|| (ext.compareToIgnoreCase("jpeg") == 0)
+							|| (ext.compareToIgnoreCase("png") == 0)) 
+						{
+							file_name = fileName;
+							file_name = file_name.concat(concatinate);
+							if (!file_name.equals("")) 
+							{
+								File fileToCreate = new File(filePath, file_name);
+								if (!fileToCreate.exists()) 
+								{
+									BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileToCreate));
+									outputStream.write(bytes);
+									outputStream.close();
+								}
+							}
+							return "success";
+						}
+						else {
+								return "Upload correct file.";
+						}	
+				} 
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+					return "error";
+				}	
+			}
 		
 }
