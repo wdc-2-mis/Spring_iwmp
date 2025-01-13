@@ -1,6 +1,8 @@
 package app.watershedyatra.model;
 
 import java.time.*;
+import java.util.Date;
+
 import javax.persistence.*;
 
 import app.model.IwmpDistrict;
@@ -13,7 +15,7 @@ public class WatershedYatraInauguaration {
 	
 	
     private Integer inauguarationId;
-    private LocalDateTime inauguarationDate;
+    private Date inauguarationDate;
     private String inauguarationLocation;
     private Integer maleParticipants;
     private Integer femaleParticipants;
@@ -52,9 +54,9 @@ public class WatershedYatraInauguaration {
     private String status;
     private String requestedIp;
     private String updatedBy;
-    private LocalDate updatedDate;
+    private Date updatedDate;
     private String createdBy;
-    private LocalDate createdDate;
+    private Date createdDate;
     private IwmpState iwmpState;
     private IwmpDistrict iwmpDistrict;
     private IwmpBlock iwmpBlock;
@@ -66,7 +68,7 @@ public class WatershedYatraInauguaration {
     }
     
 	public WatershedYatraInauguaration(Integer inauguarationId,
-			LocalDateTime inauguarationDate, String inauguarationLocation, Integer maleParticipants,
+			Date inauguarationDate, String inauguarationLocation, Integer maleParticipants,
 			Integer femaleParticipants, Integer centralMinister, Integer stateMinister, Integer parliamentMembers,
 			Integer legislativeAssemblyMembers, Integer legislativeCouncilMembers, Integer otherPublicRepresentatives,
 			Integer govOfficials, Boolean vanFlagOff, String vanFlagPath1, String vanFlagPath2, Boolean themeSong,
@@ -76,8 +78,8 @@ public class WatershedYatraInauguaration {
 			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, String shramdaanPath1,
 			String shramdaanPath2, Integer plantationArea, Integer noOfAgroForsetry, String plantationPath1,
 			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
-			String awardDistributionPath2, String status, String requestedIp, String updatedBy, LocalDate updatedDate,
-			String createdBy, LocalDate createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
+			String awardDistributionPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
+			String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
 			IwmpBlock iwmpBlock) {
 		this.inauguarationId = inauguarationId;
 		this.inauguarationDate = inauguarationDate;
@@ -140,11 +142,11 @@ public class WatershedYatraInauguaration {
 	}
 
     @Column(name = "inauguaration_date")
-	public LocalDateTime getInauguarationDate() {
+	public Date getInauguarationDate() {
 		return inauguarationDate;
 	}
 
-	public void setInauguarationDate(LocalDateTime inauguarationDate) {
+	public void setInauguarationDate(Date inauguarationDate) {
 		this.inauguarationDate = inauguarationDate;
 	}
 
@@ -490,12 +492,13 @@ public class WatershedYatraInauguaration {
 		this.updatedBy = updatedBy;
 	}
 
-    @Column(name="updated_date")
-	public LocalDate getUpdatedDate() {
+	@Temporal(TemporalType.DATE)
+    @Column(name="updated_date", length=13)
+	public Date getUpdatedDate() {
 		return updatedDate;
 	}
 
-	public void setUpdatedDate(LocalDate updatedDate) {
+	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -508,12 +511,13 @@ public class WatershedYatraInauguaration {
 		this.createdBy = createdBy;
 	}
 
-    @Column(name = "created_date")
-	public LocalDate getCreatedDate() {
+	@Temporal(TemporalType.DATE)
+    @Column(name="created_date", length=13)
+	public Date getCreatedDate() {
 		return createdDate;
 	}
 
-	public void setCreatedDate(LocalDate createdDate) {
+	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
 
