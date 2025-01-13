@@ -396,15 +396,15 @@ input[type=text] {
      	</tr>
      	<tr>
      		<td>Flag off of Van</td>
-     		<td><input type="radio" id="flagOffYes" name="flagOff" value="${true}">Yes</td>
-     		<td><input type="radio" id="flagOffNo" name="flagOff" value="${false}">No</td>
+     		<td><input type="radio" id="flagOffYes" name="flagOff" value="true">Yes</td>
+     		<td><input type="radio" id="flagOffNo" name="flagOff" value="false">No</td>
      		<td>Upload Photos<br><input type="file" id="flagOffPhoto1" name="flagOffPhoto1"><br/>
      		<input type="file" id="flagOffPhoto2" name="flagOffPhoto2"></td>
      	</tr>
      	<tr>
      		<td>Launch of Theme Song</td>
-     		<td><input type="radio" id="themeSongYes" name="themeSong" value="${true}">Yes</td>
-     		<td><input type="radio" id="themeSongNo" name="themeSong" value="${false}">No</td>
+     		<td><input type="radio" id="themeSongYes" name="themeSong" value="true">Yes</td>
+     		<td><input type="radio" id="themeSongNo" name="themeSong" value="false">No</td>
      		<td>Upload Photos<br><input type="file" id="themeSongPhoto1" name="themeSongPhoto1"><br/>
      		<input type="file" id="themeSongPhoto2" name="themeSongPhoto2"></td>
      	</tr>
