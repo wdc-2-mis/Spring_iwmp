@@ -40,8 +40,8 @@ function validation()
 	$govOfficials = $('#govOfficials').val();
 	
 	$arExperience=$('#arExperience').val();
-	$shapathYes = $('input[name="shapathYes"]:checked').val() === 'true';
-	$FilmYes = $('input[name="FilmYes"]:checked').val() === 'true';
+	$shapathYes = $('input[name="shapathYes"]:checked').val();
+	$FilmYes = $('input[name="FilmYes"]:checked').val();
 	$quizParticipants = $('#quizParticipants').val();
 	$culturalActivity = $('#culturalActivity').val();
 	$bhoomiWorks = $('#bhoomiWorks').val();
