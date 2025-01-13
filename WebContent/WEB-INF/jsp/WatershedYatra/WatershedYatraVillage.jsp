@@ -40,8 +40,8 @@ function validation()
 	$govOfficials = $('#govOfficials').val();
 	
 	$arExperience=$('#arExperience').val();
-	$shapathYes = $('input[name="shapathYes"]:checked').val() === 'true';
-	$FilmYes = $('input[name="FilmYes"]:checked').val() === 'true';
+	$shapathYes = $('input[name="shapathYes"]:checked').val();
+	$FilmYes = $('input[name="FilmYes"]:checked').val();
 	$quizParticipants = $('#quizParticipants').val();
 	$culturalActivity = $('#culturalActivity').val();
 	$bhoomiWorks = $('#bhoomiWorks').val();
@@ -219,12 +219,129 @@ function validation()
 		$('#nofagrohorti').focus();
 		return false;
 	}
+	
 	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
 		alert('Please enter the Number of Watershed Margdarshaks');
 		$('#noOfwatershed').focus();
 		return false;
 	}
 
+	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
+		alert('Please enter the Number of Watershed Margdarshaks');
+		$('#noOfwatershed').focus();
+		return false;
+	}
+	
+	if ($arExperiencephoto1 === '' || typeof $arExperiencephoto1 === 'undefined') {
+		alert('Please upload the photo of AR Experience');
+		$('#arExperiencephoto1').focus();
+		return false;
+	}
+	
+	if ($arExperiencephoto2 === '' || typeof $arExperiencephoto2 === 'undefined') {
+		alert('Please upload the photo of AR Experience');
+		$('#arExperiencephoto2').focus();
+		return false;
+	}
+	
+	if ($shapathYesphoto1 === '' || typeof $shapathYesphoto1 === 'undefined') {
+		alert('Please upload the photo of Shapath Shramdan');
+		$('#shapathYesphoto1').focus();
+		return false;
+	}
+	if ($shapathYesphoto2 === '' || typeof $shapathYesphoto2 === 'undefined') {
+		alert('Please upload the photo of Shapath Shramdan');
+		$('#shapathYesphoto2').focus();
+		return false;
+	}
+	
+	if ($FilmYesphoto1 === '' || typeof $FilmYesphoto1 === 'undefined') {
+		alert('Please upload the photo of Film on Watershed Yatra');
+		$('#FilmYesphoto1').focus();
+		return false;
+	}
+	if ($FilmYesphoto2 === '' || typeof $FilmYesphoto2 === 'undefined') {
+		alert('Please upload the photo of Film on Watershed Yatra');
+		$('#FilmYesphoto2').focus();
+		return false;
+	}
+	
+	if ($quizParticipantsphoto1 === '' || typeof $quizParticipantsphoto1 === 'undefined') {
+		alert('Please upload the photo of Quiz Program');
+		$('#quizParticipantsphoto1').focus();
+		return false;
+	}
+	if ($quizParticipantsphoto2 === '' || typeof $quizParticipantsphoto2 === 'undefined') {
+		alert('Please upload the photo of Quiz Program');
+		$('#quizParticipantsphoto2').focus();
+		return false;
+	}
+	
+	if ($culturalActivityphoto1 === '' || typeof $culturalActivityphoto1 === 'undefined') {
+		alert('Please upload the photo of Cultural Activity based on Watershed theme');
+		$('#culturalActivityphoto1').focus();
+		return false;
+	}
+	if ($culturalActivityphoto2 === '' || typeof $culturalActivityphoto2 === 'undefined') {
+		alert('Please upload the photo of Cultural Activity based on Watershed theme');
+		$('#culturalActivityphoto2').focus();
+		return false;
+	}
+	
+
+	if ($bhoomiCostphoto1 === '' || typeof $bhoomiCostphoto1 === 'undefined') {
+		alert('Please upload the photo of Bhoomi Poojan');
+		$('#bhoomiCostphoto1').focus();
+		return false;
+	}
+	if ($bhoomiCostphoto2 === '' || typeof $bhoomiCostphoto2 === 'undefined') {
+		alert('Please upload the photo of Bhoomi Poojan');
+		$('#bhoomiCostphoto2').focus();
+		return false;
+	}
+	
+	if ($lokWorksphoto1 === '' || typeof $lokWorksphoto1 === 'undefined') {
+		alert('Please upload the photo of Lokarpan');
+		$('#lokWorksphoto1').focus();
+		return false;
+	}
+	if ($lokWorksphoto2 === '' || typeof $lokWorksphoto2 === 'undefined') {
+		alert('Please upload the photo of Lokarpan');
+		$('#lokWorksphoto2').focus();
+		return false;
+	}
+	if ($locShramdaanpsphoto1 === '' || typeof $locShramdaanpsphoto1 === 'undefined') {
+		alert('Please upload the photo of Shramdan');
+		$('#locShramdaanpsphoto1').focus();
+		return false;
+	}
+	if ($locShramdaanpsphoto2 === '' || typeof $locShramdaanpsphoto2 === 'undefined') {
+		alert('Please upload the photo of Shramdan');
+		$('#locShramdaanpsphoto2').focus();
+		return false;
+	}
+	
+	if ($plantationAreaphoto1 === '' || typeof $plantationAreaphoto1 === 'undefined') {
+		alert('Please upload the photo of Plantation area');
+		$('#plantationAreaphoto1').focus();
+		return false;
+	}
+	if ($plantationAreaphoto2 === '' || typeof $plantationAreaphoto2 === 'undefined') {
+		alert('Please upload the photo of Plantation area');
+		$('#plantationAreaphoto2').focus();
+		return false;
+	}
+	
+	if ($noOfwatershedphoto1 === '' || typeof $noOfwatershedphoto1 === 'undefined') {
+		alert('Please upload the photo of Award Distribution');
+		$('#noOfwatershedphoto1').focus();
+		return false;
+	}
+	if ($noOfwatershedphoto2 === '' || typeof $noOfwatershedphoto2 === 'undefined') {
+		alert('Please upload the photo of Award Distribution');
+		$('#noOfwatershedphoto2').focus();
+		return false;
+	}
 	if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
 	    formSubmitted = true; 
 	document.saveWatershed.action="saveWatershedYatraVillage";
@@ -454,7 +571,7 @@ input[type="text"], input[type="datetime-local"], select {
 </tr>
      
      	<tr>
-     		<td>BhoomiPoojan</td>
+     		<td>Bhoomi Poojan</td>
      		<td>Number of Works<br><input type="text" id="bhoomiWorks" name="bhoomiWorks" autocomplete="off"
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="bhoomiCost" name="bhoomiCost" autocomplete="off"
