@@ -44,7 +44,9 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration";
-			System.out.println("sgd="+userfileup.getFlagOffPhoto1().getOriginalFilename());
+			
+			//System.out.println("sgd="+userfileup.getFlagOffPhoto1().getOriginalFilename());
+			
 			MultipartFile[] mfile = {userfileup.getFlagOffPhoto1(), userfileup.getFlagOffPhoto2(), userfileup.getThemeSongPhoto1(), userfileup.getThemeSongPhoto2(),
 					 	userfileup.getBhoomiPoojanPhoto1(), userfileup.getBhoomiPoojanPhoto2(), userfileup.getLokarpanPhoto1(), userfileup.getLokarpanPhoto2(),
 					 	userfileup.getShramdaanPhoto1(), userfileup.getShramdaanPhoto2(), userfileup.getPlantationPhoto1(), userfileup.getPlantationPhoto2(), 
@@ -86,10 +88,10 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setLegislativeCouncilMembers(userfileup.getCouncilMembers());
 			data.setOtherPublicRepresentatives(userfileup.getOthers());
 			data.setGovOfficials(userfileup.getGovOfficials());
-			data.setVanFlagOff(Boolean.getBoolean(userfileup.getFlagOff()));
+			data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagOff()));
 			data.setVanFlagPath1(filePath+userfileup.getFlagOffPhoto1().getOriginalFilename());
 			data.setVanFlagPath2(filePath+userfileup.getFlagOffPhoto2().getOriginalFilename());
-			data.setThemeSong(Boolean.getBoolean(userfileup.getThemeSong()));
+			data.setThemeSong(Boolean.valueOf(userfileup.getThemeSong()));
 			data.setThemeSongPath1(filePath+userfileup.getThemeSongPhoto1().getOriginalFilename());
 			data.setThemeSongPath2(filePath+userfileup.getThemeSongPhoto2().getOriginalFilename());
 			data.setBhoomiPoojanNoOfWorks(userfileup.getNoWorksBhoomiPoojan());
