@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 
 
 @Service("WatershedYatraService")
@@ -29,4 +30,7 @@ public interface WatershedYatraService {
 	String completeApproveNodalOfficer(List<Integer>  assetid, String userid);
 	String deleteApproveNodalOfficer(List<Integer>  assetid, String userid);
 
+	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session);
+	
+	
 }

@@ -1,5 +1,7 @@
 package app.watershedyatra.serviceImpl;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.WatershedYatraDao;
 import app.watershedyatra.service.WatershedYatraService;
 
@@ -82,6 +85,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 	public String deleteApproveNodalOfficer(List<Integer> assetid, String userid) {
 		// TODO Auto-generated method stub
 		return dao.deleteApproveNodalOfficer(assetid, userid);
+	}
+
+	@Override
+	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session) {
+		// TODO Auto-generated method stub
+		return dao.saveWatershedYatraVillageupload(userfileup, session);
 	}
 
 }

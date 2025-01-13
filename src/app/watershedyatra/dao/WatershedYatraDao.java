@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 
 public interface WatershedYatraDao {
 	
@@ -21,5 +22,7 @@ public interface WatershedYatraDao {
 	List<NodalOfficerBean> getDraftListofNodalOfficer(Integer stcd);
 	String completeApproveNodalOfficer(List<Integer>  assetid, String userid);
 	String deleteApproveNodalOfficer(List<Integer>  assetid, String userid);
+	
 
+	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session);
 }

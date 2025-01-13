@@ -2,6 +2,9 @@ package app.watershedyatra.daoImpl;
 
 import java.net.InetAddress;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -18,8 +21,10 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
+import app.common.CommonFunctions;
 import app.model.IwmpDistrict;
 import app.model.IwmpMFinYear;
 import app.model.IwmpMProject;
@@ -30,8 +35,10 @@ import app.model.master.IwmpVillage;
 import app.model.outcome.GroundwaterDetail;
 import app.model.outcome.GroundwaterMain;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.WatershedYatraDao;
 import app.watershedyatra.model.NodalOfficer;
+import app.watershedyatra.model.WatershedYatVill;
 
 @Repository("WatershedYatraDao")
 public class WatershedYatraDaoImpl implements WatershedYatraDao{
@@ -39,6 +46,8 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
+	@Autowired
+	CommonFunctions commonFunction;
 	
 	@Value("${districtListWatershedyatra}")
 	String districtListWatershedyatra;
@@ -358,6 +367,138 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		
 		return str;
+	}
+
+	@Override
+	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session) {
+		
+		Session sess = sessionFactory.getCurrentSession();
+		String res="fail";
+		try {
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
+			LocalDateTime localDateTime = LocalDateTime.parse(userfileup.getDatetime(), formatter); 
+			Timestamp timestamp1 = Timestamp.valueOf(localDateTime); 
+			
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/WatershedYatraVillage";
+			String filePath = "D:\\WatershedYatraVillage\\";
+			
+			MultipartFile[] mfile = {userfileup.getArExperiencephoto1(),userfileup.getArExperiencephoto2(),
+					userfileup.getBhoomiCostphoto1(),userfileup.getBhoomiCostphoto2(),userfileup.getCulturalActivityphoto1(),
+					userfileup.getCulturalActivityphoto2(),userfileup.getFilmYesphoto1(),userfileup.getFilmYesphoto2(),
+					userfileup.getLocShramdaanpsphoto1(),userfileup.getLocShramdaanpsphoto2(),userfileup.getLokWorksphoto1(),
+					userfileup.getLokWorksphoto2(),userfileup.getNoOfwatershedphoto1(),userfileup.getNoOfwatershedphoto2(),
+					userfileup.getPlantationAreaphoto1(),userfileup.getPlantationAreaphoto2(),userfileup.getQuizParticipantsphoto1(),
+					userfileup.getQuizParticipantsphoto2(),userfileup.getShapathYesphoto1(),userfileup.getShapathYesphoto2()
+					};
+			
+			for (MultipartFile file : mfile) {
+				
+				commonFunction.uploadFileforLMS(file, filePath);
+			
+			}
+			
+				InetAddress inet=InetAddress.getLocalHost();
+				String ipAddr=inet.getHostAddress();
+				
+				sess.beginTransaction();
+				
+				WatershedYatVill main =new WatershedYatVill();
+				IwmpState st =new IwmpState();
+				IwmpDistrict dt =new IwmpDistrict();
+				IwmpBlock bl =new IwmpBlock();
+				IwmpGramPanchayat gp =new IwmpGramPanchayat();
+				IwmpVillage vil = new IwmpVillage();
+				
+				st.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
+				main.setIwmpState(st);
+				
+				
+				dt.setDcode(userfileup.getDistrict());
+				main.setIwmpDistrict(dt);
+			
+				
+				
+				bl.setBcode(userfileup.getBlock());
+				main.setIwmpBlock(bl);
+			
+				
+					gp.setGcode(userfileup.getGrampan());
+					main.setIwmpGramPanchayat(gp);
+					
+			
+					vil.setVcode(userfileup.getVillage());
+					main.setIwmpVillage(vil);
+					
+				
+				main.setYatraDate1(timestamp1);
+				main.setYatraLocation(userfileup.getLocation());
+				main.setMaleParticipants(userfileup.getMaleParticipants());
+				main.setFemaleParticipants(userfileup.getFemaleParticipants());
+				main.setCentralMinister(userfileup.getCentralMinisters());
+				main.setStateMinister(userfileup.getStateMinisters());
+				main.setParliamentMembers(userfileup.getMembersOfParliament());
+				main.setLegislativeAssemblyMembers(userfileup.getLegAssemblyMembers());
+				main.setLegislativeCouncilMembers(userfileup.getLegCouncilMembers());
+				main.setOtherPublicRepresentatives(userfileup.getGovOfficials());
+				main.setGovOfficials(userfileup.getGovOfficials());
+				main.setNoOfArExperiencePeople(userfileup.getArExperience());
+				main.setBhumiJalSanrakshan(userfileup.getShapathYes());
+				main.setWatershedYatraFilm(userfileup.getFilmYes());
+				main.setQuizParticipants(userfileup.getQuizParticipants());
+				main.setCulturalActivity(userfileup.getCulturalActivity());
+				main.setBhoomiPoojanNoOfWorks(userfileup.getBhoomiWorks());
+				main.setBhoomiPoojanCostOfWorks(userfileup.getBhoomiCost());
+				main.setLokarpanNoOfWorks(userfileup.getLokWorks());
+				main.setLokarpanCostOfWorks(userfileup.getCostWorks());
+				main.setShramdaanNoOfLocation(userfileup.getLocShramdaan());
+				main.setShramdaanNoOfParticipatedPeople(userfileup.getLocShramdaanps());
+				main.setPlantationArea(userfileup.getPlantationArea());
+				main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
+				main.setAwardDistribution(userfileup.getNoOfwatershed());
+				
+				main.setArExperiencePath1(filePath+userfileup.getArExperiencephoto1().getOriginalFilename());
+				main.setArExperiencePath2(filePath+userfileup.getArExperiencephoto2().getOriginalFilename());
+				main.setShramdaanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
+				main.setShramdaanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
+				main.setYatraFilmPath1(filePath+userfileup.getFilmYesphoto1().getOriginalFilename());
+				main.setYatraFilmPath2(filePath+userfileup.getFilmYesphoto2().getOriginalFilename());
+				main.setQuizParticipantsPath1(filePath+userfileup.getQuizParticipantsphoto1().getOriginalFilename());
+				main.setQuizParticipantsPath2(filePath+userfileup.getQuizParticipantsphoto2().getOriginalFilename());
+				main.setCulturalActivityPath1(filePath+userfileup.getCulturalActivityphoto1().getOriginalFilename());
+				main.setCulturalActivityPath2(filePath+userfileup.getCulturalActivityphoto2().getOriginalFilename());
+				main.setBhoomiPoojanPath1(filePath+userfileup.getBhoomiCostphoto1().getOriginalFilename());
+				main.setBhoomiPoojanPath2(filePath+userfileup.getBhoomiCostphoto2().getOriginalFilename());
+				main.setLokarpanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
+				main.setLokarpanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
+				main.setPlantationPath1(filePath+userfileup.getPlantationAreaphoto1().getOriginalFilename());
+				main.setPlantationPath2(filePath+userfileup.getPlantationAreaphoto2().getOriginalFilename());
+				main.setAwardDistributionPath1(filePath+userfileup.getNoOfwatershedphoto1().getOriginalFilename());
+				main.setAwardDistributionPath2(filePath+userfileup.getNoOfwatershedphoto2().getOriginalFilename());
+				main.setBhumiJalSanrakshanPath1(filePath+userfileup.getShapathYesphoto1().getOriginalFilename());
+				main.setBhumiJalSanrakshanPath2(filePath+userfileup.getShapathYesphoto2().getOriginalFilename());
+				
+				main.setStatus("C");
+				main.setCreatedBy(session.getAttribute("loginID").toString());
+				main.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+				main.setRequestedIp(ipAddr);
+//				
+				sess.save(main);
+			
+				sess.getTransaction().commit();
+				res="success";
+		
+		}
+		catch(Exception ex) 
+		{
+			ex.printStackTrace();
+			sess.getTransaction().rollback();
+		}
+		finally {
+			//session.flush();
+		//session.close();
+		}
+		
+		return res;
 	}
 
 }
