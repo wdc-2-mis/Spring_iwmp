@@ -1,6 +1,6 @@
 $(function(){
 
-$(document).on('change', '#district', function(e) {
+	$(document).on('change', '#district', function(e) {
 		e.preventDefault();
 		$stCode=$('#district option:selected').val();
 		$.ajax({  
@@ -11,18 +11,20 @@ $(document).on('change', '#district', function(e) {
                 console.log(er);
             },
             success:function(data) {
-						$selectedDist=$('#district').val();
-						$ddlDistrict = $('#block');
-						$ddlDistrict.empty();
-        				$ddlDistrict.append('<option value=""> --Select Block-- </option>');
-						 for ( var key in data) {
-						   if (data.hasOwnProperty(key)) {
-							if(data[key]==$selectedDist)
+				$selectedDist=$('#district').val();
+				$ddlDistrict = $('#block');
+				$ddlDistrict.empty();
+        		$ddlDistrict.append('<option value=""> --Select Block-- </option>');
+				for ( var key in data) 
+				{
+					if (data.hasOwnProperty(key)) 
+					{
+						if(data[key]==$selectedDist)
 							$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
-							else
+						else
 							$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
-							}
-							}
+					}
+				}
 			}
 		});
 	});
@@ -39,48 +41,53 @@ $(document).on('change', '#district', function(e) {
 	                console.log(er);
 	            },
 	            success:function(data) {
-							$selectedDist=$('#block').val();
-							$ddlDistrict = $('#grampan');
-							$ddlDistrict.empty();
-	        				$ddlDistrict.append('<option value=""> --Select Gram Panchayat Name-- </option>');
-							 for ( var key in data) {
-							   if (data.hasOwnProperty(key)) {
-								if(data[key]==$selectedDist)
+					$selectedDist=$('#block').val();
+					$ddlDistrict = $('#grampan');
+					$ddlDistrict.empty();
+	        		$ddlDistrict.append('<option value=""> --Select Gram Panchayat Name-- </option>');
+					for ( var key in data) 
+					{
+						if (data.hasOwnProperty(key)) 
+						{
+							if(data[key]==$selectedDist)
 								$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
-								else
+							else
 								$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
-								}
-								}
+						}
+					}
 				}
 			});
-		});
+	});
 			
-		$(document).on('change', '#grampan', function(e) {
-					e.preventDefault();
-					$gpsCode=$('#grampan option:selected').val();
-					$.ajax({  
-			            url:"getWatershedYatraVillage",
-			            type: "post", 
-						data:{gpscode:$gpsCode}, 
-			            error:function(xhr,status,er){
+	$(document).on('change', '#grampan', function(e) {
+			e.preventDefault();
+			$gpsCode=$('#grampan option:selected').val();
+			$.ajax({  
+			        url:"getWatershedYatraVillage",
+			        type: "post", 
+					data:{gpscode:$gpsCode}, 
+			        error:function(xhr,status,er){
 			                console.log(er);
-			            },
-			            success:function(data) {
-									$selectedDist=$('#grampan').val();
-									$ddlDistrict = $('#village');
-									$ddlDistrict.empty();
-			        				$ddlDistrict.append('<option value=""> --Select Village Name-- </option>');
-									 for ( var key in data) {
-									   if (data.hasOwnProperty(key)) {
-										if(data[key]==$selectedDist)
-										$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
-										else
-										$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
-										}
-										}
+			        },
+			        success:function(data) 
+					{
+						$selectedDist=$('#grampan').val();
+						$ddlDistrict = $('#village');
+						$ddlDistrict.empty();
+			        	$ddlDistrict.append('<option value=""> --Select Village Name-- </option>');
+						for ( var key in data) 
+						{
+							if (data.hasOwnProperty(key)) 
+							{
+								if(data[key]==$selectedDist)
+									$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
+								else
+									$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
+							}
 						}
-					});
+					}
 				});
+	});
 				
 				
 	$(document).on( 'change', '#level', function (e) {
@@ -122,18 +129,15 @@ $(document).on('change', '#district', function(e) {
 		$level = $('#level option:selected').val();
 		$district = $('#district option:selected').val();
 		$block = $('#block option:selected').val();
-		
 						
 		$name = $('#name').val();
 		$designation = $('#designation').val();
 		$mob = $('#mob').val();
 		$email = $('#email').val();
 		
-		
-		
 		if($('#level option:selected').val()==='' || typeof $('#level option:selected').val()==='undefined')
 		{
-			alert('Please select Level !');
+			alert('Please select level !');
 			$('#level').focus();
 			return false;
 		}
@@ -141,7 +145,7 @@ $(document).on('change', '#district', function(e) {
 		{
 			if($('#district option:selected').val()==='' || typeof $('#district option:selected').val()==='undefined')
 			{
-				alert('Please select District !');
+				alert('Please Select District !');
 				$('#district').focus();
 				return false;
 			}
@@ -150,32 +154,32 @@ $(document).on('change', '#district', function(e) {
 		{
 			if($('#block option:selected').val()==='' || typeof $('#block option:selected').val()==='undefined')
 			{
-				alert('Please select Block !');
+				alert('Please Select Block !');
 				$('#block').focus();
 				return false;
 			}
 		}
 		if($('#name').val()==='')
 		{
-			alert('Please enter Name !');
+			alert('Please Enter Name !');
 			$('#name').focus();
 			return false;
 		}
 		if($('#designation').val()==='')
 		{
-			alert('Please enter Designation !');
+			alert('Please Enter Designation !');
 			$('#designation').focus();
 			return false;
 		}
 		if($('#mob').val()==='')
 		{
-			alert('Please enter Mobile !');
+			alert('Please Enter Mobile !');
 			$('#mob').focus();
 			return false;
 		}
 		if($('#email').val()==='')
 		{
-			alert('Please enter Email Id !');
+			alert('Please Enter Email Id !');
 			$('#email').focus();
 			return false;
 		}
@@ -187,7 +191,6 @@ $(document).on('change', '#district', function(e) {
 		{					
 			$block = 0;
 		}
-		
 					
 		$.ajax({  
 				url:"saveNodalOfficerLMS",
@@ -196,7 +199,8 @@ $(document).on('change', '#district', function(e) {
 				      error:function(xhr,status,er){
 				      console.log(er);
 				},
-				success:function(data) {
+				success:function(data) 
+				{
 					console.log(data);
 					if(data==='success')
 					{
@@ -243,23 +247,18 @@ $(document).on('change', '#district', function(e) {
 		            });
 					$chkValue=0;
 		        }
-				
-		    });	
+		});
 			
-			
-			
-			$(document).on('click', '#updateapprove', function(e){
+		$(document).on('click', '#updateapprove', function(e){
 				e.preventDefault();
 			//	$pCode=$('#project option:selected').val();
 				var finalAssetid=new Array();
-
 				$('.chkIndividualkd').each(function(){
 			         	if($(this).prop('checked'))
 			         	{
 							finalAssetid.push($(this).val());
 						}
 			     });
-			      
 			//alert(finalAssetid+','+remarks+','+otherwork);
 				if(confirm("Do you want to complete/Approved ?"))
 				{
@@ -286,13 +285,10 @@ $(document).on('change', '#district', function(e) {
 						}
 					});
 				}
+		});
 				
-				});
-				
-				
-				$(document).on('click', '#delete', function(e){
+		$(document).on('click', '#delete', function(e){
 					e.preventDefault();
-							//	$pCode=$('#project option:selected').val();
 					var finalAssetid=new Array();
 
 					$('.chkIndividualkd').each(function(){
@@ -302,34 +298,31 @@ $(document).on('change', '#district', function(e) {
 						}
 					});
 							      
-								if(confirm("Do you want to Delete ?"))
+					if(confirm("Do you want to Delete ?"))
+					{
+						$.ajax({  
+							    url:"deleteApproveNodalOfficer",
+							    type: "post",  
+							    data: {assetid:finalAssetid.toString()},
+							    error:function(xhr,status,er){
+							         console.log(er);
+							    },
+							    success: function(data) 
 								{
-									$.ajax({  
-							            url:"deleteApproveNodalOfficer",
-							            type: "post",  
-							            data: {assetid:finalAssetid.toString()},
-							            error:function(xhr,status,er){
-							                console.log(er);
-							            },
-							            success: function(data) {
-										console.log(data);
-										$('#loading').hide();
-											if(data==='success')
-											{
-												alert('Nodal Officer deleted Successfully.');
-												window.location.href='getNodalOfficerHeader';
-											}
-											else{
-												alert('Please check at least One Check Box, Data not Complete!');
-												window.location.href='getNodalOfficerHeader';
-											} 
-								
-										}
-									});
+									console.log(data);
+									$('#loading').hide();
+									if(data==='success')
+									{
+										alert('Nodal Officer deleted Successfully.');
+										window.location.href='getNodalOfficerHeader';
+									}
+									else{
+										alert('Please check at least One Check Box, Data not Complete!');
+										window.location.href='getNodalOfficerHeader';
+									} 
 								}
-								
+						});
+					}
 				});				
-				
-	
 	
 });		

@@ -3,6 +3,47 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <head>
+
+<script type="text/javascript">
+
+function validatenumber() { 
+	var x = document.getElementById("mob").value; 
+	if (x.length !== 10) { 
+		alert("Mobile number should be 10 digits"); 
+		document.getElementById("mob").value='';
+		return false; 
+	} 
+}
+
+function validateEmail(emailField)
+{
+   // var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    var reg =  /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	alert('kdy='+emailField.value);
+    if (reg.test(emailField.value) == false) 
+    {
+        alert('Please enter a valid email address');
+        document.getElementById("email").value='';
+        document.getElementById("email").focus();
+        return false ;
+    }
+}
+
+function validateemail1() { 
+	var email = document.getElementById("email").value; 
+	var emailPattern = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/; 
+	if (!emailPattern.test(email)) 
+	{ 
+		alert("Please enter a valid email address"); 
+		document.getElementById("email").value='';
+		return false; 
+	} 
+	return true; 
+}
+
+
+</script>
+
 <style> 
 input[type=text] {
   width: 100%;
@@ -46,10 +87,10 @@ input[type=email] {
     			</select>
     		</div>
     		
-			<div class="form-group col-2">
+			<div class="form-group col-3">
 			<c:if test="${userType== 'SL' }"><br/>
 			<label for="state">	<b> State Name:</b> </label>
-			<span class="projectError"></span>
+			<span class="projectError"></span> <br/>
 			<c:out value="${stateName}"></c:out>
 			</c:if>
 			</div>
@@ -114,13 +155,13 @@ input[type=email] {
     		<div class="form-group col-3">
       			<label for="district"><b> Mobile:</b> </label>
       			<span class="projectError"></span>
-      			<input type="text" id="mob" name="mob" placeholder="Enter Mobile Number" autocomplete="off"
-								pattern="^\d{10}$" maxlength="10" title="Please enter a valid 10-digit phone number" 
-								                     oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
+      			<input type="text" id="mob" name="mob" placeholder="Enter Mobile Number" autocomplete="off" min="10"
+								pattern="^\d{10}$" maxlength="10"  
+								                     oninput="this.value=this.value.replace(/[^0-9]/g,'');" onblur="validatenumber();"   required />
     		</div>
     		<div class="form-group col-3">
     			<label for="activity"> <b> Email Id:</b> </label>
-      			<input type="email" id="email" name="email" placeholder="Enter Email Id" autocomplete="off" required>
+      			<input type="text" id="email" name="email" placeholder="Enter Email Id" autocomplete="off" onblur="return validateemail1();" required>
     		</div>
     		
     		</div>
@@ -216,6 +257,83 @@ input[type=email] {
      			</div>
      		</div>
      	</c:if>
+     	
+     	
+     	<br/>
+     		<br/>
+     		<br/>
+     		<br/>
+     		
+     		
+     		
+     		<div class="form-row">
+     <div class="form-group col">
+     <hr/>
+     <h5 class="text-center font-weight-bold"><u>Approved List of Nodal Officer</u></h5>
+     <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th style="width:2%">S.No. </th> 
+								<th style="width:5%">Level</th>
+								<th style="width:5%">State Name</th>
+								<th style="width:5%">District Name</th>
+								<th style="width:5%">Block Name</th>
+								<th style="width:5%">Name</th>
+								<th style="width:5%">Designation</th>
+								<th style="width:5%">Mobile</th>
+								<th style="width:5%">Email Id</th>
+								
+							</tr>
+
+						</thead>
+						
+						<c:set var="proj" value="" />
+						<c:forEach items="${completetList}" var="dataV" varStatus="count">
+							<tr>
+							 	<td><c:out value='${count.count}' />  </td>
+								<c:if test="${dataV.level eq 'state'}">
+									<td> <c:out value="State" /></td>	
+								</c:if>
+								<c:if test="${dataV.level eq 'district'}">
+									<td> <c:out value="District" /></td>	
+								</c:if>
+								<c:if test="${dataV.level eq 'block'}">
+									<td> <c:out value="Block/Project" /></td>	
+								</c:if>
+								<c:if test="${dataV.level eq 'village'}">
+									<td> <c:out value="Village/Van Standing Point" /></td>	
+								</c:if>
+								<c:choose>
+									<c:when test="${proj ne dataV.stname}">
+										<c:set var="proj" value="${dataV.stname}" />
+										<td> <c:out value="${dataV.stname}" /></td>
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+								<td> <c:out value="${dataV.district}" /></td>
+								<td> <c:out value="${dataV.blockname}" /></td>
+								<td> <c:out value="${dataV.nodal_name}" /></td>
+								<td> <c:out value="${dataV.designation}" /></td>
+								<td> <c:out value="${dataV.mobile}" /></td>
+								<td> <c:out value="${dataV.email}" /></td>
+								
+							</tr>
+						</c:forEach>
+						<c:if test="${completeListSize eq 0}">
+							<tr>
+								<td align="center" colspan="9" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+		</table>
+		</div>
+		</div>
+     	
+     	
+     	
+     	
+     	
 		</form>
 	</div>
 	<footer class=" text-center">

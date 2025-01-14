@@ -15,6 +15,15 @@ public class NodalOfficerBean {
     private String email;
     private String level;
     private Character status;
+    private int route_plan_id;
+    private String gcode;
+    private String gramname;
+    private String vcode;
+    private String villagename;
+    private String location1;
+    private String date1;
+    private String location2;
+    private String date2;
     
 	public int getNodal_id() {
 		return nodal_id;
@@ -93,6 +102,60 @@ public class NodalOfficerBean {
 	}
 	public void setStatus(Character status) {
 		this.status = status;
+	}
+	public int getRoute_plan_id() {
+		return route_plan_id;
+	}
+	public void setRoute_plan_id(int route_plan_id) {
+		this.route_plan_id = route_plan_id;
+	}
+	public String getGcode() {
+		return gcode;
+	}
+	public void setGcode(String gcode) {
+		this.gcode = gcode;
+	}
+	public String getGramname() {
+		return gramname;
+	}
+	public void setGramname(String gramname) {
+		this.gramname = gramname;
+	}
+	public String getVcode() {
+		return vcode;
+	}
+	public void setVcode(String vcode) {
+		this.vcode = vcode;
+	}
+	public String getVillagename() {
+		return villagename;
+	}
+	public void setVillagename(String villagename) {
+		this.villagename = villagename;
+	}
+	public String getLocation1() {
+		return location1;
+	}
+	public void setLocation1(String location1) {
+		this.location1 = location1;
+	}
+	public String getDate1() {
+		return date1;
+	}
+	public void setDate1(String date1) {
+		this.date1 = date1;
+	}
+	public String getLocation2() {
+		return location2;
+	}
+	public void setLocation2(String location2) {
+		this.location2 = location2;
+	}
+	public String getDate2() {
+		return date2;
+	}
+	public void setDate2(String date2) {
+		this.date2 = date2;
 	}
     
     

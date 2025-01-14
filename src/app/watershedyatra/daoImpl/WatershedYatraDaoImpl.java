@@ -64,6 +64,10 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getDraftListofNodalOfficer}")
 	String getDraftListofNodalOfficer;
 	
+	
+	@Value("${getCompleteListofNodalOfficer}")
+	String getCompleteListofNodalOfficer;
+	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
 	
@@ -499,6 +503,34 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		
 		return res;
+	}
+
+	@Override
+	public List<NodalOfficerBean> getCompleteListofNodalOfficer(Integer stcd) {
+		// TODO Auto-generated method stub
+		String getReport=getCompleteListofNodalOfficer;
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }

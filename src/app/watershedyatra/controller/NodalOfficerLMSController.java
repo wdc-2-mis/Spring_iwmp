@@ -41,6 +41,7 @@ public class NodalOfficerLMSController {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		List<NodalOfficerBean> draft = new ArrayList<NodalOfficerBean>();
+		List<NodalOfficerBean> complete = new ArrayList<NodalOfficerBean>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 				mav = new ModelAndView("WatershedYatra/nodalOfficerLMS");
@@ -66,7 +67,7 @@ public class NodalOfficerLMSController {
 				
 				LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
 				map.put("state", "State");
-				map.put("distrinct", "Distrinct");
+				map.put("district", "District");
 				map.put("block", "Block/Project");
 				map.put("village", "Village/Van Standing Point");
 				
@@ -75,6 +76,11 @@ public class NodalOfficerLMSController {
 				draft=ser.getDraftListofNodalOfficer(stcd);
 				mav.addObject("draftList",draft);
 				mav.addObject("draftListSize",draft.size());
+				
+				
+				complete=ser.getCompleteListofNodalOfficer(stcd);
+				mav.addObject("completetList",complete);
+				mav.addObject("completeListSize",complete.size());
 
 			} else {
 				mav = new ModelAndView("login");

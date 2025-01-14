@@ -26,7 +26,7 @@ public interface WatershedYatraService {
 			String designation, String mob, String email, HttpSession session);
 	
 	List<NodalOfficerBean> getDraftListofNodalOfficer(Integer stcd);
-	
+	List<NodalOfficerBean> getCompleteListofNodalOfficer(Integer stcd);
 	String completeApproveNodalOfficer(List<Integer>  assetid, String userid);
 	String deleteApproveNodalOfficer(List<Integer>  assetid, String userid);
 

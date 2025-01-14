@@ -93,4 +93,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.saveWatershedYatraVillageupload(userfileup, session);
 	}
 
+
+
+	@Override
+	public List<NodalOfficerBean> getCompleteListofNodalOfficer(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getCompleteListofNodalOfficer(stcd);
+	}
+
 }
