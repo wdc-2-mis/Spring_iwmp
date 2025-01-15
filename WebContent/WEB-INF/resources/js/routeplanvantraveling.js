@@ -90,163 +90,145 @@ $(function(){
 	});
 				
 	$(document).on( 'click', '#btnSavekd', function (e) {
-			e.preventDefault();
-										
-			$district = $('#district option:selected').val();
-			$block = $('#block option:selected').val();
-			$grampan = $('#grampan option:selected').val();
-			$village = $('#village option:selected').val();
-			$location = $('#location').val();
-			$datetime = $('#datetime').val();
-			
-			$district1 = $('#district1 option:selected').val();
-			$block1 = $('#block1 option:selected').val();
-			$grampan1 = $('#grampan1 option:selected').val();
-			$village1 = $('#village1 option:selected').val();
-			$location1 = $('#location1').val();
-			$datetime1 = $('#datetime1').val();			
-						
-			if($('#district option:selected').val()==='' || typeof $('#district option:selected').val()==='undefined')
-			{
-				alert('Please Select District for Location-01 !');
-				$('#district').focus();
-				return false;
-			}
-			if($('#district1 option:selected').val()==='' || typeof $('#district1 option:selected').val()==='undefined')
-			{
-				alert('Please Select District for Location-02 !');
-				$('#district1').focus();
-				return false;
-			}
-						
-			if($('#block option:selected').val()==='' || typeof $('#block option:selected').val()==='undefined')
-			{
-				alert('Please Select Block for Location-01 !');
-				$('#block').focus();
-				return false;
-			}
-			if($('#block1 option:selected').val()==='' || typeof $('#block1 option:selected').val()==='undefined')
-			{
-				alert('Please Select Block for Location-02 !');
-				$('#block1').focus();
-				return false;
-			}
-			
-			if($('#grampan option:selected').val()==='' || typeof $('#grampan option:selected').val()==='undefined')
-			{
-				alert('Please Select Gram Panchayat for Location-01 !');
-				$('#grampan').focus();
-				return false;
-			}
-			if($('#grampan1 option:selected').val()==='' || typeof $('#grampan1 option:selected').val()==='undefined')
-			{
-				alert('Please Select Gram Panchayat for Location-02 !');
-				$('#grampan1').focus();
-				return false;
-			}
-			
-			if($('#village option:selected').val()==='' || typeof $('#village option:selected').val()==='undefined')
-			{
-				alert('Please Select Village for Location-01 !');
-				$('#village').focus();
-				return false;
-			}
-			if($('#village1 option:selected').val()==='' || typeof $('#village1 option:selected').val()==='undefined')
-			{
-				alert('Please select Village for Location-01 !');
-				$('#village1').focus();
-				return false;
-			}
-						
-			if($('#location').val()==='')
-			{
-				alert('Please enter location for Location-01 !');
-				$('#location').focus();
-				return false;
-			}
-			if($('#datetime').val()==='')
-			{
-				alert('Please enter Date and Time for Location-01 !');
-				$('#datetime').focus();
-				return false;
-			}
-			
-			if($('#location1').val()==='')
-			{
-				alert('Please enter location for Location-02!');
-				$('#location1').focus();
-				return false;
-			}
-			if($('#datetime1').val()==='')
-			{
-				alert('Please enter Date and Time for Location-02!');
-				$('#datetime1').focus();
-				return false;
-			}	
-			$district = $('#district option:selected').val();
-			$block = $('#block option:selected').val();
-			$grampan = $('#grampan option:selected').val();
-			$village = $('#village option:selected').val();
-			$location = $('#location').val();
-			$datetime = $('#datetime').val();
-						
-			$district1 = $('#district1 option:selected').val();
-			$block1 = $('#block1 option:selected').val();
-			$grampan1 = $('#grampan1 option:selected').val();
-			$village1 = $('#village1 option:selected').val();
-			$location1 = $('#location1').val();
-			$datetime1 = $('#datetime1').val();	
-			
-			const dateTimeStr = $('#datetime').val();
-			const dateObj = new Date(dateTimeStr); // Extract date components 
-			const year = dateObj.getFullYear(); 
-			const month = dateObj.getMonth() + 1; // Months are zero-based in JavaScript 
-			const day = dateObj.getDate(); 
-			const hours = dateObj.getHours(); 
-			const minutes = dateObj.getMinutes(); 
-			const seconds = dateObj.getSeconds();
-			
-			const dateTimeStr1 = $('#datetime1').val();
-			const dateObj1 = new Date(dateTimeStr1); // Extract date components 
-			const year1 = dateObj1.getFullYear(); 
-			const month1 = dateObj1.getMonth() + 1; // Months are zero-based in JavaScript 
-			const day1 = dateObj1.getDate(); 
-			const hours1 = dateObj1.getHours(); 
-			const minutes1 = dateObj1.getMinutes(); 
-			const seconds1 = dateObj1.getSeconds();
-			
-			const date1 = `${year}-${month}-${day}`; 
-			const date2 = `${year1}-${month1}-${day1}`;
-			
-			const time1='${hours}';
-			const time2='${hours1}';
-			
-			if(date1!==date2)
-			{
-				alert('Please select same date of both Location !');
-				$('#datetime').val('');	
-				$('#datetime1').val('');	
-				$('#datetime').focus();
-				return false;
-			}
-			
-			if(date1>date2)
-			{
-				alert('Please select same date of both Location !');
-				$('#datetime').val('');	
-				$('#datetime1').val('');	
-				$('#datetime').focus();
-				return false;
-			}
-			
-			if(time1>time2)
-			{
-				alert('Please Select Location-02 Time will be Greater Than the Location-01 Time. !');
-				$('#datetime').val('');	
-				$('#datetime1').val('');	
-				$('#datetime').focus();
-				return false;
-			}
+		e.preventDefault();
+
+		$district = $('#district option:selected').val();
+		$block = $('#block option:selected').val();
+		$grampan = $('#grampan option:selected').val();
+		$village = $('#village option:selected').val();
+		$location = $('#location').val();
+		$datetime = $('#datetime').val();
+
+		$district1 = $('#district1 option:selected').val();
+		$block1 = $('#block1 option:selected').val();
+		$grampan1 = $('#grampan1 option:selected').val();
+		$village1 = $('#village1 option:selected').val();
+		$location1 = $('#location1').val();
+		$datetime1 = $('#datetime1').val();
+
+		if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
+			alert('Please Select District for Location-01 !');
+			$('#district').focus();
+			return false;
+		}
+		if ($('#block option:selected').val() === '' || typeof $('#block option:selected').val() === 'undefined') {
+			alert('Please Select Block for Location-01 !');
+			$('#block').focus();
+			return false;
+		}
+		if ($('#grampan option:selected').val() === '' || typeof $('#grampan option:selected').val() === 'undefined') {
+			alert('Please Select Gram Panchayat for Location-01 !');
+			$('#grampan').focus();
+			return false;
+		}
+		if ($('#village option:selected').val() === '' || typeof $('#village option:selected').val() === 'undefined') {
+			alert('Please Select Village for Location-01 !');
+			$('#village').focus();
+			return false;
+		}
+		
+		if ($('#datetime').val() === '') {
+			alert('Please enter Date and Time for Location-01 !');
+			$('#datetime').focus();
+			return false;
+		}
+		if ($('#location').val() === '') {
+			alert('Please enter location for Location-01 !');
+			$('#location').focus();
+			return false;
+		}
+
+		if ($('#district1 option:selected').val() === '' || typeof $('#district1 option:selected').val() === 'undefined') {
+			alert('Please Select District for Location-02 !');
+			$('#district1').focus();
+			return false;
+		}
+		if ($('#block1 option:selected').val() === '' || typeof $('#block1 option:selected').val() === 'undefined') {
+			alert('Please Select Block for Location-02 !');
+			$('#block1').focus();
+			return false;
+		}
+		if ($('#grampan1 option:selected').val() === '' || typeof $('#grampan1 option:selected').val() === 'undefined') {
+			alert('Please Select Gram Panchayat for Location-02 !');
+			$('#grampan1').focus();
+			return false;
+		}
+		if ($('#village1 option:selected').val() === '' || typeof $('#village1 option:selected').val() === 'undefined') {
+			alert('Please select Village for Location-01 !');
+			$('#village1').focus();
+			return false;
+		}
+		if ($('#datetime1').val() === '') {
+			alert('Please enter Date and Time for Location-02!');
+			$('#datetime1').focus();
+			return false;
+		}
+		if ($('#location1').val() === '') {
+			alert('Please enter location for Location-02!');
+			$('#location1').focus();
+			return false;
+		}
+		$district = $('#district option:selected').val();
+		$block = $('#block option:selected').val();
+		$grampan = $('#grampan option:selected').val();
+		$village = $('#village option:selected').val();
+		$location = $('#location').val();
+		$datetime = $('#datetime').val();
+
+		$district1 = $('#district1 option:selected').val();
+		$block1 = $('#block1 option:selected').val();
+		$grampan1 = $('#grampan1 option:selected').val();
+		$village1 = $('#village1 option:selected').val();
+		$location1 = $('#location1').val();
+		$datetime1 = $('#datetime1').val();
+
+		const dateTimeStr = $('#datetime').val();
+		const dateObj = new Date(dateTimeStr); // Extract date components 
+		const year = dateObj.getFullYear();
+		const month = dateObj.getMonth() + 1; // Months are zero-based in JavaScript 
+		const day = dateObj.getDate();
+		const hours = dateObj.getHours();
+		const minutes = dateObj.getMinutes();
+		const seconds = dateObj.getSeconds();
+
+		const dateTimeStr1 = $('#datetime1').val();
+		const dateObj1 = new Date(dateTimeStr1); // Extract date components 
+		const year1 = dateObj1.getFullYear();
+		const month1 = dateObj1.getMonth() + 1; // Months are zero-based in JavaScript 
+		const day1 = dateObj1.getDate();
+		const hours1 = dateObj1.getHours();
+		const minutes1 = dateObj1.getMinutes();
+		const seconds1 = dateObj1.getSeconds();
+
+		const date1 = `${year}-${month}-${day}`;
+		const date2 = `${year1}-${month1}-${day1}`;
+
+		const time1 = '${hours}';
+		const time2 = '${hours1}';
+
+		if (date1 !== date2) {
+			alert('Please select same date of both Location !');
+			$('#datetime').val('');
+			$('#datetime1').val('');
+			$('#datetime').focus();
+			return false;
+		}
+
+		if (date1 > date2) {
+			alert('Please select same date of both Location !');
+			$('#datetime').val('');
+			$('#datetime1').val('');
+			$('#datetime').focus();
+			return false;
+		}
+
+		/*if (time1 > time2) {
+			alert('Please Select Location-02 Time will be Greater Than the Location-01 Time. !');
+			$('#datetime').val('');
+			$('#datetime1').val('');
+			$('#datetime').focus();
+			return false;
+		}*/
 					
 			$.ajax({  
 				url:"saveRoutePlanVanTravelingLMS",
