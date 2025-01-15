@@ -45,7 +45,8 @@ public class WatershedYatVill {
     private Integer quizParticipants;
     private String quizParticipantsPath1;
     private String quizParticipantsPath2;
-    private String culturalActivity;
+    private MCulturalActivity mCulturalActivity;
+    private String culturalActivityOther;
     private String culturalActivityPath1;
     private String culturalActivityPath2;
     private Integer bhoomiPoojanNoOfWorks;
@@ -80,7 +81,7 @@ public class WatershedYatVill {
 		   Timestamp yatraDate1,Timestamp yatraDate2,String yatraLocation,Integer maleParticipants,Integer femaleParticipants,Integer centralMinister,Integer stateMinister,Integer parliamentMembers,
 		   Integer legislativeAssemblyMembers,Integer legislativeCouncilMembers,Integer otherPublicRepresentatives,Integer govOfficials,Integer noOfArExperiencePeople,String arExperiencePath1,String arExperiencePath2,
 		   Boolean bhumiJalSanrakshan,String bhumiJalSanrakshanPath1,String bhumiJalSanrakshanPath2,Boolean watershedYatraFilm,String yatraFilmPath1,String yatraFilmPath2,Integer quizParticipants,String quizParticipantsPath1,
-		   String quizParticipantsPath2,String culturalActivity,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,Integer bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
+		   String quizParticipantsPath2,MCulturalActivity mCulturalActivity, String culturalActivityOther,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,Integer bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
 		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,Integer lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,String shramdaanPath1,
 		   String shramdaanPath2,Integer plantationArea,Integer noOfAgroForsetry,String plantationPath1,String plantationPath2,Integer awardDistribution,String awardDistributionPath1,String awardDistributionPath2,String status,
 		   String requestedIp,String updatedBy,Date updatedDate,String createdBy,Date createdDate)
@@ -115,7 +116,8 @@ public class WatershedYatVill {
 	  this.quizParticipants=quizParticipants;
 	  this.quizParticipantsPath1=quizParticipantsPath1;
 	  this.quizParticipantsPath2=quizParticipantsPath2;
-	  this.culturalActivity=culturalActivity;
+	  this.mCulturalActivity=mCulturalActivity;
+	  this.culturalActivityOther=culturalActivityOther;
 	  this.culturalActivityPath1=culturalActivityPath1;
 	  this.culturalActivityPath2=culturalActivityPath2;
 	  this.bhoomiPoojanNoOfWorks=bhoomiPoojanNoOfWorks;
@@ -425,13 +427,23 @@ public class WatershedYatVill {
 		this.quizParticipantsPath2 = quizParticipantsPath2;
 	}
 	
-	@Column(name="cultural_activity")
-	public String getCulturalActivity() {
-		return culturalActivity;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="cultural_activity_id")
+	public MCulturalActivity getmCulturalActivity() {
+		return mCulturalActivity;
+	}
+
+	public void setmCulturalActivity(MCulturalActivity mCulturalActivity) {
+		this.mCulturalActivity = mCulturalActivity;
+	}
+
+	@Column(name="cultural_activity_other")
+	public String getCulturalActivityOther() {
+		return culturalActivityOther;
 	}
 	
-	public void setCulturalActivity(String culturalActivity) {
-		this.culturalActivity = culturalActivity;
+	public void setCulturalActivityOther(String culturalActivityOther) {
+		this.culturalActivityOther = culturalActivityOther;
 	}
 	
 	@Column(name="cultural_activity_path1")

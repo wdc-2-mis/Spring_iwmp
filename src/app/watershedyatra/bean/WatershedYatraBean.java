@@ -36,7 +36,9 @@ public class WatershedYatraBean {
     private MultipartFile quizParticipantsphoto1;
     private MultipartFile quizParticipantsphoto2;
     
-    private String culturalActivity;
+    private Integer culturalActivity;
+    
+    private String otherActivity;
     private MultipartFile culturalActivityphoto1;
     private MultipartFile culturalActivityphoto2;
     private Integer bhoomiWorks;
@@ -211,11 +213,19 @@ public class WatershedYatraBean {
 	public void setQuizParticipantsphoto2(MultipartFile quizParticipantsphoto2) {
 		this.quizParticipantsphoto2 = quizParticipantsphoto2;
 	}
-	public String getCulturalActivity() {
+	public Integer getCulturalActivity() {
 		return culturalActivity;
 	}
-	public void setCulturalActivity(String culturalActivity) {
+	public void setCulturalActivity(Integer culturalActivity) {
 		this.culturalActivity = culturalActivity;
+	}
+	
+	
+	public String getOtherActivity() {
+		return otherActivity;
+	}
+	public void setOtherActivity(String otherActivity) {
+		this.otherActivity = otherActivity;
 	}
 	public MultipartFile getCulturalActivityphoto1() {
 		return culturalActivityphoto1;

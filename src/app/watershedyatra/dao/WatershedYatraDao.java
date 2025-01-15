@@ -27,4 +27,6 @@ public interface WatershedYatraDao {
 	
 
 	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session);
+	
+	LinkedHashMap<Integer, String> getCultActivity();
 }

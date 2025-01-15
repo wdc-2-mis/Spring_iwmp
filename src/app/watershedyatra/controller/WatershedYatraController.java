@@ -80,6 +80,9 @@ public class WatershedYatraController {
 				mav.addObject("stateName",stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 				
+				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+				map=ser.getCultActivity();
+				mav.addObject("cultMap", map);
 
 			} else {
 				mav = new ModelAndView("login");
@@ -140,8 +143,7 @@ public class WatershedYatraController {
 		return mav;
 	}
 	
-	
-	
+
 
 	@RequestMapping(value = "/getWatershedYatraBlock", method = RequestMethod.POST)
 	@ResponseBody

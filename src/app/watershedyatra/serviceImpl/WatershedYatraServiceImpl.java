@@ -100,5 +100,10 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		// TODO Auto-generated method stub
 		return dao.getCompleteListofNodalOfficer(stcd);
 	}
+	
+	@Override
+	public LinkedHashMap<Integer, String> getCultActivity() {
+  		return dao.getCultActivity();
+	}
 
 }

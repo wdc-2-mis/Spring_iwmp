@@ -15,6 +15,19 @@
 <title>Watershed Yatra Program</title>
 
 <script type="text/javascript">
+function toggleOtherField() {
+    const select = document.getElementById('culturalActivity');
+    const otherDiv = document.getElementById('otherActivityDiv');
+
+    // Check if the selected option text is "Others"
+    const selectedText = select.options[select.selectedIndex].text.trim();
+    if (selectedText === "Others") {
+        otherDiv.style.display = "block"; // Show the text box
+    } else {
+        otherDiv.style.display = "none"; // Hide the text box
+    }
+}
+
 
 let formSubmitted = false;
 function validation() 
@@ -44,6 +57,7 @@ function validation()
 	$FilmYes = $('input[name="FilmYes"]:checked').val();
 	$quizParticipants = $('#quizParticipants').val();
 	$culturalActivity = $('#culturalActivity').val();
+	$otherActivity = $('#otherActivity').val();
 	$bhoomiWorks = $('#bhoomiWorks').val();
 	$bhoomiCost = $('#bhoomiCost').val();
 	$lokWorks = $('#lokWorks').val();
@@ -157,81 +171,6 @@ function validation()
 		$('#arExperience').focus();
 		return false;
 	}
-	
-	if ($shapathYes === '' || typeof $shapathYes === 'undefined') {
-		alert('Please select Shapath Shramdan');
-		$('#shapathYes').focus();
-		return false;
-	}
-	if ($FilmYes === '' || typeof $FilmYes === 'undefined') {
-		alert('Please select Film on Watershed Yatra');
-		$('#FilmYes').focus();
-		return false;
-	}
-	
-	if ($quizParticipants === '' || typeof $quizParticipants === 'undefined') {
-		alert('Please enter Number of People participated in Quiz');
-		$('#quizParticipants').focus();
-		return false;
-	}
-	if ($culturalActivity === '' || typeof $culturalActivity === 'undefined') {
-		alert('Please select Cultural Activity based on Watershed theme');
-		$('#culturalActivity').focus();
-		return false;
-	}
-	if ($bhoomiWorks === '' || typeof $bhoomiWorks === 'undefined') {
-		alert('Please enter Number of Works of Bhoomi Poojan');
-		$('#bhoomiWorks').focus();
-		return false;
-	}
-	if ($bhoomiCost === '' || typeof $bhoomiCost === 'undefined') {
-		alert('Please enter Cost of Total works of Bhoomi Poojan');
-		$('#bhoomiCost').focus();
-		return false;
-	}
-	if ($lokWorks === '' || typeof $lokWorks === 'undefined') {
-		alert('Please enter Number of Works of Lokarpan');
-		$('#lokWorks').focus();
-		return false;
-	}
-	if ($costWorks === '' || typeof $costWorks === 'undefined') {
-		alert('Please enter Number of cost of Works of Lokarpan');
-		$('#costWorks').focus();
-		return false;
-	}
-	if ($locShramdaan === '' || typeof $locShramdaan === 'undefined') {
-		alert('Please enter Number of Locations of Shramdaan');
-		$('#locShramdaan').focus();
-		return false;
-	}
-	if ($locShramdaanps === '' || typeof $locShramdaanps === 'undefined') {
-		alert('Please enter Number of Cost of people participated of Shramdaan');
-		$('#locShramdaanps').focus();
-		return false;
-	}
-	if ($plantationArea === '' || typeof $plantationArea === 'undefined') {
-		alert('Please enter the plantation area');
-		$('#plantationArea').focus();
-		return false;
-	}
-	if ($nofagrohorti === '' || typeof $nofagrohorti === 'undefined') {
-		alert('Please enter the No. of Agro forsetry / Horticultural Plants');
-		$('#nofagrohorti').focus();
-		return false;
-	}
-	
-	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
-		alert('Please enter the Number of Watershed Margdarshaks');
-		$('#noOfwatershed').focus();
-		return false;
-	}
-
-	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
-		alert('Please enter the Number of Watershed Margdarshaks');
-		$('#noOfwatershed').focus();
-		return false;
-	}
-	
 	if ($arExperiencephoto1 === '' || typeof $arExperiencephoto1 === 'undefined') {
 		alert('Please upload the photo of AR Experience');
 		$('#arExperiencephoto1').focus();
@@ -244,6 +183,11 @@ function validation()
 		return false;
 	}
 	
+	if ($shapathYes === '' || typeof $shapathYes === 'undefined') {
+		alert('Please select Shapath Shramdan');
+		$('#shapathYes').focus();
+		return false;
+	}
 	if ($shapathYesphoto1 === '' || typeof $shapathYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Shapath Shramdan');
 		$('#shapathYesphoto1').focus();
@@ -254,7 +198,11 @@ function validation()
 		$('#shapathYesphoto2').focus();
 		return false;
 	}
-	
+	if ($FilmYes === '' || typeof $FilmYes === 'undefined') {
+		alert('Please select Film on Watershed Yatra');
+		$('#FilmYes').focus();
+		return false;
+	}
 	if ($FilmYesphoto1 === '' || typeof $FilmYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Film on Watershed Yatra');
 		$('#FilmYesphoto1').focus();
@@ -266,6 +214,11 @@ function validation()
 		return false;
 	}
 	
+	if ($quizParticipants === '' || typeof $quizParticipants === 'undefined') {
+		alert('Please enter Number of People participated in Quiz');
+		$('#quizParticipants').focus();
+		return false;
+	}
 	if ($quizParticipantsphoto1 === '' || typeof $quizParticipantsphoto1 === 'undefined') {
 		alert('Please upload the photo of Quiz Program');
 		$('#quizParticipantsphoto1').focus();
@@ -277,6 +230,19 @@ function validation()
 		return false;
 	}
 	
+	if ($culturalActivity === '' || typeof $culturalActivity === 'undefined') {
+		alert('Please select Cultural Activity based on Watershed theme');
+		$('#culturalActivity').focus();
+		return false;
+	}
+	if ($culturalActivity === '4') {
+	    if ($otherActivity === '' || typeof $otherActivity === 'undefined') {
+	        alert('Please specify the Other Cultural Activity based on Watershed theme');
+	        $('#otherActivity').focus();
+	        return false;
+	    }
+	}
+
 	if ($culturalActivityphoto1 === '' || typeof $culturalActivityphoto1 === 'undefined') {
 		alert('Please upload the photo of Cultural Activity based on Watershed theme');
 		$('#culturalActivityphoto1').focus();
@@ -288,7 +254,16 @@ function validation()
 		return false;
 	}
 	
-
+	if ($bhoomiWorks === '' || typeof $bhoomiWorks === 'undefined') {
+		alert('Please enter Number of Works of Bhoomi Poojan');
+		$('#bhoomiWorks').focus();
+		return false;
+	}
+	if ($bhoomiCost === '' || typeof $bhoomiCost === 'undefined') {
+		alert('Please enter Cost of Total works of Bhoomi Poojan');
+		$('#bhoomiCost').focus();
+		return false;
+	}
 	if ($bhoomiCostphoto1 === '' || typeof $bhoomiCostphoto1 === 'undefined') {
 		alert('Please upload the photo of Bhoomi Poojan');
 		$('#bhoomiCostphoto1').focus();
@@ -299,7 +274,16 @@ function validation()
 		$('#bhoomiCostphoto2').focus();
 		return false;
 	}
-	
+	if ($lokWorks === '' || typeof $lokWorks === 'undefined') {
+		alert('Please enter Number of Works of Lokarpan');
+		$('#lokWorks').focus();
+		return false;
+	}
+	if ($costWorks === '' || typeof $costWorks === 'undefined') {
+		alert('Please enter Number of cost of Works of Lokarpan');
+		$('#costWorks').focus();
+		return false;
+	}
 	if ($lokWorksphoto1 === '' || typeof $lokWorksphoto1 === 'undefined') {
 		alert('Please upload the photo of Lokarpan');
 		$('#lokWorksphoto1').focus();
@@ -308,6 +292,16 @@ function validation()
 	if ($lokWorksphoto2 === '' || typeof $lokWorksphoto2 === 'undefined') {
 		alert('Please upload the photo of Lokarpan');
 		$('#lokWorksphoto2').focus();
+		return false;
+	}
+	if ($locShramdaan === '' || typeof $locShramdaan === 'undefined') {
+		alert('Please enter Number of Locations of Shramdaan');
+		$('#locShramdaan').focus();
+		return false;
+	}
+	if ($locShramdaanps === '' || typeof $locShramdaanps === 'undefined') {
+		alert('Please enter Number of Cost of people participated of Shramdaan');
+		$('#locShramdaanps').focus();
 		return false;
 	}
 	if ($locShramdaanpsphoto1 === '' || typeof $locShramdaanpsphoto1 === 'undefined') {
@@ -321,6 +315,17 @@ function validation()
 		return false;
 	}
 	
+	if ($plantationArea === '' || typeof $plantationArea === 'undefined') {
+		alert('Please enter the plantation area');
+		$('#plantationArea').focus();
+		return false;
+	}
+	if ($nofagrohorti === '' || typeof $nofagrohorti === 'undefined') {
+		alert('Please enter the No. of Agro forsetry / Horticultural Plants');
+		$('#nofagrohorti').focus();
+		return false;
+	}
+
 	if ($plantationAreaphoto1 === '' || typeof $plantationAreaphoto1 === 'undefined') {
 		alert('Please upload the photo of Plantation area');
 		$('#plantationAreaphoto1').focus();
@@ -331,7 +336,17 @@ function validation()
 		$('#plantationAreaphoto2').focus();
 		return false;
 	}
-	
+	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
+		alert('Please enter the Number of Watershed Margdarshaks');
+		$('#noOfwatershed').focus();
+		return false;
+	}
+
+	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
+		alert('Please enter the Number of Watershed Margdarshaks');
+		$('#noOfwatershed').focus();
+		return false;
+	}
 	if ($noOfwatershedphoto1 === '' || typeof $noOfwatershedphoto1 === 'undefined') {
 		alert('Please upload the photo of Award Distribution');
 		$('#noOfwatershedphoto1').focus();
@@ -342,6 +357,7 @@ function validation()
 		$('#noOfwatershedphoto2').focus();
 		return false;
 	}
+	
 	if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
 	    formSubmitted = true; 
 	document.saveWatershed.action="saveWatershedYatraVillage";
@@ -356,46 +372,26 @@ function validation()
 </script>
 
 
-<style> 
+<style>
 input[type=text] {
-  width: 30%;
-  height: 10%;
-  padding: 12px 20px;
+  width: 100px; /* Increased width */
+  height: 35px; /* Retained height */
+  padding: 12px 15px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid black;
-  border-radius: 4px;
-  
+  border-radius: 2px;
 }
 
-input[type="text"], input[type="datetime-local"], select {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border: 2px solid #87CEFA; /* Highlighted blue border */
-    border-radius: 6px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    font-size: 16px;
-    font-family: Arial, sans-serif;
-    transition: all 0.3s ease; /* Smooth interaction effects */
-}
-.form-group label {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: black; /* Watercolor blue for labels */
-    display: block;
-    margin-bottom: 5px;
+/* .form-group label { */
+/*     font-size: 1.1rem; */
+/*     font-weight: 600; */
+/*     color: black; /* Watercolor blue for labels */ */
+/*     display: block; */
+/*     margin-bottom: 5px; */
 }
 
-@media (max-width: 768px) {
-    input[type="text"], input[type="datetime-local"], select {
-        max-width: 100%;
-    }
-    input[type="file"] {
-        max-width: 100%;
-    }
-}
+
 </style> 
 
 </head>
@@ -413,18 +409,18 @@ input[type="text"], input[type="datetime-local"], select {
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date and Time: </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%; margin-left: 20px;" />
+       		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%;" />
     		</div>
 			</div>
 			<div class="row">
 			<div class="form-group col-3">
 			<c:if test="${userType== 'SL' }"><br/>
-				<b>State Name:</b> <c:out value="${stateName}"></c:out>
+				<b>State Name:</b></br> <c:out value="${stateName}"></c:out>
 			</c:if>
 			</div>
     		<div class="form-group col-3">
       			<label for="district">District: </label>
-<!--       			<span class="projectError"></span> -->
+      			<span class="activityError"></span>
       			<select class="form-control district" id="district" name="district" >
     				<option value="">--Select--</option>
     				<c:forEach items="${distList}" var="dist"> 
@@ -468,7 +464,7 @@ input[type="text"], input[type="datetime-local"], select {
      
      <table id = "tblReport" class = "table">
      	<tr>
-     		<th colspan=5 class="text-left">Participation :</th>
+     		<th colspan=4 class="text-left">Participation :</th>
      	</tr>
      	<tr>
      		<td colspan=2>Number Of Participants/Villagers</td>
@@ -508,7 +504,7 @@ input[type="text"], input[type="datetime-local"], select {
      	</tr>
      	
      	<tr>
-     		<th colspan=5 class="text-left">Activities :</th>
+     		<th colspan=4 class="text-left">Activities :</th>
      	</tr>
      	<tr>
      		<td>AR Experience</td>
@@ -553,16 +549,24 @@ input[type="text"], input[type="datetime-local"], select {
      	</tr>
 <tr>
     <td>Cultural Activity based on Watershed theme</td>
-    <td colspan=2>
-        street play/folk/dance/songs/Others<br>
-        <select id="culturalActivity" name="culturalActivity" style="width: 100%; max-width: 300px;" required>
-            <option value="">--Select Activity--</option>
-            <option value="street_play">Street Play</option>
-            <option value="folk_dance">Folk Dance</option>
-            <option value="songs">Songs</option>
-            <option value="others">Others</option>
+   <td colspan="2">
+    Street play/folk dance/songs/Others<br>
+    <div class="form-group col-8">
+        <span class="activityError"></span>
+        <select id="culturalActivity" name="culturalActivity" style="width: 100%; max-width: 300px;" required class="form-control activity" onchange="toggleOtherField()">
+            <option value="">--Select cultural activity--</option>
+            <c:forEach items="${cultMap}" var="cult"> 
+                <option value="<c:out value='${cult.key}'/>"><c:out value="${cult.value}" /></option>
+            </c:forEach>
         </select>
-    </td>
+    </div>
+    <div id="otherActivityDiv" class="form-group col-8" style="display: none; margin-top: 10px;">
+        <label for="otherActivity">Please specify:</label>
+        <input type="text" id="otherActivity" name="otherActivity" class="form-control" placeholder="other activity" style="max-width: 300px;">
+    </div>
+</td>
+
+
     <td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1"/>
@@ -598,7 +602,7 @@ input[type="text"], input[type="datetime-local"], select {
      		<td>Shramdaan</td>
      		<td>Number of Locations<br><input type="text" id="locShramdaan" name="locShramdaan" autocomplete="off"
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Cost of people participated<br><input type="text" id="locShramdaanps" name="locShramdaanps" autocomplete="off"
+     		<td>Number of people participated<br><input type="text" id="locShramdaanps" name="locShramdaanps" autocomplete="off"
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
         Uploading of photographs (limit 2 photos per activity)<br>
@@ -621,7 +625,7 @@ input[type="text"], input[type="datetime-local"], select {
      	</tr>
      	<tr>
      		<td>Award Distribution</td>
-     		<td colspan=2>Number of Watershed Margdarshaks<br><input type="text" id="noOfwatershed" name="noOfwatershed" autocomplete="off"
+     		<td colspan=2>Number of "Watershed Margdarshaks"<br><input type="text" id="noOfwatershed" name="noOfwatershed" autocomplete="off"
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>

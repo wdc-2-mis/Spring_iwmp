@@ -32,5 +32,7 @@ public interface WatershedYatraService {
 
 	public String saveWatershedYatraVillageupload(WatershedYatraBean userfileup, HttpSession session);
 	
+	LinkedHashMap<Integer, String> getCultActivity();
+	
 	
 }

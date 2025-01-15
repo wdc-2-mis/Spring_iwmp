@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
-
+import app.watershedyatra.model.MCulturalActivity;
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
 import app.common.CommonFunctions;
 import app.model.IwmpDistrict;
@@ -67,6 +67,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	
 	@Value("${getCompleteListofNodalOfficer}")
 	String getCompleteListofNodalOfficer;
+	
+	@Value("${cultListWatershedyatra}")
+	String cultListWatershedyatra;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -412,6 +415,8 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				IwmpBlock bl =new IwmpBlock();
 				IwmpGramPanchayat gp =new IwmpGramPanchayat();
 				IwmpVillage vil = new IwmpVillage();
+				MCulturalActivity ca = new MCulturalActivity();
+				ca.setCulturalId(userfileup.getCulturalActivity());
 				
 				st.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
 				main.setIwmpState(st);
@@ -449,7 +454,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setBhumiJalSanrakshan(userfileup.getShapathYes());
 				main.setWatershedYatraFilm(userfileup.getFilmYes());
 				main.setQuizParticipants(userfileup.getQuizParticipants());
-				main.setCulturalActivity(userfileup.getCulturalActivity());
+				
+				main.setmCulturalActivity(ca);
+				if(userfileup.getCulturalActivity()==4) {
+				main.setCulturalActivityOther(userfileup.getOtherActivity());
+				System.out.println("other"+ userfileup.getOtherActivity());
+				}
 				main.setBhoomiPoojanNoOfWorks(userfileup.getBhoomiWorks());
 				main.setBhoomiPoojanCostOfWorks(userfileup.getBhoomiCost());
 				main.setLokarpanNoOfWorks(userfileup.getLokWorks());
@@ -503,6 +513,37 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		
 		return res;
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getCultActivity() {
+		
+		List<MCulturalActivity> cultList=new ArrayList<MCulturalActivity>();
+		String hql=cultListWatershedyatra;
+		LinkedHashMap<Integer, String> cultMap=new LinkedHashMap<Integer, String>();
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+				session.beginTransaction();
+				Query query = session.createQuery("from MCulturalActivity  order by culturalId");
+				cultList = query.list();
+				for (MCulturalActivity mcult : cultList) 
+				{
+					cultMap.put(mcult.getCulturalId(), mcult.getCulturalName());
+				}
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+        return cultMap;
 	}
 
 	@Override

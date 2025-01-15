@@ -89,6 +89,8 @@
         <mapping class="app.watershedyatra.model.RoutePlanVanTravel"  />
         <mapping class="app.watershedyatra.model.WatershedYatraInauguaration"  />
         <mapping class="app.watershedyatra.model.WatershedYatVill"  />
+        <mapping class="app.watershedyatra.model.MCulturalActivity"  />
+        
         
         
         
