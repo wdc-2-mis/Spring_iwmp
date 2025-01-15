@@ -354,13 +354,13 @@ function checkImage(input, inputId) {
 
 <style>
 input[type=text] {
-	width: 100px;
-	height: 50px;
-	padding: 12px 20px;
-	margin: 8px 0;
-	box-sizing: border-box;
-	border: 2px solid black;
-	border-radius: 4px;
+  width: 100px; /* Increased width */
+  height: 35px; /* Retained height */
+  padding: 12px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 2px;
 }
 
 .form-group label {
