@@ -28,12 +28,12 @@ function toggleOtherField() {
     }
 }
 
-
 let formSubmitted = false;
+let allValid = true;
 function validation() 
 {
 	if (formSubmitted) return false;
-
+	allValid = true;
 	var allowedFiles = [ ".docx",".doc", ".pdf", ".ppt", ".pptx", ".jpg", ".jpeg",".png",".xlsx","xls"];
 	
 	$district = $('#district option:selected').val();
@@ -93,282 +93,365 @@ function validation()
 	if ($datetime === '' || typeof $datetime === 'undefined') {
 		alert('Please select a Date and Time');
 		$('#datetime').focus();
+		allValid = false;
 		return false;
 	}
 	if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
 		alert('Please select District');
 		$('#district').focus();
+		allValid = false;
 		return false;
 	}
 	if ($block === '' || typeof $block === 'undefined') {
 		alert('Please select Block');
 		$('#block').focus();
+		allValid = false;
 		return false;
 	}
 	if ($grampan === '' || typeof $grampan === 'undefined') {
 		alert('Please select Gram Panchayat');
 		$('#grampan').focus();
+		allValid = false;
 		return false;
 	}
 	if ($village === '' || typeof $village === 'undefined') {
 		alert('Please select Village');
 		$('#village').focus();
+		allValid = false;
 		return false;
 	}
 	if ($location === '' || typeof $location === 'undefined') {
 		alert('Please enter Location');
 		$('#location').focus();
+		allValid = false;
 		return false;
 	}
 	if ($maleParticipants === '' || typeof $maleParticipants === 'undefined') {
 		alert('Please enter the Number Of Male Participants/Villagers');
 		$('#maleParticipants').focus();
+		allValid = false;
 		return false;
 	}
 	if ($femaleParticipants === '' || typeof $femaleParticipants === 'undefined') {
 		alert('Please enter the Number Of Female Participants/Villagers');
 		$('#femaleParticipants').focus();
+		allValid = false;
 		return false;
 	}
 	if ($centralMinisters === '' || typeof $centralMinisters === 'undefined') {
 		alert('Please enter the Number of Central Ministers');
 		$('#centralMinisters').focus();
+		allValid = false;
 		return false;
 	}
 	if ($stateMinisters === '' || typeof $stateMinisters === 'undefined') {
 		alert('Please enter the Number of State Ministers');
 		$('#stateMinisters').focus();
+		allValid = false;
 		return false;
 	}
 	if ($membersOfParliament === '' || typeof $membersOfParliament === 'undefined') {
 		alert('Please enter the Number of Members of Parliament');
 		$('#membersOfParliament').focus();
+		allValid = false;
 		return false;
 	}
 	if ($legAssemblyMembers === '' || typeof $legAssemblyMembers === 'undefined') {
 		alert('Please enter the Number of Legislative Assembly Members');
 		$('#legAssemblyMembers').focus();
+		allValid = false;
 		return false;
 	}
 	if ($legCouncilMembers === '' || typeof $legCouncilMembers === 'undefined') {
 		alert('Please enter the Number of Legislative Council Members');
 		$('#legCouncilMembers').focus();
+		allValid = false;
 		return false;
 	}
 	if ($publicReps === '' || typeof $publicReps === 'undefined') {
 		alert('Please enter the Number of other Public Representatives');
 		$('#publicReps').focus();
+		allValid = false;
 		return false;
 	}
 	if ($govOfficials === '' || typeof $govOfficials === 'undefined') {
 		alert('Please enter the Number of Government Officials');
 		$('#govOfficials').focus();
+		allValid = false;
 		return false;
 	}
 	
 	if ($arExperience === '' || typeof $arExperience === 'undefined') {
 		alert('Please enter the Number of People who availed experience');
 		$('#arExperience').focus();
+		allValid = false;
 		return false;
 	}
 	if ($arExperiencephoto1 === '' || typeof $arExperiencephoto1 === 'undefined') {
 		alert('Please upload the photo of AR Experience');
-		$('#arExperiencephoto1').focus();
+		//$('#arExperiencephoto1').focus();
+		document.getElementById('arExperiencephoto1').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($arExperiencephoto2 === '' || typeof $arExperiencephoto2 === 'undefined') {
 		alert('Please upload the photo of AR Experience');
-		$('#arExperiencephoto2').focus();
+		//$('#arExperiencephoto2').focus();
+		document.getElementById('arExperiencephoto2').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($shapathYes === '' || typeof $shapathYes === 'undefined') {
 		alert('Please select Shapath Shramdan');
 		$('#shapathYes').focus();
+		allValid = false;
 		return false;
 	}
 	if ($shapathYesphoto1 === '' || typeof $shapathYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Shapath Shramdan');
-		$('#shapathYesphoto1').focus();
+		//$('#shapathYesphoto1').focus();
+		document.getElementById('shapathYesphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($shapathYesphoto2 === '' || typeof $shapathYesphoto2 === 'undefined') {
 		alert('Please upload the photo of Shapath Shramdan');
-		$('#shapathYesphoto2').focus();
+		//$('#shapathYesphoto2').focus();
+		document.getElementById('shapathYesphoto2').click();
+		allValid = false;
 		return false;
 	}
 	if ($FilmYes === '' || typeof $FilmYes === 'undefined') {
 		alert('Please select Film on Watershed Yatra');
 		$('#FilmYes').focus();
+		allValid = false;
 		return false;
 	}
 	if ($FilmYesphoto1 === '' || typeof $FilmYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Film on Watershed Yatra');
-		$('#FilmYesphoto1').focus();
+		//$('#FilmYesphoto1').focus();
+		document.getElementById('FilmYesphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($FilmYesphoto2 === '' || typeof $FilmYesphoto2 === 'undefined') {
 		alert('Please upload the photo of Film on Watershed Yatra');
-		$('#FilmYesphoto2').focus();
+		//$('#FilmYesphoto2').focus();
+		document.getElementById('FilmYesphoto2').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($quizParticipants === '' || typeof $quizParticipants === 'undefined') {
 		alert('Please enter Number of People participated in Quiz');
 		$('#quizParticipants').focus();
+		allValid = false;
 		return false;
 	}
 	if ($quizParticipantsphoto1 === '' || typeof $quizParticipantsphoto1 === 'undefined') {
 		alert('Please upload the photo of Quiz Program');
-		$('#quizParticipantsphoto1').focus();
+	//	$('#quizParticipantsphoto1').focus();
+		document.getElementById('quizParticipantsphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($quizParticipantsphoto2 === '' || typeof $quizParticipantsphoto2 === 'undefined') {
 		alert('Please upload the photo of Quiz Program');
-		$('#quizParticipantsphoto2').focus();
+		//$('#quizParticipantsphoto2').focus();
+		document.getElementById('quizParticipantsphoto2').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($culturalActivity === '' || typeof $culturalActivity === 'undefined') {
 		alert('Please select Cultural Activity based on Watershed theme');
 		$('#culturalActivity').focus();
+		allValid = false;
 		return false;
 	}
 	if ($culturalActivity === '4') {
 	    if ($otherActivity === '' || typeof $otherActivity === 'undefined') {
 	        alert('Please specify the Other Cultural Activity based on Watershed theme');
 	        $('#otherActivity').focus();
+	        allValid = false;
 	        return false;
 	    }
 	}
 
 	if ($culturalActivityphoto1 === '' || typeof $culturalActivityphoto1 === 'undefined') {
 		alert('Please upload the photo of Cultural Activity based on Watershed theme');
-		$('#culturalActivityphoto1').focus();
+		//$('#culturalActivityphoto1').focus();
+		document.getElementById('culturalActivityphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($culturalActivityphoto2 === '' || typeof $culturalActivityphoto2 === 'undefined') {
 		alert('Please upload the photo of Cultural Activity based on Watershed theme');
-		$('#culturalActivityphoto2').focus();
+		//$('#culturalActivityphoto2').focus();
+		document.getElementById('culturalActivityphoto2').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($bhoomiWorks === '' || typeof $bhoomiWorks === 'undefined') {
 		alert('Please enter Number of Works of Bhoomi Poojan');
 		$('#bhoomiWorks').focus();
+		allValid = false;
 		return false;
 	}
 	if ($bhoomiCost === '' || typeof $bhoomiCost === 'undefined') {
 		alert('Please enter Cost of Total works of Bhoomi Poojan');
 		$('#bhoomiCost').focus();
+		allValid = false;
 		return false;
 	}
 	if ($bhoomiCostphoto1 === '' || typeof $bhoomiCostphoto1 === 'undefined') {
 		alert('Please upload the photo of Bhoomi Poojan');
-		$('#bhoomiCostphoto1').focus();
+		//$('#bhoomiCostphoto1').focus();
+		document.getElementById('bhoomiCostphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($bhoomiCostphoto2 === '' || typeof $bhoomiCostphoto2 === 'undefined') {
 		alert('Please upload the photo of Bhoomi Poojan');
-		$('#bhoomiCostphoto2').focus();
+	//	$('#bhoomiCostphoto2').focus();
+		document.getElementById('bhoomiCostphoto2').click();
+		allValid = false;
 		return false;
 	}
 	if ($lokWorks === '' || typeof $lokWorks === 'undefined') {
 		alert('Please enter Number of Works of Lokarpan');
 		$('#lokWorks').focus();
+		allValid = false;
 		return false;
 	}
 	if ($costWorks === '' || typeof $costWorks === 'undefined') {
 		alert('Please enter Number of cost of Works of Lokarpan');
 		$('#costWorks').focus();
+		allValid = false;
 		return false;
 	}
 	if ($lokWorksphoto1 === '' || typeof $lokWorksphoto1 === 'undefined') {
 		alert('Please upload the photo of Lokarpan');
-		$('#lokWorksphoto1').focus();
+		//$('#lokWorksphoto1').focus();
+		document.getElementById('lokWorksphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($lokWorksphoto2 === '' || typeof $lokWorksphoto2 === 'undefined') {
 		alert('Please upload the photo of Lokarpan');
-		$('#lokWorksphoto2').focus();
+		//$('#lokWorksphoto2').focus();
+		document.getElementById('lokWorksphoto2').click();
+		allValid = false;
 		return false;
 	}
 	if ($locShramdaan === '' || typeof $locShramdaan === 'undefined') {
 		alert('Please enter Number of Locations of Shramdaan');
 		$('#locShramdaan').focus();
+		allValid = false;
 		return false;
 	}
 	if ($locShramdaanps === '' || typeof $locShramdaanps === 'undefined') {
 		alert('Please enter Number of Cost of people participated of Shramdaan');
 		$('#locShramdaanps').focus();
+		allValid = false;
 		return false;
 	}
 	if ($locShramdaanpsphoto1 === '' || typeof $locShramdaanpsphoto1 === 'undefined') {
 		alert('Please upload the photo of Shramdan');
-		$('#locShramdaanpsphoto1').focus();
+		//$('#locShramdaanpsphoto1').focus();
+		document.getElementById('locShramdaanpsphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($locShramdaanpsphoto2 === '' || typeof $locShramdaanpsphoto2 === 'undefined') {
 		alert('Please upload the photo of Shramdan');
-		$('#locShramdaanpsphoto2').focus();
+		//$('#locShramdaanpsphoto2').focus();
+		document.getElementById('locShramdaanpsphoto2').click();
+		allValid = false;
 		return false;
 	}
 	
 	if ($plantationArea === '' || typeof $plantationArea === 'undefined') {
 		alert('Please enter the plantation area');
 		$('#plantationArea').focus();
+		allValid = false;
 		return false;
 	}
 	if ($nofagrohorti === '' || typeof $nofagrohorti === 'undefined') {
 		alert('Please enter the No. of Agro forsetry / Horticultural Plants');
 		$('#nofagrohorti').focus();
+		allValid = false;
 		return false;
 	}
 
 	if ($plantationAreaphoto1 === '' || typeof $plantationAreaphoto1 === 'undefined') {
 		alert('Please upload the photo of Plantation area');
-		$('#plantationAreaphoto1').focus();
+		//$('#plantationAreaphoto1').focus();
+		document.getElementById('plantationAreaphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($plantationAreaphoto2 === '' || typeof $plantationAreaphoto2 === 'undefined') {
 		alert('Please upload the photo of Plantation area');
-		$('#plantationAreaphoto2').focus();
+		//$('#plantationAreaphoto2').focus();
+		document.getElementById('plantationAreaphoto2').click();
+		allValid = false;
 		return false;
 	}
 	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
 		alert('Please enter the Number of Watershed Margdarshaks');
 		$('#noOfwatershed').focus();
+		allValid = false;
 		return false;
 	}
 
 	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
 		alert('Please enter the Number of Watershed Margdarshaks');
 		$('#noOfwatershed').focus();
+		allValid = false;
 		return false;
 	}
 	if ($noOfwatershedphoto1 === '' || typeof $noOfwatershedphoto1 === 'undefined') {
 		alert('Please upload the photo of Award Distribution');
-		$('#noOfwatershedphoto1').focus();
+		//$('#noOfwatershedphoto1').focus();
+		document.getElementById('noOfwatershedphoto1').click();
+		allValid = false;
 		return false;
 	}
 	if ($noOfwatershedphoto2 === '' || typeof $noOfwatershedphoto2 === 'undefined') {
 		alert('Please upload the photo of Award Distribution');
-		$('#noOfwatershedphoto2').focus();
+	//	$('#noOfwatershedphoto2').focus();
+		document.getElementById('noOfwatershedphoto2').click();
+		allValid = false;
 		return false;
 	}
-	
-	if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
+	if (allValid) {
+		if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
 	    formSubmitted = true; 
-	document.saveWatershed.action="saveWatershedYatraVillage";
-	document.saveWatershed.method="post";
-	document.saveWatershed.submit();
+		document.saveWatershed.action="saveWatershedYatraVillage";
+		document.saveWatershed.method="post";
+		document.saveWatershed.submit();
+		}
+		return true;
 	}
 
-    return false;
-}
+	    return false;
+	}
 
 
+	function checkImage(input, inputId) {
+	    var file = input.files[0];
+	    var fileType = file.type;
+
+	    if (!fileType.startsWith('image/')) {
+	        alert('Only image files are allowed');
+	       	input.value = ''; // Clear the file input
+	       	document.getElementById(inputId).focus();
+	    }
+	}
 </script>
 
 
@@ -512,8 +595,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1"/>
-        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2"/>
+        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" onchange="checkImage(this, 'arExperiencephoto1')" required />
+        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" onchange="checkImage(this, 'arExperiencephoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -523,8 +606,8 @@ input[type=text] {
      		
      		<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1"/>
-        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2"/>
+        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')" required />>
+        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -533,8 +616,8 @@ input[type=text] {
      		<td><input type="radio" id="FilmNo" name="FilmYes" value="false">No</td>
      		<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="FilmYesphoto1" id="FilmYesphoto1"/>
-        <input type="file" name="FilmYesphoto2" id="FilmYesphoto2"/>
+        <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')" required />
+        <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')" required />
     </td>
      	</tr>
      		<tr>
@@ -543,8 +626,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1"/>
-        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2"/>
+        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
+        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
     </td>
      	</tr>
 <tr>
@@ -569,8 +652,8 @@ input[type=text] {
 
     <td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1"/>
-        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2"/>
+        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" onchange="checkImage(this, 'culturalActivityphoto1')" required />
+        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" onchange="checkImage(this, 'culturalActivityphoto2')" required />
     </td>
 </tr>
      
@@ -582,8 +665,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" />
-        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" />
+        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
+        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" onchange="checkImage(this, 'bhoomiCostphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -594,8 +677,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1"/>
-        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2"/>
+        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" onchange="checkImage(this, 'lokWorksphoto1')" required />
+        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" onchange="checkImage(this, 'lokWorksphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -606,8 +689,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" />
-        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" />
+        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
+        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -618,8 +701,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1"/>
-        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2"/>
+        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" onchange="checkImage(this, 'plantationAreaphoto1')" required />
+        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" onchange="checkImage(this, 'plantationAreaphoto2')" required />
     </td>
 								
      	</tr>
@@ -629,8 +712,8 @@ input[type=text] {
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1"/>
-        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2"/>
+        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
+        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" onchange="checkImage(this, 'noOfwatershedphoto2')" required />
     </td>
      	</tr>
      	
