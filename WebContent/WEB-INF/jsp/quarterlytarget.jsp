@@ -481,7 +481,7 @@ function savequadTarget(e){
 												id="quarter1${listUser.indicators_id}" maxlength="8"
 												value="${listUser.first_quad}"
 												onblur="checkValue(${listUser.indicators_id})"
-												onfocusin="numericOnly(event)" name="quarter1" targetdesc="">
+												onfocusin="numericOnly(event)" name="quarter1" targetdesc="" required>
 										</c:if>
 										<c:if test="${listUser.area_type eq 'H'.charAt(0)}">
 											<input type="text" class="first"

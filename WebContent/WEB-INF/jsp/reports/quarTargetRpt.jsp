@@ -83,7 +83,7 @@ function exportExcel( stCode,year,stName,finName) {
           
           <td>
               <select class="form-control finyear" name="year" id="year"  required="required">
-              		<option value="0">--All Financial Year---</option>
+              		<option value="0">--All Financial Year--</option>
 						  <c:if test="${not empty financialYear}">
                					<c:forEach items="${financialYear}" var="lists">
                					<c:if test="${lists.finYrCd eq year}">

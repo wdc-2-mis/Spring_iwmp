@@ -5,6 +5,8 @@ import java.util.Map;
 
 import app.bean.StateToVillageBean;
 import app.model.IwmpDistrict;
+import app.model.IwmpMFinYear;
+import app.model.IwmpMMonth;
 import app.model.IwmpMProject;
 import app.model.IwmpState;
 import app.model.UserReg;
@@ -20,6 +22,8 @@ public interface UserDao {
 	List<UserReg> getUseridList(String stateCode, String dist);
 	void saveUserReg(UserReg userReg);
 	Integer regId();
+	List<IwmpMFinYear> getCurrentFinYear();
+	List<IwmpMMonth> getnotcompletedmonth();
 	
 	
 }

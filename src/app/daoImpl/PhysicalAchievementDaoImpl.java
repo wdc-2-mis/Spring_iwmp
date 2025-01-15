@@ -127,6 +127,20 @@ public class PhysicalAchievementDaoImpl implements PhysicalAchievementDao{
 	@Value("${viewCompletedAchievement}")
 	String viewCompletedAchievement;
 	
+	@Value("${getphyAchRecords}")
+	String getphyAchRecords;
+	
+	@Value("${phyachquery1}")
+	String phyachquery1;
+	
+	@Value("${phyachquery2}")
+	String phyachquery2;
+	
+	@Value("${phyachquery3}")
+	String phyachquery3;
+	
+	@Value("${phyachquery4}")
+	String phyachquery4;
 	
 	@Override
 	public List<PhysicalAchievementBean> getActivityWithTarget(Integer pCode,Integer finYr,Integer monthId) {
@@ -984,6 +998,69 @@ public class PhysicalAchievementDaoImpl implements PhysicalAchievementDao{
 		
 		}
 		return list;
+	}
+
+	@Override
+	public List<WdcpmksyProjectPhysicalAchievementDetails> showPhyAchRecords(Integer project, Integer fyear, Integer month) {
+		List<WdcpmksyProjectPhysicalAchievementDetails> list = new ArrayList<WdcpmksyProjectPhysicalAchievementDetails>();
+		String hql=getphyAchRecords;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(hql);
+			query.setParameter("project",project);
+			query.setParameter("fyear",fyear);
+			query.setParameter("month",month);
+			list = query.list();
+			
+			session.getTransaction().commit();
+		}catch(Exception ex) {
+		      //System.out.print(ex.getStackTrace()[0].getLineNumber());
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}finally {
+		
+		}
+		return list;
+	}
+
+	@Override
+	public boolean unfreezePhyAchData(Integer project, Integer month, Integer year, Integer achievementid) {
+		Boolean res=false;
+		Session session = sessionFactory.getCurrentSession();
+		String hql=phyachquery1;
+		try 
+		{
+			session.beginTransaction();
+			SQLQuery query1 = session.createSQLQuery(hql);
+			query1.setParameter("achievementid", achievementid);
+			query1.executeUpdate();
+			
+			SQLQuery query2 = session.createSQLQuery(phyachquery2);
+			query2.setParameter("achievementid", achievementid);
+			query2.executeUpdate();
+			
+			SQLQuery query3 = session.createSQLQuery(phyachquery3);
+			query3.setParameter("project", project);
+			query3.setParameter("month", month);
+			query3.setParameter("year", year);
+			query3.executeUpdate();
+			
+			SQLQuery query4 = session.createSQLQuery(phyachquery4);
+			query4.setParameter("achievementid", achievementid);
+			query4.executeUpdate();
+			
+			 session.getTransaction().commit();
+		        res = true;
+		}
+		catch(Exception ex) 
+		{
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		return false;
+		}
+		
+		return res;	
 	}
 
 }

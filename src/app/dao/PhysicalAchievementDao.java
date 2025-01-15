@@ -40,5 +40,7 @@ public interface PhysicalAchievementDao {
 	List<WdcpmksyProjectAssetLivelihoodStatus> getProjectLivelihoodAssetStatus(int assetid);
 	List<WdcpmksyProjectAssetProductionStatus> getProjectProductionAssetStatus(int assetid);
 	List<WdcpmksyProjectAssetEPAStatus> getProjectEPAAssetStatus(int assetid);
+	List<WdcpmksyProjectPhysicalAchievementDetails> showPhyAchRecords(Integer project, Integer fyear, Integer month);
+	boolean unfreezePhyAchData(Integer project, Integer month, Integer year, Integer achievementid);
 }
  

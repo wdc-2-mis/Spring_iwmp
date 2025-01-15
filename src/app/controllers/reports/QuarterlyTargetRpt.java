@@ -240,7 +240,7 @@ public class QuarterlyTargetRpt {
 		        document.close();
 
 		        response.setContentType("application/pdf");
-		        response.setHeader("Content-Disposition", "attachment; filename=O12-Report.pdf");
+		        response.setHeader("Content-Disposition", "attachment; filename=T3-Report.pdf");
 		        OutputStream outputStream = response.getOutputStream();
 		        baos.writeTo(outputStream);
 		        outputStream.flush();

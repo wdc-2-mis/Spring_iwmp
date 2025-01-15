@@ -17,6 +17,8 @@ import app.dao.ProfileDao;
 import app.dao.UserDao;
 import app.daoImpl.UserDaoImpl;
 import app.model.IwmpDistrict;
+import app.model.IwmpMFinYear;
+import app.model.IwmpMMonth;
 import app.model.IwmpMProject;
 import app.model.IwmpState;
 
@@ -115,6 +117,24 @@ public class UserServiceImpl implements UserService {
 			userList.put(temp.getRegId()+"", temp.getUserId());
 		}
 		return userList;
+	}
+
+	@Override
+	public Map<Integer, String> getCurrentFinYear() {
+		Map<Integer, String> finYear = new LinkedHashMap<Integer, String>();
+		for(IwmpMFinYear year: userDao.getCurrentFinYear()) {
+			finYear.put(year.getFinYrCd(), year.getFinYrDesc());
+		}
+		return finYear;
+	}
+
+	@Override
+	public Map<Integer, String> getnotcompletedmonth() {
+		Map<Integer, String> getmonth = new LinkedHashMap<Integer, String>();
+		for(IwmpMMonth month: userDao.getnotcompletedmonth()) {
+			getmonth.put(month.getMonthId(), month.getMonthName());
+		}
+		return getmonth;
 	}
 
 	

@@ -160,7 +160,6 @@ public class SelfHelpGroupController {
 		session = request.getSession(true);
 		String res="fail";
 		if(session!=null && session.getAttribute("loginID")!=null) {
-			System.out.println(shgid);
 			res= selfHelpGroupService.deleteSHG(shgid,group);
 			
 		}else {

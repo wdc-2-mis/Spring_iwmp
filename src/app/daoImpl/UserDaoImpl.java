@@ -7,6 +7,8 @@ import app.bean.User;
 
 import app.dao.UserDao;
 import app.model.IwmpDistrict;
+import app.model.IwmpMFinYear;
+import app.model.IwmpMMonth;
 import app.model.IwmpMProject;
 import app.model.IwmpState;
 
@@ -15,6 +17,8 @@ import app.model.UserReg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -51,8 +55,12 @@ public class UserDaoImpl implements UserDao{
 	  @Value("${userIdforPIA}") 
 	  String userIdforPIA;
 	 
+	  @Value("${getcurrentFinYear}") 
+	  String getcurrentFinYear;
 	  
-	
+	  @Value("${getnotcomMonth}") 
+	  String getnotcomMonth;
+	  
 	
 	@SuppressWarnings("unchecked")
 	public List<User> validateUser(Login login) {
@@ -254,6 +262,57 @@ public class UserDaoImpl implements UserDao{
 		}
         return result;
 	}
+	@Override
+	public List<IwmpMFinYear> getCurrentFinYear() {
+		List<IwmpMFinYear> result=new ArrayList<IwmpMFinYear>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=getcurrentFinYear;
+			result = ses.createQuery(hql).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+	@Override
+	public List<IwmpMMonth> getnotcompletedmonth() {
+		List<IwmpMMonth> result=new ArrayList<IwmpMMonth>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=getnotcomMonth;
+			result = ses.createQuery(hql).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+	
 	
 	
 }

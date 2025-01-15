@@ -161,4 +161,16 @@ public class PhysicalAchievementServiceImpl implements PhysicalAchievementServic
 		return physicalAchievementDao.getProjectEPAAssetStatus(assetid);
 	}
 
+	@Override
+	public List<WdcpmksyProjectPhysicalAchievementDetails> showPhyAchRecords(Integer project, Integer fyear, Integer month) {
+		// TODO Auto-generated method stub
+		return physicalAchievementDao.showPhyAchRecords(project, fyear, month);
+	}
+
+	@Override
+	public boolean unfreezePhyAchData(Integer project, Integer month, Integer year, Integer achievementid) {
+		// TODO Auto-generated method stub
+		return physicalAchievementDao.unfreezePhyAchData(project, month, year, achievementid);
+	}
+
 }
