@@ -383,7 +383,10 @@ input[type=text] {
 -->
 
 <c:if test="${not empty result}">
-    <div class="alert alert-info">${result}</div>
+    <div class="alert alert-info" style="color: green;">${result}</div>
+     <script>
+	    alert("<c:out value='${result}'/>");
+	</script> 
 </c:if>
 
 

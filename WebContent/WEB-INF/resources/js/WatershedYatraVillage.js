@@ -103,7 +103,7 @@ $(function(){
 			$("select#district")[0].selectedIndex = 0;
 			$("select#block")[0].selectedIndex = 0;
 		}
-		else if($gType==='distrinct')
+		else if($gType==='district')
 		{
 			$('.yeark').removeClass('d-none');
 			$('.mont').addClass('d-none');
