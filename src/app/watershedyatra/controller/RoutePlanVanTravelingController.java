@@ -46,7 +46,9 @@ HttpSession session;
 		ModelAndView mav = new ModelAndView();
 		List<NodalOfficerBean> draft = new ArrayList<NodalOfficerBean>();
 		try {
-			if (session != null && session.getAttribute("loginID") != null) {
+			
+			if (session != null && session.getAttribute("loginID") != null) 
+			{
 				mav = new ModelAndView("WatershedYatra/routePlanVanTraveling");
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
@@ -71,11 +73,14 @@ HttpSession session;
 				mav.addObject("draftList",draft);
 				mav.addObject("draftListSize",draft.size());
 
-			} else {
+			} 
+			else {
 				mav = new ModelAndView("login");
 				mav.addObject("login", new Login());
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			e.printStackTrace();
 		}
 		return mav;

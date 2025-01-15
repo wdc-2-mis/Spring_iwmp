@@ -42,7 +42,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration";
-			
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TEST/vanyatradoc/Inauguration";
 			
 			MultipartFile[] mfile = {userfileup.getFlagOffPhoto1(), userfileup.getFlagOffPhoto2(), userfileup.getThemeSongPhoto1(), userfileup.getThemeSongPhoto2(),
 					 	userfileup.getBhoomiPoojanPhoto1(), userfileup.getBhoomiPoojanPhoto2(), userfileup.getLokarpanPhoto1(), userfileup.getLokarpanPhoto2(),
