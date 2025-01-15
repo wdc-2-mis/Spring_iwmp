@@ -15,6 +15,14 @@
 <title>Watershed Yatra Program</title>
 
 <script type="text/javascript">
+
+function validateDecimal(input, decimalPlaces) {
+    // Allow only numbers and one decimal point
+    const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?$`);
+    if (!regex.test(input.value)) {
+      input.value = input.value.slice(0, -1); // Remove the last invalid character
+    }
+  }
 function toggleOtherField() {
     const select = document.getElementById('culturalActivity');
     const otherDiv = document.getElementById('otherActivityDiv');
@@ -606,7 +614,7 @@ input[type=text] {
      		
      		<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')" required />>
+        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')" required />
         <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')" required />
     </td>
      	</tr>
@@ -695,9 +703,13 @@ input[type=text] {
      	</tr>
      	<tr>
      		<td>Plantation</td>
-     		<td>Area (in ha.)<br><input type="text" id="plantationArea" name="plantationArea" autocomplete="off"
-								maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>No. of Agro forsetry / Horticultural Plants<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
+     		<td>
+  Area (in ha.)<br><input type="text" id="plantationArea"  name="plantationArea"  autocomplete="off"  maxlength="10" 
+  oninput="validateDecimal(this, 2)" required />
+</td>
+<!--      		<td>Area (in ha.)<br><input type="text" id="plantationArea" name="plantationArea" autocomplete="off" -->
+<!-- 								maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
+     		<td>No. of Agro forestry / Horticultural Plants<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
 								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
