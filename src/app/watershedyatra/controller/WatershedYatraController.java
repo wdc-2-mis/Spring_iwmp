@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
@@ -95,7 +96,7 @@ public class WatershedYatraController {
 	}
 	
 	@RequestMapping(value="/saveWatershedYatraVillage", method = RequestMethod.POST)
-	public ModelAndView saveWatershedYatraVillage(HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView saveWatershedYatraVillage(HttpServletRequest request, HttpServletResponse response,RedirectAttributes redirectAttributes,
 			@ModelAttribute("useruploadsl") WatershedYatraBean userfileup) throws Exception {
 	
 	
@@ -131,19 +132,29 @@ public class WatershedYatraController {
 			
 			
 			res= ser.saveWatershedYatraVillageupload(userfileup, session);
+			if (res.equals("success")) {
+				redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
+			} else {
+				redirectAttributes.addFlashAttribute("result", "Data not saved Successfully!");
+			}
+			return new ModelAndView("redirect:/getWatershedYatraHeader");
+		} 
+		else {
+			return new ModelAndView("redirect:/login");
+
 		}	
-			if(res.equals("success"))
-				mav.addObject("result","Data saved successfully");
-			else
-				mav.addObject("result","Data not saved successfully");
+//			if(res.equals("success"))
+//				mav.addObject("result","Data saved successfully");
+//			else
+//				mav.addObject("result","Data not saved successfully");
 		
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
 	}
 	
-
 
 	@RequestMapping(value = "/getWatershedYatraBlock", method = RequestMethod.POST)
 	@ResponseBody
