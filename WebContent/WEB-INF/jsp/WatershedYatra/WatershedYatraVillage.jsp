@@ -480,7 +480,7 @@ input[type=text] {
 /*     color: black; /* Watercolor blue for labels */ */
 /*     display: block; */
 /*     margin-bottom: 5px; */
-}
+/* } */
 
 
 </style> 
