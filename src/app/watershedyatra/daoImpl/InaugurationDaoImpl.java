@@ -3,9 +3,7 @@ package app.watershedyatra.daoImpl;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -45,7 +43,6 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration";
 			
-			//System.out.println("sgd="+userfileup.getFlagOffPhoto1().getOriginalFilename());
 			
 			MultipartFile[] mfile = {userfileup.getFlagOffPhoto1(), userfileup.getFlagOffPhoto2(), userfileup.getThemeSongPhoto1(), userfileup.getThemeSongPhoto2(),
 					 	userfileup.getBhoomiPoojanPhoto1(), userfileup.getBhoomiPoojanPhoto2(), userfileup.getLokarpanPhoto1(), userfileup.getLokarpanPhoto2(),
@@ -57,7 +54,6 @@ public class InaugurationDaoImpl implements InaugurationDao {
 				commonFunction.uploadFileforLMS(file, filePath);
 			
 			}
-			String FlagOffPhoto1=filePath+userfileup.getFlagOffPhoto1().getOriginalFilename();
 			
 			sess.beginTransaction();
 			InetAddress inet=InetAddress.getLocalHost();

@@ -1,5 +1,6 @@
 package app.watershedyatra.model;
 
+import java.math.BigDecimal;
 import java.time.*;
 import java.util.Date;
 
@@ -44,7 +45,7 @@ public class WatershedYatraInauguaration {
     private Integer shramdaanNoOfParticipatedPeople;
     private String shramdaanPath1;
     private String shramdaanPath2;
-    private Integer plantationArea;
+    private BigDecimal plantationArea;
     private Integer noOfAgroForsetry;
     private String plantationPath1;
     private String plantationPath2;
@@ -76,7 +77,7 @@ public class WatershedYatraInauguaration {
 			Integer bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
 			Integer lokarpanNoOfWorks, Integer lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
 			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, String shramdaanPath1,
-			String shramdaanPath2, Integer plantationArea, Integer noOfAgroForsetry, String plantationPath1,
+			String shramdaanPath2, BigDecimal plantationArea, Integer noOfAgroForsetry, String plantationPath1,
 			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
 			String awardDistributionPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
 			String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
@@ -403,11 +404,11 @@ public class WatershedYatraInauguaration {
 	}
 
 	@Column(name = "plantation_area")
-	public Integer getPlantationArea() {
+	public BigDecimal getPlantationArea() {
 		return plantationArea;
 	}
 
-	public void setPlantationArea(Integer plantationArea) {
+	public void setPlantationArea(BigDecimal plantationArea) {
 		this.plantationArea = plantationArea;
 	}
 

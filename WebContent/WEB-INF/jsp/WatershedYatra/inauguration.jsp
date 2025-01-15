@@ -199,7 +199,7 @@ function validation()
 		return false;
 	}
 	if ($totWorksBhoomiPoojan === '' || typeof $totWorksBhoomiPoojan === 'undefined') {
-		alert('Please enter the Cost of the Total Works of Bhoomi Poojan');
+		alert('Please enter the Cost of the Total Works of Bhoomi Poojan in Lakhs');
 		$('#totWorksBhoomiPoojan').focus();
 		allValid = false;
 		return false;
@@ -226,7 +226,7 @@ function validation()
 		return false;
 	}
 	if ($totWorksLokarpan === '' || typeof $totWorksLokarpan === 'undefined') {
-		alert('Please enter the Cost of the Total Works of Lokarpan');
+		alert('Please enter the Cost of the Total Works of Lokarpan in Lakhs');
 		$('#totWorksLokarpan').focus();
 		allValid = false;
 		return false;
@@ -274,7 +274,7 @@ function validation()
 	}
 	
 	if ($areaPlantation === '' || typeof $areaPlantation === 'undefined') {
-		alert('Please enter the Plantation Area');
+		alert('Please enter the Plantation Area in hectares');
 		$('#areaPlantation').focus();
 		allValid = false;
 		return false;
@@ -374,11 +374,19 @@ input[type=text] {
 
 </head>
 <body>
+<!--  
 <c:if test="${result != null}">
 	<script>
 	    alert("<c:out value='${result}'/>");
 	</script>
 </c:if>
+-->
+
+<c:if test="${not empty result}">
+    <div class="alert alert-info">${result}</div>
+</c:if>
+
+
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Programm</h4> </div>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
@@ -515,8 +523,7 @@ input[type=text] {
      	</tr>
      	<tr>
      		<td>Plantation</td>
-     		<td>Area (in ha.)<br><input type="text" id="areaPlantation" name="areaPlantation" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+     		<td>Area (in ha.)<br><input type="text" id="areaPlantation" name="areaPlantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
      		<td>No. of Agro forsetry / Horticultural Plants<br><input type="text" id="noPlantation" name="noPlantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Upload Photographs<br><input type="file" id="plantationPhoto1" name="plantationPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantationPhoto1')" required /><br/>

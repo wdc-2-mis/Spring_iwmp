@@ -1,5 +1,6 @@
 package app.watershedyatra.bean;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -39,7 +40,7 @@ public class InaugurationBean {
     private Integer costPeopleShramdaan;
     private MultipartFile shramdaanPhoto1;
     private MultipartFile shramdaanPhoto2;
-    private Integer areaPlantation;
+    private BigDecimal areaPlantation;
     private Integer noPlantation;
     private MultipartFile plantationPhoto1;
     private MultipartFile plantationPhoto2;
@@ -234,10 +235,10 @@ public class InaugurationBean {
 	public void setShramdaanPhoto2(MultipartFile shramdaanPhoto2) {
 		this.shramdaanPhoto2 = shramdaanPhoto2;
 	}
-	public Integer getAreaPlantation() {
+	public BigDecimal getAreaPlantation() {
 		return areaPlantation;
 	}
-	public void setAreaPlantation(Integer areaPlantation) {
+	public void setAreaPlantation(BigDecimal areaPlantation) {
 		this.areaPlantation = areaPlantation;
 	}
 	public Integer getNoPlantation() {
