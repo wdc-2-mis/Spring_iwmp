@@ -106,4 +106,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
   		return dao.getCultActivity();
 	}
 
+
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraList(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedYatraList(stcd);
+	}
+
 }

@@ -23,18 +23,18 @@ function validateDecimal(input, decimalPlaces) {
       input.value = input.value.slice(0, -1); // Remove the last invalid character
     }
   }
-function toggleOtherField() {
-    const select = document.getElementById('culturalActivity');
-    const otherDiv = document.getElementById('otherActivityDiv');
+// function toggleOtherField() {
+//     const select = document.getElementById('culturalActivity');
+//     const otherDiv = document.getElementById('otherActivityDiv');
 
-    // Check if the selected option text is "Others"
-    const selectedText = select.options[select.selectedIndex].text.trim();
-    if (selectedText === "Others") {
-        otherDiv.style.display = "block"; // Show the text box
-    } else {
-        otherDiv.style.display = "none"; // Hide the text box
-    }
-}
+//     // Check if the selected option text is "Others"
+//     const selectedText = select.options[select.selectedIndex].text.trim();
+//     if (selectedText === "Others") {
+//         otherDiv.style.display = "block"; // Show the text box
+//     } else {
+//         otherDiv.style.display = "none"; // Hide the text box
+//     }
+// }
 
 let formSubmitted = false;
 let allValid = true;
@@ -72,6 +72,7 @@ function validation()
 	$costWorks = $('#costWorks').val();
 	$locShramdaan = $('#locShramdaan').val();
 	$locShramdaanps = $('#locShramdaanps').val();
+	$manhour = $('#manhour').val();
 	$plantationArea = $('#plantationArea').val();
 	$nofagrohorti = $('#nofagrohorti').val();
 	$noOfwatershed = $('#noOfwatershed').val();
@@ -217,6 +218,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($shapathYes === 'true') {
 	if ($shapathYesphoto1 === '' || typeof $shapathYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Shapath Shramdan');
 		//$('#shapathYesphoto1').focus();
@@ -231,12 +233,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	}
 	if ($FilmYes === '' || typeof $FilmYes === 'undefined') {
 		alert('Please select Film on Watershed Yatra');
 		$('#FilmYes').focus();
 		allValid = false;
 		return false;
 	}
+	if ($FilmYes === 'true') {
 	if ($FilmYesphoto1 === '' || typeof $FilmYesphoto1 === 'undefined') {
 		alert('Please upload the photo of Film on Watershed Yatra');
 		//$('#FilmYesphoto1').focus();
@@ -251,7 +255,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($quizParticipants === '' || typeof $quizParticipants === 'undefined') {
 		alert('Please enter Number of People participated in Quiz');
 		$('#quizParticipants').focus();
@@ -367,6 +371,12 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($manhour === '' || typeof $locShramdaanps === 'undefined') {
+		alert('Please enter Number of Man hour');
+		$('#manhour').focus();
+		allValid = false;
+		return false;
+	}
 	if ($locShramdaanpsphoto1 === '' || typeof $locShramdaanpsphoto1 === 'undefined') {
 		alert('Please upload the photo of Shramdan');
 		//$('#locShramdaanpsphoto1').focus();
@@ -450,16 +460,29 @@ function validation()
 	}
 
 
-	function checkImage(input, inputId) {
-	    var file = input.files[0];
-	    var fileType = file.type;
+function checkImage(input, inputId) {
+    var file = input.files[0];
+    var fileType = file.type;
+    var fileSize = file.size; // Get the file size in bytes
+    var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
 
-	    if (!fileType.startsWith('image/')) {
-	        alert('Only image files are allowed');
-	       	input.value = ''; // Clear the file input
-	       	document.getElementById(inputId).focus();
-	    }
-	}
+    // Check if the file is an image
+    if (!fileType.startsWith('image/')) {
+        alert('Only image files are allowed');
+        input.value = ''; // Clear the file input
+        document.getElementById(inputId).focus();
+        return; // Stop further execution
+    }
+
+    // Check if the file size exceeds 100KB
+    if (fileSize > maxFileSize) {
+        alert('File size exceeds 100 KB. Please choose a smaller file.');
+        input.value = ''; // Clear the file input
+        document.getElementById(inputId).focus();
+        return; // Stop further execution
+    }
+}
+
 </script>
 
 
@@ -477,7 +500,7 @@ input[type=text] {
 /* .form-group label { */
 /*     font-size: 1.1rem; */
 /*     font-weight: 600; */
-/*     color: black; /* Watercolor blue for labels */ */
+/*     color: black; /* Watercolor blue for labels */ *
 /*     display: block; */
 /*     margin-bottom: 5px; */
 /* } */
@@ -506,7 +529,7 @@ input[type=text] {
 			<div class="row">
 			<div class="form-group col-3">
 			<c:if test="${userType== 'SL' }"><br/>
-				<b>State Name:</b></br> <c:out value="${stateName}"></c:out>
+				State Name:</br> <c:out value="${stateName}"></c:out>
 			</c:if>
 			</div>
     		<div class="form-group col-3">
@@ -560,38 +583,38 @@ input[type=text] {
      	<tr>
      		<td colspan=2>Number Of Participants/Villagers</td>
      		<td>Male<br><input type="text" id="maleParticipants" name="maleParticipants" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Female<br><input type="text" id="femaleParticipants" name="femaleParticipants" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of Ministers</td>
      		<td>Central Level<br><input type="text" id="centralMinisters" name="centralMinisters" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>State Level<br><input type="text" id="stateMinisters" name="stateMinisters" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
      	<tr>
      		<td colspan=2>Number of Member of Parliament</td>
      		<td colspan=2><input type="text" id="membersOfParliament" name="membersOfParliament" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of Members</td>
      		<td>Legislative Assembly<br><input type="text" id="legAssemblyMembers" name="legAssemblyMembers" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Legislative Council<br><input type="text" id="legCouncilMembers" name="legCouncilMembers" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of other Public Representatives</td>
      		<td colspan=2><input type="text" id="publicReps" name="publicReps" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	<tr>
      		<td colspan=2>Number of Government Officials</td>
      		<td colspan=2><input type="text" id="govOfficials" name="govOfficials" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
      	<tr>
@@ -600,7 +623,7 @@ input[type=text] {
      	<tr>
      		<td>AR Experience</td>
      		<td colspan=2>Number of People who availed experience<br><input type="text" id="arExperience" name="arExperience" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" onchange="checkImage(this, 'arExperiencephoto1')" required />
@@ -614,8 +637,8 @@ input[type=text] {
      		
      		<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')" required />
-        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')" required />
+        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')"  />
+        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')"  />
     </td>
      	</tr>
      	<tr>
@@ -624,14 +647,14 @@ input[type=text] {
      		<td><input type="radio" id="FilmNo" name="FilmYes" value="false">No</td>
      		<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')" required />
-        <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')" required />
+        <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')"  />
+        <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')"  />
     </td>
      	</tr>
      		<tr>
      		<td>Quiz Program</td>
      		<td colspan=2>Number of People participated in Quiz<br><input type="text" id="quizParticipants" name="quizParticipants" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
@@ -653,7 +676,7 @@ input[type=text] {
     </div>
     <div id="otherActivityDiv" class="form-group col-8" style="display: none; margin-top: 10px;">
         <label for="otherActivity">Please specify:</label>
-        <input type="text" id="otherActivity" name="otherActivity" class="form-control" placeholder="other activity" style="max-width: 300px;">
+        <input type="text1" id="otherActivity" name="otherActivity" class="form-group col-12" placeholder="other activity" style="max-width: 200px;">
     </div>
 </td>
 
@@ -668,9 +691,9 @@ input[type=text] {
      	<tr>
      		<td>Bhoomi Poojan</td>
      		<td>Number of Works<br><input type="text" id="bhoomiWorks" name="bhoomiWorks" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="bhoomiCost" name="bhoomiCost" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
@@ -680,9 +703,9 @@ input[type=text] {
      	<tr>
      		<td>Lokarpan</td>
      		<td>Number of Works<br><input type="text" id="lokWorks" name="lokWorks" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Cost of Total works (in Lakh)<br><input type="text" id="costWorks" name="costWorks" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" onchange="checkImage(this, 'lokWorksphoto1')" required />
@@ -692,11 +715,16 @@ input[type=text] {
      	<tr>
      		<td>Shramdaan</td>
      		<td>Number of Locations<br><input type="text" id="locShramdaan" name="locShramdaan" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Number of people participated<br><input type="text" id="locShramdaanps" name="locShramdaanps" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-									<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /><br>
+								 Number of Man Hours<br><input type="text" id="manhour" name="manhour" autocomplete="off"
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
+								 </td>
+<!-- 									<td>Number of Man Hour<br><input type="text" id="manhour" name="manhour" autocomplete="off" -->
+<!-- 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
+	
+	<td >Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
         <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
     </td>
@@ -709,8 +737,8 @@ input[type=text] {
 </td>
 <!--      		<td>Area (in ha.)<br><input type="text" id="plantationArea" name="plantationArea" autocomplete="off" -->
 <!-- 								maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
-     		<td>No. of Agro forestry / Horticultural Plants<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+     		<td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" onchange="checkImage(this, 'plantationAreaphoto1')" required />
@@ -719,9 +747,9 @@ input[type=text] {
 								
      	</tr>
      	<tr>
-     		<td>Award Distribution</td>
+     		<td>Award Distribution(Felicitation)</td>
      		<td colspan=2>Number of "Watershed Margdarshaks"<br><input type="text" id="noOfwatershed" name="noOfwatershed" autocomplete="off"
-								 maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
@@ -739,10 +767,120 @@ input[type=text] {
      		</div> 
      </div>
 		</div>
+	<br/>
+<!--      		<br/> -->
+<!--      		<br/> -->
+<!--      		<br/> -->
+     		
+     		
+     		
+      		<div class="form-row"> 
+     <div class="form-group col">
+      <hr/>
+      <h5 class="text-center font-weight-bold"><u> Added List Watershed Yatra at Village Level</u></h5> 
+      <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
+ 						<thead class ="theadlist" id = "theadlist"> 
+							<tr> 
+								<th rowspan="3">S.No.</th>  
+								<th rowspan="3">Date</th> 
+<!--  								<th rowspan="3">State Name</th>  -->
+								<th rowspan="3">District Name</th> 
+								<th rowspan="3">Block Name</th> 
+ 								<th rowspan="3">GP Name</th>  
+								<th rowspan="3">Village Name</th>  
+								<th rowspan="3">Location</th>
+								<th colspan="9">Number of Participation</th> 
+ 								<th colspan="16">Activities</th> 
+							</tr> 
+							<tr>
+							<th colspan="2">Participants/Villagers</th> 
+								<th colspan="2">Ministers</th> 
+ 								<th rowspan="2">Member of Parliament</th> 
+ 								<th colspan="2">Legislative Members</th> 
+ 								<th rowspan="2">Other Public Representatives</th> 
+ 								<th rowspan="2">Government Officials</th> 
+								
+								<th rowspan="2">AR Experience</th> 
+								<th rowspan="2">Shapath Shramdan</th> 
+ 								<th rowspan="2">Film on Yatra</th> 
+								<th rowspan="2">People Participated in Quiz</th> 
+ 								<th rowspan="2">Cultural Activity</th> 
+ 								<th colspan="2">Bhoomi Poojan</th> 
+ 								<th colspan="2">Lokarpan</th> 
+							<th colspan="3">Shramdaan</th> 
+ 								<th colspan="2">Plantation</th> 
+								<th rowspan="2">Award Distribution</th> 
+<!--  								<th rowspan="2">No of Uploaded Photographs</th>  -->
+							</tr> 
+							<tr> 
+								<th>Male</th> 
+								<th>Female</th> 
+ 								<th>Central Level</th> 
+ 								<th>State Level</th> 
+ 								<th>Assembly</th> 
+ 								<th>Council</th> 
+								
+							<th>Number of Works</th> 
+ 								<th>Cost of Total works (in Lakh)</th> 
+ 								<th>Number of Works</th> 
+							<th>Cost of Total works (in Lakh)</th> 
+								<th>Number of Locations</th> 
+ 								<th>No. of people participated</th> 
+ 								<th>No. of Man Hours</th>
+ 								<th>Area (in ha.)</th> 
+							<th>No. of Agro forsetry / Horticultural Plants</th> 
+								
+							</tr> 
+						</thead> 
 
+									
+ 						<c:set var="st" value="" />
+ 						<c:forEach items="${dataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /></td>
+								<td> <c:out value="${data.date}" /></td>
+								<td> <c:out value="${data.distname}" /></td>
+ 								<td> <c:out value="${data.blockname}" /></td>
+ 								<td> <c:out value="${data.gpname}" /></td>
+ 								<td> <c:out value="${data.villagename}" /></td>
+								<td> <c:out value="${data.location}" /></td>
+ 								<td> <c:out value="${data.male_participants}" /></td>
+								<td> <c:out value="${data.female_participants}" /></td>
+ 								<td> <c:out value="${data.central_ministers}" /></td>
+								<td> <c:out value="${data.state_ministers}" /></td>
+ 								<td> <c:out value="${data.parliament}" /></td>
+ 								<td> <c:out value="${data.assembly_members}" /></td>
+ 								<td> <c:out value="${data.council_members}" /></td>
+								<td> <c:out value="${data.others}" /></td>
+ 								<td> <c:out value="${data.gov_officials}" /></td>
+ 								<td> <c:out value="${data.no_of_ar_experience_people}" /></td>
+								<td> <c:out value="${data.bhumi_jal_sanrakshan == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td> <c:out value="${data.watershed_yatra_film == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td> <c:out value="${data.quiz_participants}" /></td>
+ 								<td> <c:out value="${data.cultural_name}" /></td>
+								<td> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td> <c:out value="${data.no_works_lokarpan}" /></td>
+								<td> <c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td> <c:out value="${data.no_people_shramdaan}" /></td>
+								<td> <c:out value="${data.manhour}" /></td>
+ 								<td> <c:out value="${data.area_plantation}" /></td>
+								<td> <c:out value="${data.no_plantation}" /></td>
+ 								<td> <c:out value="${data.no_awards}" /></td>
+ 							</tr>
+ 						</c:forEach>
+						<c:if test="${dataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+		</table>
+		</div>
+		</div> 
      	
 		</form:form>
-	</div>
+	</div> 
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>

@@ -60,6 +60,7 @@ public class WatershedYatVill {
     private String lokarpanPath2;
     private Integer shramdaanNoOfLocation;
     private Integer shramdaanNoOfParticipatedPeople;
+    private Integer manhour;
     private String shramdaanPath1;
     private String shramdaanPath2;
     private BigDecimal plantationArea;
@@ -83,7 +84,7 @@ public class WatershedYatVill {
 		   Integer legislativeAssemblyMembers,Integer legislativeCouncilMembers,Integer otherPublicRepresentatives,Integer govOfficials,Integer noOfArExperiencePeople,String arExperiencePath1,String arExperiencePath2,
 		   Boolean bhumiJalSanrakshan,String bhumiJalSanrakshanPath1,String bhumiJalSanrakshanPath2,Boolean watershedYatraFilm,String yatraFilmPath1,String yatraFilmPath2,Integer quizParticipants,String quizParticipantsPath1,
 		   String quizParticipantsPath2,MCulturalActivity mCulturalActivity, String culturalActivityOther,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,Integer bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
-		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,Integer lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,String shramdaanPath1,
+		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,Integer lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,Integer manhour,String shramdaanPath1,
 		   String shramdaanPath2,BigDecimal plantationArea,Integer noOfAgroForsetry,String plantationPath1,String plantationPath2,Integer awardDistribution,String awardDistributionPath1,String awardDistributionPath2,String status,
 		   String requestedIp,String updatedBy,Date updatedDate,String createdBy,Date createdDate)
    {
@@ -131,6 +132,7 @@ public class WatershedYatVill {
 	  this.lokarpanPath2=lokarpanPath2;
 	  this.shramdaanNoOfLocation=shramdaanNoOfLocation;
 	  this.shramdaanNoOfParticipatedPeople=shramdaanNoOfParticipatedPeople;
+	  this.manhour=manhour;
 	  this.shramdaanPath1=shramdaanPath1;
 	  this.shramdaanPath2=shramdaanPath2;
 	  this.plantationArea=plantationArea;
@@ -555,6 +557,15 @@ public class WatershedYatVill {
 		this.shramdaanNoOfParticipatedPeople = shramdaanNoOfParticipatedPeople;
 	}
 	
+	@Column(name="man_hr")
+	public Integer getManhour() {
+		return manhour;
+	}
+
+	public void setManhour(Integer manhour) {
+		this.manhour = manhour;
+	}
+
 	@Column(name="shramdaan_path1")
 	public String getShramdaanPath1() {
 		return shramdaanPath1;

@@ -7,6 +7,44 @@ import java.time.LocalDateTime;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WatershedYatraBean {
+	
+    private Integer watershed_yatra_id;
+    private String date;
+    private Integer st_code;
+    private String stname;
+    private String distname;
+    private String blockname;
+    private String gpname;
+    private String villagename;
+    private Integer male_participants;
+    private Integer female_participants;
+    private Integer central_ministers;
+    private Integer state_ministers;
+    private Integer parliament;
+    private Integer assembly_members;
+    private Integer council_members;
+    private Integer others;
+    private Integer gov_officials;
+    private Integer no_of_ar_experience_people;
+    private String bhumi_jal_sanrakshan;
+    private String watershed_yatra_film;
+    private Integer quiz_participants;
+    private Integer cultural_activity_id;
+    private String cultural_name;
+    private Integer no_works_bhoomipoojan;
+    private Integer tot_works_bhoomipoojan;
+    private Integer no_works_lokarpan;
+    private Integer tot_works_lokarpan;
+    private Integer no_location_shramdaan;
+    private Integer no_people_shramdaan;
+    private Integer manhour;
+	private BigDecimal area_plantation;
+    private Integer no_plantation;
+    private Integer no_awards;
+//    private Integer no_works_bhoomipoojan;
+//    private Integer no_works_bhoomipoojan;
+    
+    
     
 	private Integer district;
 	private Integer block;
@@ -64,6 +102,198 @@ public class WatershedYatraBean {
     
     
     
+	public Integer getWatershed_yatra_id() {
+		return watershed_yatra_id;
+	}
+	public void setWatershed_yatra_id(Integer watershed_yatra_id) {
+		this.watershed_yatra_id = watershed_yatra_id;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public Integer getSt_code() {
+		return st_code;
+	}
+	public void setSt_code(Integer st_code) {
+		this.st_code = st_code;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
+	}
+	public String getBlockname() {
+		return blockname;
+	}
+	public void setBlockname(String blockname) {
+		this.blockname = blockname;
+	}
+	public String getGpname() {
+		return gpname;
+	}
+	public void setGpname(String gpname) {
+		this.gpname = gpname;
+	}
+	public String getVillagename() {
+		return villagename;
+	}
+	public void setVillagename(String villagename) {
+		this.villagename = villagename;
+	}
+	public Integer getMale_participants() {
+		return male_participants;
+	}
+	public void setMale_participants(Integer male_participants) {
+		this.male_participants = male_participants;
+	}
+	public Integer getFemale_participants() {
+		return female_participants;
+	}
+	public void setFemale_participants(Integer female_participants) {
+		this.female_participants = female_participants;
+	}
+	public Integer getCentral_ministers() {
+		return central_ministers;
+	}
+	public void setCentral_ministers(Integer central_ministers) {
+		this.central_ministers = central_ministers;
+	}
+	public Integer getState_ministers() {
+		return state_ministers;
+	}
+	public void setState_ministers(Integer state_ministers) {
+		this.state_ministers = state_ministers;
+	}
+	public Integer getParliament() {
+		return parliament;
+	}
+	public void setParliament(Integer parliament) {
+		this.parliament = parliament;
+	}
+	public Integer getAssembly_members() {
+		return assembly_members;
+	}
+	public void setAssembly_members(Integer assembly_members) {
+		this.assembly_members = assembly_members;
+	}
+	public Integer getCouncil_members() {
+		return council_members;
+	}
+	public void setCouncil_members(Integer council_members) {
+		this.council_members = council_members;
+	}
+	public Integer getOthers() {
+		return others;
+	}
+	public void setOthers(Integer others) {
+		this.others = others;
+	}
+	public Integer getGov_officials() {
+		return gov_officials;
+	}
+	public void setGov_officials(Integer gov_officials) {
+		this.gov_officials = gov_officials;
+	}
+	public Integer getNo_of_ar_experience_people() {
+		return no_of_ar_experience_people;
+	}
+	public void setNo_of_ar_experience_people(Integer no_of_ar_experience_people) {
+		this.no_of_ar_experience_people = no_of_ar_experience_people;
+	}
+	public String getBhumi_jal_sanrakshan() {
+		return bhumi_jal_sanrakshan;
+	}
+	public void setBhumi_jal_sanrakshan(String bhumi_jal_sanrakshan) {
+		this.bhumi_jal_sanrakshan = bhumi_jal_sanrakshan;
+	}
+	public String getWatershed_yatra_film() {
+		return watershed_yatra_film;
+	}
+	public void setWatershed_yatra_film(String watershed_yatra_film) {
+		this.watershed_yatra_film = watershed_yatra_film;
+	}
+	public Integer getQuiz_participants() {
+		return quiz_participants;
+	}
+	public void setQuiz_participants(Integer quiz_participants) {
+		this.quiz_participants = quiz_participants;
+	}
+	public Integer getCultural_activity_id() {
+		return cultural_activity_id;
+	}
+	public void setCultural_activity_id(Integer cultural_activity_id) {
+		this.cultural_activity_id = cultural_activity_id;
+	}
+	public String getCultural_name() {
+		return cultural_name;
+	}
+	public void setCultural_name(String cultural_name) {
+		this.cultural_name = cultural_name;
+	}
+	public Integer getNo_works_bhoomipoojan() {
+		return no_works_bhoomipoojan;
+	}
+	public void setNo_works_bhoomipoojan(Integer no_works_bhoomipoojan) {
+		this.no_works_bhoomipoojan = no_works_bhoomipoojan;
+	}
+	public Integer getTot_works_bhoomipoojan() {
+		return tot_works_bhoomipoojan;
+	}
+	public void setTot_works_bhoomipoojan(Integer tot_works_bhoomipoojan) {
+		this.tot_works_bhoomipoojan = tot_works_bhoomipoojan;
+	}
+	public Integer getNo_works_lokarpan() {
+		return no_works_lokarpan;
+	}
+	public void setNo_works_lokarpan(Integer no_works_lokarpan) {
+		this.no_works_lokarpan = no_works_lokarpan;
+	}
+	public Integer getTot_works_lokarpan() {
+		return tot_works_lokarpan;
+	}
+	public void setTot_works_lokarpan(Integer tot_works_lokarpan) {
+		this.tot_works_lokarpan = tot_works_lokarpan;
+	}
+	public Integer getNo_location_shramdaan() {
+		return no_location_shramdaan;
+	}
+	public void setNo_location_shramdaan(Integer no_location_shramdaan) {
+		this.no_location_shramdaan = no_location_shramdaan;
+	}
+	public Integer getNo_people_shramdaan() {
+		return no_people_shramdaan;
+	}
+	public void setNo_people_shramdaan(Integer no_people_shramdaan) {
+		this.no_people_shramdaan = no_people_shramdaan;
+	}
+	public BigDecimal getArea_plantation() {
+		return area_plantation;
+	}
+	public void setArea_plantation(BigDecimal area_plantation) {
+		this.area_plantation = area_plantation;
+	}
+	public Integer getNo_plantation() {
+		return no_plantation;
+	}
+	public void setNo_plantation(Integer no_plantation) {
+		this.no_plantation = no_plantation;
+	}
+	public Integer getNo_awards() {
+		return no_awards;
+	}
+	public void setNo_awards(Integer no_awards) {
+		this.no_awards = no_awards;
+	}
 	public Integer getDistrict() {
 		return district;
 	}
@@ -367,7 +597,12 @@ public class WatershedYatraBean {
 	public void setFemaleParticipants(int femaleParticipants) {
 		this.femaleParticipants = femaleParticipants;
 	}
-    
+	 public Integer getManhour() {
+			return manhour;
+		}
+		public void setManhour(Integer manhour) {
+			this.manhour = manhour;
+		}
 	
     
 }

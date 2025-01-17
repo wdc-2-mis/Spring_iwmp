@@ -71,6 +71,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${cultListWatershedyatra}")
 	String cultListWatershedyatra;
 	
+	@Value("${getWyatraDetails}")
+	String getWyatraDetails;
+	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
 	
@@ -479,6 +482,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setLokarpanCostOfWorks(userfileup.getCostWorks());
 				main.setShramdaanNoOfLocation(userfileup.getLocShramdaan());
 				main.setShramdaanNoOfParticipatedPeople(userfileup.getLocShramdaanps());
+				main.setManhour(userfileup.getManhour());
 				main.setPlantationArea(userfileup.getPlantationArea());
 				main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
 				main.setAwardDistribution(userfileup.getNoOfwatershed());
@@ -570,6 +574,33 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				Query query= session.createSQLQuery(getReport);
 				query.setInteger("statecd",stcd); 
 				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraList(Integer stcd) {
+		String getReport=getWyatraDetails;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
 				list = query.list();
 				session.getTransaction().commit();
 		} 

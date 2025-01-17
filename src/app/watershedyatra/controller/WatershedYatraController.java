@@ -29,6 +29,7 @@ import app.bean.reports.UserUploadDetailsBean;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.service.ProfileService;
+import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.service.WatershedYatraService;
 import java.io.File;
@@ -58,6 +59,7 @@ public class WatershedYatraController {
 	public ModelAndView getWatershedYatraHeader(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
+		List<WatershedYatraBean> dlist = new ArrayList<WatershedYatraBean>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 				mav = new ModelAndView("WatershedYatra/WatershedYatraVillage");
@@ -80,10 +82,12 @@ public class WatershedYatraController {
 				mav.addObject("distName",distName);
 				mav.addObject("stateName",stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
-				
 				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 				map=ser.getCultActivity();
 				mav.addObject("cultMap", map);
+				dlist=ser.getWatershedYatraList(stcd);
+				mav.addObject("dataList",dlist);
+				mav.addObject("dataListSize",dlist.size());
 
 			} else {
 				mav = new ModelAndView("login");
