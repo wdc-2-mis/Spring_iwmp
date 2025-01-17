@@ -96,7 +96,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setOtherPublicRepresentatives(userfileup.getOthers());
 			data.setGovOfficials(userfileup.getGov_officials());
 			data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagoff()));
-			if(userfileup.getFlagoff_photo1()!=null)
+//			if(userfileup.getFlagoff_photo1()!=null)
 			data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
 			
 			data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
