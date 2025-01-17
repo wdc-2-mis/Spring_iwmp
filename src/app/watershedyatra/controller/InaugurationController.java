@@ -56,6 +56,7 @@ public class InaugurationController extends HttpServlet {
 				String stateName = "";
 				int stCode = 0;
 				int distCode = 0;
+				List<InaugurationBean> data = new ArrayList<InaugurationBean>();
 
 				for (ProfileBean bean : listm) {
 					distName = bean.getDistrictname();
@@ -67,6 +68,11 @@ public class InaugurationController extends HttpServlet {
 				mav.addObject("userType", userType);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				
+				data=iSer.getInaugurationDetails(stcd);
+				mav.addObject("dataList",data);
+				mav.addObject("dataListSize",data.size());
 
 			} else {
 				mav = new ModelAndView("login");

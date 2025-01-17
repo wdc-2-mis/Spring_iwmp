@@ -10,5 +10,5 @@ import app.watershedyatra.bean.InaugurationBean;
 public interface InaugurationDao {
 	
 	public String saveInauguration(InaugurationBean userfileup, HttpSession session);
-	
+	public List<InaugurationBean> getInaugurationDetails(Integer stcd);
 }

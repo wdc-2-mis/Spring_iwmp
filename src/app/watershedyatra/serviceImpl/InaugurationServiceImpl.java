@@ -22,4 +22,8 @@ public class InaugurationServiceImpl implements InaugurationService {
 		return dao.saveInauguration(userfileup, session);
 	}
 
+	public List<InaugurationBean> getInaugurationDetails(Integer stcd) {
+		return dao.getInaugurationDetails(stcd);
+	}
+
 }

@@ -43,6 +43,7 @@ public class WatershedYatraInauguaration {
     private String lokarpanPath2;
     private Integer shramdaanNoOfLocation;
     private Integer shramdaanNoOfParticipatedPeople;
+    private Integer manHr;
     private String shramdaanPath1;
     private String shramdaanPath2;
     private BigDecimal plantationArea;
@@ -76,7 +77,7 @@ public class WatershedYatraInauguaration {
 			String themeSongPath1, String themeSongPath2, Integer bhoomiPoojanNoOfWorks,
 			Integer bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
 			Integer lokarpanNoOfWorks, Integer lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
-			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, String shramdaanPath1,
+			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, Integer manHr, String shramdaanPath1,
 			String shramdaanPath2, BigDecimal plantationArea, Integer noOfAgroForsetry, String plantationPath1,
 			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
 			String awardDistributionPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
@@ -110,6 +111,7 @@ public class WatershedYatraInauguaration {
 		this.lokarpanPath2 = lokarpanPath2;
 		this.shramdaanNoOfLocation = shramdaanNoOfLocation;
 		this.shramdaanNoOfParticipatedPeople = shramdaanNoOfParticipatedPeople;
+		this.manHr = manHr;
 		this.shramdaanPath1 = shramdaanPath1;
 		this.shramdaanPath2 = shramdaanPath2;
 		this.plantationArea = plantationArea;
@@ -383,6 +385,15 @@ public class WatershedYatraInauguaration {
 
 	public void setShramdaanNoOfParticipatedPeople(Integer shramdaanNoOfParticipatedPeople) {
 		this.shramdaanNoOfParticipatedPeople = shramdaanNoOfParticipatedPeople;
+	}
+	
+	@Column(name = "man_hr")
+	public Integer getManHr() {
+		return manHr;
+	}
+
+	public void setManHr(Integer manHr) {
+		this.manHr = manHr;
 	}
 
 	@Column(name = "shramdaan_path1")

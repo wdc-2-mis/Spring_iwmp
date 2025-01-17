@@ -13,43 +13,50 @@ public class InaugurationBean {
     private Integer block;
     private String date;
     private String location;
-    private Integer maleParticipants;
-    private Integer femaleParticipants;
-    private Integer centralMinisters;
-    private Integer stateMinisters;
+    private Integer male_participants;
+    private Integer female_participants;
+    private Integer central_ministers;
+    private Integer state_ministers;
     private Integer parliament;
-    private Integer assemblyMembers;
-    private Integer councilMembers;
+    private Integer assembly_members;
+    private Integer council_members;
     private Integer others;
-    private Integer govOfficials;
-    private String flagOff;
-    private MultipartFile flagOffPhoto1;
-    private MultipartFile flagOffPhoto2;
-    private String themeSong;
-    private MultipartFile themeSongPhoto1;
-    private MultipartFile themeSongPhoto2;
-    private Integer noWorksBhoomiPoojan;
-    private Integer totWorksBhoomiPoojan;
-    private MultipartFile bhoomiPoojanPhoto1;
-    private MultipartFile bhoomiPoojanPhoto2;
-    private Integer noWorksLokarpan;
-    private Integer totWorksLokarpan;
-    private MultipartFile lokarpanPhoto1;
-    private MultipartFile lokarpanPhoto2;
-    private Integer noLocationShramdaan;
-    private Integer costPeopleShramdaan;
-    private MultipartFile shramdaanPhoto1;
-    private MultipartFile shramdaanPhoto2;
-    private BigDecimal areaPlantation;
-    private Integer noPlantation;
-    private MultipartFile plantationPhoto1;
-    private MultipartFile plantationPhoto2;
-    private Integer noAwards;
-    private MultipartFile awardPhoto1;
-    private MultipartFile awardPhoto2;
+    private Integer gov_officials;
+    private String flagoff;
+    private MultipartFile flagoff_photo1;
+    private MultipartFile flagoff_photo2;
+    private String themesong;
+    private MultipartFile themesong_photo1;
+    private MultipartFile themesong_photo2;
+    private Integer no_works_bhoomipoojan;
+    private Integer tot_works_bhoomipoojan;
+    private MultipartFile bhoomipoojan_photo1;
+    private MultipartFile bhoomipoojan_photo2;
+    private Integer no_works_lokarpan;
+    private Integer tot_works_lokarpan;
+    private MultipartFile lokarpan_photo1;
+    private MultipartFile lokarpan_photo2;
+    private Integer no_location_shramdaan;
+    private Integer no_people_shramdaan;
+    private Integer man;
+    private MultipartFile shramdaan_photo1;
+    private MultipartFile shramdaan_photo2;
+    private BigDecimal area_plantation;
+    private Integer no_plantation;
+    private MultipartFile plantation_photo1;
+    private MultipartFile plantation_photo2;
+    private Integer no_awards;
+    private MultipartFile award_photo1;
+    private MultipartFile award_photo2;
 
+    private Integer inauguaration_id;
+    private Integer st_code;
+    private String stname;
+    private String distname;
+    private String blockname;
     
-    public Integer getDistrict() {
+    
+	public Integer getDistrict() {
 		return district;
 	}
 	public void setDistrict(Integer district) {
@@ -73,29 +80,29 @@ public class InaugurationBean {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Integer getMaleParticipants() {
-		return maleParticipants;
+	public Integer getMale_participants() {
+		return male_participants;
 	}
-	public void setMaleParticipants(Integer maleParticipants) {
-		this.maleParticipants = maleParticipants;
+	public void setMale_participants(Integer male_participants) {
+		this.male_participants = male_participants;
 	}
-	public Integer getFemaleParticipants() {
-		return femaleParticipants;
+	public Integer getFemale_participants() {
+		return female_participants;
 	}
-	public void setFemaleParticipants(Integer femaleParticipants) {
-		this.femaleParticipants = femaleParticipants;
+	public void setFemale_participants(Integer female_participants) {
+		this.female_participants = female_participants;
 	}
-	public Integer getCentralMinisters() {
-		return centralMinisters;
+	public Integer getCentral_ministers() {
+		return central_ministers;
 	}
-	public void setCentralMinisters(Integer centralMinisters) {
-		this.centralMinisters = centralMinisters;
+	public void setCentral_ministers(Integer central_ministers) {
+		this.central_ministers = central_ministers;
 	}
-	public Integer getStateMinisters() {
-		return stateMinisters;
+	public Integer getState_ministers() {
+		return state_ministers;
 	}
-	public void setStateMinisters(Integer stateMinisters) {
-		this.stateMinisters = stateMinisters;
+	public void setState_ministers(Integer state_ministers) {
+		this.state_ministers = state_ministers;
 	}
 	public Integer getParliament() {
 		return parliament;
@@ -103,17 +110,17 @@ public class InaugurationBean {
 	public void setParliament(Integer parliament) {
 		this.parliament = parliament;
 	}
-	public Integer getAssemblyMembers() {
-		return assemblyMembers;
+	public Integer getAssembly_members() {
+		return assembly_members;
 	}
-	public void setAssemblyMembers(Integer assemblyMembers) {
-		this.assemblyMembers = assemblyMembers;
+	public void setAssembly_members(Integer assembly_members) {
+		this.assembly_members = assembly_members;
 	}
-	public Integer getCouncilMembers() {
-		return councilMembers;
+	public Integer getCouncil_members() {
+		return council_members;
 	}
-	public void setCouncilMembers(Integer councilMembers) {
-		this.councilMembers = councilMembers;
+	public void setCouncil_members(Integer council_members) {
+		this.council_members = council_members;
 	}
 	public Integer getOthers() {
 		return others;
@@ -121,161 +128,198 @@ public class InaugurationBean {
 	public void setOthers(Integer others) {
 		this.others = others;
 	}
-	public Integer getGovOfficials() {
-		return govOfficials;
+	public Integer getGov_officials() {
+		return gov_officials;
 	}
-	public void setGovOfficials(Integer govOfficials) {
-		this.govOfficials = govOfficials;
+	public void setGov_officials(Integer gov_officials) {
+		this.gov_officials = gov_officials;
 	}
-	public String getFlagOff() {
-		return flagOff;
+	public String getFlagoff() {
+		return flagoff;
 	}
-	public void setFlagOff(String flagOff) {
-		this.flagOff = flagOff;
+	public void setFlagoff(String flagoff) {
+		this.flagoff = flagoff;
 	}
-	public MultipartFile getFlagOffPhoto1() {
-		return flagOffPhoto1;
+	public MultipartFile getFlagoff_photo1() {
+		return flagoff_photo1;
 	}
-	public void setFlagOffPhoto1(MultipartFile flagOffPhoto1) {
-		this.flagOffPhoto1 = flagOffPhoto1;
+	public void setFlagoff_photo1(MultipartFile flagoff_photo1) {
+		this.flagoff_photo1 = flagoff_photo1;
 	}
-	public MultipartFile getFlagOffPhoto2() {
-		return flagOffPhoto2;
+	public MultipartFile getFlagoff_photo2() {
+		return flagoff_photo2;
 	}
-	public void setFlagOffPhoto2(MultipartFile flagOffPhoto2) {
-		this.flagOffPhoto2 = flagOffPhoto2;
+	public void setFlagoff_photo2(MultipartFile flagoff_photo2) {
+		this.flagoff_photo2 = flagoff_photo2;
 	}
-	public String getThemeSong() {
-		return themeSong;
+	public String getThemesong() {
+		return themesong;
 	}
-	public void setThemeSong(String themeSong) {
-		this.themeSong = themeSong;
+	public void setThemesong(String themesong) {
+		this.themesong = themesong;
 	}
-	public MultipartFile getThemeSongPhoto1() {
-		return themeSongPhoto1;
+	public MultipartFile getThemesong_photo1() {
+		return themesong_photo1;
 	}
-	public void setThemeSongPhoto1(MultipartFile themeSongPhoto1) {
-		this.themeSongPhoto1 = themeSongPhoto1;
+	public void setThemesong_photo1(MultipartFile themesong_photo1) {
+		this.themesong_photo1 = themesong_photo1;
 	}
-	public MultipartFile getThemeSongPhoto2() {
-		return themeSongPhoto2;
+	public MultipartFile getThemesong_photo2() {
+		return themesong_photo2;
 	}
-	public void setThemeSongPhoto2(MultipartFile themeSongPhoto2) {
-		this.themeSongPhoto2 = themeSongPhoto2;
+	public void setThemesong_photo2(MultipartFile themesong_photo2) {
+		this.themesong_photo2 = themesong_photo2;
 	}
-	public Integer getNoWorksBhoomiPoojan() {
-		return noWorksBhoomiPoojan;
+	public Integer getNo_works_bhoomipoojan() {
+		return no_works_bhoomipoojan;
 	}
-	public void setNoWorksBhoomiPoojan(Integer noWorksBhoomiPoojan) {
-		this.noWorksBhoomiPoojan = noWorksBhoomiPoojan;
+	public void setNo_works_bhoomipoojan(Integer no_works_bhoomipoojan) {
+		this.no_works_bhoomipoojan = no_works_bhoomipoojan;
 	}
-	public Integer getTotWorksBhoomiPoojan() {
-		return totWorksBhoomiPoojan;
+	public Integer getTot_works_bhoomipoojan() {
+		return tot_works_bhoomipoojan;
 	}
-	public void setTotWorksBhoomiPoojan(Integer totWorksBhoomiPoojan) {
-		this.totWorksBhoomiPoojan = totWorksBhoomiPoojan;
+	public void setTot_works_bhoomipoojan(Integer tot_works_bhoomipoojan) {
+		this.tot_works_bhoomipoojan = tot_works_bhoomipoojan;
 	}
-	public MultipartFile getBhoomiPoojanPhoto1() {
-		return bhoomiPoojanPhoto1;
+	public MultipartFile getBhoomipoojan_photo1() {
+		return bhoomipoojan_photo1;
 	}
-	public void setBhoomiPoojanPhoto1(MultipartFile bhoomiPoojanPhoto1) {
-		this.bhoomiPoojanPhoto1 = bhoomiPoojanPhoto1;
+	public void setBhoomipoojan_photo1(MultipartFile bhoomipoojan_photo1) {
+		this.bhoomipoojan_photo1 = bhoomipoojan_photo1;
 	}
-	public MultipartFile getBhoomiPoojanPhoto2() {
-		return bhoomiPoojanPhoto2;
+	public MultipartFile getBhoomipoojan_photo2() {
+		return bhoomipoojan_photo2;
 	}
-	public void setBhoomiPoojanPhoto2(MultipartFile bhoomiPoojanPhoto2) {
-		this.bhoomiPoojanPhoto2 = bhoomiPoojanPhoto2;
+	public void setBhoomipoojan_photo2(MultipartFile bhoomipoojan_photo2) {
+		this.bhoomipoojan_photo2 = bhoomipoojan_photo2;
 	}
-	public Integer getNoWorksLokarpan() {
-		return noWorksLokarpan;
+	public Integer getNo_works_lokarpan() {
+		return no_works_lokarpan;
 	}
-	public void setNoWorksLokarpan(Integer noWorksLokarpan) {
-		this.noWorksLokarpan = noWorksLokarpan;
+	public void setNo_works_lokarpan(Integer no_works_lokarpan) {
+		this.no_works_lokarpan = no_works_lokarpan;
 	}
-	public Integer getTotWorksLokarpan() {
-		return totWorksLokarpan;
+	public Integer getTot_works_lokarpan() {
+		return tot_works_lokarpan;
 	}
-	public void setTotWorksLokarpan(Integer totWorksLokarpan) {
-		this.totWorksLokarpan = totWorksLokarpan;
+	public void setTot_works_lokarpan(Integer tot_works_lokarpan) {
+		this.tot_works_lokarpan = tot_works_lokarpan;
 	}
-	public MultipartFile getLokarpanPhoto1() {
-		return lokarpanPhoto1;
+	public MultipartFile getLokarpan_photo1() {
+		return lokarpan_photo1;
 	}
-	public void setLokarpanPhoto1(MultipartFile lokarpanPhoto1) {
-		this.lokarpanPhoto1 = lokarpanPhoto1;
+	public void setLokarpan_photo1(MultipartFile lokarpan_photo1) {
+		this.lokarpan_photo1 = lokarpan_photo1;
 	}
-	public MultipartFile getLokarpanPhoto2() {
-		return lokarpanPhoto2;
+	public MultipartFile getLokarpan_photo2() {
+		return lokarpan_photo2;
 	}
-	public void setLokarpanPhoto2(MultipartFile lokarpanPhoto2) {
-		this.lokarpanPhoto2 = lokarpanPhoto2;
+	public void setLokarpan_photo2(MultipartFile lokarpan_photo2) {
+		this.lokarpan_photo2 = lokarpan_photo2;
 	}
-	public Integer getNoLocationShramdaan() {
-		return noLocationShramdaan;
+	public Integer getNo_location_shramdaan() {
+		return no_location_shramdaan;
 	}
-	public void setNoLocationShramdaan(Integer noLocationShramdaan) {
-		this.noLocationShramdaan = noLocationShramdaan;
+	public void setNo_location_shramdaan(Integer no_location_shramdaan) {
+		this.no_location_shramdaan = no_location_shramdaan;
 	}
-	public Integer getCostPeopleShramdaan() {
-		return costPeopleShramdaan;
+	public Integer getNo_people_shramdaan() {
+		return no_people_shramdaan;
 	}
-	public void setCostPeopleShramdaan(Integer costPeopleShramdaan) {
-		this.costPeopleShramdaan = costPeopleShramdaan;
+	public void setNo_people_shramdaan(Integer no_people_shramdaan) {
+		this.no_people_shramdaan = no_people_shramdaan;
 	}
-	public MultipartFile getShramdaanPhoto1() {
-		return shramdaanPhoto1;
+	public Integer getMan() {
+		return man;
 	}
-	public void setShramdaanPhoto1(MultipartFile shramdaanPhoto1) {
-		this.shramdaanPhoto1 = shramdaanPhoto1;
+	public void setMan(Integer man) {
+		this.man = man;
 	}
-	public MultipartFile getShramdaanPhoto2() {
-		return shramdaanPhoto2;
+	public MultipartFile getShramdaan_photo1() {
+		return shramdaan_photo1;
 	}
-	public void setShramdaanPhoto2(MultipartFile shramdaanPhoto2) {
-		this.shramdaanPhoto2 = shramdaanPhoto2;
+	public void setShramdaan_photo1(MultipartFile shramdaan_photo1) {
+		this.shramdaan_photo1 = shramdaan_photo1;
 	}
-	public BigDecimal getAreaPlantation() {
-		return areaPlantation;
+	public MultipartFile getShramdaan_photo2() {
+		return shramdaan_photo2;
 	}
-	public void setAreaPlantation(BigDecimal areaPlantation) {
-		this.areaPlantation = areaPlantation;
+	public void setShramdaan_photo2(MultipartFile shramdaan_photo2) {
+		this.shramdaan_photo2 = shramdaan_photo2;
 	}
-	public Integer getNoPlantation() {
-		return noPlantation;
+	public BigDecimal getArea_plantation() {
+		return area_plantation;
 	}
-	public void setNoPlantation(Integer noPlantation) {
-		this.noPlantation = noPlantation;
+	public void setArea_plantation(BigDecimal area_plantation) {
+		this.area_plantation = area_plantation;
 	}
-	public MultipartFile getPlantationPhoto1() {
-		return plantationPhoto1;
+	public Integer getNo_plantation() {
+		return no_plantation;
 	}
-	public void setPlantationPhoto1(MultipartFile plantationPhoto1) {
-		this.plantationPhoto1 = plantationPhoto1;
+	public void setNo_plantation(Integer no_plantation) {
+		this.no_plantation = no_plantation;
 	}
-	public MultipartFile getPlantationPhoto2() {
-		return plantationPhoto2;
+	public MultipartFile getPlantation_photo1() {
+		return plantation_photo1;
 	}
-	public void setPlantationPhoto2(MultipartFile plantationPhoto2) {
-		this.plantationPhoto2 = plantationPhoto2;
+	public void setPlantation_photo1(MultipartFile plantation_photo1) {
+		this.plantation_photo1 = plantation_photo1;
 	}
-	public Integer getNoAwards() {
-		return noAwards;
+	public MultipartFile getPlantation_photo2() {
+		return plantation_photo2;
 	}
-	public void setNoAwards(Integer noAwards) {
-		this.noAwards = noAwards;
+	public void setPlantation_photo2(MultipartFile plantation_photo2) {
+		this.plantation_photo2 = plantation_photo2;
 	}
-	public MultipartFile getAwardPhoto1() {
-		return awardPhoto1;
+	public Integer getNo_awards() {
+		return no_awards;
 	}
-	public void setAwardPhoto1(MultipartFile awardPhoto1) {
-		this.awardPhoto1 = awardPhoto1;
+	public void setNo_awards(Integer no_awards) {
+		this.no_awards = no_awards;
 	}
-	public MultipartFile getAwardPhoto2() {
-		return awardPhoto2;
+	public MultipartFile getAward_photo1() {
+		return award_photo1;
 	}
-	public void setAwardPhoto2(MultipartFile awardPhoto2) {
-		this.awardPhoto2 = awardPhoto2;
+	public void setAward_photo1(MultipartFile award_photo1) {
+		this.award_photo1 = award_photo1;
 	}
+	public MultipartFile getAward_photo2() {
+		return award_photo2;
+	}
+	public void setAward_photo2(MultipartFile award_photo2) {
+		this.award_photo2 = award_photo2;
+	}
+	public Integer getInauguaration_id() {
+		return inauguaration_id;
+	}
+	public void setInauguaration_id(Integer inauguaration_id) {
+		this.inauguaration_id = inauguaration_id;
+	}
+	public Integer getSt_code() {
+		return st_code;
+	}
+	public void setSt_code(Integer st_code) {
+		this.st_code = st_code;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
+	}
+	public String getBlockname() {
+		return blockname;
+	}
+	public void setBlockname(String blockname) {
+		this.blockname = blockname;
+	}
+    
 	
 }

@@ -19,55 +19,56 @@ function validation()
 	if (formSubmitted) return false;
 	allValid = true;
 	
-	var allowedFiles = [ ".docx",".doc", ".pdf", ".ppt", ".pptx", ".jpg", ".jpeg",".png",".xlsx","xls"];
+	var allowedFiles = [".jpg", ".jpeg",".png"];
 	
 	$district = $('#district option:selected').val();
 	$block = $('#block option:selected').val();
 
 	$date = $('#date').val();
 	$location = $('#location').val();
-	$maleParticipants = $('#maleParticipants').val();
-	$femaleParticipants = $('#femaleParticipants').val();
-	$centralMinisters = $('#centralMinisters').val();
+	$male_participants = $('#male_participants').val();
+	$female_participants = $('#female_participants').val();
+	$central_ministers = $('#central_ministers').val();
 	$stateMinisters = $('#stateMinisters').val();
 	$parliament = $('#parliament').val();
-	$assemblyMembers = $('#assemblyMembers').val();
-	$councilMembers = $('#councilMembers').val();
+	$assembly_members = $('#assembly_members').val();
+	$council_members = $('#council_members').val();
 	$others = $('#others').val();
-	$govOfficials = $('#govOfficials').val();
-	$flagOff = $('input[name="flagOff"]:checked').val();
+	$gov_officials = $('#gov_officials').val();
+	$flagoff = $('input[name="flagoff"]:checked').val();
 	$flagOffPhotos = $('#flagOffPhotos').val();
-	$themeSong = $('input[name="themeSong"]:checked').val();
+	$themesong = $('input[name="themesong"]:checked').val();
 	$themeSongPhotos = $('#themeSongPhotos').val();
-	$noWorksBhoomiPoojan = $('#noWorksBhoomiPoojan').val();
-	$totWorksBhoomiPoojan = $('#totWorksBhoomiPoojan').val();
+	$no_works_bhoomipoojan = $('#no_works_bhoomipoojan').val();
+	$tot_works_bhoomipoojan = $('#tot_works_bhoomipoojan').val();
 	$bhoomiPoojanPhotos = $('#bhoomiPoojanPhotos').val();
-	$noWorksLokarpan = $('#noWorksLokarpan').val();
-	$totWorksLokarpan = $('#totWorksLokarpan').val();
+	$no_works_lokarpan = $('#no_works_lokarpan').val();
+	$tot_works_lokarpan = $('#tot_works_lokarpan').val();
 	$lokarpanPhotos = $('#lokarpanPhotos').val();
-	$noLocationShramdaan = $('#noLocationShramdaan').val();
-	$costPeopleShramdaan = $('#costPeopleShramdaan').val();
+	$no_location_shramdaan = $('#no_location_shramdaan').val();
+	$no_people_shramdaan = $('#no_people_shramdaan').val();
+	$man = $('#man').val();
 	$shramdaanPhotos = $('#shramdaanPhotos').val();
-	$areaPlantation = $('#areaPlantation').val();
+	$area_plantation = $('#area_plantation').val();
 	$noPlantation = $('#noPlantation').val();
 	$plantationPhotos = $('#plantationPhotos').val();
-	$noAwards = $('#noAwards').val();
+	$no_awards = $('#no_awards').val();
 	$awardPhotos = $('#awardPhotos').val();
 
-	$flagOffPhoto1 = $('#flagOffPhoto1').val();
-	$flagOffPhoto2 = $('#flagOffPhoto2').val();
-	$themeSongPhoto1 = $('#themeSongPhoto1').val();
-	$themeSongPhoto2 = $('#themeSongPhoto2').val();
-	$bhoomiPoojanPhoto1 = $('#bhoomiPoojanPhoto1').val();
-	$bhoomiPoojanPhoto2 = $('#bhoomiPoojanPhoto2').val();
-	$lokarpanPhoto1 = $('#lokarpanPhoto1').val();
-	$lokarpanPhoto2 = $('#lokarpanPhoto2').val();
-	$shramdaanPhoto1 = $('#shramdaanPhoto1').val();
-	$shramdaanPhoto2 = $('#shramdaanPhoto2').val();
-	$plantationPhoto1 = $('#plantationPhoto1').val();
-	$plantationPhoto2 = $('#plantationPhoto2').val();
-	$awardPhoto1 = $('#awardPhoto1').val();
-	$awardPhoto2 = $('#awardPhoto2').val();
+	$flagoff_photo1 = $('#flagoff_photo1').val();
+	$flagoff_photo2 = $('#flagoff_photo2').val();
+	$themesong_photo1 = $('#themesong_photo1').val();
+	$themesong_photo2 = $('#themesong_photo2').val();
+	$bhoomipoojan_photo1 = $('#bhoomipoojan_photo1').val();
+	$bhoomipoojan_photo2 = $('#bhoomipoojan_photo2').val();
+	$lokarpan_photo1 = $('#lokarpan_photo1').val();
+	$lokarpan_photo2 = $('#lokarpan_photo2').val();
+	$shramdaan_photo1 = $('#shramdaan_photo1').val();
+	$shramdaan_photo2 = $('#shramdaan_photo2').val();
+	$plantation_photo1 = $('#plantation_photo1').val();
+	$plantation_photo2 = $('#plantation_photo2').val();
+	$award_photo1 = $('#award_photo1').val();
+	$award_photo2 = $('#award_photo2').val();
 	
 
 	if ($date === '' || typeof $date === 'undefined') {
@@ -94,21 +95,21 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	if ($maleParticipants === '' || typeof $maleParticipants === 'undefined') {
+	if ($male_participants === '' || typeof $male_participants === 'undefined') {
 		alert('Please enter the Number of Male Participants/Villagers');
-		$('#maleParticipants').focus();
+		$('#male_participants').focus();
 		allValid = false;
 		return false;
 	}
-	if ($femaleParticipants === '' || typeof $femaleParticipants === 'undefined') {
+	if ($female_participants === '' || typeof $female_participants === 'undefined') {
 		alert('Please enter the Number of Female Participants/Villagers');
-		$('#femaleParticipants').focus();
+		$('#female_participants').focus();
 		allValid = false;
 		return false;
 	}
-	if ($centralMinisters === '' || typeof $centralMinisters === 'undefined') {
+	if ($central_ministers === '' || typeof $central_ministers === 'undefined') {
 		alert('Please enter the Number of Central Ministers');
-		$('#centralMinisters').focus();
+		$('#central_ministers').focus();
 		allValid = false;
 		return false;
 	}
@@ -124,15 +125,15 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	if ($assemblyMembers === '' || typeof $assemblyMembers === 'undefined') {
+	if ($assembly_members === '' || typeof $assembly_members === 'undefined') {
 		alert('Please enter the Number of Legislative Assembly Members');
-		$('#assemblyMembers').focus();
+		$('#assembly_members').focus();
 		allValid = false;
 		return false;
 	}
-	if ($councilMembers === '' || typeof $councilMembers === 'undefined') {
+	if ($council_members === '' || typeof $council_members === 'undefined') {
 		alert('Please enter the Number of Legislative Council Members');
-		$('#councilMembers').focus();
+		$('#council_members').focus();
 		allValid = false;
 		return false;
 	}
@@ -142,140 +143,146 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	if ($govOfficials === '' || typeof $govOfficials === 'undefined') {
+	if ($gov_officials === '' || typeof $gov_officials === 'undefined') {
 		alert('Please enter the Number of Government Officials');
-		$('#govOfficials').focus();
+		$('#gov_officials').focus();
 		allValid = false;
 		return false;
 	}
-	if ($flagOff === '' || typeof $flagOff === 'undefined') {
+	if ($flagoff === '' || typeof $flagoff === 'undefined') {
 		alert('Please select Flag off of Van');
-// 		$('#flagOff').focus();
-		$('input[name="flagOff"]').first().focus();
+// 		$('#flagoff').focus();
+		$('input[name="flagoff"]').first().focus();
 		allValid = false;
 		return false;
 	}
-	
-	if ($flagOffPhoto1 === '' || typeof $flagOffPhoto1 === 'undefined') {
+	if ($flagoff === 'true') {
+	if ($flagoff_photo1 === '' || typeof $flagoff_photo1 === 'undefined') {
 		alert('Please upload photo for the Flag off of Van');
-// 		$('#flagOffPhoto1').focus();
-		document.getElementById('flagOffPhoto1').click();
+// 		$('#flagoff_photo1').focus();
+		document.getElementById('flagoff_photo1').click();
 		allValid = false;
 		return false;
-	}if ($flagOffPhoto2 === '' || typeof $flagOffPhoto2 === 'undefined') {
+	}if ($flagoff_photo2 === '' || typeof $flagoff_photo2 === 'undefined') {
 		alert('Please upload photo for the Flag off of Van');
-// 		$('#flagOffPhoto2').focus();
-		document.getElementById('flagOffPhoto2').click();
+// 		$('#flagoff_photo2').focus();
+		document.getElementById('flagoff_photo2').click();
 		allValid = false;
 		return false;
 	}
-	
-	if ($themeSong === '' || typeof $themeSong === 'undefined') {
+	}
+	if ($themesong === '' || typeof $themesong === 'undefined') {
 		alert('Please select the Launch of the Theme Song');
-// 		$('#themeSong').focus();
-		$('input[name="themeSong"]').first().focus();
+// 		$('#themesong').focus();
+		$('input[name="themesong"]').first().focus();
 		allValid = false;
 		return false;
 	}
-	
-	if ($themeSongPhoto1 === '' || typeof $themeSongPhoto1 === 'undefined') {
+	if ($themesong === 'true') {
+	if ($themesong_photo1 === '' || typeof $themesong_photo1 === 'undefined') {
 		alert('Please upload photo for the Launch of the Theme Song');
-// 		$('#themeSongPhoto1').focus();
-		document.getElementById('themeSongPhoto1').click();
+// 		$('#themesong_photo1').focus();
+		document.getElementById('themesong_photo1').click();
 		allValid = false;
 		return false;
-	}if ($themeSongPhoto2 === '' || typeof $themeSongPhoto2 === 'undefined') {
+	}if ($themesong_photo2 === '' || typeof $themesong_photo2 === 'undefined') {
 		alert('Please upload photo for the Launch of the Theme Song');
-// 		$('#themeSongPhoto2').focus();
-		document.getElementById('themeSongPhoto2').click();
+// 		$('#themesong_photo2').focus();
+		document.getElementById('themesong_photo2').click();
 		allValid = false;
 		return false;
 	}
-	
-	if ($noWorksBhoomiPoojan === '' || typeof $noWorksBhoomiPoojan === 'undefined') {
+	}
+	if ($no_works_bhoomipoojan === '' || typeof $no_works_bhoomipoojan === 'undefined') {
 		alert('Please enter Number of Works of Bhoomi Poojan');
-		$('#noWorksBhoomiPoojan').focus();
+		$('#no_works_bhoomipoojan').focus();
 		allValid = false;
 		return false;
 	}
-	if ($totWorksBhoomiPoojan === '' || typeof $totWorksBhoomiPoojan === 'undefined') {
+	if ($tot_works_bhoomipoojan === '' || typeof $tot_works_bhoomipoojan === 'undefined') {
 		alert('Please enter the Cost of the Total Works of Bhoomi Poojan in Lakhs');
-		$('#totWorksBhoomiPoojan').focus();
+		$('#tot_works_bhoomipoojan').focus();
 		allValid = false;
 		return false;
 	}
 	
-	if ($bhoomiPoojanPhoto1 === '' || typeof $bhoomiPoojanPhoto1 === 'undefined') {
+	if ($bhoomipoojan_photo1 === '' || typeof $bhoomipoojan_photo1 === 'undefined') {
 		alert('Please upload photo for Bhoomi Poojan');
-// 		$('#bhoomiPoojanPhoto1').focus();
-		document.getElementById('bhoomiPoojanPhoto1').click();
+// 		$('#bhoomipoojan_photo1').focus();
+		document.getElementById('bhoomipoojan_photo1').click();
 		allValid = false;
 		return false;
-	}if ($bhoomiPoojanPhoto2 === '' || typeof $bhoomiPoojanPhoto2 === 'undefined') {
+	}if ($bhoomipoojan_photo2 === '' || typeof $bhoomipoojan_photo2 === 'undefined') {
 		alert('Please upload photo for Bhoomi Poojan');
-// 		$('#bhoomiPoojanPhoto2').focus();
-		document.getElementById('bhoomiPoojanPhoto2').click();
+// 		$('#bhoomipoojan_photo2').focus();
+		document.getElementById('bhoomipoojan_photo2').click();
 		allValid = false;
 		return false;
 	}
 	
-	if ($noWorksLokarpan === '' || typeof $noWorksLokarpan === 'undefined') {
+	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
 		alert('Please enter the Number of Works of Lokarpan');
-		$('#noWorksLokarpan').focus();
+		$('#no_works_lokarpan').focus();
 		allValid = false;
 		return false;
 	}
-	if ($totWorksLokarpan === '' || typeof $totWorksLokarpan === 'undefined') {
+	if ($tot_works_lokarpan === '' || typeof $tot_works_lokarpan === 'undefined') {
 		alert('Please enter the Cost of the Total Works of Lokarpan in Lakhs');
-		$('#totWorksLokarpan').focus();
+		$('#tot_works_lokarpan').focus();
 		allValid = false;
 		return false;
 	}
 	
-	if ($lokarpanPhoto1 === '' || typeof $lokarpanPhoto1 === 'undefined') {
+	if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
 		alert('Please upload photo for Lokarpan');
-// 		$('#lokarpanPhoto1').focus();
-		document.getElementById('lokarpanPhoto1').click();
+// 		$('#lokarpan_photo1').focus();
+		document.getElementById('lokarpan_photo1').click();
 		allValid = false;
 		return false;
-	}if ($lokarpanPhoto2 === '' || typeof $lokarpanPhoto2 === 'undefined') {
+	}if ($lokarpan_photo2 === '' || typeof $lokarpan_photo2 === 'undefined') {
 		alert('Please upload photo for Lokarpan');
-// 		$('#lokarpanPhoto2').focus();
-		document.getElementById('lokarpanPhoto2').click();
+// 		$('#lokarpan_photo2').focus();
+		document.getElementById('lokarpan_photo2').click();
 		allValid = false;
 		return false;
 	}
 	
-	if ($noLocationShramdaan === '' || typeof $noLocationShramdaan === 'undefined') {
+	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
 		alert('Please enter the Number of Locations of Shramdaan');
-		$('#noLocationShramdaan').focus();
+		$('#no_location_shramdaan').focus();
 		allValid = false;
 		return false;
 	}
-	if ($costPeopleShramdaan === '' || typeof $costPeopleShramdaan === 'undefined') {
-		alert('Please enter Cost of people who participated in Shramdaan');
-		$('#costPeopleShramdaan').focus();
+	if ($no_people_shramdaan === '' || typeof $no_people_shramdaan === 'undefined') {
+		alert('Please enter No of people participated in Shramdaan');
+		$('#no_people_shramdaan').focus();
 		allValid = false;
 		return false;
 	}
-	
-	if ($shramdaanPhoto1 === '' || typeof $shramdaanPhoto1 === 'undefined') {
-		alert('Please upload photo for Shramdaan');
-// 		$('#shramdaanPhoto1').focus();
-		document.getElementById('shramdaanPhoto1').click();
-		allValid = false;
-		return false;
-	}if ($shramdaanPhoto2 === '' || typeof $shramdaanPhoto2 === 'undefined') {
-		alert('Please upload photo for Shramdaan');
-// 		$('#shramdaanPhoto2').focus();
-		document.getElementById('shramdaanPhoto2').click();
+	if ($man === '' || typeof $man === 'undefined') {
+		alert('Please enter No of Man Hours in Shramdaan');
+		$('#man').focus();
 		allValid = false;
 		return false;
 	}
 	
-	if ($areaPlantation === '' || typeof $areaPlantation === 'undefined') {
+	if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
+		alert('Please upload photo for Shramdaan');
+// 		$('#shramdaan_photo1').focus();
+		document.getElementById('shramdaan_photo1').click();
+		allValid = false;
+		return false;
+	}if ($shramdaan_photo2 === '' || typeof $shramdaan_photo2 === 'undefined') {
+		alert('Please upload photo for Shramdaan');
+// 		$('#shramdaan_photo2').focus();
+		document.getElementById('shramdaan_photo2').click();
+		allValid = false;
+		return false;
+	}
+	
+	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
 		alert('Please enter the Plantation Area in hectares');
-		$('#areaPlantation').focus();
+		$('#area_plantation').focus();
 		allValid = false;
 		return false;
 	}
@@ -286,37 +293,37 @@ function validation()
 		return false;
 	}
 	
-	if ($plantationPhoto1 === '' || typeof $plantationPhoto1 === 'undefined') {
+	if ($plantation_photo1 === '' || typeof $plantation_photo1 === 'undefined') {
 		alert('Please upload photo for Plantation');
-// 		$('#plantationPhoto1').focus();
-		document.getElementById('plantationPhoto1').click();
+// 		$('#plantation_photo1').focus();
+		document.getElementById('plantation_photo1').click();
 		allValid = false;
 		return false;
-	}if ($plantationPhoto2 === '' || typeof $plantationPhoto2 === 'undefined') {
+	}if ($plantation_photo2 === '' || typeof $plantation_photo2 === 'undefined') {
 		alert('Please upload photo for Plantation');
-// 		$('#plantationPhoto2').focus();
-		document.getElementById('plantationPhoto2').click();
+// 		$('#plantation_photo2').focus();
+		document.getElementById('plantation_photo2').click();
 		allValid = false;
 		return false;
 	}
 	
-	if ($noAwards === '' || typeof $noAwards === 'undefined') {
+	if ($no_awards === '' || typeof $no_awards === 'undefined') {
 		alert('Please enter the Number of Award Distribution');
-		$('#noAwards').focus();
+		$('#no_awards').focus();
 		allValid = false;
 		return false;
 	}
 	
-	if ($awardPhoto1 === '' || typeof $awardPhoto1 === 'undefined') {
+	if ($award_photo1 === '' || typeof $award_photo1 === 'undefined') {
 		alert('Please upload photo for Award Distribution');
-// 		$('#awardPhoto1').focus();
-		document.getElementById('awardPhoto1').click();
+// 		$('#award_photo1').focus();
+		document.getElementById('award_photo1').click();
 		allValid = false;
 		return false;
-	}if ($awardPhoto2 === '' || typeof $awardPhoto2 === 'undefined') {
+	}if ($award_photo2 === '' || typeof $award_photo2 === 'undefined') {
 		alert('Please upload photo for Award Distribution');
-// 		$('#awardPhoto2').focus();
-		document.getElementById('awardPhoto2').click();
+// 		$('#award_photo2').focus();
+		document.getElementById('award_photo2').click();
 		allValid = false;
 		return false;
 	}
@@ -337,14 +344,27 @@ if (allValid) {
 
 
 function checkImage(input, inputId) {
-    var file = input.files[0];
+	var file = input.files[0];
     var fileType = file.type;
+    var fileSize = file.size; // Get the file size in bytes
+    var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
 
+    // Check if the file is an image
     if (!fileType.startsWith('image/')) {
         alert('Only image files are allowed');
-       	input.value = ''; // Clear the file input
-       	document.getElementById(inputId).focus();
+        input.value = ''; // Clear the file input
+        document.getElementById(inputId).focus();
+        return;
     }
+
+    // Check if the file size exceeds 100KB
+    if (fileSize > maxFileSize) {
+        alert('File size exceeds 100 KB. Please choose a smaller file.');
+        input.value = ''; // Clear the file input
+        document.getElementById(inputId).focus();
+        return;
+    }
+    
 }
 
 </script>
@@ -363,13 +383,13 @@ function checkImage(input, inputId) {
 /*    border-radius: 2px; */
  }
 
-.form-group label {
-	font-size: 1.1rem;
-	font-weight: 600;
-	color: black; /* Watercolor blue for labels */
-	display: block;
-	margin-bottom: 5px;
-}
+/* .form-group label { */
+/* 	font-size: 1.1rem; */
+/* 	font-weight: 600; */
+/* 	color: black; /* Watercolor blue for labels */ */
+/* 	display: block; */
+/* 	margin-bottom: 5px; */
+/* } */
 </style> 
 
 </head>
@@ -407,7 +427,7 @@ function checkImage(input, inputId) {
 			<div class="row">
 			<div class="form-group col-3">
 			<c:if test="${userType== 'SL' }"><br/>
-				<b> State Name: </b><br/>
+				 State Name: <br/>
 				<c:out value="${stateName}"></c:out>
 			</c:if>
 			</div>
@@ -443,16 +463,16 @@ function checkImage(input, inputId) {
      	</tr>
      	<tr>
      		<td>Number of Participants/Villagers</td>
-     		<td>Male<br><input type="text" id="maleParticipants" name="maleParticipants" autocomplete="off"
+     		<td>Male<br><input type="text" id="male_participants" name="male_participants" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Female<br><input type="text" id="femaleParticipants" name="femaleParticipants" autocomplete="off"
+     		<td>Female<br><input type="text" id="female_participants" name="female_participants" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Number of Ministers</td>
-     		<td>Central Level<br><input type="text" id="centralMinisters" name="centralMinisters" autocomplete="off"
+     		<td>Central Level<br><input type="text" id="central_ministers" name="central_ministers" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>State Level<br><input type="text" id="stateMinisters" name="stateMinisters" autocomplete="off"
+     		<td>State Level<br><input type="text" id="stateMinisters" name="state_ministers" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
@@ -463,9 +483,9 @@ function checkImage(input, inputId) {
      	</tr>
      	<tr>
      		<td>Number of Members</td>
-     		<td>Legislative Assembly<br><input type="text" id="assemblyMembers" name="assemblyMembers" autocomplete="off"
+     		<td>Legislative Assembly<br><input type="text" id="assembly_members" name="assembly_members" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Legislative Council<br><input type="text" id="councilMembers" name="councilMembers" autocomplete="off"
+     		<td>Legislative Council<br><input type="text" id="council_members" name="council_members" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
@@ -475,7 +495,7 @@ function checkImage(input, inputId) {
      	</tr>
      	<tr>
      		<td>Number of Government Officials</td>
-     		<td colspan=2><input type="text" id="govOfficials" name="govOfficials" autocomplete="off"
+     		<td colspan=2><input type="text" id="gov_officials" name="gov_officials" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	</table>
@@ -485,59 +505,61 @@ function checkImage(input, inputId) {
      	</tr>
      	<tr>
      		<td>Flag off of Van</td>
-     		<td><input type="radio" id="flagOffYes" name="flagOff" value="true" autocomplete="off" />Yes</td>
-     		<td><input type="radio" id="flagOffNo" name="flagOff" value="false" autocomplete="off" />No</td>
-     		<td>Upload Photographs<br><input type="file" id="flagOffPhoto1" name="flagOffPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagOffPhoto1')" required /><br/>
-     							<input type="file" id="flagOffPhoto2" name="flagOffPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagOffPhoto2')" required /></td>
+     		<td><input type="radio" id="flagOffYes" name="flagoff" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="flagOffNo" name="flagoff" value="false" autocomplete="off" />No</td>
+     		<td>Upload Photographs<br><input type="file" id="flagoff_photo1" name="flagoff_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo1')" /><br/>
+     							<input type="file" id="flagoff_photo2" name="flagoff_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo2')" /></td>
      	</tr>
      	<tr>
      		<td>Launch of Theme Song</td>
-     		<td><input type="radio" id="themeSongYes" name="themeSong" value="true" autocomplete="off" />Yes</td>
-     		<td><input type="radio" id="themeSongNo" name="themeSong" value="false" autocomplete="off" />No</td>
-     		<td>Upload Photographs<br><input type="file" id="themeSongPhoto1" name="themeSongPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themeSongPhoto1')" required /><br/>
-     							<input type="file" id="themeSongPhoto2" name="themeSongPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themeSongPhoto2')" required /></td>
+     		<td><input type="radio" id="themeSongYes" name="themesong" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="themeSongNo" name="themesong" value="false" autocomplete="off" />No</td>
+     		<td>Upload Photographs<br><input type="file" id="themesong_photo1" name="themesong_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo1')" /><br/>
+     							<input type="file" id="themesong_photo2" name="themesong_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo2')" /></td>
      	</tr>
      	<tr>
      		<td>Bhoomi Poojan</td>
-     		<td>Number of Works<br><input type="text" id="noWorksBhoomiPoojan" name="noWorksBhoomiPoojan" autocomplete="off"
+     		<td>Number of Works<br><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Cost of Total works (in Lakh)<br><input type="text" id="totWorksBhoomiPoojan" name="totWorksBhoomiPoojan" autocomplete="off"
+			<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="bhoomiPoojanPhoto1" name="bhoomiPoojanPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomiPoojanPhoto1')" required /><br/>
-								<input type="file" id="bhoomiPoojanPhoto2" name="bhoomiPoojanPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomiPoojanPhoto2')" required /></td>
+			<td>Upload Photographs<br><input type="file" id="bhoomipoojan_photo1" name="bhoomipoojan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo1')" required /><br/>
+								<input type="file" id="bhoomipoojan_photo2" name="bhoomipoojan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo2')" required /></td>
      	</tr>
      	<tr>
      		<td>Lokarpan</td>
-     		<td>Number of Works<br><input type="text" id="noWorksLokarpan" name="noWorksLokarpan" autocomplete="off"
+     		<td>Number of Works<br><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Cost of Total works (in Lakh)<br><input type="text" id="totWorksLokarpan" name="totWorksLokarpan" autocomplete="off"
+     		<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_lokarpan" name="tot_works_lokarpan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="lokarpanPhoto1" name="lokarpanPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpanPhoto1')" required /><br/>
-								<input type="file" id="lokarpanPhoto2" name="lokarpanPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpanPhoto2')" required /></td>
+			<td>Upload Photographs<br><input type="file" id="lokarpan_photo1" name="lokarpan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo1')" required /><br/>
+								<input type="file" id="lokarpan_photo2" name="lokarpan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo2')" required /></td>
      	</tr>
      	<tr>
      		<td>Shramdaan</td>
-     		<td>Number of Locations<br><input type="text" id="noLocationShramdaan" name="noLocationShramdaan" autocomplete="off"
+     		<td>Number of Locations<br><input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Cost of people participated<br><input type="text" id="costPeopleShramdaan" name="costPeopleShramdaan" autocomplete="off"
+     		<td>No. of people participated<br><input type="text" id="no_people_shramdaan" name="no_people_shramdaan" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /><br/> <br/>
+			Number of Man Hours<br><input type="text" id="man" name="man" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="shramdaanPhoto1" name="shramdaanPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaanPhoto1')" required /><br/>
-								<input type="file" id="shramdaanPhoto2" name="shramdaanPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaanPhoto2')" required /></td>
+			<td>Upload Photographs<br><input type="file" id="shramdaan_photo1" name="shramdaan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaan_photo1')" required /><br/>
+								<input type="file" id="shramdaan_photo2" name="shramdaan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaan_photo2')" required /></td>
      	</tr>
      	<tr>
      		<td>Plantation</td>
-     		<td>Area (in ha.)<br><input type="text" id="areaPlantation" name="areaPlantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
-     		<td>No. of Agro forsetry / Horticultural Plants<br><input type="text" id="noPlantation" name="noPlantation" autocomplete="off"
+     		<td>Area (in ha.)<br><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
+     		<td>No. of Agro forsetry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="plantationPhoto1" name="plantationPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantationPhoto1')" required /><br/>
-								<input type="file" id="plantationPhoto2" name="plantationPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantationPhoto2')" required /></td>
+			<td>Upload Photographs<br><input type="file" id="plantation_photo1" name="plantation_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo1')" required /><br/>
+								<input type="file" id="plantation_photo2" name="plantation_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo2')" required /></td>
      	</tr>
      	<tr>
-     		<td>Award Distribution</td>
-     		<td colspan=2>Number of Watershed Margdarshaks<br><input type="text" id="noAwards" name="noAwards" autocomplete="off"
+     		<td>Award Distribution (Felicitation)</td>
+     		<td colspan=2>Number of Watershed Margdarshaks<br><input type="text" id="no_awards" name="no_awards" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="awardPhoto1" name="awardPhoto1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'awardPhoto1')" required /><br/>
-								<input type="file" id="awardPhoto2" name="awardPhoto2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'awardPhoto2')" required /></td>
+			<td>Upload Photographs<br><input type="file" id="award_photo1" name="award_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'award_photo1')" required /><br/>
+								<input type="file" id="award_photo2" name="award_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'award_photo2')" required /></td>
      	</tr>
      	<tr>
      		<td colspan=4 class="text-left">
@@ -560,6 +582,118 @@ function checkImage(input, inputId) {
 		
    
 	</div>
+	
+	
+	
+	<div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold"><u>List of Watershed Yatra - Inauguration Programm Details</u></h5>
+	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th rowspan="3">S.No.<!-- <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> --></th> 
+								<th rowspan="3">Date</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="3">District Name</th>
+								<th rowspan="3">Block Name</th>
+								<th rowspan="3">Location</th>
+								<th colspan="9">Number of Participation</th>
+								<th colspan="12">Activities</th>
+							</tr>
+							<tr>
+								<th colspan="2">Participants/Villagers</th>
+								<th colspan="2">Ministers</th>
+								<th rowspan="2">Member of Parliament</th>
+								<th colspan="2">Legislative Members</th>
+								<th rowspan="2">Other Public Representatives</th>
+								<th rowspan="2">Government Officials</th>
+								
+								<th rowspan="2">Flag off of Van</th>
+								<th rowspan="2">Launch of Theme Song</th>
+								<th colspan="2">Bhoomi Poojan</th>
+								<th colspan="2">Lokarpan</th>
+								<th colspan="3">Shramdaan</th>
+								<th colspan="2">Plantation</th>
+								<th rowspan="2">Award Distribution (Felicitation)</th>
+<!-- 								<th rowspan="2">No of Uploaded Photographs</th> -->
+							</tr>
+							<tr>
+								<th>Male</th>
+								<th>Female</th>
+								<th>Central Level</th>
+								<th>State Level</th>
+								<th>Assembly</th>
+								<th>Council</th>
+								
+								<th>Number of Works</th>
+								<th>Cost of Total works (in Lakh)</th>
+								<th>Number of Works</th>
+								<th>Cost of Total works (in Lakh)</th>
+								<th>Number of Locations</th>
+								<th>No. of people participated</th>
+								<th>No. of Man Hours</th>
+								<th>Area (in ha.)</th>
+								<th>No. of Agro forsetry / Horticultural Plants (No. of Sapling)</th>
+								
+								<!-- <th style="width:5%">Location2 (Nearby/Milestone)</th>
+								<th style="width:5%">Date and Time Location2</th> -->
+							</tr>
+						</thead>
+						
+ 						<c:set var="st" value="" />
+ 						<c:forEach items="${dataList}" var="data" varStatus="count">
+ 							<tr>
+<%--  							 	<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.nodal_id}"  name="${dataV.nodal_id}" value="${dataV.nodal_id}"/> </td> --%>
+								<td><c:out value='${count.count}' /></td>
+								<td> <c:out value="${data.date}" /></td>
+<%--  								<c:choose> --%>
+<%--  									<c:when test="${st ne data.stname}"> --%>
+<%--  										<c:set var="st" value="${data.stname}" /> --%>
+<%--  										<td> <c:out value="${data.stname}" /></td> --%>
+<%--  									</c:when> --%>
+<%--  								<c:otherwise> --%>
+<!--  										<td></td> -->
+<%--  								</c:otherwise> --%>
+<%--  								</c:choose> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+								<td class="text-left"> <c:out value="${data.location}" /></td>
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+								<td class="text-left"> <c:out value="${data.flagoff == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-left"> <c:out value="${data.themesong == 'true' ? 'Yes' : 'No'}" /></td>
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								<td class="text-right"> <c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.man}" /></td>
+ 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
+								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+ 							</tr>
+ 						</c:forEach>
+						<c:if test="${dataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="26" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+		</table>
+		
+		
+		</div>
+		</div>
+	
+	
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
