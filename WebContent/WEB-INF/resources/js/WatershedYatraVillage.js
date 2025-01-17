@@ -214,9 +214,9 @@ $(function(){
 							window.location.href='getNodalOfficerHeader';
 						});
 					}
-					if(data==='fail')
+					else if(data==='fail')
 					{
-						successAlert('Data not Saved Successfully');
+						successAlert('Data not Saved Successfully, Eamail Already Register.');
 						$("#successok").click(function(){
 							$('#popup').modal('hide');
 							window.location.href='getNodalOfficerHeader';

@@ -202,12 +202,18 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		// TODO Auto-generated method stub
 		Session sess = sessionFactory.getCurrentSession();
 		String res="fail";
+		String result;
 		try {
 			
+			sess.beginTransaction();
+			SQLQuery chkdata=sess.createSQLQuery("select * from nodal_officer where UPPER(email)=UPPER(:emailid)");
+			chkdata.setString("emailid", email);
+			chkdata.list();
+		
+			if(chkdata.list().isEmpty()) 
+			{
 				InetAddress inet=InetAddress.getLocalHost();
 				String ipAddr=inet.getHostAddress();
-				
-				sess.beginTransaction();
 				
 				NodalOfficer main =new NodalOfficer();
 				IwmpState st =new IwmpState();
@@ -237,10 +243,16 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setRequestedIp(ipAddr);
 				main.setStatus('D');
 				sess.save(main);
-			
 				sess.getTransaction().commit();
 				res="success";
-		
+			}
+			else {
+				
+				sess.getTransaction().commit();
+				res="fail";
+			
+			}
+			
 		}
 		catch(Exception ex) 
 		{
