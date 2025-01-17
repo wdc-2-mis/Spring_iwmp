@@ -141,7 +141,7 @@ $(function(){
 			$('#level').focus();
 			return false;
 		}
-		if($('#level option:selected').val()==='distrinct' )
+		if($('#level option:selected').val()==='district' )
 		{
 			if($('#district option:selected').val()==='' || typeof $('#district option:selected').val()==='undefined')
 			{
