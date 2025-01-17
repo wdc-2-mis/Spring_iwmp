@@ -47,20 +47,20 @@ function validateemail1() {
 <style> 
 input[type=text] {
   width: 100%;
-  padding: 12px 20px;
+/*   padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid black;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 
 input[type=email] {
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
+ /* padding: 12px 20px;
+   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid black;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 
 
@@ -213,8 +213,8 @@ input[type=email] {
 								<c:if test="${dataV.level eq 'state'}">
 									<td> <c:out value="State" /></td>	
 								</c:if>
-								<c:if test="${dataV.level eq 'distrinct'}">
-									<td> <c:out value="Distrinct" /></td>	
+								<c:if test="${dataV.level eq 'district'}">
+									<td> <c:out value="District" /></td>	
 								</c:if>
 								<c:if test="${dataV.level eq 'block'}">
 									<td> <c:out value="Block/Project" /></td>	
