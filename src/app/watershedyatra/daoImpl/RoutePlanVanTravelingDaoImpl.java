@@ -48,7 +48,14 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 		// TODO Auto-generated method stub
 		Session sess = sessionFactory.getCurrentSession();
 		String res="fail";
+		Integer result=0;
 		try {
+			
+				sess.beginTransaction();
+				List list = sess.createQuery("Select coalesce(max(flagwise),0)+1 from RoutePlanVanTravel").list();
+			//	System.out.println(list.get(0));
+				result=Integer.parseInt(list.get(0).toString());
+			
 				DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
 				LocalDateTime localDateTime = LocalDateTime.parse(datetime, formatter); 
 				Timestamp timestamp1 = Timestamp.valueOf(localDateTime); 
@@ -60,7 +67,7 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				InetAddress inet=InetAddress.getLocalHost();
 				String ipAddr=inet.getHostAddress();
 				
-				sess.beginTransaction();
+				//sess.beginTransaction();
 				
 				RoutePlanVanTravel main =new RoutePlanVanTravel();
 				IwmpState st =new IwmpState();
@@ -81,6 +88,7 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				main.setIwmpVillage(v);
 				main.setLocation1(location);
 				main.setDate1(timestamp1);
+				main.setFlagwise(result);
 				main.setStatus('C');
 				main.setCreatedBy(session.getAttribute("loginID").toString());
 				main.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
@@ -108,6 +116,7 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				main1.setIwmpVillage(v1);
 				main1.setLocation2(location1);
 				main1.setDate2(timestamp2);
+				main1.setFlagwise(result);
 				main1.setStatus('C');
 				main1.setCreatedBy(session.getAttribute("loginID").toString());
 				main1.setCreatedDate(new Timestamp(new java.util.Date().getTime()));

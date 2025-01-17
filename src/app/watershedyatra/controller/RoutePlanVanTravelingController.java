@@ -122,11 +122,8 @@ HttpSession session;
 		if(session!=null && session.getAttribute("loginID")!=null) 
 		{
 			Integer regid = Integer.parseInt(session.getAttribute("regId").toString());
-			
 			res=serr.saveRoutePlanVanTravelingLMS(Integer.parseInt(state), district, block, grampan, village, location, datetime, session, district1, block1, grampan1, village1, location1, datetime1);
-			
 		}
-		
 		return res; 
 	}
 	

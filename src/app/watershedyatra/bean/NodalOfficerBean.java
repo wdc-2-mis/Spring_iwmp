@@ -24,6 +24,7 @@ public class NodalOfficerBean {
     private String date1;
     private String location2;
     private String date2;
+    private int flagwise;
     
 	public int getNodal_id() {
 		return nodal_id;
@@ -156,6 +157,12 @@ public class NodalOfficerBean {
 	}
 	public void setDate2(String date2) {
 		this.date2 = date2;
+	}
+	public int getFlagwise() {
+		return flagwise;
+	}
+	public void setFlagwise(int flagwise) {
+		this.flagwise = flagwise;
 	}
     
     

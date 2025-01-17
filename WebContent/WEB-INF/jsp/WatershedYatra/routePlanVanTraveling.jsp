@@ -7,20 +7,20 @@
 <style> 
 input[type=text] {
   width: 200%;
-  padding: 8px 12px;
-  margin: 2px 0;
+ /* padding: 8px 12px;
+   margin: 2px 0;
   box-sizing: border-box;
   border: 1px solid black;
-  border-radius: 2px;
+  border-radius: 2px; */
 }
 
 input[type=email] {
   width: 100%;
-  padding: 12px 20px;
+ /*  padding: 12px 20px;
   margin: 8px 0;
   box-sizing: border-box;
   border: 2px solid black;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 
 
@@ -154,23 +154,41 @@ input[type=email] {
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
 								<th style="width:2%">S.No. &nbsp; <!-- <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> --></th> 
+								<th style="width:5%">Date and Time </th>
 								<th style="width:5%">State Name</th>
 								<th style="width:5%">District Name</th>
 								<th style="width:5%">Block Name</th>
 								<th style="width:5%">Gram Panchyat Name</th>
 								<th style="width:5%">Village Name</th>
 								<th style="width:5%">Location (Nearby/Milestone)</th>
-								<th style="width:5%">Date and Time </th>
+								
 								<!-- <th style="width:5%">Location2 (Nearby/Milestone)</th>
 								<th style="width:5%">Date and Time Location2</th> -->
 							</tr>
 						</thead>
 						
 						<c:set var="proj" value="" />
+						<c:set var="flagwis" value="" />
+						<c:set var="ac" value="1" />
 						<c:forEach items="${draftList}" var="dataV" varStatus="count">
 							<tr>
-							 	<td><c:out value='${count.count}' /> <%-- &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.nodal_id}"  name="${dataV.nodal_id}" value="${dataV.nodal_id}"/> --%> </td>
-								
+								<c:choose>
+									<c:when test="${flagwis ne dataV.flagwise}">
+										<c:set var="flagwis" value="${dataV.flagwise}" />
+										<td><c:out value="${ac}" /></td>
+										 <c:set var="ac" value="${ac+1}" /> 
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+							 	 <%-- &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.nodal_id}"  name="${dataV.nodal_id}" value="${dataV.nodal_id}"/> --%> </td>
+								<c:if test="${dataV.date1 ne null }">
+									<td> <c:out value="${dataV.date1}" /></td>
+								</c:if>
+								<c:if test="${dataV.date1 eq null }">
+									<td> <c:out value="${dataV.date2}" /></td>
+								</c:if>
 								<c:choose>
 									<c:when test="${proj ne dataV.stname}">
 										<c:set var="proj" value="${dataV.stname}" />
@@ -192,12 +210,7 @@ input[type=email] {
 									<td> <c:out value="${dataV.location2}" /></td>
 								</c:if>
 								
-								<c:if test="${dataV.date1 ne null }">
-									<td> <c:out value="${dataV.date1}" /></td>
-								</c:if>
-								<c:if test="${dataV.date1 eq null }">
-									<td> <c:out value="${dataV.date2}" /></td>
-								</c:if>
+								
 								
 								<%-- <td> <c:out value="${dataV.location2}" /></td>
 								<td> <c:out value="${dataV.date2}" /></td> --%>

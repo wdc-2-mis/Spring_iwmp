@@ -31,7 +31,7 @@ public class RoutePlanVanTravel {
     private String requestedIp;
     private String updatedBy;
     private Date updatedDate;
-    
+    private Integer flagwise;
     
 
     public RoutePlanVanTravel() {}
@@ -41,7 +41,7 @@ public class RoutePlanVanTravel {
 	}
 	
 	public RoutePlanVanTravel(Integer routePlanId, IwmpState iwmpState,IwmpDistrict iwmpDistrict,IwmpBlock iwmpBlock, IwmpGramPanchayat iwmpGramPanchayat,Timestamp date1, Timestamp date2,
-			IwmpVillage iwmpVillage, String location1, String location2, Character status, Date createdDate,String createdBy,String requestedIp,String updatedBy,Date updatedDate) {
+			IwmpVillage iwmpVillage, String location1, String location2, Character status, Date createdDate,String createdBy,String requestedIp,String updatedBy,Date updatedDate, Integer flagwise) {
 		
 		this.routePlanId=routePlanId;
 		this.iwmpState=iwmpState;
@@ -59,6 +59,7 @@ public class RoutePlanVanTravel {
 		this.updatedDate=updatedDate;
 		this.date1=date1;
 		this.date2=date2;
+		this.flagwise=flagwise;
 		
 	}
 
@@ -212,6 +213,15 @@ public class RoutePlanVanTravel {
 
 	public void setDate2(Timestamp date2) {
 		this.date2 = date2;
+	}
+
+	@Column(name="flagwise")
+	public Integer getFlagwise() {
+		return flagwise;
+	}
+
+	public void setFlagwise(Integer flagwise) {
+		this.flagwise = flagwise;
 	}
 	
 	
