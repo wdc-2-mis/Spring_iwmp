@@ -376,7 +376,7 @@ function validation()
 		return false;
 	}
 	if ($locShramdaanps === '' || typeof $locShramdaanps === 'undefined') {
-		alert('Please enter Number of Cost of people participated of Shramdaan');
+		alert('Please enter Number of people participated of Shramdaan');
 		$('#locShramdaanps').focus();
 		allValid = false;
 		return false;
