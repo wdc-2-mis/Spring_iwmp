@@ -636,8 +636,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" onchange="checkImage(this, 'arExperiencephoto1')" required />
-        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" onchange="checkImage(this, 'arExperiencephoto2')" required />
+        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" accept="image/*" onchange="checkImage(this, 'arExperiencephoto1')" required />
+        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" accept="image/*" onchange="checkImage(this, 'arExperiencephoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -647,8 +647,8 @@ input[type=text] {
      		
      		<td id="fileUploadSection2" style="display:none;">
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')"  />
-        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')"  />
+        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" accept="image/*" onchange="checkImage(this, 'shapathYesphoto1')"  />
+        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" accept="image/*" onchange="checkImage(this, 'shapathYesphoto2')"  />
     </td>
      	</tr>
      	<tr>
@@ -657,8 +657,8 @@ input[type=text] {
   <td><input type="radio" id="FilmNo" name="FilmYes" value="false" onclick="toggleFileUpload()">No</td>
   <td id="fileUploadSection" style="display:none;">
     Uploading of photographs (limit 2 photos per activity)<br>
-    <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')" />
-    <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')" />
+    <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" accept="image/*" onchange="checkImage(this, 'FilmYesphoto1')" />
+    <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" accept="image/*" onchange="checkImage(this, 'FilmYesphoto2')" />
   </td>
 </tr>
 <!--      	<tr> -->
@@ -677,8 +677,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
-        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
+        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
+        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
     </td>
      	</tr>
 <tr>
@@ -694,17 +694,17 @@ input[type=text] {
             </c:forEach>
         </select>
     </div>
-    <div id="otherActivityDiv" class="form-group col-8" style="display: none; margin-top: 10px;">
-        <label for="otherActivity">Please specify:</label>
-        <input type="text1" id="otherActivity" name="otherActivity" class="form-group col-12" placeholder="other activity" style="max-width: 200px;">
-    </div>
+<!--     <div id="otherActivityDiv" class="form-group col-8" style="display: none; margin-top: 10px;"> -->
+<!--         <label for="otherActivity">Please specify:</label> -->
+<!--         <input type="text1" id="otherActivity" name="otherActivity" class="form-group col-12" placeholder="other activity" style="max-width: 200px;"> -->
+<!--     </div> -->
 </td>
 
 
     <td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" onchange="checkImage(this, 'culturalActivityphoto1')" required />
-        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" onchange="checkImage(this, 'culturalActivityphoto2')" required />
+        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto1')" required />
+        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto2')" required />
     </td>
 </tr>
      
@@ -716,8 +716,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
-        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" onchange="checkImage(this, 'bhoomiCostphoto2')" required />
+        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
+        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -728,8 +728,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" onchange="checkImage(this, 'lokWorksphoto1')" required />
-        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" onchange="checkImage(this, 'lokWorksphoto2')" required />
+        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" accept="image/*" onchange="checkImage(this, 'lokWorksphoto1')" required />
+        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" accept="image/*" onchange="checkImage(this, 'lokWorksphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -745,8 +745,8 @@ input[type=text] {
 <!-- 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
 	
 	<td >Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
-        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
+        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
+        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
     </td>
      	</tr>
      	<tr>
@@ -761,8 +761,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" onchange="checkImage(this, 'plantationAreaphoto1')" required />
-        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" onchange="checkImage(this, 'plantationAreaphoto2')" required />
+        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto1')" required />
+        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto2')" required />
     </td>
 								
      	</tr>
@@ -772,8 +772,8 @@ input[type=text] {
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
-        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" onchange="checkImage(this, 'noOfwatershedphoto2')" required />
+        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
+        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto2')" required />
     </td>
      	</tr>
      	
@@ -829,7 +829,7 @@ input[type=text] {
  								<th colspan="2">Lokarpan</th> 
 							<th colspan="3">Shramdaan</th> 
  								<th colspan="2">Plantation</th> 
-								<th rowspan="2">Award Distribution</th> 
+								<th rowspan="2">Award Distribution (Felicitation)</th> 
 <!--  								<th rowspan="2">No of Uploaded Photographs</th>  -->
 							</tr> 
 							<tr> 
@@ -848,7 +848,7 @@ input[type=text] {
  								<th>No. of people participated</th> 
  								<th>No. of Man Hours</th>
  								<th>Area (in ha.)</th> 
-							<th>No. of Agro forsetry / Horticultural Plants</th> 
+							<th>No. of Agro forestry / Horticultural Plants (No. of Sapling)</th> 
 								
 							</tr> 
 						</thead> 
@@ -864,35 +864,35 @@ input[type=text] {
  								<td> <c:out value="${data.gpname}" /></td>
  								<td> <c:out value="${data.villagename}" /></td>
 								<td> <c:out value="${data.location}" /></td>
- 								<td> <c:out value="${data.male_participants}" /></td>
-								<td> <c:out value="${data.female_participants}" /></td>
- 								<td> <c:out value="${data.central_ministers}" /></td>
-								<td> <c:out value="${data.state_ministers}" /></td>
- 								<td> <c:out value="${data.parliament}" /></td>
- 								<td> <c:out value="${data.assembly_members}" /></td>
- 								<td> <c:out value="${data.council_members}" /></td>
-								<td> <c:out value="${data.others}" /></td>
- 								<td> <c:out value="${data.gov_officials}" /></td>
- 								<td> <c:out value="${data.no_of_ar_experience_people}" /></td>
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_of_ar_experience_people}" /></td>
 								<td> <c:out value="${data.bhumi_jal_sanrakshan == 'true' ? 'Yes' : 'No'}" /></td>
  								<td> <c:out value="${data.watershed_yatra_film == 'true' ? 'Yes' : 'No'}" /></td>
- 								<td> <c:out value="${data.quiz_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.quiz_participants}" /></td>
  								<td> <c:out value="${data.cultural_name}" /></td>
-								<td> <c:out value="${data.no_works_bhoomipoojan}" /></td>
- 								<td> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
- 								<td> <c:out value="${data.no_works_lokarpan}" /></td>
-								<td> <c:out value="${data.tot_works_lokarpan}" /></td>
- 								<td> <c:out value="${data.no_location_shramdaan}" /></td>
-								<td> <c:out value="${data.no_people_shramdaan}" /></td>
-								<td> <c:out value="${data.manhour}" /></td>
- 								<td> <c:out value="${data.area_plantation}" /></td>
-								<td> <c:out value="${data.no_plantation}" /></td>
- 								<td> <c:out value="${data.no_awards}" /></td>
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								<td class="text-right"> <c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.manhour}" /></td>
+ 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
+								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
  							</tr>
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
+								<td align="center" colspan="18" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 						</c:if>
 		</table>
