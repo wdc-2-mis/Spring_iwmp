@@ -287,7 +287,7 @@ function validation()
 		return false;
 	}
 	if ($noPlantation === '' || typeof $noPlantation === 'undefined') {
-		alert('Please enter the Number of Agro forsetry / Horticultural Plants');
+		alert('Please enter the Number of Agro forestry / Horticultural Plants');
 		$('#noPlantation').focus();
 		allValid = false;
 		return false;
@@ -565,7 +565,7 @@ function toggleFileUpload(radioId, filesId) {
      	<tr>
      		<td>Plantation</td>
      		<td>Area (in ha.)<br><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
-     		<td>No. of Agro forsetry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
+     		<td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Upload Photographs<br><input type="file" id="plantation_photo1" name="plantation_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo1')" required /><br/>
 								<input type="file" id="plantation_photo2" name="plantation_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo2')" required /></td>
@@ -587,16 +587,9 @@ function toggleFileUpload(radioId, filesId) {
      	</tr>
      </table>
      </div>
-		</div>
-<!-- 		<div class="form-row"> -->
-<!-- 				<div class="form-group col"> -->
-<!--      				<input type="button" class="d-none btn btn-info" id="update" name="update" value ="update"/> -->
-<!--      			</div> -->
-<!--      		</div> -->
-     	
+		</div>  	
 		</form:form>
 		
-   
 	</div>
 	
 	
@@ -604,7 +597,7 @@ function toggleFileUpload(radioId, filesId) {
 	<div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold"><u>List of Watershed Yatra - Inauguration Programm Details</u></h5>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Programm Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
@@ -650,7 +643,7 @@ function toggleFileUpload(radioId, filesId) {
 								<th>No. of people participated</th>
 								<th>No. of Man Hours</th>
 								<th>Area (in ha.)</th>
-								<th>No. of Agro forsetry / Horticultural Plants (No. of Sapling)</th>
+								<th>No. of Agro forestry / Horticultural Plants (No. of Sapling)</th>
 								
 							</tr>
 						</thead>
