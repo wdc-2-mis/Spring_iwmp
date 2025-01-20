@@ -367,6 +367,22 @@ function checkImage(input, inputId) {
     
 }
 
+	
+function toggleFileUpload(radioId, filesId) {
+	  var radioButtons = document.getElementsByName(radioId);
+	  var fileUploadSection = document.getElementById(filesId);
+
+	  for (var i = 0; i < radioButtons.length; i++) {
+	    if (radioButtons[i].checked && radioButtons[i].value === "true") {
+	      fileUploadSection.style.display = 'block';
+	      return;
+	    }
+	  }
+
+	  fileUploadSection.style.display = 'none';
+}	
+	
+	
 </script>
 
 <meta charset="ISO-8859-1">
@@ -450,7 +466,7 @@ function checkImage(input, inputId) {
     		</div>
     		<div class="form-group col-3">
     			<label for="location">Location (Nearby/Milestone):</label>
-      			<input type="texts" class="form-control activity" name="location" id="location" autocomplete="off" />
+      			<input type="text" class="form-control activity" name="location" id="location" autocomplete="off" style="width: 100%; max-width: 800px;" />
     		</div>
     		
     		</div>
@@ -505,16 +521,16 @@ function checkImage(input, inputId) {
      	</tr>
      	<tr>
      		<td>Flag off of Van</td>
-     		<td><input type="radio" id="flagOffYes" name="flagoff" value="true" autocomplete="off" />Yes</td>
-     		<td><input type="radio" id="flagOffNo" name="flagoff" value="false" autocomplete="off" />No</td>
-     		<td>Upload Photographs<br><input type="file" id="flagoff_photo1" name="flagoff_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo1')" /><br/>
+     		<td><input type="radio" id="flagOffYes" name="flagoff" value="true" autocomplete="off" onclick="toggleFileUpload('flagoff', 'flagoff_files')" />Yes</td>
+     		<td><input type="radio" id="flagOffNo" name="flagoff" value="false" autocomplete="off" onclick="toggleFileUpload('flagoff', 'flagoff_files')" />No</td>
+     		<td id="flagoff_files">Upload Photographs<br><input type="file" id="flagoff_photo1" name="flagoff_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo1')" /><br/>
      							<input type="file" id="flagoff_photo2" name="flagoff_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo2')" /></td>
      	</tr>
      	<tr>
      		<td>Launch of Theme Song</td>
-     		<td><input type="radio" id="themeSongYes" name="themesong" value="true" autocomplete="off" />Yes</td>
-     		<td><input type="radio" id="themeSongNo" name="themesong" value="false" autocomplete="off" />No</td>
-     		<td>Upload Photographs<br><input type="file" id="themesong_photo1" name="themesong_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo1')" /><br/>
+     		<td><input type="radio" id="themeSongYes" name="themesong" value="true" autocomplete="off" onclick="toggleFileUpload('themesong', 'themesong_files')" />Yes</td>
+     		<td><input type="radio" id="themeSongNo" name="themesong" value="false" autocomplete="off" onclick="toggleFileUpload('themesong', 'themesong_files')" />No</td>
+     		<td id="themesong_files">Upload Photographs<br><input type="file" id="themesong_photo1" name="themesong_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo1')" /><br/>
      							<input type="file" id="themesong_photo2" name="themesong_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo2')" /></td>
      	</tr>
      	<tr>
@@ -592,7 +608,7 @@ function checkImage(input, inputId) {
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="3">S.No.<!-- <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> --></th> 
+								<th rowspan="3">S.No.</th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
 								<th rowspan="3">District Name</th>
@@ -636,15 +652,12 @@ function checkImage(input, inputId) {
 								<th>Area (in ha.)</th>
 								<th>No. of Agro forsetry / Horticultural Plants (No. of Sapling)</th>
 								
-								<!-- <th style="width:5%">Location2 (Nearby/Milestone)</th>
-								<th style="width:5%">Date and Time Location2</th> -->
 							</tr>
 						</thead>
 						
  						<c:set var="st" value="" />
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
-<%--  							 	<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.nodal_id}"  name="${dataV.nodal_id}" value="${dataV.nodal_id}"/> </td> --%>
 								<td><c:out value='${count.count}' /></td>
 								<td> <c:out value="${data.date}" /></td>
 <%--  								<c:choose> --%>
@@ -680,6 +693,7 @@ function checkImage(input, inputId) {
  								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+<%--  								<td class="text-right"> <c:out value="${data.image_count}" /></td> --%>
  							</tr>
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">

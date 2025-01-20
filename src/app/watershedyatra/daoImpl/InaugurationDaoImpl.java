@@ -96,13 +96,19 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setOtherPublicRepresentatives(userfileup.getOthers());
 			data.setGovOfficials(userfileup.getGov_officials());
 			data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagoff()));
-//			if(userfileup.getFlagoff_photo1()!=null)
-			data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
+//			data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
+//			data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
 			
-			data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
+			data.setVanFlagPath1(!userfileup.getFlagoff_photo1().isEmpty() ? filePath + userfileup.getFlagoff_photo1().getOriginalFilename() :  null);
+			data.setVanFlagPath1(!userfileup.getFlagoff_photo2().isEmpty() ? filePath + userfileup.getFlagoff_photo2().getOriginalFilename() :  null);
+			
 			data.setThemeSong(Boolean.valueOf(userfileup.getThemesong()));
-			data.setThemeSongPath1(filePath+userfileup.getThemesong_photo1().getOriginalFilename());
-			data.setThemeSongPath2(filePath+userfileup.getThemesong_photo2().getOriginalFilename());
+//			data.setThemeSongPath1(filePath+userfileup.getThemesong_photo1().getOriginalFilename());
+//			data.setThemeSongPath2(filePath+userfileup.getThemesong_photo2().getOriginalFilename());
+			
+			data.setThemeSongPath1(!userfileup.getThemesong_photo1().isEmpty() ? filePath + userfileup.getThemesong_photo1().getOriginalFilename() :  null);
+			data.setThemeSongPath2(!userfileup.getThemesong_photo2().isEmpty() ? filePath + userfileup.getThemesong_photo2().getOriginalFilename() :  null);
+			
 			data.setBhoomiPoojanNoOfWorks(userfileup.getNo_works_bhoomipoojan());
 			data.setBhoomiPoojanCostOfWorks(userfileup.getTot_works_bhoomipoojan());
 			data.setBhoomiPoojanPath1(filePath+userfileup.getBhoomipoojan_photo1().getOriginalFilename());
