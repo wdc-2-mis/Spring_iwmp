@@ -474,7 +474,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setmCulturalActivity(ca);
 				if(userfileup.getCulturalActivity()==4) {
 				main.setCulturalActivityOther(userfileup.getOtherActivity());
-				System.out.println("other"+ userfileup.getOtherActivity());
+				//System.out.println("other"+ userfileup.getOtherActivity());
 				}
 				main.setBhoomiPoojanNoOfWorks(userfileup.getBhoomiWorks());
 				main.setBhoomiPoojanCostOfWorks(userfileup.getBhoomiCost());
@@ -489,24 +489,30 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				
 				main.setArExperiencePath1(filePath+userfileup.getArExperiencephoto1().getOriginalFilename());
 				main.setArExperiencePath2(filePath+userfileup.getArExperiencephoto2().getOriginalFilename());
+				
+				main.setBhumiJalSanrakshanPath1(!userfileup.getShapathYesphoto1().isEmpty() ? filePath + userfileup.getShapathYesphoto1().getOriginalFilename() :  null);
+				main.setBhumiJalSanrakshanPath2(!userfileup.getShapathYesphoto2().isEmpty() ? filePath + userfileup.getShapathYesphoto2().getOriginalFilename() :  null);
+				main.setYatraFilmPath1(!userfileup.getFilmYesphoto1().isEmpty() ? filePath + userfileup.getFilmYesphoto1().getOriginalFilename() :  null);
+				main.setYatraFilmPath2(!userfileup.getFilmYesphoto2().isEmpty() ? filePath + userfileup.getFilmYesphoto2().getOriginalFilename() :  null);
+				
 				main.setShramdaanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
 				main.setShramdaanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
-				main.setYatraFilmPath1(filePath+userfileup.getFilmYesphoto1().getOriginalFilename());
-				main.setYatraFilmPath2(filePath+userfileup.getFilmYesphoto2().getOriginalFilename());
+//				main.setYatraFilmPath1(filePath+userfileup.getFilmYesphoto1().getOriginalFilename());
+//				main.setYatraFilmPath2(filePath+userfileup.getFilmYesphoto2().getOriginalFilename());
 				main.setQuizParticipantsPath1(filePath+userfileup.getQuizParticipantsphoto1().getOriginalFilename());
 				main.setQuizParticipantsPath2(filePath+userfileup.getQuizParticipantsphoto2().getOriginalFilename());
 				main.setCulturalActivityPath1(filePath+userfileup.getCulturalActivityphoto1().getOriginalFilename());
 				main.setCulturalActivityPath2(filePath+userfileup.getCulturalActivityphoto2().getOriginalFilename());
 				main.setBhoomiPoojanPath1(filePath+userfileup.getBhoomiCostphoto1().getOriginalFilename());
 				main.setBhoomiPoojanPath2(filePath+userfileup.getBhoomiCostphoto2().getOriginalFilename());
-				main.setLokarpanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
-				main.setLokarpanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
+				main.setLokarpanPath1(filePath+userfileup.getLokWorksphoto1().getOriginalFilename());
+				main.setLokarpanPath2(filePath+userfileup.getLokWorksphoto2().getOriginalFilename());
 				main.setPlantationPath1(filePath+userfileup.getPlantationAreaphoto1().getOriginalFilename());
 				main.setPlantationPath2(filePath+userfileup.getPlantationAreaphoto2().getOriginalFilename());
 				main.setAwardDistributionPath1(filePath+userfileup.getNoOfwatershedphoto1().getOriginalFilename());
 				main.setAwardDistributionPath2(filePath+userfileup.getNoOfwatershedphoto2().getOriginalFilename());
-				main.setBhumiJalSanrakshanPath1(filePath+userfileup.getShapathYesphoto1().getOriginalFilename());
-				main.setBhumiJalSanrakshanPath2(filePath+userfileup.getShapathYesphoto2().getOriginalFilename());
+//				main.setBhumiJalSanrakshanPath1(filePath+userfileup.getShapathYesphoto1().getOriginalFilename());
+//				main.setBhumiJalSanrakshanPath2(filePath+userfileup.getShapathYesphoto2().getOriginalFilename());
 				
 				main.setStatus("C");
 				main.setCreatedBy(session.getAttribute("loginID").toString());

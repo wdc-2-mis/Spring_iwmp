@@ -15,12 +15,30 @@
 <title>Watershed Yatra Program</title>
 
 <script type="text/javascript">
-
+function toggleFileUpload() {
+ var filmYes = document.getElementById('FilmYes').checked; 
+ var fileUploadSection = document.getElementById('fileUploadSection'); 
+ if (filmYes) { fileUploadSection.style.display = 'block'; 
+} else
+{ 
+fileUploadSection.style.display = 'none'; 
+} 
+ }
+ 
+function toggleFileUpload2() {
+	 var shapathYes = document.getElementById('shapathYes').checked; 
+	 var fileUploadSection2 = document.getElementById('fileUploadSection2'); 
+	 if (shapathYes) { fileUploadSection2.style.display = 'block'; 
+	} else
+	{ 
+	fileUploadSection2.style.display = 'none'; 
+	} 
+	 }
 function validateDecimal(input, decimalPlaces) {
     // Allow only numbers and one decimal point
     const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?$`);
     if (!regex.test(input.value)) {
-      input.value = input.value.slice(0, -1); // Remove the last invalid character
+      input.value = input.value.slice(0, -1); // Remove the last invalid character 
     }
   }
 // function toggleOtherField() {
@@ -282,14 +300,6 @@ function validation()
 		$('#culturalActivity').focus();
 		allValid = false;
 		return false;
-	}
-	if ($culturalActivity === '4') {
-	    if ($otherActivity === '' || typeof $otherActivity === 'undefined') {
-	        alert('Please specify the Other Cultural Activity based on Watershed theme');
-	        $('#otherActivity').focus();
-	        allValid = false;
-	        return false;
-	    }
 	}
 
 	if ($culturalActivityphoto1 === '' || typeof $culturalActivityphoto1 === 'undefined') {
@@ -632,25 +642,35 @@ input[type=text] {
      	</tr>
      	<tr>
      		<td>"Bhoomi aur Jal Sanrakshan" Shapath Shramdan</td>
-     		<td><input type="radio" id="shapathYes" name="shapathYes" value="true">Yes</td>
-			<td><input type="radio" id="shapathNo" name="shapathYes" value="false">No</td>
+     		<td><input type="radio" id="shapathYes" name="shapathYes" value="true" onclick="toggleFileUpload2()">Yes</td>
+			<td><input type="radio" id="shapathNo" name="shapathYes" value="false" onclick="toggleFileUpload2()">No</td>
      		
-     		<td >
+     		<td id="fileUploadSection2" style="display:none;">
         Uploading of photographs (limit 2 photos per activity)<br>
         <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" onchange="checkImage(this, 'shapathYesphoto1')"  />
         <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" onchange="checkImage(this, 'shapathYesphoto2')"  />
     </td>
      	</tr>
      	<tr>
-     		<td>Film on Watershed Yatra</td>
-     		<td><input type="radio" id="FilmYes" name="FilmYes" value="true">Yes</td>
-     		<td><input type="radio" id="FilmNo" name="FilmYes" value="false">No</td>
-     		<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
-        <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')"  />
-        <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')"  />
-    </td>
-     	</tr>
+  <td>Film on Watershed Yatra</td>
+  <td><input type="radio" id="FilmYes" name="FilmYes" value="true" onclick="toggleFileUpload()">Yes</td>
+  <td><input type="radio" id="FilmNo" name="FilmYes" value="false" onclick="toggleFileUpload()">No</td>
+  <td id="fileUploadSection" style="display:none;">
+    Uploading of photographs (limit 2 photos per activity)<br>
+    <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')" />
+    <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')" />
+  </td>
+</tr>
+<!--      	<tr> -->
+<!--      		<td>Film on Watershed Yatra</td> -->
+<!--      		<td><input type="radio" id="FilmYes" name="FilmYes" value="true">Yes</td> -->
+<!--      		<td><input type="radio" id="FilmNo" name="FilmYes" value="false">No</td> -->
+<!--      		<td > -->
+<!--         Uploading of photographs (limit 2 photos per activity)<br> -->
+<!--         <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')"  /> -->
+<!--         <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')"  /> -->
+<!--     </td> -->
+<!--      	</tr> -->
      		<tr>
      		<td>Quiz Program</td>
      		<td colspan=2>Number of People participated in Quiz<br><input type="text" id="quizParticipants" name="quizParticipants" autocomplete="off"
