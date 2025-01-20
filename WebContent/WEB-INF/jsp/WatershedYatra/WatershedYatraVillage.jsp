@@ -797,7 +797,7 @@ input[type=text] {
       		<div class="form-row"> 
      <div class="form-group col">
       <hr/>
-      <h5 class="text-center font-weight-bold"><u> Added List Watershed Yatra at Village Level</u></h5> 
+      <h5 class="text-center font-weight-bold"><u> List of Watershed Yatra at Village Level</u></h5> 
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
