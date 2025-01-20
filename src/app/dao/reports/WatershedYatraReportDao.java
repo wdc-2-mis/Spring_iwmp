@@ -1,0 +1,18 @@
+package app.dao.reports;
+
+import java.util.List;
+
+import app.model.IwmpDistrict;
+import app.model.master.IwmpBlock;
+import app.model.master.IwmpGramPanchayat;
+import app.watershedyatra.bean.NodalOfficerBean;
+
+public interface WatershedYatraReportDao {
+	
+	List<IwmpDistrict> getDistrictList(int stateCode);
+	List<IwmpBlock> getBlockList(int stateCode, int dist);
+	List<IwmpGramPanchayat> getGramPanchyatList(Integer block);
+	
+	List<NodalOfficerBean> getRoutePlanReportData(Integer State, Integer district, Integer block, Integer grampan);
+	List<NodalOfficerBean> getNodalOfficerReportData(String lvl, Integer State, Integer district, Integer block);
+}
