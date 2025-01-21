@@ -114,4 +114,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.getWatershedYatraList(stcd);
 	}
 
+
+
+	@Override
+	public String getExistingWatershedYatraVillageCodes(Integer villageCode) {
+		// TODO Auto-generated method stub
+		return dao.getExistingWatershedYatraVillageCodes(villageCode);
+	}
+
 }

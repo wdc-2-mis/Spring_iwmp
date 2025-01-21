@@ -571,7 +571,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				{
 					cultMap.put(mcult.getCulturalId(), mcult.getCulturalName());
 				}
-				session.getTransaction().commit();
+				//session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -648,11 +648,38 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			ex.printStackTrace();
 		}
 		finally {
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 			//session.flush();
 		//session.close();
 		}
 		return list;
+	}
+
+	@Override
+	public String getExistingWatershedYatraVillageCodes(Integer villageCode) {
+		// TODO Auto-generated method stub
+		 Session session = sessionFactory.getCurrentSession();
+		  int result;
+		  String data="fail";
+		  try {
+		    session.beginTransaction();
+			List list = session.createQuery("SELECT iwmpVillage.vcode FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
+		//	result=Integer.parseInt(list.get(0).toString());
+			if(!list.isEmpty())
+				data="success";
+		  } 
+		  catch (HibernateException e) {
+		    System.err.print("Hibernate error");
+		    e.printStackTrace();
+		    session.getTransaction().rollback();
+		  } catch (Exception ex) {
+		    session.getTransaction().rollback();
+		    ex.printStackTrace();
+		  }
+		  finally {
+			  session.getTransaction().commit();
+		  }
+		  return data;
 	}
 
 }

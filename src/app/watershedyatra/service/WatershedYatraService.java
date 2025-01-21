@@ -36,5 +36,7 @@ public interface WatershedYatraService {
 
 	List<WatershedYatraBean> getWatershedYatraList(Integer stcd);
 	
+	String getExistingWatershedYatraVillageCodes(Integer villageCode);
+	
 	
 }

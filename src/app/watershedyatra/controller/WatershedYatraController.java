@@ -181,5 +181,10 @@ public class WatershedYatraController {
 		return ser.getWatershedYatraVillage(gpCode);
 	}
 	
+	@RequestMapping(value = "/getExistingWatershedYatraVillageCodes", method = RequestMethod.POST)
+	@ResponseBody
+	public String getExistingWatershedYatraVillageCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="villageCode") Integer villageCode ) {
+	  return ser.getExistingWatershedYatraVillageCodes(villageCode);
+	}
 
 }

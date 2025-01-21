@@ -31,4 +31,6 @@ public interface WatershedYatraDao {
 	LinkedHashMap<Integer, String> getCultActivity();
 	
 	List<WatershedYatraBean> getWatershedYatraList(Integer stcd);
+	
+	String getExistingWatershedYatraVillageCodes(Integer villageCode);
 }

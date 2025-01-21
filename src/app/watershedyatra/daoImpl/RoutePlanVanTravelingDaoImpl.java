@@ -167,6 +167,9 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 			session.getTransaction().rollback();
 			ex.printStackTrace();
 		}
+		finally {
+			  session.getTransaction().commit();
+		  }
 		return list;
 	}
 
@@ -190,6 +193,9 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 		  } catch (Exception ex) {
 		    session.getTransaction().rollback();
 		    ex.printStackTrace();
+		  }
+		  finally {
+			  session.getTransaction().commit();
 		  }
 		  return data;
 	}
