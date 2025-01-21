@@ -92,7 +92,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				{
 					distMap.put(state.getDcode(), state.getDistName());
 				}
-				session.getTransaction().commit();
+				//session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -102,6 +102,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		catch(Exception ex){
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
 		}
         return distMap;
 	}
@@ -123,7 +126,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				blkMap.put( blk.getBlockName(), blk.getBcode());
 			//	System.out.println(district.getDcode()+" k "+district.getDistName());
 			}
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -133,6 +136,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		catch(Exception ex){
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
 		}
         return blkMap;
 	}
@@ -154,7 +160,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				blkMap.put( blk.getGramPanchayatName(), blk.getGcode());
 			//	System.out.println(district.getDcode()+" k "+district.getDistName());
 			}
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -164,6 +170,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		catch(Exception ex){
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
 		}
         return blkMap;
 	}
@@ -185,7 +194,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				blkMap.put( blk.getVillageName(), blk.getVcode());
 			//	System.out.println(district.getDcode()+" k "+district.getDistName());
 			}
-			session.getTransaction().commit();
+			
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -195,6 +204,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		catch(Exception ex){
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
 		}
         return blkMap;
 	}
@@ -263,6 +275,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			sess.getTransaction().rollback();
 		}
 		finally {
+			sess.getTransaction().commit();
 			//session.flush();
 		//session.close();
 		}
@@ -294,6 +307,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		{
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			//session.flush();
+		//session.close();
 		}
 		return list;
 	}
@@ -564,6 +582,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			session.getTransaction().rollback();
 			ex.printStackTrace();
 		}
+		finally {
+			session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
         return cultMap;
 	}
 
@@ -592,6 +615,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			session.getTransaction().rollback();
 			ex.printStackTrace();
 		}
+		finally {
+			session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
 		return list;
 	}
 
@@ -618,6 +646,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		{
 			session.getTransaction().rollback();
 			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			//session.flush();
+		//session.close();
 		}
 		return list;
 	}
