@@ -275,7 +275,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			sess.getTransaction().rollback();
 		}
 		finally {
-			sess.getTransaction().commit();
+			//sess.getTransaction().commit();
 			//session.flush();
 		//session.close();
 		}
@@ -309,7 +309,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			ex.printStackTrace();
 		}
 		finally {
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 			//session.flush();
 		//session.close();
 		}
@@ -616,7 +616,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			ex.printStackTrace();
 		}
 		finally {
-			session.getTransaction().commit();
+		//	session.getTransaction().commit();
 			//session.flush();
 		//session.close();
 		}
