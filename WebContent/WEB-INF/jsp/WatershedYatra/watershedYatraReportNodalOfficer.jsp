@@ -73,6 +73,41 @@ function showReport(e)
 	return false;
 }
 
+function downloadPDF(state, year, quarter){
+	
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+    var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
+  //  alert(stName+distName+projName+yearName);
+    document.getElementById("stName").value=stName;
+    document.getElementById("finName").value=finName;
+    document.getElementById("quartename").value=quartename;
+	
+    document.getElementById("state").value=state;
+    document.getElementById("year").value=year;
+    document.getElementById("quarter").value=quarter;
+    document.indicators.action="downloadQuarterReportPDF";
+	document.indicators.method="post";
+	document.indicators.submit();
+	}
+
+function exportExcel(state, year, quarter){
+	
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+    var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
+  //  alert(stName+distName+projName+yearName);
+    document.getElementById("stName").value=stName;
+    document.getElementById("finName").value=finName;
+    document.getElementById("quartename").value=quartename;
+	
+    document.getElementById("state").value=state;
+    document.getElementById("year").value=year;
+    document.getElementById("quarter").value=quarter;
+    document.indicators.action="downloadExceltargetAchievementofIndicators";
+	document.indicators.method="post";
+	document.indicators.submit();
+	}
 
 
 </script>
@@ -161,6 +196,12 @@ function showReport(e)
        </tr>
       </table>
 
+<br/>
+<c:if test="${routePlanList ne null}">
+<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${year}','${quarter}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${year}','${quarter}')" class="btn btn-info">PDF</button>
+<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+</c:if>
  <br/>
         <table class="table">
           <tr>
