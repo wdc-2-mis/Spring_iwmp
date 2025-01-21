@@ -327,7 +327,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 					str="fail";
 				 }
 			 }
-			 
 		}
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -372,7 +371,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 					str="fail";
 				 }
 			 }
-			 
 		}
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
