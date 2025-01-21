@@ -168,7 +168,7 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 			ex.printStackTrace();
 		}
 		finally {
-			  session.getTransaction().commit();
+			//  session.getTransaction().commit();
 		  }
 		return list;
 	}
