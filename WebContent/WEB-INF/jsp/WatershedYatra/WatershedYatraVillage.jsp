@@ -409,7 +409,7 @@ function validation()
 		return false;
 	}
 	if ($nofagrohorti === '' || typeof $nofagrohorti === 'undefined') {
-		alert('Please enter the No. of Agro forsetry / Horticultural Plants');
+		alert('Please enter the No. of Agro forestry / Horticultural Plants');
 		$('#nofagrohorti').focus();
 		allValid = false;
 		return false;
@@ -830,7 +830,7 @@ input[type=text] {
 							<th colspan="3">Shramdaan</th> 
  								<th colspan="2">Plantation</th> 
 								<th rowspan="2">Award Distribution (Felicitation)</th> 
-<!--  								<th rowspan="2">No of Uploaded Photographs</th>  -->
+ 								<th rowspan="2">No of Uploaded Photographs</th> 
 							</tr> 
 							<tr> 
 								<th>Male</th> 
