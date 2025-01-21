@@ -37,4 +37,13 @@ public class RoutePlanVanTravelingServicesImpl implements RoutePlanVanTravelingS
 		return dao.getRoutePlanVanTraveling(stcd);
 	}
 
+
+
+
+	@Override
+	public String getExistingVillageCodes(Integer villageCode) {
+		// TODO Auto-generated method stub
+		return dao.getExistingVillageCodes(villageCode);
+	}
+
 }

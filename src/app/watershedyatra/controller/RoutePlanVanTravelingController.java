@@ -127,5 +127,11 @@ HttpSession session;
 		return res; 
 	}
 	
+	
+	@RequestMapping(value = "/getExistingVillageCodes", method = RequestMethod.POST)
+	@ResponseBody
+	public String getExistingVillageCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="villageCode") Integer villageCode ) {
+	  return serr.getExistingVillageCodes(villageCode);
+	}
 
 }

@@ -14,4 +14,6 @@ public interface RoutePlanVanTravelingDao {
 	
 	List<NodalOfficerBean> getRoutePlanVanTraveling(Integer stcd);
 
+	String getExistingVillageCodes(Integer villageCode);
+
 }

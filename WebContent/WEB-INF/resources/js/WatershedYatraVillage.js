@@ -88,6 +88,29 @@ $(function(){
 					}
 				});
 	});
+	
+$(document).on('change', '#village', function(e) {
+  e.preventDefault();
+  $villageCode = $('#village option:selected').val();
+  $.ajax({
+    url: "getExistingVillageCodes",
+    type: "post",
+    data: {villageCode: $villageCode},
+    error: function(xhr, status, er) {
+      console.log(er);
+    },
+    success: function(data) 
+    {
+		if(data==='success')
+		{
+			alert('Village already exists. Please select a different village. !');
+			$("select#village")[0].selectedIndex = 0;
+						
+		}
+					
+    }
+  });
+});
 				
 				
 	$(document).on( 'change', '#level', function (e) {
