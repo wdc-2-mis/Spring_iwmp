@@ -128,10 +128,10 @@ function downloadPDF(state, district, blkd, grampn){
 					</c:if> 	
               </select>
           </td>
-           <td class="label">Gram Panchyat &nbsp;<span style="color: red;">*</span></td>
+           <td class="label">Gram Panchayat &nbsp;<span style="color: red;">*</span></td>
            <td>
               <select name="grampan" id="grampan" required="required" >
-              <option value="0">--All Gram Panchyat--</option>
+              <option value="0">--All Gram Panchayat--</option>
               	<c:if test="${not empty gpList}">
                					<c:forEach items="${gpList}" var="lists">
                						<c:if test="${lists.key eq grampn}">
@@ -165,7 +165,7 @@ function downloadPDF(state, district, blkd, grampn){
               			 	<th class="displ" align="center">State Name</th>
               			 	<th class="displ" align="center">District Name</th>
               			 	<th class="displ" align="center">Block Name</th>
-              			 	<th class="displ" align="center">Gram Panchyat Name</th>
+              			 	<th class="displ" align="center">Gram Panchayat Name</th>
               			 	<th class="displ" align="center">Village Name</th>
               			 	<th class="displ" align="center">Location (Nearby/Milestone)</th>
               			 	
