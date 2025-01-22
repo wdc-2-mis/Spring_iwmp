@@ -43,7 +43,22 @@ function showReport(e)
 	return false;
 }
 
-
+function downloadPDF(state, district, blkd, grampn){
+	
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var gpkName = document.getElementById("grampan").options[document.getElementById("grampan").selectedIndex].text;
+ 
+    document.getElementById("stName").value=stName;
+    document.getElementById("distName").value=distName;
+    document.getElementById("blkName").value=blkName;
+    document.getElementById("gpkName").value=gpkName;
+	
+    document.routePlan.action="downloadRoutePlanReportPDF";
+	document.routePlan.method="post";
+	document.routePlan.submit();
+}
 
 </script>
 
@@ -55,6 +70,11 @@ function showReport(e)
 <div class="col" style="text-align:center;"><h5>Route Plan for Van Traveling/Watershed Mahotsawa</h5></div>
  <form:form autocomplete="off" name="routePlan" id="routePlan"  action="getWatershedYatraReport" method="get">
  		<br/>
+ 		<input type="hidden" name="stName" id="stName" value="" />
+		<input type="hidden" name="distName" id="distName" value="" />
+		<input type="hidden" name="blkName" id="blkName" value="" />
+		<input type="hidden" name="gpkName" id="gpkName" value="" />
+		
       <table >
         <tr>
           <td class="label">State <span style="color: red;">*</span></td>
@@ -128,6 +148,12 @@ function showReport(e)
        </tr>
       </table>
 
+ <br/>
+<c:if test="${routePlanList ne null}">
+<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button>
+<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+</c:if>
  <br/>
         <table class="table">
           <tr>
