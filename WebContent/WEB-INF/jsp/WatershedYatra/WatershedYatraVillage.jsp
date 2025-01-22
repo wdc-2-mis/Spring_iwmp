@@ -350,7 +350,7 @@ function validation()
 		return false;
 	}
 	if ($costWorks === '' || typeof $costWorks === 'undefined') {
-		alert('Please enter Number of cost of Works of Lokarpan');
+		alert('Please enter Number of cost of Total Works of Lokarpan');
 		$('#costWorks').focus();
 		allValid = false;
 		return false;
@@ -635,7 +635,7 @@ input[type=text] {
      		<td colspan=2>Number of People who availed experience<br><input type="text" id="arExperience" name="arExperience" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+        Upload Photographs<br>
         <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" accept="image/*" onchange="checkImage(this, 'arExperiencephoto1')" required />
         <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" accept="image/*" onchange="checkImage(this, 'arExperiencephoto2')" required />
     </td>
@@ -646,7 +646,7 @@ input[type=text] {
 			<td><input type="radio" id="shapathNo" name="shapathYes" value="false" onclick="toggleFileUpload2()">No</td>
      		
      		<td id="fileUploadSection2" style="display:none;">
-        Uploading of photographs (limit 2 photos per activity)<br>
+       Upload Photographs<br>
         <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" accept="image/*" onchange="checkImage(this, 'shapathYesphoto1')"  />
         <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" accept="image/*" onchange="checkImage(this, 'shapathYesphoto2')"  />
     </td>
@@ -656,7 +656,7 @@ input[type=text] {
   <td><input type="radio" id="FilmYes" name="FilmYes" value="true" onclick="toggleFileUpload()">Yes</td>
   <td><input type="radio" id="FilmNo" name="FilmYes" value="false" onclick="toggleFileUpload()">No</td>
   <td id="fileUploadSection" style="display:none;">
-    Uploading of photographs (limit 2 photos per activity)<br>
+    Upload Photographs<br>
     <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" accept="image/*" onchange="checkImage(this, 'FilmYesphoto1')" />
     <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" accept="image/*" onchange="checkImage(this, 'FilmYesphoto2')" />
   </td>
@@ -676,7 +676,7 @@ input[type=text] {
      		<td colspan=2>Number of People participated in Quiz<br><input type="text" id="quizParticipants" name="quizParticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+       Upload Photographs<br>
         <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
         <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
     </td>
@@ -702,7 +702,7 @@ input[type=text] {
 
 
     <td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+        Upload Photographs<br>
         <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto1')" required />
         <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto2')" required />
     </td>
@@ -715,7 +715,7 @@ input[type=text] {
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="bhoomiCost" name="bhoomiCost" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+       Upload Photographs<br>
         <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
         <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto2')" required />
     </td>
@@ -727,7 +727,7 @@ input[type=text] {
      		<td>Cost of Total works (in Lakh)<br><input type="text" id="costWorks" name="costWorks" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 									<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+        Upload Photographs<br>
         <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" accept="image/*" onchange="checkImage(this, 'lokWorksphoto1')" required />
         <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" accept="image/*" onchange="checkImage(this, 'lokWorksphoto2')" required />
     </td>
@@ -744,7 +744,7 @@ input[type=text] {
 <!-- 									<td>Number of Man Hour<br><input type="text" id="manhour" name="manhour" autocomplete="off" -->
 <!-- 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
 	
-	<td >Uploading of photographs (limit 2 photos per activity)<br>
+	<td >Upload Photographs<br>
         <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
         <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
     </td>
@@ -760,7 +760,7 @@ input[type=text] {
      		<td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+        Upload Photographs<br>
         <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto1')" required />
         <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto2')" required />
     </td>
@@ -771,7 +771,7 @@ input[type=text] {
      		<td colspan=2>Number of "Watershed Margdarshaks"<br><input type="text" id="noOfwatershed" name="noOfwatershed" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
-        Uploading of photographs (limit 2 photos per activity)<br>
+        Upload Photographs<br>
         <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
         <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto2')" required />
     </td>

@@ -480,7 +480,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setParliamentMembers(userfileup.getMembersOfParliament());
 				main.setLegislativeAssemblyMembers(userfileup.getLegAssemblyMembers());
 				main.setLegislativeCouncilMembers(userfileup.getLegCouncilMembers());
-				main.setOtherPublicRepresentatives(userfileup.getGovOfficials());
+				main.setOtherPublicRepresentatives(userfileup.getPublicReps());
 				main.setGovOfficials(userfileup.getGovOfficials());
 				main.setNoOfArExperiencePeople(userfileup.getArExperience());
 				main.setBhumiJalSanrakshan(userfileup.getShapathYes());
