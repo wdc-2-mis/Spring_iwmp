@@ -73,22 +73,21 @@ function showReport(e)
 	return false;
 }
 
-function downloadPDF(state, year, quarter){
+function downloadPDF(state, district, blkd, lvl){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
-    var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
-  //  alert(stName+distName+projName+yearName);
+    var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var level = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
+  
     document.getElementById("stName").value=stName;
-    document.getElementById("finName").value=finName;
-    document.getElementById("quartename").value=quartename;
-	
-    document.getElementById("state").value=state;
-    document.getElementById("year").value=year;
-    document.getElementById("quarter").value=quarter;
-    document.indicators.action="downloadQuarterReportPDF";
-	document.indicators.method="post";
-	document.indicators.submit();
+    document.getElementById("distName").value=finName;
+    document.getElementById("blkName").value=blkname;
+    document.getElementById("lvlName").value=level;
+    
+    document.nodalOfficers.action="downloadNodalOfficerReportPDF";
+	document.nodalOfficers.method="post";
+	document.nodalOfficers.submit();
 	}
 
 function exportExcel(state, year, quarter){
@@ -120,6 +119,10 @@ function exportExcel(state, year, quarter){
 <div class="col" style="text-align:center;"><h5>Details of Nodal Officers</h5></div>
  <form:form autocomplete="off" name="nodalOfficers" id="nodalOfficers"  action="getWatershedYatraNodalReport" method="get">
  		<br/>
+ 		<input type="hidden" name="stName" id="stName" value="" />
+		<input type="hidden" name="distName" id="distName" value="" />
+		<input type="hidden" name="blkName" id="blkName" value="" />
+		<input type="hidden" name="lvlName" id="lvlName" value="" />
       <table >
         <tr>
         
@@ -198,8 +201,8 @@ function exportExcel(state, year, quarter){
 
 <br/>
 <c:if test="${routePlanList ne null}">
-<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${year}','${quarter}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${year}','${quarter}')" class="btn btn-info">PDF</button>
+<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
  <br/>

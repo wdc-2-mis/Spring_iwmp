@@ -206,7 +206,7 @@ public class WatershedYatraReportController {
 				
 				list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
 				
-				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+"     Block : "+blkName+"     Gram Panchyat Name : "+gpkName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchyat Name : "+gpkName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Date and Time", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -393,4 +393,177 @@ public class WatershedYatraReportController {
 		}
 		return mav; 
 	}
+	
+	@RequestMapping(value = "/downloadNodalOfficerReportPDF", method = RequestMethod.POST)
+	public ModelAndView downloadNodalOfficerReportPDF(HttpServletRequest request, HttpServletResponse response) 
+	{
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String lvlName= request.getParameter("lvlName");
+
+		String lvl= request.getParameter("level");
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+		
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Nodal Officer");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			
+			document.open(); 
+	       
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null; 
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+				paragraph3 = new Paragraph("View Details of Nodal Officers", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+			
+			if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village")){
+				table = new PdfPTable(9);
+				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5 });
+			}
+			if(lvl.equals("district") ){
+				table = new PdfPTable(8);
+				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5 });
+			}
+			if(lvl.equals("state") ){
+				table = new PdfPTable(7);
+				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5});
+			}	
+				table.setWidthPercentage(70);
+			
+				table.setWidthPercentage(100);
+				table.setSpacingBefore(0f);
+				table.setSpacingAfter(0f);
+				table.setHeaderRows(2);
+				
+				list=ser.getNodalOfficerReportData(lvl, stCode, distCode, blkCode);
+				
+				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village"))
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName+" District : "+distName+" Block : "+blkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
+				if(lvl.equals("district") )
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName+" District : "+distName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+				if(lvl.equals("state") )
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName, Element.ALIGN_LEFT, 7, 1, bf8Bold);
+				
+			//	CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+"State : "+ stName+"     District : "+distName+"     Block : "+blkName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Level", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") )
+				CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") )
+				CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table, "Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Designation", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Mobile", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Email Id", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				int stcd=0;
+				int distcd=0;
+				int i=0;
+				int k=1;
+				int totNum = 0;
+				if(list.size()!=0)
+					for( i=0;i<list.size();i++) 
+					{
+						
+							CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+							if(list.get(i).getLevel().equals("state") )
+								CommonFunctions.insertCell(table, "State", Element.ALIGN_LEFT, 1, 1, bf8);
+							if(list.get(i).getLevel().equals("district") )
+								CommonFunctions.insertCell(table, "District", Element.ALIGN_LEFT, 1, 1, bf8);
+							if(list.get(i).getLevel().equals("block") )
+								CommonFunctions.insertCell(table, "Block/Project", Element.ALIGN_LEFT, 1, 1, bf8);
+							if(list.get(i).getLevel().equals("village") )
+								CommonFunctions.insertCell(table, "Village/Van Standing Point", Element.ALIGN_LEFT, 1, 1, bf8);
+						
+							if(Integer.parseInt(list.get(i).getSt_code())!=stcd) {
+								CommonFunctions.insertCell(table, list.get(i).getStname(), Element.ALIGN_LEFT, 1, 1, bf8);
+							}
+							else {
+								CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
+							}
+							if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") ) {
+								
+								if(Integer.parseInt(list.get(i).getDcode())!=distcd) {
+									CommonFunctions.insertCell(table, list.get(i).getDistrict(), Element.ALIGN_LEFT, 1, 1, bf8);
+								}
+								else {
+									CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
+								}
+							}	
+							if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") )
+								CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
+							
+							CommonFunctions.insertCell(table, list.get(i).getNodal_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+							CommonFunctions.insertCell(table, list.get(i).getDesignation(), Element.ALIGN_LEFT, 1, 1, bf8);
+							CommonFunctions.insertCell(table, list.get(i).getMobile(), Element.ALIGN_LEFT, 1, 1, bf8);
+							CommonFunctions.insertCell(table, list.get(i).getEmail(), Element.ALIGN_LEFT, 1, 1, bf8);
+						
+						stcd=Integer.parseInt(list.get(i).getSt_code());
+					}
+				
+				
+				if(list.size()==0) {
+					if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village"))
+						CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 9, 1, bf8);
+					if(lvl.equals("district") )
+						CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+					if(lvl.equals("state") )
+						CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 7, 1, bf8);
+				}	
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;NodalOfficer.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+	
+	} 
+	catch (Exception ex) 
+	{
+		ex.printStackTrace();
+	} 
+	
+	return null;
+}
 }
