@@ -627,14 +627,17 @@ public class WatershedYatraReportController {
 				
 				list=ser.getNodalOfficerReportData(lvl, stCode, distCode, blkCode);
 				
-				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village")) {
+				if(lvl.equals("a") ) {
 					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+", State Name: "+ stName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
 				}	
 				if(lvl.equals("district") ) {
-					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName+" District : "+distName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+", State : "+ stName+", District : "+distName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
 				}	
 				if(lvl.equals("state") ) {
-					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName, Element.ALIGN_LEFT, 7, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+", State : "+ stName, Element.ALIGN_LEFT, 7, 1, bf8Bold);
+				}
+				if(lvl.equals("block") || lvl.equals("village") ) {
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+", State : "+ stName+", District : "+distName+", block : "+blkName , Element.ALIGN_LEFT, 8, 1, bf8Bold);
 				}
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Level", Element.ALIGN_CENTER, 1, 1, bf8Bold);
