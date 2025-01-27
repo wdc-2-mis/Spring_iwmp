@@ -60,6 +60,23 @@ function downloadPDF(state, district, blkd, grampn){
 	document.routePlan.submit();
 }
 
+function downloadExcel(state, district, blkd, grampn){
+	
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var gpkName = document.getElementById("grampan").options[document.getElementById("grampan").selectedIndex].text;
+ 
+    document.getElementById("stName").value=stName;
+    document.getElementById("distName").value=distName;
+    document.getElementById("blkName").value=blkName;
+    document.getElementById("gpkName").value=gpkName;
+	
+    document.routePlan.action="downloadRoutePlanReportExcel";
+	document.routePlan.method="post";
+	document.routePlan.submit();
+}
+
 </script>
 
 </head>
@@ -149,11 +166,11 @@ function downloadPDF(state, district, blkd, grampn){
       </table>
 
  <br/>
-<c:if test="${routePlanList ne null}">
-<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
+<c:if test="${not empty routePlanList}">
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
 <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button>
-<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
+<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
         <table class="table">
           <tr>
@@ -234,7 +251,7 @@ function downloadPDF(state, district, blkd, grampn){
                 	</c:if>
                 	<c:if test="${routePlanListSize eq 0}">
 							<tr>
-								<td align="center" colspan="8" class="required" style="color:red;">Data Not Found</td>
+								<td align="center" colspan="9" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 					</c:if>
                 	</tbody>

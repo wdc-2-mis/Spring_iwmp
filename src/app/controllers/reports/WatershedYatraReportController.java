@@ -2,8 +2,8 @@ package app.controllers.reports;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.BaseColor;
@@ -29,9 +38,7 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import app.bean.AssetIdBean;
 import app.bean.Login;
-import app.bean.UnfreezeBaselineSurveyDataBean;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.service.StateMasterService;
@@ -212,7 +219,7 @@ public class WatershedYatraReportController {
 				
 				list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
 				
-				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchyat Name : "+gpkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchayat Name : "+gpkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Route Plan Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Route Plan Time", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -298,6 +305,152 @@ public class WatershedYatraReportController {
 	
 	return null;
 }
+	
+	@RequestMapping(value = "/downloadRoutePlanReportExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadRoutePlanReportExcel(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String gpkName= request.getParameter("gpkName");
+		
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+		int gpCode = Integer.parseInt(request.getParameter("grampan"));
+		
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		
+		list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
+		
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Route Plan for Van Traveling Watershed Mahotsawa");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Route Plan for Van Traveling/Watershed Mahotsawa";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(5,5,0,8);
+		sheet.addMergedRegion(mergedRegion);
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State : "+ stName+"     District : "+distName+"     Block : "+blkName+"     Gram Panchayat : "+gpkName);
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<9;i++)
+		{
+			cell =rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("Sl. No.");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Route Plan Date");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Route Plan Time");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("State Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(4);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(5);
+		cell.setCellValue("Block Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Gram Panchayat Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(7);
+		cell.setCellValue("Village Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("Location (Nearby/Milestone)");
+		cell.setCellStyle(style);
+		
+			
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<9;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 8;
+		int totNum = 0;
+		String StName = "";
+		
+	    for(NodalOfficerBean bean: list) {
+	    	Row row = sheet.createRow(rowno);
+	    	if(bean.getFlagwise() != totNum)
+	    	{
+	        	row.createCell(0).setCellValue(sno);
+	        	sno++;
+	        }
+	    	if(bean.getDate1() != null)
+	    	{
+	    		row.createCell(1).setCellValue(bean.getDate1());
+	    		row.createCell(2).setCellValue(bean.getTime1());
+	    	}
+	    	if(bean.getDate1() == null)
+	    	{
+		    	row.createCell(1).setCellValue(bean.getDate2());
+	    		row.createCell(2).setCellValue(bean.getTime2());
+	    	}
+	    	if(!StName.equals(bean.getStname()))
+	    	{
+	        	row.createCell(3).setCellValue(bean.getStname());
+	        }
+	    	row.createCell(4).setCellValue(bean.getDistrict());
+	    	row.createCell(5).setCellValue(bean.getBlockname());
+	    	row.createCell(6).setCellValue(bean.getGramname());
+	    	row.createCell(7).setCellValue(bean.getVillagename());
+	    	if(bean.getLocation1() != null)
+	    		row.createCell(8).setCellValue(bean.getLocation1());
+	    	if(bean.getLocation1() == null)
+		    	row.createCell(8).setCellValue(bean.getLocation2());
+	    	
+	    	totNum = bean.getFlagwise();
+	    	StName = bean.getStname();
+	    	rowno++;
+	    }
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
+	    String fileName = "attachment; filename=Report Route Plan.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "WatershedYatra/watershedYatraReportRoutePlan";
+	}
+	
 	
 	@RequestMapping(value="/getWatershedYatraNodalReport", method = RequestMethod.GET)
 	public ModelAndView getWatershedYatraNodalReport(HttpServletRequest request, HttpServletResponse response)
@@ -591,4 +744,161 @@ public class WatershedYatraReportController {
 	
 	return null;
 }
+	
+	@RequestMapping(value = "/downloadNodalOfficerReportExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadNodalOfficerReportExcel(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		
+		String Level= request.getParameter("lvlName");
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		
+		String lvl = request.getParameter("level");
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		
+		int distCode = request.getParameter("district") != null ? Integer.parseInt(request.getParameter("district")) : 0;
+		int blkCode = request.getParameter("block") != null ? Integer.parseInt(request.getParameter("block")) : 0;
+		
+		LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+		map.put("state", "State");
+		map.put("district", "District");
+		map.put("block", "Block/Project");
+		map.put("village", "Village/Van Standing Point");
+		
+		
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		
+		list=ser.getNodalOfficerReportData(lvl, stCode, distCode, blkCode);
+		
+		Workbook workbook = new XSSFWorkbook();
+		
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Details of Nodal Officers");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Details of Nodal Officers";
+		String areaAmtValDetail ="";
+		
+		Map<String, Integer> headerCount = new HashMap<>();
+		headerCount.put("a", 8);
+		headerCount.put("block", 8);
+		headerCount.put("village", 8);
+		headerCount.put("district", 7);
+		headerCount.put("state", 6);
+		
+		int n = headerCount.get(lvl);
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, n, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(5,5,0,n);
+		sheet.addMergedRegion(mergedRegion);
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		String levelInfo = "Level : " + Level + "     State : " + stName;
+
+		if (Level.equals("District")) {
+		    levelInfo += "     District : " + distName;
+		} else if (Level.equals("Block/Project") || Level.equals("Village/Van Standing Point")) {
+		    levelInfo += "     District : " + distName + "     Block : " + blkName;
+		}
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue(levelInfo);
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<=n;i++)
+		{
+			cell =rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		// Define the header columns based on the level
+		List<String> headerColumns = new ArrayList<>();
+		headerColumns.add("S.No.");
+		headerColumns.add("Level");
+		headerColumns.add("State Name");
+		
+		if (lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village")) {
+		    headerColumns.add("District Name");
+		}
+		
+		if (lvl.equals("a") || lvl.equals("block") || lvl.equals("village")) {
+		    headerColumns.add("Block Name");
+		}
+		
+		headerColumns.add("Name");
+		headerColumns.add("Designation");
+		headerColumns.add("Mobile");
+		headerColumns.add("Email Id");
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		for (int i = 0; i < headerColumns.size(); i++) {
+		    cell = rowhead.createCell(i);
+		    cell.setCellValue(headerColumns.get(i));
+		    cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<=n;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 8;
+		String state = "";
+		
+	    for(NodalOfficerBean bean: list) {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(map.get(bean.getLevel()));
+	    	if(!state.equals(bean.getStname()))
+	    		row.createCell(2).setCellValue(bean.getStname());
+	    	int c = 3;
+	    	if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village"))
+	    	{
+	    		row.createCell(c).setCellValue(bean.getDistrict());
+	    		c++;
+	    	}
+	    	if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village"))
+	    	{
+	    		row.createCell(c).setCellValue(bean.getBlockname());
+	    		c++;
+	    	}
+	    	row.createCell(c).setCellValue(bean.getNodal_name());
+	    	c++;
+	    	row.createCell(c).setCellValue(bean.getDesignation());
+	    	c++;
+	    	row.createCell(c).setCellValue(bean.getMobile());
+	    	c++;
+	    	row.createCell(c).setCellValue(bean.getEmail());
+	    	c++;
+	    	
+	    	state = bean.getStname();
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), n);
+	    String fileName = "attachment; filename=Report Nodal Officers.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "WatershedYatra/watershedYatraReportNodalOfficer";
+	}
+	
 }

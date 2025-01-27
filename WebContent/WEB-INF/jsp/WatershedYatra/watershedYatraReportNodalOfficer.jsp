@@ -73,29 +73,6 @@ function showReport(e)
 	return false;
 }
 
-function downloadPDF1(state, district, blkd, lvl){
-	
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-	// alert('kdy='+stName);
-	if(lvl==='district' || lvl==='block' || lvl==='village' ) {
-    	var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    	document.getElementById("distName").value=finName;
-    }
-	if( lvl==='block' || lvl==='village' ) {
-    	var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
-    	document.getElementById("blkName").value=blkname;
-	}
-    var level = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
-   
-    
-    document.getElementById("stName").value=stName;
-    document.getElementById("lvlName").value=level;
-    
-    document.nodalOfficers.action="downloadNodalOfficerReportPDF";
-	document.nodalOfficers.method="post";
-	document.nodalOfficers.submit();
-	}
-	
 function showChangedata(){
 	
 	/* var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
@@ -119,23 +96,58 @@ function showChangedata(){
 	document.nodalOfficers.submit();
 	}
 
-function exportExcel(state, year, quarter){
+function downloadPDF1(state, district, blkd, lvl){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
-    var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
-  //  alert(stName+distName+projName+yearName);
-    document.getElementById("stName").value=stName;
-    document.getElementById("finName").value=finName;
-    document.getElementById("quartename").value=quartename;
-	
-    document.getElementById("state").value=state;
-    document.getElementById("year").value=year;
-    document.getElementById("quarter").value=quarter;
-    document.indicators.action="downloadExceltargetAchievementofIndicators";
-	document.indicators.method="post";
-	document.indicators.submit();
+	// alert('kdy='+stName);
+	if(lvl==='district' || lvl==='block' || lvl==='village' ) {
+    	var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    	document.getElementById("distName").value=finName;
+    }
+	if( lvl==='block' || lvl==='village' ) {
+    	var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    	document.getElementById("blkName").value=blkname;
 	}
+    var level = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
+   
+    
+    document.getElementById("stName").value=stName;
+    document.getElementById("lvlName").value=level;
+    
+    document.nodalOfficers.action="downloadNodalOfficerReportPDF";
+	document.nodalOfficers.method="post";
+	document.nodalOfficers.submit();
+	}
+
+function downloadExcel(lvl, state, district, blkd) {
+	
+    var lvl = document.getElementById("level").value;
+    var state = document.getElementById("state").value;
+    var distName = "";
+    var blkName = "";
+
+    if (lvl === "district" || lvl === "block" || lvl === "village") {
+        district = document.getElementById("district").value;
+        distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    }
+    
+    if (lvl === "block" || lvl === "village") {
+    	blkd = document.getElementById("block").value;
+        blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    }
+	
+    var lvlName = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
+    var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+	
+    document.getElementById("lvlName").value = lvlName;
+    document.getElementById("stName").value = stName;
+    document.getElementById("distName").value = distName;
+    document.getElementById("blkName").value = blkName;
+    
+    document.nodalOfficers.action = "downloadNodalOfficerReportExcel";
+    document.nodalOfficers.method = "post";
+    document.nodalOfficers.submit();
+}
 
 
 </script>
@@ -228,11 +240,11 @@ function exportExcel(state, year, quarter){
       </table>
 
 <br/>
-<c:if test="${routePlanList ne null}">
-<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">Excel</button>
+<c:if test="${not empty routePlanList}">
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${lvl}','${state}','${district}','${blkd}')" class="btn btn-info">Excel</button>
 <button name="exportPDF" id="exportPDF" onclick="downloadPDF1('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">PDF</button>
-<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
+<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
         <table class="table">
           <tr>
