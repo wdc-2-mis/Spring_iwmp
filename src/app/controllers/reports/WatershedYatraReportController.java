@@ -72,6 +72,12 @@ public class WatershedYatraReportController {
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportRoutePlan");
 			mav.addObject("menu", menuController.getMenuUserId(request));
 			
+		//	String fullPath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/WDC-PMKSY_file_0060.png";
+	    //    String removePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/";
+	        
+	    //    String result = fullPath.replace(removePath, "");
+	    //    System.out.println("image "+result);
+			
 			stateList=stateMasterService.getAllState();
 			mav.addObject("stateList", stateList);
 			mav.addObject("state", userState);
@@ -195,8 +201,8 @@ public class WatershedYatraReportController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			
-				table = new PdfPTable(8);
-				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5 });
+				table = new PdfPTable(9);
+				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5 });
 				table.setWidthPercentage(70);
 			
 				table.setWidthPercentage(100);
@@ -206,9 +212,10 @@ public class WatershedYatraReportController {
 				
 				list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
 				
-				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchyat Name : "+gpkName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchyat Name : "+gpkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Date and Time", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Route Plan Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Route Plan Time", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -231,10 +238,12 @@ public class WatershedYatraReportController {
 							CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 						}
 						if(list.get(i).getDate1()!=null){
-							CommonFunctions.insertCell(table, list.get(i).getDate1(), Element.ALIGN_LEFT, 1, 1, bf8);	
+							CommonFunctions.insertCell(table, list.get(i).getDate1(), Element.ALIGN_LEFT, 1, 1, bf8);
+							CommonFunctions.insertCell(table, list.get(i).getTime1(), Element.ALIGN_LEFT, 1, 1, bf8);
 						}	
 						if(list.get(i).getDate1()==null){
-							CommonFunctions.insertCell(table, list.get(i).getDate2(), Element.ALIGN_LEFT, 1, 1, bf8);	
+							CommonFunctions.insertCell(table, list.get(i).getDate2(), Element.ALIGN_LEFT, 1, 1, bf8);
+							CommonFunctions.insertCell(table, list.get(i).getTime2(), Element.ALIGN_LEFT, 1, 1, bf8);
 						}
 						if(Integer.parseInt(list.get(i).getSt_code())!=stcd) {
 							CommonFunctions.insertCell(table, list.get(i).getStname(), Element.ALIGN_LEFT, 1, 1, bf8);
@@ -258,7 +267,7 @@ public class WatershedYatraReportController {
 				
 				
 				if(list.size()==0) 
-				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 9, 1, bf8);
 				
 					
 		document.add(table);
@@ -301,8 +310,8 @@ public class WatershedYatraReportController {
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		
-		if(session!=null && session.getAttribute("loginID")!=null) {
-			
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportNodalOfficer");
 			mav.addObject("menu", menuController.getMenuUserId(request));
 			
@@ -327,10 +336,9 @@ public class WatershedYatraReportController {
 				blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
 				mav.addObject("blockList", blockList);}
 				mav.addObject("blkd", block);
-				
-		
 			
-		}else {
+		}
+		else {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}
@@ -404,8 +412,9 @@ public class WatershedYatraReportController {
 
 		String lvl= request.getParameter("level");
 		int stCode = Integer.parseInt(request.getParameter("state"));
-		int distCode = Integer.parseInt(request.getParameter("district"));
-		int blkCode = Integer.parseInt(request.getParameter("block"));
+		//String district = request.getParameter("district") != null ? request.getParameter("district") : "0";
+		int distCode = Integer.parseInt(request.getParameter("district") != null ? request.getParameter("district") : "0");
+		int blkCode = Integer.parseInt(request.getParameter("block") != null ? request.getParameter("block") : "0");
 		
 		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
 		
@@ -444,41 +453,45 @@ public class WatershedYatraReportController {
 			
 			if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village")){
 				table = new PdfPTable(9);
-				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5 });
+				table.setWidths(new int[] { 3, 5, 10, 5, 5, 10, 5, 5, 10 });
+				table.setWidthPercentage(90);
 			}
 			if(lvl.equals("district") ){
 				table = new PdfPTable(8);
-				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5 });
+				table.setWidths(new int[] { 3, 5, 10, 5, 10, 5, 5, 10 });
+				table.setWidthPercentage(80);
 			}
 			if(lvl.equals("state") ){
 				table = new PdfPTable(7);
-				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5});
-			}	
+				table.setWidths(new int[] { 3, 5, 10, 10, 5, 5, 10});
 				table.setWidthPercentage(70);
+			}	
 			
-				table.setWidthPercentage(100);
+				//table.setWidthPercentage(100);
 				table.setSpacingBefore(0f);
 				table.setSpacingAfter(0f);
 				table.setHeaderRows(2);
 				
 				list=ser.getNodalOfficerReportData(lvl, stCode, distCode, blkCode);
 				
-				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village"))
-					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName+" District : "+distName+" Block : "+blkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
-				if(lvl.equals("district") )
+				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village")) {
+					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+", State Name: "+ stName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
+				}	
+				if(lvl.equals("district") ) {
 					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName+" District : "+distName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
-				if(lvl.equals("state") )
+				}	
+				if(lvl.equals("state") ) {
 					CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+" State : "+ stName, Element.ALIGN_LEFT, 7, 1, bf8Bold);
-				
-			//	CommonFunctions.insertCellHeader(table,"Level : "+ lvlName+"State : "+ stName+"     District : "+distName+"     Block : "+blkName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+				}
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Level", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") )
-				CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") )
-				CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				
+				if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") ) {
+					CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				}
+				if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") ) {
+					CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				}
 				CommonFunctions.insertCellHeader(table, "Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Designation", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Mobile", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -489,17 +502,19 @@ public class WatershedYatraReportController {
 				int i=0;
 				int k=1;
 				int totNum = 0;
-				if(list.size()!=0)
+						if(list.size()!=0)
 					for( i=0;i<list.size();i++) 
 					{
-						
 							CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 							if(list.get(i).getLevel().equals("state") )
 								CommonFunctions.insertCell(table, "State", Element.ALIGN_LEFT, 1, 1, bf8);
+							
 							if(list.get(i).getLevel().equals("district") )
 								CommonFunctions.insertCell(table, "District", Element.ALIGN_LEFT, 1, 1, bf8);
+							
 							if(list.get(i).getLevel().equals("block") )
 								CommonFunctions.insertCell(table, "Block/Project", Element.ALIGN_LEFT, 1, 1, bf8);
+							
 							if(list.get(i).getLevel().equals("village") )
 								CommonFunctions.insertCell(table, "Village/Van Standing Point", Element.ALIGN_LEFT, 1, 1, bf8);
 						
@@ -509,17 +524,26 @@ public class WatershedYatraReportController {
 							else {
 								CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 							}
-							if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") ) {
-								
-								if(Integer.parseInt(list.get(i).getDcode())!=distcd) {
+							if(lvl.equals("a") || lvl.equals("district") || lvl.equals("block") || lvl.equals("village") ) 
+							{
+								if(list.get(i).getDistrict()!=null)
+								{
 									CommonFunctions.insertCell(table, list.get(i).getDistrict(), Element.ALIGN_LEFT, 1, 1, bf8);
 								}
 								else {
 									CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 								}
 							}	
-							if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") )
-								CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
+							if(lvl.equals("a") || lvl.equals("block") || lvl.equals("village") ) {
+								
+								if(list.get(i).getBlockname()!=null)
+								{
+									CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
+								}
+								else {
+									CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
+								}
+							}
 							
 							CommonFunctions.insertCell(table, list.get(i).getNodal_name(), Element.ALIGN_LEFT, 1, 1, bf8);
 							CommonFunctions.insertCell(table, list.get(i).getDesignation(), Element.ALIGN_LEFT, 1, 1, bf8);
@@ -527,6 +551,7 @@ public class WatershedYatraReportController {
 							CommonFunctions.insertCell(table, list.get(i).getEmail(), Element.ALIGN_LEFT, 1, 1, bf8);
 						
 						stcd=Integer.parseInt(list.get(i).getSt_code());
+						k=k+1;
 					}
 				
 				

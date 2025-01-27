@@ -179,21 +179,22 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 		try {
 			
 				session.beginTransaction();
-				if(lvl.equals("a")) {
+				if(lvl.equals("a") && State==0) {
 				query= session.createSQLQuery(getReport);
 				query.setInteger("statecd",State); 
-				
+				}
+				if(lvl.equals("a") && State>0) {
+					query= session.createSQLQuery(getReport);
+					query.setInteger("statecd",State); 
 				}
 				if(lvl.equals("state")) {
 					query= session.createSQLQuery(getReport1);
 					query.setInteger("statecd",State); 
-					
 				}
 				if(lvl.equals("district")) {
 					query= session.createSQLQuery(getReport2);
 					query.setInteger("statecd",State); 
 					query.setInteger("distcd",district); 
-					
 				}
 				if(lvl.equals("block")) {
 					query= session.createSQLQuery(getReport3);

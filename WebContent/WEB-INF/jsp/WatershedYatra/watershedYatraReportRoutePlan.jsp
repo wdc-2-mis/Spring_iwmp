@@ -80,7 +80,7 @@ function downloadPDF(state, district, blkd, grampn){
           <td class="label">State <span style="color: red;">*</span></td>
           <td>
               <select name="state" id="state" onchange="this.form.submit();" required="required">
-              		<option value="">--Select--</option>
+              		<option value="0">--All State--</option>
               		
                   	<c:if test="${not empty stateList}">
                			<c:forEach items="${stateList}" var="lists">
@@ -161,7 +161,8 @@ function downloadPDF(state, district, blkd, grampn){
             	<table id="tblReport" class="table">
             	<thead>
               		<tr>	<th class="displ" align="center">Sl. No.</th>
-              				<th class="displ" align="center">Date and Time</th>
+              				<th class="displ" align="center">Route Plan Date</th>
+              				<th class="displ" align="center">Route Plan Time</th>
               			 	<th class="displ" align="center">State Name</th>
               			 	<th class="displ" align="center">District Name</th>
               			 	<th class="displ" align="center">Block Name</th>
@@ -191,9 +192,11 @@ function downloadPDF(state, district, blkd, grampn){
 								</c:choose>
 								<c:if test="${dataV.date1 ne null }">
 									<td> <c:out value="${dataV.date1}" /></td>
+									<td> <c:out value="${dataV.time1}" /></td>
 								</c:if>
 								<c:if test="${dataV.date1 eq null }">
 									<td> <c:out value="${dataV.date2}" /></td>
+									<td> <c:out value="${dataV.time2}" /></td>
 								</c:if>
 								<c:choose>
 									<c:when test="${statename ne dataV.stname}">
@@ -205,7 +208,7 @@ function downloadPDF(state, district, blkd, grampn){
 								</c:otherwise>
 								</c:choose>
 								
-								<c:choose>
+							<%--	<c:choose>
 									<c:when test="${dist ne dataV.district}">
 										<c:set var="dist" value="${dataV.district}" />
 										<td> <c:out value="${dataV.district}" /></td>
@@ -213,8 +216,8 @@ function downloadPDF(state, district, blkd, grampn){
 								<c:otherwise>
 										<td></td>
 								</c:otherwise>
-								</c:choose>
-								<%-- <td> <c:out value="${dataV.district}" /></td> --%>
+								</c:choose> --%>
+								 <td> <c:out value="${dataV.district}" /></td>
 								<td> <c:out value="${dataV.blockname}" /></td>
 								<td> <c:out value="${dataV.gramname}" /></td>
 								<td> <c:out value="${dataV.villagename}" /></td>

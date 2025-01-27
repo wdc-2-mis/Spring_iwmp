@@ -73,20 +73,49 @@ function showReport(e)
 	return false;
 }
 
-function downloadPDF(state, district, blkd, lvl){
+function downloadPDF1(state, district, blkd, lvl){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+	// alert('kdy='+stName);
+	if(lvl==='district' || lvl==='block' || lvl==='village' ) {
+    	var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    	document.getElementById("distName").value=finName;
+    }
+	if( lvl==='block' || lvl==='village' ) {
+    	var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    	document.getElementById("blkName").value=blkname;
+	}
     var level = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
-  
+   
+    
     document.getElementById("stName").value=stName;
-    document.getElementById("distName").value=finName;
-    document.getElementById("blkName").value=blkname;
     document.getElementById("lvlName").value=level;
     
     document.nodalOfficers.action="downloadNodalOfficerReportPDF";
 	document.nodalOfficers.method="post";
+	document.nodalOfficers.submit();
+	}
+	
+function showChangedata(){
+	
+	/* var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+	// alert('kdy='+stName);
+	if(lvl==='district' || lvl==='block' || lvl==='village' ) {
+    	var finName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    	document.getElementById("distName").value=finName;
+    }
+	if( lvl==='block' || lvl==='village' ) {
+    	var blkname = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    	document.getElementById("blkName").value=blkname;
+	}
+    var level = document.getElementById("level").options[document.getElementById("level").selectedIndex].text;
+   
+    
+    document.getElementById("stName").value=stName;
+    document.getElementById("lvlName").value=level;  */
+    
+    document.nodalOfficers.action="getWatershedYatraNodalReport";
+	document.nodalOfficers.method="get";
 	document.nodalOfficers.submit();
 	}
 
@@ -128,7 +157,7 @@ function exportExcel(state, year, quarter){
         
         <td class="label">Level <span style="color: red;">*</span></td>
           <td>
-              <select name="level" id="level" onchange="this.form.submit();" required="required">
+              <select name="level" id="level"  required="required" onchange="showChangedata();">
               		<option value="a">--All Level--</option>
     				<c:forEach items="${level}" var="dist"> 
     				<c:if test="${dist.key eq lvl}">
@@ -144,9 +173,8 @@ function exportExcel(state, year, quarter){
         
           <td class="label">State <span style="color: red;">*</span></td>
           <td>
-              <select name="state" id="state" onchange="this.form.submit();" required="required">
-              		<option value="">--Select--</option>
-              		
+              <select name="state" id="state" onchange="showChangedata();" required="required">
+              		<option value="0">--All State--</option>
                   	<c:if test="${not empty stateList}">
                			<c:forEach items="${stateList}" var="lists">
                				<c:if test="${lists.key eq state}">
@@ -162,7 +190,7 @@ function exportExcel(state, year, quarter){
           <c:if test="${lvl eq 'district' || lvl eq 'block' || lvl eq 'village'}">
           <td>District <span style="color: red;">*</span></td>
           <td>
-              <select name="district" id="district" onchange="this.form.submit();" >
+              <select name="district" id="district" onchange="showChangedata();" >
               		<option value="0">--All District--</option>
                   	 <c:if test="${not empty districtList}">
                					<c:forEach items="${districtList}" var="lists">
@@ -180,7 +208,7 @@ function exportExcel(state, year, quarter){
            <c:if test="${lvl eq 'block' || lvl eq 'village'}">
            <td>Block &nbsp;<span style="color: red;">*</span></td>
            <td>
-              <select name="block" id="block"  onchange="this.form.submit();">
+              <select name="block" id="block"  >
               <option value="0">--All Block--</option>
               	<c:if test="${not empty blockList}">
                					<c:forEach items="${blockList}" var="lists">
@@ -202,7 +230,7 @@ function exportExcel(state, year, quarter){
 <br/>
 <c:if test="${routePlanList ne null}">
 <button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">PDF</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF1('${state}','${district}','${blkd}','${lvl}')" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
  <br/>
