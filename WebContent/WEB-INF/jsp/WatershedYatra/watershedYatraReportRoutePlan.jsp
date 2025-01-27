@@ -41,7 +41,7 @@ function showReport(e)
 		document.routePlan.submit();
 	}
 	return false;
-}
+} 
 
 function downloadPDF(state, district, blkd, grampn){
 	
@@ -57,6 +57,14 @@ function downloadPDF(state, district, blkd, grampn){
 	
     document.routePlan.action="downloadRoutePlanReportPDF";
 	document.routePlan.method="post";
+	document.routePlan.submit();
+}
+
+function showChangedata(){
+	
+	
+    document.routePlan.action="getWatershedYatraReport";
+	document.routePlan.method="get";
 	document.routePlan.submit();
 }
 
@@ -96,7 +104,7 @@ function downloadExcel(state, district, blkd, grampn){
         <tr>
           <td class="label">State <span style="color: red;">*</span></td>
           <td>
-              <select name="state" id="state" onchange="this.form.submit();" required="required">
+              <select name="state" id="state" onchange="showChangedata();" required="required">
               		<option value="0">--All State--</option>
               		
                   	<c:if test="${not empty stateList}">
@@ -114,7 +122,7 @@ function downloadExcel(state, district, blkd, grampn){
           
            <td class="label">District <span style="color: red;">*</span></td>
           <td>
-              <select name="district" id="district" onchange="this.form.submit();" required="required">
+              <select name="district" id="district" onchange="showChangedata();" required="required">
               		<option value="0">--All District--</option>
                   	 <c:if test="${not empty districtList}">
                					<c:forEach items="${districtList}" var="lists">
@@ -131,7 +139,7 @@ function downloadExcel(state, district, blkd, grampn){
           
            <td class="label">Block &nbsp;<span style="color: red;">*</span></td>
            <td>
-              <select name="block" id="block" required="required" onchange="this.form.submit();">
+              <select name="block" id="block" required="required" onchange="showChangedata();">
               <option value="0">--All Block--</option>
               	<c:if test="${not empty blockList}">
                					<c:forEach items="${blockList}" var="lists">
