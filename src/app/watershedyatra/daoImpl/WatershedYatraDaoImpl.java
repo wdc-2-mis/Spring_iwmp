@@ -418,7 +418,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			Timestamp timestamp1 = Timestamp.valueOf(localDateTime); 
 			
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/WatershedYatraVillage";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TEST/vanyatradoc/WatershedYatraVillage";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/WatershedYatraVillage";
 			String filePath = "D:\\WatershedYatraVillage\\";
 			
 			MultipartFile[] mfile = {userfileup.getArExperiencephoto1(),userfileup.getArExperiencephoto2(),
