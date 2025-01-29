@@ -475,6 +475,8 @@ function checkImage(input, inputId) {
     var fileType = file.type;
     var fileSize = file.size; // Get the file size in bytes
     var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
+    var maxWidth = 500; // Max width in pixels
+    var maxHeight = 500; // Max height in pixels
 
     // Check if the file is an image
     if (!fileType.startsWith('image/')) {
@@ -491,32 +493,216 @@ function checkImage(input, inputId) {
         document.getElementById(inputId).focus();
         return; // Stop further execution
     }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+            var width = img.width;
+            var height = img.height;
+
+            // Check if the image dimensions exceed the max width or height
+            if (width > maxWidth || height > maxHeight) {
+                alert('Image dimensions exceed the allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
+                input.value = ''; // Clear the file input
+                document.getElementById(inputId).focus();
+                return; // Stop further execution
+            }
+
+        };
+
+        img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
 }
 
+
+
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+function openLargeImage(imageSrc, index, total) {
+    // Set the image source
+    document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
+    
+    // Display the large image popup
+    document.getElementById('largeImagePopup').style.display = 'block';
+    
+    // Set current index and total images (optional)
+    currentIndex = index;
+    totalImages = total;
+}
+
+function closeLargeImagePopup() {
+    document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+// function openLargeImage(imageSrc, index, total) {
+// 	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
+// 	document.getElementById('largeImagePopup').style.display = 'block';
+// 	currentIndex = index;
+// 	totalImages = total;
+// }
+
+// function closeLargeImagePopup() {
+// 	document.getElementById('largeImagePopup').style.display = 'none';
+// }
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
+	
+	
 </script>
 
 
+
+<meta charset="ISO-8859-1">
+<title>Inauguration Programm</title>
+
 <style>
 input[type=text] {
-  width: 100px; /* Increased width */
-/*   height: 35px; /* Retained height */ 
-/*   padding: 12px 15px; */
-/*   margin: 8px 0; */
-/*   box-sizing: border-box; */
-/*   border: 2px solid black; */
-/*   border-radius: 2px; */
+	width: 100px;
+	
 }
 
-/* .form-group label { */
-/*     font-size: 1.1rem; */
-/*     font-weight: 600; */
-/*     color: black; /* Watercolor blue for labels */ *
-/*     display: block; */
-/*     margin-bottom: 5px; */
-/* } */
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 300px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 
 
-</style> 
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Large image */
+#largeImage {
+  width: 100%; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+</style>
 
 </head>
 <body>
@@ -675,7 +861,7 @@ input[type=text] {
      		<td>Quiz Program</td>
      		<td colspan=2>Number of People participated in Quiz<br><input type="text" id="quizParticipants" name="quizParticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-								<td >
+								<td>
        Upload Photographs<br>
         <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
         <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
@@ -858,36 +1044,40 @@ input[type=text] {
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
 								<td><c:out value='${count.count}' /></td>
-								<td> <c:out value="${data.date}" /></td>
-								<td> <c:out value="${data.distname}" /></td>
- 								<td> <c:out value="${data.blockname}" /></td>
- 								<td> <c:out value="${data.gpname}" /></td>
- 								<td> <c:out value="${data.villagename}" /></td>
-								<td> <c:out value="${data.location}" /></td>
- 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
-								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
- 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
-								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
- 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
- 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
- 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
-								<td class="text-right"> <c:out value="${data.others}" /></td>
- 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
- 								<td class="text-right"> <c:out value="${data.no_of_ar_experience_people}" /></td>
-								<td> <c:out value="${data.bhumi_jal_sanrakshan == 'true' ? 'Yes' : 'No'}" /></td>
- 								<td> <c:out value="${data.watershed_yatra_film == 'true' ? 'Yes' : 'No'}" /></td>
- 								<td class="text-right"> <c:out value="${data.quiz_participants}" /></td>
- 								<td> <c:out value="${data.cultural_name}" /></td>
-								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
- 								<td class="text-right"> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
- 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
-								<td class="text-right"> <c:out value="${data.tot_works_lokarpan}" /></td>
- 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.manhour}" /></td>
- 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
-								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
- 								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+								<td><c:out value="${data.date}" /></td>
+								<td><c:out value="${data.distname}" /></td>
+ 								<td><c:out value="${data.blockname}" /></td>
+ 								<td><c:out value="${data.gpname}" /></td>
+ 								<td><c:out value="${data.villagename}" /></td>
+								<td><c:out value="${data.location}" /></td>
+ 								<td class="text-right"><c:out value="${data.male_participants}" /></td>
+								<td class="text-right"><c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"><c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"><c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"><c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"><c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"><c:out value="${data.council_members}" /></td>
+								<td class="text-right"><c:out value="${data.others}" /></td>
+ 								<td class="text-right"><c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_of_ar_experience_people}" /></td>
+								<td><c:out value="${data.bhumi_jal_sanrakshan == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td><c:out value="${data.watershed_yatra_film == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-right"><c:out value="${data.quiz_participants}" /></td>
+ 								<td><c:out value="${data.cultural_name}" /></td>
+								<td class="text-right"><c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"><c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_works_lokarpan}" /></td>
+								<td class="text-right"><c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"><c:out value="${data.no_people_shramdaan}" /></td>
+								<td class="text-right"><c:out value="${data.manhour}" /></td>
+ 								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
+								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_awards}" /></td>
+<!-- 									<td class="text-right"> -->
+<%-- 									<a href="#" class="showImage"><c:out value="${data.image_count}" /></a>  --%>
+<%-- 									<input type="hidden" id="watershedYatraId" value="${data.watershed_yatra_id}" /></td> --%>
+ 								
  							</tr>
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">
@@ -901,6 +1091,23 @@ input[type=text] {
      	
 		</form:form>
 	</div> 
+	<!-- Show Image Modal HTML -->
+	<div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
+
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="popup-content large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+		
+	</div>
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>

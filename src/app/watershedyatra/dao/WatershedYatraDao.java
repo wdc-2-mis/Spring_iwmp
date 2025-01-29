@@ -33,4 +33,6 @@ public interface WatershedYatraDao {
 	List<WatershedYatraBean> getWatershedYatraList(Integer stcd);
 	
 	String getExistingWatershedYatraVillageCodes(Integer villageCode);
+	
+	List<String> getImagesWatershedYatraId(Integer watershedYatraId);
 }

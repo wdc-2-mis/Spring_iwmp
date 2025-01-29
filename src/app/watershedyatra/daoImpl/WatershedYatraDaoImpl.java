@@ -488,10 +488,10 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setQuizParticipants(userfileup.getQuizParticipants());
 				
 				main.setmCulturalActivity(ca);
-				if(userfileup.getCulturalActivity()==4) {
-				main.setCulturalActivityOther(userfileup.getOtherActivity());
+//				if(userfileup.getCulturalActivity()==4) {
+//				main.setCulturalActivityOther(userfileup.getOtherActivity());
 				//System.out.println("other"+ userfileup.getOtherActivity());
-				}
+//				}
 				main.setBhoomiPoojanNoOfWorks(userfileup.getBhoomiWorks());
 				main.setBhoomiPoojanCostOfWorks(userfileup.getBhoomiCost());
 				main.setLokarpanNoOfWorks(userfileup.getLokWorks());
@@ -681,5 +681,47 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		  }
 		  return data;
 	}
+
+	@Override
+	public List<String> getImagesWatershedYatraId(Integer watershedYatraId) {
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatVill> list = new ArrayList<>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedYatVill where watershedYatraId = :watershedYatraId");
+			query.setInteger("watershedYatraId", watershedYatraId);
+//			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraInauguaration.class));
+			list = query.list();
+			session.getTransaction().commit();
+//			imgList.add(list.get(0).getWatershedYatraId().toString());
+			imgList.add(list.get(0).getArExperiencePath1());
+			imgList.add(list.get(0).getArExperiencePath2());
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath1());
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath2());
+			imgList.add(list.get(0).getYatraFilmPath1());
+			imgList.add(list.get(0).getYatraFilmPath2());
+			imgList.add(list.get(0).getQuizParticipantsPath1());
+			imgList.add(list.get(0).getQuizParticipantsPath2());
+			imgList.add(list.get(0).getCulturalActivityPath1());
+			imgList.add(list.get(0).getCulturalActivityPath2());
+			imgList.add(list.get(0).getBhoomiPoojanPath1());
+			imgList.add(list.get(0).getBhoomiPoojanPath2());
+			imgList.add(list.get(0).getLokarpanPath1());
+			imgList.add(list.get(0).getLokarpanPath2());
+			imgList.add(list.get(0).getShramdaanPath1());
+			imgList.add(list.get(0).getShramdaanPath2());
+			imgList.add(list.get(0).getPlantationPath1());
+			imgList.add(list.get(0).getPlantationPath2());
+			imgList.add(list.get(0).getAwardDistributionPath1());
+			imgList.add(list.get(0).getAwardDistributionPath2());
+			
+		}catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+	
 
 }

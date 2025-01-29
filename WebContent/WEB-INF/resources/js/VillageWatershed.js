@@ -106,6 +106,35 @@ $(document).on('change', '#district', function(e) {
 				  });
 				});
 				
+
+				$(document).on('click', '.showImage', function(e) {
+					var watershedYatraId = $('#watershedYatraId').val();
+					$.ajax({
+						type: 'POST',
+						url: "getImageWatershedYatraId",
+						data: { watershedYatraId: watershedYatraId },
+						error: function(xhr, status, er) {
+							console.log(er);
+						},
+						success: function(data) {
+							var imageContainer = $('.image-container');
+							imageContainer.empty();
+							let list = '<ul>';
+							for (let i = 0; i < data.length; i++) {
+								if (data[i] != null) {
+									list += '<li><img src="resources/images/WatershedYatraVillage/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+								}
+							}
+							list += '</ul>';
+							document.getElementById('imageList').innerHTML = list;
+							document.getElementById('imagePopup').style.display = 'block';
+						}
+					});
+				});
+
+
+				
+				
 				$(document).on('click', '#submitbtn1', function (e) {
 				    e.preventDefault();
 

@@ -41,10 +41,28 @@ public class WatershedYatraBean {
 	private BigDecimal area_plantation;
     private Integer no_plantation;
     private Integer no_awards;
-//    private Integer no_works_bhoomipoojan;
-//    private Integer no_works_bhoomipoojan;
+    private Integer image_count;
     
-    
+    private String ar_experience_path1;
+    private String ar_experience_path2;
+    private String bhumi_jal_sanrakshan_path1;
+    private String bhumi_jal_sanrakshan_path2;
+    private String yatra_film_path1;
+    private String yatra_film_path2;
+    private String quiz_participants_path1;
+    private String quiz_participants_path2;
+    private String cultural_activity_path1;
+    private String cultural_activity_path2;
+    private String bhoomi_poojan_path1;
+    private String bhoomi_poojan_path2;
+    private String lokarpan_path1;
+    private String lokarpan_path2;
+    private String shramdaan_path1;
+    private String shramdaan_path2;
+    private String plantation_path1;
+    private String plantation_path2;
+    private String award_distribution_path1;
+    private String award_distribution_path2;
     
 	private Integer district;
 	private Integer block;
@@ -101,7 +119,132 @@ public class WatershedYatraBean {
     private MultipartFile noOfwatershedphoto2;
     
     
-    
+	public String getAr_experience_path1() {
+		return ar_experience_path1;
+	}
+	public void setAr_experience_path1(String ar_experience_path1) {
+		this.ar_experience_path1 = ar_experience_path1;
+	}
+	public String getAr_experience_path2() {
+		return ar_experience_path2;
+	}
+	public void setAr_experience_path2(String ar_experience_path2) {
+		this.ar_experience_path2 = ar_experience_path2;
+	}
+	public String getBhumi_jal_sanrakshan_path1() {
+		return bhumi_jal_sanrakshan_path1;
+	}
+	public void setBhumi_jal_sanrakshan_path1(String bhumi_jal_sanrakshan_path1) {
+		this.bhumi_jal_sanrakshan_path1 = bhumi_jal_sanrakshan_path1;
+	}
+	public String getBhumi_jal_sanrakshan_path2() {
+		return bhumi_jal_sanrakshan_path2;
+	}
+	public void setBhumi_jal_sanrakshan_path2(String bhumi_jal_sanrakshan_path2) {
+		this.bhumi_jal_sanrakshan_path2 = bhumi_jal_sanrakshan_path2;
+	}
+	public String getYatra_film_path1() {
+		return yatra_film_path1;
+	}
+	public void setYatra_film_path1(String yatra_film_path1) {
+		this.yatra_film_path1 = yatra_film_path1;
+	}
+	public String getYatra_film_path2() {
+		return yatra_film_path2;
+	}
+	public void setYatra_film_path2(String yatra_film_path2) {
+		this.yatra_film_path2 = yatra_film_path2;
+	}
+	public String getQuiz_participants_path1() {
+		return quiz_participants_path1;
+	}
+	public void setQuiz_participants_path1(String quiz_participants_path1) {
+		this.quiz_participants_path1 = quiz_participants_path1;
+	}
+	public String getQuiz_participants_path2() {
+		return quiz_participants_path2;
+	}
+	public void setQuiz_participants_path2(String quiz_participants_path2) {
+		this.quiz_participants_path2 = quiz_participants_path2;
+	}
+	public String getCultural_activity_path1() {
+		return cultural_activity_path1;
+	}
+	public void setCultural_activity_path1(String cultural_activity_path1) {
+		this.cultural_activity_path1 = cultural_activity_path1;
+	}
+	public String getCultural_activity_path2() {
+		return cultural_activity_path2;
+	}
+	public void setCultural_activity_path2(String cultural_activity_path2) {
+		this.cultural_activity_path2 = cultural_activity_path2;
+	}
+	public String getBhoomi_poojan_path1() {
+		return bhoomi_poojan_path1;
+	}
+	public void setBhoomi_poojan_path1(String bhoomi_poojan_path1) {
+		this.bhoomi_poojan_path1 = bhoomi_poojan_path1;
+	}
+	public String getBhoomi_poojan_path2() {
+		return bhoomi_poojan_path2;
+	}
+	public void setBhoomi_poojan_path2(String bhoomi_poojan_path2) {
+		this.bhoomi_poojan_path2 = bhoomi_poojan_path2;
+	}
+	public String getLokarpan_path1() {
+		return lokarpan_path1;
+	}
+	public void setLokarpan_path1(String lokarpan_path1) {
+		this.lokarpan_path1 = lokarpan_path1;
+	}
+	public String getLokarpan_path2() {
+		return lokarpan_path2;
+	}
+	public void setLokarpan_path2(String lokarpan_path2) {
+		this.lokarpan_path2 = lokarpan_path2;
+	}
+	public String getShramdaan_path1() {
+		return shramdaan_path1;
+	}
+	public void setShramdaan_path1(String shramdaan_path1) {
+		this.shramdaan_path1 = shramdaan_path1;
+	}
+	public String getShramdaan_path2() {
+		return shramdaan_path2;
+	}
+	public void setShramdaan_path2(String shramdaan_path2) {
+		this.shramdaan_path2 = shramdaan_path2;
+	}
+	public String getPlantation_path1() {
+		return plantation_path1;
+	}
+	public void setPlantation_path1(String plantation_path1) {
+		this.plantation_path1 = plantation_path1;
+	}
+	public String getPlantation_path2() {
+		return plantation_path2;
+	}
+	public void setPlantation_path2(String plantation_path2) {
+		this.plantation_path2 = plantation_path2;
+	}
+	public String getAward_distribution_path1() {
+		return award_distribution_path1;
+	}
+	public void setAward_distribution_path1(String award_distribution_path1) {
+		this.award_distribution_path1 = award_distribution_path1;
+	}
+	public String getAward_distribution_path2() {
+		return award_distribution_path2;
+	}
+	public void setAward_distribution_path2(String award_distribution_path2) {
+		this.award_distribution_path2 = award_distribution_path2;
+	}
+	public Integer getImage_count() {
+		return image_count;
+	}
+	public void setImage_count(Integer image_count) {
+		this.image_count = image_count;
+	}
 	public Integer getWatershed_yatra_id() {
 		return watershed_yatra_id;
 	}

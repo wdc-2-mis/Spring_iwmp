@@ -122,4 +122,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.getExistingWatershedYatraVillageCodes(villageCode);
 	}
 
+
+
+	@Override
+	public List<String> getImagesWatershedYatraId(Integer watershedYatraId) {
+		
+		return dao.getImagesWatershedYatraId(watershedYatraId);
+	}
+
 }

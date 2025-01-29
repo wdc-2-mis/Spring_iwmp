@@ -18,23 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
-import app.bean.reports.UserFileUploadBean;
-import app.bean.reports.UserUploadDetailsBean;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.service.ProfileService;
-import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.service.WatershedYatraService;
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
 
 
 @Controller("WatershedYatraController")
@@ -187,4 +180,18 @@ public class WatershedYatraController {
 	  return ser.getExistingWatershedYatraVillageCodes(villageCode);
 	}
 
+
+@RequestMapping(value = "/getImageWatershedYatraId", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageWatershedYatraId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("watershedYatraId") Integer watershedYatraId){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = ser.getImagesWatershedYatraId(watershedYatraId);
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
 }
