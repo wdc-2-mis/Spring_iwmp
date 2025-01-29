@@ -290,10 +290,40 @@ $(function() {
 			}
 		});
 	});
+	
+	
+	
 
 
+	$(document).on('click', '.showImage', function(e) {
+		var inaugId = $('#inaugId').val();
+		$.ajax({
+			type: 'POST',
+			url: "getImageByInaugurationId",
+			data: { inaugId: inaugId },
+			error: function(xhr, status, er) {
+				console.log(er);
+			},
+			success: function(data) {
+				var imageContainer = $('.image-container');
+				imageContainer.empty();
+				let list = '<ul>';
+				for (let i = 0; i < data.length; i++) {
+					if (data[i] != null) {
+						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+					}
+				}
+				list += '</ul>';
+				document.getElementById('imageList').innerHTML = list;
+				document.getElementById('imagePopup').style.display = 'block';
+			}
+		});
+	});
 
+	
 
+	
+	
 
 
 

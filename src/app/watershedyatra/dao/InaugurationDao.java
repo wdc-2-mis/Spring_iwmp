@@ -11,4 +11,6 @@ public interface InaugurationDao {
 	
 	public String saveInauguration(InaugurationBean userfileup, HttpSession session);
 	public List<InaugurationBean> getInaugurationDetails(Integer stcd);
+	public List<String> getImagesByInaugurationId(int inaugurationId);
+	
 }

@@ -40,6 +40,9 @@ public class InaugurationDaoImpl implements InaugurationDao {
 	@Value("${getInaugurationDetails}")
 	String getInaugurationDetails;
 	
+//	@Value("${getImageByInaugurationId}")
+//	String getImageByInaugurationId;
+	
 	@Override
 	public String saveInauguration(InaugurationBean userfileup, HttpSession session) {
 		Session sess = sessionFactory.getCurrentSession();
@@ -52,7 +55,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TEST/vanyatradoc/Inauguration";
 			
 			MultipartFile[] mfile = {userfileup.getFlagoff_photo1(), userfileup.getFlagoff_photo2(), userfileup.getThemesong_photo1(), userfileup.getThemesong_photo2(),
 					 	userfileup.getBhoomipoojan_photo1(), userfileup.getBhoomipoojan_photo2(), userfileup.getLokarpan_photo1(), userfileup.getLokarpan_photo2(),
@@ -169,6 +172,41 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			ex.printStackTrace();
 		}
 		return list;
+	}
+	
+	
+	@Override
+	public List<String> getImagesByInaugurationId(int inaugurationId) {
+//		String getImage=getImageByInaugurationId;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatraInauguaration> list = new ArrayList<>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedYatraInauguaration where inauguarationId = :inaugid");
+			query.setInteger("inaugid", inaugurationId);
+//			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraInauguaration.class));
+			list = query.list();
+			session.getTransaction().commit();
+//			imgList.add(list.get(0).getInauguarationId().toString());
+			imgList.add(list.get(0).getVanFlagPath1());
+			imgList.add(list.get(0).getVanFlagPath2());
+			imgList.add(list.get(0).getThemeSongPath1());
+			imgList.add(list.get(0).getThemeSongPath2());
+			imgList.add(list.get(0).getBhoomiPoojanPath1());
+			imgList.add(list.get(0).getBhoomiPoojanPath2());
+			imgList.add(list.get(0).getLokarpanPath1());
+			imgList.add(list.get(0).getLokarpanPath2());
+			imgList.add(list.get(0).getShramdaanPath1());
+			imgList.add(list.get(0).getShramdaanPath2());
+			imgList.add(list.get(0).getPlantationPath1());
+			imgList.add(list.get(0).getPlantationPath2());
+			
+		}catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 	
 	

@@ -26,4 +26,11 @@ public class InaugurationServiceImpl implements InaugurationService {
 		return dao.getInaugurationDetails(stcd);
 	}
 
+	@Override
+	public List<String> getImagesByInaugurationId(int inaugurationId) {
+		// TODO Auto-generated method stub
+		return dao.getImagesByInaugurationId(inaugurationId);
+	}
+	
+
 }

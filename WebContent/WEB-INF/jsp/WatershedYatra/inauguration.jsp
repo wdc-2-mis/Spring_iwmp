@@ -330,7 +330,7 @@ function validation()
 	
 
 if (allValid) {
-	if(confirm("Do you want to save Inauguration Program Details?")) {
+	if(confirm("Do you want to save Inauguration Programm Details?")) {
     formSubmitted = true; 
 	document.inauguration.action="saveInaugurationDetails";
 	document.inauguration.method="post";
@@ -380,33 +380,182 @@ function toggleFileUpload(radioId, filesId) {
 	  }
 
 	  fileUploadSection.style.display = 'none';
-}	
+}
+
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+  
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+	document.getElementById('largeImage').src = 'resources/images/watershedyatra/' + imageSrc;
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
+
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
 	
 	
 </script>
 
 <meta charset="ISO-8859-1">
-<title>Inauguration Program</title>
+<title>Inauguration Programm</title>
 
 <style>
- input[type=text] {
-   width: 100px;
-/*    height: 35px; /* Retained height */
-/*    padding: 12px 15px; */
-/*    margin: 8px 0; */
-/*    box-sizing: border-box; */
-/*    border: 2px solid black; */
-/*    border-radius: 2px; */
- }
+input[type=text] {
+	width: 100px;
+	
+}
 
-/* .form-group label { */
-/* 	font-size: 1.1rem; */
-/* 	font-weight: 600; */
-/* 	color: black; /* Watercolor blue for labels */ */
-/* 	display: block; */
-/* 	margin-bottom: 5px; */
-/* } */
-</style> 
+/* Popup container */
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ 
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 500px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Large image pop-up */
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 300px;
+  left: 60%;
+  width: 30%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+
+/* Large image pop-up content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  border: 1px solid #888;
+  width: 100%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* Add this line */
+}
+
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#largeImage {
+  width: 80%;
+  height: auto;
+  max-height: 80vh; /* Adjust this value as needed */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+</style>
 
 </head>
 <body>
@@ -427,7 +576,7 @@ function toggleFileUpload(radioId, filesId) {
 
 
 	<div class="maindiv">
-		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
+		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Programm</h4> </div>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
 		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="saveInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
@@ -597,7 +746,7 @@ function toggleFileUpload(radioId, filesId) {
 	<div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Program Details</h5>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Programm Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
@@ -608,7 +757,7 @@ function toggleFileUpload(radioId, filesId) {
 								<th rowspan="3">Block Name</th>
 								<th rowspan="3">Location</th>
 								<th colspan="9">Number of Participation</th>
-								<th colspan="12">Activities</th>
+								<th colspan="13">Activities</th>
 							</tr>
 							<tr>
 								<th colspan="2">Participants/Villagers</th>
@@ -625,7 +774,7 @@ function toggleFileUpload(radioId, filesId) {
 								<th colspan="3">Shramdaan</th>
 								<th colspan="2">Plantation</th>
 								<th rowspan="2">Award Distribution (Felicitation)</th>
-<!-- 								<th rowspan="2">No of Uploaded Photographs</th> -->
+								<th rowspan="2">No of Uploaded Photographs</th>
 							</tr>
 							<tr>
 								<th>Male</th>
@@ -686,8 +835,10 @@ function toggleFileUpload(radioId, filesId) {
  								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
-<%--  								<td class="text-right"> <c:out value="${data.image_count}" /></td> --%>
- 							</tr>
+								<td class="text-right">
+									<a href="#" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<input type="hidden" id="inaugId" value="${data.inauguaration_id}" /></td>
+					</tr>
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
@@ -699,8 +850,23 @@ function toggleFileUpload(radioId, filesId) {
 		
 		</div>
 		</div>
-	
-	
+		<!-- Show Image Modal HTML -->
+	<div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
+
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+	</div>
+
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
