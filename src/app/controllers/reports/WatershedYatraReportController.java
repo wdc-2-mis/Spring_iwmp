@@ -43,6 +43,7 @@ import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.service.StateMasterService;
 import app.service.reports.WatershedYatraReportService;
+import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 
 @Controller("WatershedYatraReportController")
@@ -902,6 +903,85 @@ public class WatershedYatraReportController {
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    
 	    return "WatershedYatra/watershedYatraReportNodalOfficer";
+	}
+	
+	
+	@RequestMapping(value="/getInaugurationReport", method = RequestMethod.GET)
+	public ModelAndView getInaugurationReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String block= request.getParameter("block");
+		if(session!=null && session.getAttribute("loginID")!=null) {
+			
+			mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+			districtList = ser.getDistrictList(Integer.parseInt(userState));
+			mav.addObject("districtList", districtList);}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("blockList", blockList);}
+				mav.addObject("blkd", block);
+				
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return mav; 
+	}
+	
+	@RequestMapping(value="/getInaugurationReportData", method = RequestMethod.POST)
+	public ModelAndView getInaugurationReportData(HttpServletRequest request, HttpServletResponse response)
+	{
+			session = request.getSession(true);
+			ModelAndView mav = new ModelAndView();
+			String userState= request.getParameter("state");
+			String district= request.getParameter("district");
+			String block= request.getParameter("block");
+			
+			List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+			
+			
+			if(session!=null && session.getAttribute("loginID")!=null) {
+				
+				mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
+				mav.addObject("menu", menuController.getMenuUserId(request));
+				
+				list=ser.getInaugurationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block));
+				mav.addObject("inaugurationList", list);
+				mav.addObject("inaugurationListSize", list.size());
+				
+				
+				stateList=stateMasterService.getAllState();
+				mav.addObject("stateList", stateList);
+				mav.addObject("state", userState);
+				
+				if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+				districtList = ser.getDistrictList(Integer.parseInt(userState));
+				mav.addObject("districtList", districtList);}
+				mav.addObject("district", district);
+				
+				if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+					blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+					mav.addObject("blockList", blockList);}
+					mav.addObject("blkd", block);
+					
+			}else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+			return mav; 
 	}
 	
 }

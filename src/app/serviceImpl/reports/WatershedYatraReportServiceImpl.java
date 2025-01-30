@@ -12,6 +12,7 @@ import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
 import app.service.reports.WatershedYatraReportService;
+import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 
 @Service("WatershedYatraReportService")
@@ -72,6 +73,13 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 			Integer block) {
 		// TODO Auto-generated method stub
 		return dao.getNodalOfficerReportData(lvl, State, district, block);
+	}
+
+
+
+	@Override
+	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block) {
+		return dao.getInaugurationReportData(State, district, block);
 	}
 
 }

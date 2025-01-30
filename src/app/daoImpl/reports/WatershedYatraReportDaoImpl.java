@@ -16,6 +16,7 @@ import app.dao.reports.WatershedYatraReportDao;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 
 @Repository("WatershedYatraReportDao")
@@ -50,6 +51,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	
 	@Value("${getNodalOfficerwatershedvillLevel}") 
 	String getNodalOfficerwatershedvillLevel;
+	
+	@Value("${getInaugurationData}") 
+	String getInaugurationData;
 
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -209,6 +213,35 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 					query.setInteger("blkcd",block);
 				}
 				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block) {
+		String getReport=getInaugurationData;
+		Session session = sessionFactory.getCurrentSession();
+		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",State); 
+				query.setInteger("distcd",district); 
+				query.setInteger("blkcd",block); 
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
 				list = query.list();
 				session.getTransaction().commit();
 		} 

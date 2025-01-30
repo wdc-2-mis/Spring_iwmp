@@ -54,8 +54,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
 			
 			String filePath="D:\\Inauguration\\";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TEST/vanyatradoc/Inauguration";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/";
 			
 			MultipartFile[] mfile = {userfileup.getFlagoff_photo1(), userfileup.getFlagoff_photo2(), userfileup.getThemesong_photo1(), userfileup.getThemesong_photo2(),
 					 	userfileup.getBhoomipoojan_photo1(), userfileup.getBhoomipoojan_photo2(), userfileup.getLokarpan_photo1(), userfileup.getLokarpan_photo2(),
@@ -189,21 +189,25 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			list = query.list();
 			session.getTransaction().commit();
 //			imgList.add(list.get(0).getInauguarationId().toString());
-			imgList.add(list.get(0).getVanFlagPath1());
-			imgList.add(list.get(0).getVanFlagPath2());
-			imgList.add(list.get(0).getThemeSongPath1());
-			imgList.add(list.get(0).getThemeSongPath2());
-			imgList.add(list.get(0).getBhoomiPoojanPath1());
-			imgList.add(list.get(0).getBhoomiPoojanPath2());
-			imgList.add(list.get(0).getLokarpanPath1());
-			imgList.add(list.get(0).getLokarpanPath2());
-			imgList.add(list.get(0).getShramdaanPath1());
-			imgList.add(list.get(0).getShramdaanPath2());
-			imgList.add(list.get(0).getPlantationPath1());
-			imgList.add(list.get(0).getPlantationPath2());
+			if(list.get(0).getVanFlagPath1()!=null)
+				imgList.add(list.get(0).getVanFlagPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getVanFlagPath2()!=null)
+				imgList.add(list.get(0).getVanFlagPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getThemeSongPath1()!=null)
+				imgList.add(list.get(0).getThemeSongPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getThemeSongPath2()!=null)
+				imgList.add(list.get(0).getThemeSongPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
 			
 		}catch(Exception ex) {
-			session.getTransaction().rollback();
+ 			session.getTransaction().rollback();
 			ex.printStackTrace();
 		}
 		return imgList;

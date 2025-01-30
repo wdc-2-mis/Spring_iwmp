@@ -310,6 +310,8 @@ $(function() {
 				let list = '<ul>';
 				for (let i = 0; i < data.length; i++) {
 					if (data[i] != null) {
+//						/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/
+//						/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/
 						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 					}
 				}

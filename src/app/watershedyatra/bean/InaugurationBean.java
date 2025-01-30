@@ -54,7 +54,7 @@ public class InaugurationBean {
     private String stname;
     private String distname;
     private String blockname;
-    
+    private Integer image_count;
     
 	public Integer getDistrict() {
 		return district;
@@ -319,6 +319,12 @@ public class InaugurationBean {
 	}
 	public void setBlockname(String blockname) {
 		this.blockname = blockname;
+	}
+	public Integer getImage_count() {
+		return image_count;
+	}
+	public void setImage_count(Integer image_count) {
+		this.image_count = image_count;
 	}
     
 	

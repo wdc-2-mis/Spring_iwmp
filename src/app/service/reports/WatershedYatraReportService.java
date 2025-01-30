@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 
 @Service("WatershedYatraReportService")
@@ -16,5 +17,6 @@ public interface WatershedYatraReportService {
 	
 	List<NodalOfficerBean> getRoutePlanReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<NodalOfficerBean> getNodalOfficerReportData(String lvl, Integer State, Integer district, Integer block);
+	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block);
 
 }

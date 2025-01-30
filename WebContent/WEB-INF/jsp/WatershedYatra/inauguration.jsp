@@ -344,17 +344,19 @@ if (allValid) {
 
 
 function checkImage(input, inputId) {
-	var file = input.files[0];
+    var file = input.files[0];
     var fileType = file.type;
     var fileSize = file.size; // Get the file size in bytes
     var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
+    var maxWidth = 500; // Max width in pixels
+    var maxHeight = 500; // Max height in pixels
 
     // Check if the file is an image
     if (!fileType.startsWith('image/')) {
         alert('Only image files are allowed');
         input.value = ''; // Clear the file input
         document.getElementById(inputId).focus();
-        return;
+        return; // Stop further execution
     }
 
     // Check if the file size exceeds 100KB
@@ -362,9 +364,30 @@ function checkImage(input, inputId) {
         alert('File size exceeds 100 KB. Please choose a smaller file.');
         input.value = ''; // Clear the file input
         document.getElementById(inputId).focus();
-        return;
+        return; // Stop further execution
     }
-    
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+            var width = img.width;
+            var height = img.height;
+
+            // Check if the image dimensions exceed the max width or height
+            if (width > maxWidth || height > maxHeight) {
+                alert('Image dimensions exceed the allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
+                input.value = ''; // Clear the file input
+                document.getElementById(inputId).focus();
+                return; // Stop further execution
+            }
+
+        };
+
+        img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
 }
 
 	
