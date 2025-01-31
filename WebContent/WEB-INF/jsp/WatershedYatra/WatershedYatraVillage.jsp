@@ -522,32 +522,22 @@ function checkImage(input, inputId) {
 function closePopup() {
     document.getElementById('imagePopup').style.display = 'none';
   }
-function openLargeImage(imageSrc, index, total) {
-    // Set the image source
-    document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
-    
-    // Display the large image popup
-    document.getElementById('largeImagePopup').style.display = 'block';
-    
-    // Set current index and total images (optional)
-    currentIndex = index;
-    totalImages = total;
-}
+
 
 function closeLargeImagePopup() {
     document.getElementById('largeImagePopup').style.display = 'none';
 }
 
-// function openLargeImage(imageSrc, index, total) {
-// 	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
-// 	document.getElementById('largeImagePopup').style.display = 'block';
-// 	currentIndex = index;
-// 	totalImages = total;
-// }
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
 
-// function closeLargeImagePopup() {
-// 	document.getElementById('largeImagePopup').style.display = 'none';
-// }
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
 
 function showNextImage() {
 	if (currentIndex < totalImages - 1) {
@@ -1016,7 +1006,7 @@ display: none; /* Hidden by default */
 							<th colspan="3">Shramdaan</th> 
  								<th colspan="2">Plantation</th> 
 								<th rowspan="2">Award Distribution (Felicitation)</th> 
-<!--  								<th rowspan="2">No of Uploaded Photographs</th>  -->
+ 								<th rowspan="2">No of Uploaded Photographs</th> 
 							</tr> 
 							<tr> 
 								<th>Male</th> 
@@ -1074,9 +1064,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"><c:out value="${data.no_awards}" /></td>
-<!-- 									<td class="text-right"> -->
-<%-- 									<a href="#" class="showImage"><c:out value="${data.image_count}" /></a>  --%>
-<%-- 									<input type="hidden" id="watershedYatraId" value="${data.watershed_yatra_id}" /></td> --%>
+									<td class="text-right">
+									<a href="#" class="showImage"><c:out value="${data.image_count}" /></a> 
+									<input type="hidden" id="watershedYatraId" value="${data.watershed_yatra_id}" /></td>
  								
  							</tr>
  						</c:forEach>
@@ -1100,7 +1090,7 @@ display: none; /* Hidden by default */
 	</div>
 
 	<div id="largeImagePopup" class="popup" style="display: none;">
-		<div class="popup-content large-image-popup-content">
+		<div class="large-image-popup-content">
 			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
 			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
 			<img id="largeImage" src="" alt="Large Image" />

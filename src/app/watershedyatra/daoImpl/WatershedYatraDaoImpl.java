@@ -695,26 +695,35 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			list = query.list();
 			session.getTransaction().commit();
 //			imgList.add(list.get(0).getWatershedYatraId().toString());
-			imgList.add(list.get(0).getArExperiencePath1());
-			imgList.add(list.get(0).getArExperiencePath2());
-			imgList.add(list.get(0).getBhumiJalSanrakshanPath1());
-			imgList.add(list.get(0).getBhumiJalSanrakshanPath2());
-			imgList.add(list.get(0).getYatraFilmPath1());
-			imgList.add(list.get(0).getYatraFilmPath2());
-			imgList.add(list.get(0).getQuizParticipantsPath1());
-			imgList.add(list.get(0).getQuizParticipantsPath2());
-			imgList.add(list.get(0).getCulturalActivityPath1());
-			imgList.add(list.get(0).getCulturalActivityPath2());
-			imgList.add(list.get(0).getBhoomiPoojanPath1());
-			imgList.add(list.get(0).getBhoomiPoojanPath2());
-			imgList.add(list.get(0).getLokarpanPath1());
-			imgList.add(list.get(0).getLokarpanPath2());
-			imgList.add(list.get(0).getShramdaanPath1());
-			imgList.add(list.get(0).getShramdaanPath2());
-			imgList.add(list.get(0).getPlantationPath1());
-			imgList.add(list.get(0).getPlantationPath2());
-			imgList.add(list.get(0).getAwardDistributionPath1());
-			imgList.add(list.get(0).getAwardDistributionPath2());
+			imgList.add(list.get(0).getArExperiencePath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getArExperiencePath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getYatraFilmPath1()!=null)
+			imgList.add(list.get(0).getYatraFilmPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getYatraFilmPath2()!=null)
+			imgList.add(list.get(0).getYatraFilmPath2().replaceAll(".*\\\\", ""));
+			
+			imgList.add(list.get(0).getQuizParticipantsPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getQuizParticipantsPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getCulturalActivityPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getCulturalActivityPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
 			
 		}catch(Exception ex) {
 			session.getTransaction().rollback();
