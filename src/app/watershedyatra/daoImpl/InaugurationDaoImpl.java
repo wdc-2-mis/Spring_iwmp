@@ -205,7 +205,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
-			
+			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
 		}catch(Exception ex) {
  			session.getTransaction().rollback();
 			ex.printStackTrace();
