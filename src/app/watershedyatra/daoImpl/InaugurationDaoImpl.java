@@ -192,24 +192,24 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			//server
 			
-			if(list.get(0).getVanFlagPath1()!=null)
-				imgList.add(list.get(0).getVanFlagPath1().substring(list.get(0).getVanFlagPath1().lastIndexOf("/")+1));
-			if(list.get(0).getVanFlagPath2()!=null)
-				imgList.add(list.get(0).getVanFlagPath2().substring(list.get(0).getVanFlagPath2().lastIndexOf("/")+1));
-			if(list.get(0).getThemeSongPath1()!=null)
-				imgList.add(list.get(0).getThemeSongPath1().substring(list.get(0).getThemeSongPath1().lastIndexOf("/")+1));
-			if(list.get(0).getThemeSongPath2()!=null)
-				imgList.add(list.get(0).getThemeSongPath2().substring(list.get(0).getThemeSongPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
+//			if(list.get(0).getVanFlagPath1()!=null)
+//				imgList.add(list.get(0).getVanFlagPath1().substring(list.get(0).getVanFlagPath1().lastIndexOf("/")+1));
+//			if(list.get(0).getVanFlagPath2()!=null)
+//				imgList.add(list.get(0).getVanFlagPath2().substring(list.get(0).getVanFlagPath2().lastIndexOf("/")+1));
+//			if(list.get(0).getThemeSongPath1()!=null)
+//				imgList.add(list.get(0).getThemeSongPath1().substring(list.get(0).getThemeSongPath1().lastIndexOf("/")+1));
+//			if(list.get(0).getThemeSongPath2()!=null)
+//				imgList.add(list.get(0).getThemeSongPath2().substring(list.get(0).getThemeSongPath2().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
+//			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
 			
 			
 			//local
