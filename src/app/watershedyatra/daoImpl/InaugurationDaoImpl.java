@@ -189,6 +189,31 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			list = query.list();
 			session.getTransaction().commit();
 //			imgList.add(list.get(0).getInauguarationId().toString());
+			
+			//server
+			
+			if(list.get(0).getVanFlagPath1()!=null)
+				imgList.add(list.get(0).getVanFlagPath1().substring(list.get(0).getVanFlagPath1().lastIndexOf("/")+1));
+			if(list.get(0).getVanFlagPath2()!=null)
+				imgList.add(list.get(0).getVanFlagPath2().substring(list.get(0).getVanFlagPath2().lastIndexOf("/")+1));
+			if(list.get(0).getThemeSongPath1()!=null)
+				imgList.add(list.get(0).getThemeSongPath1().substring(list.get(0).getThemeSongPath1().lastIndexOf("/")+1));
+			if(list.get(0).getThemeSongPath2()!=null)
+				imgList.add(list.get(0).getThemeSongPath2().substring(list.get(0).getThemeSongPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
+			
+			
+			//local
+			
 			if(list.get(0).getVanFlagPath1()!=null)
 				imgList.add(list.get(0).getVanFlagPath1().replaceAll(".*\\\\", ""));
 			if(list.get(0).getVanFlagPath2()!=null)
@@ -207,6 +232,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
+
+			
 		}catch(Exception ex) {
  			session.getTransaction().rollback();
 			ex.printStackTrace();
