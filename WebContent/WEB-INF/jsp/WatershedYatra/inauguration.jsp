@@ -330,7 +330,7 @@ function validation()
 	
 
 if (allValid) {
-	if(confirm("Do you want to save Inauguration Programm Details?")) {
+	if(confirm("Do you want to save Inauguration Program Details?")) {
     formSubmitted = true; 
 	document.inauguration.action="saveInaugurationDetails";
 	document.inauguration.method="post";
@@ -441,7 +441,7 @@ function showPrevImage() {
 </script>
 
 <meta charset="ISO-8859-1">
-<title>Inauguration Programm</title>
+<title>Inauguration Program</title>
 
 <style>
 input[type=text] {
@@ -599,7 +599,7 @@ display: none; /* Hidden by default */
 
 
 	<div class="maindiv">
-		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Programm</h4> </div>
+		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
 		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="saveInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
@@ -769,7 +769,7 @@ display: none; /* Hidden by default */
 	<div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Programm Details</h5>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Program Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
@@ -865,7 +865,7 @@ display: none; /* Hidden by default */
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="26" class="required" style="color:red;">Data Not Found</td>
+								<td align="center" colspan="27" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 						</c:if>
 		</table>

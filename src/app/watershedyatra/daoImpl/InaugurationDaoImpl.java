@@ -103,7 +103,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 //			data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
 			
 			data.setVanFlagPath1(!userfileup.getFlagoff_photo1().isEmpty() ? filePath + userfileup.getFlagoff_photo1().getOriginalFilename() :  null);
-			data.setVanFlagPath1(!userfileup.getFlagoff_photo2().isEmpty() ? filePath + userfileup.getFlagoff_photo2().getOriginalFilename() :  null);
+			data.setVanFlagPath2(!userfileup.getFlagoff_photo2().isEmpty() ? filePath + userfileup.getFlagoff_photo2().getOriginalFilename() :  null);
 			
 			data.setThemeSong(Boolean.valueOf(userfileup.getThemesong()));
 //			data.setThemeSongPath1(filePath+userfileup.getThemesong_photo1().getOriginalFilename());
