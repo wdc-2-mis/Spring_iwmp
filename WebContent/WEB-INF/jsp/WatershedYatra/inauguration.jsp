@@ -411,7 +411,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-	document.getElementById('largeImage').src = 'resources/images/watershedyatra/' + imageSrc;
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + imageSrc;			//PRD
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/TEST/filepath/TESTING/vanyatradoc/Inauguration/' + imageSrc;	//TEST
+	document.getElementById('largeImage').src = 'resources/images/watershedyatra/' + imageSrc;												//Local
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -859,8 +861,8 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
 								<td class="text-right">
-									<a href="#" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
-									<input type="hidden" id="inaugId" value="${data.inauguaration_id}" /></td>
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
 					</tr>
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">

@@ -296,11 +296,12 @@ $(function() {
 
 
 	$(document).on('click', '.showImage', function(e) {
-		var inaugId = $('#inaugId').val();
+		//var inaugId = $('#inaugId').val();
+		$inaugId= e.target.getAttribute('data-id');
 		$.ajax({
 			type: 'POST',
 			url: "getImageByInaugurationId",
-			data: { inaugId: inaugId },
+			data: { inaugId:$inaugId },
 			error: function(xhr, status, er) {
 				console.log(er);
 			},
@@ -310,9 +311,18 @@ $(function() {
 				let list = '<ul>';
 				for (let i = 0; i < data.length; i++) {
 					if (data[i] != null) {
-//						/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/
-//						/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/
+//						https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/
+//						https://wdcpmksy.dolr.gov.in/TEST/filepath/TESTING/vanyatradoc/Inauguration/
+
+						//PRD
+//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
+						//TEST
+//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/TEST/filepath/TESTING/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						
+						//Local
 						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						
 					}
 				}
 				list += '</ul>';
