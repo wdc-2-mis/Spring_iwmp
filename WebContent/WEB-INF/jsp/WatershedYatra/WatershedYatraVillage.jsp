@@ -529,7 +529,9 @@ function closeLargeImagePopup() {
 }
 
 function openLargeImage(imageSrc, index, total) {
-	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/WatershedYatraVillage/' + imageSrc;			//PRD
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/TEST/filepath/TESTING/vanyatradoc/WatershedYatraVillage/' + imageSrc;	//TEST
+	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;												//Local
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -1064,9 +1066,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"><c:out value="${data.no_awards}" /></td>
-									<td class="text-right">
-									<a href="#" class="showImage"><c:out value="${data.image_count}" /></a> 
-									<input type="hidden" id="watershedYatraId" value="${data.watershed_yatra_id}" /></td>
+								<td class="text-right">
+									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage"><c:out value="${data.image_count}" /></a> 
+								</td>
  								
  							</tr>
  						</c:forEach>

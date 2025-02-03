@@ -108,11 +108,14 @@ $(document).on('change', '#district', function(e) {
 				
 
 				$(document).on('click', '.showImage', function(e) {
-					var watershedYatraId = $('#watershedYatraId').val();
+					//var watershedYatraId = $('#watershedYatraId').val();
+					$watershedYatraId= e.target.getAttribute('data-id');
+					//alert('kdy'+watershedYatraId);
+					//alert('kdy1'+$achid);
 					$.ajax({
 						type: 'POST',
 						url: "getImageWatershedYatraId",
-						data: { watershedYatraId: watershedYatraId },
+						data: { watershedYatraId:$watershedYatraId},
 						error: function(xhr, status, er) {
 							console.log(er);
 						},
@@ -122,7 +125,16 @@ $(document).on('change', '#district', function(e) {
 							let list = '<ul>';
 							for (let i = 0; i < data.length; i++) {
 								if (data[i] != null) {
+									
+									//PRD
+//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/WatershedYatraVillage/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
+									//TEST
+//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/TEST/filepath/TESTING/vanyatradoc/WatershedYatraVillage/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+															
+									//Local
 									list += '<li><img src="resources/images/WatershedYatraVillage/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+															
 								}
 							}
 							list += '</ul>';

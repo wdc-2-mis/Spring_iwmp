@@ -10,6 +10,7 @@ public class WatershedYatraBean {
 	
     private Integer watershed_yatra_id;
     private String date;
+    private String timed;
     private Integer st_code;
     private String stname;
     private String distname;
@@ -119,6 +120,17 @@ public class WatershedYatraBean {
     private MultipartFile noOfwatershedphoto2;
     
     
+    
+    
+    
+    
+    
+	public String getTimed() {
+		return timed;
+	}
+	public void setTimed(String timed) {
+		this.timed = timed;
+	}
 	public String getAr_experience_path1() {
 		return ar_experience_path1;
 	}
