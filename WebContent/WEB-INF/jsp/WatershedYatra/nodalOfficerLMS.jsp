@@ -11,7 +11,7 @@ function validatenumber() {
 	if (x.length !== 10) { 
 		alert("Mobile number should be 10 digits"); 
 		document.getElementById("mob").value='';
-		return false; 
+		//return false; 
 	} 
 }
 
@@ -25,7 +25,7 @@ function validateEmail(emailField)
         alert('Please enter a valid email address');
         document.getElementById("email").value='';
         document.getElementById("email").focus();
-        return false ;
+       // return false ;
     }
 }
 
@@ -36,9 +36,9 @@ function validateemail1() {
 	{ 
 		alert("Please enter a valid email address"); 
 		document.getElementById("email").value='';
-		return false; 
+		//return false; 
 	} 
-	return true; 
+	//return true; 
 }
 
 
