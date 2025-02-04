@@ -599,6 +599,12 @@ display: none; /* Hidden by default */
 	</script> 
 </c:if>
 
+<c:if test="${not empty result1}">
+    <div class="alert alert-info" style="color: red;">${result1}</div>
+     <script>
+	    alert("<c:out value='${result1}'/>");
+	</script> 
+</c:if>
 
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
