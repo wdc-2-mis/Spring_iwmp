@@ -521,12 +521,12 @@ public class CommonFunctions {
 		            // add image
 		            
 					
-				//	 String emb="https://wdcpmksy.dolr.gov.in/resources/images/tiranga_national_emblem.png";
-				//	 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/g20-logo.png";
+					 String emb="https://wdcpmksy.dolr.gov.in/resources/images/tiranga_national_emblem.png";
+					 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/g20-logo.png";
 					 
 		           
-		           String emb="http://localhost/resources/images/tiranga_national_emblem.png";
-				   String g20l="http://localhost/resources/images/g20-logo.png";
+		           //String emb="http://localhost/resources/images/tiranga_national_emblem.png";
+				   //String g20l="http://localhost/resources/images/g20-logo.png";
 
 					
 					Image img = Image.getInstance(emb);

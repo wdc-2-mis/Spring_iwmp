@@ -29,19 +29,17 @@
     <!-- Page Content -->
    <div class="container page-top">
 
-
-
         <div class="row">
-<c:forEach var="list" items="${files}">
+			<c:forEach var="list" items="${files}">
 				<c:forEach var="files" items="${list.value}">
 			<%-- <li>	<a href="">${files.path}/${files.fileName}</a></li> --%>
-			  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-                <a href="http://wdcpmksy.dolr.gov.in/filepath/PRD/CircularMessageAlert/${files.fileName}" class="fancybox" rel="ligthbox">
-                    <img  src="http://wdcpmksy.dolr.gov.in/filepath/PRD/CircularMessageAlert/${files.fileName}" class="zoom img-fluid "  alt="">
-                   
-                </a>
-            </div>
-			</c:forEach>
+				  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+	                <a href="http://wdcpmksy.dolr.gov.in/filepath/PRD/CircularMessageAlert/${files.fileName}" class="fancybox" rel="ligthbox">
+	                    <img  src="http://wdcpmksy.dolr.gov.in/filepath/PRD/CircularMessageAlert/${files.fileName}" class="zoom img-fluid "  alt="">
+	                   
+	                </a>
+	            	</div>
+				</c:forEach>
 			</c:forEach>
 
            <%--  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
