@@ -345,7 +345,7 @@ display: none; /* Hidden by default */
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Block Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
 						<th colspan="9" style="text-align:center; vertical-align: middle;">Number of Participation</th>
-						<th colspan="13" style="text-align:center; vertical-align: middle;">Activities</th>
+						<th colspan="19" style="text-align:center; vertical-align: middle;">Activities</th>
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Participants/Villagers</th>
@@ -362,6 +362,9 @@ display: none; /* Hidden by default */
 						<th colspan="3" style="text-align:center; vertical-align: middle;">Shramdaan</th>
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Plantation</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Award Distribution (Felicitation)</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of stalls of Departments</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of stalls of SHGs/FPOs</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of LakhPati Didi Participated</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">No of Uploaded Photographs</th>
 					</tr>
 					<tr>
@@ -382,7 +385,7 @@ display: none; /* Hidden by default */
 						<th style="text-align:center; vertical-align: middle;">No. of Agro forestry / Horticultural Plants (No. of Sapling)</th>
 					</tr>
 					<tr>
-						<% for (int i = 1; i <= 28; i++) { %>
+						<% for (int i = 1; i <= 31; i++) { %>
 						<th class="text-center"><%= i %></th>
 						<% } %>
 					</tr>
@@ -432,6 +435,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+ 								<td class="text-right"> <c:out value="${data.dept_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shg_fpo_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_lakhpati_didi}" /></td>
 <%--  								<td class="text-right"> <c:out value="${data.image_count}" /></td> --%>
  								<td class="text-right">
 									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
@@ -441,8 +447,8 @@ display: none; /* Hidden by default */
 					</c:if>
 					<c:if test="${inaugurationListSize eq 0}">
 						<tr>
-							<td align="center" colspan="28" class="required"
-								style="color: red;">Data Not Found</td>
+							<td align="center" colspan="21" class="required" style="color:red;">Data Not Found</td>
+							<td colspan="10" ></td>
 						</tr>
 					</c:if>
 				</tbody>

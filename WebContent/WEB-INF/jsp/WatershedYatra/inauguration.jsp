@@ -54,6 +54,10 @@ function validation()
 	$plantationPhotos = $('#plantationPhotos').val();
 	$no_awards = $('#no_awards').val();
 	$awardPhotos = $('#awardPhotos').val();
+	
+	$dept_stalls = $('#dept_stalls').val();
+	$shg_fpo_stalls = $('#shg_fpo_stalls').val();
+	$no_lakhpati_didi = $('#no_lakhpati_didi').val();
 
 	$flagoff_photo1 = $('#flagoff_photo1').val();
 	$flagoff_photo2 = $('#flagoff_photo2').val();
@@ -69,7 +73,12 @@ function validation()
 	$plantation_photo2 = $('#plantation_photo2').val();
 	$award_photo1 = $('#award_photo1').val();
 	$award_photo2 = $('#award_photo2').val();
-	
+	$dept_stalls_photo1 = $('#dept_stalls_photo1').val();
+	$dept_stalls_photo2 = $('#dept_stalls_photo2').val();
+	$shg_fpo_stalls_photo1 = $('#shg_fpo_stalls_photo1').val();
+	$shg_fpo_stalls_photo2 = $('#shg_fpo_stalls_photo2').val();
+	$lakhpati_didi_photo1 = $('#lakhpati_didi_photo1').val();
+	$lakhpati_didi_photo2 = $('#lakhpati_didi_photo2').val();
 
 	if ($date === '' || typeof $date === 'undefined') {
 		alert('Please select a Date');
@@ -324,6 +333,72 @@ function validation()
 		alert('Please upload photo for Award Distribution');
 // 		$('#award_photo2').focus();
 		document.getElementById('award_photo2').click();
+		allValid = false;
+		return false;
+	}
+	
+	
+	
+	
+	if ($dept_stalls === '' || typeof $dept_stalls === 'undefined') {
+		alert('Please enter the Number of stalls of Departments');
+		$('#dept_stalls').focus();
+		allValid = false;
+		return false;
+	}
+	
+	if ($dept_stalls_photo1 === '' || typeof $dept_stalls_photo1 === 'undefined') {
+		alert('Please upload photo for stalls of Departments');
+// 		$('#dept_stalls_photo1').focus();
+		document.getElementById('dept_stalls_photo1').click();
+		allValid = false;
+		return false;
+	}if ($dept_stalls_photo2 === '' || typeof $dept_stalls_photo2 === 'undefined') {
+		alert('Please upload photo for stalls of Departments');
+// 		$('#dept_stalls_photo2').focus();
+		document.getElementById('dept_stalls_photo2').click();
+		allValid = false;
+		return false;
+	}
+	
+	if ($shg_fpo_stalls === '' || typeof $shg_fpo_stalls === 'undefined') {
+		alert('Please enter the Number of stalls of SHGs/FPOs');
+		$('#shg_fpo_stalls').focus();
+		allValid = false;
+		return false;
+	}
+	
+	if ($shg_fpo_stalls_photo1 === '' || typeof $shg_fpo_stalls_photo1 === 'undefined') {
+		alert('Please upload photo for stalls of SHGs/FPOs');
+// 		$('#shg_fpo_stalls_photo1').focus();
+		document.getElementById('shg_fpo_stalls_photo1').click();
+		allValid = false;
+		return false;
+	}if ($shg_fpo_stalls_photo2 === '' || typeof $shg_fpo_stalls_photo2 === 'undefined') {
+		alert('Please upload photo for stalls of SHGs/FPOs');
+// 		$('#shg_fpo_stalls_photo2').focus();
+		document.getElementById('shg_fpo_stalls_photo2').click();
+		allValid = false;
+		return false;
+	}
+	
+	if ($no_lakhpati_didi === '' || typeof $no_lakhpati_didi === 'undefined') {
+		alert('Please enter the Number of people participated in LakhPati Didi');
+		$('#no_lakhpati_didi').focus();
+		allValid = false;
+		return false;
+	}
+	
+	if ($lakhpati_didi_photo1 === '' || typeof $lakhpati_didi_photo1 === 'undefined') {
+		alert('Please upload photo for LakhPati Didi');
+// 		$('#lakhpati_didi_photo1').focus();
+		document.getElementById('lakhpati_didi_photo1').click();
+		allValid = false;
+		return false;
+	}if ($lakhpati_didi_photo2 === '' || typeof $lakhpati_didi_photo2 === 'undefined') {
+		alert('Please upload photo for LakhPati Didi');
+// 		$('#lakhpati_didi_photo2').focus();
+		document.getElementById('lakhpati_didi_photo2').click();
 		allValid = false;
 		return false;
 	}
@@ -758,6 +833,28 @@ display: none; /* Hidden by default */
 								<input type="file" id="award_photo2" name="award_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'award_photo2')" required /></td>
      	</tr>
      	<tr>
+     		<td>Number of stalls of Departments</td>
+     		<td colspan=2><input type="text" id="dept_stalls" name="dept_stalls" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+			<td>Upload Photographs<br><input type="file" id="dept_stalls_photo1" name="dept_stalls_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'dept_stalls_photo1')" required /><br/>
+								<input type="file" id="dept_stalls_photo2" name="dept_stalls_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'dept_stalls_photo2')" required /></td>
+     	</tr>
+     	<tr>
+     		<td>Number of stalls of SHGs/FPOs</td>
+     		<td colspan=2><input type="text" id="shg_fpo_stalls" name="shg_fpo_stalls" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+			<td>Upload Photographs<br><input type="file" id="shg_fpo_stalls_photo1" name="shg_fpo_stalls_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shg_fpo_stalls_photo1')" required /><br/>
+								<input type="file" id="shg_fpo_stalls_photo2" name="shg_fpo_stalls_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shg_fpo_stalls_photo2')" required /></td>
+     	</tr>
+     	<tr>
+     		<td>Number of LakhPati Didi Participated</td>
+     		<td colspan=2><input type="text" id="no_lakhpati_didi" name="no_lakhpati_didi" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+			<td>Upload Photographs<br><input type="file" id="lakhpati_didi_photo1" name="lakhpati_didi_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lakhpati_didi_photo1')" required /><br/>
+								<input type="file" id="lakhpati_didi_photo2" name="lakhpati_didi_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lakhpati_didi_photo2')" required /></td>
+     	</tr>
+     	
+     	<tr>
      		<td colspan=4 class="text-left">
 <!--      			<button class="btn btn-primary" type="submit">Save</button> -->
 <!--      			<input type="button" name="click" id="click" value="Save" class="btn btn-info" onclick="savedata();" /> -->
@@ -788,7 +885,7 @@ display: none; /* Hidden by default */
 								<th rowspan="3">Block Name</th>
 								<th rowspan="3">Location</th>
 								<th colspan="9">Number of Participation</th>
-								<th colspan="13">Activities</th>
+								<th colspan="19">Activities</th>
 							</tr>
 							<tr>
 								<th colspan="2">Participants/Villagers</th>
@@ -805,6 +902,9 @@ display: none; /* Hidden by default */
 								<th colspan="3">Shramdaan</th>
 								<th colspan="2">Plantation</th>
 								<th rowspan="2">Award Distribution (Felicitation)</th>
+								<th rowspan="2">Number of stalls of Departments</th>
+								<th rowspan="2">Number of stalls of SHGs/FPOs</th>
+								<th rowspan="2">Number of LakhPati Didi Participated</th>
 								<th rowspan="2">No of Uploaded Photographs</th>
 							</tr>
 							<tr>
@@ -866,6 +966,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+ 								<td class="text-right"> <c:out value="${data.dept_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shg_fpo_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_lakhpati_didi}" /></td>
 								<td class="text-right">
 									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
@@ -873,7 +976,8 @@ display: none; /* Hidden by default */
  						</c:forEach>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="27" class="required" style="color:red;">Data Not Found</td>
+								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="10" ></td>
 							</tr>
 						</c:if>
 		</table>

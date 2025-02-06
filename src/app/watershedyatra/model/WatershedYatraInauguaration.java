@@ -53,6 +53,15 @@ public class WatershedYatraInauguaration {
     private Integer awardDistribution;
     private String awardDistributionPath1;
     private String awardDistributionPath2;
+    private Integer noDeptStalls;
+    private String deptStallsPath1;
+    private String deptStallsPath2;
+    private Integer noShgFpo;
+    private String shgFpoPath1;
+    private String shgFpoPath2;
+    private Integer noLakhpatiDidi;
+    private String lakhpatiDidiPath1;
+    private String lakhpatiDidiPath2;
     private String status;
     private String requestedIp;
     private String updatedBy;
@@ -80,7 +89,9 @@ public class WatershedYatraInauguaration {
 			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, Integer manHr, String shramdaanPath1,
 			String shramdaanPath2, BigDecimal plantationArea, Integer noOfAgroForsetry, String plantationPath1,
 			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
-			String awardDistributionPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
+			String awardDistributionPath2, Integer noDeptStalls, String deptStallsPath1, String deptStallsPath2,
+		    Integer noShgFpo, String shgFpoPath1, String shgFpoPath2, Integer noLakhpatiDidi, String lakhpatiDidiPath1,
+		    String lakhpatiDidiPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
 			String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
 			IwmpBlock iwmpBlock) {
 		this.inauguarationId = inauguarationId;
@@ -121,6 +132,15 @@ public class WatershedYatraInauguaration {
 		this.awardDistribution = awardDistribution;
 		this.awardDistributionPath1 = awardDistributionPath1;
 		this.awardDistributionPath2 = awardDistributionPath2;
+		this.noDeptStalls = noDeptStalls;
+		this.deptStallsPath1 = deptStallsPath1;
+		this.deptStallsPath2 = deptStallsPath2;
+		this.noShgFpo = noShgFpo;
+		this.shgFpoPath1 = shgFpoPath1;
+		this.shgFpoPath2 = shgFpoPath2;
+		this.noLakhpatiDidi = noLakhpatiDidi;
+		this.lakhpatiDidiPath1 = lakhpatiDidiPath1;
+		this.lakhpatiDidiPath2 = lakhpatiDidiPath2;
 		this.status = status;
 		this.requestedIp = requestedIp;
 		this.updatedBy = updatedBy;
@@ -475,6 +495,87 @@ public class WatershedYatraInauguaration {
 
 	public void setAwardDistributionPath2(String awardDistributionPath2) {
 		this.awardDistributionPath2 = awardDistributionPath2;
+	}
+	
+	@Column(name = "no_dept_stalls")
+	public Integer getNoDeptStalls() {
+		return noDeptStalls;
+	}
+
+	public void setNoDeptStalls(Integer noDeptStalls) {
+		this.noDeptStalls = noDeptStalls;
+	}
+
+	@Column(name = "dept_stalls_path1")
+	public String getDeptStallsPath1() {
+		return deptStallsPath1;
+	}
+
+	public void setDeptStallsPath1(String deptStallsPath1) {
+		this.deptStallsPath1 = deptStallsPath1;
+	}
+
+	@Column(name = "dept_stalls_path2")
+	public String getDeptStallsPath2() {
+		return deptStallsPath2;
+	}
+
+	public void setDeptStallsPath2(String deptStallsPath2) {
+		this.deptStallsPath2 = deptStallsPath2;
+	}
+
+	@Column(name = "no_shg_fpo")
+	public Integer getNoShgFpo() {
+		return noShgFpo;
+	}
+
+	public void setNoShgFpo(Integer noShgFpo) {
+		this.noShgFpo = noShgFpo;
+	}
+
+	@Column(name = "shg_fpo_path1")
+	public String getShgFpoPath1() {
+		return shgFpoPath1;
+	}
+
+	public void setShgFpoPath1(String shgFpoPath1) {
+		this.shgFpoPath1 = shgFpoPath1;
+	}
+
+	@Column(name = "shg_fpo_path2")
+	public String getShgFpoPath2() {
+		return shgFpoPath2;
+	}
+
+	public void setShgFpoPath2(String shgFpoPath2) {
+		this.shgFpoPath2 = shgFpoPath2;
+	}
+
+	@Column(name = "no_lakhpati_didi")
+	public Integer getNoLakhpatiDidi() {
+		return noLakhpatiDidi;
+	}
+
+	public void setNoLakhpatiDidi(Integer noLakhpatiDidi) {
+		this.noLakhpatiDidi = noLakhpatiDidi;
+	}
+
+	@Column(name = "lakhpati_didi_path1")
+	public String getLakhpatiDidiPath1() {
+		return lakhpatiDidiPath1;
+	}
+
+	public void setLakhpatiDidiPath1(String lakhpatiDidiPath1) {
+		this.lakhpatiDidiPath1 = lakhpatiDidiPath1;
+	}
+
+	@Column(name = "lakhpati_didi_path2")
+	public String getLakhpatiDidiPath2() {
+		return lakhpatiDidiPath2;
+	}
+
+	public void setLakhpatiDidiPath2(String lakhpatiDidiPath2) {
+		this.lakhpatiDidiPath2 = lakhpatiDidiPath2;
 	}
 
 	@Column(name = "status")

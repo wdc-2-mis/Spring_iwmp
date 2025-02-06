@@ -48,7 +48,15 @@ public class InaugurationBean {
     private Integer no_awards;
     private MultipartFile award_photo1;
     private MultipartFile award_photo2;
-
+    private Integer dept_stalls;
+    private MultipartFile dept_stalls_photo1;
+    private MultipartFile dept_stalls_photo2;
+    private Integer shg_fpo_stalls;
+    private MultipartFile shg_fpo_stalls_photo1;
+    private MultipartFile shg_fpo_stalls_photo2;
+    private Integer no_lakhpati_didi;
+    private MultipartFile lakhpati_didi_photo1;
+    private MultipartFile lakhpati_didi_photo2;
     private Integer inauguaration_id;
     private Integer st_code;
     private String stname;
@@ -289,6 +297,60 @@ public class InaugurationBean {
 	}
 	public void setAward_photo2(MultipartFile award_photo2) {
 		this.award_photo2 = award_photo2;
+	}
+	public Integer getDept_stalls() {
+		return dept_stalls;
+	}
+	public void setDept_stalls(Integer dept_stalls) {
+		this.dept_stalls = dept_stalls;
+	}
+	public MultipartFile getDept_stalls_photo1() {
+		return dept_stalls_photo1;
+	}
+	public void setDept_stalls_photo1(MultipartFile dept_stalls_photo1) {
+		this.dept_stalls_photo1 = dept_stalls_photo1;
+	}
+	public MultipartFile getDept_stalls_photo2() {
+		return dept_stalls_photo2;
+	}
+	public void setDept_stalls_photo2(MultipartFile dept_stalls_photo2) {
+		this.dept_stalls_photo2 = dept_stalls_photo2;
+	}
+	public Integer getShg_fpo_stalls() {
+		return shg_fpo_stalls;
+	}
+	public void setShg_fpo_stalls(Integer shg_fpo_stalls) {
+		this.shg_fpo_stalls = shg_fpo_stalls;
+	}
+	public MultipartFile getShg_fpo_stalls_photo1() {
+		return shg_fpo_stalls_photo1;
+	}
+	public void setShg_fpo_stalls_photo1(MultipartFile shg_fpo_stalls_photo1) {
+		this.shg_fpo_stalls_photo1 = shg_fpo_stalls_photo1;
+	}
+	public MultipartFile getShg_fpo_stalls_photo2() {
+		return shg_fpo_stalls_photo2;
+	}
+	public void setShg_fpo_stalls_photo2(MultipartFile shg_fpo_stalls_photo2) {
+		this.shg_fpo_stalls_photo2 = shg_fpo_stalls_photo2;
+	}
+	public Integer getNo_lakhpati_didi() {
+		return no_lakhpati_didi;
+	}
+	public void setNo_lakhpati_didi(Integer no_lakhpati_didi) {
+		this.no_lakhpati_didi = no_lakhpati_didi;
+	}
+	public MultipartFile getLakhpati_didi_photo1() {
+		return lakhpati_didi_photo1;
+	}
+	public void setLakhpati_didi_photo1(MultipartFile lakhpati_didi_photo1) {
+		this.lakhpati_didi_photo1 = lakhpati_didi_photo1;
+	}
+	public MultipartFile getLakhpati_didi_photo2() {
+		return lakhpati_didi_photo2;
+	}
+	public void setLakhpati_didi_photo2(MultipartFile lakhpati_didi_photo2) {
+		this.lakhpati_didi_photo2 = lakhpati_didi_photo2;
 	}
 	public Integer getInauguaration_id() {
 		return inauguaration_id;

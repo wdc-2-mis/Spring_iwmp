@@ -60,7 +60,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			MultipartFile[] mfile = {userfileup.getFlagoff_photo1(), userfileup.getFlagoff_photo2(), userfileup.getThemesong_photo1(), userfileup.getThemesong_photo2(),
 					 	userfileup.getBhoomipoojan_photo1(), userfileup.getBhoomipoojan_photo2(), userfileup.getLokarpan_photo1(), userfileup.getLokarpan_photo2(),
 					 	userfileup.getShramdaan_photo1(), userfileup.getShramdaan_photo2(), userfileup.getPlantation_photo1(), userfileup.getPlantation_photo2(), 
-					 	userfileup.getAward_photo1(), userfileup.getAward_photo2() };
+					 	userfileup.getAward_photo1(), userfileup.getAward_photo2(), userfileup.getDept_stalls_photo1(), userfileup.getDept_stalls_photo2(), 
+					 	userfileup.getShg_fpo_stalls_photo1(), userfileup.getShg_fpo_stalls_photo2(), userfileup.getLakhpati_didi_photo1(), userfileup.getLakhpati_didi_photo2() };
 			
 			for (MultipartFile file : mfile) {
 			
@@ -132,7 +133,15 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setAwardDistribution(userfileup.getNo_awards());
 			data.setAwardDistributionPath1(filePath+userfileup.getAward_photo1().getOriginalFilename());
 			data.setAwardDistributionPath2(filePath+userfileup.getAward_photo2().getOriginalFilename());
-			
+			data.setNoDeptStalls(userfileup.getDept_stalls());
+			data.setDeptStallsPath1(filePath+userfileup.getDept_stalls_photo1().getOriginalFilename());
+			data.setDeptStallsPath2(filePath+userfileup.getDept_stalls_photo2().getOriginalFilename());
+			data.setNoShgFpo(userfileup.getShg_fpo_stalls());
+			data.setShgFpoPath1(filePath+userfileup.getShg_fpo_stalls_photo1().getOriginalFilename());
+			data.setShgFpoPath2(filePath+userfileup.getShg_fpo_stalls_photo2().getOriginalFilename());
+			data.setNoLakhpatiDidi(userfileup.getNo_lakhpati_didi());
+			data.setLakhpatiDidiPath1(filePath+userfileup.getLakhpati_didi_photo1().getOriginalFilename());
+			data.setLakhpatiDidiPath2(filePath+userfileup.getLakhpati_didi_photo2().getOriginalFilename());
 			
 			sess.save(data);
 			sess.getTransaction().commit();
@@ -211,7 +220,14 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
 			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
 			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
-*/			
+			imgList.add(list.get(0).getDeptStallsPath1().substring(list.get(0).getDeptStallsPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getDeptStallsPath2().substring(list.get(0).getDeptStallsPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getShgFpoPath1().substring(list.get(0).getShgFpoPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getShgFpoPath2().substring(list.get(0).getShgFpoPath2().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getLakhpatiDidiPath1().substring(list.get(0).getLakhpatiDidiPath1().lastIndexOf("/")+1));
+			imgList.add(list.get(0).getLakhpatiDidiPath2().substring(list.get(0).getLakhpatiDidiPath2().lastIndexOf("/")+1));
+			
+*/
 			
 			//local
 			
@@ -233,7 +249,13 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
 			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
-
+			imgList.add(list.get(0).getDeptStallsPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getDeptStallsPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShgFpoPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getShgFpoPath2().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLakhpatiDidiPath1().replaceAll(".*\\\\", ""));
+			imgList.add(list.get(0).getLakhpatiDidiPath2().replaceAll(".*\\\\", ""));
+			
 			
 		}catch(Exception ex) {
  			session.getTransaction().rollback();
