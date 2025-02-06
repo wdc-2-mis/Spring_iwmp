@@ -101,7 +101,7 @@ input[type=email] {
 	    		<div class="form-group col-3">
 	      			<label for="district"><b>District:</b> </label>
 	      			<span class="projectError"></span>
-	      			<select class="form-control district1" id="district1" name="district1" required>
+	      			<select class="form-control district1" id="district1" name="district1" >
 	    				<option value="">--Select District--</option>
 	    				<c:forEach items="${distList}" var="dist"> 
 						<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
@@ -111,31 +111,31 @@ input[type=email] {
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Block:</b> </label>
 	      			<span class="activityError"></span>
-	      			<select class="form-control activity" id="block1" name="block1" required>
+	      			<select class="form-control activity" id="block1" name="block1" >
 	    				<option value="">--Select Block--</option>
 	    			</select>
 	    		</div>
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Gram Panchayat Name:</b> </label>
 	      			<span class="activityError"></span>
-	      			<select class="form-control activity" id="grampan1" name="grampan1" required>
+	      			<select class="form-control activity" id="grampan1" name="grampan1" >
 	    				<option value="">--Select Gram Panchayat Name--</option>
 	    			</select>
 	    		</div>
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Village Name:</b> </label>
 	      			<span class="activityError"></span>
-	      			<select class="form-control activity" id="village1" name="village1" required>
+	      			<select class="form-control activity" id="village1" name="village1" >
 	    				<option value="">--Select Village Name--</option>
 	    			</select>
 	    		</div>
 	    		<div class="form-group col-3">
 	      		  		<label for="datetime"><b>Date and Time: </b></label>
-	       		 		<input type="datetime-local" name="datetime1" id="datetime1" class="form-control" required/>
+	       		 		<input type="datetime-local" name="datetime1" id="datetime1" class="form-control" />
 	    		</div>
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Location(Nearby/Milestone):</b></label>
-	      			<input type="text" name="location1" id="location1"  required/>
+	      			<input type="text" name="location1" id="location1"  />
 	    		</div>
 		</div>
     	<br/>
@@ -234,7 +234,7 @@ input[type=email] {
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
-	<script src='<c:url value="/resources/js/WatershedYatraVillage.js" />'></script>
+	<%-- <script src='<c:url value="/resources/js/WatershedYatraVillage.js" />'></script> --%>
 	<script src='<c:url value="/resources/js/routeplanvantraveling.js" />'></script> 
 </body>
 </html>

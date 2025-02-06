@@ -1,4 +1,116 @@
 $(function(){
+	
+	$(document).on('change', '#district', function(e) {
+			e.preventDefault();
+			$stCode=$('#district option:selected').val();
+			$.ajax({  
+	            url:"getWatershedYatraBlock",
+	            type: "post", 
+				data:{stateCode:$stCode}, 
+	            error:function(xhr,status,er){
+	                console.log(er);
+	            },
+	            success:function(data) {
+					$selectedDist=$('#district').val();
+					$ddlDistrict = $('#block');
+					$ddlDistrict.empty();
+	        		$ddlDistrict.append('<option value=""> --Select Block-- </option>');
+					for ( var key in data) 
+					{
+						if (data.hasOwnProperty(key)) 
+						{
+							if(data[key]==$selectedDist)
+								$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
+							else
+								$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
+						}
+					}
+				}
+			});
+		});
+		
+		
+		$(document).on('change', '#block', function(e) {
+				e.preventDefault();
+				$blkCode=$('#block option:selected').val();
+				$.ajax({  
+		            url:"getWatershedYatraGPs",
+		            type: "post", 
+					data:{blkCode:$blkCode}, 
+		            error:function(xhr,status,er){
+		                console.log(er);
+		            },
+		            success:function(data) {
+						$selectedDist=$('#block').val();
+						$ddlDistrict = $('#grampan');
+						$ddlDistrict.empty();
+		        		$ddlDistrict.append('<option value=""> --Select Gram Panchayat Name-- </option>');
+						for ( var key in data) 
+						{
+							if (data.hasOwnProperty(key)) 
+							{
+								if(data[key]==$selectedDist)
+									$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
+								else
+									$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
+							}
+						}
+					}
+				});
+		});
+				
+		$(document).on('change', '#grampan', function(e) {
+				e.preventDefault();
+				$gpsCode=$('#grampan option:selected').val();
+				$.ajax({  
+				        url:"getWatershedYatraVillage",
+				        type: "post", 
+						data:{gpscode:$gpsCode}, 
+				        error:function(xhr,status,er){
+				                console.log(er);
+				        },
+				        success:function(data) 
+						{
+							$selectedDist=$('#grampan').val();
+							$ddlDistrict = $('#village');
+							$ddlDistrict.empty();
+				        	$ddlDistrict.append('<option value=""> --Select Village Name-- </option>');
+							for ( var key in data) 
+							{
+								if (data.hasOwnProperty(key)) 
+								{
+									if(data[key]==$selectedDist)
+										$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
+									else
+										$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
+								}
+							}
+						}
+					});
+		});
+		
+		$(document).on('change', '#village', function(e) {
+			  e.preventDefault();
+			  $villageCode = $('#village option:selected').val();
+			  $.ajax({
+			    url: "getExistingVillageCodes",
+			    type: "post",
+			    data: {villageCode: $villageCode},
+			    error: function(xhr, status, er) {
+			      console.log(er);
+			    },
+			    success: function(data) 
+			    {
+					if(data==='success')
+					{
+						alert('Village already exists. Please select a different village. !');
+						$("select#village")[0].selectedIndex = 0;
+									
+					}
+								
+			    }
+			  });
+			});
 
 	$(document).on('change', '#district1', function(e) {
 		e.preventDefault();
@@ -111,6 +223,8 @@ $(function(){
 	    }
 	  });
 	});
+	
+	
 				
 	$(document).on( 'click', '#btnSavekd', function (e) {
 		e.preventDefault();
@@ -161,6 +275,8 @@ $(function(){
 			return false;
 		}
 
+		if ($('#district1 option:selected').val() >0) {
+		
 		if ($('#district1 option:selected').val() === '' || typeof $('#district1 option:selected').val() === 'undefined') {
 			alert('Please Select District for Location-02 !');
 			$('#district1').focus();
@@ -191,19 +307,19 @@ $(function(){
 			$('#location1').focus();
 			return false;
 		}
-		$district = $('#district option:selected').val();
-		$block = $('#block option:selected').val();
-		$grampan = $('#grampan option:selected').val();
-		$village = $('#village option:selected').val();
-		$location = $('#location').val();
-		$datetime = $('#datetime').val();
-
-		$district1 = $('#district1 option:selected').val();
-		$block1 = $('#block1 option:selected').val();
-		$grampan1 = $('#grampan1 option:selected').val();
-		$village1 = $('#village1 option:selected').val();
-		$location1 = $('#location1').val();
-		$datetime1 = $('#datetime1').val();
+		}
+		else{
+			
+			$district1 = 0;
+			$block1 = 0;
+			$grampan1 = 0;
+			$village1 = 0;
+			$location1 ="";
+			$datetime1 ="";
+			
+		}
+		
+		if ($('#district1 option:selected').val() >0) {
 
 		const dateTimeStr = $('#datetime').val();
 		const dateObj = new Date(dateTimeStr); // Extract date components 
@@ -245,6 +361,7 @@ $(function(){
 			return false;
 		}
 
+		}
 		/*if (time1 > time2) {
 			alert('Please Select Location-02 Time will be Greater Than the Location-01 Time. !');
 			$('#datetime').val('');

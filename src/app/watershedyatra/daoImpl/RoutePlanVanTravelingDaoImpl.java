@@ -49,6 +49,8 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 		Session sess = sessionFactory.getCurrentSession();
 		String res="fail";
 		Integer result=0;
+		LocalDateTime localDateTime1=null;
+		Timestamp timestamp2=null;
 		try {
 			
 				sess.beginTransaction();
@@ -61,9 +63,6 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				Timestamp timestamp1 = Timestamp.valueOf(localDateTime); 
 			//	System.out.println("Converted Timestamp: " + timestamp);
 				
-				LocalDateTime localDateTime1 = LocalDateTime.parse(datetime1, formatter); 
-				Timestamp timestamp2 = Timestamp.valueOf(localDateTime1); 
-			
 				InetAddress inet=InetAddress.getLocalHost();
 				String ipAddr=inet.getHostAddress();
 				
@@ -96,34 +95,38 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				
 				sess.save(main);
 				
-				
-				RoutePlanVanTravel main1 =new RoutePlanVanTravel();
-				IwmpState st1 =new IwmpState();
-				IwmpDistrict dt1 =new IwmpDistrict();
-				IwmpBlock bl1 =new IwmpBlock();
-				IwmpGramPanchayat gp1= new IwmpGramPanchayat();
-				IwmpVillage v1= new IwmpVillage();
-				
-				st1.setStCode(state);
-				main1.setIwmpState(st1);
-				dt1.setDcode(district1);
-				main1.setIwmpDistrict(dt1);
-				bl1.setBcode(block1);
-				main1.setIwmpBlock(bl1);
-				gp1.setGcode(grampan1);
-				main1.setIwmpGramPanchayat(gp1);
-				v1.setVcode(village1);
-				main1.setIwmpVillage(v1);
-				main1.setLocation2(location1);
-				main1.setDate2(timestamp2);
-				main1.setFlagwise(result);
-				main1.setStatus('C');
-				main1.setCreatedBy(session.getAttribute("loginID").toString());
-				main1.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-				main1.setRequestedIp(ipAddr);
-				
-				sess.save(main1);
-			
+				if(!datetime1.equals("") && datetime1!=null) 
+				{
+					localDateTime1 = LocalDateTime.parse(datetime1, formatter); 
+					timestamp2 = Timestamp.valueOf(localDateTime1); 
+					
+					RoutePlanVanTravel main1 =new RoutePlanVanTravel();
+					IwmpState st1 =new IwmpState();
+					IwmpDistrict dt1 =new IwmpDistrict();
+					IwmpBlock bl1 =new IwmpBlock();
+					IwmpGramPanchayat gp1= new IwmpGramPanchayat();
+					IwmpVillage v1= new IwmpVillage();
+					
+					st1.setStCode(state);
+					main1.setIwmpState(st1);
+					dt1.setDcode(district1);
+					main1.setIwmpDistrict(dt1);
+					bl1.setBcode(block1);
+					main1.setIwmpBlock(bl1);
+					gp1.setGcode(grampan1);
+					main1.setIwmpGramPanchayat(gp1);
+					v1.setVcode(village1);
+					main1.setIwmpVillage(v1);
+					main1.setLocation2(location1);
+					main1.setDate2(timestamp2);
+					main1.setFlagwise(result);
+					main1.setStatus('C');
+					main1.setCreatedBy(session.getAttribute("loginID").toString());
+					main1.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+					main1.setRequestedIp(ipAddr);
+					
+					sess.save(main1);
+				}
 				sess.getTransaction().commit();
 				res="success";
 		
