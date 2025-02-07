@@ -27,6 +27,7 @@ import app.model.master.WdcpmksyMPhyOtherActivity;
 import app.model.outcome.GroundwaterMain;
 import app.model.project.IwmpApprovelLevel;
 import app.watershedyatra.model.NodalOfficer;
+import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 import app.watershedyatra.model.RoutePlanVanTravel;
@@ -82,6 +83,7 @@ public class IwmpState implements java.io.Serializable {
 	private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
      private Set<WatershedYatraInauguaration> WatershedYatraInauguaration = new HashSet<WatershedYatraInauguaration>(0);
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
+	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
      
 	public IwmpState() {
 	}
@@ -100,7 +102,7 @@ public class IwmpState implements java.io.Serializable {
 			Set<PfmsCgireceiptDetaildata> pfmsCgireceiptDetaildatas, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetailsForStateLgdCode, 
 			Set<PfmsEatmisdataDetail> pfmsEatmisdataDetailsForStCode, Set<WdcpmksyMPhyOtherActivity> wdcpmksyMPhyOtherActivities,
 			Set<GetGoiReleaseToStateTreasury> getGoiReleaseToStateTreasury, Set<NodalOfficer> nodalOfficer, 
-			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<RoutePlanVanTravel> routePlanVanTravel) {
+			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation>preYatraPreparation,Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.stCode = stCode;
 		this.iwmpApprovelLevels = iwmpApprovelLevels;
 		this.stName = stName;
@@ -138,6 +140,7 @@ public class IwmpState implements java.io.Serializable {
 	    this.WatershedYatraInauguaration=WatershedYatraInauguaration;
 	    this.watershedYatVill=watershedYatVill;
 	    this.routePlanVanTravel=routePlanVanTravel;
+	    this.preYatraPreparation=preYatraPreparation;
 	}
 
 	@Id
@@ -512,6 +515,18 @@ public class IwmpState implements java.io.Serializable {
 
 	public void setRoutePlanVanTravel(Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.routePlanVanTravel = routePlanVanTravel;
+	}
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpState")
+	public Set<PreYatraPreparation> getPreYatraPreparation() {
+		return preYatraPreparation;
+	}
+
+	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
+		this.preYatraPreparation = preYatraPreparation;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 	

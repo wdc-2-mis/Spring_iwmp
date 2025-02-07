@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 
 import app.model.IwmpDistrict;
 import app.watershedyatra.model.NodalOfficer;
+import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.RoutePlanVanTravel;
 import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
@@ -66,6 +67,7 @@ public class IwmpBlock implements java.io.Serializable {
 	private Set<WatershedYatraInauguaration> WatershedYatraInauguaration = new HashSet<WatershedYatraInauguaration>(0);
 	private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
+	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
 	 
 	@Transient
 	private boolean updatestatus;
@@ -96,7 +98,7 @@ public class IwmpBlock implements java.io.Serializable {
 			String districtCode2011, String subdistrictCode2001, String subdistrictCode2011,
 			String censusCodePortedData, Integer stateCodelgd, Integer districtCodelgd, Integer blockCodelgd,
 			Boolean active, Set<IwmpGramPanchayat> iwmpGramPanchayats, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer,
-			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<RoutePlanVanTravel> routePlanVanTravel) {
+			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.bcode = bcode;
 		this.iwmpDistrict = iwmpDistrict;
 		this.stCode = stCode;
@@ -128,6 +130,7 @@ public class IwmpBlock implements java.io.Serializable {
 		this.WatershedYatraInauguaration=WatershedYatraInauguaration;
 		this.watershedYatVill=watershedYatVill;
 		this.routePlanVanTravel=routePlanVanTravel;
+		this.preYatraPreparation = preYatraPreparation;
 	}
 
 	@Id
@@ -411,6 +414,14 @@ public class IwmpBlock implements java.io.Serializable {
 
 	public void setRoutePlanVanTravel(Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.routePlanVanTravel = routePlanVanTravel;
+	}
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpBlock")
+	public Set<PreYatraPreparation> getPreYatraPreparation() {
+		return preYatraPreparation;
+	}
+
+	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
+		this.preYatraPreparation = preYatraPreparation;
 	}
     
     

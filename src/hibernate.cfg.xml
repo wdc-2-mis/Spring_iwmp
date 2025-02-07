@@ -90,6 +90,11 @@
         <mapping class="app.watershedyatra.model.WatershedYatraInauguaration"  />
         <mapping class="app.watershedyatra.model.WatershedYatVill"  />
         <mapping class="app.watershedyatra.model.MCulturalActivity"  />
+        <mapping class="app.watershedyatra.model.MCulturalActivity"  />
+        <mapping class="app.watershedyatra.model.PreYatraPreparation" />
+        <mapping class="app.watershedyatra.model.PreYatraGramsabha" />
+        <mapping class="app.watershedyatra.model.PreYatraPrabhatpheri" />
+        
         
         
         

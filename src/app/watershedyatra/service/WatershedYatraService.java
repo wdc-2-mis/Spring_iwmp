@@ -3,11 +3,15 @@ package app.watershedyatra.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.PreYatraPrepBean;
+import app.watershedyatra.bean.PreYatraPreparationBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 
 
@@ -39,6 +43,10 @@ public interface WatershedYatraService {
 	String getExistingWatershedYatraVillageCodes(Integer villageCode);
 
 	List<String> getImagesWatershedYatraId(Integer watershedYatraId);
+
+	String savePreYatraPrep(PreYatraPrepBean preYatraPrep, HttpSession session, HttpServletRequest request);
+
+	List<PreYatraPreparationBean> getpreyatrasaveRecord(Integer stcd);
 	
 	
 }

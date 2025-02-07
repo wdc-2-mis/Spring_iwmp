@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.RoutePlanVanTravel;
 import app.watershedyatra.model.WatershedYatVill;
 
@@ -48,7 +49,8 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 	private Boolean active;
 	private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
-
+	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
+	
 	@Transient
 	private boolean updatestatus;
 
@@ -75,7 +77,7 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 	public IwmpGramPanchayat(int gcode, IwmpBlock iwmpBlock, int stCode, int distCode, int blockCode,
 			int gramPanchayatLgdCode, String gramPanchayatName, String importType, String lastUpdatedBy,
 			Date lastUpdatedDate, String requestIp, Set<IwmpVillage> iwmpVillages, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails,
-			Set<WatershedYatVill> watershedYatVill, Set<RoutePlanVanTravel> routePlanVanTravel) {
+			Set<WatershedYatVill> watershedYatVill, Set<RoutePlanVanTravel> routePlanVanTravel, Set<PreYatraPreparation> preYatraPreparation) {
 		this.gcode = gcode;
 		this.iwmpBlock = iwmpBlock;
 		this.stCode = stCode;
@@ -91,6 +93,7 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 		this.pfmsEatmisdataDetails = pfmsEatmisdataDetails;
 		this.watershedYatVill=watershedYatVill;
 		this.routePlanVanTravel=routePlanVanTravel;
+		this.preYatraPreparation=preYatraPreparation;
 	}
 
 	@Id
@@ -238,6 +241,14 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 
 	public void setRoutePlanVanTravel(Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.routePlanVanTravel = routePlanVanTravel;
+	}
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpGramPanchayat")
+	public Set<PreYatraPreparation> getPreYatraPreparation() {
+		return preYatraPreparation;
+	}
+
+	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
+		this.preYatraPreparation = preYatraPreparation;
 	}
     
     

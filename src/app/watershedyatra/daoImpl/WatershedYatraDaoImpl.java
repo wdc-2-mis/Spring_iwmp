@@ -1,7 +1,14 @@
 package app.watershedyatra.daoImpl;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.PreparedStatement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +17,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
@@ -35,9 +43,14 @@ import app.model.master.IwmpVillage;
 import app.model.outcome.GroundwaterDetail;
 import app.model.outcome.GroundwaterMain;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.PreYatraPrepBean;
+import app.watershedyatra.bean.PreYatraPreparationBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.WatershedYatraDao;
 import app.watershedyatra.model.NodalOfficer;
+import app.watershedyatra.model.PreYatraGramsabha;
+import app.watershedyatra.model.PreYatraPrabhatpheri;
+import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.WatershedYatVill;
 
 @Repository("WatershedYatraDao")
@@ -73,6 +86,10 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	
 	@Value("${getWyatraDetails}")
 	String getWyatraDetails;
+	
+	@Value("${getpreyatrarcd}")
+	String getpreyatrarcd;
+	
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -762,6 +779,256 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		return imgList;
 	}
-	
 
+	public static String getClientIpAddr(HttpServletRequest request) {  
+	    String ip = request.getHeader("X-Forwarded-For");  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("WL-Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_VIA");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("REMOTE_ADDR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getRemoteAddr();  
+	    }  
+	    return ip;  
+	}
+	
+	
+	@Override
+	public String savePreYatraPrep(PreYatraPrepBean preYatraPrep, HttpSession session, HttpServletRequest request) {
+	    Session sess = sessionFactory.getCurrentSession();
+	    String res = "fail";
+	    Integer stateCode = Integer.parseInt(session.getAttribute("stateCode").toString());
+	    try {
+	        sess.beginTransaction();
+
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	        Date date = formatter.parse(preYatraPrep.getDate());
+	        Date date1 = formatter.parse(preYatraPrep.getDate1());
+
+	        DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
+	        
+	        String dateTimeString1 = preYatraPrep.getGramphoto1_time(); 
+	        LocalDateTime GlocalDateTime1 = LocalDateTime.parse(dateTimeString1, originalFormatter);
+	        
+	        String formattedDate = GlocalDateTime1.format(datetimeFormatter);
+	        LocalDateTime GlocalDateTime2 = LocalDateTime.parse(formattedDate, datetimeFormatter);
+	        
+	        Timestamp Gtimestamp1 = Timestamp.valueOf(GlocalDateTime2);
+
+	        String dateTimeString2 = preYatraPrep.getGramphoto2_time(); 
+	        LocalDateTime PlocalDateTime1 = LocalDateTime.parse(dateTimeString2, originalFormatter);
+	        
+	        String PformattedDate = PlocalDateTime1.format(datetimeFormatter);
+	        LocalDateTime PlocalDateTime2 = LocalDateTime.parse(PformattedDate, datetimeFormatter);
+	        
+	        Timestamp Gtimestamp2 = Timestamp.valueOf(PlocalDateTime2);
+
+	        PreYatraPreparation prep = new PreYatraPreparation();
+	        IwmpState iwmpState = sess.get(IwmpState.class, stateCode);
+
+	        Integer districtCode = preYatraPrep.getDistrict();
+	        IwmpDistrict iwmpDistrict = sess.get(IwmpDistrict.class, districtCode);
+
+	        Integer blockCode = preYatraPrep.getBlock();
+	        IwmpBlock iwmpblock = sess.get(IwmpBlock.class, blockCode);
+
+	        Integer gramCode = preYatraPrep.getGrampan();
+	        IwmpGramPanchayat gp = sess.get(IwmpGramPanchayat.class, gramCode);
+
+	        Integer villageCode = preYatraPrep.getVillage1();
+	        IwmpVillage village = sess.get(IwmpVillage.class, villageCode);
+
+	        //set prabhat pheri photos format
+	        String dateTimeString = preYatraPrep.getPheriphoto1_time(); 
+	        LocalDateTime GlocalDateTimep1 = LocalDateTime.parse(dateTimeString, originalFormatter);
+	        
+	        String pformattedDate1 = GlocalDateTimep1.format(datetimeFormatter);
+	        LocalDateTime GlocalDateTimep2 = LocalDateTime.parse(pformattedDate1, datetimeFormatter);
+	        
+	        Timestamp ptimestamp1 = Timestamp.valueOf(GlocalDateTimep2);
+
+	        String dateTimeStringp2 = preYatraPrep.getPheriphoto2_time(); 
+	        LocalDateTime localDateTimep1 = LocalDateTime.parse(dateTimeStringp2, originalFormatter);
+	        
+	        String P2formattedDate = localDateTimep1.format(datetimeFormatter);
+	        LocalDateTime P2localDateTime2 = LocalDateTime.parse(P2formattedDate, datetimeFormatter);
+	        
+	        Timestamp ptimestamp2 = Timestamp.valueOf(P2localDateTime2);
+
+	        PreYatraPreparation prep2 = new PreYatraPreparation();
+	        
+	        Integer districtCode2 = preYatraPrep.getDistrict1();
+	        IwmpDistrict iwmpDistrict2 = sess.get(IwmpDistrict.class, districtCode2);
+
+	        Integer blockCode2 = preYatraPrep.getBlock1();
+	        IwmpBlock iwmpblock2 = sess.get(IwmpBlock.class, blockCode2);
+
+	        Integer gramCode2 = preYatraPrep.getGrampan1();
+	        IwmpGramPanchayat gp2 = sess.get(IwmpGramPanchayat.class, gramCode2);
+
+	        
+	        
+	        
+	        // saved pre yatra preparation for gram sabha
+	        prep.setIwmpState(iwmpState);
+	        prep.setIwmpDistrict(iwmpDistrict);
+	        prep.setIwmpBlock(iwmpblock);
+	        prep.setIwmpGramPanchayat(gp);
+	        prep.setStatus("C");
+	        prep.setPreYatraType("gramSabha");
+	        prep.setCreatedDate(new Date());
+	        prep.setCreatedBy(session.getAttribute("loginID").toString());
+	        prep.setRequestedIp(getClientIpAddr(request));
+	        prep.setUpdatedBy(session.getAttribute("loginID").toString());
+	        prep.setUpdatedDate(new Date());
+	        sess.save(prep);
+
+	        // Save Photo Files
+	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/");
+	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "D:\\preyatraprep/");
+
+	        PreYatraGramsabha gram = new PreYatraGramsabha();
+	        gram.setPreYatraPreparation(prep);
+	        gram.setGramsabhaDate(date);
+	        gram.setGramsabhaPhoto1(photo1Path); 
+	        gram.setGramsabhaPhoto1Latitude(preYatraPrep.getGramphoto1_lat());
+	        gram.setGramsabhaPhoto1Longitude(preYatraPrep.getGramphoto1_lng());
+	        gram.setGramsabhaPhoto1Time(Gtimestamp1);
+	        gram.setGramsabhaPhoto2(photo2Path); 
+	        gram.setGramsabhaPhoto2Latitude(preYatraPrep.getGramphoto2_lat());
+	        gram.setGramsabhaPhoto2Longitude(preYatraPrep.getGramphoto2_lng());
+	        gram.setGramsabhaPhoto2Time(Gtimestamp2);
+	        gram.setCreatedBy(session.getAttribute("loginID").toString());
+	        gram.setRequestedIp(getClientIpAddr(request));
+	        gram.setCreatedDate(new Date());
+            sess.save(gram);
+            
+         // saved pre yatra preparation for Prabhat Pheri
+	        prep2.setIwmpState(iwmpState);
+	        prep2.setIwmpDistrict(iwmpDistrict2);
+	        prep2.setIwmpBlock(iwmpblock2);
+	        prep2.setIwmpGramPanchayat(gp2);
+	        prep2.setIwmpVillage(village);
+	        prep2.setStatus("C");
+	        prep2.setPreYatraType("prabhatPheri");
+	        prep2.setCreatedDate(new Date());
+	        prep2.setCreatedBy(session.getAttribute("loginID").toString());
+	        prep2.setRequestedIp(getClientIpAddr(request));
+	        prep2.setUpdatedBy(session.getAttribute("loginID").toString());
+	        prep2.setUpdatedDate(new Date());
+	        sess.save(prep2);
+            
+	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "D:\\preyatraprep/");
+	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "D:\\preyatraprep/");
+	        
+	        PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
+	        pheri.setPreYatraPreparation(prep2);
+	        pheri.setPrabhatpheriDate(date1);
+	        pheri.setPrabhatpheriPhoto1(photo3Path);
+	        pheri.setPrabhatpheriPhoto1Latitude(preYatraPrep.getPheriphoto1_lat());
+	        pheri.setPrabhatpheriPhoto1Longitude(preYatraPrep.getPheriphoto1_lng());
+	        pheri.setPrabhatpheriPhoto1Time(ptimestamp1);
+	        pheri.setPrabhatpheriPhoto2(photo4Path);
+	        pheri.setPrabhatpheriPhoto2Latitude(preYatraPrep.getPheriphoto2_lat());
+	        pheri.setPrabhatpheriPhoto2Longitude(preYatraPrep.getPheriphoto2_lng());
+	        pheri.setPrabhatpheriPhoto2Time(ptimestamp2);
+	        pheri.setCreatedDate(new Date());
+	        pheri.setCreatedBy(session.getAttribute("loginID").toString());
+	        pheri.setRequestedIp(getClientIpAddr(request));
+	        sess.save(pheri);
+	        sess.getTransaction().commit();
+	        res = "success";
+	    } catch (Exception ex) {
+	    	ex.printStackTrace();
+	        sess.getTransaction().rollback();
+	    } finally {
+	        // session.flush();
+	        // session.close();
+	    }
+	   return res;
+	}
+
+	
+	private String saveFile(MultipartFile file, String directoryPath) {
+	    if (file == null || file.isEmpty()) {
+	        return null; // No file uploaded
+	    }
+	    
+	    try {
+	        // Ensure directory exists
+	        File directory = new File(directoryPath);
+	        if (!directory.exists()) {
+	            directory.mkdirs();
+	        }
+
+	        // Generate unique file name
+	        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+	        File destinationFile = new File(directoryPath + fileName);
+
+	        // Save file to directory
+	        Files.copy(file.getInputStream(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+	        return destinationFile.getAbsolutePath(); // Return file path for DB
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+	@Override
+	public List<PreYatraPreparationBean> getpreyatrasaveRecord(Integer stcd) {
+		String getReport=getpreyatrarcd;
+		Session session = sessionFactory.getCurrentSession();
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(PreYatraPreparationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
+	}
 }

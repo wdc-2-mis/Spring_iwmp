@@ -61,6 +61,15 @@
 			<version>2.3.2</version>
 		</dependency>
 
+<!--showing gps location and time stamp -->
+<dependency>
+    <groupId>com.drewnoakes</groupId>
+    <artifactId>metadata-extractor</artifactId>
+    <version>2.18.0</version>
+</dependency>
+
+
+
 
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>

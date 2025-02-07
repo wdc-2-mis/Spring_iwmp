@@ -27,6 +27,7 @@ import app.model.project.IwmpProjectPhysicalAssetTemp;
 import app.model.project.WdcpmksyEpaWorkid;
 import app.model.project.WdcpmksyLivelihoodWorkid;
 import app.model.project.WdcpmksyPrdouctionWorkid;
+import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.RoutePlanVanTravel;
 import app.watershedyatra.model.WatershedYatVill;
 
@@ -71,6 +72,7 @@ public class IwmpVillage implements java.io.Serializable {
     private Set<WdcpmksyLivelihoodWorkid> wdcpmksyLivelihoodWorkids = new HashSet<WdcpmksyLivelihoodWorkid>(0);
     private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
     private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
+    private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
     
 	@Transient
 	private boolean updatestatus;
@@ -103,7 +105,7 @@ public class IwmpVillage implements java.io.Serializable {
 			String lastUpdatedBy, Date lastUpdatedDate, String requestIp, String stateCode2001, String stateCode2011,
 			String districtCode2001, String districtCode2011, String subdistrictCode2001, String subdistrictCode2011,
 			String villageCode2001, String villageCode2011, String censusCodePortedData, Boolean active, Set<WatershedYatVill> watershedYatVill,
-			Set<RoutePlanVanTravel> routePlanVanTravel) {
+			Set<RoutePlanVanTravel> routePlanVanTravel, Set<PreYatraPreparation> preYatraPreparation) {
 		this.vcode = vcode;
 		this.iwmpGramPanchayat = iwmpGramPanchayat;
 		this.stCode = stCode;
@@ -128,6 +130,7 @@ public class IwmpVillage implements java.io.Serializable {
 		this.active = active;
 		this.watershedYatVill=watershedYatVill;
 		this.routePlanVanTravel=routePlanVanTravel;
+		this.preYatraPreparation=preYatraPreparation;
 	}
 
 	@Id
@@ -421,6 +424,14 @@ public class IwmpVillage implements java.io.Serializable {
 
 	public void setRoutePlanVanTravel(Set<RoutePlanVanTravel> routePlanVanTravel) {
 		this.routePlanVanTravel = routePlanVanTravel;
+	}
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpVillage")
+	public Set<PreYatraPreparation> getPreYatraPreparation() {
+		return preYatraPreparation;
+	}
+
+	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
+		this.preYatraPreparation = preYatraPreparation;
 	}
 
 
