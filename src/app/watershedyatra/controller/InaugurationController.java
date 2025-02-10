@@ -127,7 +127,7 @@ public class InaugurationController extends HttpServlet {
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 				} else {
-					redirectAttributes.addFlashAttribute("result1", "Data not saved Successfully!");
+					redirectAttributes.addFlashAttribute("result1", "Data not saved Successfully and Upload correct file!");
 				}
 				return new ModelAndView("redirect:/inaugurationLocation");
 			} else {

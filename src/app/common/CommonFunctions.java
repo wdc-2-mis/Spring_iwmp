@@ -324,7 +324,7 @@ public class CommonFunctions {
 					size = size / 1024;
 					if(size/1024 > 20)
 					{
-						return "File size should be less than 20 MB";
+						return "File size should be less than 2 MB";
 					}
 					byte[] bytes = mfile.getBytes();
 					String s1 = new String(bytes);
