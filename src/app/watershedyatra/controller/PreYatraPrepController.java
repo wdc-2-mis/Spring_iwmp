@@ -123,4 +123,16 @@ public class PreYatraPrepController {
 	    return mav;
 	}
 
+	
+    @RequestMapping(value="/checkGramPanchayat", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkGramPanchayat(@RequestParam("gramCode") Integer gramCode, @RequestParam("preyatraType") String preyatraType) {
+        return ser.checkgrampanchayat(gramCode, preyatraType);
+    }
+    
+    @RequestMapping(value="/checkVillage", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkVillage(@RequestParam("vCode") Integer vCode, @RequestParam("preyatraType") String preyatraType) {
+        return ser.checkVillageStatus(vCode, preyatraType);
+    }
 }

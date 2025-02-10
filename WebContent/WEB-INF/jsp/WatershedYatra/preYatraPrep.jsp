@@ -5,6 +5,38 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <%@ page import="app.watershedyatra.bean.PreYatraPreparationBean" %>
 <head>
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.8);
+    }
+    .modal-content {
+        margin: auto;
+        display: block;
+        width: 80%;
+        max-width: 600px;
+    }
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: white;
+        font-size: 35px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+
+
 <script type="text/javascript">
 
 let allValid = true;
@@ -128,7 +160,13 @@ if (allValid) {
 <body>
 	<div class="maindiv">
 	
-		<div class="col formheading" style=""><h4><u>Pre Yatra Preparation</u></h4> </div>
+		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
+		<label>
+		<span style="color:red;">Note:-Image size must be under 100KB, with dimensions of 300x400 pixels.</span>
+		</label>
+		<c:if test="${not empty result}">
+             <script>alert("${result}");</script>
+        </c:if>
 		<form:form autocomplete="off" name="preyatraprep" id="preyatraprep" modelAttribute="preyatraprep" action="savePreYatraPreparation" method="post" enctype="multipart/form-data">
 		
              <div class="card-header" style="height:60px"> 		
@@ -304,11 +342,11 @@ if (allValid) {
                     <td>${record.villagename}</td>
                     <td>${record.yatratype}</td>
                     <td>${record.entrydate}</td>
-                    <td><button onclick="showImage('${record.photo1}')">View</button></td>
+                    <td><button onclick="showImage('<c:url value='${record.photo1}'/>')">View</button></td>
                     <td>${record.photo1long}</td>
                     <td>${record.photo1lang}</td>
                     <td>${record.photo1time}</td>
-                    <td><button onclick="showImage('${record.photo2}')">View</button></td>
+                     <td><button onclick="showImage('<c:url value='${record.photo2}'/>')">View</button></td>
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
@@ -317,7 +355,7 @@ if (allValid) {
         </c:when>
         <c:otherwise>
             <tr>
-                <td colspan="10" style="text-align: center; font-weight: bold;">Data Not Found</td>
+                <td colspan="16" style="text-align: center; font-weight: bold;">Data Not Found</td>
             </tr>
         </c:otherwise>
     </c:choose>
@@ -327,37 +365,6 @@ if (allValid) {
     <img class="modal-content" id="popupImage">
 </div>
 
-<!-- CSS for Popup -->
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        padding-top: 100px;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.8);
-    }
-    .modal-content {
-        margin: auto;
-        display: block;
-        width: 80%;
-        max-width: 600px;
-    }
-    .close {
-        position: absolute;
-        top: 15px;
-        right: 25px;
-        color: white;
-        font-size: 35px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-</style>
 
 <!-- JavaScript for Popup -->
 <script>
@@ -376,10 +383,7 @@ if (allValid) {
 </script>
 	 </div>
 	 </div>   		
-	    		
-	    		
-	    		
-	    		</div>
+	    			</div>
 	    		<footer class=" text-center">
 	            <%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>

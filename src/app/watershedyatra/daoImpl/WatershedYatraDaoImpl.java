@@ -25,6 +25,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -90,6 +91,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getpreyatrarcd}")
 	String getpreyatrarcd;
 	
+	@Value("${checkgrampanchayat}")
+	String checkgrampanchayat;
+	
+	@Value("${checkVillagestatus}")
+	String checkVillagestatus;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -911,9 +917,15 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        sess.save(prep);
 
 	        // Save Photo Files
-	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/");
-	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "D:\\preyatraprep/");
-
+	        boolean isDuplicatePhoto1 = isDuplicateGSPhoto1(preYatraPrep.getGramphoto1().getOriginalFilename(), preYatraPrep.getGramphoto1_lat(), preYatraPrep.getGramphoto1_lng());
+	        //String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/", isDuplicatePhoto1);
+	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto1);
+	        
+	        
+	        
+	        boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
+	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto2);
+	        
 	        PreYatraGramsabha gram = new PreYatraGramsabha();
 	        gram.setPreYatraPreparation(prep);
 	        gram.setGramsabhaDate(date);
@@ -945,8 +957,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep2.setUpdatedDate(new Date());
 	        sess.save(prep2);
             
-	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "D:\\preyatraprep/");
-	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "D:\\preyatraprep/");
+	        boolean isDuplicatePhoto3 = isDuplicatePPPhoto1(preYatraPrep.getPheriphoto1().getOriginalFilename(), preYatraPrep.getPheriphoto1_lat(), preYatraPrep.getPheriphoto1_lng());
+	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto3);
+	        
+	        boolean isDuplicatePhoto4 = isDuplicatePPPhoto2(preYatraPrep.getPheriphoto2().getOriginalFilename(), preYatraPrep.getPheriphoto2_lat(), preYatraPrep.getPheriphoto2_lng());
+	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto4);
 	        
 	        PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
 	        pheri.setPreYatraPreparation(prep2);
@@ -968,6 +983,8 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	    } catch (Exception ex) {
 	    	ex.printStackTrace();
 	        sess.getTransaction().rollback();
+	        ex.printStackTrace();
+	        return "failure";
 	    } finally {
 	        // session.flush();
 	        // session.close();
@@ -975,31 +992,138 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	   return res;
 	}
 
-	
-	private String saveFile(MultipartFile file, String directoryPath) {
+	private boolean isDuplicateGSPhoto1(String photoName, String latitude, String longitude) {
+	    Session session = sessionFactory.openSession();
+	    boolean isDuplicate = false;
+	    String hql = null;
+	    Query query = null;
+	    try {
+	        if (!latitude.equals("Not Available")) {
+	            hql = "FROM PreYatraGramsabha WHERE gramsabhaPhoto1 = :photoName AND gramsabhaPhoto1Latitude = :latitude AND gramsabhaPhoto1Longitude = :longitude";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	            query.setParameter("latitude", latitude);
+	            query.setParameter("longitude", longitude);
+	        } else {
+	            hql = "FROM PreYatraGramsabha WHERE gramsabhaPhoto1 = :photoName";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	        }
+
+	        List results = query.list(); // Get all results
+	        isDuplicate = !results.isEmpty(); // Check if there are any results
+	    } finally {
+	        session.close();
+	    }
+
+	    return isDuplicate;
+	}
+
+	private boolean isDuplicateGSPhoto2(String photoName, String latitude, String longitude) {
+	    Session session = sessionFactory.openSession();
+	    boolean isDuplicate = false;
+	    String hql = null;
+	    Query query = null;
+	    try {
+	        if (!latitude.equals("Not Available")) {
+	            hql = "FROM PreYatraGramsabha WHERE gramsabhaPhoto2 = :photoName AND gramsabhaPhoto2Latitude = :latitude AND gramsabhaPhoto2Longitude = :longitude";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	            query.setParameter("latitude", latitude);
+	            query.setParameter("longitude", longitude);
+	        } else {
+	            hql = "FROM PreYatraGramsabha WHERE gramsabhaPhoto2 = :photoName";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);	
+	        }
+
+	        List results = query.list(); // Get all results
+	        isDuplicate = !results.isEmpty(); // Check if there are any results
+	    } finally {
+	        session.close();
+	    }
+
+	    return isDuplicate;
+	}
+
+	private boolean isDuplicatePPPhoto1(String photoName, String latitude, String longitude) {
+	    Session session = sessionFactory.openSession();
+	    boolean isDuplicate = false;
+	    String hql = null;
+	    Query query = null;
+	    try {
+	        if (!latitude.equals("Not Available")) {
+	            hql = "FROM PreYatraPrabhatpheri WHERE prabhatpheriPhoto1 = :photoName AND prabhatpheriPhoto1Latitude = :latitude AND prabhatpheriPhoto1Longitude = :longitude";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	            query.setParameter("latitude", latitude);
+	            query.setParameter("longitude", longitude);
+	        } else {
+	            hql = "FROM PreYatraPrabhatpheri WHERE prabhatpheriPhoto1 = :photoName";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	        }
+
+	        List results = query.list(); // Get all results
+	        isDuplicate = !results.isEmpty(); // Check if there are any results
+	    } finally {
+	        session.close();
+	    }
+
+	    return isDuplicate;
+	}
+
+	private boolean isDuplicatePPPhoto2(String photoName, String latitude, String longitude) {
+	    Session session = sessionFactory.openSession();
+	    boolean isDuplicate = false;
+	    String hql = null;
+	    Query query = null;
+	    try {
+	        if (!latitude.equals("Not Available")) {
+	        	hql = "FROM PreYatraPrabhatpheri WHERE prabhatpheriPhoto2 = :photoName AND prabhatpheriPhoto2Latitude = :latitude AND prabhatpheriPhoto2Longitude = :longitude";
+	             query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);
+	            query.setParameter("latitude", latitude);
+	            query.setParameter("longitude", longitude);
+	        } else {
+	            hql = "FROM PreYatraPrabhatpheri WHERE prabhatpheriPhoto2 = :photoName";
+	            query = session.createQuery(hql);
+	            query.setParameter("photoName", photoName);	
+	        }
+
+	        List results = query.list(); // Get all results
+	        isDuplicate = !results.isEmpty(); // Check if there are any results
+	    } finally {
+	        session.close();
+	    }
+
+	    return isDuplicate;
+	}
+	private String saveFile(MultipartFile file, String directoryPath, boolean isDuplicate) {
 	    if (file == null || file.isEmpty()) {
 	        return null; // No file uploaded
 	    }
-	    
-	    try {
-	        // Ensure directory exists
-	        File directory = new File(directoryPath);
-	        if (!directory.exists()) {
-	            directory.mkdirs();
+
+	    String fileName = file.getOriginalFilename();
+	    String filePath = directoryPath + fileName;
+
+	    if (!isDuplicate) {
+	        try {
+	            // Ensure directory exists
+	            File directory = new File(directoryPath);
+	            if (!directory.exists()) {
+	                directory.mkdirs();
+	            }
+
+	            // Save file to directory
+	            Files.copy(file.getInputStream(), new File(filePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return null;
 	        }
-
-	        // Generate unique file name
-	        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-	        File destinationFile = new File(directoryPath + fileName);
-
-	        // Save file to directory
-	        Files.copy(file.getInputStream(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-	        return destinationFile.getAbsolutePath(); // Return file path for DB
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return null;
 	    }
+
+	    return filePath; // Return file path for DB
 	}
 
 	@Override
@@ -1031,4 +1155,58 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		  }
 		return list;
 	}
+
+	
+	@Override
+	public boolean checkgrampanchayat(Integer gramCode, String preyatraType) {
+	    Integer value = 0;
+	    Boolean status = false; // Default to false in case no results found
+	    
+	    try (Session session = sessionFactory.openSession()) {
+	        Transaction tx = session.beginTransaction();
+	        
+	        String sql = checkgrampanchayat;
+	        SQLQuery query = session.createSQLQuery(sql);
+	        query.setInteger("gramCode", gramCode);
+	        query.setParameter("preyatraType", preyatraType);
+	        value = ((Number) query.uniqueResult()).intValue();
+
+	        if (value > 0) {
+	            status = true;
+	        }
+	        
+	        tx.commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace(); // Log exception for debugging
+	    }
+
+	    return status;
+	}
+
+	@Override
+	public boolean checkVillageStatus(Integer vCode, String preyatraType) {
+		 Integer value = 0;
+		    Boolean status = false; // Default to false in case no results found
+		    
+		    try (Session session = sessionFactory.openSession()) {
+		        Transaction tx = session.beginTransaction();
+		        
+		        String sql = checkVillagestatus;
+		        SQLQuery query = session.createSQLQuery(sql);
+		        query.setInteger("vCode", vCode);
+		        query.setParameter("preyatraType", preyatraType);
+		        value = ((Number) query.uniqueResult()).intValue();
+
+		        if (value > 0) {
+		            status = true;
+		        }
+		        
+		        tx.commit();
+		    } catch (Exception ex) {
+		        ex.printStackTrace(); // Log exception for debugging
+		    }
+
+		    return status;
+	}
+
 }

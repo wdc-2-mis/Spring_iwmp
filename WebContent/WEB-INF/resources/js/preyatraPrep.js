@@ -112,9 +112,45 @@ $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {
     validatePhoto(this, this.id, 400, 300, 400);
 });
 
-
+document.getElementById("grampan").addEventListener("change", function() {
+        var gramCode = this.value;
+        var preyatra_type = 'gramSabha'
+        $.ajax({
+            url: 'checkGramPanchayat',
+            type: 'POST',
+            data: {
+                gramCode: gramCode,
+                preyatraType:preyatra_type
+            },
+            success: function(exists) {
+                if (exists) {
+					alert(' Gram Panchayat already exists. Please select a different  Gram Panchayat. !');
+						$("select#grampan")[0].selectedIndex = 0;
+					
+                }
+            }
+        });
+    });
     
-    
+document.getElementById("village1").addEventListener("change", function() {
+        var vCode = this.value;
+        var preyatra_type = 'prabhatPheri'
+        $.ajax({
+            url: 'checkVillage',
+            type: 'POST',
+            data: {
+                vCode: vCode,
+                preyatraType:preyatra_type
+            },
+            success: function(exists) {
+                if (exists) {
+					alert('Village already exists. Please select a different Village. !');
+						$("select#village1")[0].selectedIndex = 0;
+					
+                }
+            }
+        });
+    });    
 });
 
 

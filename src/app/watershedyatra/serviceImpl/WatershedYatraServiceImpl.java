@@ -150,4 +150,19 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.getpreyatrasaveRecord(stcd);
 	}
 
+
+
+	@Override
+	public boolean checkgrampanchayat(Integer gramCode, String preyatraType) {
+		
+		return dao.checkgrampanchayat(gramCode, preyatraType);
+	}
+
+
+
+	@Override
+	public boolean checkVillageStatus(Integer vCode, String preyatraType) {
+		return dao.checkVillageStatus(vCode, preyatraType);
+	}
+
 }

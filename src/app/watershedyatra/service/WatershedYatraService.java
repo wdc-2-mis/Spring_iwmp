@@ -47,6 +47,10 @@ public interface WatershedYatraService {
 	String savePreYatraPrep(PreYatraPrepBean preYatraPrep, HttpSession session, HttpServletRequest request);
 
 	List<PreYatraPreparationBean> getpreyatrasaveRecord(Integer stcd);
+
+	boolean checkgrampanchayat(Integer gramCode, String preyatraType);
+
+	boolean checkVillageStatus(Integer vCode, String preyatraType);
 	
 	
 }
