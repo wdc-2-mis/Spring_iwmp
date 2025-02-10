@@ -103,13 +103,29 @@ $(document).ready(function () {
             document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
 
             console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
+            
+                let photo1File = document.getElementById("gramphoto1").files[0];
+                let photo2File = document.getElementById("gramphoto2").files[0];
+                if (photo1File && photo2File && photo1File.name === photo2File.name) {
+                    alert("The same photo cannot be uploaded twice. Please select different photos.");
+                    input.value = "";
+                    return;
+                }
+                
+                 let photo3File = document.getElementById("pheriphoto1").files[0];
+                let photo4File = document.getElementById("pheriphoto2").files[0];
+                if (photo3File && photo4File && photo3File.name === photo4File.name) {
+                    alert("The same photo cannot be uploaded twice. Please select different photos.");
+                    input.value = "";
+                    return;
+                }
         });
     }
 }
 
 // Attach validation to file inputs
 $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {
-    validatePhoto(this, this.id, 400, 300, 400);
+    validatePhoto(this, this.id, 100, 250, 300);
 });
 
 document.getElementById("grampan").addEventListener("change", function() {

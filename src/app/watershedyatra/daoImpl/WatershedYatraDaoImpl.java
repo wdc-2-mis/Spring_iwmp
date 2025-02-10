@@ -918,13 +918,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 
 	        // Save Photo Files
 	        boolean isDuplicatePhoto1 = isDuplicateGSPhoto1(preYatraPrep.getGramphoto1().getOriginalFilename(), preYatraPrep.getGramphoto1_lat(), preYatraPrep.getGramphoto1_lng());
-	        //String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/", isDuplicatePhoto1);
-	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto1);
+	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/", isDuplicatePhoto1);
 	        
 	        
 	        
 	        boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
-	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto2);
+	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "D:\\preyatraprep/", isDuplicatePhoto2);
 	        
 	        PreYatraGramsabha gram = new PreYatraGramsabha();
 	        gram.setPreYatraPreparation(prep);
@@ -958,10 +957,10 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        sess.save(prep2);
             
 	        boolean isDuplicatePhoto3 = isDuplicatePPPhoto1(preYatraPrep.getPheriphoto1().getOriginalFilename(), preYatraPrep.getPheriphoto1_lat(), preYatraPrep.getPheriphoto1_lng());
-	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto3);
+	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "D:\\preyatraprep/", isDuplicatePhoto3);
 	        
 	        boolean isDuplicatePhoto4 = isDuplicatePPPhoto2(preYatraPrep.getPheriphoto2().getOriginalFilename(), preYatraPrep.getPheriphoto2_lat(), preYatraPrep.getPheriphoto2_lng());
-	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto4);
+	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "D:\\preyatraprep/", isDuplicatePhoto4);
 	        
 	        PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
 	        pheri.setPreYatraPreparation(prep2);

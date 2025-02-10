@@ -162,7 +162,7 @@ if (allValid) {
 	
 		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
 		<label>
-		<span style="color:red;">Note:-Image size must be under 100KB, with dimensions of 300x400 pixels.</span>
+		<span style="color:blue;">Note:-Image size must be under 100KB, with dimensions of 250*300 pixels.</span>
 		</label>
 		<c:if test="${not empty result}">
              <script>alert("${result}");</script>
@@ -342,11 +342,12 @@ if (allValid) {
                     <td>${record.villagename}</td>
                     <td>${record.yatratype}</td>
                     <td>${record.entrydate}</td>
-                    <td><button onclick="showImage('<c:url value='${record.photo1}'/>')">View</button></td>
+                    
+                    <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo1}')">View</button></td>
                     <td>${record.photo1long}</td>
                     <td>${record.photo1lang}</td>
                     <td>${record.photo1time}</td>
-                     <td><button onclick="showImage('<c:url value='${record.photo2}'/>')">View</button></td>
+                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo2}')">View</button></td>
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
