@@ -464,6 +464,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				
 				sess.beginTransaction();
 				
+				if(res.equals("success")) {
 				WatershedYatVill main =new WatershedYatVill();
 				IwmpState st =new IwmpState();
 				IwmpDistrict dt =new IwmpDistrict();
@@ -559,9 +560,10 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setRequestedIp(ipAddr);
 //				
 				sess.save(main);
-			
-				sess.getTransaction().commit();
 				res="success";
+				}
+				sess.getTransaction().commit();
+				
 		
 		}
 		catch(Exception ex) 
