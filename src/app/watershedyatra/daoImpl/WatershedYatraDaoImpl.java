@@ -830,6 +830,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	    Session sess = sessionFactory.getCurrentSession();
 	    String res = "fail";
 	    Integer stateCode = Integer.parseInt(session.getAttribute("stateCode").toString());
+	    Timestamp Gtimestamp1 = null;
+	    Timestamp Gtimestamp2 = null;
+	    Timestamp ptimestamp1 = null;
+	    Timestamp ptimestamp2 = null;
+	    
 	    try {
 	        sess.beginTransaction();
 
@@ -840,22 +845,27 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
 	        
+	        if (!"Not Available".equals(preYatraPrep.getGramphoto1_time())) {
 	        String dateTimeString1 = preYatraPrep.getGramphoto1_time(); 
 	        LocalDateTime GlocalDateTime1 = LocalDateTime.parse(dateTimeString1, originalFormatter);
-	        
 	        String formattedDate = GlocalDateTime1.format(datetimeFormatter);
 	        LocalDateTime GlocalDateTime2 = LocalDateTime.parse(formattedDate, datetimeFormatter);
+	         Gtimestamp1 = Timestamp.valueOf(GlocalDateTime2);
+	        }
+	        else {
+	        	 Gtimestamp1 = null;
+	        }
 	        
-	        Timestamp Gtimestamp1 = Timestamp.valueOf(GlocalDateTime2);
-
+	        if (!"Not Available".equals(preYatraPrep.getGramphoto2_time())) {
 	        String dateTimeString2 = preYatraPrep.getGramphoto2_time(); 
 	        LocalDateTime PlocalDateTime1 = LocalDateTime.parse(dateTimeString2, originalFormatter);
-	        
 	        String PformattedDate = PlocalDateTime1.format(datetimeFormatter);
 	        LocalDateTime PlocalDateTime2 = LocalDateTime.parse(PformattedDate, datetimeFormatter);
-	        
-	        Timestamp Gtimestamp2 = Timestamp.valueOf(PlocalDateTime2);
-
+	        Gtimestamp2 = Timestamp.valueOf(PlocalDateTime2);
+	        }
+	        else {
+	        	Gtimestamp2 = null;
+	        }
 	        PreYatraPreparation prep = new PreYatraPreparation();
 	        IwmpState iwmpState = sess.get(IwmpState.class, stateCode);
 
@@ -872,24 +882,29 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        IwmpVillage village = sess.get(IwmpVillage.class, villageCode);
 
 	        //set prabhat pheri photos format
+	        if (!"Not Available".equals(preYatraPrep.getPheriphoto1_time())) {
 	        String dateTimeString = preYatraPrep.getPheriphoto1_time(); 
 	        LocalDateTime GlocalDateTimep1 = LocalDateTime.parse(dateTimeString, originalFormatter);
-	        
 	        String pformattedDate1 = GlocalDateTimep1.format(datetimeFormatter);
 	        LocalDateTime GlocalDateTimep2 = LocalDateTime.parse(pformattedDate1, datetimeFormatter);
-	        
-	        Timestamp ptimestamp1 = Timestamp.valueOf(GlocalDateTimep2);
-
+	        ptimestamp1 = Timestamp.valueOf(GlocalDateTimep2);
+	        }
+	        else {
+	        	ptimestamp1 = null;
+	        }
+	        if (!"Not Available".equals(preYatraPrep.getPheriphoto2_time())) {
 	        String dateTimeStringp2 = preYatraPrep.getPheriphoto2_time(); 
 	        LocalDateTime localDateTimep1 = LocalDateTime.parse(dateTimeStringp2, originalFormatter);
-	        
 	        String P2formattedDate = localDateTimep1.format(datetimeFormatter);
 	        LocalDateTime P2localDateTime2 = LocalDateTime.parse(P2formattedDate, datetimeFormatter);
+	        ptimestamp2 = Timestamp.valueOf(P2localDateTime2);
+	        }
+	        else {
+	        	ptimestamp2 = null;
+	        }
 	        
-	        Timestamp ptimestamp2 = Timestamp.valueOf(P2localDateTime2);
-
+	        
 	        PreYatraPreparation prep2 = new PreYatraPreparation();
-	        
 	        Integer districtCode2 = preYatraPrep.getDistrict1();
 	        IwmpDistrict iwmpDistrict2 = sess.get(IwmpDistrict.class, districtCode2);
 
@@ -898,10 +913,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 
 	        Integer gramCode2 = preYatraPrep.getGrampan1();
 	        IwmpGramPanchayat gp2 = sess.get(IwmpGramPanchayat.class, gramCode2);
-
-	        
-	        
-	        
+   
 	        // saved pre yatra preparation for gram sabha
 	        prep.setIwmpState(iwmpState);
 	        prep.setIwmpDistrict(iwmpDistrict);
