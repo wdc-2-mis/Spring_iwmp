@@ -705,6 +705,9 @@ display: none; /* Hidden by default */
 </c:if>
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra at Village Level</h4> </div>
+			<label>
+		<span style="color:blue;">Note:- Image size must be under 100KB, with dimensions of 500 x 500 pixels or less.</span>
+		</label>
 		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			
 			<hr/>
@@ -839,16 +842,7 @@ display: none; /* Hidden by default */
     <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" accept="image/*" onchange="checkImage(this, 'FilmYesphoto2')" />
   </td>
 </tr>
-<!--      	<tr> -->
-<!--      		<td>Film on Watershed Yatra</td> -->
-<!--      		<td><input type="radio" id="FilmYes" name="FilmYes" value="true">Yes</td> -->
-<!--      		<td><input type="radio" id="FilmNo" name="FilmYes" value="false">No</td> -->
-<!--      		<td > -->
-<!--         Uploading of photographs (limit 2 photos per activity)<br> -->
-<!--         <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" onchange="checkImage(this, 'FilmYesphoto1')"  /> -->
-<!--         <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" onchange="checkImage(this, 'FilmYesphoto2')"  /> -->
-<!--     </td> -->
-<!--      	</tr> -->
+
      		<tr>
      		<td>Quiz Program</td>
      		<td colspan=2>Number of People participated in Quiz<br><input type="text" id="quizParticipants" name="quizParticipants" autocomplete="off"
@@ -874,7 +868,7 @@ display: none; /* Hidden by default */
     </div>
 <!--     <div id="otherActivityDiv" class="form-group col-8" style="display: none; margin-top: 10px;"> -->
 <!--         <label for="otherActivity">Please specify:</label> -->
-<!--         <input type="text1" id="otherActivity" name="otherActivity" class="form-group col-12" placeholder="other activity" style="max-width: 200px;"> -->
+<!--         <input type="text1" id="otherActivity" name="otherActivity" class="form-group col-12" pla ceholder="other activity" style="max-width: 200px;"> -->
 <!--     </div> -->
 </td>
 
@@ -919,9 +913,7 @@ display: none; /* Hidden by default */
 								 Number of Man Hours<br><input type="text" id="manhour" name="manhour" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
 								 </td>
-<!-- 									<td>Number of Man Hour<br><input type="text" id="manhour" name="manhour" autocomplete="off" -->
-<!-- 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
-	
+
 	<td >Upload Photographs<br>
         <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
         <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
@@ -933,8 +925,6 @@ display: none; /* Hidden by default */
   Area (in ha.)<br><input type="text" id="plantationArea"  name="plantationArea"  autocomplete="off"  maxlength="10" 
   oninput="validateDecimal(this, 2)" required />
 </td>
-<!--      		<td>Area (in ha.)<br><input type="text" id="plantationArea" name="plantationArea" autocomplete="off" -->
-<!-- 								maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
      		<td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="nofagrohorti" name="nofagrohorti" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
@@ -1067,7 +1057,7 @@ display: none; /* Hidden by default */
 								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"><c:out value="${data.no_awards}" /></td>
 								<td class="text-right">
-									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
  								
  							</tr>

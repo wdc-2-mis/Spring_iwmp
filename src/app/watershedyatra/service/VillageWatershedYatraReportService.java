@@ -9,5 +9,6 @@ import app.watershedyatra.bean.WatershedYatraBean;
 @Service("VillageWatershedYatraReportService")
 public interface VillageWatershedYatraReportService {
 	
-	List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block, Integer grampan);
+	List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block, Integer grampan, String userdate);
+
 }

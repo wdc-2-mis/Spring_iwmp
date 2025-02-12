@@ -10,7 +10,11 @@ import org.springframework.stereotype.Repository;
 import app.common.CommonFunctions;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.VillageWatershedYatraReportDao;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -32,18 +36,24 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 
 		@Override
 		public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
-				Integer grampan) {
+				Integer grampan, String userdate) {
 				
 				String getReport=getWatershedYatraReport;
 				Session session = sessionFactory.getCurrentSession();
 				List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
 				try {
+					
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+					Date yadate = formatter.parse(userdate);
+					
 						session.beginTransaction();
 						Query query= session.createSQLQuery(getReport);
 						query.setInteger("statecd",State); 
 						query.setInteger("distcd",district); 
 						query.setInteger("blkcd",block); 
 						query.setInteger("gpkcd",grampan); 
+						query.setParameter("userdate",yadate);
 						query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
 						list = query.list();
 						session.getTransaction().commit();
