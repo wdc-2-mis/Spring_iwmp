@@ -14,10 +14,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,7 @@ import app.service.StateMasterService;
 import app.service.reports.WatershedYatraReportService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.PreYatraPreparationBean;
 
 @Controller("WatershedYatraReportController")
 public class WatershedYatraReportController {
@@ -915,6 +919,7 @@ public class WatershedYatraReportController {
 		String userState= request.getParameter("state");
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
+		
 		if(session!=null && session.getAttribute("loginID")!=null) {
 			
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
@@ -949,6 +954,7 @@ public class WatershedYatraReportController {
 			String userState= request.getParameter("state");
 			String district= request.getParameter("district");
 			String block= request.getParameter("block");
+			String userdate= request.getParameter("userdate");
 			
 			List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 			
@@ -958,7 +964,7 @@ public class WatershedYatraReportController {
 				mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
 				mav.addObject("menu", menuController.getMenuUserId(request));
 				
-				list=ser.getInaugurationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block));
+				list=ser.getInaugurationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), userdate );
 				mav.addObject("inaugurationList", list);
 				mav.addObject("inaugurationListSize", list.size());
 				
@@ -976,6 +982,8 @@ public class WatershedYatraReportController {
 					blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
 					mav.addObject("blockList", blockList);}
 					mav.addObject("blkd", block);
+					mav.addObject("udate", userdate);
+					
 					
 			}else {
 				mav = new ModelAndView("login");
@@ -983,5 +991,760 @@ public class WatershedYatraReportController {
 			}
 			return mav; 
 	}
+	
+	
+	@RequestMapping(value = "/downloadExcelInaugurationReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelInaugurationReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+		String userdate= request.getParameter("udate");
+		
+		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+		
+		list=ser.getInaugurationReportData(stCode, distCode, blkCode, userdate);
+		
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Watershed Yatra - Inauguration Program Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "List of Watershed Yatra - Inauguration Program Details";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 30, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(5,5,0,30);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,3,3);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,4,4);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,5,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,6,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,15,30);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,6,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,8,9);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,10,10);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,11,12);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,13,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,14,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,15,15);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,16,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,17,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,19,20);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,21,23);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,24,25);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,26,26);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,27,27);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,28,28);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,29,29);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,30,30);
+		sheet.addMergedRegion(mergedRegion);
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State : " + stName + "     District : " + distName + "     Block : " + blkName + "     Date : " + userdate);
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<31;i++)
+		{
+			cell =rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Date");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("State Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(4);
+		cell.setCellValue("Block Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(5);
+		cell.setCellValue("Location");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Number of Participation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=7; i<15; i++) 
+		{
+			cell = rowhead.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Activities");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=16; i<31; i++) 
+		{
+			cell = rowhead.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("Location (Nearby/Milestone)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0; i<6; i++)
+		{
+			cell = rowhead1.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("Participants/Villagers");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(8);
+		cell.setCellValue("Ministers");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(9);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Member of Parliament");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(11);
+		cell.setCellValue("Legislative Members");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(12);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(13);
+		cell.setCellValue("Other Public Representatives");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(14);
+		cell.setCellValue("Government Officials");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(15);
+		cell.setCellValue("Flag off of Van");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(16);
+		cell.setCellValue("Launch of Theme Song");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(17);
+		cell.setCellValue("Bhoomi Poojan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(18);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(19);
+		cell.setCellValue("Lokarpan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(20);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(21);
+		cell.setCellValue("Shramdaan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(22);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(23);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(24);
+		cell.setCellValue("Plantation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(25);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(26);
+		cell.setCellValue("Award Distribution (Felicitation)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(27);
+		cell.setCellValue("Number of stalls of Departments");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(28);
+		cell.setCellValue("Number of stalls of SHGs/FPOs");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(29);
+		cell.setCellValue("Number of LakhPati Didi Participated");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(30);
+		cell.setCellValue("No of Uploaded Photographs");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0; i<6; i++)
+		{
+			cell = rowhead2.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(6);
+		cell.setCellValue("Male");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(7);
+		cell.setCellValue("Female");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("Central Level");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(9);
+		cell.setCellValue("State Level");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(10);
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(11);
+		cell.setCellValue("Assembly");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(12);
+		cell.setCellValue("Council");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=13; i<17; i++)
+		{
+			cell = rowhead2.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(17);
+		cell.setCellValue("Number of Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(18);
+		cell.setCellValue("Cost of Total works (in Lakh)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(19);
+		cell.setCellValue("Number of Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(20);
+		cell.setCellValue("Cost of Total works (in Lakh)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(21);
+		cell.setCellValue("Number of Locations");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(22);
+		cell.setCellValue("No. of people participated");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(23);
+		cell.setCellValue("No. of Man Hours");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(24);
+		cell.setCellValue("Area (in ha.)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(25);
+		cell.setCellValue("No. of Agro forestry / Horticultural Plants (No. of Sapling)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=26; i<31; i++)
+		{
+			cell = rowhead2.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead3 = sheet.createRow(9);
+		
+		for(int i=0;i<31;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 10;
+		String StName = "";
+		
+	    for(InaugurationBean bean: list) {
+	    	Row row = sheet.createRow(rowno);
+	        
+	    	row.createCell(0).setCellValue(sno);
+		    row.createCell(1).setCellValue(bean.getDate());
+		    row.createCell(2).setCellValue(bean.getStname().equals(StName) ? "" : bean.getStname());
+	    	row.createCell(3).setCellValue(bean.getDistname());
+	    	row.createCell(4).setCellValue(bean.getBlockname());
+	    	row.createCell(5).setCellValue(bean.getLocation());
+	    	row.createCell(6).setCellValue(bean.getMale_participants());
+	    	row.createCell(7).setCellValue(bean.getFemale_participants());
+	    	row.createCell(8).setCellValue(bean.getCentral_ministers());
+	    	row.createCell(9).setCellValue(bean.getState_ministers());
+	    	row.createCell(10).setCellValue(bean.getParliament());
+	    	row.createCell(11).setCellValue(bean.getAssembly_members());
+	    	row.createCell(12).setCellValue(bean.getCouncil_members());
+	    	row.createCell(13).setCellValue(bean.getOthers());
+	    	row.createCell(14).setCellValue(bean.getGov_officials());
+	    	row.createCell(15).setCellValue(bean.getFlagoff().equals("true") ? "Yes" : "No");
+	    	row.createCell(16).setCellValue(bean.getThemesong().equals("true") ? "Yes" : "No");
+	    	row.createCell(17).setCellValue(bean.getNo_works_bhoomipoojan());
+	    	row.createCell(18).setCellValue(bean.getTot_works_bhoomipoojan()==null?0.00:bean.getTot_works_bhoomipoojan().doubleValue());
+	    	row.createCell(19).setCellValue(bean.getNo_works_lokarpan());
+	    	row.createCell(20).setCellValue(bean.getTot_works_lokarpan()==null?0.00:bean.getTot_works_lokarpan().doubleValue());
+	    	row.createCell(21).setCellValue(bean.getNo_location_shramdaan());
+	    	row.createCell(22).setCellValue(bean.getNo_people_shramdaan());
+	    	row.createCell(23).setCellValue(bean.getMan());
+	    	row.createCell(24).setCellValue(bean.getArea_plantation()==null?0.00:bean.getArea_plantation().doubleValue());
+	    	row.createCell(25).setCellValue(bean.getNo_plantation());
+	    	row.createCell(26).setCellValue(bean.getNo_awards());
+	    	row.createCell(27).setCellValue(bean.getDept_stalls());
+	    	row.createCell(28).setCellValue(bean.getShg_fpo_stalls());
+	    	row.createCell(29).setCellValue(bean.getNo_lakhpati_didi());
+	    	row.createCell(30).setCellValue(bean.getImage_count());
+
+	    	StName = bean.getStname();
+	    	sno++;
+	    	rowno++;
+	    }
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 30);
+	    String fileName = "attachment; filename=Report Inauguration.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "WatershedYatra/watershedYatraReportInauguration";
+	}
+
+	
+	@RequestMapping(value = "/downloadPDFInaugurationReport", method = RequestMethod.POST)
+	public ModelAndView downloadPDFInaugurationReport(HttpServletRequest request, HttpServletResponse response) {
+
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("distName");
+		String blkName = request.getParameter("blkName");
+		String userdate= request.getParameter("udate");
+		
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+
+		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+
+		list = ser.getInaugurationReportData(stCode, distCode, blkCode, userdate);
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Watershed Yatra - Inauguration Program Details");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph("List of Watershed Yatra - Inauguration Program Details", f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(31);
+			table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 });
+			table.setWidthPercentage(70);
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(4);
+
+			CommonFunctions.insertCellHeader(table,"State : " + stName + "     District : " + distName + "     Block : " + blkName + "     Date : " + userdate, Element.ALIGN_LEFT, 31, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Date", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Location", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Participation", Element.ALIGN_CENTER, 9, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Activities", Element.ALIGN_CENTER, 16, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "Participants/Villagers", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Ministers", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Member of Parliament", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Legislative Members", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Other Public Representatives", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Government Officials", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Flag off of Van", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Launch of Theme Song", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Bhoomi Poojan", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Lokarpan", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Shramdaan", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Plantation", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Award Distribution (Felicitation)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of stalls of Departments", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of stalls of SHGs/FPOs", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of LakhPati Didi Participated", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No of Uploaded Photographs", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "Male", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Female", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Central Level", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Level", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Assembly", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Council", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cost of Total works (in Lakh)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cost of Total works (in Lakh)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Locations", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of people participated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of Man Hours", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Area (in ha.)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of Agro forestry / Horticultural Plants (No. of Sapling)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "17", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "18", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "19", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "20", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "21", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "22", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "23", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "24", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "25", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "26", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "27", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "28", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "29", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "30", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "31", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			int i = 0;
+			int k = 1;
+			String StName = "";
+
+			if (list.size() != 0)
+				for (i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDate(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname().equals(StName) ? "" : list.get(i).getStname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getLocation(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMale_participants().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getFemale_participants().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCentral_ministers().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getState_ministers().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getParliament().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getAssembly_members().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCouncil_members().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getOthers().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getGov_officials().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getFlagoff().equals("true") ? "Yes" : "No", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getThemesong().equals("true") ? "Yes" : "No", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_works_bhoomipoojan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTot_works_bhoomipoojan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_works_lokarpan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTot_works_lokarpan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_location_shramdaan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_people_shramdaan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMan().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getArea_plantation().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_plantation().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_awards().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDept_stalls().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getShg_fpo_stalls().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_lakhpati_didi().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getImage_count().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+
+					StName = list.get(i).getStname();
+					k = k + 1;
+				}
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 31, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+					CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Inauguration.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+
+	
+	@RequestMapping(value="/getPreYatraPreparationReport", method = RequestMethod.GET)
+	public ModelAndView getPreYatraReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+	//	String st_code=session.getAttribute("stateCode").toString();
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String block= request.getParameter("block");
+		String grampan= request.getParameter("grampan");
+		if(session!=null && session.getAttribute("loginID")!=null) {
+			
+			mav = new ModelAndView("WatershedYatra/preYatraPreparationReport");
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+			districtList = ser.getDistrictList(Integer.parseInt(userState));
+			mav.addObject("districtList", districtList);}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("blockList", blockList);}
+				mav.addObject("blkd", block);
+				
+			if( block!=null && !block.equalsIgnoreCase("") && !block.equals("0")) {
+				gpList = ser.getGramPanchyatList(Integer.parseInt(block));
+				mav.addObject("gpList", gpList);}
+				mav.addObject("grampn", grampan);	
+			
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return mav; 
+	}
+	
+	@RequestMapping(value="/getPreYatraPreparationReportData", method = RequestMethod.POST)
+	public ModelAndView getPreYatraPreparationReportData(HttpServletRequest request, HttpServletResponse response)
+	{
+			session = request.getSession(true);
+		//	String st_code=session.getAttribute("stateCode").toString();
+			ModelAndView mav = new ModelAndView();
+			String userState= request.getParameter("state");
+			String district= request.getParameter("district");
+			String block= request.getParameter("block");
+			String grampan= request.getParameter("grampan");
+			
+			List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+			
+			
+			if(session!=null && session.getAttribute("loginID")!=null) {
+				
+				mav = new ModelAndView("WatershedYatra/preYatraPreparationReport");
+				mav.addObject("menu", menuController.getMenuUserId(request));
+				
+				list=ser.getPreYatraPreparationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan));
+				mav.addObject("preYatraList", list);
+				mav.addObject("preYatraListSize", list.size());
+				
+				
+				stateList=stateMasterService.getAllState();
+				mav.addObject("stateList", stateList);
+				mav.addObject("state", userState);
+				
+				if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+				districtList = ser.getDistrictList(Integer.parseInt(userState));
+				mav.addObject("districtList", districtList);}
+				mav.addObject("district", district);
+				
+				if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+					blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+					mav.addObject("blockList", blockList);}
+					mav.addObject("blkd", block);
+					
+				if( block!=null && !block.equalsIgnoreCase("") && !block.equals("0")) {
+					gpList = ser.getGramPanchyatList(Integer.parseInt(block));
+					mav.addObject("gpList", gpList);}
+					mav.addObject("grampn", grampan);	
+				
+			}else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+			return mav; 
+	}
+	
 	
 }

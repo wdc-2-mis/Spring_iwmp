@@ -29,11 +29,11 @@ public class InaugurationBean {
     private MultipartFile themesong_photo1;
     private MultipartFile themesong_photo2;
     private Integer no_works_bhoomipoojan;
-    private Integer tot_works_bhoomipoojan;
+    private BigDecimal tot_works_bhoomipoojan;
     private MultipartFile bhoomipoojan_photo1;
     private MultipartFile bhoomipoojan_photo2;
     private Integer no_works_lokarpan;
-    private Integer tot_works_lokarpan;
+    private BigDecimal tot_works_lokarpan;
     private MultipartFile lokarpan_photo1;
     private MultipartFile lokarpan_photo2;
     private Integer no_location_shramdaan;
@@ -184,10 +184,10 @@ public class InaugurationBean {
 	public void setNo_works_bhoomipoojan(Integer no_works_bhoomipoojan) {
 		this.no_works_bhoomipoojan = no_works_bhoomipoojan;
 	}
-	public Integer getTot_works_bhoomipoojan() {
+	public BigDecimal getTot_works_bhoomipoojan() {
 		return tot_works_bhoomipoojan;
 	}
-	public void setTot_works_bhoomipoojan(Integer tot_works_bhoomipoojan) {
+	public void setTot_works_bhoomipoojan(BigDecimal tot_works_bhoomipoojan) {
 		this.tot_works_bhoomipoojan = tot_works_bhoomipoojan;
 	}
 	public MultipartFile getBhoomipoojan_photo1() {
@@ -208,10 +208,10 @@ public class InaugurationBean {
 	public void setNo_works_lokarpan(Integer no_works_lokarpan) {
 		this.no_works_lokarpan = no_works_lokarpan;
 	}
-	public Integer getTot_works_lokarpan() {
+	public BigDecimal getTot_works_lokarpan() {
 		return tot_works_lokarpan;
 	}
-	public void setTot_works_lokarpan(Integer tot_works_lokarpan) {
+	public void setTot_works_lokarpan(BigDecimal tot_works_lokarpan) {
 		this.tot_works_lokarpan = tot_works_lokarpan;
 	}
 	public MultipartFile getLokarpan_photo1() {

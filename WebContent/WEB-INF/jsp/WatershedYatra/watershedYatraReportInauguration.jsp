@@ -15,22 +15,31 @@ function showReport(e)
 	var state = $('#state').val();
 	var district = $('#district').val();
 	var block = $('#block').val();
+	var userdate = $('#userdate').val();
+	$('#userdate').val(userdate);
+
 	if(state==='')
 	{
-		alert('Please select state ');
+		alert('Please select State');
 		$('#state').focus();
 		e.preventDefault();
 	}
 	if(district==='')
 	{
-		alert('Please select District ');
+		alert('Please select District');
 		$('#district').focus();
 		e.preventDefault();
 	}
 	if(block==='')
 	{
-		alert('Please select block ');
+		alert('Please select Block');
 		$('#block').focus();
+		e.preventDefault();
+	}
+	if(userdate==='')
+	{
+		alert('Please select Date');
+		$('#userdate').focus();
 		e.preventDefault();
 	}
 	else{
@@ -49,7 +58,7 @@ function showChangedata(){
 }
 
 
-function downloadPDF(state, district, blkd){
+function downloadPDF(state, district, blkd, udate){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -58,13 +67,14 @@ function downloadPDF(state, district, blkd){
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
+    document.getElementById("udate").value=udate;
 	
-    document.inauguration.action="downloadRoutePlanReportPDF";
+    document.inauguration.action="downloadPDFInaugurationReport";
 	document.inauguration.method="post";
 	document.inauguration.submit();
 }
 
-function downloadExcel(state, district, blkd){
+function downloadExcel(state, district, blkd, udate){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -73,8 +83,9 @@ function downloadExcel(state, district, blkd){
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
+    document.getElementById("udate").value=udate;
 	
-    document.inauguration.action="downloadRoutePlanReportExcel";
+    document.inauguration.action="downloadExcelInaugurationReport";
 	document.inauguration.method="post";
 	document.inauguration.submit();
 }
@@ -275,6 +286,7 @@ display: none; /* Hidden by default */
 			<input type="hidden" name="stName" id="stName" value="" />
 			<input type="hidden" name="distName" id="distName" value="" />
 			<input type="hidden" name="blkName" id="blkName" value="" />
+			<input type="hidden" name="udate" id="udate" value="" />
 
 			<table>
 				<tr>
@@ -322,6 +334,9 @@ display: none; /* Hidden by default */
 								</c:forEach>
 							</c:if>
 					</select></td>
+					
+					<td class="label">Date <span style="color: red;">*</span></td>
+					<td><input type="date" name="userdate" id="userdate" value="udate" class="form-control activity" style="width: 100%;" /></td>
 
 					<td align="left">&nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);" name="view" value='Get Data' /></td>
 				</tr>
@@ -329,8 +344,8 @@ display: none; /* Hidden by default */
 
 			<br />
 			<c:if test="${not empty inaugurationList}">
-<%-- 				<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}')" class="btn btn-info">Excel</button> --%>
-<%-- 				<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}')" class="btn btn-info">PDF</button> --%>
+				<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${udate}')" class="btn btn-info">Excel</button>
+				<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${udate}')" class="btn btn-info">PDF</button>
 			</c:if>
 			<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			<br />

@@ -65,7 +65,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			for (MultipartFile file : mfile) {
 			
-			 res=commonFunction.uploadFileforLMS(file, filePath);
+				commonFunction.uploadFileforLMS(file, filePath);
 			
 			}
 			
@@ -79,7 +79,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			d.setDcode(userfileup.getDistrict());
 			IwmpBlock b= new IwmpBlock();
 			b.setBcode(userfileup.getBlock()); 
-			if(res.equals("success")) {
+			
 			data.setIwmpState(s);
 			data.setIwmpDistrict(d);
 			data.setIwmpBlock(b);
@@ -144,10 +144,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setLakhpatiDidiPath2(filePath+userfileup.getLakhpati_didi_photo2().getOriginalFilename());
 			
 			sess.save(data);
-			
 			res = "success";
-			}
-			
 			sess.getTransaction().commit();
 			
 		}

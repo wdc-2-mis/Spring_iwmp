@@ -683,6 +683,9 @@ display: none; /* Hidden by default */
 
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
+		<label>
+			<span style="color:blue;">Note:- Image size must be under 100KB, with dimensions of 500 x 500 pixels or less</span>
+		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
 		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="saveInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
@@ -793,7 +796,7 @@ display: none; /* Hidden by default */
      		<td>Number of Works<br><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
 			<td>Upload Photographs<br><input type="file" id="bhoomipoojan_photo1" name="bhoomipoojan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo1')" required /><br/>
 								<input type="file" id="bhoomipoojan_photo2" name="bhoomipoojan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo2')" required /></td>
      	</tr>
@@ -802,7 +805,7 @@ display: none; /* Hidden by default */
      		<td>Number of Works<br><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_lokarpan" name="tot_works_lokarpan" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
 			<td>Upload Photographs<br><input type="file" id="lokarpan_photo1" name="lokarpan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo1')" required /><br/>
 								<input type="file" id="lokarpan_photo2" name="lokarpan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo2')" required /></td>
      	</tr>

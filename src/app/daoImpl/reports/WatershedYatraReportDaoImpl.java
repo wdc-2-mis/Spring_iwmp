@@ -1,6 +1,8 @@
 package app.daoImpl.reports;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -18,6 +20,7 @@ import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.PreYatraPreparationBean;
 
 @Repository("WatershedYatraReportDao")
 public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
@@ -54,6 +57,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	
 	@Value("${getInaugurationData}") 
 	String getInaugurationData;
+	
+	@Value("${getPreYatraPrepReport}") 
+	String getPreYatraPrepReportData;
 
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -231,17 +237,55 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	}
 
 	@Override
-	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block) {
+	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate) {
 		String getReport=getInaugurationData;
 		Session session = sessionFactory.getCurrentSession();
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+		try {
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+			Date inaugurationDate = formatter.parse(userdate);
+			
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",State); 
+				query.setInteger("distcd",district); 
+				query.setInteger("blkcd",block);
+				query.setDate("userdate",inaugurationDate);
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district,
+			Integer block, Integer grampan) 
+	{
+		String getReport=getPreYatraPrepReportData;
+		Session session = sessionFactory.getCurrentSession();
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
 		try {
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
 				query.setInteger("statecd",State); 
 				query.setInteger("distcd",district); 
 				query.setInteger("blkcd",block); 
-				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+				query.setInteger("gpkcd",grampan); 
+				query.setResultTransformer(Transformers.aliasToBean(PreYatraPreparationBean.class));
 				list = query.list();
 				session.getTransaction().commit();
 		} 
