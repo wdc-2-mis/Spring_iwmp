@@ -125,7 +125,7 @@ $(document).ready(function () {
 
 // Attach validation to file inputs
 $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {
-    validatePhoto(this, this.id, 100, 250, 300);
+    validatePhoto(this, this.id, 300, 300, 400);
 });
 
 document.getElementById("grampan").addEventListener("change", function() {
