@@ -214,7 +214,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	if ($no_works_bhoomipoojan > 0) {
 	if ($bhoomipoojan_photo1 === '' || typeof $bhoomipoojan_photo1 === 'undefined') {
 		alert('Please upload photo for Bhoomi Poojan');
 // 		$('#bhoomipoojan_photo1').focus();
@@ -228,7 +228,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
 		alert('Please enter the Number of Works of Lokarpan');
 		$('#no_works_lokarpan').focus();
@@ -241,7 +241,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	if ($no_works_lokarpan > 0) {
 	if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
 		alert('Please upload photo for Lokarpan');
 // 		$('#lokarpan_photo1').focus();
@@ -255,7 +255,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
 		alert('Please enter the Number of Locations of Shramdaan');
 		$('#no_location_shramdaan').focus();
@@ -274,7 +274,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	if ($no_location_shramdaan > 0) {
 	if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
 		alert('Please upload photo for Shramdaan');
 // 		$('#shramdaan_photo1').focus();
@@ -288,7 +288,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
 		alert('Please enter the Plantation Area in hectares');
 		$('#area_plantation').focus();
@@ -301,7 +301,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	if ($area_plantation > 0) {
 	if ($plantation_photo1 === '' || typeof $plantation_photo1 === 'undefined') {
 		alert('Please upload photo for Plantation');
 // 		$('#plantation_photo1').focus();
@@ -315,14 +315,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($no_awards === '' || typeof $no_awards === 'undefined') {
 		alert('Please enter the Number of Award Distribution');
 		$('#no_awards').focus();
 		allValid = false;
 		return false;
 	}
-	
+	if ($no_awards > 0) {
 	if ($award_photo1 === '' || typeof $award_photo1 === 'undefined') {
 		alert('Please upload photo for Award Distribution');
 // 		$('#award_photo1').focus();
@@ -336,17 +336,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
-	
-	
-	
+	}
 	if ($dept_stalls === '' || typeof $dept_stalls === 'undefined') {
 		alert('Please enter the Number of stalls of Departments');
 		$('#dept_stalls').focus();
 		allValid = false;
 		return false;
 	}
-	
+	if ($dept_stalls > 0) {
 	if ($dept_stalls_photo1 === '' || typeof $dept_stalls_photo1 === 'undefined') {
 		alert('Please upload photo for stalls of Departments');
 // 		$('#dept_stalls_photo1').focus();
@@ -360,14 +357,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($shg_fpo_stalls === '' || typeof $shg_fpo_stalls === 'undefined') {
 		alert('Please enter the Number of stalls of SHGs/FPOs');
 		$('#shg_fpo_stalls').focus();
 		allValid = false;
 		return false;
 	}
-	
+	if ($shg_fpo_stalls > 0) {
 	if ($shg_fpo_stalls_photo1 === '' || typeof $shg_fpo_stalls_photo1 === 'undefined') {
 		alert('Please upload photo for stalls of SHGs/FPOs');
 // 		$('#shg_fpo_stalls_photo1').focus();
@@ -381,14 +378,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($no_lakhpati_didi === '' || typeof $no_lakhpati_didi === 'undefined') {
 		alert('Please enter the Number of people participated in LakhPati Didi');
 		$('#no_lakhpati_didi').focus();
 		allValid = false;
 		return false;
 	}
-	
+	if ($no_lakhpati_didi > 0) {
 	if ($lakhpati_didi_photo1 === '' || typeof $lakhpati_didi_photo1 === 'undefined') {
 		alert('Please upload photo for LakhPati Didi');
 // 		$('#lakhpati_didi_photo1').focus();
@@ -402,7 +399,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 
 if (allValid) {
 	if(confirm("Do you want to save Inauguration Program Details?")) {
@@ -422,9 +419,9 @@ function checkImage(input, inputId) {
     var file = input.files[0];
     var fileType = file.type;
     var fileSize = file.size; // Get the file size in bytes
-    var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
-    var maxWidth = 500; // Max width in pixels
-    var maxHeight = 500; // Max height in pixels
+    var maxFileSize = 300 * 1024; // Max size: 100KB (in bytes)
+    var maxWidth = 400; // Max width in pixels
+    var maxHeight = 400; // Max height in pixels
 
     // Check if the file is an image
     if (!fileType.startsWith('image/')) {
@@ -436,7 +433,7 @@ function checkImage(input, inputId) {
 
     // Check if the file size exceeds 100KB
     if (fileSize > maxFileSize) {
-        alert('File size exceeds 100 KB. Please choose a smaller file.');
+        alert('File size exceeds 300 KB. Please choose a smaller file.');
         input.value = ''; // Clear the file input
         document.getElementById(inputId).focus();
         return; // Stop further execution
@@ -684,7 +681,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 		<label>
-			<span style="color:blue;">Note:- Image size must be under 100KB, with dimensions of 500 x 500 pixels or less</span>
+			<span style="color:blue;">Note:- Image size must be under 300KB, with dimensions of 400 x 400 pixels or less</span>
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
