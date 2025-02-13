@@ -33,9 +33,11 @@ public class WatershedYatraBean {
     private Integer cultural_activity_id;
     private String cultural_name;
     private Integer no_works_bhoomipoojan;
-    private Integer tot_works_bhoomipoojan;
+   // private Integer tot_works_bhoomipoojan;
+    private BigDecimal tot_works_bhoomipoojan;
     private Integer no_works_lokarpan;
-    private Integer tot_works_lokarpan;
+   // private Integer tot_works_lokarpan;
+    private BigDecimal tot_works_lokarpan;
     private Integer no_location_shramdaan;
     private Integer no_people_shramdaan;
     private Integer manhour;
@@ -100,11 +102,11 @@ public class WatershedYatraBean {
     private MultipartFile culturalActivityphoto1;
     private MultipartFile culturalActivityphoto2;
     private Integer bhoomiWorks;
-    private Integer bhoomiCost;
+    private BigDecimal bhoomiCost;
     private MultipartFile bhoomiCostphoto1;
     private MultipartFile bhoomiCostphoto2;
     private Integer lokWorks;
-    private Integer costWorks;
+    private BigDecimal costWorks;
     private MultipartFile lokWorksphoto1;
     private MultipartFile lokWorksphoto2;
     private Integer locShramdaan;
@@ -401,10 +403,10 @@ public class WatershedYatraBean {
 	public void setNo_works_bhoomipoojan(Integer no_works_bhoomipoojan) {
 		this.no_works_bhoomipoojan = no_works_bhoomipoojan;
 	}
-	public Integer getTot_works_bhoomipoojan() {
+	public BigDecimal getTot_works_bhoomipoojan() {
 		return tot_works_bhoomipoojan;
 	}
-	public void setTot_works_bhoomipoojan(Integer tot_works_bhoomipoojan) {
+	public void setTot_works_bhoomipoojan(BigDecimal tot_works_bhoomipoojan) {
 		this.tot_works_bhoomipoojan = tot_works_bhoomipoojan;
 	}
 	public Integer getNo_works_lokarpan() {
@@ -413,10 +415,10 @@ public class WatershedYatraBean {
 	public void setNo_works_lokarpan(Integer no_works_lokarpan) {
 		this.no_works_lokarpan = no_works_lokarpan;
 	}
-	public Integer getTot_works_lokarpan() {
+	public BigDecimal getTot_works_lokarpan() {
 		return tot_works_lokarpan;
 	}
-	public void setTot_works_lokarpan(Integer tot_works_lokarpan) {
+	public void setTot_works_lokarpan(BigDecimal tot_works_lokarpan) {
 		this.tot_works_lokarpan = tot_works_lokarpan;
 	}
 	public Integer getNo_location_shramdaan() {
@@ -631,10 +633,10 @@ public class WatershedYatraBean {
 	public void setBhoomiWorks(Integer bhoomiWorks) {
 		this.bhoomiWorks = bhoomiWorks;
 	}
-	public Integer getBhoomiCost() {
+	public BigDecimal getBhoomiCost() {
 		return bhoomiCost;
 	}
-	public void setBhoomiCost(Integer bhoomiCost) {
+	public void setBhoomiCost(BigDecimal bhoomiCost) {
 		this.bhoomiCost = bhoomiCost;
 	}
 	public MultipartFile getBhoomiCostphoto1() {
@@ -655,10 +657,10 @@ public class WatershedYatraBean {
 	public void setLokWorks(Integer lokWorks) {
 		this.lokWorks = lokWorks;
 	}
-	public Integer getCostWorks() {
+	public BigDecimal getCostWorks() {
 		return costWorks;
 	}
-	public void setCostWorks(Integer costWorks) {
+	public void setCostWorks(BigDecimal costWorks) {
 		this.costWorks = costWorks;
 	}
 	public MultipartFile getLokWorksphoto1() {

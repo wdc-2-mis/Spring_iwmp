@@ -214,6 +214,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if($arExperience>0){
 	if ($arExperiencephoto1 === '' || typeof $arExperiencephoto1 === 'undefined') {
 		alert('Please upload the photo of AR Experience');
 		//$('#arExperiencephoto1').focus();
@@ -229,7 +230,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($shapathYes === '' || typeof $shapathYes === 'undefined') {
 		alert('Please select Shapath Shramdan');
 		$('#shapathYes').focus();
@@ -280,6 +281,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($quizParticipants>0) {
 	if ($quizParticipantsphoto1 === '' || typeof $quizParticipantsphoto1 === 'undefined') {
 		alert('Please upload the photo of Quiz Program');
 	//	$('#quizParticipantsphoto1').focus();
@@ -294,7 +296,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($culturalActivity === '' || typeof $culturalActivity === 'undefined') {
 		alert('Please select Cultural Activity based on Watershed theme');
 		$('#culturalActivity').focus();
@@ -329,6 +331,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($bhoomiWorks>0) {
 	if ($bhoomiCostphoto1 === '' || typeof $bhoomiCostphoto1 === 'undefined') {
 		alert('Please upload the photo of Bhoomi Poojan');
 		//$('#bhoomiCostphoto1').focus();
@@ -336,12 +339,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	
 	if ($bhoomiCostphoto2 === '' || typeof $bhoomiCostphoto2 === 'undefined') {
 		alert('Please upload the photo of Bhoomi Poojan');
 	//	$('#bhoomiCostphoto2').focus();
 		document.getElementById('bhoomiCostphoto2').click();
 		allValid = false;
 		return false;
+	}
 	}
 	if ($lokWorks === '' || typeof $lokWorks === 'undefined') {
 		alert('Please enter Number of Works of Lokarpan');
@@ -355,6 +360,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if($lokWorks>0){
 	if ($lokWorksphoto1 === '' || typeof $lokWorksphoto1 === 'undefined') {
 		alert('Please upload the photo of Lokarpan');
 		//$('#lokWorksphoto1').focus();
@@ -369,6 +375,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+}
 	if ($locShramdaan === '' || typeof $locShramdaan === 'undefined') {
 		alert('Please enter Number of Locations of Shramdaan');
 		$('#locShramdaan').focus();
@@ -387,6 +394,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($locShramdaan>0){
 	if ($locShramdaanpsphoto1 === '' || typeof $locShramdaanpsphoto1 === 'undefined') {
 		alert('Please upload the photo of Shramdan');
 		//$('#locShramdaanpsphoto1').focus();
@@ -401,7 +409,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	
+	}
 	if ($plantationArea === '' || typeof $plantationArea === 'undefined') {
 		alert('Please enter the plantation area');
 		$('#plantationArea').focus();
@@ -414,7 +422,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
-
+	if ($plantationArea>0){ 
 	if ($plantationAreaphoto1 === '' || typeof $plantationAreaphoto1 === 'undefined') {
 		alert('Please upload the photo of Plantation area');
 		//$('#plantationAreaphoto1').focus();
@@ -429,6 +437,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	}
 	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
 		alert('Please enter the Number of Watershed Margdarshaks');
 		$('#noOfwatershed').focus();
@@ -436,12 +445,8 @@ function validation()
 		return false;
 	}
 
-	if ($noOfwatershed === '' || typeof $noOfwatershed === 'undefined') {
-		alert('Please enter the Number of Watershed Margdarshaks');
-		$('#noOfwatershed').focus();
-		allValid = false;
-		return false;
-	}
+	if ($noOfwatershed>0){
+	
 	if ($noOfwatershedphoto1 === '' || typeof $noOfwatershedphoto1 === 'undefined') {
 		alert('Please upload the photo of Award Distribution');
 		//$('#noOfwatershedphoto1').focus();
@@ -455,6 +460,7 @@ function validation()
 		document.getElementById('noOfwatershedphoto2').click();
 		allValid = false;
 		return false;
+	}
 	}
 	if (allValid) {
 		if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
@@ -474,9 +480,9 @@ function checkImage(input, inputId) {
     var file = input.files[0];
     var fileType = file.type;
     var fileSize = file.size; // Get the file size in bytes
-    var maxFileSize = 100 * 1024; // Max size: 100KB (in bytes)
-    var maxWidth = 500; // Max width in pixels
-    var maxHeight = 500; // Max height in pixels
+    var maxFileSize = 300 * 1024; // Max size: 100KB (in bytes)
+    var maxWidth = 400; // Max width in pixels
+    var maxHeight = 400; // Max height in pixels
 
     // Check if the file is an image
     if (!fileType.startsWith('image/')) {
@@ -488,7 +494,7 @@ function checkImage(input, inputId) {
 
     // Check if the file size exceeds 100KB
     if (fileSize > maxFileSize) {
-        alert('File size exceeds 100 KB. Please choose a smaller file.');
+        alert('File size exceeds 300 KB. Please choose a smaller file.');
         input.value = ''; // Clear the file input
         document.getElementById(inputId).focus();
         return; // Stop further execution
@@ -706,7 +712,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra at Village Level</h4> </div>
 			<label>
-		<span style="color:blue;">Note:- Image size must be under 100KB, with dimensions of 500 x 500 pixels or less.</span>
+		<span style="color:blue;">Note:- Image size must be under 300KB, with dimensions of 400 x 400 pixels or less.</span>
 		</label>
 		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			
@@ -885,7 +891,7 @@ display: none; /* Hidden by default */
      		<td>Number of Works<br><input type="text" id="bhoomiWorks" name="bhoomiWorks" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="bhoomiCost" name="bhoomiCost" autocomplete="off"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="10" oninput="validateDecimal(this, 2)" required /></td>
 								<td >
        Upload Photographs<br>
         <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
@@ -897,7 +903,7 @@ display: none; /* Hidden by default */
      		<td>Number of Works<br><input type="text" id="lokWorks" name="lokWorks" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Cost of Total works (in Lakh)<br><input type="text" id="costWorks" name="costWorks" autocomplete="off"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="10" oninput="validateDecimal(this, 2)" required /></td>
 									<td >
         Upload Photographs<br>
         <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" accept="image/*" onchange="checkImage(this, 'lokWorksphoto1')" required />

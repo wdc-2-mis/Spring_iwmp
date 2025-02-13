@@ -51,11 +51,11 @@ public class WatershedYatVill {
     private String culturalActivityPath1;
     private String culturalActivityPath2;
     private Integer bhoomiPoojanNoOfWorks;
-    private Integer bhoomiPoojanCostOfWorks;
+    private BigDecimal bhoomiPoojanCostOfWorks;
     private String bhoomiPoojanPath1;
     private String bhoomiPoojanPath2;
     private Integer lokarpanNoOfWorks;
-    private Integer lokarpanCostOfWorks;
+    private BigDecimal lokarpanCostOfWorks;
     private String lokarpanPath1;
     private String lokarpanPath2;
     private Integer shramdaanNoOfLocation;
@@ -83,8 +83,8 @@ public class WatershedYatVill {
 		   Timestamp yatraDate1,Timestamp yatraDate2,String yatraLocation,Integer maleParticipants,Integer femaleParticipants,Integer centralMinister,Integer stateMinister,Integer parliamentMembers,
 		   Integer legislativeAssemblyMembers,Integer legislativeCouncilMembers,Integer otherPublicRepresentatives,Integer govOfficials,Integer noOfArExperiencePeople,String arExperiencePath1,String arExperiencePath2,
 		   Boolean bhumiJalSanrakshan,String bhumiJalSanrakshanPath1,String bhumiJalSanrakshanPath2,Boolean watershedYatraFilm,String yatraFilmPath1,String yatraFilmPath2,Integer quizParticipants,String quizParticipantsPath1,
-		   String quizParticipantsPath2,MCulturalActivity mCulturalActivity, String culturalActivityOther,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,Integer bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
-		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,Integer lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,Integer manhour,String shramdaanPath1,
+		   String quizParticipantsPath2,MCulturalActivity mCulturalActivity, String culturalActivityOther,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,BigDecimal bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
+		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,BigDecimal lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,Integer manhour,String shramdaanPath1,
 		   String shramdaanPath2,BigDecimal plantationArea,Integer noOfAgroForsetry,String plantationPath1,String plantationPath2,Integer awardDistribution,String awardDistributionPath1,String awardDistributionPath2,String status,
 		   String requestedIp,String updatedBy,Date updatedDate,String createdBy,Date createdDate)
    {
@@ -477,11 +477,11 @@ public class WatershedYatVill {
 	}
 	
 	@Column(name="bhoomi_poojan_cost_of_works")
-	public Integer getBhoomiPoojanCostOfWorks() {
+	public BigDecimal getBhoomiPoojanCostOfWorks() {
 		return bhoomiPoojanCostOfWorks;
 	}
 	
-	public void setBhoomiPoojanCostOfWorks(Integer bhoomiPoojanCostOfWorks) {
+	public void setBhoomiPoojanCostOfWorks(BigDecimal bhoomiPoojanCostOfWorks) {
 		this.bhoomiPoojanCostOfWorks = bhoomiPoojanCostOfWorks;
 	}
 	
@@ -513,11 +513,11 @@ public class WatershedYatVill {
 	}
 	
 	@Column(name="lokarpan_cost_of_works")
-	public Integer getLokarpanCostOfWorks() {
+	public BigDecimal getLokarpanCostOfWorks() {
 		return lokarpanCostOfWorks;
 	}
 	
-	public void setLokarpanCostOfWorks(Integer lokarpanCostOfWorks) {
+	public void setLokarpanCostOfWorks(BigDecimal lokarpanCostOfWorks) {
 		this.lokarpanCostOfWorks = lokarpanCostOfWorks;
 	}
 	

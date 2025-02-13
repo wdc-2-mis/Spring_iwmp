@@ -2,6 +2,7 @@ package app.watershedyatra.daoImpl;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -526,30 +527,47 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
 				main.setAwardDistribution(userfileup.getNoOfwatershed());
 				
-				main.setArExperiencePath1(filePath+userfileup.getArExperiencephoto1().getOriginalFilename());
-				main.setArExperiencePath2(filePath+userfileup.getArExperiencephoto2().getOriginalFilename());
+				//main.setArExperiencePath1(filePath+userfileup.getArExperiencephoto1().getOriginalFilename());
+				//main.setArExperiencePath2(filePath+userfileup.getArExperiencephoto2().getOriginalFilename());
 				
 				main.setBhumiJalSanrakshanPath1(!userfileup.getShapathYesphoto1().isEmpty() ? filePath + userfileup.getShapathYesphoto1().getOriginalFilename() :  null);
 				main.setBhumiJalSanrakshanPath2(!userfileup.getShapathYesphoto2().isEmpty() ? filePath + userfileup.getShapathYesphoto2().getOriginalFilename() :  null);
 				main.setYatraFilmPath1(!userfileup.getFilmYesphoto1().isEmpty() ? filePath + userfileup.getFilmYesphoto1().getOriginalFilename() :  null);
 				main.setYatraFilmPath2(!userfileup.getFilmYesphoto2().isEmpty() ? filePath + userfileup.getFilmYesphoto2().getOriginalFilename() :  null);
+				main.setBhoomiPoojanPath1(!userfileup.getBhoomiCostphoto1().isEmpty() ? filePath + userfileup.getBhoomiCostphoto1().getOriginalFilename() :  null);
+				main.setBhoomiPoojanPath2(!userfileup.getBhoomiCostphoto2().isEmpty() ? filePath + userfileup.getBhoomiCostphoto2().getOriginalFilename() :  null);
+				//
+				main.setArExperiencePath1(!userfileup.getArExperiencephoto1().isEmpty() ? filePath + userfileup.getArExperiencephoto1().getOriginalFilename() :  null);
+				main.setArExperiencePath2(!userfileup.getArExperiencephoto2().isEmpty() ? filePath + userfileup.getArExperiencephoto2().getOriginalFilename() :  null);
+				main.setShramdaanPath1(!userfileup.getLocShramdaanpsphoto1().isEmpty() ? filePath + userfileup.getLocShramdaanpsphoto1().getOriginalFilename() :  null);
+				main.setShramdaanPath2(!userfileup.getLocShramdaanpsphoto2().isEmpty() ? filePath + userfileup.getLocShramdaanpsphoto2().getOriginalFilename() :  null);
+				main.setQuizParticipantsPath1(!userfileup.getQuizParticipantsphoto1().isEmpty() ? filePath + userfileup.getQuizParticipantsphoto1().getOriginalFilename() :  null);
+				main.setQuizParticipantsPath2(!userfileup.getQuizParticipantsphoto2().isEmpty() ? filePath + userfileup.getQuizParticipantsphoto2().getOriginalFilename() :  null);
 				
-				main.setShramdaanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
-				main.setShramdaanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
+				main.setLokarpanPath1(!userfileup.getLokWorksphoto1().isEmpty() ? filePath + userfileup.getLokWorksphoto1().getOriginalFilename() :  null);
+				main.setLokarpanPath2(!userfileup.getLokWorksphoto2().isEmpty() ? filePath + userfileup.getLokWorksphoto2().getOriginalFilename() :  null);
+				main.setPlantationPath1(!userfileup.getPlantationAreaphoto1().isEmpty() ? filePath + userfileup.getPlantationAreaphoto1().getOriginalFilename() :  null);
+				main.setPlantationPath2(!userfileup.getPlantationAreaphoto2().isEmpty() ? filePath + userfileup.getPlantationAreaphoto2().getOriginalFilename() :  null);
+				main.setAwardDistributionPath1(!userfileup.getNoOfwatershedphoto1().isEmpty() ? filePath + userfileup.getNoOfwatershedphoto1().getOriginalFilename() :  null);
+				main.setAwardDistributionPath2(!userfileup.getNoOfwatershedphoto2().isEmpty() ? filePath + userfileup.getNoOfwatershedphoto2().getOriginalFilename() :  null);
+				
+				
+			//	main.setShramdaanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
+				//main.setShramdaanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
 //				main.setYatraFilmPath1(filePath+userfileup.getFilmYesphoto1().getOriginalFilename());
 //				main.setYatraFilmPath2(filePath+userfileup.getFilmYesphoto2().getOriginalFilename());
-				main.setQuizParticipantsPath1(filePath+userfileup.getQuizParticipantsphoto1().getOriginalFilename());
-				main.setQuizParticipantsPath2(filePath+userfileup.getQuizParticipantsphoto2().getOriginalFilename());
+				//main.setQuizParticipantsPath1(filePath+userfileup.getQuizParticipantsphoto1().getOriginalFilename());
+				//main.setQuizParticipantsPath2(filePath+userfileup.getQuizParticipantsphoto2().getOriginalFilename());
 				main.setCulturalActivityPath1(filePath+userfileup.getCulturalActivityphoto1().getOriginalFilename());
 				main.setCulturalActivityPath2(filePath+userfileup.getCulturalActivityphoto2().getOriginalFilename());
-				main.setBhoomiPoojanPath1(filePath+userfileup.getBhoomiCostphoto1().getOriginalFilename());
-				main.setBhoomiPoojanPath2(filePath+userfileup.getBhoomiCostphoto2().getOriginalFilename());
-				main.setLokarpanPath1(filePath+userfileup.getLokWorksphoto1().getOriginalFilename());
-				main.setLokarpanPath2(filePath+userfileup.getLokWorksphoto2().getOriginalFilename());
-				main.setPlantationPath1(filePath+userfileup.getPlantationAreaphoto1().getOriginalFilename());
-				main.setPlantationPath2(filePath+userfileup.getPlantationAreaphoto2().getOriginalFilename());
-				main.setAwardDistributionPath1(filePath+userfileup.getNoOfwatershedphoto1().getOriginalFilename());
-				main.setAwardDistributionPath2(filePath+userfileup.getNoOfwatershedphoto2().getOriginalFilename());
+				//main.setBhoomiPoojanPath1(filePath+userfileup.getBhoomiCostphoto1().getOriginalFilename());
+				//main.setBhoomiPoojanPath2(filePath+userfileup.getBhoomiCostphoto2().getOriginalFilename());
+				//main.setLokarpanPath1(filePath+userfileup.getLokWorksphoto1().getOriginalFilename());
+				//main.setLokarpanPath2(filePath+userfileup.getLokWorksphoto2().getOriginalFilename());
+				//main.setPlantationPath1(filePath+userfileup.getPlantationAreaphoto1().getOriginalFilename());
+				//main.setPlantationPath2(filePath+userfileup.getPlantationAreaphoto2().getOriginalFilename());
+				//main.setAwardDistributionPath1(filePath+userfileup.getNoOfwatershedphoto1().getOriginalFilename());
+				//main.setAwardDistributionPath2(filePath+userfileup.getNoOfwatershedphoto2().getOriginalFilename());
 //				main.setBhumiJalSanrakshanPath1(filePath+userfileup.getShapathYesphoto1().getOriginalFilename());
 //				main.setBhumiJalSanrakshanPath2(filePath+userfileup.getShapathYesphoto2().getOriginalFilename());
 				
@@ -718,65 +736,129 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 //			imgList.add(list.get(0).getWatershedYatraId().toString());
 			
 			//server
-			imgList.add(list.get(0).getArExperiencePath1().substring(list.get(0).getArExperiencePath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getArExperiencePath2().substring(list.get(0).getArExperiencePath2().lastIndexOf("/")+1));
-			if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
-				imgList.add(list.get(0).getBhumiJalSanrakshanPath1().substring(list.get(0).getBhumiJalSanrakshanPath1().lastIndexOf("/")+1));
-			if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
-				imgList.add(list.get(0).getBhumiJalSanrakshanPath2().substring(list.get(0).getBhumiJalSanrakshanPath2().lastIndexOf("/")+1));
-			if(list.get(0).getYatraFilmPath1()!=null)
-				imgList.add(list.get(0).getYatraFilmPath1().substring(list.get(0).getYatraFilmPath1().lastIndexOf("/")+1));
-			if(list.get(0).getYatraFilmPath2()!=null)
-				imgList.add(list.get(0).getYatraFilmPath2().substring(list.get(0).getYatraFilmPath2().lastIndexOf("/")+1));
-			
-			imgList.add(list.get(0).getQuizParticipantsPath1().substring(list.get(0).getQuizParticipantsPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getQuizParticipantsPath2().substring(list.get(0).getQuizParticipantsPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getCulturalActivityPath1().substring(list.get(0).getCulturalActivityPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getCulturalActivityPath2().substring(list.get(0).getCulturalActivityPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
-			
-			
-			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
+//				if(list.get(0).getArExperiencePath1()!=null)
+//			imgList.add(list.get(0).getArExperiencePath1().substring(list.get(0).getArExperiencePath1().lastIndexOf("/")+1));
+//				
+//				if(list.get(0).getArExperiencePath2()!=null)
+//			imgList.add(list.get(0).getArExperiencePath2().substring(list.get(0).getArExperiencePath2().lastIndexOf("/")+1));
+//			
+//				if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
+//				imgList.add(list.get(0).getBhumiJalSanrakshanPath1().substring(list.get(0).getBhumiJalSanrakshanPath1().lastIndexOf("/")+1));
+//			
+//				if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
+//				imgList.add(list.get(0).getBhumiJalSanrakshanPath2().substring(list.get(0).getBhumiJalSanrakshanPath2().lastIndexOf("/")+1));
+//			
+//				if(list.get(0).getYatraFilmPath1()!=null)
+//				imgList.add(list.get(0).getYatraFilmPath1().substring(list.get(0).getYatraFilmPath1().lastIndexOf("/")+1));
+//			
+//				if(list.get(0).getYatraFilmPath2()!=null)
+//				imgList.add(list.get(0).getYatraFilmPath2().substring(list.get(0).getYatraFilmPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getQuizParticipantsPath1()!=null)
+//			imgList.add(list.get(0).getQuizParticipantsPath1().substring(list.get(0).getQuizParticipantsPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getQuizParticipantsPath2()!=null)
+//			imgList.add(list.get(0).getQuizParticipantsPath2().substring(list.get(0).getQuizParticipantsPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getCulturalActivityPath1()!=null)
+//			imgList.add(list.get(0).getCulturalActivityPath1().substring(list.get(0).getCulturalActivityPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getCulturalActivityPath2()!=null)
+//			imgList.add(list.get(0).getCulturalActivityPath2().substring(list.get(0).getCulturalActivityPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getBhoomiPoojanPath1()!=null)
+//			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getBhoomiPoojanPath2()!=null)
+//			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getLokarpanPath1()!=null)
+//			
+//			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getLokarpanPath2()!=null)
+//			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getShramdaanPath1()!=null)
+//			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getShramdaanPath2()!=null)
+//			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getPlantationPath1()!=null)
+//			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getPlantationPath2()!=null)
+//			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getAwardDistributionPath1()!=null)
+//			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
+//			
+//			if(list.get(0).getAwardDistributionPath2()!=null)
+//			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
 			
 			//local
-//			imgList.add(list.get(0).getArExperiencePath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getArExperiencePath2().replaceAll(".*\\\\", ""));
-//			
-//			if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
-//			imgList.add(list.get(0).getBhumiJalSanrakshanPath1().replaceAll(".*\\\\", ""));
-//			
-//			if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
-//			imgList.add(list.get(0).getBhumiJalSanrakshanPath2().replaceAll(".*\\\\", ""));
-//			
-//			if(list.get(0).getYatraFilmPath1()!=null)
-//			imgList.add(list.get(0).getYatraFilmPath1().replaceAll(".*\\\\", ""));
-//			
-//			if(list.get(0).getYatraFilmPath2()!=null)
-//			imgList.add(list.get(0).getYatraFilmPath2().replaceAll(".*\\\\", ""));
-//			
-//			imgList.add(list.get(0).getQuizParticipantsPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getQuizParticipantsPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getCulturalActivityPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getCulturalActivityPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
-//			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
-//			
+			
+			if(list.get(0).getArExperiencePath1()!=null)
+			imgList.add(list.get(0).getArExperiencePath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getArExperiencePath2()!=null)
+			imgList.add(list.get(0).getArExperiencePath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
+			imgList.add(list.get(0).getBhumiJalSanrakshanPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getYatraFilmPath1()!=null)
+			imgList.add(list.get(0).getYatraFilmPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getYatraFilmPath2()!=null)
+			imgList.add(list.get(0).getYatraFilmPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getQuizParticipantsPath1()!=null)
+			imgList.add(list.get(0).getQuizParticipantsPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getQuizParticipantsPath2()!=null)
+			imgList.add(list.get(0).getQuizParticipantsPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getCulturalActivityPath1()!=null)
+			imgList.add(list.get(0).getCulturalActivityPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getCulturalActivityPath2()!=null)
+			imgList.add(list.get(0).getCulturalActivityPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhoomiPoojanPath1()!=null)
+			imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getBhoomiPoojanPath2()!=null)
+			imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getLokarpanPath1()!=null)
+			imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getLokarpanPath2()!=null)
+			imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getShramdaanPath1()!=null)
+			imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getShramdaanPath2()!=null)
+			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getPlantationPath1()!=null)
+			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getPlantationPath2()!=null)
+			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getAwardDistributionPath1()!=null)
+			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
+			
+			if(list.get(0).getAwardDistributionPath2()!=null)
+			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
+			
 		}catch(Exception ex) {
 			session.getTransaction().rollback();
 			ex.printStackTrace();

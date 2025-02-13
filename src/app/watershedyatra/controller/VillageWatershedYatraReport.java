@@ -502,9 +502,9 @@ public class VillageWatershedYatraReport {
 	        	row.createCell(21).setCellValue(bean.getQuiz_participants());
 	        	row.createCell(22).setCellValue(bean.getCultural_name());
 	        	row.createCell(23).setCellValue(bean.getNo_works_bhoomipoojan());
-	        	row.createCell(24).setCellValue(bean.getTot_works_bhoomipoojan());
+	        	row.createCell(24).setCellValue(bean.getTot_works_bhoomipoojan().doubleValue());
 	        	row.createCell(25).setCellValue(bean.getNo_works_lokarpan());
-	        	row.createCell(26).setCellValue(bean.getTot_works_lokarpan());
+	        	row.createCell(26).setCellValue(bean.getTot_works_lokarpan().doubleValue());
 	        	row.createCell(27).setCellValue(bean.getNo_location_shramdaan());
 	        	row.createCell(28).setCellValue(bean.getNo_people_shramdaan());
 	        	row.createCell(29).setCellValue(bean.getManhour());
