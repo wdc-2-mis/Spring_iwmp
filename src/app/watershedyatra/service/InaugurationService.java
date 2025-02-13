@@ -14,4 +14,9 @@ public interface InaugurationService {
 	public List<InaugurationBean> getInaugurationDetails(Integer stcd);
 	public List<String> getImagesByInaugurationId(int inaugurationId);
 	
+	String getExistingBlockInaguraCodes(Integer bCode);
+	
+	
+	
+	
 }

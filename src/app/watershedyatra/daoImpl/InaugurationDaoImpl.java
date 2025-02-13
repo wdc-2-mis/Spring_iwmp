@@ -329,6 +329,33 @@ public class InaugurationDaoImpl implements InaugurationDao {
 		}
 		return imgList;
 	}
+
+	@Override
+	public String getExistingBlockInaguraCodes(Integer bCode) {
+		// TODO Auto-generated method stub
+		 Session session = sessionFactory.getCurrentSession();
+		  int result;
+		  String data="fail";
+		  try {
+		    session.beginTransaction();
+			List list = session.createQuery("SELECT iwmpBlock.bcode FROM WatershedYatraInauguaration where iwmpBlock.bcode=:villageCode").setInteger("villageCode", bCode).list();
+		//	result=Integer.parseInt(list.get(0).toString());
+			if(!list.isEmpty())
+				data="success";
+		  } 
+		  catch (HibernateException e) {
+		    System.err.print("Hibernate error");
+		    e.printStackTrace();
+		    session.getTransaction().rollback();
+		  } catch (Exception ex) {
+		    session.getTransaction().rollback();
+		    ex.printStackTrace();
+		  }
+		  finally {
+			  session.getTransaction().commit();
+		  }
+		  return data;
+	}
 	
 	
 }

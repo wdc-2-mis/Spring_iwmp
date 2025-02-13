@@ -27,6 +27,30 @@ $(function() {
 			}
 		});
 	});
+	
+	
+	$(document).on('change', '#block', function(e) {
+			  e.preventDefault();
+			  $villageCode = $('#block option:selected').val();
+			  $.ajax({
+			    url: "getExistingBlockInaguraCodes",
+			    type: "post",
+			    data: {villageCode: $villageCode},
+			    error: function(xhr, status, er) {
+			      console.log(er);
+			    },
+			    success: function(data) 
+			    {
+					if(data==='success')
+					{
+						alert('Block already exists. Please select a different Block. !');
+						$("select#block")[0].selectedIndex = 0;
+									
+					}
+								
+			    }
+			  });
+			});
 
 
 	//	$(document).on('change', '#block', function(e) {
@@ -333,7 +357,7 @@ $(function() {
 	});
 
 	
-
+		
 	
 	
 

@@ -165,6 +165,10 @@ public class InaugurationController extends HttpServlet {
 		return imgList;
 	}
 	
-	
+	@RequestMapping(value = "/getExistingBlockInaguraCodes", method = RequestMethod.POST)
+	@ResponseBody
+	public String getExistingBlockInaguraCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="villageCode") Integer villageCode ) {
+	  return iSer.getExistingBlockInaguraCodes(villageCode);
+	}
 
 }

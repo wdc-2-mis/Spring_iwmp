@@ -31,6 +31,12 @@ public class InaugurationServiceImpl implements InaugurationService {
 		// TODO Auto-generated method stub
 		return dao.getImagesByInaugurationId(inaugurationId);
 	}
+
+	@Override
+	public String getExistingBlockInaguraCodes(Integer bCode) {
+		// TODO Auto-generated method stub
+		return dao.getExistingBlockInaguraCodes(bCode);
+	}
 	
 
 }
