@@ -34,11 +34,11 @@ public class WatershedYatraInauguaration {
     private String themeSongPath1;
     private String themeSongPath2;
     private Integer bhoomiPoojanNoOfWorks;
-    private Integer bhoomiPoojanCostOfWorks;
+    private BigDecimal bhoomiPoojanCostOfWorks;
     private String bhoomiPoojanPath1;
     private String bhoomiPoojanPath2;
     private Integer lokarpanNoOfWorks;
-    private Integer lokarpanCostOfWorks;
+    private BigDecimal lokarpanCostOfWorks;
     private String lokarpanPath1;
     private String lokarpanPath2;
     private Integer shramdaanNoOfLocation;
@@ -84,8 +84,8 @@ public class WatershedYatraInauguaration {
 			Integer legislativeAssemblyMembers, Integer legislativeCouncilMembers, Integer otherPublicRepresentatives,
 			Integer govOfficials, Boolean vanFlagOff, String vanFlagPath1, String vanFlagPath2, Boolean themeSong,
 			String themeSongPath1, String themeSongPath2, Integer bhoomiPoojanNoOfWorks,
-			Integer bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
-			Integer lokarpanNoOfWorks, Integer lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
+			BigDecimal bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
+			Integer lokarpanNoOfWorks, BigDecimal lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
 			Integer shramdaanNoOfLocation, Integer shramdaanNoOfParticipatedPeople, Integer manHr, String shramdaanPath1,
 			String shramdaanPath2, BigDecimal plantationArea, Integer noOfAgroForsetry, String plantationPath1,
 			String plantationPath2, Integer awardDistribution, String awardDistributionPath1,
@@ -327,11 +327,11 @@ public class WatershedYatraInauguaration {
 	}
 
 	@Column(name = "bhoomi_poojan_cost_of_works")
-	public Integer getBhoomiPoojanCostOfWorks() {
+	public BigDecimal getBhoomiPoojanCostOfWorks() {
 		return bhoomiPoojanCostOfWorks;
 	}
 
-	public void setBhoomiPoojanCostOfWorks(Integer bhoomiPoojanCostOfWorks) {
+	public void setBhoomiPoojanCostOfWorks(BigDecimal bhoomiPoojanCostOfWorks) {
 		this.bhoomiPoojanCostOfWorks = bhoomiPoojanCostOfWorks;
 	}
 
@@ -363,11 +363,11 @@ public class WatershedYatraInauguaration {
 	}
 
 	@Column(name = "lokarpan_cost_of_works")
-	public Integer getLokarpanCostOfWorks() {
+	public BigDecimal getLokarpanCostOfWorks() {
 		return lokarpanCostOfWorks;
 	}
 
-	public void setLokarpanCostOfWorks(Integer lokarpanCostOfWorks) {
+	public void setLokarpanCostOfWorks(BigDecimal lokarpanCostOfWorks) {
 		this.lokarpanCostOfWorks = lokarpanCostOfWorks;
 	}
 

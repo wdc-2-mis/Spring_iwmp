@@ -7,6 +7,7 @@ import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.bean.PreYatraPreparationBean;
 
 public interface WatershedYatraReportDao {
 	
@@ -16,5 +17,6 @@ public interface WatershedYatraReportDao {
 	
 	List<NodalOfficerBean> getRoutePlanReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<NodalOfficerBean> getNodalOfficerReportData(String lvl, Integer State, Integer district, Integer block);
-	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block);
+	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate);
+	List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district, Integer block, Integer grampan);
 }

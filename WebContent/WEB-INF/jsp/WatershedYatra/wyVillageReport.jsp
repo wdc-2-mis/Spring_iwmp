@@ -16,6 +16,7 @@ function showReport(e)
 	var district = $('#district').val();
 	var block = $('#block').val();
 	var gp = $('#grampan').val();
+	var userdate = $('#userdate').val();
 	if(state==='')
 	{
 		alert('Please select state ');
@@ -30,8 +31,14 @@ function showReport(e)
 	}
 	if(block==='')
 	{
-		alert('Please select block ');
+		alert('Please select Block ');
 		$('#block').focus();
+		e.preventDefault();
+	}
+	if(userdate==='')
+	{
+		alert('Please select Date ');
+		$('#userdate').focus();
 		e.preventDefault();
 	}
 	else{
@@ -43,19 +50,21 @@ function showReport(e)
 	return false;
 } 
 
-function downloadPDF(state, district, blkd, grampn){
-	
+function downloadPDF(state, district, blkd, grampn,userdate){
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
     var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
     var gpkName = document.getElementById("grampan").options[document.getElementById("grampan").selectedIndex].text;
+  
  
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
+    document.getElementById("userdate1").value=userdate;
+    
 	
-    document.routePlan.action="downloadRoutePlanRdeportPDF";
+    document.routePlan.action="downloadVillageYatraReportPDF";
 	document.routePlan.method="post";
 	document.routePlan.submit();
 }
@@ -68,7 +77,7 @@ function showChangedata(){
 	document.routePlan.submit();
 }
 
-function downloadExcel(state, district, blkd, grampn){
+function downloadExcel(state, district, blkd, grampn,userdate){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -79,8 +88,9 @@ function downloadExcel(state, district, blkd, grampn){
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
+    document.getElementById("userdate1").value=userdate;
 	
-    document.routePlan.action="downloadRoutePlanRepordtExcel";
+    document.routePlan.action="downloadExcelVillageYatraReport";
 	document.routePlan.method="post";
 	document.routePlan.submit();
 }
@@ -264,6 +274,7 @@ display: none; /* Hidden by default */
 		<input type="hidden" name="distName" id="distName" value="" />
 		<input type="hidden" name="blkName" id="blkName" value="" />
 		<input type="hidden" name="gpkName" id="gpkName" value="" />
+		<input type="hidden" name="userdate1" id="userdate1" value="" />
 		
       <table >
         <tr>
@@ -334,14 +345,25 @@ display: none; /* Hidden by default */
 					</c:if> 	
               </select>
           </td>
+           <td>
+           <div class="row">
+    			<div class="form-group col-12">
+    			
+      		  <label for="date">Date: </label>
+      		  <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />
+       		 
+    		</div>
+			</div>
+			 </td>
           <td align="left"> &nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);"  name="view" value='Get Data' /> </td>
        </tr>
       </table>
 
  <br/>
-<c:if test="${not empty routePlanList}">
-<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button>
+<c:if test="${not empty dataList}">
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}', '${userdate}')" class="btn btn-info">PDF</button>
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}','${userdate}')" class="btn btn-info">Excel</button>
+
 </c:if>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>

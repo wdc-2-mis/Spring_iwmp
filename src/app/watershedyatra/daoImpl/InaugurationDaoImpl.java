@@ -65,7 +65,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			for (MultipartFile file : mfile) {
 			
-			 res=commonFunction.uploadFileforLMS(file, filePath);
+				commonFunction.uploadFileforLMS(file, filePath);
 			
 			}
 			
@@ -79,7 +79,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			d.setDcode(userfileup.getDistrict());
 			IwmpBlock b= new IwmpBlock();
 			b.setBcode(userfileup.getBlock()); 
-			if(res.equals("success")) {
+			
 			data.setIwmpState(s);
 			data.setIwmpDistrict(d);
 			data.setIwmpBlock(b);
@@ -115,39 +115,68 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			data.setBhoomiPoojanNoOfWorks(userfileup.getNo_works_bhoomipoojan());
 			data.setBhoomiPoojanCostOfWorks(userfileup.getTot_works_bhoomipoojan());
-			data.setBhoomiPoojanPath1(filePath+userfileup.getBhoomipoojan_photo1().getOriginalFilename());
-			data.setBhoomiPoojanPath2(filePath+userfileup.getBhoomipoojan_photo2().getOriginalFilename());
+//			data.setBhoomiPoojanPath1(filePath+userfileup.getBhoomipoojan_photo1().getOriginalFilename());
+//			data.setBhoomiPoojanPath2(filePath+userfileup.getBhoomipoojan_photo2().getOriginalFilename());
+			
+			data.setBhoomiPoojanPath1(!userfileup.getBhoomipoojan_photo1().isEmpty() ? filePath + userfileup.getBhoomipoojan_photo1().getOriginalFilename() :  null);
+			data.setBhoomiPoojanPath2(!userfileup.getBhoomipoojan_photo2().isEmpty() ? filePath + userfileup.getBhoomipoojan_photo2().getOriginalFilename() :  null);
+			
 			data.setLokarpanNoOfWorks(userfileup.getNo_works_lokarpan());
 			data.setLokarpanCostOfWorks(userfileup.getTot_works_lokarpan());
-			data.setLokarpanPath1(filePath+userfileup.getLokarpan_photo1().getOriginalFilename());
-			data.setLokarpanPath2(filePath+userfileup.getLokarpan_photo2().getOriginalFilename());
+//			data.setLokarpanPath1(filePath+userfileup.getLokarpan_photo1().getOriginalFilename());
+//			data.setLokarpanPath2(filePath+userfileup.getLokarpan_photo2().getOriginalFilename());
+			
+			data.setLokarpanPath1(!userfileup.getLokarpan_photo1().isEmpty() ? filePath + userfileup.getLokarpan_photo1().getOriginalFilename() :  null);
+			data.setLokarpanPath2(!userfileup.getLokarpan_photo2().isEmpty() ? filePath + userfileup.getLokarpan_photo2().getOriginalFilename() :  null);
+			
 			data.setShramdaanNoOfLocation(userfileup.getNo_location_shramdaan());
 			data.setShramdaanNoOfParticipatedPeople(userfileup.getNo_people_shramdaan());
 			data.setManHr(userfileup.getMan());
-			data.setShramdaanPath1(filePath+userfileup.getShramdaan_photo1().getOriginalFilename());
-			data.setShramdaanPath2(filePath+userfileup.getShramdaan_photo2().getOriginalFilename());
+//			data.setShramdaanPath1(filePath+userfileup.getShramdaan_photo1().getOriginalFilename());
+//			data.setShramdaanPath2(filePath+userfileup.getShramdaan_photo2().getOriginalFilename());
+			
+			data.setShramdaanPath1(!userfileup.getShramdaan_photo1().isEmpty() ? filePath + userfileup.getShramdaan_photo1().getOriginalFilename() :  null);
+			data.setShramdaanPath2(!userfileup.getShramdaan_photo2().isEmpty() ? filePath + userfileup.getShramdaan_photo2().getOriginalFilename() :  null);
+			
 			data.setPlantationArea(userfileup.getArea_plantation());
 			data.setNoOfAgroForsetry(userfileup.getNo_plantation());
-			data.setPlantationPath1(filePath+userfileup.getPlantation_photo1().getOriginalFilename());
-			data.setPlantationPath2(filePath+userfileup.getPlantation_photo2().getOriginalFilename());
+//			data.setPlantationPath1(filePath+userfileup.getPlantation_photo1().getOriginalFilename());
+//			data.setPlantationPath2(filePath+userfileup.getPlantation_photo2().getOriginalFilename());
+			
+			data.setPlantationPath1(!userfileup.getPlantation_photo1().isEmpty() ? filePath + userfileup.getPlantation_photo1().getOriginalFilename() :  null);
+			data.setPlantationPath2(!userfileup.getPlantation_photo2().isEmpty() ? filePath + userfileup.getPlantation_photo2().getOriginalFilename() :  null);
+			
 			data.setAwardDistribution(userfileup.getNo_awards());
-			data.setAwardDistributionPath1(filePath+userfileup.getAward_photo1().getOriginalFilename());
-			data.setAwardDistributionPath2(filePath+userfileup.getAward_photo2().getOriginalFilename());
+//			data.setAwardDistributionPath1(filePath+userfileup.getAward_photo1().getOriginalFilename());
+//			data.setAwardDistributionPath2(filePath+userfileup.getAward_photo2().getOriginalFilename());
+			
+			data.setAwardDistributionPath1(!userfileup.getAward_photo1().isEmpty() ? filePath + userfileup.getAward_photo1().getOriginalFilename() :  null);
+			data.setAwardDistributionPath2(!userfileup.getAward_photo2().isEmpty() ? filePath + userfileup.getAward_photo2().getOriginalFilename() :  null);
+			
 			data.setNoDeptStalls(userfileup.getDept_stalls());
-			data.setDeptStallsPath1(filePath+userfileup.getDept_stalls_photo1().getOriginalFilename());
-			data.setDeptStallsPath2(filePath+userfileup.getDept_stalls_photo2().getOriginalFilename());
+//			data.setDeptStallsPath1(filePath+userfileup.getDept_stalls_photo1().getOriginalFilename());
+//			data.setDeptStallsPath2(filePath+userfileup.getDept_stalls_photo2().getOriginalFilename());
+			
+			data.setDeptStallsPath1(!userfileup.getDept_stalls_photo1().isEmpty() ? filePath + userfileup.getDept_stalls_photo1().getOriginalFilename() :  null);
+			data.setDeptStallsPath2(!userfileup.getDept_stalls_photo2().isEmpty() ? filePath + userfileup.getDept_stalls_photo2().getOriginalFilename() :  null);
+			
 			data.setNoShgFpo(userfileup.getShg_fpo_stalls());
-			data.setShgFpoPath1(filePath+userfileup.getShg_fpo_stalls_photo1().getOriginalFilename());
-			data.setShgFpoPath2(filePath+userfileup.getShg_fpo_stalls_photo2().getOriginalFilename());
+//			data.setShgFpoPath1(filePath+userfileup.getShg_fpo_stalls_photo1().getOriginalFilename());
+//			data.setShgFpoPath2(filePath+userfileup.getShg_fpo_stalls_photo2().getOriginalFilename());
+			
+			data.setShgFpoPath1(!userfileup.getShg_fpo_stalls_photo1().isEmpty() ? filePath + userfileup.getShg_fpo_stalls_photo1().getOriginalFilename() :  null);
+			data.setShgFpoPath2(!userfileup.getShg_fpo_stalls_photo2().isEmpty() ? filePath + userfileup.getShg_fpo_stalls_photo2().getOriginalFilename() :  null);
+			
 			data.setNoLakhpatiDidi(userfileup.getNo_lakhpati_didi());
-			data.setLakhpatiDidiPath1(filePath+userfileup.getLakhpati_didi_photo1().getOriginalFilename());
-			data.setLakhpatiDidiPath2(filePath+userfileup.getLakhpati_didi_photo2().getOriginalFilename());
+//			data.setLakhpatiDidiPath1(filePath+userfileup.getLakhpati_didi_photo1().getOriginalFilename());
+//			data.setLakhpatiDidiPath2(filePath+userfileup.getLakhpati_didi_photo2().getOriginalFilename());
+			
+			data.setLakhpatiDidiPath1(!userfileup.getLakhpati_didi_photo1().isEmpty() ? filePath + userfileup.getLakhpati_didi_photo1().getOriginalFilename() :  null);
+			data.setLakhpatiDidiPath2(!userfileup.getLakhpati_didi_photo2().isEmpty() ? filePath + userfileup.getLakhpati_didi_photo2().getOriginalFilename() :  null);
+			
 			
 			sess.save(data);
-			
 			res = "success";
-			}
-			
 			sess.getTransaction().commit();
 			
 		}
@@ -214,24 +243,41 @@ public class InaugurationDaoImpl implements InaugurationDao {
 				imgList.add(list.get(0).getThemeSongPath1().substring(list.get(0).getThemeSongPath1().lastIndexOf("/")+1));
 			if(list.get(0).getThemeSongPath2()!=null)
 				imgList.add(list.get(0).getThemeSongPath2().substring(list.get(0).getThemeSongPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getDeptStallsPath1().substring(list.get(0).getDeptStallsPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getDeptStallsPath2().substring(list.get(0).getDeptStallsPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShgFpoPath1().substring(list.get(0).getShgFpoPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getShgFpoPath2().substring(list.get(0).getShgFpoPath2().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLakhpatiDidiPath1().substring(list.get(0).getLakhpatiDidiPath1().lastIndexOf("/")+1));
-			imgList.add(list.get(0).getLakhpatiDidiPath2().substring(list.get(0).getLakhpatiDidiPath2().lastIndexOf("/")+1));
+			if(list.get(0).getBhoomiPoojanPath1()!=null)
+				imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
+			if(list.get(0).getBhoomiPoojanPath2()!=null)
+				imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
+			if(list.get(0).getLokarpanPath1()!=null)
+				imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
+			if(list.get(0).getLokarpanPath2()!=null)
+				imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
+			if(list.get(0).getShramdaanPath1()!=null)
+				imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
+			if(list.get(0).getShramdaanPath2()!=null)
+				imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
+			if(list.get(0).getPlantationPath1()!=null)
+				imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
+			if(list.get(0).getPlantationPath2()!=null)
+				imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
+			if(list.get(0).getAwardDistributionPath1()!=null)
+				imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
+			if(list.get(0).getAwardDistributionPath2()!=null)
+				imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
+			if(list.get(0).getDeptStallsPath1()!=null)
+				imgList.add(list.get(0).getDeptStallsPath1().substring(list.get(0).getDeptStallsPath1().lastIndexOf("/")+1));
+			if(list.get(0).getDeptStallsPath2()!=null)
+				imgList.add(list.get(0).getDeptStallsPath2().substring(list.get(0).getDeptStallsPath2().lastIndexOf("/")+1));
+			if(list.get(0).getShgFpoPath1()!=null)
+				imgList.add(list.get(0).getShgFpoPath1().substring(list.get(0).getShgFpoPath1().lastIndexOf("/")+1));
+			if(list.get(0).getShgFpoPath2()!=null)
+				imgList.add(list.get(0).getShgFpoPath2().substring(list.get(0).getShgFpoPath2().lastIndexOf("/")+1));
+			if(list.get(0).getLakhpatiDidiPath1()!=null)
+				imgList.add(list.get(0).getLakhpatiDidiPath1().substring(list.get(0).getLakhpatiDidiPath1().lastIndexOf("/")+1));
+			if(list.get(0).getLakhpatiDidiPath2()!=null)
+				imgList.add(list.get(0).getLakhpatiDidiPath2().substring(list.get(0).getLakhpatiDidiPath2().lastIndexOf("/")+1));
 			
-*/
+*/			
+
 			
 			//local
 			
@@ -243,22 +289,38 @@ public class InaugurationDaoImpl implements InaugurationDao {
 				imgList.add(list.get(0).getThemeSongPath1().replaceAll(".*\\\\", ""));
 			if(list.get(0).getThemeSongPath2()!=null)
 				imgList.add(list.get(0).getThemeSongPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getDeptStallsPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getDeptStallsPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getShgFpoPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getShgFpoPath2().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getLakhpatiDidiPath1().replaceAll(".*\\\\", ""));
-			imgList.add(list.get(0).getLakhpatiDidiPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getBhoomiPoojanPath1()!=null)
+				imgList.add(list.get(0).getBhoomiPoojanPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getBhoomiPoojanPath2()!=null)
+				imgList.add(list.get(0).getBhoomiPoojanPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getLokarpanPath1()!=null)
+				imgList.add(list.get(0).getLokarpanPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getLokarpanPath2()!=null)
+				imgList.add(list.get(0).getLokarpanPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getShramdaanPath1()!=null)
+				imgList.add(list.get(0).getShramdaanPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getShramdaanPath2()!=null)
+				imgList.add(list.get(0).getShramdaanPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getPlantationPath1()!=null)
+				imgList.add(list.get(0).getPlantationPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getPlantationPath2()!=null)
+				imgList.add(list.get(0).getPlantationPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getAwardDistributionPath1()!=null)
+				imgList.add(list.get(0).getAwardDistributionPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getAwardDistributionPath2()!=null)
+				imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getDeptStallsPath1()!=null)
+				imgList.add(list.get(0).getDeptStallsPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getDeptStallsPath2()!=null)
+				imgList.add(list.get(0).getDeptStallsPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getShgFpoPath1()!=null)
+				imgList.add(list.get(0).getShgFpoPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getShgFpoPath2()!=null)
+				imgList.add(list.get(0).getShgFpoPath2().replaceAll(".*\\\\", ""));
+			if(list.get(0).getLakhpatiDidiPath1()!=null)
+				imgList.add(list.get(0).getLakhpatiDidiPath1().replaceAll(".*\\\\", ""));
+			if(list.get(0).getLakhpatiDidiPath2()!=null)
+				imgList.add(list.get(0).getLakhpatiDidiPath2().replaceAll(".*\\\\", ""));
 			
 			
 		}catch(Exception ex) {

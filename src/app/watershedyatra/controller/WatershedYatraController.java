@@ -131,7 +131,8 @@ public class WatershedYatraController {
 			res= ser.saveWatershedYatraVillageupload(userfileup, session);
 			if (res.equals("success")) {
 				redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
-			} else {
+			} 
+			else {
 				redirectAttributes.addFlashAttribute("result", "Data not saved Successfully and Upload correct file!");
 			}
 			return new ModelAndView("redirect:/getWatershedYatraHeader");
