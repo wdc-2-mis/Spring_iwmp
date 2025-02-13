@@ -1,6 +1,7 @@
 package app.watershedyatra.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.*;
 import java.util.Date;
 
@@ -71,6 +72,61 @@ public class WatershedYatraInauguaration {
     private IwmpState iwmpState;
     private IwmpDistrict iwmpDistrict;
     private IwmpBlock iwmpBlock;
+    
+    private String van_flag_path1_longitute;
+    private String van_flag_path1_latitude;
+    private Timestamp van_flag_path1_time;
+    private String van_flag_path2_longitute;
+    private String van_flag_path2_latitude;
+    private Timestamp van_flag_path2_time;
+    private String theme_song_path1_longitute;
+    private String theme_song_path1_latitude;
+    private Timestamp theme_song_path1_time;
+    private String theme_song_path2_longitute;
+    private String theme_song_path2_latitude;
+    private Timestamp theme_song_path2_time;
+    private String bhoomi_poojan_path1_longitute;
+    private String bhoomi_poojan_path1_latitude;
+    private Timestamp bhoomi_poojan_path1_time;
+    private String bhoomi_poojan_path2_longitute;
+    private String bhoomi_poojan_path2_latitude;
+    private Timestamp bhoomi_poojan_path2_time;
+    private String lokarpan_path1_longitute;
+    private String lokarpan_path1_latitude;
+    private Timestamp lokarpan_path1_time;
+    private String lokarpan_path2_longitute;
+    private String lokarpan_path2_latitude;
+    private Timestamp lokarpan_path2_time;
+    private String plantation_path1_longitute;
+    private String plantation_path1_latitude;
+    private Timestamp plantation_path1_time;
+    private String plantation_path2_longitute;
+    private String plantation_path2_latitude;
+    private Timestamp plantation_path2_time;
+    private String award_distribution_path1_longitute;
+    private String award_distribution_path1_latitude;
+    private Timestamp award_distribution_path1_time;
+    private String award_distribution_path2_longitute;
+    private String award_distribution_path2_latitude;
+    private Timestamp award_distribution_path2_time;
+    private String dept_stalls_path1_longitute;
+    private String dept_stalls_path1_latitude;
+    private Timestamp dept_stalls_path1_time;
+    private String dept_stalls_path2_longitute;
+    private String dept_stalls_path2_latitude;
+    private Timestamp dept_stalls_path2_time;
+    private String shg_fpo_path1_longitute;
+    private String shg_fpo_path1_latitude;
+    private Timestamp shg_fpo_path1_time;
+    private String shg_fpo_path2_longitute;
+    private String shg_fpo_path2_latitude;
+    private Timestamp shg_fpo_path2_time;
+    private String lakhpati_didi_path1_longitute;
+    private String lakhpati_didi_path1_latitude;
+    private Timestamp lakhpati_didi_path1_time;
+    private String lakhpati_didi_path2_longitute;
+    private String lakhpati_didi_path2_latitude;
+    private Timestamp lakhpati_didi_path2_time;
     
     public WatershedYatraInauguaration() { }
    
@@ -663,6 +719,494 @@ public class WatershedYatraInauguaration {
 	public void setIwmpBlock(IwmpBlock iwmpBlock) {
 		this.iwmpBlock = iwmpBlock;
 	}
+
+	@Column(name ="van_flag_path1_longitute")
+	public String getVan_flag_path1_longitute() {
+		return van_flag_path1_longitute;
+	}
+
+	public void setVan_flag_path1_longitute(String van_flag_path1_longitute) {
+		this.van_flag_path1_longitute = van_flag_path1_longitute;
+	}
+
+	@Column(name ="van_flag_path1_latitude")
+	public String getVan_flag_path1_latitude() {
+		return van_flag_path1_latitude;
+	}
+
+	public void setVan_flag_path1_latitude(String van_flag_path1_latitude) {
+		this.van_flag_path1_latitude = van_flag_path1_latitude;
+	}
+
+	@Column(name ="van_flag_path1_time")
+	public Timestamp getVan_flag_path1_time() {
+		return van_flag_path1_time;
+	}
+
+	public void setVan_flag_path1_time(Timestamp van_flag_path1_time) {
+		this.van_flag_path1_time = van_flag_path1_time;
+	}
+
+	@Column(name ="van_flag_path2_longitute")
+	public String getVan_flag_path2_longitute() {
+		return van_flag_path2_longitute;
+	}
+
+	public void setVan_flag_path2_longitute(String van_flag_path2_longitute) {
+		this.van_flag_path2_longitute = van_flag_path2_longitute;
+	}
+
+	@Column(name ="van_flag_path2_latitude")
+	public String getVan_flag_path2_latitude() {
+		return van_flag_path2_latitude;
+	}
+
+	public void setVan_flag_path2_latitude(String van_flag_path2_latitude) {
+		this.van_flag_path2_latitude = van_flag_path2_latitude;
+	}
+
+	@Column(name ="van_flag_path2_time")
+	public Timestamp getVan_flag_path2_time() {
+		return van_flag_path2_time;
+	}
+
+	public void setVan_flag_path2_time(Timestamp van_flag_path2_time) {
+		this.van_flag_path2_time = van_flag_path2_time;
+	}
+
+	@Column(name ="theme_song_path1_longitute")
+	public String getTheme_song_path1_longitute() {
+		return theme_song_path1_longitute;
+	}
+
+	public void setTheme_song_path1_longitute(String theme_song_path1_longitute) {
+		this.theme_song_path1_longitute = theme_song_path1_longitute;
+	}
+
+	@Column(name ="theme_song_path1_latitude")
+	public String getTheme_song_path1_latitude() {
+		return theme_song_path1_latitude;
+	}
+
+	public void setTheme_song_path1_latitude(String theme_song_path1_latitude) {
+		this.theme_song_path1_latitude = theme_song_path1_latitude;
+	}
+
+	@Column(name ="theme_song_path1_time")
+	public Timestamp getTheme_song_path1_time() {
+		return theme_song_path1_time;
+	}
+
+	public void setTheme_song_path1_time(Timestamp theme_song_path1_time) {
+		this.theme_song_path1_time = theme_song_path1_time;
+	}
+
+	@Column(name ="theme_song_path2_longitute")
+	public String getTheme_song_path2_longitute() {
+		return theme_song_path2_longitute;
+	}
+
+	public void setTheme_song_path2_longitute(String theme_song_path2_longitute) {
+		this.theme_song_path2_longitute = theme_song_path2_longitute;
+	}
+
+	@Column(name ="theme_song_path2_latitude")
+	public String getTheme_song_path2_latitude() {
+		return theme_song_path2_latitude;
+	}
+
+	public void setTheme_song_path2_latitude(String theme_song_path2_latitude) {
+		this.theme_song_path2_latitude = theme_song_path2_latitude;
+	}
+
+	@Column(name ="theme_song_path2_time")
+	public Timestamp getTheme_song_path2_time() {
+		return theme_song_path2_time;
+	}
+
+	public void setTheme_song_path2_time(Timestamp theme_song_path2_time) {
+		this.theme_song_path2_time = theme_song_path2_time;
+	}
+
+	@Column(name ="bhoomi_poojan_path1_longitute")
+	public String getBhoomi_poojan_path1_longitute() {
+		return bhoomi_poojan_path1_longitute;
+	}
+
+	public void setBhoomi_poojan_path1_longitute(String bhoomi_poojan_path1_longitute) {
+		this.bhoomi_poojan_path1_longitute = bhoomi_poojan_path1_longitute;
+	}
+
+	@Column(name ="bhoomi_poojan_path1_latitude")
+	public String getBhoomi_poojan_path1_latitude() {
+		return bhoomi_poojan_path1_latitude;
+	}
+
+	public void setBhoomi_poojan_path1_latitude(String bhoomi_poojan_path1_latitude) {
+		this.bhoomi_poojan_path1_latitude = bhoomi_poojan_path1_latitude;
+	}
+
+	@Column(name ="bhoomi_poojan_path1_time")
+	public Timestamp getBhoomi_poojan_path1_time() {
+		return bhoomi_poojan_path1_time;
+	}
+
+	public void setBhoomi_poojan_path1_time(Timestamp bhoomi_poojan_path1_time) {
+		this.bhoomi_poojan_path1_time = bhoomi_poojan_path1_time;
+	}
+
+	@Column(name ="bhoomi_poojan_path2_longitute")
+	public String getBhoomi_poojan_path2_longitute() {
+		return bhoomi_poojan_path2_longitute;
+	}
+
+	public void setBhoomi_poojan_path2_longitute(String bhoomi_poojan_path2_longitute) {
+		this.bhoomi_poojan_path2_longitute = bhoomi_poojan_path2_longitute;
+	}
+
+	@Column(name ="bhoomi_poojan_path2_latitude")
+	public String getBhoomi_poojan_path2_latitude() {
+		return bhoomi_poojan_path2_latitude;
+	}
+
+	public void setBhoomi_poojan_path2_latitude(String bhoomi_poojan_path2_latitude) {
+		this.bhoomi_poojan_path2_latitude = bhoomi_poojan_path2_latitude;
+	}
+
+	@Column(name ="bhoomi_poojan_path2_time")
+	public Timestamp getBhoomi_poojan_path2_time() {
+		return bhoomi_poojan_path2_time;
+	}
+
+	public void setBhoomi_poojan_path2_time(Timestamp bhoomi_poojan_path2_time) {
+		this.bhoomi_poojan_path2_time = bhoomi_poojan_path2_time;
+	}
+
+	@Column(name ="lokarpan_path1_longitute")
+	public String getLokarpan_path1_longitute() {
+		return lokarpan_path1_longitute;
+	}
+
+	public void setLokarpan_path1_longitute(String lokarpan_path1_longitute) {
+		this.lokarpan_path1_longitute = lokarpan_path1_longitute;
+	}
+
+	@Column(name ="lokarpan_path1_latitude")
+	public String getLokarpan_path1_latitude() {
+		return lokarpan_path1_latitude;
+	}
+
+	public void setLokarpan_path1_latitude(String lokarpan_path1_latitude) {
+		this.lokarpan_path1_latitude = lokarpan_path1_latitude;
+	}
+
+	@Column(name ="lokarpan_path1_time")
+	public Timestamp getLokarpan_path1_time() {
+		return lokarpan_path1_time;
+	}
+
+	public void setLokarpan_path1_time(Timestamp lokarpan_path1_time) {
+		this.lokarpan_path1_time = lokarpan_path1_time;
+	}
+
+	@Column(name ="lokarpan_path2_longitute")
+	public String getLokarpan_path2_longitute() {
+		return lokarpan_path2_longitute;
+	}
+
+	public void setLokarpan_path2_longitute(String lokarpan_path2_longitute) {
+		this.lokarpan_path2_longitute = lokarpan_path2_longitute;
+	}
+
+	@Column(name ="lokarpan_path2_latitude")
+	public String getLokarpan_path2_latitude() {
+		return lokarpan_path2_latitude;
+	}
+
+	public void setLokarpan_path2_latitude(String lokarpan_path2_latitude) {
+		this.lokarpan_path2_latitude = lokarpan_path2_latitude;
+	}
+	
+	@Column(name ="lokarpan_path2_time")
+	public Timestamp getLokarpan_path2_time() {
+		return lokarpan_path2_time;
+	}
+
+	public void setLokarpan_path2_time(Timestamp lokarpan_path2_time) {
+		this.lokarpan_path2_time = lokarpan_path2_time;
+	}
+
+	@Column(name ="plantation_path1_longitute")
+	public String getPlantation_path1_longitute() {
+		return plantation_path1_longitute;
+	}
+
+	public void setPlantation_path1_longitute(String plantation_path1_longitute) {
+		this.plantation_path1_longitute = plantation_path1_longitute;
+	}
+
+	@Column(name ="plantation_path1_latitude")
+	public String getPlantation_path1_latitude() {
+		return plantation_path1_latitude;
+	}
+
+	public void setPlantation_path1_latitude(String plantation_path1_latitude) {
+		this.plantation_path1_latitude = plantation_path1_latitude;
+	}
+
+	@Column(name ="plantation_path1_time")
+	public Timestamp getPlantation_path1_time() {
+		return plantation_path1_time;
+	}
+
+	public void setPlantation_path1_time(Timestamp plantation_path1_time) {
+		this.plantation_path1_time = plantation_path1_time;
+	}
+
+	@Column(name ="plantation_path2_longitute")
+	public String getPlantation_path2_longitute() {
+		return plantation_path2_longitute;
+	}
+
+	public void setPlantation_path2_longitute(String plantation_path2_longitute) {
+		this.plantation_path2_longitute = plantation_path2_longitute;
+	}
+
+	@Column(name ="plantation_path2_latitude")
+	public String getPlantation_path2_latitude() {
+		return plantation_path2_latitude;
+	}
+
+	public void setPlantation_path2_latitude(String plantation_path2_latitude) {
+		this.plantation_path2_latitude = plantation_path2_latitude;
+	}
+
+	@Column(name ="plantation_path2_time")
+	public Timestamp getPlantation_path2_time() {
+		return plantation_path2_time;
+	}
+
+	public void setPlantation_path2_time(Timestamp plantation_path2_time) {
+		this.plantation_path2_time = plantation_path2_time;
+	}
+
+	@Column(name ="award_distribution_path1_longitute")
+	public String getAward_distribution_path1_longitute() {
+		return award_distribution_path1_longitute;
+	}
+
+	public void setAward_distribution_path1_longitute(String award_distribution_path1_longitute) {
+		this.award_distribution_path1_longitute = award_distribution_path1_longitute;
+	}
+
+	@Column(name ="award_distribution_path1_latitude")
+	public String getAward_distribution_path1_latitude() {
+		return award_distribution_path1_latitude;
+	}
+
+	public void setAward_distribution_path1_latitude(String award_distribution_path1_latitude) {
+		this.award_distribution_path1_latitude = award_distribution_path1_latitude;
+	}
+
+	@Column(name ="award_distribution_path1_time")
+	public Timestamp getAward_distribution_path1_time() {
+		return award_distribution_path1_time;
+	}
+
+	public void setAward_distribution_path1_time(Timestamp award_distribution_path1_time) {
+		this.award_distribution_path1_time = award_distribution_path1_time;
+	}
+
+	@Column(name ="award_distribution_path2_longitute")
+	public String getAward_distribution_path2_longitute() {
+		return award_distribution_path2_longitute;
+	}
+
+	public void setAward_distribution_path2_longitute(String award_distribution_path2_longitute) {
+		this.award_distribution_path2_longitute = award_distribution_path2_longitute;
+	}
+
+	@Column(name ="award_distribution_path2_latitude")
+	public String getAward_distribution_path2_latitude() {
+		return award_distribution_path2_latitude;
+	}
+
+	public void setAward_distribution_path2_latitude(String award_distribution_path2_latitude) {
+		this.award_distribution_path2_latitude = award_distribution_path2_latitude;
+	}
+
+	@Column(name ="award_distribution_path2_time")
+	public Timestamp getAward_distribution_path2_time() {
+		return award_distribution_path2_time;
+	}
+
+	public void setAward_distribution_path2_time(Timestamp award_distribution_path2_time) {
+		this.award_distribution_path2_time = award_distribution_path2_time;
+	}
+
+	@Column(name ="dept_stalls_path1_longitute")
+	public String getDept_stalls_path1_longitute() {
+		return dept_stalls_path1_longitute;
+	}
+
+	public void setDept_stalls_path1_longitute(String dept_stalls_path1_longitute) {
+		this.dept_stalls_path1_longitute = dept_stalls_path1_longitute;
+	}
+
+	@Column(name ="dept_stalls_path1_latitude")
+	public String getDept_stalls_path1_latitude() {
+		return dept_stalls_path1_latitude;
+	}
+
+	public void setDept_stalls_path1_latitude(String dept_stalls_path1_latitude) {
+		this.dept_stalls_path1_latitude = dept_stalls_path1_latitude;
+	}
+
+	@Column(name ="dept_stalls_path1_time")
+	public Timestamp getDept_stalls_path1_time() {
+		return dept_stalls_path1_time;
+	}
+
+	public void setDept_stalls_path1_time(Timestamp dept_stalls_path1_time) {
+		this.dept_stalls_path1_time = dept_stalls_path1_time;
+	}
+
+	@Column(name ="dept_stalls_path2_longitute")
+	public String getDept_stalls_path2_longitute() {
+		return dept_stalls_path2_longitute;
+	}
+
+	public void setDept_stalls_path2_longitute(String dept_stalls_path2_longitute) {
+		this.dept_stalls_path2_longitute = dept_stalls_path2_longitute;
+	}
+
+	@Column(name ="dept_stalls_path2_latitude")
+	public String getDept_stalls_path2_latitude() {
+		return dept_stalls_path2_latitude;
+	}
+
+	public void setDept_stalls_path2_latitude(String dept_stalls_path2_latitude) {
+		this.dept_stalls_path2_latitude = dept_stalls_path2_latitude;
+	}
+
+	@Column(name ="dept_stalls_path2_time")
+	public Timestamp getDept_stalls_path2_time() {
+		return dept_stalls_path2_time;
+	}
+
+	public void setDept_stalls_path2_time(Timestamp dept_stalls_path2_time) {
+		this.dept_stalls_path2_time = dept_stalls_path2_time;
+	}
+
+	@Column(name ="shg_fpo_path1_longitute")
+	public String getShg_fpo_path1_longitute() {
+		return shg_fpo_path1_longitute;
+	}
+
+	public void setShg_fpo_path1_longitute(String shg_fpo_path1_longitute) {
+		this.shg_fpo_path1_longitute = shg_fpo_path1_longitute;
+	}
+
+	@Column(name ="shg_fpo_path1_latitude")
+	public String getShg_fpo_path1_latitude() {
+		return shg_fpo_path1_latitude;
+	}
+
+	public void setShg_fpo_path1_latitude(String shg_fpo_path1_latitude) {
+		this.shg_fpo_path1_latitude = shg_fpo_path1_latitude;
+	}
+
+	@Column(name ="shg_fpo_path1_time")
+	public Timestamp getShg_fpo_path1_time() {
+		return shg_fpo_path1_time;
+	}
+
+	public void setShg_fpo_path1_time(Timestamp shg_fpo_path1_time) {
+		this.shg_fpo_path1_time = shg_fpo_path1_time;
+	}
+
+	@Column(name ="shg_fpo_path2_longitute")
+	public String getShg_fpo_path2_longitute() {
+		return shg_fpo_path2_longitute;
+	}
+
+	public void setShg_fpo_path2_longitute(String shg_fpo_path2_longitute) {
+		this.shg_fpo_path2_longitute = shg_fpo_path2_longitute;
+	}
+
+	@Column(name ="shg_fpo_path2_latitude")
+	public String getShg_fpo_path2_latitude() {
+		return shg_fpo_path2_latitude;
+	}
+
+	public void setShg_fpo_path2_latitude(String shg_fpo_path2_latitude) {
+		this.shg_fpo_path2_latitude = shg_fpo_path2_latitude;
+	}
+
+	@Column(name ="shg_fpo_path2_time")
+	public Timestamp getShg_fpo_path2_time() {
+		return shg_fpo_path2_time;
+	}
+
+	public void setShg_fpo_path2_time(Timestamp shg_fpo_path2_time) {
+		this.shg_fpo_path2_time = shg_fpo_path2_time;
+	}
+
+	@Column(name ="lakhpati_didi_path1_longitute")
+	public String getLakhpati_didi_path1_longitute() {
+		return lakhpati_didi_path1_longitute;
+	}
+
+	public void setLakhpati_didi_path1_longitute(String lakhpati_didi_path1_longitute) {
+		this.lakhpati_didi_path1_longitute = lakhpati_didi_path1_longitute;
+	}
+
+	@Column(name ="lakhpati_didi_path1_latitude")
+	public String getLakhpati_didi_path1_latitude() {
+		return lakhpati_didi_path1_latitude;
+	}
+
+	public void setLakhpati_didi_path1_latitude(String lakhpati_didi_path1_latitude) {
+		this.lakhpati_didi_path1_latitude = lakhpati_didi_path1_latitude;
+	}
+
+	@Column(name ="lakhpati_didi_path1_time")
+	public Timestamp getLakhpati_didi_path1_time() {
+		return lakhpati_didi_path1_time;
+	}
+
+	public void setLakhpati_didi_path1_time(Timestamp lakhpati_didi_path1_time) {
+		this.lakhpati_didi_path1_time = lakhpati_didi_path1_time;
+	}
+
+	@Column(name ="lakhpati_didi_path2_longitute")
+	public String getLakhpati_didi_path2_longitute() {
+		return lakhpati_didi_path2_longitute;
+	}
+
+	public void setLakhpati_didi_path2_longitute(String lakhpati_didi_path2_longitute) {
+		this.lakhpati_didi_path2_longitute = lakhpati_didi_path2_longitute;
+	}
+
+	@Column(name ="lakhpati_didi_path2_latitude")
+	public String getLakhpati_didi_path2_latitude() {
+		return lakhpati_didi_path2_latitude;
+	}
+
+	public void setLakhpati_didi_path2_latitude(String lakhpati_didi_path2_latitude) {
+		this.lakhpati_didi_path2_latitude = lakhpati_didi_path2_latitude;
+	}
+
+	@Column(name ="lakhpati_didi_path2_time")
+	public Timestamp getLakhpati_didi_path2_time() {
+		return lakhpati_didi_path2_time;
+	}
+
+	public void setLakhpati_didi_path2_time(Timestamp lakhpati_didi_path2_time) {
+		this.lakhpati_didi_path2_time = lakhpati_didi_path2_time;
+	}
+	
+	
 
 
 }
