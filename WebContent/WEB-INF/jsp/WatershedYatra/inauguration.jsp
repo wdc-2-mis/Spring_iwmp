@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <script src='<c:url value="/resources/js/inauguration.js" />'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 <script type="text/javascript">
 
 let formSubmitted = false;
@@ -681,7 +682,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 		<label>
-			<span style="color:blue;">Note:- Image size must be under 300KB, with dimensions of 400 x 400 pixels or less</span>
+			<span style="color:blue;">Note:- The image size must be under 300KB, with dimensions of 300 x 400 pixels with Geo-referenced and Time-stamped.</span>
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
@@ -778,15 +779,33 @@ display: none; /* Hidden by default */
      		<td>Flag off of Van</td>
      		<td><input type="radio" id="flagOffYes" name="flagoff" value="true" autocomplete="off" onclick="toggleFileUpload('flagoff', 'flagoff_files')" />Yes</td>
      		<td><input type="radio" id="flagOffNo" name="flagoff" value="false" autocomplete="off" onclick="toggleFileUpload('flagoff', 'flagoff_files')" />No</td>
-     		<td id="flagoff_files">Upload Photographs<br><input type="file" id="flagoff_photo1" name="flagoff_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo1')" /><br/>
-     							<input type="file" id="flagoff_photo2" name="flagoff_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'flagoff_photo2')" /></td>
+     		<td id="flagoff_files">Upload Photographs<br>
+     			<input type="file" id="flagoff_photo1" name="flagoff_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" /><br/>
+     			<input type="hidden" id="flagoff_photo1_lat" name="flagoff_photo1_lat">
+                <input type="hidden" id="flagoff_photo1_lng" name="flagoff_photo1_lng">
+                <input type="hidden" id="flagoff_photo1_time" name="flagoff_photo1_time">
+     			
+     			<input type="file" id="flagoff_photo2" name="flagoff_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" />
+     			<input type="hidden" id="flagoff_photo2_lat" name="flagoff_photo2_lat">
+                <input type="hidden" id="flagoff_photo2_lng" name="flagoff_photo2_lng">
+                <input type="hidden" id="flagoff_photo2_time" name="flagoff_photo2_time">
+     		</td>
      	</tr>
      	<tr>
      		<td>Launch of Theme Song</td>
      		<td><input type="radio" id="themeSongYes" name="themesong" value="true" autocomplete="off" onclick="toggleFileUpload('themesong', 'themesong_files')" />Yes</td>
      		<td><input type="radio" id="themeSongNo" name="themesong" value="false" autocomplete="off" onclick="toggleFileUpload('themesong', 'themesong_files')" />No</td>
-     		<td id="themesong_files">Upload Photographs<br><input type="file" id="themesong_photo1" name="themesong_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo1')" /><br/>
-     							<input type="file" id="themesong_photo2" name="themesong_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'themesong_photo2')" /></td>
+     		<td id="themesong_files">Upload Photographs<br>
+     			<input type="file" id="themesong_photo1" name="themesong_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" /><br/>
+     			<input type="hidden" id="themesong_photo1_lat" name="themesong_photo1_lat">
+                <input type="hidden" id="themesong_photo1_lng" name="themesong_photo1_lng">
+                <input type="hidden" id="themesong_photo1_time" name="themesong_photo1_time">
+     			
+     			<input type="file" id="themesong_photo2" name="themesong_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" />
+     			<input type="hidden" id="themesong_photo2_lat" name="themesong_photo2_lat">
+                <input type="hidden" id="themesong_photo2_lng" name="themesong_photo2_lng">
+                <input type="hidden" id="themesong_photo2_time" name="themesong_photo2_time">
+     		</td>
      	</tr>
      	<tr>
      		<td>Bhoomi Poojan</td>
@@ -794,8 +813,17 @@ display: none; /* Hidden by default */
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
-			<td>Upload Photographs<br><input type="file" id="bhoomipoojan_photo1" name="bhoomipoojan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo1')" required /><br/>
-								<input type="file" id="bhoomipoojan_photo2" name="bhoomipoojan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'bhoomipoojan_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="bhoomipoojan_photo1" name="bhoomipoojan_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="bhoomipoojan_photo1_lat" name="bhoomipoojan_photo1_lat">
+                <input type="hidden" id="bhoomipoojan_photo1_lng" name="bhoomipoojan_photo1_lng">
+                <input type="hidden" id="bhoomipoojan_photo1_time" name="bhoomipoojan_photo1_time">
+				
+				<input type="file" id="bhoomipoojan_photo2" name="bhoomipoojan_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="bhoomipoojan_photo2_lat" name="bhoomipoojan_photo2_lat">
+                <input type="hidden" id="bhoomipoojan_photo2_lng" name="bhoomipoojan_photo2_lng">
+                <input type="hidden" id="bhoomipoojan_photo2_time" name="bhoomipoojan_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Lokarpan</td>
@@ -803,8 +831,17 @@ display: none; /* Hidden by default */
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_lokarpan" name="tot_works_lokarpan" autocomplete="off"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
-			<td>Upload Photographs<br><input type="file" id="lokarpan_photo1" name="lokarpan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo1')" required /><br/>
-								<input type="file" id="lokarpan_photo2" name="lokarpan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lokarpan_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="lokarpan_photo1" name="lokarpan_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="lokarpan_photo1_lat" name="lokarpan_photo1_lat">
+                <input type="hidden" id="lokarpan_photo1_lng" name="lokarpan_photo1_lng">
+                <input type="hidden" id="lokarpan_photo1_time" name="lokarpan_photo1_time">
+				
+				<input type="file" id="lokarpan_photo2" name="lokarpan_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="lokarpan_photo2_lat" name="lokarpan_photo2_lat">
+                <input type="hidden" id="lokarpan_photo2_lng" name="lokarpan_photo2_lng">
+                <input type="hidden" id="lokarpan_photo2_time" name="lokarpan_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Shramdaan</td>
@@ -814,44 +851,98 @@ display: none; /* Hidden by default */
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /><br/> <br/>
 			Number of Man Hours<br><input type="text" id="man" name="man" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="shramdaan_photo1" name="shramdaan_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaan_photo1')" required /><br/>
-								<input type="file" id="shramdaan_photo2" name="shramdaan_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shramdaan_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="shramdaan_photo1" name="shramdaan_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="shramdaan_photo1_lat" name="shramdaan_photo1_lat">
+                <input type="hidden" id="shramdaan_photo1_lng" name="shramdaan_photo1_lng">
+                <input type="hidden" id="shramdaan_photo1_time" name="shramdaan_photo1_time">
+				
+				<input type="file" id="shramdaan_photo2" name="shramdaan_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="shramdaan_photo2_lat" name="shramdaan_photo2_lat">
+                <input type="hidden" id="shramdaan_photo2_lng" name="shramdaan_photo2_lng">
+                <input type="hidden" id="shramdaan_photo2_time" name="shramdaan_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Plantation</td>
      		<td>Area (in ha.)<br><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
      		<td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="plantation_photo1" name="plantation_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo1')" required /><br/>
-								<input type="file" id="plantation_photo2" name="plantation_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'plantation_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="plantation_photo1" name="plantation_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="plantation_photo1_lat" name="plantation_photo1_lat">
+                <input type="hidden" id="plantation_photo1_lng" name="plantation_photo1_lng">
+                <input type="hidden" id="plantation_photo1_time" name="plantation_photo1_time">
+				
+				<input type="file" id="plantation_photo2" name="plantation_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="plantation_photo2_lat" name="plantation_photo2_lat">
+                <input type="hidden" id="plantation_photo2_lng" name="plantation_photo2_lng">
+                <input type="hidden" id="plantation_photo2_time" name="plantation_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Award Distribution (Felicitation)</td>
      		<td colspan=2>Number of Watershed Margdarshaks<br><input type="text" id="no_awards" name="no_awards" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="award_photo1" name="award_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'award_photo1')" required /><br/>
-								<input type="file" id="award_photo2" name="award_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'award_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="award_photo1" name="award_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="award_photo1_lat" name="award_photo1_lat">
+                <input type="hidden" id="award_photo1_lng" name="award_photo1_lng">
+                <input type="hidden" id="award_photo1_time" name="award_photo1_time">
+				
+				<input type="file" id="award_photo2" name="award_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="award_photo2_lat" name="award_photo2_lat">
+                <input type="hidden" id="award_photo2_lng" name="award_photo2_lng">
+                <input type="hidden" id="award_photo2_time" name="award_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Number of stalls of Departments</td>
      		<td colspan=2><input type="text" id="dept_stalls" name="dept_stalls" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="dept_stalls_photo1" name="dept_stalls_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'dept_stalls_photo1')" required /><br/>
-								<input type="file" id="dept_stalls_photo2" name="dept_stalls_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'dept_stalls_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="dept_stalls_photo1" name="dept_stalls_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="dept_stalls_photo1_lat" name="dept_stalls_photo1_lat">
+                <input type="hidden" id="dept_stalls_photo1_lng" name="dept_stalls_photo1_lng">
+                <input type="hidden" id="dept_stalls_photo1_time" name="dept_stalls_photo1_time">
+				
+				<input type="file" id="dept_stalls_photo2" name="dept_stalls_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="dept_stalls_photo2_lat" name="dept_stalls_photo2_lat">
+                <input type="hidden" id="dept_stalls_photo2_lng" name="dept_stalls_photo2_lng">
+                <input type="hidden" id="dept_stalls_photo2_time" name="dept_stalls_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Number of stalls of SHGs/FPOs</td>
      		<td colspan=2><input type="text" id="shg_fpo_stalls" name="shg_fpo_stalls" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="shg_fpo_stalls_photo1" name="shg_fpo_stalls_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shg_fpo_stalls_photo1')" required /><br/>
-								<input type="file" id="shg_fpo_stalls_photo2" name="shg_fpo_stalls_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'shg_fpo_stalls_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="shg_fpo_stalls_photo1" name="shg_fpo_stalls_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="shg_fpo_stalls_photo1_lat" name="shg_fpo_stalls_photo1_lat">
+                <input type="hidden" id="shg_fpo_stalls_photo1_lng" name="shg_fpo_stalls_photo1_lng">
+                <input type="hidden" id="shg_fpo_stalls_photo1_time" name="shg_fpo_stalls_photo1_time">
+				
+				<input type="file" id="shg_fpo_stalls_photo2" name="shg_fpo_stalls_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="shg_fpo_stalls_photo2_lat" name="shg_fpo_stalls_photo2_lat">
+                <input type="hidden" id="shg_fpo_stalls_photo2_lng" name="shg_fpo_stalls_photo2_lng">
+                <input type="hidden" id="shg_fpo_stalls_photo2_time" name="shg_fpo_stalls_photo2_time">
+			</td>
      	</tr>
      	<tr>
      		<td>Number of LakhPati Didi Participated</td>
      		<td colspan=2><input type="text" id="no_lakhpati_didi" name="no_lakhpati_didi" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Upload Photographs<br><input type="file" id="lakhpati_didi_photo1" name="lakhpati_didi_photo1" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lakhpati_didi_photo1')" required /><br/>
-								<input type="file" id="lakhpati_didi_photo2" name="lakhpati_didi_photo2" autocomplete="off" accept="image/*" onchange="checkImage(this, 'lakhpati_didi_photo2')" required /></td>
+			<td>Upload Photographs<br>
+				<input type="file" id="lakhpati_didi_photo1" name="lakhpati_didi_photo1" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required /><br/>
+				<input type="hidden" id="lakhpati_didi_photo1_lat" name="lakhpati_didi_photo1_lat">
+                <input type="hidden" id="lakhpati_didi_photo1_lng" name="lakhpati_didi_photo1_lng">
+                <input type="hidden" id="lakhpati_didi_photo1_time" name="lakhpati_didi_photo1_time">
+				
+				<input type="file" id="lakhpati_didi_photo2" name="lakhpati_didi_photo2" autocomplete="off" accept="image/*" onchange="validatePhoto(this)" required />
+				<input type="hidden" id="lakhpati_didi_photo2_lat" name="lakhpati_didi_photo2_lat">
+                <input type="hidden" id="lakhpati_didi_photo2_lng" name="lakhpati_didi_photo2_lng">
+                <input type="hidden" id="lakhpati_didi_photo2_time" name="lakhpati_didi_photo2_time">
+			</td>
      	</tr>
      	
      	<tr>

@@ -97,6 +97,12 @@ public class WatershedYatraInauguaration {
     private String lokarpan_path2_longitute;
     private String lokarpan_path2_latitude;
     private Timestamp lokarpan_path2_time;
+    private String shramdaan_path1_longitute;
+    private String shramdaan_path1_latitude;
+    private Timestamp shramdaan_path1_time;
+    private String shramdaan_path2_longitute;
+    private String shramdaan_path2_latitude;
+    private Timestamp shramdaan_path2_time;
     private String plantation_path1_longitute;
     private String plantation_path1_latitude;
     private Timestamp plantation_path1_time;
@@ -934,6 +940,60 @@ public class WatershedYatraInauguaration {
 
 	public void setLokarpan_path2_time(Timestamp lokarpan_path2_time) {
 		this.lokarpan_path2_time = lokarpan_path2_time;
+	}
+	
+	@Column(name ="shramdaan_path1_longitute")
+	public String getShramdaan_path1_longitute() {
+		return shramdaan_path1_longitute;
+	}
+
+	public void setShramdaan_path1_longitute(String shramdaan_path1_longitute) {
+		this.shramdaan_path1_longitute = shramdaan_path1_longitute;
+	}
+
+	@Column(name ="shramdaan_path1_latitude")
+	public String getShramdaan_path1_latitude() {
+		return shramdaan_path1_latitude;
+	}
+
+	public void setShramdaan_path1_latitude(String shramdaan_path1_latitude) {
+		this.shramdaan_path1_latitude = shramdaan_path1_latitude;
+	}
+
+	@Column(name ="shramdaan_path1_time")
+	public Timestamp getShramdaan_path1_time() {
+		return shramdaan_path1_time;
+	}
+
+	public void setShramdaan_path1_time(Timestamp shramdaan_path1_time) {
+		this.shramdaan_path1_time = shramdaan_path1_time;
+	}
+
+	@Column(name ="shramdaan_path2_longitute")
+	public String getShramdaan_path2_longitute() {
+		return shramdaan_path2_longitute;
+	}
+
+	public void setShramdaan_path2_longitute(String shramdaan_path2_longitute) {
+		this.shramdaan_path2_longitute = shramdaan_path2_longitute;
+	}
+
+	@Column(name ="shramdaan_path2_latitude")
+	public String getShramdaan_path2_latitude() {
+		return shramdaan_path2_latitude;
+	}
+
+	public void setShramdaan_path2_latitude(String shramdaan_path2_latitude) {
+		this.shramdaan_path2_latitude = shramdaan_path2_latitude;
+	}
+
+	@Column(name ="shramdaan_path2_time")
+	public Timestamp getShramdaan_path2_time() {
+		return shramdaan_path2_time;
+	}
+
+	public void setShramdaan_path2_time(Timestamp shramdaan_path2_time) {
+		this.shramdaan_path2_time = shramdaan_path2_time;
 	}
 
 	@Column(name ="plantation_path1_longitute")
