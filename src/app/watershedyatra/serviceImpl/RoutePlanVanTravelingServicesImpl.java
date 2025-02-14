@@ -46,4 +46,31 @@ public class RoutePlanVanTravelingServicesImpl implements RoutePlanVanTravelingS
 		return dao.getExistingVillageCodes(villageCode);
 	}
 
+
+
+
+	@Override
+	public String completeApproveRoutePlanforVanTraveling(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.completeApproveRoutePlanforVanTraveling(assetid, userid);
+	}
+
+
+
+
+	@Override
+	public String deleteRoutePlanforVanTraveling(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteRoutePlanforVanTraveling(assetid, userid);
+	}
+
+
+
+
+	@Override
+	public List<NodalOfficerBean> getRoutePlanVanTravelingComp(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getRoutePlanVanTravelingComp(stcd);
+	}
+
 }

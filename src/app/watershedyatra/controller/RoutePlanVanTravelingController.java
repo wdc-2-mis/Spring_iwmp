@@ -45,6 +45,7 @@ HttpSession session;
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		List<NodalOfficerBean> draft = new ArrayList<NodalOfficerBean>();
+		List<NodalOfficerBean> comp = new ArrayList<NodalOfficerBean>();
 		try {
 			
 			if (session != null && session.getAttribute("loginID") != null) 
@@ -72,6 +73,9 @@ HttpSession session;
 				draft=serr.getRoutePlanVanTraveling(stcd);
 				mav.addObject("draftList",draft);
 				mav.addObject("draftListSize",draft.size());
+				comp=serr.getRoutePlanVanTravelingComp(stcd);
+				mav.addObject("compList",comp);
+				mav.addObject("compListSize",comp.size());
 
 			} 
 			else {
@@ -133,5 +137,48 @@ HttpSession session;
 	public String getExistingVillageCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="villageCode") Integer villageCode ) {
 	  return serr.getExistingVillageCodes(villageCode);
 	}
+	
+	@RequestMapping(value="/completeApproveRoutePlanforVanTraveling", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeApproveRoutePlanforVanTraveling(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serr.completeApproveRoutePlanforVanTraveling(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	@RequestMapping(value="/deleteRoutePlanforVanTraveling", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteRoutePlanforVanTraveling(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serr.deleteRoutePlanforVanTraveling(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+
 
 }

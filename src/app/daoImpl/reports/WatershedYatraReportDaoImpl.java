@@ -237,7 +237,7 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	}
 
 	@Override
-	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate) {
+	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate, String userdateto) {
 		String getReport=getInaugurationData;
 		Session session = sessionFactory.getCurrentSession();
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
@@ -246,6 +246,7 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 			Date inaugurationDate = formatter.parse(userdate);
+			Date inaugurationDate1 = formatter.parse(userdateto);
 			
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
@@ -253,6 +254,7 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 				query.setInteger("distcd",district); 
 				query.setInteger("blkcd",block);
 				query.setDate("userdate",inaugurationDate);
+				query.setDate("userdate1",inaugurationDate1);
 				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
 				list = query.list();
 				session.getTransaction().commit();

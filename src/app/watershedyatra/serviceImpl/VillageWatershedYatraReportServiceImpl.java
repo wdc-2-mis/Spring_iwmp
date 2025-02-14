@@ -17,9 +17,9 @@ public class VillageWatershedYatraReportServiceImpl implements VillageWatershedY
 	
 	@Override
 	public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
-			Integer grampan, String userdate) {
+			Integer grampan, String userdate, String userdateto) {
 		
-		return dao.showWatershedYatraVillageReport(State, district, block, grampan, userdate);
+		return dao.showWatershedYatraVillageReport(State, district, block, grampan, userdate, userdateto);
 	}
 
 }

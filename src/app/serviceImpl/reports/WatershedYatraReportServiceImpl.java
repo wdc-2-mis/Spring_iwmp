@@ -79,8 +79,8 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 
 
 	@Override
-	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate) {
-		return dao.getInaugurationReportData(State, district, block, userdate);
+	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate, String userdateto) {
+		return dao.getInaugurationReportData(State, district, block, userdate, userdateto);
 	}
 
 

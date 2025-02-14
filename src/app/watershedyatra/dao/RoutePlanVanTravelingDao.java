@@ -13,7 +13,10 @@ public interface RoutePlanVanTravelingDao {
 			Integer village1, String location1, String datetime1);
 	
 	List<NodalOfficerBean> getRoutePlanVanTraveling(Integer stcd);
+	List<NodalOfficerBean> getRoutePlanVanTravelingComp(Integer stcd);
 
 	String getExistingVillageCodes(Integer villageCode);
+	String completeApproveRoutePlanforVanTraveling(List<Integer>  assetid, String userid);
+	String deleteRoutePlanforVanTraveling(List<Integer>  assetid, String userid);
 
 }

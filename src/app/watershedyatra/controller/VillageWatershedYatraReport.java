@@ -3,7 +3,11 @@ package app.watershedyatra.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,11 +88,10 @@ public class VillageWatershedYatraReport {
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
-		if(session!=null && session.getAttribute("loginID")!=null) {
-			
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
 			mav = new ModelAndView("WatershedYatra/wyVillageReport");
 			mav.addObject("menu", menuController.getMenuUserId(request));
-			
 		
 			stateList=stateMasterService.getAllState();
 			mav.addObject("stateList", stateList);
@@ -115,6 +118,7 @@ public class VillageWatershedYatraReport {
 		}
 		return mav; 
 	}
+	
 	@RequestMapping(value="/showWatershedYatraVillageReport", method = RequestMethod.POST)
 	public ModelAndView showWatershedYatraVillageReport(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -126,20 +130,27 @@ public class VillageWatershedYatraReport {
 			String block= request.getParameter("block");
 			String grampan= request.getParameter("grampan");
 			String userdate= request.getParameter("userdate");
-			
+			String userdateto= request.getParameter("userdateto");
 			List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
-			
-			
+			 
+	        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
 			if(session!=null && session.getAttribute("loginID")!=null) {
 				
 				mav = new ModelAndView("WatershedYatra/wyVillageReport");
 				mav.addObject("menu", menuController.getMenuUserId(request));
 				
-				list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate);
+				list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate, userdateto);
 				mav.addObject("dataList", list);
 				mav.addObject("dataListSize", list.size());
 				mav.addObject("userdate", userdate);
-				
+				mav.addObject("dateto", userdateto);
+				mav.addObject("fromDateStr", fromDateStr);
+				mav.addObject("toDateStr", toDateStr);
 				
 				stateList=stateMasterService.getAllState();
 				mav.addObject("stateList", stateList);
@@ -177,10 +188,23 @@ public class VillageWatershedYatraReport {
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
 		String userdate= request.getParameter("userdate1");
+		String userdateto= request.getParameter("userdate2");
+		
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String gpkName= request.getParameter("gpkName");
+		
+		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
+        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
 		
 		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
 		
-		list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan),userdate);
+		list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan),userdate, userdateto);
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
@@ -336,7 +360,7 @@ public class VillageWatershedYatraReport {
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(19);
-			cell.setCellValue("Shapath Shramdan");  
+			cell.setCellValue("Shramdan");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(20);
@@ -547,8 +571,21 @@ public class VillageWatershedYatraReport {
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
 		String userdate= request.getParameter("userdate1");
+		String userdateto= request.getParameter("userdate2");
+		
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String gpkName= request.getParameter("gpkName");
+		
+		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
+        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
 		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
-		list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan),userdate);
+		list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate, userdateto);
 		
 		try {
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
@@ -557,7 +594,7 @@ public class VillageWatershedYatraReport {
 			document.addTitle("villageYatraReport");
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			 PdfWriter writer=PdfWriter.getInstance(document, baos);
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
 			
 			document.open(); 
 	       
@@ -591,6 +628,7 @@ public class VillageWatershedYatraReport {
 				table.setSpacingAfter(0f);							
 				table.setHeaderRows(4);
 				
+				CommonFunctions.insertCellHeader(table, "State : "+stName+" District : "+distName+" Block : "+blkName+" Gram Panchayat :"+gpkName+" From Date: "+ fromDateStr+" To Date :"+toDateStr  ,Element.ALIGN_LEFT, 34, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "S.No.",Element.ALIGN_RIGHT, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Date", Element.ALIGN_RIGHT, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Time", Element.ALIGN_RIGHT, 1, 3, bf8Bold);
@@ -616,7 +654,7 @@ public class VillageWatershedYatraReport {
 				CommonFunctions.insertCellHeader(table, "Government Officials", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 
 				CommonFunctions.insertCellHeader(table, "AR Experience", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Shapath Shramdan", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Shramdan", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Film on Yatra", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "People Participated in Quiz", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Cultural Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);

@@ -2,6 +2,8 @@ package app.controllers.reports;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -955,16 +957,22 @@ public class WatershedYatraReportController {
 			String district= request.getParameter("district");
 			String block= request.getParameter("block");
 			String userdate= request.getParameter("userdate");
+			String userdateto= request.getParameter("userdateto");
 			
 			List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 			
+			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			
 			if(session!=null && session.getAttribute("loginID")!=null) {
 				
 				mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
 				mav.addObject("menu", menuController.getMenuUserId(request));
 				
-				list=ser.getInaugurationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), userdate );
+				list=ser.getInaugurationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), userdate, userdateto );
 				mav.addObject("inaugurationList", list);
 				mav.addObject("inaugurationListSize", list.size());
 				
@@ -983,6 +991,9 @@ public class WatershedYatraReportController {
 					mav.addObject("blockList", blockList);}
 					mav.addObject("blkd", block);
 					mav.addObject("udate", userdate);
+					mav.addObject("dateto", userdateto);
+					mav.addObject("fromDateStr", fromDateStr);
+					mav.addObject("toDateStr", toDateStr);
 					
 					
 			}else {
@@ -1007,10 +1018,11 @@ public class WatershedYatraReportController {
 		int distCode = Integer.parseInt(request.getParameter("district"));
 		int blkCode = Integer.parseInt(request.getParameter("block"));
 		String userdate= request.getParameter("udate");
+		String userdateto= request.getParameter("userdate2");
 		
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 		
-		list=ser.getInaugurationReportData(stCode, distCode, blkCode, userdate);
+		list=ser.getInaugurationReportData(stCode, distCode, blkCode, userdate,userdateto);
 		
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
@@ -1458,10 +1470,17 @@ public class WatershedYatraReportController {
 		int stCode = Integer.parseInt(request.getParameter("state"));
 		int distCode = Integer.parseInt(request.getParameter("district"));
 		int blkCode = Integer.parseInt(request.getParameter("block"));
-
+		String userdateto= request.getParameter("userdate2");
+		
+		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
+        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 
-		list = ser.getInaugurationReportData(stCode, distCode, blkCode, userdate);
+		list = ser.getInaugurationReportData(stCode, distCode, blkCode, userdate, userdateto);
 
 		try {
 
@@ -1504,9 +1523,7 @@ public class WatershedYatraReportController {
 			table.setSpacingBefore(0f);
 			table.setSpacingAfter(0f);
 			table.setHeaderRows(4);
-
-			CommonFunctions.insertCellHeader(table,"State : " + stName + "     District : " + distName + "     Block : " + blkName + "     Date : " + userdate, Element.ALIGN_LEFT, 31, 1, bf8Bold);
-
+			CommonFunctions.insertCellHeader(table,"State : " + stName + "     District : " + distName + "     Block : " + blkName + "   From Date: "+ fromDateStr+" To Date :"+toDateStr, Element.ALIGN_LEFT, 31, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Date", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);

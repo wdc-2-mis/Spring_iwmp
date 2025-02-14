@@ -6,5 +6,5 @@ import app.watershedyatra.bean.WatershedYatraBean;
 
 public interface VillageWatershedYatraReportDao {
 
-	List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block, Integer grampan, String userdate);
+	List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block, Integer grampan, String userdate, String userdateto);
 }

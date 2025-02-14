@@ -36,7 +36,7 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 
 		@Override
 		public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
-				Integer grampan, String userdate) {
+				Integer grampan, String userdate, String userdateto) {
 				
 				String getReport=getWatershedYatraReport;
 				Session session = sessionFactory.getCurrentSession();
@@ -46,6 +46,7 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 					Date yadate = formatter.parse(userdate);
+					Date yadateto = formatter.parse(userdateto);
 					
 						session.beginTransaction();
 						Query query= session.createSQLQuery(getReport);
@@ -54,6 +55,7 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 						query.setInteger("blkcd",block); 
 						query.setInteger("gpkcd",grampan); 
 						query.setParameter("userdate",yadate);
+						query.setParameter("yadateto",yadateto);
 						query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
 						list = query.list();
 						session.getTransaction().commit();

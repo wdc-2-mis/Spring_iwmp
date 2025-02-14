@@ -146,10 +146,108 @@ input[type=email] {
      		</div>
      	</div> 
 			
+				<br/>
+     		<br/>
+     		<br/>
+     		<br/>
+     		
+     		
+     		
+     		<div class="form-row">
+     <div class="form-group col">
+     <hr/>
+     <h5 class="text-center font-weight-bold"><u>Draft List of Route Plan for Van Traveling/Watershed Mahotsawa</u></h5>
+     <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th style="width:2%">S.No. &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+								<th style="width:5%">Date and Time </th>
+								<th style="width:5%">State Name</th>
+								<th style="width:5%">District Name</th>
+								<th style="width:5%">Block Name</th>
+								<th style="width:5%">Gram Panchyat Name</th>
+								<th style="width:5%">Village Name</th>
+								<th style="width:5%">Location (Nearby/Milestone)</th>
+								
+							</tr>
+
+						</thead>
+						
+						
+						<c:set var="proj" value="" />
+						<c:set var="flagwis" value="" />
+						<c:set var="ac" value="1" />
+						<c:forEach items="${draftList}" var="dataV" varStatus="count">
+							<tr>
+								<c:choose>
+									<c:when test="${flagwis ne dataV.flagwise}">
+										<c:set var="flagwis" value="${dataV.flagwise}" />
+										<td><c:out value="${ac}" /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.flagwise}"  name="${dataV.flagwise}" value="${dataV.flagwise}"/> </td>
+										 <c:set var="ac" value="${ac+1}" /> 
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+							 	
+								<c:if test="${dataV.date1 ne null }">
+									<td> <c:out value="${dataV.date1}" /></td>
+								</c:if>
+								<c:if test="${dataV.date1 eq null }">
+									<td> <c:out value="${dataV.date2}" /></td>
+								</c:if>
+								<c:choose>
+									<c:when test="${proj ne dataV.stname}">
+										<c:set var="proj" value="${dataV.stname}" />
+										<td> <c:out value="${dataV.stname}" /></td>
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+								<td> <c:out value="${dataV.district}" /></td>
+								<td> <c:out value="${dataV.blockname}" /></td>
+								<td> <c:out value="${dataV.gramname}" /></td>
+								<td> <c:out value="${dataV.villagename}" /></td>
+								
+								<c:if test="${dataV.location1 ne null }">
+									<td> <c:out value="${dataV.location1}" /></td>
+								</c:if>
+								<c:if test="${dataV.location1 eq null }">
+									<td> <c:out value="${dataV.location2}" /></td>
+								</c:if>
+								
+								
+							</tr>
+						</c:forEach>
+						<c:if test="${draftListSize eq 0}">
+							<tr>
+								<td align="center" colspan="9" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+		</table>
+		</div>
+		</div>
+		
+		<c:if test="${draftListSize gt 0}">
+		<div class="form-row">
+				<div class="form-group col">
+     				<input type="button" class="btn btn-info" id="updateapprove" name="updateapprove" value ="Approve Route Plan for Van Traveling"/>
+     				<input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete Draft Route Plan for Van Traveling"/>
+     			</div>
+     		</div>
+     	</c:if>
+     	
+     	
+     	<br/>
+     		<br/>
+     		<br/>
+     		<br/>
+			
      <div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold"><u>List of Route Plan for Van Traveling/Watershed Mahotsawa</u></h5>
+	     <h5 class="text-center font-weight-bold"><u>Approve/Complete List of Route Plan for Van Traveling/Watershed Mahotsawa</u></h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
@@ -170,7 +268,7 @@ input[type=email] {
 						<c:set var="proj" value="" />
 						<c:set var="flagwis" value="" />
 						<c:set var="ac" value="1" />
-						<c:forEach items="${draftList}" var="dataV" varStatus="count">
+						<c:forEach items="${compList}" var="dataV" varStatus="count">
 							<tr>
 								<c:choose>
 									<c:when test="${flagwis ne dataV.flagwise}">
@@ -216,7 +314,7 @@ input[type=email] {
 								<td> <c:out value="${dataV.date2}" /></td> --%>
 							</tr>
 						</c:forEach>
-						<c:if test="${draftListSize eq 0}">
+						<c:if test="${compListSize eq 0}">
 							<tr>
 								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
 							</tr>

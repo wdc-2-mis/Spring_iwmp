@@ -18,7 +18,7 @@ public interface WatershedYatraReportService {
 	
 	List<NodalOfficerBean> getRoutePlanReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<NodalOfficerBean> getNodalOfficerReportData(String lvl, Integer State, Integer district, Integer block);
-	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate);
+	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate, String userdateto);
 	List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district, Integer block, Integer grampan);
 
 }

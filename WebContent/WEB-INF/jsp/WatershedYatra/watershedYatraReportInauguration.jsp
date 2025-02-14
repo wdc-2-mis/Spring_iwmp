@@ -17,6 +17,13 @@ function showReport(e)
 	var block = $('#block').val();
 	var userdate = $('#userdate').val();
 	$('#userdate').val(userdate);
+	
+	var userdateto = $('#userdateto').val();
+	
+	const dateTimeStr = $('#userdate').val();
+	const dateTimeStrto = $('#userdateto').val();
+	const dateObj = new Date(dateTimeStr); 
+	const dateObjto = new Date(dateTimeStrto); 
 
 	if(state==='')
 	{
@@ -38,10 +45,22 @@ function showReport(e)
 	}
 	if(userdate==='')
 	{
-		alert('Please select Date');
+		alert('Please select From Date');
 		$('#userdate').focus();
 		e.preventDefault();
 	}
+	if(userdateto==='')
+	{
+		alert('Please select To Date ');
+		$('#userdateto').focus();
+		e.preventDefault();
+	}
+	
+	if (dateObjto < dateObj) {
+		alert('From date Can not be greater than To date');
+		$('#userdate').val('');
+		$('#userdateto').val('');
+	} 
 	else{
 		document.inauguration.action="getInaugurationReportData";
 		document.inauguration.method="post";
@@ -58,7 +77,7 @@ function showChangedata(){
 }
 
 
-function downloadPDF(state, district, blkd, udate){
+function downloadPDF(state, district, blkd, udate, udateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -68,13 +87,14 @@ function downloadPDF(state, district, blkd, udate){
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("udate").value=udate;
+    document.getElementById("userdate2").value=udateto;
 	
     document.inauguration.action="downloadPDFInaugurationReport";
 	document.inauguration.method="post";
 	document.inauguration.submit();
 }
 
-function downloadExcel(state, district, blkd, udate){
+function downloadExcel(state, district, blkd, udate, udateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -84,6 +104,7 @@ function downloadExcel(state, district, blkd, udate){
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("udate").value=udate;
+    document.getElementById("userdate2").value=udateto;
 	
     document.inauguration.action="downloadExcelInaugurationReport";
 	document.inauguration.method="post";
@@ -287,6 +308,7 @@ display: none; /* Hidden by default */
 			<input type="hidden" name="distName" id="distName" value="" />
 			<input type="hidden" name="blkName" id="blkName" value="" />
 			<input type="hidden" name="udate" id="udate" value="" />
+			<input type="hidden" name="userdate2" id="userdate2" value="" />
 
 			<table>
 				<tr>
@@ -335,8 +357,10 @@ display: none; /* Hidden by default */
 							</c:if>
 					</select></td>
 					
-					<td class="label">Date <span style="color: red;">*</span></td>
+					<td class="label">From Date <span style="color: red;">*</span></td>
 					<td><input type="date" name="userdate" id="userdate" value="udate" class="form-control activity" style="width: 100%;" /></td>
+					<td class="label">To Date <span style="color: red;">*</span></td>
+					<td><input type="date" name="userdateto" id="userdateto" value="" class="form-control activity" style="width: 100%;" /></td>
 
 					<td align="left">&nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);" name="view" value='Get Data' /></td>
 				</tr>
@@ -344,14 +368,15 @@ display: none; /* Hidden by default */
 
 			<br />
 			<c:if test="${not empty inaugurationList}">
-				<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${udate}')" class="btn btn-info">Excel</button>
-				<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${udate}')" class="btn btn-info">PDF</button>
+				<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${udate}','${dateto}')" class="btn btn-info">Excel</button>
+				<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${udate}','${dateto}')" class="btn btn-info">PDF</button>
 			</c:if>
 			<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			<br />
 
 			<table id="tblReport" class="table">
 				<thead class="theadlist" id="theadlist">
+				<tr><td colspan="31" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 					<tr>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Date</th>

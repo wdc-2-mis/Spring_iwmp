@@ -17,6 +17,13 @@ function showReport(e)
 	var block = $('#block').val();
 	var gp = $('#grampan').val();
 	var userdate = $('#userdate').val();
+	var userdateto = $('#userdateto').val();
+	
+	const dateTimeStr = $('#userdate').val();
+	const dateTimeStrto = $('#userdateto').val();
+	const dateObj = new Date(dateTimeStr); 
+	const dateObjto = new Date(dateTimeStrto); 
+	
 	if(state==='')
 	{
 		alert('Please select state ');
@@ -37,10 +44,22 @@ function showReport(e)
 	}
 	if(userdate==='')
 	{
-		alert('Please select Date ');
+		alert('Please select From Date ');
 		$('#userdate').focus();
 		e.preventDefault();
 	}
+	if(userdateto==='')
+	{
+		alert('Please select To Date ');
+		$('#userdateto').focus();
+		e.preventDefault();
+	}
+	
+	if (dateObjto < dateObj) {
+		alert('From date Can not be greater than To date');
+		$('#userdate').val('');
+		$('#userdateto').val('');
+	} 
 	else{
 		
 		document.routePlan.action="showWatershedYatraVillageReport";
@@ -50,7 +69,7 @@ function showReport(e)
 	return false;
 } 
 
-function downloadPDF(state, district, blkd, grampn,userdate){
+function downloadPDF(state, district, blkd, grampn,userdate, dateto){
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
     var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
@@ -62,7 +81,7 @@ function downloadPDF(state, district, blkd, grampn,userdate){
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
     document.getElementById("userdate1").value=userdate;
-    
+    document.getElementById("userdate2").value=dateto;
 	
     document.routePlan.action="downloadVillageYatraReportPDF";
 	document.routePlan.method="post";
@@ -77,7 +96,7 @@ function showChangedata(){
 	document.routePlan.submit();
 }
 
-function downloadExcel(state, district, blkd, grampn,userdate){
+function downloadExcel(state, district, blkd, grampn,userdate, dateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -89,6 +108,7 @@ function downloadExcel(state, district, blkd, grampn,userdate){
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
     document.getElementById("userdate1").value=userdate;
+    document.getElementById("userdate2").value=dateto;
 	
     document.routePlan.action="downloadExcelVillageYatraReport";
 	document.routePlan.method="post";
@@ -275,6 +295,7 @@ display: none; /* Hidden by default */
 		<input type="hidden" name="blkName" id="blkName" value="" />
 		<input type="hidden" name="gpkName" id="gpkName" value="" />
 		<input type="hidden" name="userdate1" id="userdate1" value="" />
+		<input type="hidden" name="userdate2" id="userdate2" value="" />
 		
       <table >
         <tr>
@@ -349,8 +370,19 @@ display: none; /* Hidden by default */
            <div class="row">
     			<div class="form-group col-12">
     			
-      		  <label for="date">Date: </label>
+      		  <label for="date">From Date&nbsp;<span style="color: red;">*</span> : </label>
       		  <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />
+       		 
+    		</div>
+			</div>
+			 </td>
+			 
+			 <td>
+           <div class="row">
+    			<div class="form-group col-12">
+    			
+      		  <label for="date">To Date&nbsp;<span style="color: red;">*</span> : </label>
+      		  <input type="date" name="userdateto" id="userdateto" class="form-control activity" style="width: 100%;" />
        		 
     		</div>
 			</div>
@@ -361,18 +393,21 @@ display: none; /* Hidden by default */
 
  <br/>
 <c:if test="${not empty dataList}">
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}', '${userdate}')" class="btn btn-info">PDF</button>
-<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}','${userdate}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}', '${userdate}', '${dateto}')" class="btn btn-info">PDF</button>
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}','${userdate}', '${dateto}')" class="btn btn-info">Excel</button>
 
 </c:if>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
         <table class="table">
           <tr>
+          
+          
             <td>
             	<!-- <h5 class="text-center font-weight-bold"><u> List of Watershed Yatra at Village Level</u></h5>  -->
      		<table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
+ 						<tr><td colspan="20" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 							<tr> 
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Date</th> 
@@ -395,7 +430,7 @@ display: none; /* Hidden by default */
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Government Officials</th> 
 								
 								<th rowspan="2" style="text-align:center; vertical-align: middle;">AR Experience</th> 
-								<th rowspan="2" style="text-align:center; vertical-align: middle;">Shapath Shramdan</th> 
+								<th rowspan="2" style="text-align:center; vertical-align: middle;">Shramdan</th> 
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Film on Yatra</th> 
 								<th rowspan="2" style="text-align:center; vertical-align: middle;">People Participated in Quiz</th> 
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Cultural Activity</th> 
