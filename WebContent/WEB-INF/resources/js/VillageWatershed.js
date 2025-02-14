@@ -144,6 +144,66 @@ $(document).on('change', '#district', function(e) {
 					});
 				});
 
+				function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
+				    if (input.files && input.files[0]) {
+				        let file = input.files[0];
+				        let fileSizeKB = file.size / 1024;
+
+				        // Validate file size
+				        if (fileSizeKB > maxSizeKB) {
+				            alert("File size exceeds " + maxSizeKB + " KB. Please upload a smaller image.");
+				            input.value = "";
+				            return;
+				        }
+
+				        let img = new Image();
+				        img.src = URL.createObjectURL(file);
+				        img.onload = function () {
+				            // Validate image dimensions
+				            if (this.width > maxWidth || this.height > maxHeight) {
+				                alert("Image dimensions should not exceed " + maxWidth + "x" + maxHeight);
+				                input.value = "";
+				                return;
+				            }
+				        };
+
+				        // Extract metadata using EXIF.js
+				        EXIF.getData(file, function () {
+				            let latitude = EXIF.getTag(this, "GPSLatitude");
+				            let longitude = EXIF.getTag(this, "GPSLongitude");
+				            let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
+
+				            // Convert GPS coordinates to decimal format
+				            function convertDMSToDD(dms, ref) {
+				                if (!dms) return null;
+				                let degrees = dms[0].numerator / dms[0].denominator;
+				                let minutes = dms[1].numerator / dms[1].denominator / 60;
+				                let seconds = dms[2].numerator / dms[2].denominator / 3600;
+				                let decimal = degrees + minutes + seconds;
+				                return ref === "S" || ref === "W" ? -decimal : decimal;
+				            }
+
+				            let latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
+				            let lngRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
+				            let lat = convertDMSToDD(latitude, latRef);
+				            let lng = convertDMSToDD(longitude, lngRef);
+
+				            // Set extracted values in hidden input fields
+				            document.getElementById(photoId + "_lat").value = lat || "Not Available";
+				            document.getElementById(photoId + "_lng").value = lng || "Not Available";
+				            document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
+
+				            console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
+				            
+				                
+				        });
+				    }
+				}
+
+				// Attach validation to file inputs
+				$('#arExperiencephoto1,#arExperiencephoto2,#shapathYesphoto1,#shapathYesphoto2,#FilmYesphoto1,#FilmYesphoto2,#quizParticipantsphoto1,#quizParticipantsphoto2,#culturalActivityphoto1,#culturalActivityphoto2,#bhoomiCostphoto1,#bhoomiCostphoto2,#lokWorksphoto1,#lokWorksphoto2,#locShramdaanpsphoto1,#locShramdaanpsphoto2,#plantationAreaphoto1,#plantationAreaphoto2,#noOfwatershedphoto1,#noOfwatershedphoto2').change(function () {
+				    validatePhoto(this, this.id, 300, 300, 400);
+				});
 
 				
 				

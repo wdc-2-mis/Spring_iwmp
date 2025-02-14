@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -437,10 +438,25 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		Session sess = sessionFactory.getCurrentSession();
 		String res="fail";
 		try {
+			
+			
+			
 			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
 			LocalDateTime localDateTime = LocalDateTime.parse(userfileup.getDatetime(), formatter); 
 			Timestamp timestamp1 = Timestamp.valueOf(localDateTime); 
-			
+			    Timestamp Gtimestamp1 = null;
+			    Timestamp Gtimestamp2 = null;
+			    Timestamp ptimestamp1 = null;
+			    Timestamp ptimestamp2 = null;
+			   
+//			    SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd");
+//		        Date date = formatter1.parse(userfileup.getDate());
+//		        Date date1 = formatter1.parse(userfileup.getDatetime());
+
+		        DateTimeFormatter datetimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
+		        
+		       
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/WatershedYatraVillage/";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/WatershedYatraVillage/";
 			String filePath = "D:\\WatershedYatraVillage\\";
@@ -512,10 +528,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setQuizParticipants(userfileup.getQuizParticipants());
 				
 				main.setmCulturalActivity(ca);
-//				if(userfileup.getCulturalActivity()==4) {
-//				main.setCulturalActivityOther(userfileup.getOtherActivity());
-				//System.out.println("other"+ userfileup.getOtherActivity());
-//				}
 				main.setBhoomiPoojanNoOfWorks(userfileup.getBhoomiWorks());
 				main.setBhoomiPoojanCostOfWorks(userfileup.getBhoomiCost());
 				main.setLokarpanNoOfWorks(userfileup.getLokWorks());
@@ -527,49 +539,231 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
 				main.setAwardDistribution(userfileup.getNoOfwatershed());
 				
-				//main.setArExperiencePath1(filePath+userfileup.getArExperiencephoto1().getOriginalFilename());
-				//main.setArExperiencePath2(filePath+userfileup.getArExperiencephoto2().getOriginalFilename());
+				
 				
 				main.setBhumiJalSanrakshanPath1(!userfileup.getShapathYesphoto1().isEmpty() ? filePath + userfileup.getShapathYesphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getShapathYesphoto1().isEmpty()) {
+				main.setBhumi_jal_sanrakshan_path1_latitude(userfileup.getShapathYesphoto1_lat());
+		        main.setBhumi_jal_sanrakshan_path1_longitute(userfileup.getShapathYesphoto1_lng());
+		        main.setBhumi_jal_sanrakshan_path1_time(parseTimestamp(userfileup.getShapathYesphoto1_time()));
+				}
+				else {
+					main.setBhumi_jal_sanrakshan_path1_latitude(null);
+			        main.setBhumi_jal_sanrakshan_path1_longitute(null);
+			        main.setBhumi_jal_sanrakshan_path1_time(null);
+				}
 				main.setBhumiJalSanrakshanPath2(!userfileup.getShapathYesphoto2().isEmpty() ? filePath + userfileup.getShapathYesphoto2().getOriginalFilename() :  null);
+				if (!userfileup.getShapathYesphoto2().isEmpty()) {
+				main.setBhumi_jal_sanrakshan_path2_latitude(userfileup.getShapathYesphoto2_lat());
+		        main.setBhumi_jal_sanrakshan_path2_longitute(userfileup.getShapathYesphoto2_lng());
+		        main.setBhumi_jal_sanrakshan_path2_time(parseTimestamp(userfileup.getShapathYesphoto2_time()));
+				}
+				else {
+					main.setBhumi_jal_sanrakshan_path2_latitude(null);
+			        main.setBhumi_jal_sanrakshan_path2_longitute(null);
+			        main.setBhumi_jal_sanrakshan_path2_time(null);
+				}
 				main.setYatraFilmPath1(!userfileup.getFilmYesphoto1().isEmpty() ? filePath + userfileup.getFilmYesphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getFilmYesphoto1().isEmpty()) {
+				main.setYatra_film_path1_latitude(userfileup.getFilmYesphoto1_lat());
+		        main.setYatra_film_path1_longitute(userfileup.getFilmYesphoto1_lng());
+		        main.setYatra_film_path1_time(parseTimestamp(userfileup.getFilmYesphoto1_time()));
+				}
+				else {
+					main.setYatra_film_path1_latitude(null);
+			        main.setYatra_film_path1_longitute(null);
+			        main.setYatra_film_path1_time(null);
+				}
 				main.setYatraFilmPath2(!userfileup.getFilmYesphoto2().isEmpty() ? filePath + userfileup.getFilmYesphoto2().getOriginalFilename() :  null);
+				if (!userfileup.getFilmYesphoto2().isEmpty()) {
+				main.setYatra_film_path2_latitude(userfileup.getFilmYesphoto2_lat());
+		        main.setYatra_film_path2_longitute(userfileup.getFilmYesphoto2_lng());
+		        main.setYatra_film_path2_time(parseTimestamp(userfileup.getFilmYesphoto2_time()));
+				}
+				else {
+					main.setYatra_film_path2_latitude(null);
+			        main.setYatra_film_path2_longitute(null);
+			        main.setYatra_film_path2_time(null);
+				}
+		        
 				main.setBhoomiPoojanPath1(!userfileup.getBhoomiCostphoto1().isEmpty() ? filePath + userfileup.getBhoomiCostphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getBhoomiCostphoto1().isEmpty()) {
+				main.setBhoomi_poojan_path1_latitude(userfileup.getBhoomiCostphoto1_lat());
+		        main.setBhoomi_poojan_path1_longitute(userfileup.getBhoomiCostphoto1_lng());
+		        main.setBhoomi_poojan_path1_time(parseTimestamp(userfileup.getBhoomiCostphoto1_time()));
+				}
+				else {
+					main.setBhoomi_poojan_path1_latitude(null);
+			        main.setBhoomi_poojan_path1_longitute(null);
+			        main.setBhoomi_poojan_path1_time(null);
+				}
 				main.setBhoomiPoojanPath2(!userfileup.getBhoomiCostphoto2().isEmpty() ? filePath + userfileup.getBhoomiCostphoto2().getOriginalFilename() :  null);
-				//
+				if (!userfileup.getBhoomiCostphoto2().isEmpty()) {
+				main.setBhoomi_poojan_path2_latitude(userfileup.getBhoomiCostphoto2_lat());
+		        main.setBhoomi_poojan_path2_longitute(userfileup.getBhoomiCostphoto2_lng());
+		        main.setBhoomi_poojan_path2_time(parseTimestamp(userfileup.getBhoomiCostphoto2_time()));
+				}
+				else {
+					main.setBhoomi_poojan_path2_latitude(null);
+			        main.setBhoomi_poojan_path2_longitute(null);
+			        main.setBhoomi_poojan_path2_time(null);
+				}
 				main.setArExperiencePath1(!userfileup.getArExperiencephoto1().isEmpty() ? filePath + userfileup.getArExperiencephoto1().getOriginalFilename() :  null);
+				if (!userfileup.getArExperiencephoto1().isEmpty()) {
+				main.setAr_experience_path1_latitude(userfileup.getArExperiencephoto1_lat());
+		        main.setAr_experience_path1_longitute(userfileup.getArExperiencephoto1_lng());
+		        main.setAr_experience_path1_time(parseTimestamp(userfileup.getArExperiencephoto1_time()));
+				}
+				else {
+					main.setAr_experience_path1_latitude(null);
+			        main.setAr_experience_path1_longitute(null);
+			        main.setAr_experience_path1_time(null);
+				}
 				main.setArExperiencePath2(!userfileup.getArExperiencephoto2().isEmpty() ? filePath + userfileup.getArExperiencephoto2().getOriginalFilename() :  null);
+				if (!userfileup.getArExperiencephoto2().isEmpty()) {
+				main.setAr_experience_path2_latitude(userfileup.getArExperiencephoto2_lat());
+		        main.setAr_experience_path2_longitute(userfileup.getArExperiencephoto2_lng());
+		        main.setAr_experience_path2_time(parseTimestamp(userfileup.getArExperiencephoto2_time()));
+				}
+				else {
+					main.setAr_experience_path2_latitude(null);
+			        main.setAr_experience_path2_longitute(null);
+			        main.setAr_experience_path2_time(null);
+				}
 				main.setShramdaanPath1(!userfileup.getLocShramdaanpsphoto1().isEmpty() ? filePath + userfileup.getLocShramdaanpsphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getLocShramdaanpsphoto1().isEmpty()) {
+				main.setShramdaan_path1_latitude(userfileup.getLocShramdaanpsphoto1_lat());
+		        main.setShramdaan_path1_longitute(userfileup.getLocShramdaanpsphoto1_lng());
+		        main.setShramdaan_path1_time(parseTimestamp(userfileup.getLocShramdaanpsphoto1_time()));
+				}
+				else {
+					main.setShramdaan_path1_latitude(null);
+			        main.setShramdaan_path1_longitute(null);
+			        main.setShramdaan_path1_time(null);
+				}
 				main.setShramdaanPath2(!userfileup.getLocShramdaanpsphoto2().isEmpty() ? filePath + userfileup.getLocShramdaanpsphoto2().getOriginalFilename() :  null);
+				if (!userfileup.getLocShramdaanpsphoto2().isEmpty()) {
+				main.setShramdaan_path2_latitude(userfileup.getLocShramdaanpsphoto2_lat());
+		        main.setShramdaan_path2_longitute(userfileup.getLocShramdaanpsphoto2_lng());
+		        main.setShramdaan_path2_time(parseTimestamp(userfileup.getLocShramdaanpsphoto2_time()));
+				}
+				else {
+					main.setShramdaan_path2_latitude(null);
+			        main.setShramdaan_path2_longitute(null);
+			        main.setShramdaan_path2_time(null);
+				}
 				main.setQuizParticipantsPath1(!userfileup.getQuizParticipantsphoto1().isEmpty() ? filePath + userfileup.getQuizParticipantsphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getQuizParticipantsphoto1().isEmpty()) {
+				main.setQuiz_participants_path1_latitude(userfileup.getQuizParticipantsphoto1_lat());
+		        main.setQuiz_participants_path1_longitute(userfileup.getQuizParticipantsphoto1_lng());
+		        main.setQuiz_participants_path1_time(parseTimestamp(userfileup.getQuizParticipantsphoto1_time()));
+				}
+				else {
+					main.setQuiz_participants_path1_latitude(null);
+			        main.setQuiz_participants_path1_longitute(null);
+			        main.setQuiz_participants_path1_time(null);
+				}
 				main.setQuizParticipantsPath2(!userfileup.getQuizParticipantsphoto2().isEmpty() ? filePath + userfileup.getQuizParticipantsphoto2().getOriginalFilename() :  null);
-				
+				if (!userfileup.getQuizParticipantsphoto2().isEmpty()) {
+				main.setQuiz_participants_path2_latitude(userfileup.getQuizParticipantsphoto2_lat());
+		        main.setQuiz_participants_path2_longitute(userfileup.getQuizParticipantsphoto2_lng());
+		        main.setQuiz_participants_path2_time(parseTimestamp(userfileup.getQuizParticipantsphoto2_time()));
+				}
+				else {
+					main.setQuiz_participants_path2_latitude(null);
+			        main.setQuiz_participants_path2_longitute(null);
+			        main.setQuiz_participants_path2_time(null);
+				}
 				main.setLokarpanPath1(!userfileup.getLokWorksphoto1().isEmpty() ? filePath + userfileup.getLokWorksphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getLokWorksphoto1().isEmpty()) {
+				main.setLokarpan_path1_latitude(userfileup.getLokWorksphoto1_lat());
+		        main.setLokarpan_path1_longitute(userfileup.getLokWorksphoto1_lng());
+		        main.setLokarpan_path1_time(parseTimestamp(userfileup.getLokWorksphoto1_time()));
+				}
+				else {
+					main.setLokarpan_path1_latitude(null);
+			        main.setLokarpan_path1_longitute(null);
+			        main.setLokarpan_path1_time(null);
+				}
+		        
 				main.setLokarpanPath2(!userfileup.getLokWorksphoto2().isEmpty() ? filePath + userfileup.getLokWorksphoto2().getOriginalFilename() :  null);
+				if (!userfileup.getLokWorksphoto2().isEmpty()) {
+				main.setLokarpan_path2_latitude(userfileup.getLokWorksphoto2_lat());
+		        main.setLokarpan_path2_longitute(userfileup.getLokWorksphoto2_lng());
+		        main.setLokarpan_path2_time(parseTimestamp(userfileup.getLokWorksphoto2_time()));
+				}
+				else {
+					main.setLokarpan_path2_latitude(null);
+			        main.setLokarpan_path2_longitute(null);
+			        main.setLokarpan_path2_time(null);
+				}
 				main.setPlantationPath1(!userfileup.getPlantationAreaphoto1().isEmpty() ? filePath + userfileup.getPlantationAreaphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getPlantationAreaphoto1().isEmpty()) {
+				main.setPlantation_path1_latitude(userfileup.getPlantationAreaphoto1_lat());
+		        main.setPlantation_path1_longitute(userfileup.getPlantationAreaphoto1_lng());
+		        main.setPlantation_path1_time(parseTimestamp(userfileup.getPlantationAreaphoto1_time()));
+				}
+				else {
+					main.setPlantation_path1_latitude(null);
+			        main.setPlantation_path1_longitute(null);
+			        main.setPlantation_path1_time(null);
+				}
 				main.setPlantationPath2(!userfileup.getPlantationAreaphoto2().isEmpty() ? filePath + userfileup.getPlantationAreaphoto2().getOriginalFilename() :  null);
+				if (!userfileup.getPlantationAreaphoto2().isEmpty()) {
+				main.setPlantation_path2_latitude(userfileup.getPlantationAreaphoto2_lat());
+		        main.setPlantation_path2_longitute(userfileup.getPlantationAreaphoto2_lng());
+		        main.setPlantation_path2_time(parseTimestamp(userfileup.getPlantationAreaphoto2_time()));
+				}
+				else {
+					main.setPlantation_path2_latitude(null);
+			        main.setPlantation_path2_longitute(null);
+			        main.setPlantation_path2_time(null);
+				}
 				main.setAwardDistributionPath1(!userfileup.getNoOfwatershedphoto1().isEmpty() ? filePath + userfileup.getNoOfwatershedphoto1().getOriginalFilename() :  null);
+				if (!userfileup.getNoOfwatershedphoto1().isEmpty()) {
+				main.setAward_distribution_path1_latitude(userfileup.getNoOfwatershedphoto1_lat());
+		        main.setAward_distribution_path1_longitute(userfileup.getNoOfwatershedphoto1_lng());
+		        main.setAward_distribution_path1_time(parseTimestamp(userfileup.getNoOfwatershedphoto1_time()));
+				}
+				else {
+					main.setAward_distribution_path1_latitude(null);
+			        main.setAward_distribution_path1_longitute(null);
+			        main.setAward_distribution_path1_time(null);
+				}
 				main.setAwardDistributionPath2(!userfileup.getNoOfwatershedphoto2().isEmpty() ? filePath + userfileup.getNoOfwatershedphoto2().getOriginalFilename() :  null);
-				
-				
-			//	main.setShramdaanPath1(filePath+userfileup.getLocShramdaanpsphoto1().getOriginalFilename());
-				//main.setShramdaanPath2(filePath+userfileup.getLocShramdaanpsphoto2().getOriginalFilename());
-//				main.setYatraFilmPath1(filePath+userfileup.getFilmYesphoto1().getOriginalFilename());
-//				main.setYatraFilmPath2(filePath+userfileup.getFilmYesphoto2().getOriginalFilename());
-				//main.setQuizParticipantsPath1(filePath+userfileup.getQuizParticipantsphoto1().getOriginalFilename());
-				//main.setQuizParticipantsPath2(filePath+userfileup.getQuizParticipantsphoto2().getOriginalFilename());
-				main.setCulturalActivityPath1(filePath+userfileup.getCulturalActivityphoto1().getOriginalFilename());
-				main.setCulturalActivityPath2(filePath+userfileup.getCulturalActivityphoto2().getOriginalFilename());
-				//main.setBhoomiPoojanPath1(filePath+userfileup.getBhoomiCostphoto1().getOriginalFilename());
-				//main.setBhoomiPoojanPath2(filePath+userfileup.getBhoomiCostphoto2().getOriginalFilename());
-				//main.setLokarpanPath1(filePath+userfileup.getLokWorksphoto1().getOriginalFilename());
-				//main.setLokarpanPath2(filePath+userfileup.getLokWorksphoto2().getOriginalFilename());
-				//main.setPlantationPath1(filePath+userfileup.getPlantationAreaphoto1().getOriginalFilename());
-				//main.setPlantationPath2(filePath+userfileup.getPlantationAreaphoto2().getOriginalFilename());
-				//main.setAwardDistributionPath1(filePath+userfileup.getNoOfwatershedphoto1().getOriginalFilename());
-				//main.setAwardDistributionPath2(filePath+userfileup.getNoOfwatershedphoto2().getOriginalFilename());
-//				main.setBhumiJalSanrakshanPath1(filePath+userfileup.getShapathYesphoto1().getOriginalFilename());
-//				main.setBhumiJalSanrakshanPath2(filePath+userfileup.getShapathYesphoto2().getOriginalFilename());
+				if (!userfileup.getNoOfwatershedphoto2().isEmpty()) {
+				main.setAward_distribution_path2_latitude(userfileup.getNoOfwatershedphoto2_lat());
+		        main.setAward_distribution_path2_longitute(userfileup.getNoOfwatershedphoto2_lng());
+		        main.setAward_distribution_path2_time(parseTimestamp(userfileup.getNoOfwatershedphoto2_time()));
+				}
+				else {
+					main.setAward_distribution_path2_latitude(null);
+			        main.setAward_distribution_path2_longitute(null);
+			        main.setAward_distribution_path2_time(null);
+				}
+			
+				main.setCulturalActivityPath1(!userfileup.getCulturalActivityphoto1().isEmpty() ? filePath + userfileup.getCulturalActivityphoto1().getOriginalFilename() : null);
+				if (!userfileup.getCulturalActivityphoto1().isEmpty()) {
+				main.setCultural_activity_path1_latitude(userfileup.getCulturalActivityphoto1_lat());
+		        main.setCultural_activity_path1_longitute(userfileup.getCulturalActivityphoto1_lng());
+		        main.setCultural_activity_path1_time(parseTimestamp(userfileup.getCulturalActivityphoto1_time()));
+				}
+				else {
+					main.setCultural_activity_path1_latitude(null);
+			        main.setCultural_activity_path1_longitute(null);
+			        main.setCultural_activity_path1_time(null);
+				}
+				main.setCulturalActivityPath2(!userfileup.getCulturalActivityphoto2().isEmpty() ? filePath + userfileup.getCulturalActivityphoto2().getOriginalFilename() : null);
+				if (!userfileup.getCulturalActivityphoto2().isEmpty()) {
+				main.setCultural_activity_path2_latitude(userfileup.getCulturalActivityphoto2_lat());
+		        main.setCultural_activity_path2_longitute(userfileup.getCulturalActivityphoto2_lng());
+		        main.setCultural_activity_path2_time(parseTimestamp(userfileup.getCulturalActivityphoto2_time()));
+				}
+				else {
+					main.setCultural_activity_path2_latitude(null);
+			        main.setCultural_activity_path2_longitute(null);
+			        main.setCultural_activity_path2_time(null);
+				}
 				
 				main.setStatus("C");
 				main.setCreatedBy(session.getAttribute("loginID").toString());
@@ -1299,5 +1493,17 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 
 		    return status;
 	}
+	
+	private Timestamp parseTimestamp(String dateTimeString) {
+				DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
+				DateTimeFormatter targetFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+				try {
+					LocalDateTime localDateTime = LocalDateTime.parse(dateTimeString, originalFormatter);
+					return Timestamp.valueOf(localDateTime.format(targetFormatter));
+				} catch (DateTimeParseException e) {
+    // Handle parsing error
+    return null;
+}
+}
 }

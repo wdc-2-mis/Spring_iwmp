@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 
 <meta charset="ISO-8859-1">
 <title>Watershed Yatra Program</title>
@@ -41,19 +42,6 @@ function validateDecimal(input, decimalPlaces) {
       input.value = input.value.slice(0, -1); // Remove the last invalid character 
     }
   }
-// function toggleOtherField() {
-//     const select = document.getElementById('culturalActivity');
-//     const otherDiv = document.getElementById('otherActivityDiv');
-
-//     // Check if the selected option text is "Others"
-//     const selectedText = select.options[select.selectedIndex].text.trim();
-//     if (selectedText === "Others") {
-//         otherDiv.style.display = "block"; // Show the text box
-//     } else {
-//         otherDiv.style.display = "none"; // Hide the text box
-//     }
-// }
-
 let formSubmitted = false;
 let allValid = true;
 function validation() 
@@ -481,7 +469,7 @@ function checkImage(input, inputId) {
     var fileType = file.type;
     var fileSize = file.size; // Get the file size in bytes
     var maxFileSize = 300 * 1024; // Max size: 100KB (in bytes)
-    var maxWidth = 400; // Max width in pixels
+    var maxWidth = 300; // Max width in pixels
     var maxHeight = 400; // Max height in pixels
 
     // Check if the file is an image
@@ -712,7 +700,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra at Village Level</h4> </div>
 			<label>
-		<span style="color:blue;">Note:- Image size must be under 300KB, with dimensions of 400 x 400 pixels or less.</span>
+		<span style="color:blue;">Note:- The Image size must be under 300KB, with dimensions of 300 x 400 pixels with Geo-referenced and Time-stamped.</span>
 		</label>
 		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			
@@ -823,19 +811,32 @@ display: none; /* Hidden by default */
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Upload Photographs<br>
-        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" accept="image/*" onchange="checkImage(this, 'arExperiencephoto1')" required />
-        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" accept="image/*" onchange="checkImage(this, 'arExperiencephoto2')" required />
+        <input type="file" name="arExperiencephoto1" id="arExperiencephoto1" accept="image/*" onchange="validatePhoto(this)" required />
+           <input type="hidden" id="arExperiencephoto1_lat" name="arExperiencephoto1_lat">
+           <input type="hidden" id="arExperiencephoto1_lng" name="arExperiencephoto1_lng">
+           <input type="hidden" id="arExperiencephoto1_time" name="arExperiencephoto1_time">
+        <input type="file" name="arExperiencephoto2" id="arExperiencephoto2" accept="image/*" onchange="validatePhoto(this)" required />
+           <input type="hidden" id="arExperiencephoto2_lat" name="arExperiencephoto2_lat">
+           <input type="hidden" id="arExperiencephoto2_lng" name="arExperiencephoto2_lng">
+           <input type="hidden" id="arExperiencephoto2_time" name="arExperiencephoto2_time">
     </td>
      	</tr>
      	<tr>
-     		<td>"Bhoomi aur Jal Sanrakshan" Shapath Shramdan</td>
+     		<td>"Bhoomi aur Jal Sanrakshan" Shapath </td>
      		<td><input type="radio" id="shapathYes" name="shapathYes" value="true" onclick="toggleFileUpload2()">Yes</td>
 			<td><input type="radio" id="shapathNo" name="shapathYes" value="false" onclick="toggleFileUpload2()">No</td>
      		
      		<td id="fileUploadSection2" style="display:none;">
        Upload Photographs<br>
-        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" accept="image/*" onchange="checkImage(this, 'shapathYesphoto1')"  />
-        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" accept="image/*" onchange="checkImage(this, 'shapathYesphoto2')"  />
+        <input type="file" name="shapathYesphoto1" id="shapathYesphoto1" accept="image/*" onchange="validatePhoto(this)"  />
+        <input type="hidden" id="shapathYesphoto1_lat" name="shapathYesphoto1_lat">
+        <input type="hidden" id="shapathYesphoto1_lng" name="shapathYesphoto1_lng">
+        <input type="hidden" id="shapathYesphoto1_time" name="shapathYesphoto1_time">
+        
+        <input type="file" name="shapathYesphoto2" id="shapathYesphoto2" accept="image/*" onchange="validatePhoto(this)"  />
+        <input type="hidden" id="shapathYesphoto2_lat" name="shapathYesphoto2_lat">
+        <input type="hidden" id="shapathYesphoto2_lng" name="shapathYesphoto2_lng">
+         <input type="hidden" id="shapathYesphoto2_time" name="shapathYesphoto2_time">
     </td>
      	</tr>
      	<tr>
@@ -844,8 +845,15 @@ display: none; /* Hidden by default */
   <td><input type="radio" id="FilmNo" name="FilmYes" value="false" onclick="toggleFileUpload()">No</td>
   <td id="fileUploadSection" style="display:none;">
     Upload Photographs<br>
-    <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" accept="image/*" onchange="checkImage(this, 'FilmYesphoto1')" />
-    <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" accept="image/*" onchange="checkImage(this, 'FilmYesphoto2')" />
+    <input type="file" name="FilmYesphoto1" id="FilmYesphoto1" accept="image/*" onchange="validatePhoto(this)" />
+  		  <input type="hidden" id="FilmYesphoto1_lat" name="FilmYesphoto1_lat">
+      	  <input type="hidden" id="FilmYesphoto1_lng" name="FilmYesphoto1_lng">
+       	  <input type="hidden" id="FilmYesphoto1_time" name="FilmYesphoto1_time">
+         
+    <input type="file" name="FilmYesphoto2" id="FilmYesphoto2" accept="image/*" onchange="validatePhoto(this)" />
+    		  <input type="hidden" id="FilmYesphoto2_lat" name="FilmYesphoto2_lat">
+      		  <input type="hidden" id="FilmYesphoto2_lng" name="FilmYesphoto2_lng">
+       		  <input type="hidden" id="FilmYesphoto2_time" name="FilmYesphoto2_time">
   </td>
 </tr>
 
@@ -855,8 +863,14 @@ display: none; /* Hidden by default */
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td>
        Upload Photographs<br>
-        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto1')" required />
-        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" accept="image/*" onchange="checkImage(this, 'quizParticipantsphoto2')" required />
+        <input type="file" name="quizParticipantsphoto1" id="quizParticipantsphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+              <input type="hidden" id="quizParticipantsphoto1_lat" name="quizParticipantsphoto1_lat">
+      		  <input type="hidden" id="quizParticipantsphoto1_lng" name="quizParticipantsphoto1_lng">
+       		  <input type="hidden" id="quizParticipantsphoto1_time" name="quizParticipantsphoto1_time">
+        <input type="file" name="quizParticipantsphoto2" id="quizParticipantsphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+   			  <input type="hidden" id="quizParticipantsphoto2_lat" name="quizParticipantsphoto2_lat">
+      		  <input type="hidden" id="quizParticipantsphoto2_lng" name="quizParticipantsphoto2_lng">
+       		  <input type="hidden" id="quizParticipantsphoto2_time" name="quizParticipantsphoto2_time">
     </td>
      	</tr>
 <tr>
@@ -881,8 +895,16 @@ display: none; /* Hidden by default */
 
     <td >
         Upload Photographs<br>
-        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto1')" required />
-        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" accept="image/*" onchange="checkImage(this, 'culturalActivityphoto2')" required />
+        <input type="file" name="culturalActivityphoto1" id="culturalActivityphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+       				<input type="hidden" id="culturalActivityphoto1_lat" name="culturalActivityphoto1_lat">
+      			    <input type="hidden" id="culturalActivityphoto1_lng" name="culturalActivityphoto1_lng">
+       		       <input type="hidden" id="culturalActivityphoto1_time" name="culturalActivityphoto1_time">
+   
+        <input type="file" name="culturalActivityphoto2" id="culturalActivityphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+              <input type="hidden" id="culturalActivityphoto2_lat" name="culturalActivityphoto2_lat">
+      		  <input type="hidden" id="culturalActivityphoto2_lng" name="culturalActivityphoto2_lng">
+       		  <input type="hidden" id="culturalActivityphoto2_time" name="culturalActivityphoto2_time">
+   
     </td>
 </tr>
      
@@ -894,8 +916,16 @@ display: none; /* Hidden by default */
 								 maxlength="10" oninput="validateDecimal(this, 2)" required /></td>
 								<td >
        Upload Photographs<br>
-        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto1')" required />
-        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" accept="image/*" onchange="checkImage(this, 'bhoomiCostphoto2')" required />
+        <input type="file" name="bhoomiCostphoto1" id="bhoomiCostphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+       			 <input type="hidden" id="bhoomiCostphoto1_lat" name="bhoomiCostphoto1_lat">
+      		     <input type="hidden" id="bhoomiCostphoto1_lng" name="bhoomiCostphoto1_lng">
+       		    <input type="hidden" id="bhoomiCostphoto1_time" name="bhoomiCostphoto1_time">
+   
+        <input type="file" name="bhoomiCostphoto2" id="bhoomiCostphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+   				 <input type="hidden" id="bhoomiCostphoto2_lat" name="bhoomiCostphoto2_lat">
+      	   	     <input type="hidden" id="bhoomiCostphoto2_lng" name="bhoomiCostphoto2_lng">
+       		     <input type="hidden" id="bhoomiCostphoto2_time" name="bhoomiCostphoto2_time">
+   
     </td>
      	</tr>
      	<tr>
@@ -906,8 +936,15 @@ display: none; /* Hidden by default */
 								 maxlength="10" oninput="validateDecimal(this, 2)" required /></td>
 									<td >
         Upload Photographs<br>
-        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" accept="image/*" onchange="checkImage(this, 'lokWorksphoto1')" required />
-        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" accept="image/*" onchange="checkImage(this, 'lokWorksphoto2')" required />
+        <input type="file" name="lokWorksphoto1" id="lokWorksphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+                 <input type="hidden" id="lokWorksphoto1_lat" name="lokWorksphoto1_lat">
+      	   	     <input type="hidden" id="lokWorksphoto1_lng" name="lokWorksphoto1_lng">
+       		     <input type="hidden" id="lokWorksphoto1_time" name="lokWorksphoto1_time">
+   
+        <input type="file" name="lokWorksphoto2" id="lokWorksphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+                 <input type="hidden" id="lokWorksphoto2_lat" name="lokWorksphoto2_lat">
+      	   	     <input type="hidden" id="lokWorksphoto2_lng" name="lokWorksphoto2_lng">
+       		     <input type="hidden" id="lokWorksphoto2_time" name="lokWorksphoto2_time">
     </td>
      	</tr>
      	<tr>
@@ -921,8 +958,14 @@ display: none; /* Hidden by default */
 								 </td>
 
 	<td >Upload Photographs<br>
-        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto1')" required />
-        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" accept="image/*" onchange="checkImage(this, 'locShramdaanpsphoto2')" required />
+        <input type="file" name="locShramdaanpsphoto1" id="locShramdaanpsphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+         		<input type="hidden" id="locShramdaanpsphoto1_lat" name="locShramdaanpsphoto1_lat">
+      	   	     <input type="hidden" id="locShramdaanpsphoto1_lng" name="locShramdaanpsphoto1_lng">
+       		     <input type="hidden" id="locShramdaanpsphoto1_time" name="locShramdaanpsphoto1_time">
+        <input type="file" name="locShramdaanpsphoto2" id="locShramdaanpsphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+     				<input type="hidden" id="locShramdaanpsphoto2_lat" name="locShramdaanpsphoto2_lat">
+      	   	        <input type="hidden" id="locShramdaanpsphoto2_lng" name="locShramdaanpsphoto2_lng">
+       		        <input type="hidden" id="locShramdaanpsphoto2_time" name="locShramdaanpsphoto2_time">
     </td>
      	</tr>
      	<tr>
@@ -935,8 +978,14 @@ display: none; /* Hidden by default */
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Upload Photographs<br>
-        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto1')" required />
-        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" accept="image/*" onchange="checkImage(this, 'plantationAreaphoto2')" required />
+        <input type="file" name="plantationAreaphoto1" id="plantationAreaphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+                    <input type="hidden" id="plantationAreaphoto1_lat" name="plantationAreaphoto1_lat">
+      	   	        <input type="hidden" id="plantationAreaphoto1_lng" name="plantationAreaphoto1_lng">
+       		        <input type="hidden" id="plantationAreaphoto1_time" name="plantationAreaphoto1_time">
+        <input type="file" name="plantationAreaphoto2" id="plantationAreaphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+   				    <input type="hidden" id="plantationAreaphoto2_lat" name="plantationAreaphoto2_lat">
+      	   	        <input type="hidden" id="plantationAreaphoto2_lng" name="plantationAreaphoto2_lng">
+       		        <input type="hidden" id="plantationAreaphoto2_time" name="plantationAreaphoto2_time">
     </td>
 								
      	</tr>
@@ -946,8 +995,14 @@ display: none; /* Hidden by default */
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 								<td >
         Upload Photographs<br>
-        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto1')" required />
-        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" accept="image/*" onchange="checkImage(this, 'noOfwatershedphoto2')" required />
+        <input type="file" name="noOfwatershedphoto1" id="noOfwatershedphoto1" accept="image/*" onchange="validatePhoto(this)" required />
+        			 <input type="hidden" id="noOfwatershedphoto1_lat" name="noOfwatershedphoto1_lat">
+      	   	         <input type="hidden" id="noOfwatershedphoto1_lng" name="noOfwatershedphoto1_lng">
+       		         <input type="hidden" id="noOfwatershedphoto1_time" name="noOfwatershedphoto1_time">
+        <input type="file" name="noOfwatershedphoto2" id="noOfwatershedphoto2" accept="image/*" onchange="validatePhoto(this)" required />
+  					 <input type="hidden" id="noOfwatershedphoto2_lat" name="noOfwatershedphoto2_lat">
+      	   	         <input type="hidden" id="noOfwatershedphoto2_lng" name="noOfwatershedphoto2_lng">
+       		         <input type="hidden" id="noOfwatershedphoto2_time" name="noOfwatershedphoto2_time">
     </td>
      	</tr>
      	
@@ -995,7 +1050,7 @@ display: none; /* Hidden by default */
  								<th rowspan="2">Government Officials</th> 
 								
 								<th rowspan="2">AR Experience</th> 
-								<th rowspan="2">Shapath Shramdan</th> 
+								<th rowspan="2">Shapath</th> 
  								<th rowspan="2">Film on Yatra</th> 
 								<th rowspan="2">People Participated in Quiz</th> 
  								<th rowspan="2">Cultural Activity</th> 

@@ -123,10 +123,448 @@ public class WatershedYatraBean {
     
     
     
+    private String noOfwatershedphoto1_lat;
+    private String noOfwatershedphoto1_lng;
+    private String noOfwatershedphoto1_time;
+    
+    private String noOfwatershedphoto2_lat;
+    private String noOfwatershedphoto2_lng;
+    private String noOfwatershedphoto2_time;
+    
+    private String plantationAreaphoto1_lat;
+    private String plantationAreaphoto1_lng;
+    private String plantationAreaphoto1_time;
+    
+    private String plantationAreaphoto2_lat;
+    private String plantationAreaphoto2_lng;
+    private String plantationAreaphoto2_time;
+    
+    private String locShramdaanpsphoto1_lat;
+    private String locShramdaanpsphoto1_lng;
+    private String locShramdaanpsphoto1_time;
+    
+    private String locShramdaanpsphoto2_lat;
+    private String locShramdaanpsphoto2_lng;
+    private String locShramdaanpsphoto2_time;
+    
+    private String lokWorksphoto1_lat;
+    private String lokWorksphoto1_lng;
+    private String lokWorksphoto1_time;
+    
+    private String lokWorksphoto2_lat;
+    private String lokWorksphoto2_lng;
+    private String lokWorksphoto2_time;
+    
+    private String bhoomiCostphoto1_lat;
+    private String bhoomiCostphoto1_lng;
+    private String bhoomiCostphoto1_time;
+    
+    private String bhoomiCostphoto2_lat;
+    private String bhoomiCostphoto2_lng;
+    private String bhoomiCostphoto2_time;
+    
+    private String culturalActivityphoto1_lat;
+    private String culturalActivityphoto1_lng;
+    private String culturalActivityphoto1_time;
+    
+    private String culturalActivityphoto2_lat;
+    private String culturalActivityphoto2_lng;
+    private String culturalActivityphoto2_time;
+    
+    private String quizParticipantsphoto1_lat;
+    private String quizParticipantsphoto1_lng;
+    private String quizParticipantsphoto1_time;
+    
+    private String quizParticipantsphoto2_lat;
+    private String quizParticipantsphoto2_lng;
+    private String quizParticipantsphoto2_time;
+    
+    private String FilmYesphoto1_lat;
+    private String FilmYesphoto1_lng;
+    private String FilmYesphoto1_time;
+    
+    private String FilmYesphoto2_lat;
+    private String FilmYesphoto2_lng;
+    private String FilmYesphoto2_time;
+    
+    private String shapathYesphoto1_lat;
+    private String shapathYesphoto1_lng;
+    private String shapathYesphoto1_time;
+    
+    private String shapathYesphoto2_lat;
+    private String shapathYesphoto2_lng;
+    private String shapathYesphoto2_time;
+    
+    private String arExperiencephoto1_lat;
+    private String arExperiencephoto1_lng;
+    private String arExperiencephoto1_time;
+    
+    private String arExperiencephoto2_lat;
+    private String arExperiencephoto2_lng;
+    private String arExperiencephoto2_time;
     
     
     
-    
+	public String getArExperiencephoto1_lat() {
+		return arExperiencephoto1_lat;
+	}
+	public void setArExperiencephoto1_lat(String arExperiencephoto1_lat) {
+		this.arExperiencephoto1_lat = arExperiencephoto1_lat;
+	}
+	public String getArExperiencephoto1_lng() {
+		return arExperiencephoto1_lng;
+	}
+	public void setArExperiencephoto1_lng(String arExperiencephoto1_lng) {
+		this.arExperiencephoto1_lng = arExperiencephoto1_lng;
+	}
+	public String getArExperiencephoto1_time() {
+		return arExperiencephoto1_time;
+	}
+	public void setArExperiencephoto1_time(String arExperiencephoto1_time) {
+		this.arExperiencephoto1_time = arExperiencephoto1_time;
+	}
+	public String getArExperiencephoto2_lat() {
+		return arExperiencephoto2_lat;
+	}
+	public void setArExperiencephoto2_lat(String arExperiencephoto2_lat) {
+		this.arExperiencephoto2_lat = arExperiencephoto2_lat;
+	}
+	public String getArExperiencephoto2_lng() {
+		return arExperiencephoto2_lng;
+	}
+	public void setArExperiencephoto2_lng(String arExperiencephoto2_lng) {
+		this.arExperiencephoto2_lng = arExperiencephoto2_lng;
+	}
+	public String getArExperiencephoto2_time() {
+		return arExperiencephoto2_time;
+	}
+	public void setArExperiencephoto2_time(String arExperiencephoto2_time) {
+		this.arExperiencephoto2_time = arExperiencephoto2_time;
+	}
+	public String getNoOfwatershedphoto1_lat() {
+		return noOfwatershedphoto1_lat;
+	}
+	public void setNoOfwatershedphoto1_lat(String noOfwatershedphoto1_lat) {
+		this.noOfwatershedphoto1_lat = noOfwatershedphoto1_lat;
+	}
+	public String getNoOfwatershedphoto1_lng() {
+		return noOfwatershedphoto1_lng;
+	}
+	public void setNoOfwatershedphoto1_lng(String noOfwatershedphoto1_lng) {
+		this.noOfwatershedphoto1_lng = noOfwatershedphoto1_lng;
+	}
+	public String getNoOfwatershedphoto1_time() {
+		return noOfwatershedphoto1_time;
+	}
+	public void setNoOfwatershedphoto1_time(String noOfwatershedphoto1_time) {
+		this.noOfwatershedphoto1_time = noOfwatershedphoto1_time;
+	}
+	public String getNoOfwatershedphoto2_lat() {
+		return noOfwatershedphoto2_lat;
+	}
+	public void setNoOfwatershedphoto2_lat(String noOfwatershedphoto2_lat) {
+		this.noOfwatershedphoto2_lat = noOfwatershedphoto2_lat;
+	}
+	public String getNoOfwatershedphoto2_lng() {
+		return noOfwatershedphoto2_lng;
+	}
+	public void setNoOfwatershedphoto2_lng(String noOfwatershedphoto2_lng) {
+		this.noOfwatershedphoto2_lng = noOfwatershedphoto2_lng;
+	}
+	public String getNoOfwatershedphoto2_time() {
+		return noOfwatershedphoto2_time;
+	}
+	public void setNoOfwatershedphoto2_time(String noOfwatershedphoto2_time) {
+		this.noOfwatershedphoto2_time = noOfwatershedphoto2_time;
+	}
+	public String getPlantationAreaphoto1_lat() {
+		return plantationAreaphoto1_lat;
+	}
+	public void setPlantationAreaphoto1_lat(String plantationAreaphoto1_lat) {
+		this.plantationAreaphoto1_lat = plantationAreaphoto1_lat;
+	}
+	public String getPlantationAreaphoto1_lng() {
+		return plantationAreaphoto1_lng;
+	}
+	public void setPlantationAreaphoto1_lng(String plantationAreaphoto1_lng) {
+		this.plantationAreaphoto1_lng = plantationAreaphoto1_lng;
+	}
+	public String getPlantationAreaphoto1_time() {
+		return plantationAreaphoto1_time;
+	}
+	public void setPlantationAreaphoto1_time(String plantationAreaphoto1_time) {
+		this.plantationAreaphoto1_time = plantationAreaphoto1_time;
+	}
+	public String getPlantationAreaphoto2_lat() {
+		return plantationAreaphoto2_lat;
+	}
+	public void setPlantationAreaphoto2_lat(String plantationAreaphoto2_lat) {
+		this.plantationAreaphoto2_lat = plantationAreaphoto2_lat;
+	}
+	public String getPlantationAreaphoto2_lng() {
+		return plantationAreaphoto2_lng;
+	}
+	public void setPlantationAreaphoto2_lng(String plantationAreaphoto2_lng) {
+		this.plantationAreaphoto2_lng = plantationAreaphoto2_lng;
+	}
+	public String getPlantationAreaphoto2_time() {
+		return plantationAreaphoto2_time;
+	}
+	public void setPlantationAreaphoto2_time(String plantationAreaphoto2_time) {
+		this.plantationAreaphoto2_time = plantationAreaphoto2_time;
+	}
+	public String getLocShramdaanpsphoto1_lat() {
+		return locShramdaanpsphoto1_lat;
+	}
+	public void setLocShramdaanpsphoto1_lat(String locShramdaanpsphoto1_lat) {
+		this.locShramdaanpsphoto1_lat = locShramdaanpsphoto1_lat;
+	}
+	public String getLocShramdaanpsphoto1_lng() {
+		return locShramdaanpsphoto1_lng;
+	}
+	public void setLocShramdaanpsphoto1_lng(String locShramdaanpsphoto1_lng) {
+		this.locShramdaanpsphoto1_lng = locShramdaanpsphoto1_lng;
+	}
+	public String getLocShramdaanpsphoto1_time() {
+		return locShramdaanpsphoto1_time;
+	}
+	public void setLocShramdaanpsphoto1_time(String locShramdaanpsphoto1_time) {
+		this.locShramdaanpsphoto1_time = locShramdaanpsphoto1_time;
+	}
+	public String getLocShramdaanpsphoto2_lat() {
+		return locShramdaanpsphoto2_lat;
+	}
+	public void setLocShramdaanpsphoto2_lat(String locShramdaanpsphoto2_lat) {
+		this.locShramdaanpsphoto2_lat = locShramdaanpsphoto2_lat;
+	}
+	public String getLocShramdaanpsphoto2_lng() {
+		return locShramdaanpsphoto2_lng;
+	}
+	public void setLocShramdaanpsphoto2_lng(String locShramdaanpsphoto2_lng) {
+		this.locShramdaanpsphoto2_lng = locShramdaanpsphoto2_lng;
+	}
+	public String getLocShramdaanpsphoto2_time() {
+		return locShramdaanpsphoto2_time;
+	}
+	public void setLocShramdaanpsphoto2_time(String locShramdaanpsphoto2_time) {
+		this.locShramdaanpsphoto2_time = locShramdaanpsphoto2_time;
+	}
+	public String getLokWorksphoto1_lat() {
+		return lokWorksphoto1_lat;
+	}
+	public void setLokWorksphoto1_lat(String lokWorksphoto1_lat) {
+		this.lokWorksphoto1_lat = lokWorksphoto1_lat;
+	}
+	public String getLokWorksphoto1_lng() {
+		return lokWorksphoto1_lng;
+	}
+	public void setLokWorksphoto1_lng(String lokWorksphoto1_lng) {
+		this.lokWorksphoto1_lng = lokWorksphoto1_lng;
+	}
+	public String getLokWorksphoto1_time() {
+		return lokWorksphoto1_time;
+	}
+	public void setLokWorksphoto1_time(String lokWorksphoto1_time) {
+		this.lokWorksphoto1_time = lokWorksphoto1_time;
+	}
+	public String getLokWorksphoto2_lat() {
+		return lokWorksphoto2_lat;
+	}
+	public void setLokWorksphoto2_lat(String lokWorksphoto2_lat) {
+		this.lokWorksphoto2_lat = lokWorksphoto2_lat;
+	}
+	public String getLokWorksphoto2_lng() {
+		return lokWorksphoto2_lng;
+	}
+	public void setLokWorksphoto2_lng(String lokWorksphoto2_lng) {
+		this.lokWorksphoto2_lng = lokWorksphoto2_lng;
+	}
+	public String getLokWorksphoto2_time() {
+		return lokWorksphoto2_time;
+	}
+	public void setLokWorksphoto2_time(String lokWorksphoto2_time) {
+		this.lokWorksphoto2_time = lokWorksphoto2_time;
+	}
+	public String getBhoomiCostphoto1_lat() {
+		return bhoomiCostphoto1_lat;
+	}
+	public void setBhoomiCostphoto1_lat(String bhoomiCostphoto1_lat) {
+		this.bhoomiCostphoto1_lat = bhoomiCostphoto1_lat;
+	}
+	public String getBhoomiCostphoto1_lng() {
+		return bhoomiCostphoto1_lng;
+	}
+	public void setBhoomiCostphoto1_lng(String bhoomiCostphoto1_lng) {
+		this.bhoomiCostphoto1_lng = bhoomiCostphoto1_lng;
+	}
+	public String getBhoomiCostphoto1_time() {
+		return bhoomiCostphoto1_time;
+	}
+	public void setBhoomiCostphoto1_time(String bhoomiCostphoto1_time) {
+		this.bhoomiCostphoto1_time = bhoomiCostphoto1_time;
+	}
+	public String getBhoomiCostphoto2_lat() {
+		return bhoomiCostphoto2_lat;
+	}
+	public void setBhoomiCostphoto2_lat(String bhoomiCostphoto2_lat) {
+		this.bhoomiCostphoto2_lat = bhoomiCostphoto2_lat;
+	}
+	public String getBhoomiCostphoto2_lng() {
+		return bhoomiCostphoto2_lng;
+	}
+	public void setBhoomiCostphoto2_lng(String bhoomiCostphoto2_lng) {
+		this.bhoomiCostphoto2_lng = bhoomiCostphoto2_lng;
+	}
+	public String getBhoomiCostphoto2_time() {
+		return bhoomiCostphoto2_time;
+	}
+	public void setBhoomiCostphoto2_time(String bhoomiCostphoto2_time) {
+		this.bhoomiCostphoto2_time = bhoomiCostphoto2_time;
+	}
+	public String getCulturalActivityphoto1_lat() {
+		return culturalActivityphoto1_lat;
+	}
+	public void setCulturalActivityphoto1_lat(String culturalActivityphoto1_lat) {
+		this.culturalActivityphoto1_lat = culturalActivityphoto1_lat;
+	}
+	public String getCulturalActivityphoto1_lng() {
+		return culturalActivityphoto1_lng;
+	}
+	public void setCulturalActivityphoto1_lng(String culturalActivityphoto1_lng) {
+		this.culturalActivityphoto1_lng = culturalActivityphoto1_lng;
+	}
+	public String getCulturalActivityphoto1_time() {
+		return culturalActivityphoto1_time;
+	}
+	public void setCulturalActivityphoto1_time(String culturalActivityphoto1_time) {
+		this.culturalActivityphoto1_time = culturalActivityphoto1_time;
+	}
+	public String getCulturalActivityphoto2_lat() {
+		return culturalActivityphoto2_lat;
+	}
+	public void setCulturalActivityphoto2_lat(String culturalActivityphoto2_lat) {
+		this.culturalActivityphoto2_lat = culturalActivityphoto2_lat;
+	}
+	public String getCulturalActivityphoto2_lng() {
+		return culturalActivityphoto2_lng;
+	}
+	public void setCulturalActivityphoto2_lng(String culturalActivityphoto2_lng) {
+		this.culturalActivityphoto2_lng = culturalActivityphoto2_lng;
+	}
+	public String getCulturalActivityphoto2_time() {
+		return culturalActivityphoto2_time;
+	}
+	public void setCulturalActivityphoto2_time(String culturalActivityphoto2_time) {
+		this.culturalActivityphoto2_time = culturalActivityphoto2_time;
+	}
+	public String getQuizParticipantsphoto1_lat() {
+		return quizParticipantsphoto1_lat;
+	}
+	public void setQuizParticipantsphoto1_lat(String quizParticipantsphoto1_lat) {
+		this.quizParticipantsphoto1_lat = quizParticipantsphoto1_lat;
+	}
+	public String getQuizParticipantsphoto1_lng() {
+		return quizParticipantsphoto1_lng;
+	}
+	public void setQuizParticipantsphoto1_lng(String quizParticipantsphoto1_lng) {
+		this.quizParticipantsphoto1_lng = quizParticipantsphoto1_lng;
+	}
+	public String getQuizParticipantsphoto1_time() {
+		return quizParticipantsphoto1_time;
+	}
+	public void setQuizParticipantsphoto1_time(String quizParticipantsphoto1_time) {
+		this.quizParticipantsphoto1_time = quizParticipantsphoto1_time;
+	}
+	public String getQuizParticipantsphoto2_lat() {
+		return quizParticipantsphoto2_lat;
+	}
+	public void setQuizParticipantsphoto2_lat(String quizParticipantsphoto2_lat) {
+		this.quizParticipantsphoto2_lat = quizParticipantsphoto2_lat;
+	}
+	public String getQuizParticipantsphoto2_lng() {
+		return quizParticipantsphoto2_lng;
+	}
+	public void setQuizParticipantsphoto2_lng(String quizParticipantsphoto2_lng) {
+		this.quizParticipantsphoto2_lng = quizParticipantsphoto2_lng;
+	}
+	public String getQuizParticipantsphoto2_time() {
+		return quizParticipantsphoto2_time;
+	}
+	public void setQuizParticipantsphoto2_time(String quizParticipantsphoto2_time) {
+		this.quizParticipantsphoto2_time = quizParticipantsphoto2_time;
+	}
+	public String getFilmYesphoto1_lat() {
+		return FilmYesphoto1_lat;
+	}
+	public void setFilmYesphoto1_lat(String filmYesphoto1_lat) {
+		FilmYesphoto1_lat = filmYesphoto1_lat;
+	}
+	public String getFilmYesphoto1_lng() {
+		return FilmYesphoto1_lng;
+	}
+	public void setFilmYesphoto1_lng(String filmYesphoto1_lng) {
+		FilmYesphoto1_lng = filmYesphoto1_lng;
+	}
+	public String getFilmYesphoto1_time() {
+		return FilmYesphoto1_time;
+	}
+	public void setFilmYesphoto1_time(String filmYesphoto1_time) {
+		FilmYesphoto1_time = filmYesphoto1_time;
+	}
+	public String getFilmYesphoto2_lat() {
+		return FilmYesphoto2_lat;
+	}
+	public void setFilmYesphoto2_lat(String filmYesphoto2_lat) {
+		FilmYesphoto2_lat = filmYesphoto2_lat;
+	}
+	public String getFilmYesphoto2_lng() {
+		return FilmYesphoto2_lng;
+	}
+	public void setFilmYesphoto2_lng(String filmYesphoto2_lng) {
+		FilmYesphoto2_lng = filmYesphoto2_lng;
+	}
+	public String getFilmYesphoto2_time() {
+		return FilmYesphoto2_time;
+	}
+	public void setFilmYesphoto2_time(String filmYesphoto2_time) {
+		FilmYesphoto2_time = filmYesphoto2_time;
+	}
+	public String getShapathYesphoto1_lat() {
+		return shapathYesphoto1_lat;
+	}
+	public void setShapathYesphoto1_lat(String shapathYesphoto1_lat) {
+		this.shapathYesphoto1_lat = shapathYesphoto1_lat;
+	}
+	public String getShapathYesphoto1_lng() {
+		return shapathYesphoto1_lng;
+	}
+	public void setShapathYesphoto1_lng(String shapathYesphoto1_lng) {
+		this.shapathYesphoto1_lng = shapathYesphoto1_lng;
+	}
+	public String getShapathYesphoto1_time() {
+		return shapathYesphoto1_time;
+	}
+	public void setShapathYesphoto1_time(String shapathYesphoto1_time) {
+		this.shapathYesphoto1_time = shapathYesphoto1_time;
+	}
+	public String getShapathYesphoto2_lat() {
+		return shapathYesphoto2_lat;
+	}
+	public void setShapathYesphoto2_lat(String shapathYesphoto2_lat) {
+		this.shapathYesphoto2_lat = shapathYesphoto2_lat;
+	}
+	public String getShapathYesphoto2_lng() {
+		return shapathYesphoto2_lng;
+	}
+	public void setShapathYesphoto2_lng(String shapathYesphoto2_lng) {
+		this.shapathYesphoto2_lng = shapathYesphoto2_lng;
+	}
+	public String getShapathYesphoto2_time() {
+		return shapathYesphoto2_time;
+	}
+	public void setShapathYesphoto2_time(String shapathYesphoto2_time) {
+		this.shapathYesphoto2_time = shapathYesphoto2_time;
+	}
 	public String getTimed() {
 		return timed;
 	}
