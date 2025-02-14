@@ -204,6 +204,14 @@ $(function(){
 	$(document).on('change', '#village1', function(e) {
 	  e.preventDefault();
 	  $villageCode = $('#village1 option:selected').val();
+	  $village = $('#village option:selected').val();
+	  if ($village==$villageCode) {
+	  		alert('Location-01 Village can not be same Location-02 Village!');
+			$("select#village1")[0].selectedIndex = 0;
+	  		$('#village1').focus();
+	  		return false;
+	  }
+	  
 	  $.ajax({
 	    url: "getExistingVillageCodes",
 	    type: "post",

@@ -19,11 +19,6 @@ function showReport(e)
 	var userdate = $('#userdate').val();
 	var userdateto = $('#userdateto').val();
 	
-	const dateTimeStr = $('#userdate').val();
-	const dateTimeStrto = $('#userdateto').val();
-	const dateObj = new Date(dateTimeStr); 
-	const dateObjto = new Date(dateTimeStrto); 
-	
 	if(state==='')
 	{
 		alert('Please select state ');
@@ -42,24 +37,29 @@ function showReport(e)
 		$('#block').focus();
 		e.preventDefault();
 	}
-	if(userdate==='')
-	{
-		alert('Please select From Date ');
-		$('#userdate').focus();
-		e.preventDefault();
-	}
-	if(userdateto==='')
-	{
-		alert('Please select To Date ');
-		$('#userdateto').focus();
-		e.preventDefault();
-	}
 	
+	/*  if(userdateto!='')
+	{
+		if(userdate==='')
+		{
+			$('#userdateto').val('');
+			alert('Please select From Date ');
+			$('#userdate').focus();
+			e.preventDefault();
+		}
+	}  */
+/*	 	if(userdateto!='' && userdate!='')
+	{
+		const dateTimeStr = $('#userdate').val();
+		const dateTimeStrto = $('#userdateto').val();
+		const dateObj = new Date(dateTimeStr); 
+		const dateObjto = new Date(dateTimeStrto); 
 	if (dateObjto < dateObj) {
-		alert('From date Can not be greater than To date');
-		$('#userdate').val('');
-		$('#userdateto').val('');
-	} 
+			alert('From date Can not be greater than To date');
+			$('#userdate').val('');
+			$('#userdateto').val('');
+		}  
+	} */
 	else{
 		
 		document.routePlan.action="showWatershedYatraVillageReport";
@@ -283,6 +283,8 @@ display: none; /* Hidden by default */
 </style>
 
 </head>
+
+
 <div class ="card">
 
 <div class="table-responsive">
@@ -370,7 +372,7 @@ display: none; /* Hidden by default */
            <div class="row">
     			<div class="form-group col-12">
     			
-      		  <label for="date">From Date&nbsp;<span style="color: red;">*</span> : </label>
+      		  <label for="date">From Date : </label>
       		  <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />
        		 
     		</div>
@@ -381,7 +383,7 @@ display: none; /* Hidden by default */
            <div class="row">
     			<div class="form-group col-12">
     			
-      		  <label for="date">To Date&nbsp;<span style="color: red;">*</span> : </label>
+      		  <label for="date">To Date&nbsp; : </label>
       		  <input type="date" name="userdateto" id="userdateto" class="form-control activity" style="width: 100%;" />
        		 
     		</div>
@@ -578,6 +580,16 @@ $(".sidebar-btn").click(function(){
 $(".wrapper").toggleClass("collapse");
 	});
 	});
+
+document.getElementById('userdateto').addEventListener('change', function() {
+    var fromDate = document.getElementById('userdate').value;
+    if (!fromDate) {
+        alert('Please select From Date first.');
+        this.value = ''; // Reset the To Date
+        $('#userdate').focus();
+    }
+});
+
 
 </script>
 <footer class=" ">

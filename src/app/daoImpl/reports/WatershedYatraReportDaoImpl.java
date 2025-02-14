@@ -21,6 +21,7 @@ import app.model.master.IwmpGramPanchayat;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 
 @Repository("WatershedYatraReportDao")
 public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
@@ -60,6 +61,12 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	
 	@Value("${getPreYatraPrepReport}") 
 	String getPreYatraPrepReportData;
+	
+	@Value("${getInaugurationDatatodate}") 
+	String getInaugurationDatatodate;
+	
+	@Value("${getInaugurationDatafromdate}") 
+	String getInaugurationDatafromdate;
 
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -239,24 +246,55 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	@Override
 	public List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate, String userdateto) {
 		String getReport=getInaugurationData;
+		String getReport2=getInaugurationDatatodate;
+		String getReport1=getInaugurationDatafromdate;
 		Session session = sessionFactory.getCurrentSession();
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 		try {
-			
+			Query query=null;
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-			Date inaugurationDate = formatter.parse(userdate);
-			Date inaugurationDate1 = formatter.parse(userdateto);
+			Date inaugurationDate = null;
+			Date inaugurationDate1 = null;
+			
+			if(!userdate.equals("")) 
+				inaugurationDate = formatter.parse(userdate);
+			
+			if(!userdateto.equals("")) 
+				inaugurationDate1 = formatter.parse(userdateto);
 			
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setInteger("statecd",State); 
-				query.setInteger("distcd",district); 
-				query.setInteger("blkcd",block);
-				query.setDate("userdate",inaugurationDate);
-				query.setDate("userdate1",inaugurationDate1);
-				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
-				list = query.list();
+				
+				if(userdate.equals("") && userdateto.equals("")) 
+				{
+					query= session.createSQLQuery(getReport);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block);
+					query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+					list = query.list();
+				}
+				if( !userdate.equals("") && !userdateto.equals("")) {
+					query= session.createSQLQuery(getReport2);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block);
+					query.setDate("userdate",inaugurationDate);
+					query.setDate("userdate1",inaugurationDate1);
+					query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+					list = query.list();
+				}
+				if(!userdate.equals("")  &&  userdateto.equals("")) {
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block);
+					query.setDate("userdate",inaugurationDate);
+					query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+					list = query.list();
+				}
+				
+				
 				session.getTransaction().commit();
 		} 
 		catch (HibernateException e) 

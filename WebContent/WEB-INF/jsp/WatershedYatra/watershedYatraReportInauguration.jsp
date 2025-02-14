@@ -43,7 +43,7 @@ function showReport(e)
 		$('#block').focus();
 		e.preventDefault();
 	}
-	if(userdate==='')
+	/* if(userdate==='')
 	{
 		alert('Please select From Date');
 		$('#userdate').focus();
@@ -60,7 +60,7 @@ function showReport(e)
 		alert('From date Can not be greater than To date');
 		$('#userdate').val('');
 		$('#userdateto').val('');
-	} 
+	}  */
 	else{
 		document.inauguration.action="getInaugurationReportData";
 		document.inauguration.method="post";
@@ -357,9 +357,9 @@ display: none; /* Hidden by default */
 							</c:if>
 					</select></td>
 					
-					<td class="label">From Date <span style="color: red;">*</span></td>
+					<td class="label">From Date </td>
 					<td><input type="date" name="userdate" id="userdate" value="udate" class="form-control activity" style="width: 100%;" /></td>
-					<td class="label">To Date <span style="color: red;">*</span></td>
+					<td class="label">To Date </td>
 					<td><input type="date" name="userdateto" id="userdateto" value="" class="form-control activity" style="width: 100%;" /></td>
 
 					<td align="left">&nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);" name="view" value='Get Data' /></td>
@@ -529,6 +529,15 @@ $(".wrapper").toggleClass("collapse");
 	});
 	});
 
+
+document.getElementById('userdateto').addEventListener('change', function() {
+    var fromDate = document.getElementById('userdate').value;
+    if (!fromDate) {
+        alert('Please select From Date first.');
+        this.value = ''; // Reset the To Date
+        $('#userdate').focus();
+    }
+});
 </script>
 <footer class=" ">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>

@@ -961,11 +961,17 @@ public class WatershedYatraReportController {
 			
 			List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 			
-			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	        
+			String fromDateStr=null;
+			String toDateStr =null;
+			
+			if(!userdate.equals("")) {
+	        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
 	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
 			
 			if(session!=null && session.getAttribute("loginID")!=null) {
 				
@@ -1019,6 +1025,19 @@ public class WatershedYatraReportController {
 		int blkCode = Integer.parseInt(request.getParameter("block"));
 		String userdate= request.getParameter("udate");
 		String userdateto= request.getParameter("userdate2");
+		
+		String fromDateStr ="";
+        String toDateStr = "";
+        
+        	if(!userdate.equals("")) {
+		        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+		        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
+		        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+		        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+        
 		
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 		
@@ -1472,11 +1491,19 @@ public class WatershedYatraReportController {
 		int blkCode = Integer.parseInt(request.getParameter("block"));
 		String userdateto= request.getParameter("userdate2");
 		
-		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		
+        String fromDateStr ="";
+        String toDateStr = "";
         
-        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        	if(!userdate.equals("")) {
+		        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+		        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
+		        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+		        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+        
         
 		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
 

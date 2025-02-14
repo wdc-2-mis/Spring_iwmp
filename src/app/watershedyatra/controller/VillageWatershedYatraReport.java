@@ -112,7 +112,8 @@ public class VillageWatershedYatraReport {
 				mav.addObject("gpList", gpList);}
 				mav.addObject("grampn", grampan);	
 			
-		}else {
+		}
+		else {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}
@@ -132,13 +133,17 @@ public class VillageWatershedYatraReport {
 			String userdate= request.getParameter("userdate");
 			String userdateto= request.getParameter("userdateto");
 			List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
-			 
+			String fromDateStr=null;
+			String toDateStr =null;
+			
+			if(!userdate.equals("")) {
 	        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-	        
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
 	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
 			if(session!=null && session.getAttribute("loginID")!=null) {
 				
 				mav = new ModelAndView("WatershedYatra/wyVillageReport");
@@ -195,12 +200,15 @@ public class VillageWatershedYatraReport {
 		String blkName= request.getParameter("blkName");
 		String gpkName= request.getParameter("gpkName");
 		
-		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        
-        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
+		
+		if(!userdate.equals("")) {
+			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+		if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
 		
 		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
 		
@@ -577,12 +585,17 @@ public class VillageWatershedYatraReport {
 		String distName= request.getParameter("distName");
 		String blkName= request.getParameter("blkName");
 		String gpkName= request.getParameter("gpkName");
-		
-		LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        
-        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		String fromDateStr ="";
+		String toDateStr ="";
+		if(!userdate.equals("")) {
+			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+		if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+
         
 		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
 		list=service.showWatershedYatraVillageReport(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate, userdateto);
