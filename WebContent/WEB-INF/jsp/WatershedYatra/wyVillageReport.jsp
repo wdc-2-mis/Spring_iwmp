@@ -125,9 +125,9 @@ function closeLargeImagePopup() {
 }
 
 function openLargeImage(imageSrc, index, total) {
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/WatershedYatraVillage/' + imageSrc;			//PRD
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/WatershedYatraVillage/' + imageSrc;			//PRD
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/WatershedYatraVillage/' + imageSrc;	//TEST
-	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;												//Local
+// 	document.getElementById('largeImage').src = 'resources/images/WatershedYatraVillage/' + imageSrc;												//Local
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;

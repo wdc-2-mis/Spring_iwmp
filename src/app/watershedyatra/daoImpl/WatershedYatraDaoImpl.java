@@ -457,9 +457,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
 		        
 		       
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/WatershedYatraVillage/";
+			 String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/WatershedYatraVillage/";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/WatershedYatraVillage/";
-			String filePath = "D:\\WatershedYatraVillage\\";
+//			String filePath = "D:\\WatershedYatraVillage\\";
 			
 			MultipartFile[] mfile = {userfileup.getArExperiencephoto1(),userfileup.getArExperiencephoto2(),
 					userfileup.getBhoomiCostphoto1(),userfileup.getBhoomiCostphoto2(),userfileup.getCulturalActivityphoto1(),
@@ -472,7 +472,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			
 			for (MultipartFile file : mfile) {
 				
-				commonFunction.uploadFileforLMS(file, filePath);
+				commonFunction.uploadFileforLMS(file, filePath, userfileup.getVillage());
 			
 			}
 			
@@ -930,69 +930,69 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 //			imgList.add(list.get(0).getWatershedYatraId().toString());
 			
 			//server
-//				if(list.get(0).getArExperiencePath1()!=null)
-//			imgList.add(list.get(0).getArExperiencePath1().substring(list.get(0).getArExperiencePath1().lastIndexOf("/")+1));
-//				
-//				if(list.get(0).getArExperiencePath2()!=null)
-//			imgList.add(list.get(0).getArExperiencePath2().substring(list.get(0).getArExperiencePath2().lastIndexOf("/")+1));
-//			
-//				if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
-//				imgList.add(list.get(0).getBhumiJalSanrakshanPath1().substring(list.get(0).getBhumiJalSanrakshanPath1().lastIndexOf("/")+1));
-//			
-//				if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
-//				imgList.add(list.get(0).getBhumiJalSanrakshanPath2().substring(list.get(0).getBhumiJalSanrakshanPath2().lastIndexOf("/")+1));
-//			
-//				if(list.get(0).getYatraFilmPath1()!=null)
-//				imgList.add(list.get(0).getYatraFilmPath1().substring(list.get(0).getYatraFilmPath1().lastIndexOf("/")+1));
-//			
-//				if(list.get(0).getYatraFilmPath2()!=null)
-//				imgList.add(list.get(0).getYatraFilmPath2().substring(list.get(0).getYatraFilmPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getQuizParticipantsPath1()!=null)
-//			imgList.add(list.get(0).getQuizParticipantsPath1().substring(list.get(0).getQuizParticipantsPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getQuizParticipantsPath2()!=null)
-//			imgList.add(list.get(0).getQuizParticipantsPath2().substring(list.get(0).getQuizParticipantsPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getCulturalActivityPath1()!=null)
-//			imgList.add(list.get(0).getCulturalActivityPath1().substring(list.get(0).getCulturalActivityPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getCulturalActivityPath2()!=null)
-//			imgList.add(list.get(0).getCulturalActivityPath2().substring(list.get(0).getCulturalActivityPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getBhoomiPoojanPath1()!=null)
-//			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getBhoomiPoojanPath2()!=null)
-//			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getLokarpanPath1()!=null)
-//			
-//			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getLokarpanPath2()!=null)
-//			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getShramdaanPath1()!=null)
-//			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getShramdaanPath2()!=null)
-//			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getPlantationPath1()!=null)
-//			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getPlantationPath2()!=null)
-//			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getAwardDistributionPath1()!=null)
-//			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
-//			
-//			if(list.get(0).getAwardDistributionPath2()!=null)
-//			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
+				if(list.get(0).getArExperiencePath1()!=null)
+			imgList.add(list.get(0).getArExperiencePath1().substring(list.get(0).getArExperiencePath1().lastIndexOf("/")+1));
+				
+				if(list.get(0).getArExperiencePath2()!=null)
+			imgList.add(list.get(0).getArExperiencePath2().substring(list.get(0).getArExperiencePath2().lastIndexOf("/")+1));
+			
+				if(list.get(0).getBhumiJalSanrakshanPath1()!=null)
+				imgList.add(list.get(0).getBhumiJalSanrakshanPath1().substring(list.get(0).getBhumiJalSanrakshanPath1().lastIndexOf("/")+1));
+			
+				if(list.get(0).getBhumiJalSanrakshanPath2()!=null)
+				imgList.add(list.get(0).getBhumiJalSanrakshanPath2().substring(list.get(0).getBhumiJalSanrakshanPath2().lastIndexOf("/")+1));
+			
+				if(list.get(0).getYatraFilmPath1()!=null)
+				imgList.add(list.get(0).getYatraFilmPath1().substring(list.get(0).getYatraFilmPath1().lastIndexOf("/")+1));
+			
+				if(list.get(0).getYatraFilmPath2()!=null)
+				imgList.add(list.get(0).getYatraFilmPath2().substring(list.get(0).getYatraFilmPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getQuizParticipantsPath1()!=null)
+			imgList.add(list.get(0).getQuizParticipantsPath1().substring(list.get(0).getQuizParticipantsPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getQuizParticipantsPath2()!=null)
+			imgList.add(list.get(0).getQuizParticipantsPath2().substring(list.get(0).getQuizParticipantsPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getCulturalActivityPath1()!=null)
+			imgList.add(list.get(0).getCulturalActivityPath1().substring(list.get(0).getCulturalActivityPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getCulturalActivityPath2()!=null)
+			imgList.add(list.get(0).getCulturalActivityPath2().substring(list.get(0).getCulturalActivityPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getBhoomiPoojanPath1()!=null)
+			imgList.add(list.get(0).getBhoomiPoojanPath1().substring(list.get(0).getBhoomiPoojanPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getBhoomiPoojanPath2()!=null)
+			imgList.add(list.get(0).getBhoomiPoojanPath2().substring(list.get(0).getBhoomiPoojanPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getLokarpanPath1()!=null)
+			
+			imgList.add(list.get(0).getLokarpanPath1().substring(list.get(0).getLokarpanPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getLokarpanPath2()!=null)
+			imgList.add(list.get(0).getLokarpanPath2().substring(list.get(0).getLokarpanPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getShramdaanPath1()!=null)
+			imgList.add(list.get(0).getShramdaanPath1().substring(list.get(0).getShramdaanPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getShramdaanPath2()!=null)
+			imgList.add(list.get(0).getShramdaanPath2().substring(list.get(0).getShramdaanPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getPlantationPath1()!=null)
+			imgList.add(list.get(0).getPlantationPath1().substring(list.get(0).getPlantationPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getPlantationPath2()!=null)
+			imgList.add(list.get(0).getPlantationPath2().substring(list.get(0).getPlantationPath2().lastIndexOf("/")+1));
+			
+			if(list.get(0).getAwardDistributionPath1()!=null)
+			imgList.add(list.get(0).getAwardDistributionPath1().substring(list.get(0).getAwardDistributionPath1().lastIndexOf("/")+1));
+			
+			if(list.get(0).getAwardDistributionPath2()!=null)
+			imgList.add(list.get(0).getAwardDistributionPath2().substring(list.get(0).getAwardDistributionPath2().lastIndexOf("/")+1));
 			
 			//local
-			
+/*			
 			if(list.get(0).getArExperiencePath1()!=null)
 			imgList.add(list.get(0).getArExperiencePath1().replaceAll(".*\\\\", ""));
 			
@@ -1052,7 +1052,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			
 			if(list.get(0).getAwardDistributionPath2()!=null)
 			imgList.add(list.get(0).getAwardDistributionPath2().replaceAll(".*\\\\", ""));
-			
+*/			
 		}catch(Exception ex) {
 			session.getTransaction().rollback();
 			ex.printStackTrace();
@@ -1202,14 +1202,16 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep.setUpdatedDate(new Date());
 	        sess.save(prep);
 
+	        Integer prepId = prep.getPrepId(); 
+	        
 	        // Save Photo Files
 	        boolean isDuplicatePhoto1 = isDuplicateGSPhoto1(preYatraPrep.getGramphoto1().getOriginalFilename(), preYatraPrep.getGramphoto1_lat(), preYatraPrep.getGramphoto1_lng());
-	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), "D:\\preyatraprep/", isDuplicatePhoto1);
+	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), prepId, "GS_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto1);
 	        
 	        
 	        
 	        boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
-	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), "D:\\preyatraprep/", isDuplicatePhoto2);
+	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), prepId, "GS_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto2);
 	        
 	        PreYatraGramsabha gram = new PreYatraGramsabha();
 	        gram.setPreYatraPreparation(prep);
@@ -1241,12 +1243,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep2.setUpdatedBy(session.getAttribute("loginID").toString());
 	        prep2.setUpdatedDate(new Date());
 	        sess.save(prep2);
-            
+	        Integer prepId2 = prep.getPrepId();
 	        boolean isDuplicatePhoto3 = isDuplicatePPPhoto1(preYatraPrep.getPheriphoto1().getOriginalFilename(), preYatraPrep.getPheriphoto1_lat(), preYatraPrep.getPheriphoto1_lng());
-	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), "D:\\preyatraprep/", isDuplicatePhoto3);
+	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), prepId2, "PP_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto3);
 	        
 	        boolean isDuplicatePhoto4 = isDuplicatePPPhoto2(preYatraPrep.getPheriphoto2().getOriginalFilename(), preYatraPrep.getPheriphoto2_lat(), preYatraPrep.getPheriphoto2_lng());
-	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), "D:\\preyatraprep/", isDuplicatePhoto4);
+	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), prepId2, "PP_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto4);
 	        
 	        PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
 	        pheri.setPreYatraPreparation(prep2);
@@ -1384,12 +1386,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 
 	    return isDuplicate;
 	}
-	private String saveFile(MultipartFile file, String directoryPath, boolean isDuplicate) {
+	private String saveFile(MultipartFile file, Integer id, String type, String directoryPath, boolean isDuplicate) {
 	    if (file == null || file.isEmpty()) {
 	        return null; // No file uploaded
 	    }
 
-	    String fileName = file.getOriginalFilename();
+	    String fileName = id+type+file.getOriginalFilename();
 	    String filePath = directoryPath + fileName;
 
 	    if (!isDuplicate) {

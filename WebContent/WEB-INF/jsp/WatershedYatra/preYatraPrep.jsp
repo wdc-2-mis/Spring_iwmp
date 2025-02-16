@@ -162,7 +162,7 @@ if (allValid) {
 	
 		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
 		<label>
-		<span style="color:blue;">Note:-Image size must be under 300KB, with dimensions of 300*400 pixels.</span>
+		<span style="color:blue;">Note:-Image size must be under 300KB, with dimensions of 300*400 pixels with Geo-Referenced and Time-stamped.</span>
 		</label>
 		<c:if test="${not empty result}">
              <script>alert("${result}");</script>
@@ -319,7 +319,7 @@ if (allValid) {
         <th>Block</th>
         <th>Gram Panchayat</th>
         <th>Village</th>
-        <th>Yatra Type</th>
+        <th>Activity Type</th>
         <th>Entry Date</th>
         <th>Photo 1</th>
         <th>Photo1 longitude</th>
@@ -343,11 +343,11 @@ if (allValid) {
                     <td>${record.yatratype}</td>
                     <td>${record.entrydate}</td>
                     
-                    <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo1}')">View</button></td>
+                    <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo1}')">View</button></td>
                     <td>${record.photo1long}</td>
                     <td>${record.photo1lang}</td>
                     <td>${record.photo1time}</td>
-                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo2}')">View</button></td>
+                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo2}')">View</button></td>
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>

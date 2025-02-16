@@ -53,7 +53,9 @@ $(document).ready(function () {
         });
     });
 
-    function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
+    
+
+function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
     if (input.files && input.files[0]) {
         let file = input.files[0];
         let fileSizeKB = file.size / 1024;
@@ -103,25 +105,44 @@ $(document).ready(function () {
             document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
 
             console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
-            
-                let photo1File = document.getElementById("gramphoto1").files[0];
-                let photo2File = document.getElementById("gramphoto2").files[0];
-                if (photo1File && photo2File && photo1File.name === photo2File.name) {
-                    alert("The same photo cannot be uploaded twice. Please select different photos.");
-                    input.value = "";
-                    return;
+
+            // Check for duplicate photos
+            let photo1File = document.getElementById("gramphoto1").files[0];
+            let photo2File = document.getElementById("gramphoto2").files[0];
+            let photo3File = document.getElementById("pheriphoto1").files[0];
+            let photo4File = document.getElementById("pheriphoto2").files[0];
+
+            let duplicateFiles = [];
+
+            function checkDuplicate(photoFile1, photoFile2, inputId) {
+                if (photoFile1 && photoFile2 && photoFile1.name === photoFile2.name) {
+                    alert(`The same photo cannot be uploaded twice. Please select a different photo.`);
+                    duplicateFiles.push(inputId);
                 }
-                
-                 let photo3File = document.getElementById("pheriphoto1").files[0];
-                let photo4File = document.getElementById("pheriphoto2").files[0];
-                if (photo3File && photo4File && photo3File.name === photo4File.name) {
-                    alert("The same photo cannot be uploaded twice. Please select different photos.");
+            }
+
+            checkDuplicate(photo1File, photo3File, "pheriphoto1");
+            checkDuplicate(photo1File, photo2File, "gramphoto2");
+            checkDuplicate(photo2File, photo3File, "pheriphoto1");
+            checkDuplicate(photo1File, photo4File, "pheriphoto2");
+            checkDuplicate(photo2File, photo4File, "pheriphoto2");
+            checkDuplicate(photo3File, photo4File, "pheriphoto2");
+
+            // Clear duplicate photo inputs
+            duplicateFiles.forEach(id => {
+                document.getElementById(id).value = "";
+            });
+
+            // Alert if photo does not have longitude and latitude
+            if (!lat || !lng) {
+                if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
                     input.value = "";
-                    return;
                 }
+            }
         });
     }
 }
+
 
 // Attach validation to file inputs
 $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {

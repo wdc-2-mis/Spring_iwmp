@@ -521,12 +521,12 @@ public class CommonFunctions {
 		            // add image
 		            
 					
-					 String emb="https://wdcpmksy.dolr.gov.in/resources/images/tiranga_national_emblem.png";
-					 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/g20-logo.png";
+//					 String emb="https://wdcpmksy.dolr.gov.in/resources/images/tiranga_national_emblem.png";
+//					 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/g20-logo.png";
 					 
 		           
-		           //String emb="http://localhost/resources/images/tiranga_national_emblem.png";
-				   //String g20l="http://localhost/resources/images/g20-logo.png";
+		           String emb="http://localhost/resources/images/tiranga_national_emblem.png";
+				   String g20l="http://localhost/resources/images/g20-logo.png";
 
 					
 					Image img = Image.getInstance(emb);
@@ -674,7 +674,7 @@ public class CommonFunctions {
 				return style;
 		 }
 		 
-		 public String uploadFileforLMS(MultipartFile mfile,String filePath) throws Exception
+		 public String uploadFileforLMS(MultipartFile mfile, String filePath, Integer bcode) throws Exception
 		 {
 				int mid=0, k=0;
 				String ext="", file_name = "", concatinate = ".";
@@ -725,11 +725,11 @@ public class CommonFunctions {
 						}
 						mid = fileName.lastIndexOf(".");
 						ext = fileName.substring(mid + 1, fileName.length()); 
-						if ((ext.compareToIgnoreCase("") == 0) || (ext.compareToIgnoreCase("jpg") == 0)
+						if ((ext.compareToIgnoreCase("jpg") == 0)
 							|| (ext.compareToIgnoreCase("jpeg") == 0)
 							|| (ext.compareToIgnoreCase("png") == 0)) 
 						{
-							file_name = fileName;
+							file_name = bcode+fileName;
 						//	file_name = file_name.concat(concatinate);
 							if (!file_name.equals("")) 
 							{
@@ -741,16 +741,17 @@ public class CommonFunctions {
 									outputStream.close();
 								}
 							}
-							return "success";
+							return "Upload";
 						}
 						else {
-								return "Upload correct file.";
+								return "unUpload";
 						}	
 				} 
 				catch (Exception e) 
 				{
 					e.printStackTrace();
-					return "error";
+					return "unUpload";
+					
 				}	
 			}
 		

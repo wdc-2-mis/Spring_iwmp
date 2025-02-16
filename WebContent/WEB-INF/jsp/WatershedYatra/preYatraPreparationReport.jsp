@@ -275,14 +275,14 @@ function downloadExcel(state, district, blkd, grampn){
 							<td>${record.entrydate}</td>
 
 							<td>
-								<button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo1}')">View</button>
+								<button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo1}')">View</button>
 							</td>
 							
 							<td>${record.photo1long}</td>
 							<td>${record.photo1lang}</td>
 							<td>${record.photo1time}</td>
 							<td>
-								<button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/TESTING/preyatraprep/${record.photo2}')">View</button>
+								<button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo2}')">View</button>
 							</td>
 							
 							<td>${record.photo2long}</td>

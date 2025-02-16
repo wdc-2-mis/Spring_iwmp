@@ -64,13 +64,14 @@ public class InaugurationDaoImpl implements InaugurationDao {
 		Session sess = sessionFactory.getCurrentSession();
 		
 		String res = "fail";
+		String upload="unUpload";
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
 			
-			String filePath="D:\\Inauguration\\";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
+//			String filePath="D:\\Inauguration\\";
+			 String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/";
 			
 			MultipartFile[] mfile = {userfileup.getFlagoff_photo1(), userfileup.getFlagoff_photo2(), userfileup.getThemesong_photo1(), userfileup.getThemesong_photo2(),
@@ -79,9 +80,11 @@ public class InaugurationDaoImpl implements InaugurationDao {
 					 	userfileup.getAward_photo1(), userfileup.getAward_photo2(), userfileup.getDept_stalls_photo1(), userfileup.getDept_stalls_photo2(), 
 					 	userfileup.getShg_fpo_stalls_photo1(), userfileup.getShg_fpo_stalls_photo2(), userfileup.getLakhpati_didi_photo1(), userfileup.getLakhpati_didi_photo2() };
 			
+			
+			
 			for (MultipartFile file : mfile) {
 			
-				commonFunction.uploadFileforLMS(file, filePath);
+				upload=commonFunction.uploadFileforLMS(file, filePath, userfileup.getBlock());
 			
 			}
 			
@@ -459,7 +462,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			//server
 			
-/*
+
  			if(list.get(0).getVanFlagPath1()!=null)
 				imgList.add(list.get(0).getVanFlagPath1().substring(list.get(0).getVanFlagPath1().lastIndexOf("/")+1));
 			if(list.get(0).getVanFlagPath2()!=null)
@@ -501,11 +504,11 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			if(list.get(0).getLakhpatiDidiPath2()!=null)
 				imgList.add(list.get(0).getLakhpatiDidiPath2().substring(list.get(0).getLakhpatiDidiPath2().lastIndexOf("/")+1));
 			
-*/			
+			
 
 			
 			//local
-			
+/*			
 			if(list.get(0).getVanFlagPath1()!=null)
 				imgList.add(list.get(0).getVanFlagPath1().replaceAll(".*\\\\", ""));
 			if(list.get(0).getVanFlagPath2()!=null)
@@ -546,7 +549,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 				imgList.add(list.get(0).getLakhpatiDidiPath1().replaceAll(".*\\\\", ""));
 			if(list.get(0).getLakhpatiDidiPath2()!=null)
 				imgList.add(list.get(0).getLakhpatiDidiPath2().replaceAll(".*\\\\", ""));
-			
+*/			
 			
 		}catch(Exception ex) {
  			session.getTransaction().rollback();
