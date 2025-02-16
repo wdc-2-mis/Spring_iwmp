@@ -716,7 +716,7 @@ public class CommonFunctions {
 						
 						if(mfile.isEmpty() || fileName.isEmpty())
 						{
-							return "Please upload a valid file";
+							return "fileisempty";
 						}
 						File file = new File(filePath);
 						if (!file.exists()) 
@@ -797,7 +797,7 @@ public class CommonFunctions {
 						
 						if(mfile.isEmpty() || fileName.isEmpty())
 						{
-							return "Please upload a valid file";
+							return "fileisempty";
 						}
 						File file = new File(filePath);
 						if (!file.exists()) 

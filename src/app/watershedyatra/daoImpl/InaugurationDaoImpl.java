@@ -426,6 +426,322 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			res = "success";
 			sess.getTransaction().commit();
 			}
+			else if(upload.equals("fileisempty")) {
+					data.setIwmpState(s);
+					data.setIwmpDistrict(d);
+					data.setIwmpBlock(b);
+					data.setCreatedBy(session.getAttribute("loginID").toString());
+					data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+					data.setRequestedIp(ipAddr);
+					data.setStatus("C");
+					
+					data.setInauguarationDate(inaugurationDate);
+					data.setInauguarationLocation(userfileup.getLocation());
+					data.setMaleParticipants(userfileup.getMale_participants());
+					data.setFemaleParticipants(userfileup.getFemale_participants());
+					data.setCentralMinister(userfileup.getCentral_ministers());
+					data.setStateMinister(userfileup.getState_ministers());
+					data.setParliamentMembers(userfileup.getParliament());
+					data.setLegislativeAssemblyMembers(userfileup.getAssembly_members());
+					data.setLegislativeCouncilMembers(userfileup.getCouncil_members());
+					data.setOtherPublicRepresentatives(userfileup.getOthers());
+					data.setGovOfficials(userfileup.getGov_officials());
+					data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagoff()));
+//					data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
+//					data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
+					
+					data.setVanFlagPath1(!userfileup.getFlagoff_photo1().isEmpty() ? filePath + "I"+"Flag1"+userfileup.getBlock()+"_"+userfileup.getFlagoff_photo1().getOriginalFilename() :  null);
+					if(!userfileup.getFlagoff_photo1().isEmpty()) {
+						data.setVan_flag_path1_latitude(userfileup.getFlagoff_photo1_lat());
+						data.setVan_flag_path1_longitute(userfileup.getFlagoff_photo1_lng());
+						data.setVan_flag_path1_time(parseTimestamp(userfileup.getFlagoff_photo1_time()));
+					}
+					else {
+						data.setVan_flag_path1_latitude(null);
+						data.setVan_flag_path1_longitute(null);
+						data.setVan_flag_path1_time(null);
+					}
+					
+					data.setVanFlagPath2(!userfileup.getFlagoff_photo2().isEmpty() ? filePath + "I"+"Flag2"+userfileup.getBlock()+"_"+userfileup.getFlagoff_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getFlagoff_photo2().isEmpty()) {
+						data.setVan_flag_path2_latitude(userfileup.getFlagoff_photo2_lat());
+						data.setVan_flag_path2_longitute(userfileup.getFlagoff_photo2_lng());
+						data.setVan_flag_path2_time(parseTimestamp(userfileup.getFlagoff_photo2_time()));
+					}
+					else {
+						data.setVan_flag_path2_latitude(null);
+						data.setVan_flag_path2_longitute(null);
+						data.setVan_flag_path2_time(null);
+					}
+					
+					data.setThemeSong(Boolean.valueOf(userfileup.getThemesong()));
+//					data.setThemeSongPath1(filePath+userfileup.getThemesong_photo1().getOriginalFilename());
+//					data.setThemeSongPath2(filePath+userfileup.getThemesong_photo2().getOriginalFilename());
+					
+					data.setThemeSongPath1(!userfileup.getThemesong_photo1().isEmpty() ? filePath + "I"+"Song1"+userfileup.getBlock()+"_"+userfileup.getThemesong_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getThemesong_photo1().isEmpty()) {
+						data.setTheme_song_path1_latitude(userfileup.getThemesong_photo1_lat());
+						data.setTheme_song_path1_longitute(userfileup.getThemesong_photo1_lng());
+						data.setTheme_song_path1_time(parseTimestamp(userfileup.getThemesong_photo1_time()));
+					}
+					else {
+						data.setTheme_song_path1_latitude(null);
+						data.setTheme_song_path1_longitute(null);
+						data.setTheme_song_path1_time(null);
+					}
+					
+					data.setThemeSongPath2(!userfileup.getThemesong_photo2().isEmpty() ? filePath + "I"+"Song2"+userfileup.getBlock()+"_"+userfileup.getThemesong_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getThemesong_photo2().isEmpty()) {
+						data.setTheme_song_path2_latitude(userfileup.getThemesong_photo2_lat());
+						data.setTheme_song_path2_longitute(userfileup.getThemesong_photo2_lng());
+						data.setTheme_song_path2_time(parseTimestamp(userfileup.getThemesong_photo2_time()));
+					}
+					else {
+						data.setTheme_song_path2_latitude(null);
+						data.setTheme_song_path2_longitute(null);
+						data.setTheme_song_path2_time(null);
+					}
+					data.setBhoomiPoojanNoOfWorks(userfileup.getNo_works_bhoomipoojan());
+					data.setBhoomiPoojanCostOfWorks(userfileup.getTot_works_bhoomipoojan());
+//					data.setBhoomiPoojanPath1(filePath+userfileup.getBhoomipoojan_photo1().getOriginalFilename());
+//					data.setBhoomiPoojanPath2(filePath+userfileup.getBhoomipoojan_photo2().getOriginalFilename());
+					
+					data.setBhoomiPoojanPath1(!userfileup.getBhoomipoojan_photo1().isEmpty() ? filePath + "I"+"Bhoomi1"+userfileup.getBlock()+"_"+userfileup.getBhoomipoojan_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getBhoomipoojan_photo1().isEmpty()) {
+						data.setBhoomi_poojan_path1_latitude(userfileup.getBhoomipoojan_photo1_lat());
+						data.setBhoomi_poojan_path1_longitute(userfileup.getBhoomipoojan_photo1_lng());
+						data.setBhoomi_poojan_path1_time(parseTimestamp(userfileup.getBhoomipoojan_photo1_time()));
+					}
+					else {
+						data.setBhoomi_poojan_path1_latitude(null);
+						data.setBhoomi_poojan_path1_longitute(null);
+						data.setBhoomi_poojan_path1_time(null);
+					}
+					
+					data.setBhoomiPoojanPath2(!userfileup.getBhoomipoojan_photo2().isEmpty() ? filePath +"I"+"Bhoomi2"+userfileup.getBlock()+"_"+ userfileup.getBhoomipoojan_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getBhoomipoojan_photo2().isEmpty()) {
+						data.setBhoomi_poojan_path2_latitude(userfileup.getBhoomipoojan_photo2_lat());
+						data.setBhoomi_poojan_path2_longitute(userfileup.getBhoomipoojan_photo2_lng());
+						data.setBhoomi_poojan_path2_time(parseTimestamp(userfileup.getBhoomipoojan_photo2_time()));
+					}
+					else {
+						data.setBhoomi_poojan_path2_latitude(null);
+						data.setBhoomi_poojan_path2_longitute(null);
+						data.setBhoomi_poojan_path2_time(null);
+					}
+//					
+					data.setLokarpanNoOfWorks(userfileup.getNo_works_lokarpan());
+					data.setLokarpanCostOfWorks(userfileup.getTot_works_lokarpan());
+//					data.setLokarpanPath1(filePath+userfileup.getLokarpan_photo1().getOriginalFilename());
+//					data.setLokarpanPath2(filePath+userfileup.getLokarpan_photo2().getOriginalFilename());
+					
+					data.setLokarpanPath1(!userfileup.getLokarpan_photo1().isEmpty() ? filePath + "I"+"Lok1"+userfileup.getBlock()+"_"+userfileup.getLokarpan_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getLokarpan_photo1().isEmpty()) {
+						data.setLokarpan_path1_latitude(userfileup.getLokarpan_photo1_lat());
+						data.setLokarpan_path1_longitute(userfileup.getLokarpan_photo1_lng());
+						data.setLokarpan_path1_time(parseTimestamp(userfileup.getLokarpan_photo1_time()));
+					}
+					else {
+						data.setLokarpan_path1_latitude(null);
+						data.setLokarpan_path1_longitute(null);
+						data.setLokarpan_path1_time(null);
+					}
+					
+					data.setLokarpanPath2(!userfileup.getLokarpan_photo2().isEmpty() ? filePath + "I"+"Lok2"+userfileup.getBlock()+"_"+userfileup.getLokarpan_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getLokarpan_photo2().isEmpty()) {
+						data.setLokarpan_path2_latitude(userfileup.getLokarpan_photo2_lat());
+						data.setLokarpan_path2_longitute(userfileup.getLokarpan_photo2_lng());
+						data.setLokarpan_path2_time(parseTimestamp(userfileup.getLokarpan_photo2_time()));
+					}
+					else {
+						data.setLokarpan_path2_latitude(null);
+						data.setLokarpan_path2_longitute(null);
+						data.setLokarpan_path2_time(null);
+					}
+					
+					data.setShramdaanNoOfLocation(userfileup.getNo_location_shramdaan());
+					data.setShramdaanNoOfParticipatedPeople(userfileup.getNo_people_shramdaan());
+					data.setManHr(userfileup.getMan());
+//					data.setShramdaanPath1(filePath+userfileup.getShramdaan_photo1().getOriginalFilename());
+//					data.setShramdaanPath2(filePath+userfileup.getShramdaan_photo2().getOriginalFilename());
+					
+					data.setShramdaanPath1(!userfileup.getShramdaan_photo1().isEmpty() ? filePath + "I"+"Shram1"+userfileup.getBlock()+"_"+userfileup.getShramdaan_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getShramdaan_photo1().isEmpty()) {
+						data.setShramdaan_path1_latitude(userfileup.getShramdaan_photo1_lat());
+						data.setShramdaan_path1_longitute(userfileup.getShramdaan_photo1_lng());
+						data.setShramdaan_path1_time(parseTimestamp(userfileup.getShramdaan_photo1_time()));
+					}
+					else {
+						data.setShramdaan_path1_latitude(null);
+						data.setShramdaan_path1_longitute(null);
+						data.setShramdaan_path1_time(null);
+					}
+					
+					data.setShramdaanPath2(!userfileup.getShramdaan_photo2().isEmpty() ? filePath + "I"+"Shram2"+userfileup.getBlock()+"_"+userfileup.getShramdaan_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getShramdaan_photo2().isEmpty()) {
+						data.setShramdaan_path2_latitude(userfileup.getShramdaan_photo2_lat());
+						data.setShramdaan_path2_longitute(userfileup.getShramdaan_photo2_lng());
+						data.setShramdaan_path2_time(parseTimestamp(userfileup.getShramdaan_photo2_time()));
+					}
+					else {
+						data.setShramdaan_path2_latitude(null);
+						data.setShramdaan_path2_longitute(null);
+						data.setShramdaan_path2_time(null);
+					}
+					
+					data.setPlantationArea(userfileup.getArea_plantation());
+					data.setNoOfAgroForsetry(userfileup.getNo_plantation());
+//					data.setPlantationPath1(filePath+userfileup.getPlantation_photo1().getOriginalFilename());
+//					data.setPlantationPath2(filePath+userfileup.getPlantation_photo2().getOriginalFilename());
+					
+					data.setPlantationPath1(!userfileup.getPlantation_photo1().isEmpty() ? filePath + "I"+"Plan1"+userfileup.getBlock()+"_"+userfileup.getPlantation_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getPlantation_photo1().isEmpty()) {
+						data.setPlantation_path1_latitude(userfileup.getPlantation_photo1_lat());
+						data.setPlantation_path1_longitute(userfileup.getPlantation_photo1_lng());
+						data.setPlantation_path1_time(parseTimestamp(userfileup.getPlantation_photo1_time()));
+					}
+					else {
+						data.setPlantation_path1_latitude(null);
+						data.setPlantation_path1_longitute(null);
+						data.setPlantation_path1_time(null);
+					}
+					
+					data.setPlantationPath2(!userfileup.getPlantation_photo2().isEmpty() ? filePath + "I"+"Plan2"+userfileup.getBlock()+"_"+userfileup.getPlantation_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getPlantation_photo2().isEmpty()) {
+						data.setPlantation_path2_latitude(userfileup.getPlantation_photo2_lat());
+						data.setPlantation_path2_longitute(userfileup.getPlantation_photo2_lng());
+						data.setPlantation_path2_time(parseTimestamp(userfileup.getPlantation_photo2_time()));
+					}
+					else {
+						data.setPlantation_path2_latitude(null);
+						data.setPlantation_path2_longitute(null);
+						data.setPlantation_path2_time(null);
+					}
+					
+					data.setAwardDistribution(userfileup.getNo_awards());
+//					data.setAwardDistributionPath1(filePath+userfileup.getAward_photo1().getOriginalFilename());
+//					data.setAwardDistributionPath2(filePath+userfileup.getAward_photo2().getOriginalFilename());
+					
+					data.setAwardDistributionPath1(!userfileup.getAward_photo1().isEmpty() ? filePath + "I"+"Award1"+userfileup.getBlock()+"_"+userfileup.getAward_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getAward_photo1().isEmpty()) {
+						data.setAward_distribution_path1_latitude(userfileup.getAward_photo1_lat());
+						data.setAward_distribution_path1_longitute(userfileup.getAward_photo1_lng());
+						data.setAward_distribution_path1_time(parseTimestamp(userfileup.getAward_photo1_time()));
+					}
+					else {
+						data.setAward_distribution_path1_latitude(null);
+						data.setAward_distribution_path1_longitute(null);
+						data.setAward_distribution_path1_time(null);
+					}
+					
+					data.setAwardDistributionPath2(!userfileup.getAward_photo2().isEmpty() ? filePath + "I"+"Award2"+userfileup.getBlock()+"_"+userfileup.getAward_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getAward_photo2().isEmpty()) {
+						data.setAward_distribution_path2_latitude(userfileup.getAward_photo2_lat());
+						data.setAward_distribution_path2_longitute(userfileup.getAward_photo2_lng());
+						data.setAward_distribution_path2_time(parseTimestamp(userfileup.getAward_photo2_time()));
+					}
+					else {
+						data.setAward_distribution_path2_latitude(null);
+						data.setAward_distribution_path2_longitute(null);
+						data.setAward_distribution_path2_time(null);
+					}
+					
+					data.setNoDeptStalls(userfileup.getDept_stalls());
+//					data.setDeptStallsPath1(filePath+userfileup.getDept_stalls_photo1().getOriginalFilename());
+//					data.setDeptStallsPath2(filePath+userfileup.getDept_stalls_photo2().getOriginalFilename());
+					
+					data.setDeptStallsPath1(!userfileup.getDept_stalls_photo1().isEmpty() ? filePath + "I"+"Dept1"+userfileup.getBlock()+"_"+userfileup.getDept_stalls_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getDept_stalls_photo1().isEmpty()) {
+						data.setDept_stalls_path1_latitude(userfileup.getDept_stalls_photo1_lat());
+						data.setDept_stalls_path1_longitute(userfileup.getDept_stalls_photo1_lng());
+						data.setDept_stalls_path1_time(parseTimestamp(userfileup.getDept_stalls_photo1_time()));
+					}
+					else {
+						data.setDept_stalls_path1_latitude(null);
+						data.setDept_stalls_path1_longitute(null);
+						data.setDept_stalls_path1_time(null);
+					}
+					
+					data.setDeptStallsPath2(!userfileup.getDept_stalls_photo2().isEmpty() ? filePath +"I"+"Dept2"+userfileup.getBlock()+"_"+ userfileup.getDept_stalls_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getDept_stalls_photo2().isEmpty()) {
+						data.setDept_stalls_path2_latitude(userfileup.getDept_stalls_photo2_lat());
+						data.setDept_stalls_path2_longitute(userfileup.getDept_stalls_photo2_lng());
+						data.setDept_stalls_path2_time(parseTimestamp(userfileup.getDept_stalls_photo2_time()));
+					}
+					else {
+						data.setDept_stalls_path2_latitude(null);
+						data.setDept_stalls_path2_longitute(null);
+						data.setDept_stalls_path2_time(null);
+					}
+					
+					data.setNoShgFpo(userfileup.getShg_fpo_stalls());
+//					data.setShgFpoPath1(filePath+userfileup.getShg_fpo_stalls_photo1().getOriginalFilename());
+//					data.setShgFpoPath2(filePath+userfileup.getShg_fpo_stalls_photo2().getOriginalFilename());
+					
+					data.setShgFpoPath1(!userfileup.getShg_fpo_stalls_photo1().isEmpty() ? filePath + "I"+"SHG1"+userfileup.getBlock()+"_"+userfileup.getShg_fpo_stalls_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getShg_fpo_stalls_photo1().isEmpty()) {
+						data.setShg_fpo_path1_latitude(userfileup.getShg_fpo_stalls_photo1_lat());
+						data.setShg_fpo_path1_longitute(userfileup.getShg_fpo_stalls_photo1_lng());
+						data.setShg_fpo_path1_time(parseTimestamp(userfileup.getShg_fpo_stalls_photo1_time()));
+					}
+					else {
+						data.setShg_fpo_path1_latitude(null);
+						data.setShg_fpo_path1_longitute(null);
+						data.setShg_fpo_path1_time(null);
+					}
+					
+					data.setShgFpoPath2(!userfileup.getShg_fpo_stalls_photo2().isEmpty() ? filePath + "I"+"SHG2"+userfileup.getBlock()+"_"+userfileup.getShg_fpo_stalls_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getShg_fpo_stalls_photo2().isEmpty()) {
+						data.setShg_fpo_path2_latitude(userfileup.getShg_fpo_stalls_photo2_lat());
+						data.setShg_fpo_path2_longitute(userfileup.getShg_fpo_stalls_photo2_lng());
+						data.setShg_fpo_path2_time(parseTimestamp(userfileup.getShg_fpo_stalls_photo2_time()));
+					}
+					else {
+						data.setShg_fpo_path2_latitude(null);
+						data.setShg_fpo_path2_longitute(null);
+						data.setShg_fpo_path2_time(null);
+					}
+					
+					data.setNoLakhpatiDidi(userfileup.getNo_lakhpati_didi());
+//					data.setLakhpatiDidiPath1(filePath+userfileup.getLakhpati_didi_photo1().getOriginalFilename());
+//					data.setLakhpatiDidiPath2(filePath+userfileup.getLakhpati_didi_photo2().getOriginalFilename());
+					
+					data.setLakhpatiDidiPath1(!userfileup.getLakhpati_didi_photo1().isEmpty() ? filePath + "I"+"Lakh1"+userfileup.getBlock()+"_"+userfileup.getLakhpati_didi_photo1().getOriginalFilename() :  null);
+					if (!userfileup.getLakhpati_didi_photo1().isEmpty()) {
+						data.setLakhpati_didi_path1_latitude(userfileup.getLakhpati_didi_photo1_lat());
+						data.setLakhpati_didi_path1_longitute(userfileup.getLakhpati_didi_photo1_lng());
+						data.setLakhpati_didi_path1_time(parseTimestamp(userfileup.getLakhpati_didi_photo1_time()));
+					}
+					else {
+						data.setLakhpati_didi_path1_latitude(null);
+						data.setLakhpati_didi_path1_longitute(null);
+						data.setLakhpati_didi_path1_time(null);
+					}
+					
+					data.setLakhpatiDidiPath2(!userfileup.getLakhpati_didi_photo2().isEmpty() ? filePath +  "I"+"Lakh2"+userfileup.getBlock()+"_"+userfileup.getLakhpati_didi_photo2().getOriginalFilename() :  null);
+					if (!userfileup.getLakhpati_didi_photo2().isEmpty()) {
+						data.setLakhpati_didi_path2_latitude(userfileup.getLakhpati_didi_photo2_lat());
+						data.setLakhpati_didi_path2_longitute(userfileup.getLakhpati_didi_photo2_lng());
+						data.setLakhpati_didi_path2_time(parseTimestamp(userfileup.getLakhpati_didi_photo2_time()));
+					}
+					else {
+						data.setLakhpati_didi_path2_latitude(null);
+						data.setLakhpati_didi_path2_longitute(null);
+						data.setLakhpati_didi_path2_time(null);
+					}
+					sess.save(data);
+					res = "success";
+					sess.getTransaction().commit();
+					}
+			else {
+				res = "fail";
+			}
+			
+			
+			
+			
+			
+			
 		}
 		catch (Exception ex) {
 			res = "fail";

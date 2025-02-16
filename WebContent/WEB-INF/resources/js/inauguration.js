@@ -406,7 +406,11 @@ $(function() {
             document.getElementById(photoId + "_lat").value = lat || "Not Available";
             document.getElementById(photoId + "_lng").value = lng || "Not Available";
             document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
-
+			if (!lat || !lng) {
+					 if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
+					 input.value = "";
+										                }
+														}
             console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
             
                

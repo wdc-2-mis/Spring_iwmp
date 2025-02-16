@@ -1005,7 +1005,11 @@ display: none; /* Hidden by default */
        		         <input type="hidden" id="noOfwatershedphoto2_time" name="noOfwatershedphoto2_time">
     </td>
      	</tr>
-     	
+     	<tr>
+     		<td>Remark</td>
+     		<td colspan=4>Remarks<input type="text" id="remark" name="remark" autocomplete="off"
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								</tr>
 
      </table>
         <div class="form-row">
