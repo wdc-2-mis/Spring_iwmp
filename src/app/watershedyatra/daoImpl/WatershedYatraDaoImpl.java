@@ -553,6 +553,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				main.setPlantationArea(userfileup.getPlantationArea());
 				main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
 				main.setAwardDistribution(userfileup.getNoOfwatershed());
+				main.setRemarks(userfileup.getRemarks());
 				
 
 				main.setBhumiJalSanrakshanPath1(!userfileup.getShapathYesphoto1().isEmpty() ? filePath + "W"+"Shap1"+userfileup.getVillage()+"_"+userfileup.getShapathYesphoto1().getOriginalFilename() :  null);
@@ -835,7 +836,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 					main.setPlantationArea(userfileup.getPlantationArea());
 					main.setNoOfAgroForsetry(userfileup.getNofagrohorti());
 					main.setAwardDistribution(userfileup.getNoOfwatershed());
-					
+					main.setRemarks(userfileup.getRemarks());
 
 					main.setBhumiJalSanrakshanPath1(!userfileup.getShapathYesphoto1().isEmpty() ? filePath + "W"+"Shap1"+userfileup.getVillage()+"_"+userfileup.getShapathYesphoto1().getOriginalFilename() :  null);
 					if (!userfileup.getShapathYesphoto1().isEmpty()) {
@@ -1075,16 +1076,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 					res = "fail";
 					
 				}
-				
-					
-				
-				
-				
-				
-				
-				
-				
-				
 				
 		}
 		catch(Exception ex) 
@@ -1822,4 +1813,48 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
     return null;
 }
 }
+
+	@Override
+	public String deleteWatershedYatraDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("delete from watershed_yatra_village_level where watershed_yatra_id=:nrmpkid");
+			 Date d= new Date();
+			 
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
 }

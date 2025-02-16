@@ -52,5 +52,7 @@ public interface WatershedYatraService {
 
 	boolean checkVillageStatus(Integer vCode, String preyatraType);
 	
+	String deleteWatershedYatraDetails(List<Integer>  assetid, String userid);
+	
 	
 }

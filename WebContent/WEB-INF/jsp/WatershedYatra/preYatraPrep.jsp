@@ -162,7 +162,7 @@ if (allValid) {
 	
 		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
 		<label>
-		<span style="color:blue;">Note:-Image size must be under 300KB, with dimensions of 300*400 pixels with Geo-Referenced and Time-stamped.</span>
+		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 300 x 400 pixels,Geo-referenced and Time-stamped.</span>
 		</label>
 		<c:if test="${not empty result}">
              <script>alert("${result}");</script>

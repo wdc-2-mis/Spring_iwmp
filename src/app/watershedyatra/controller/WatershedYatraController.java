@@ -195,4 +195,31 @@ public class WatershedYatraController {
 		}
 		return imgList;
 	}
+
+@RequestMapping(value="/deleteWatershedYatraDetails", method = RequestMethod.POST)
+@ResponseBody
+public String deleteWatershedYatraDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+{
+	ModelAndView mav = new ModelAndView();
+	String res="";
+	session = request.getSession(true);
+	if(session!=null && session.getAttribute("loginID")!=null) 
+	{
+		Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+		String userType= session.getAttribute("userType").toString();
+		res=ser.deleteWatershedYatraDetails(assetid, session.getAttribute("loginID").toString());
+	
+	 
+	}else {
+		mav = new ModelAndView("login");
+		mav.addObject("login", new Login());
+	}
+	return res; 
+}
+
+
+
+
+
+
 }

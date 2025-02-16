@@ -82,7 +82,7 @@ function validation()
 	$plantationArea = $('#plantationArea').val();
 	$nofagrohorti = $('#nofagrohorti').val();
 	$noOfwatershed = $('#noOfwatershed').val();
-	
+	$remarks = $('#remarks').val();
 	$arExperiencephoto1 = $('#arExperiencephoto1').val();
 	$arExperiencephoto2 = $('#arExperiencephoto2').val();
 	$shapathYesphoto1 = $('#shapathYesphoto1').val();
@@ -227,14 +227,14 @@ function validation()
 	}
 	if ($shapathYes === 'true') {
 	if ($shapathYesphoto1 === '' || typeof $shapathYesphoto1 === 'undefined') {
-		alert('Please upload the photo of Shapath Shramdan');
+		alert('Please upload the photo of Shapath ');
 		//$('#shapathYesphoto1').focus();
 		document.getElementById('shapathYesphoto1').click();
 		allValid = false;
 		return false;
 	}
 	if ($shapathYesphoto2 === '' || typeof $shapathYesphoto2 === 'undefined') {
-		alert('Please upload the photo of Shapath Shramdan');
+		alert('Please upload the photo of Shapath ');
 		//$('#shapathYesphoto2').focus();
 		document.getElementById('shapathYesphoto2').click();
 		allValid = false;
@@ -700,7 +700,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra at Village Level</h4> </div>
 			<label>
-		<span style="color:blue;">Note:- The Image size must be under 300KB, with dimensions of 300 x 400 pixels with Geo-referenced and Time-stamped.</span>
+		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 300 x 400 pixels,Geo-referenced and Time-stamped.</span>
 		</label>
 		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			
@@ -1006,10 +1006,11 @@ display: none; /* Hidden by default */
     </td>
      	</tr>
      	<tr>
-     		<td>Remark</td>
-     		<td colspan=4>Remarks<input type="text" id="remark" name="remark" autocomplete="off"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-								</tr>
+   				 <td>Remarks</td>
+   					 <td colspan="4">
+   					  <input type="text" id="remarks" name="remarks"  style="width: 100%; max-width: 500px;"> 
+    				</td>
+</tr>
 
      </table>
         <div class="form-row">
@@ -1034,7 +1035,7 @@ display: none; /* Hidden by default */
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
-								<th rowspan="3">S.No.</th>  
+								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> Select All</th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
 								<th rowspan="3">District Name</th> 
@@ -1042,6 +1043,7 @@ display: none; /* Hidden by default */
  								<th rowspan="3">GP Name</th>  
 								<th rowspan="3">Village Name</th>  
 								<th rowspan="3">Location</th>
+								<th rowspan="3">Remarks</th> 
 								<th colspan="9">Number of Participation</th> 
  								<th colspan="16">Activities</th> 
 							</tr> 
@@ -1063,6 +1065,7 @@ display: none; /* Hidden by default */
 							<th colspan="3">Shramdaan</th> 
  								<th colspan="2">Plantation</th> 
 								<th rowspan="2">Award Distribution (Felicitation)</th> 
+								
  								<th rowspan="2">No of Uploaded Photographs</th> 
 							</tr> 
 							<tr> 
@@ -1090,13 +1093,14 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
-								<td><c:out value='${count.count}' /></td>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.watershed_yatra_id}"  name="${data.watershed_yatra_id}" value="${data.watershed_yatra_id}"/></td>
 								<td><c:out value="${data.date}" /></td>
 								<td><c:out value="${data.distname}" /></td>
  								<td><c:out value="${data.blockname}" /></td>
  								<td><c:out value="${data.gpname}" /></td>
  								<td><c:out value="${data.villagename}" /></td>
 								<td><c:out value="${data.location}" /></td>
+								<td class="text-right"><c:out value="${data.remarks}" /></td>
  								<td class="text-right"><c:out value="${data.male_participants}" /></td>
 								<td class="text-right"><c:out value="${data.female_participants}" /></td>
  								<td class="text-right"><c:out value="${data.central_ministers}" /></td>
@@ -1121,12 +1125,20 @@ display: none; /* Hidden by default */
  								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"><c:out value="${data.no_awards}" /></td>
+ 								
 								<td class="text-right">
 									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
  								
  							</tr>
  						</c:forEach>
+ 						
+ 						<tr>
+								
+								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+							</tr>
+ 						
+ 						
 						<c:if test="${dataListSize eq 0}">
 							<tr>
 								<td align="center" colspan="18" class="required" style="color:red;">Data Not Found</td>

@@ -44,4 +44,6 @@ public interface WatershedYatraDao {
 	List<PreYatraPreparationBean> getpreyatrasaveRecord(Integer stcd);
 	boolean checkgrampanchayat(Integer gramCode, String preyatraType);
 	boolean checkVillageStatus(Integer vCode, String preyatraType);
+	
+	String deleteWatershedYatraDetails(List<Integer>  assetid, String userid);
 }

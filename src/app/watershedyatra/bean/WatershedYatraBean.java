@@ -203,8 +203,15 @@ public class WatershedYatraBean {
     private String arExperiencephoto2_lng;
     private String arExperiencephoto2_time;
     
+    private String remarks;
     
     
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	public String getArExperiencephoto1_lat() {
 		return arExperiencephoto1_lat;
 	}

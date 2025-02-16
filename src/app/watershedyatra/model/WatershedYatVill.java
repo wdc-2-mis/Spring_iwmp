@@ -76,6 +76,7 @@ public class WatershedYatVill {
     private Date updatedDate;
     private String createdBy;
     private Date createdDate;
+    private String remarks;
     
     private String ar_experience_path1_longitute;
     private String ar_experience_path1_latitude;
@@ -147,7 +148,7 @@ public class WatershedYatVill {
 		   String quizParticipantsPath2,MCulturalActivity mCulturalActivity, String culturalActivityOther,String culturalActivityPath1,String culturalActivityPath2,Integer bhoomiPoojanNoOfWorks,BigDecimal bhoomiPoojanCostOfWorks,String bhoomiPoojanPath1,
 		   String bhoomiPoojanPath2,Integer lokarpanNoOfWorks,BigDecimal lokarpanCostOfWorks,String lokarpanPath1,String lokarpanPath2,Integer shramdaanNoOfLocation,Integer shramdaanNoOfParticipatedPeople,Integer manhour,String shramdaanPath1,
 		   String shramdaanPath2,BigDecimal plantationArea,Integer noOfAgroForsetry,String plantationPath1,String plantationPath2,Integer awardDistribution,String awardDistributionPath1,String awardDistributionPath2,String status,
-		   String requestedIp,String updatedBy,Date updatedDate,String createdBy,Date createdDate)
+		   String requestedIp,String updatedBy,Date updatedDate,String createdBy,Date createdDate, String remarks)
    {
 	  this.watershedYatraId=watershedYatraId;
 	  this.iwmpState=iwmpState;
@@ -209,6 +210,7 @@ public class WatershedYatVill {
 	  this.updatedDate=updatedDate;
 	  this.createdBy=createdBy;
 	  this.createdDate=createdDate;
+	  this.remarks=remarks;
    }
 
    
@@ -760,6 +762,15 @@ public class WatershedYatVill {
 	
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	@Column(name="remarks")
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	@Column(name ="ar_experience_path1_longitute")

@@ -165,4 +165,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.checkVillageStatus(vCode, preyatraType);
 	}
 
+
+
+	@Override
+	public String deleteWatershedYatraDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteWatershedYatraDetails(  assetid, userid);
+	}
+
 }
