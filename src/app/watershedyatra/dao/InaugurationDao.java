@@ -14,5 +14,6 @@ public interface InaugurationDao {
 	public List<String> getImagesByInaugurationId(int inaugurationId);
 	
 	String getExistingBlockInaguraCodes(Integer bCode);
+	String deleteInaugurationDetails(List<Integer>  assetid, String userid);
 	
 }

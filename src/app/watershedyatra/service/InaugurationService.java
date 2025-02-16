@@ -16,6 +16,8 @@ public interface InaugurationService {
 	
 	String getExistingBlockInaguraCodes(Integer bCode);
 	
+	String deleteInaugurationDetails(List<Integer>  assetid, String userid);
+	
 	
 	
 	

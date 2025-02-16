@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -127,7 +128,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 			data.setRequestedIp(ipAddr);
 			data.setStatus("C");
-			
+			data.setRemarks(userfileup.getRemarks());
 			data.setInauguarationDate(inaugurationDate);
 			data.setInauguarationLocation(userfileup.getLocation());
 			data.setMaleParticipants(userfileup.getMale_participants());
@@ -434,7 +435,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 					data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 					data.setRequestedIp(ipAddr);
 					data.setStatus("C");
-					
+					data.setRemarks(userfileup.getRemarks());
 					data.setInauguarationDate(inaugurationDate);
 					data.setInauguarationLocation(userfileup.getLocation());
 					data.setMaleParticipants(userfileup.getMale_participants());
@@ -919,6 +920,50 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			  session.getTransaction().commit();
 		  }
 		  return data;
+	}
+
+	@Override
+	public String deleteInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("delete from watershed_yatra_inauguaration where inauguaration_id=:nrmpkid");
+			 Date d= new Date();
+			 
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
 	}
 	
 	

@@ -384,6 +384,7 @@ display: none; /* Hidden by default */
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">District Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Block Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
 						<th colspan="9" style="text-align:center; vertical-align: middle;">Number of Participation</th>
 						<th colspan="19" style="text-align:center; vertical-align: middle;">Activities</th>
 					</tr>
@@ -454,6 +455,7 @@ display: none; /* Hidden by default */
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
+								<td class="text-left"> <c:out value="${data.remarks}" /></td>
  								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
 								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
  								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>

@@ -37,6 +37,12 @@ public class InaugurationServiceImpl implements InaugurationService {
 		// TODO Auto-generated method stub
 		return dao.getExistingBlockInaguraCodes(bCode);
 	}
+
+	@Override
+	public String deleteInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteInaugurationDetails(assetid, userid);
+	}
 	
 
 }

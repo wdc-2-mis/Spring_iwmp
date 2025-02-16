@@ -123,6 +123,8 @@ public class InaugurationBean {
     private String distname;
     private String blockname;
     private Integer image_count;
+    private String remarks;
+    
     
 	public Integer getDistrict() {
 		return district;
@@ -807,6 +809,12 @@ public class InaugurationBean {
 	}
 	public void setLakhpati_didi_photo2_time(String lakhpati_didi_photo2_time) {
 		this.lakhpati_didi_photo2_time = lakhpati_didi_photo2_time;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
     
 	

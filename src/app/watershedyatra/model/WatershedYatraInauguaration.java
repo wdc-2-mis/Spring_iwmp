@@ -133,6 +133,7 @@ public class WatershedYatraInauguaration {
     private String lakhpati_didi_path2_longitute;
     private String lakhpati_didi_path2_latitude;
     private Timestamp lakhpati_didi_path2_time;
+    private String remarks;
     
     public WatershedYatraInauguaration() { }
    
@@ -155,7 +156,7 @@ public class WatershedYatraInauguaration {
 		    Integer noShgFpo, String shgFpoPath1, String shgFpoPath2, Integer noLakhpatiDidi, String lakhpatiDidiPath1,
 		    String lakhpatiDidiPath2, String status, String requestedIp, String updatedBy, Date updatedDate,
 			String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict,
-			IwmpBlock iwmpBlock) {
+			IwmpBlock iwmpBlock, String remarks) {
 		this.inauguarationId = inauguarationId;
 		this.inauguarationDate = inauguarationDate;
 		this.inauguarationLocation = inauguarationLocation;
@@ -212,6 +213,7 @@ public class WatershedYatraInauguaration {
 		this.iwmpState = iwmpState;
 		this.iwmpDistrict = iwmpDistrict;
 		this.iwmpBlock = iwmpBlock;
+		this.remarks=remarks;
 	}
 	
 
@@ -1264,6 +1266,15 @@ public class WatershedYatraInauguaration {
 
 	public void setLakhpati_didi_path2_time(Timestamp lakhpati_didi_path2_time) {
 		this.lakhpati_didi_path2_time = lakhpati_didi_path2_time;
+	}
+
+	@Column(name ="remarks")
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 	

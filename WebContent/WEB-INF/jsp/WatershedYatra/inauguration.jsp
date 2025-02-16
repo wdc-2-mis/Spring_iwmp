@@ -80,6 +80,7 @@ function validation()
 	$shg_fpo_stalls_photo2 = $('#shg_fpo_stalls_photo2').val();
 	$lakhpati_didi_photo1 = $('#lakhpati_didi_photo1').val();
 	$lakhpati_didi_photo2 = $('#lakhpati_didi_photo2').val();
+	$remark = $('#remark').val();
 
 	if ($date === '' || typeof $date === 'undefined') {
 		alert('Please select a Date');
@@ -105,6 +106,7 @@ function validation()
 		allValid = false;
 		return false;
 	}
+		
 	if ($male_participants === '' || typeof $male_participants === 'undefined') {
 		alert('Please enter the Number of Male Participants/Villagers');
 		$('#male_participants').focus();
@@ -682,7 +684,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 		<label>
-			<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 300 x 400 pixels,Geo-referenced and Time-stamped.</span>
+			<span style="color:blue;">Note:- The image size must be under 300KB, with dimensions of 300 x 400 pixels with Geo-referenced and Time-stamped.</span>
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
@@ -724,6 +726,8 @@ display: none; /* Hidden by default */
     			<label for="location">Location (Nearby/Milestone):</label>
       			<input type="text" class="form-control activity" name="location" id="location" autocomplete="off" style="width: 100%; max-width: 800px;" />
     		</div>
+    		
+    		
     		
     		</div>
      		<div class="form-row">
@@ -943,6 +947,15 @@ display: none; /* Hidden by default */
                 <input type="hidden" id="lakhpati_didi_photo2_lng" name="lakhpati_didi_photo2_lng">
                 <input type="hidden" id="lakhpati_didi_photo2_time" name="lakhpati_didi_photo2_time">
 			</td>
+			
+     	</tr>
+     	
+     	<tr>
+     		<td>Remarks:</td>
+			<td colspan="2">
+      			<input type="text" class="form-control activity" name="remarks" id="remarks" autocomplete="off" style="width: 100%;" />
+    		</td>
+    		
      	</tr>
      	
      	<tr>
@@ -969,12 +982,13 @@ display: none; /* Hidden by default */
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="3">S.No.</th> 
+								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
 								<th rowspan="3">District Name</th>
 								<th rowspan="3">Block Name</th>
 								<th rowspan="3">Location</th>
+								<th rowspan="3">Remarks</th>
 								<th colspan="9">Number of Participation</th>
 								<th colspan="19">Activities</th>
 							</tr>
@@ -1022,7 +1036,7 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
-								<td><c:out value='${count.count}' /></td>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
 								<td> <c:out value="${data.date}" /></td>
 <%--  								<c:choose> --%>
 <%--  									<c:when test="${st ne data.stname}"> --%>
@@ -1036,6 +1050,7 @@ display: none; /* Hidden by default */
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
+								<td class="text-left"> <c:out value="${data.remarks}" /></td>
  								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
 								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
  								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
@@ -1064,7 +1079,14 @@ display: none; /* Hidden by default */
 									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
+							
+					
  						</c:forEach>
+ 						
+ 						<tr>
+								
+								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+							</tr>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
 								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
