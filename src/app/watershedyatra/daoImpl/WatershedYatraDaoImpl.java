@@ -1404,7 +1404,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	}
 	
 	
-	@Override
 	public String savePreYatraPrep(PreYatraPrepBean preYatraPrep, HttpSession session, HttpServletRequest request) {
 	    Session sess = sessionFactory.getCurrentSession();
 	    String res = "fail";
@@ -1505,36 +1504,44 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep.setRequestedIp(getClientIpAddr(request));
 	        prep.setUpdatedBy(session.getAttribute("loginID").toString());
 	        prep.setUpdatedDate(new Date());
+	        prep.setRemark(preYatraPrep.getRemarks());
 	        sess.save(prep);
 
 	        Integer prepId = prep.getPrepId(); 
 	        
 	        // Save Photo Files
 	        boolean isDuplicatePhoto1 = isDuplicateGSPhoto1(preYatraPrep.getGramphoto1().getOriginalFilename(), preYatraPrep.getGramphoto1_lat(), preYatraPrep.getGramphoto1_lng());
-	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), prepId, "GS_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto1);
+	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), prepId, "GS_", "D:\\preyatraprep/", isDuplicatePhoto1);
+	        
+	         boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
+	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), prepId, "GS_", "D:\\preyatraprep/", isDuplicatePhoto2);
 	        
 	        
+	        if (photo1Path != null && photo2Path != null) {
+	        	
+	        	PreYatraGramsabha gram = new PreYatraGramsabha();
+		        gram.setPreYatraPreparation(prep);
+		        gram.setGramsabhaDate(date);
+		        gram.setGramsabhaPhoto1(photo1Path); 
+		        gram.setGramsabhaPhoto1Latitude(preYatraPrep.getGramphoto1_lat());
+		        gram.setGramsabhaPhoto1Longitude(preYatraPrep.getGramphoto1_lng());
+		        gram.setGramsabhaPhoto1Time(Gtimestamp1);
+		        gram.setGramsabhaPhoto2(photo2Path); 
+		        gram.setGramsabhaPhoto2Latitude(preYatraPrep.getGramphoto2_lat());
+		        gram.setGramsabhaPhoto2Longitude(preYatraPrep.getGramphoto2_lng());
+		        gram.setGramsabhaPhoto2Time(Gtimestamp2);
+		        gram.setCreatedBy(session.getAttribute("loginID").toString());
+		        gram.setRequestedIp(getClientIpAddr(request));
+		        gram.setCreatedDate(new Date());
+	            sess.save(gram);
+	            
+	         // saved pre yatra preparation for Prabhat Pheri
+		    	
+	        }
+	        else {
+	        	throw new Exception("Photo upload failed for Gram Sabha.");
+	        }
 	        
-	        boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
-	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), prepId, "GS_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto2);
-	        
-	        PreYatraGramsabha gram = new PreYatraGramsabha();
-	        gram.setPreYatraPreparation(prep);
-	        gram.setGramsabhaDate(date);
-	        gram.setGramsabhaPhoto1(photo1Path); 
-	        gram.setGramsabhaPhoto1Latitude(preYatraPrep.getGramphoto1_lat());
-	        gram.setGramsabhaPhoto1Longitude(preYatraPrep.getGramphoto1_lng());
-	        gram.setGramsabhaPhoto1Time(Gtimestamp1);
-	        gram.setGramsabhaPhoto2(photo2Path); 
-	        gram.setGramsabhaPhoto2Latitude(preYatraPrep.getGramphoto2_lat());
-	        gram.setGramsabhaPhoto2Longitude(preYatraPrep.getGramphoto2_lng());
-	        gram.setGramsabhaPhoto2Time(Gtimestamp2);
-	        gram.setCreatedBy(session.getAttribute("loginID").toString());
-	        gram.setRequestedIp(getClientIpAddr(request));
-	        gram.setCreatedDate(new Date());
-            sess.save(gram);
-            
-         // saved pre yatra preparation for Prabhat Pheri
 	        prep2.setIwmpState(iwmpState);
 	        prep2.setIwmpDistrict(iwmpDistrict2);
 	        prep2.setIwmpBlock(iwmpblock2);
@@ -1547,36 +1554,45 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep2.setRequestedIp(getClientIpAddr(request));
 	        prep2.setUpdatedBy(session.getAttribute("loginID").toString());
 	        prep2.setUpdatedDate(new Date());
+	        prep2.setRemark(preYatraPrep.getRemarks());
 	        sess.save(prep2);
-	        Integer prepId2 = prep.getPrepId();
+	        Integer prepId2 = prep2.getPrepId();
+        	
+	        
 	        boolean isDuplicatePhoto3 = isDuplicatePPPhoto1(preYatraPrep.getPheriphoto1().getOriginalFilename(), preYatraPrep.getPheriphoto1_lat(), preYatraPrep.getPheriphoto1_lng());
-	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), prepId2, "PP_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto3);
+	        String photo3Path = saveFile(preYatraPrep.getPheriphoto1(), prepId2, "PP_", "D:\\preyatraprep/", isDuplicatePhoto3);
 	        
 	        boolean isDuplicatePhoto4 = isDuplicatePPPhoto2(preYatraPrep.getPheriphoto2().getOriginalFilename(), preYatraPrep.getPheriphoto2_lat(), preYatraPrep.getPheriphoto2_lng());
-	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), prepId2, "PP_", "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/preyatraprep/", isDuplicatePhoto4);
+	        String photo4Path = saveFile(preYatraPrep.getPheriphoto2(), prepId2, "PP_", "D:\\preyatraprep/", isDuplicatePhoto4);
 	        
-	        PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
-	        pheri.setPreYatraPreparation(prep2);
-	        pheri.setPrabhatpheriDate(date1);
-	        pheri.setPrabhatpheriPhoto1(photo3Path);
-	        pheri.setPrabhatpheriPhoto1Latitude(preYatraPrep.getPheriphoto1_lat());
-	        pheri.setPrabhatpheriPhoto1Longitude(preYatraPrep.getPheriphoto1_lng());
-	        pheri.setPrabhatpheriPhoto1Time(ptimestamp1);
-	        pheri.setPrabhatpheriPhoto2(photo4Path);
-	        pheri.setPrabhatpheriPhoto2Latitude(preYatraPrep.getPheriphoto2_lat());
-	        pheri.setPrabhatpheriPhoto2Longitude(preYatraPrep.getPheriphoto2_lng());
-	        pheri.setPrabhatpheriPhoto2Time(ptimestamp2);
-	        pheri.setCreatedDate(new Date());
-	        pheri.setCreatedBy(session.getAttribute("loginID").toString());
-	        pheri.setRequestedIp(getClientIpAddr(request));
-	        sess.save(pheri);
+	        if (photo3Path != null && photo4Path != null) {
+	        	PreYatraPrabhatpheri pheri = new PreYatraPrabhatpheri();
+		        pheri.setPreYatraPreparation(prep2);
+		        pheri.setPrabhatpheriDate(date1);
+		        pheri.setPrabhatpheriPhoto1(photo3Path);
+		        pheri.setPrabhatpheriPhoto1Latitude(preYatraPrep.getPheriphoto1_lat());
+		        pheri.setPrabhatpheriPhoto1Longitude(preYatraPrep.getPheriphoto1_lng());
+		        pheri.setPrabhatpheriPhoto1Time(ptimestamp1);
+		        pheri.setPrabhatpheriPhoto2(photo4Path);
+		        pheri.setPrabhatpheriPhoto2Latitude(preYatraPrep.getPheriphoto2_lat());
+		        pheri.setPrabhatpheriPhoto2Longitude(preYatraPrep.getPheriphoto2_lng());
+		        pheri.setPrabhatpheriPhoto2Time(ptimestamp2);
+		        pheri.setCreatedDate(new Date());
+		        pheri.setCreatedBy(session.getAttribute("loginID").toString());
+		        pheri.setRequestedIp(getClientIpAddr(request));
+		        sess.save(pheri);
+	        }
+	        
+	        else {
+	        	throw new Exception("Photo upload failed for Prabhat Pheri.");
+	        }
+	        
 	        sess.getTransaction().commit();
 	        res = "success";
 	    } catch (Exception ex) {
-	    	ex.printStackTrace();
-	        sess.getTransaction().rollback();
+	    	sess.getTransaction().rollback();
+	        res = "photonotupload";
 	        ex.printStackTrace();
-	        return "failure";
 	    } finally {
 	        // session.flush();
 	        // session.close();
@@ -1718,6 +1734,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	    return filePath; // Return file path for DB
 	}
 
+
 	@Override
 	public List<PreYatraPreparationBean> getpreyatrasaveRecord(Integer stcd) {
 		String getReport=getpreyatrarcd;
@@ -1857,4 +1874,33 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		
 		return str;
 	}
+
+	@Override
+	public void deletePreYatraPrep(Integer prepid) {
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        
+	        // Delete dependent records first
+	        session.createSQLQuery("DELETE FROM pre_yatra_gramsabha WHERE prep_id = :prepid")
+	               .setParameter("prepid", prepid)
+	               .executeUpdate();
+	        
+	        session.createSQLQuery("DELETE FROM pre_yatra_prabhatpheri WHERE prep_id = :prepid")
+	               .setParameter("prepid", prepid)
+	               .executeUpdate();
+	        
+	        // Delete the main record
+	        session.createSQLQuery("DELETE FROM pre_yatra_preparation WHERE prep_id = :prepid")
+	               .setParameter("prepid", prepid)
+	               .executeUpdate();
+	        
+	        session.getTransaction().commit();
+	    } catch (Exception e) {
+	        session.getTransaction().rollback();
+	        throw e;
+	    }
+	}
+
+
 }

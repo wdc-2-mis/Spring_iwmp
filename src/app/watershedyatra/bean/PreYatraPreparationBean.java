@@ -20,6 +20,7 @@ public class PreYatraPreparationBean {
 	private String photo2long;
 	private String photo2lang;
 	private String photo2time;
+	private String remarks;
 	public Integer getPrep_id() {
 		return prep_id;
 	}
@@ -116,6 +117,12 @@ public class PreYatraPreparationBean {
 	}
 	public void setEntrydate(String entrydate) {
 		this.entrydate = entrydate;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 	

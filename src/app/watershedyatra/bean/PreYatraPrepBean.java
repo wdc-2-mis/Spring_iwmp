@@ -32,7 +32,7 @@ public class PreYatraPrepBean {
     private String pheriphoto2_lat;
     private String pheriphoto2_lng;
     private String pheriphoto2_time;
-    
+    private String remarks;
     
     
 	public Integer getDistrict() {
@@ -189,6 +189,12 @@ public class PreYatraPrepBean {
 	}
 	public void setPheriphoto2_time(String pheriphoto2_time) {
 		this.pheriphoto2_time = pheriphoto2_time;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 	

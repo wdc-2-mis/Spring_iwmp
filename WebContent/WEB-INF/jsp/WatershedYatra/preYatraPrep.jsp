@@ -176,11 +176,11 @@ if (allValid) {
 			
 			<div class="form-row">
 				<div class="form-group col-3">
-					<c:if test="${userType== 'SL' }">
+					
 						<label for="state">	<b> State Name:</b> </label>
 						<span class="projectError"></span> <br/>
 						<c:out value="${stateName}"></c:out>
-					</c:if>
+					
 				</div>
 	    		<div class="form-group col-3">
 	      			<label for="district"><b>District:</b> </label>
@@ -314,6 +314,7 @@ if (allValid) {
 	    		<table border="1">
     <tr>
         <th>S.No</th>
+        <th>Action</th>
         <th>State</th>
         <th>District</th>
         <th>Block</th>
@@ -329,12 +330,15 @@ if (allValid) {
         <th>Photo2 longitude</th>
         <th>Photo2 latitude</th>
         <th>Photo2 Date</th>
+        <th>Remarks</th>
+        
     </tr>
     <c:choose>
         <c:when test="${not empty records}">
             <c:forEach var="record" items="${records}" varStatus="loop">
                 <tr>
                     <td>${loop.count}</td>  <%-- Correct serial number --%>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id})"> Delete </button>
                     <td>${record.stname}</td>
                     <td>${record.districtname}</td>
                     <td>${record.blockname}</td>
@@ -351,6 +355,7 @@ if (allValid) {
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
+                    <td>${record.remarks}</td>
                 </tr>
             </c:forEach>
         </c:when>

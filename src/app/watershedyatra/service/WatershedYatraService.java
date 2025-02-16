@@ -54,5 +54,5 @@ public interface WatershedYatraService {
 	
 	String deleteWatershedYatraDetails(List<Integer>  assetid, String userid);
 	
-	
+	void deletePreYatraPrep(Integer prepid);
 }

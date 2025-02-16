@@ -60,6 +60,27 @@ function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
         let file = input.files[0];
         let fileSizeKB = file.size / 1024;
 
+
+        
+        let sanitizedFileName = file.name.replace(/\s+/g, '_');
+
+        // Create a new File object with the sanitized name
+        let newFile = new File([file], sanitizedFileName, { type: file.type });
+
+       let specialCharPattern = /[^\w.-]/;
+
+        // Check if file name contains special characters
+        if (specialCharPattern.test(newFile.name)) {
+            alert("File name contains special characters. Please rename the file without special characters and try again.");
+            input.value = "";
+            return;
+        }
+
+        // Replace the original file with the sanitized one
+        let dataTransfer = new DataTransfer();
+        dataTransfer.items.add(newFile);
+        input.files = dataTransfer.files;
+
         // Validate file size
         if (fileSizeKB > maxSizeKB) {
             alert("File size exceeds " + maxSizeKB + " KB. Please upload a smaller image.");
@@ -68,7 +89,7 @@ function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
         }
 
         let img = new Image();
-        img.src = URL.createObjectURL(file);
+        img.src = URL.createObjectURL(newFile);
         img.onload = function () {
             // Validate image dimensions
             if (this.width > maxWidth || this.height > maxHeight) {
@@ -79,7 +100,7 @@ function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
         };
 
         // Extract metadata using EXIF.js
-        EXIF.getData(file, function () {
+        EXIF.getData(newFile, function () {
             let latitude = EXIF.getTag(this, "GPSLatitude");
             let longitude = EXIF.getTag(this, "GPSLongitude");
             let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
@@ -187,8 +208,26 @@ document.getElementById("village1").addEventListener("change", function() {
                 }
             }
         });
-    });    
+    });   
+    
+    
+     
 });
 
-
+function deleteRecord(prepId) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        $.ajax({
+            type: "POST",
+            url: "deletePreYatraPreparation", 
+            data: { id: prepId },
+            success: function(response) {
+                alert(response);
+                location.reload("getPreYatraPrep"); // Refresh the page after deletion
+            },
+            error: function(xhr, status, error) {
+                alert("Error deleting record: " + error);
+            }
+        });
+    }
+}
 

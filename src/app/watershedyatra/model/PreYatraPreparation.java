@@ -26,7 +26,8 @@ public class PreYatraPreparation {
     private String requestedIp;
     private String updatedBy;
     private Date updatedDate;
-
+    private String remark;
+    
     public PreYatraPreparation() {}
 
     @Id
@@ -154,4 +155,15 @@ public class PreYatraPreparation {
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
+
+    @Column(name = "remark", length = 500)
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+    
+    
 }

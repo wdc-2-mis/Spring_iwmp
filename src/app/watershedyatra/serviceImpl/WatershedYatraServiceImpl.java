@@ -173,4 +173,10 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		return dao.deleteWatershedYatraDetails(  assetid, userid);
 	}
 
+	@Override
+	public void deletePreYatraPrep(Integer prepids) {
+		dao.deletePreYatraPrep(prepids);
+		
+	}
+
 }

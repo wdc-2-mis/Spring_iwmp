@@ -110,7 +110,11 @@ public class PreYatraPrepController {
 	            res = ser.savePreYatraPrep(preYatraPrep, session, request);
 	            if (res.equals("success")) {
 	                redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
-	            } else {
+	            } 
+	            else if (res.equals("photonotupload")) {
+	                redirectAttributes.addFlashAttribute("result", "Issue on uploading Photos but upload valid Photos");
+	            } 
+	            else {
 	                redirectAttributes.addFlashAttribute("result", "Data not saved Successfully!");
 	            }
 	            return new ModelAndView("redirect:/getPreYatraPrep");
@@ -135,4 +139,18 @@ public class PreYatraPrepController {
     public boolean checkVillage(@RequestParam("vCode") Integer vCode, @RequestParam("preyatraType") String preyatraType) {
         return ser.checkVillageStatus(vCode, preyatraType);
     }
+    
+    @RequestMapping(value = "/deletePreYatraPreparation", method = RequestMethod.POST)
+    @ResponseBody
+    public String deletePreYatraPreparation(@RequestParam("id") Integer prepid) {
+        try {
+			/* String[] prepids = prepid.split(","); */
+            ser.deletePreYatraPrep(prepid);
+            return "Record deleted successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error in deleting record";
+        }
+    }
+    
 }

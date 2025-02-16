@@ -46,4 +46,5 @@ public interface WatershedYatraDao {
 	boolean checkVillageStatus(Integer vCode, String preyatraType);
 	
 	String deleteWatershedYatraDetails(List<Integer>  assetid, String userid);
+	void deletePreYatraPrep(Integer prepids);
 }
