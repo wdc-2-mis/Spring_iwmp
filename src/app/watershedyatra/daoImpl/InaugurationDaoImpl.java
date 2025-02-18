@@ -66,9 +66,17 @@ public class InaugurationDaoImpl implements InaugurationDao {
 		String res = "fail";
 		String upload="unUpload";
 		try {
+			sess.beginTransaction();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
+			
+			
+			List list = sess.createQuery("SELECT iwmpState.stCode FROM WatershedYatraInauguaration where iwmpState.stCode=:villageCode").setInteger("villageCode", Integer.parseInt(session.getAttribute("stateCode").toString())).list();
+			//	result=Integer.parseInt(list.get(0).toString());
+			if(list.isEmpty()) {
+				
+			
 			
 //		String filePath="D:\\Inauguration\\";
 			 String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
@@ -109,7 +117,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			
 			
 			
-			sess.beginTransaction();
+			
 			InetAddress inet=InetAddress.getLocalHost();
 			String ipAddr=inet.getHostAddress();
 			WatershedYatraInauguaration data = new WatershedYatraInauguaration();
@@ -744,7 +752,13 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			}
 			
 			
-			
+				}else {
+					
+					res = "failexist";
+					
+				}
+				
+				
 			
 			
 			
