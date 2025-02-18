@@ -332,7 +332,7 @@ $(document).on('change', '#district', function(e) {
 
 				// Attach validation to file inputs
 				$('#arExperiencephoto1,#arExperiencephoto2,#shapathYesphoto1,#shapathYesphoto2,#FilmYesphoto1,#FilmYesphoto2,#quizParticipantsphoto1,#quizParticipantsphoto2,#culturalActivityphoto1,#culturalActivityphoto2,#bhoomiCostphoto1,#bhoomiCostphoto2,#lokWorksphoto1,#lokWorksphoto2,#locShramdaanpsphoto1,#locShramdaanpsphoto2,#plantationAreaphoto1,#plantationAreaphoto2,#noOfwatershedphoto1,#noOfwatershedphoto2').change(function () {
-				    validatePhoto(this, this.id, 300, 300, 400);
+				    validatePhoto(this, this.id, 300, 400, 400);
 				});
 
 				
