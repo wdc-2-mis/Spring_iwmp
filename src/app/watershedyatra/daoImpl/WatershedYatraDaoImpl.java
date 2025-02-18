@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.nio.file.Path;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -101,6 +101,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	
 	@Value("${getWyatraDetailsComplete}")
 	String getWyatraDetailsComplete;
+	
+	@Value("${getpreyatraComprdc}")
+	String getpreyatraComprdc;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -1500,7 +1503,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep.setIwmpDistrict(iwmpDistrict);
 	        prep.setIwmpBlock(iwmpblock);
 	        prep.setIwmpGramPanchayat(gp);
-	        prep.setStatus("C");
+	        prep.setStatus("D");
 	        prep.setPreYatraType("gramSabha");
 	        prep.setCreatedDate(new Date());
 	        prep.setCreatedBy(session.getAttribute("loginID").toString());
@@ -1515,6 +1518,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        // Save Photo Files
 	        boolean isDuplicatePhoto1 = isDuplicateGSPhoto1(preYatraPrep.getGramphoto1().getOriginalFilename(), preYatraPrep.getGramphoto1_lat(), preYatraPrep.getGramphoto1_lng());
 	        String photo1Path = saveFile(preYatraPrep.getGramphoto1(), prepId, "GS_", "D:\\preyatraprep/", isDuplicatePhoto1);
+	       // String photo1Path = saveFile(preYatraPrep.getGramphoto1(), prepId, "GS_", "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/preyatraprep/", isDuplicatePhoto1);
 	        
 	         boolean isDuplicatePhoto2 = isDuplicateGSPhoto2(preYatraPrep.getGramphoto2().getOriginalFilename(), preYatraPrep.getGramphoto2_lat(), preYatraPrep.getGramphoto2_lng());
 	        String photo2Path = saveFile(preYatraPrep.getGramphoto2(), prepId, "GS_", "D:\\preyatraprep/", isDuplicatePhoto2);
@@ -1550,7 +1554,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        prep2.setIwmpBlock(iwmpblock2);
 	        prep2.setIwmpGramPanchayat(gp2);
 	        prep2.setIwmpVillage(village);
-	        prep2.setStatus("C");
+	        prep2.setStatus("D");
 	        prep2.setPreYatraType("prabhatPheri");
 	        prep2.setCreatedDate(new Date());
 	        prep2.setCreatedBy(session.getAttribute("loginID").toString());
@@ -1879,30 +1883,167 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	}
 
 	@Override
-	public void deletePreYatraPrep(Integer prepid) {
+	public void deletePreYatraPrep(Integer prepid, String photo1, String photo2) {
 	    Session session = sessionFactory.getCurrentSession();
+	    Transaction transaction = null;
+	    
+	    try {
+	        transaction = session.beginTransaction();
+	        
+	        String activityType = (String) session.createSQLQuery(
+	                "SELECT preyatra_type FROM pre_yatra_preparation WHERE prep_id = :prepid")
+	                .setParameter("prepid", prepid)
+	                .uniqueResult();
+	        
+	        if (activityType != null) {
+	            switch (activityType.toLowerCase()) {
+	                case "gramsabha":
+	                    session.createSQLQuery("DELETE FROM pre_yatra_gramsabha WHERE prep_id = :prepid")
+	                            .setParameter("prepid", prepid)
+	                            .executeUpdate();
+	                    break;
+	                case "prabhatpheri":
+	                    session.createSQLQuery("DELETE FROM pre_yatra_prabhatpheri WHERE prep_id = :prepid")
+	                            .setParameter("prepid", prepid)
+	                            .executeUpdate();
+	                    break;
+	            }
+	        }
+	        
+	        session.createSQLQuery("DELETE FROM pre_yatra_preparation WHERE prep_id = :prepid")
+	                .setParameter("prepid", prepid)
+	                .executeUpdate();
+	        
+	        transaction.commit();
+
+	        deleteFile("D:\\preyatraprep\\" + photo1);
+	        deleteFile("D:\\preyatraprep\\" + photo2);
+	        
+	    } catch (Exception e) {
+	        if (transaction != null) transaction.rollback();
+	        throw e; // Or log the exception properly
+	    }
+	}
+
+	
+	private void deleteFile(String filePath) {
+	    Path path = Paths.get(filePath);
+	    try {
+	        if (Files.deleteIfExists(path)) {
+	            System.out.println("Deleted file: " + filePath);
+	        } else {
+	            System.out.println("File not found: " + filePath);
+	        }
+	    } catch (IOException e) {
+	        System.err.println("Error deleting file: " + filePath + " - " + e.getMessage());
+	    }
+	}
+
+
+	@Override
+	public String deleteMulPreYatraPrep(List<String> prepid, List<String> photos, String userid) {
+		Session session = sessionFactory.getCurrentSession();
+		String str="fail";
 	    try {
 	        session.beginTransaction();
-	        
-	        // Delete dependent records first
-	        session.createSQLQuery("DELETE FROM pre_yatra_gramsabha WHERE prep_id = :prepid")
-	               .setParameter("prepid", prepid)
-	               .executeUpdate();
-	        
-	        session.createSQLQuery("DELETE FROM pre_yatra_prabhatpheri WHERE prep_id = :prepid")
-	               .setParameter("prepid", prepid)
-	               .executeUpdate();
-	        
-	        // Delete the main record
-	        session.createSQLQuery("DELETE FROM pre_yatra_preparation WHERE prep_id = :prepid")
-	               .setParameter("prepid", prepid)
-	               .executeUpdate();
-	        
+	        for (String id : prepid) {
+				Query query = session.createSQLQuery("SELECT preyatra_type FROM pre_yatra_preparation WHERE prep_id = :id");
+				query.setInteger("id", Integer.parseInt(id));
+				
+				String activityType = (String)query.uniqueResult();
+				
+				if("gramSabha".equalsIgnoreCase(activityType))
+				{
+					session.createSQLQuery("DELETE FROM pre_yatra_gramsabha WHERE prep_id = :id")
+	                .setInteger("id", Integer.parseInt(id))
+	                .executeUpdate();
+				}
+				else if("prabhatPheri".equalsIgnoreCase(activityType))
+				{
+					session.createSQLQuery("DELETE FROM pre_yatra_prabhatpheri WHERE prep_id = :id")
+	                .setInteger("id", Integer.parseInt(id))
+	                .executeUpdate();
+				}
+				session.createSQLQuery("DELETE FROM pre_yatra_preparation WHERE prep_id = :id")
+	            .setInteger("id", Integer.parseInt(id))
+	            .executeUpdate();
+				}
+	        for (String photo : photos) {
+	            if (photo != null && !photo.isEmpty()) {
+	                File file = new File("D:\\preyatraprep\\" + photo);
+	                if (file.exists()) {
+	                    if (file.delete()) {
+	                        System.out.println("Deleted file: " + file.getAbsolutePath());
+	                    } else {
+	                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+	                    }
+	                } else {
+	                    System.out.println("File not found: " + file.getAbsolutePath());
+	                }
+	            }
+	        }
+	        str = "success";
 	        session.getTransaction().commit();
-	    } catch (Exception e) {
+
+	    }
+	    catch (Exception e) {
+	    	str = "fail";
 	        session.getTransaction().rollback();
 	        throw e;
 	    }
+	    return str;    
+	}
+
+	@Override
+	public String completeMulPreYatraPrep(List<String> prepids) {
+		Session session = sessionFactory.getCurrentSession();
+		String str="fail";
+		try {
+			session.beginTransaction();
+	        for (String id : prepids) {
+	        	Query query = session.createSQLQuery("update pre_yatra_preparation set status = 'C' where prep_id = :id");
+				query.setInteger("id", Integer.parseInt(id));
+				query.executeUpdate();
+	        }
+	        str = "success";
+	        session.getTransaction().commit(); 
+		}
+		catch (Exception e) {
+	    	str = "fail";
+	        session.getTransaction().rollback();
+	        throw e;
+	    }
+	    return str;  
+	}
+
+	@Override
+	public List<PreYatraPreparationBean> getpreyatracompleteRecord(Integer stcd) {
+		String getReport=getpreyatraComprdc;
+		Session session = sessionFactory.getCurrentSession();
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(PreYatraPreparationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
 	}
 
 	@Override

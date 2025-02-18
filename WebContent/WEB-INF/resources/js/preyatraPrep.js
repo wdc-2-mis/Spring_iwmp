@@ -170,6 +170,23 @@ $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {
     validatePhoto(this, this.id, 300, 300, 400);
 });
 
+   $('#chkSelectAll').on('click',function(){
+	   		$chkValue=0;
+		        if(this.checked)
+		        {
+		            $('.chkIndividual').each(function(){
+		                this.checked = true;
+						$chkValue++;
+		            });
+		        }
+		        else{
+		             $('.chkIndividual').each(function(){
+		                this.checked = false;
+		            });
+					$chkValue=0;
+		        }
+		}); 
+
 document.getElementById("grampan").addEventListener("change", function() {
         var gramCode = this.value;
         var preyatra_type = 'gramSabha'
@@ -214,15 +231,15 @@ document.getElementById("village1").addEventListener("change", function() {
      
 });
 
-function deleteRecord(prepId) {
+function deleteRecord(prepId, photo1, photo2) {
     if (confirm("Are you sure you want to delete this record?")) {
         $.ajax({
             type: "POST",
             url: "deletePreYatraPreparation", 
-            data: { id: prepId },
+            data: { id: prepId, photo1: photo1, photo2: photo2},
             success: function(response) {
                 alert(response);
-                location.reload("getPreYatraPrep"); // Refresh the page after deletion
+                location.reload("getPreYatraPrep"); 
             },
             error: function(xhr, status, error) {
                 alert("Error deleting record: " + error);
@@ -230,4 +247,79 @@ function deleteRecord(prepId) {
         });
     }
 }
+
+$(document).on('click', '#deletePreYatra', function(e){
+        e.preventDefault();
+        var finalPreid = [];
+        var photoList = [];
+        
+        $('.chkIndividual').each(function(){
+            if($(this).prop('checked')) {
+                finalPreid.push($(this).val());
+                photoList.push($(this).data('photo1'));
+                photoList.push($(this).data('photo2'));
+            }
+        });
+       if(finalPreid.length > 0) {
+            if(confirm("Do you want to delete the selected records?")) {
+                $.ajax({  
+                    url: "deleteMulPreYatraPrep",
+                    type: "post",  
+                    data: {prepid: finalPreid.toString(), photos: photoList.toString()},
+                    error: function(xhr, status, er){
+                        console.log(er);
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if(data === 'success') {
+                            alert('Pre Yatra Preparation Records Deleted Successfully.');
+                            window.location.href = 'getPreYatraPrep';
+                        } else {
+                            alert('Error in Deletion. Please try again.');
+                        } 
+                    }
+                });
+            }
+        } else {
+            alert('Please select at least one record to delete!');
+        }
+    });
+
+$(document).on('click', '#completePreYatra', function(e){
+        e.preventDefault();
+        var finalPreid = [];
+        
+        $('.chkIndividual').each(function(){
+            if($(this).prop('checked')) {
+                finalPreid.push($(this).val());
+               
+            }
+        });
+       if(finalPreid.length > 0) {
+            if(confirm("Do you want to delete the selected records?")) {
+                $.ajax({  
+                    url: "completeMulPreYatraPrep",
+                    type: "post",  
+                    data: {prepid: finalPreid.toString()},
+                    error: function(xhr, status, er){
+                        console.log(er);
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        if(data === 'success') {
+                            alert('Pre Yatra Preparation Records Updated Successfully.');
+                            window.location.href = 'getPreYatraPrep';
+                        } else {
+                            alert('Error in Deletion. Please try again.');
+                        } 
+                    }
+                });
+            }
+        } else {
+            alert('Please select at least one record to complete!');
+        }
+    });
+
+
+
 

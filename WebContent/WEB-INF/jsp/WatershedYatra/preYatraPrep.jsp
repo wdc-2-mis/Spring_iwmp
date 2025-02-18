@@ -36,6 +36,20 @@
     }
 </style>
 
+<script>
+    function showImage(src) {
+        if (!src) {
+            alert("No Image Available");
+            return;
+        }
+        document.getElementById("popupImage").src = src;
+        document.getElementById("imageModal").style.display = "block";
+    }
+
+    function closeImage() {
+        document.getElementById("imageModal").style.display = "none";
+    }
+</script>
 
 <script type="text/javascript">
 
@@ -240,11 +254,10 @@ if (allValid) {
 			<div class="card-body">
 			<div class="form-row">
 				<div class="form-group col-3">
-					<c:if test="${userType== 'SL' }">
 						<label for="state">	<b> State Name:</b> </label>
 						<span class="projectError"></span> <br/>
 						<c:out value="${stateName}"></c:out>
-					</c:if>
+					
 				</div>
 	    		<div class="form-group col-3">
 	      			<label for="district"><b>District:</b> </label>
@@ -310,36 +323,40 @@ if (allValid) {
 	    		<div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold"><u>List of Pre Yatra Preparation</u></h5>
+	     <h5 class="text-center font-weight-bold"><u>Draft List of Pre Yatra Preparation (<c:out value="${stateName}"></c:out>)</u></h5>
 	    		<table border="1">
+   <thead>
     <tr>
-        <th>S.No</th>
-        <th>Action</th>
-        <th>State</th>
-        <th>District</th>
-        <th>Block</th>
-        <th>Gram Panchayat</th>
-        <th>Village</th>
-        <th>Activity Type</th>
-        <th>Entry Date</th>
-        <th>Photo 1</th>
-        <th>Photo1 longitude</th>
-        <th>Photo1 latitude</th>
-        <th>Photo1 Date</th>
-        <th>Photo 2</th>
-        <th>Photo2 longitude</th>
-        <th>Photo2 latitude</th>
-        <th>Photo2 Date</th>
-        <th>Remarks</th>
+        <th rowspan="2">S.No<input type="checkbox" id="chkSelectAll" name="chkSelectAll" /></th>
+        <th rowspan="2">District</th>
+        <th rowspan="2">Block</th>
+        <th rowspan="2">Gram Panchayat</th>
+        <th rowspan="2">Village</th>
+        <th rowspan="2">Activity Type</th>
+        <th rowspan="2">Entry Date</th>
+        <th colspan="4" style="text-align:center;">Photo 1 Details</th>
+        <th colspan="4" style="text-align:center;">Photo 2 Details</th>
+        <th rowspan="2">Remarks</th>
+        <th rowspan="2">Action</th>
         
     </tr>
+    <tr>
+        <th>Photo</th>
+        <th>longitude</th>
+        <th>latitude</th>
+        <th>Date</th>
+        <th>Photo</th>
+        <th>longitude</th>
+        <th>latitude</th>
+        <th>Date</th>
+    </tr>
+    </thead>
     <c:choose>
         <c:when test="${not empty records}">
             <c:forEach var="record" items="${records}" varStatus="loop">
                 <tr>
-                    <td>${loop.count}</td>  <%-- Correct serial number --%>
-                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id})"> Delete </button>
-                    <td>${record.stname}</td>
+                    <td>${loop.count}&nbsp;<input type="checkbox" class="chkIndividual" id="${record.prep_id}"  name="${record.prep_id}" value="${record.prep_id}"
+                    data-photo1="${record.photo1}" data-photo2="${record.photo2}"/></td>  <%-- Correct serial number --%>
                     <td>${record.districtname}</td>
                     <td>${record.blockname}</td>
                     <td>${record.gramname}</td>
@@ -356,6 +373,7 @@ if (allValid) {
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
                     <td>${record.remarks}</td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id}, '${record.photo1}', '${record.photo2}')"> Delete </button>
                 </tr>
             </c:forEach>
         </c:when>
@@ -371,24 +389,83 @@ if (allValid) {
     <img class="modal-content" id="popupImage">
 </div>
 
-
-<!-- JavaScript for Popup -->
-<script>
-    function showImage(src) {
-        if (!src) {
-            alert("No Image Available");
-            return;
-        }
-        document.getElementById("popupImage").src = src;
-        document.getElementById("imageModal").style.display = "block";
-    }
-
-    function closeImage() {
-        document.getElementById("imageModal").style.display = "none";
-    }
-</script>
 	 </div>
 	 </div>   		
+	 <div class="form-group text-center">
+     				<input type="button" class="btn btn-info" id="completePreYatra" name="updatepreYatra" value ="Complete"/>
+     				<input type="button" class="btn btn-info" id="deletePreYatra" name="deletePreYatra" value ="Delete"/>
+     			</div>
+	 
+	 
+	 <div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold"><u>Complete List of Pre Yatra Preparation (<c:out value="${stateName}"></c:out>)</u></h5>
+	    		<table border="1">
+   <thead>
+    <tr>
+        <th rowspan="2">S.No</th>
+        <th rowspan="2">District</th>
+        <th rowspan="2">Block</th>
+        <th rowspan="2">Gram Panchayat</th>
+        <th rowspan="2">Village</th>
+        <th rowspan="2">Activity Type</th>
+        <th rowspan="2">Entry Date</th>
+        <th colspan="4" style="text-align:center;">Photo 1 Details</th>
+        <th colspan="4" style="text-align:center;">Photo 2 Details</th>
+        <th rowspan="2">Remarks</th>
+        
+    </tr>
+    <tr>
+        <th>Photo</th>
+        <th>longitude</th>
+        <th>latitude</th>
+        <th>Date</th>
+        <th>Photo</th>
+        <th>longitude</th>
+        <th>latitude</th>
+        <th>Date</th>
+    </tr>
+    </thead>
+    <c:choose>
+        <c:when test="${not empty comprecords}">
+            <c:forEach var="comprecords" items="${comprecords}" varStatus="loop">
+                <tr>
+                    <td>${loop.count}</td>  <%-- Correct serial number --%>
+                    <td>${comprecords.districtname}</td>
+                    <td>${comprecords.blockname}</td>
+                    <td>${comprecords.gramname}</td>
+                    <td>${comprecords.villagename}</td>
+                    <td>${comprecords.yatratype}</td>
+                    <td>${comprecords.entrydate}</td>
+                    
+                    <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${comprecords.photo1}')">View</button></td>
+                    <td>${comprecords.photo1long}</td>
+                    <td>${comprecords.photo1lang}</td>
+                    <td>${comprecords.photo1time}</td>
+                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${comprecords.photo2}')">View</button></td>
+                    <td>${comprecords.photo2long}</td>
+                    <td>${comprecords.photo2lang}</td>
+                    <td>${comprecords.photo2time}</td>
+                    <td>${comprecords.remarks}</td>
+                    
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="16" style="text-align: center; font-weight: bold;">Data Not Found</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
+</table>
+<div id="imageModal" class="modal">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img class="modal-content" id="popupImage">
+</div>
+
+	 </div>
+	 </div>   
 	    			</div>
 	    		<footer class=" text-center">
 	            <%@include file="/WEB-INF/jspf/footer2.jspf"%>

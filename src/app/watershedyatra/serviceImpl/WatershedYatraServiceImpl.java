@@ -174,10 +174,37 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 	}
 
 	@Override
-	public void deletePreYatraPrep(Integer prepids) {
-		dao.deletePreYatraPrep(prepids);
+	public void deletePreYatraPrep(Integer prepids, String photo1, String photo2) {
+		dao.deletePreYatraPrep(prepids, photo1, photo2);
 		
 	}
+
+
+
+	@Override
+	public String deleteMulPreYatraPrep(List<String> prepid, List<String> photos, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteMulPreYatraPrep(prepid, photos, userid);
+	}
+
+
+
+	@Override
+	public String completeMulPreYatraPrep(List<String> prepids) {
+		// TODO Auto-generated method stub
+		return dao.completeMulPreYatraPrep(prepids);
+	}
+
+
+
+	@Override
+	public List<PreYatraPreparationBean> getpreyatracompleteRecord(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getpreyatracompleteRecord(stcd);
+	}
+	
+	
+	
 	@Override
 	public String completeWatershedYatraDetails(List<Integer> assetid, String userid) {
 		// TODO Auto-generated method stub

@@ -43,6 +43,7 @@ public class PreYatraPrepController {
 	    HttpSession session = request.getSession(false); // Avoid unnecessary session creation
 	    ModelAndView mav;
 	    List<PreYatraPreparationBean> preyatrasavedata = new ArrayList<PreYatraPreparationBean>();
+	    List<PreYatraPreparationBean> preyatracompletedata = new ArrayList<PreYatraPreparationBean>();
 	    if (session != null && session.getAttribute("loginID") != null) {
 	        mav = new ModelAndView("WatershedYatra/preYatraPrep");
 
@@ -67,7 +68,9 @@ public class PreYatraPrepController {
 	        mav.addObject("userType", userType);
 	        mav.addObject("distList", ser.getDistrictList(stcd));
 	        preyatrasavedata=ser.getpreyatrasaveRecord(stcd);
+	        preyatracompletedata=ser.getpreyatracompleteRecord(stcd);
 			mav.addObject("records",preyatrasavedata);
+			mav.addObject("comprecords",preyatracompletedata);
 	    } else {
 	        mav = new ModelAndView("login");
 	        mav.addObject("login", new Login());
@@ -142,15 +145,55 @@ public class PreYatraPrepController {
     
     @RequestMapping(value = "/deletePreYatraPreparation", method = RequestMethod.POST)
     @ResponseBody
-    public String deletePreYatraPreparation(@RequestParam("id") Integer prepid) {
+    public String deletePreYatraPreparation(@RequestParam("id") Integer prepid, @RequestParam("photo1") String photo1, @RequestParam("photo2") String photo2) {
         try {
 			/* String[] prepids = prepid.split(","); */
-            ser.deletePreYatraPrep(prepid);
+            ser.deletePreYatraPrep(prepid, photo1, photo2);
             return "Record deleted successfully!";
         } catch (Exception e) {
             e.printStackTrace();
             return "Error in deleting record";
         }
     }
+    
+    @RequestMapping(value="/deleteMulPreYatraPrep", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteMulPreYatraPrep(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="prepid") List<String> prepid,
+			@RequestParam(value ="photos") List<String> photos)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=ser.deleteMulPreYatraPrep(prepid, photos, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+    
+    @RequestMapping(value="/completeMulPreYatraPrep", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeMulPreYatraPrep(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="prepid") List<String> prepids)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			res=ser.completeMulPreYatraPrep(prepids);
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
     
 }
