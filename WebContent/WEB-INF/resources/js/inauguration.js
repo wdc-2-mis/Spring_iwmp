@@ -27,85 +27,114 @@ $(function() {
 			}
 		});
 	});
-	
-	
+
+
 	$(document).on('change', '#block', function(e) {
-			  e.preventDefault();
-			  $villageCode = $('#block option:selected').val();
-			  $.ajax({
-			    url: "getExistingBlockInaguraCodes",
-			    type: "post",
-			    data: {villageCode: $villageCode},
-			    error: function(xhr, status, er) {
-			      console.log(er);
-			    },
-			    success: function(data) 
-			    {
-					if(data==='success')
-					{
-						alert('Block already exists. Please select a different Block. !');
-						$("select#block")[0].selectedIndex = 0;
-									
-					}
-								
-			    }
-			  });
+		e.preventDefault();
+		$villageCode = $('#block option:selected').val();
+		$.ajax({
+			url: "getExistingBlockInaguraCodes",
+			type: "post",
+			data: { villageCode: $villageCode },
+			error: function(xhr, status, er) {
+				console.log(er);
+			},
+			success: function(data) {
+				if (data === 'success') {
+					alert('Block already exists. Please select a different Block. !');
+					$("select#block")[0].selectedIndex = 0;
+
+				}
+
+			}
+		});
 	});
-			
-	$('#chkSelectAllkd').on('click',function(){
-			$chkValue=0;
-			if(this.checked)
-			{
-				$('.chkIndividualkd').each(function(){
+
+	$('#chkSelectAllkd').on('click', function() {
+		$chkValue = 0;
+		if (this.checked) {
+			$('.chkIndividualkd').each(function() {
 				this.checked = true;
 				$chkValue++;
-				});
-			}
-			else{
-					$('.chkIndividualkd').each(function(){
-					     this.checked = false;
-					 });
-				$chkValue=0;
-			}
-	});	
-									
-							$(document).on('click', '#delete', function(e){
-										e.preventDefault();
-										var finalAssetid=new Array();
+			});
+		}
+		else {
+			$('.chkIndividualkd').each(function() {
+				this.checked = false;
+			});
+			$chkValue = 0;
+		}
+	});
 
-										$('.chkIndividualkd').each(function(){
-											if($(this).prop('checked'))
-											{
-												finalAssetid.push($(this).val());
-											}
-										});
-												      
-										if(confirm("Do you want to Delete ?"))
-										{
-											$.ajax({  
-												    url:"deleteInaugurationDetails",
-												    type: "post",  
-												    data: {assetid:finalAssetid.toString()},
-												    error:function(xhr,status,er){
-												         console.log(er);
-												    },
-												    success: function(data) 
-													{
-														console.log(data);
-														$('#loading').hide();
-														if(data==='success')
-														{
-															alert('Deleted Successfully.');
-															window.location.href='inaugurationLocation';
-														}
-														else{
-															alert('Please check at least One Check Box, Data not Complete!');
-															window.location.href='inaugurationLocation';
-														} 
-													}
-											});
-										}
-									});	
+	$(document).on('click', '#delete', function(e) {
+		e.preventDefault();
+		var finalAssetid = new Array();
+
+		$('.chkIndividualkd').each(function() {
+			if ($(this).prop('checked')) {
+				finalAssetid.push($(this).val());
+			}
+		});
+
+		if (confirm("Do you want to Delete ?")) {
+			$.ajax({
+				url: "deleteInaugurationDetails",
+				type: "post",
+				data: { assetid: finalAssetid.toString() },
+				error: function(xhr, status, er) {
+					console.log(er);
+				},
+				success: function(data) {
+					console.log(data);
+					$('#loading').hide();
+					if (data === 'success') {
+						alert('Deleted Successfully.');
+						window.location.href = 'inaugurationLocation';
+					}
+					else {
+						alert('Please check at least One Check Box, Data not Complete!');
+						window.location.href = 'inaugurationLocation';
+					}
+				}
+			});
+		}
+	});
+
+
+
+	$(document).on('click', '#complete', function(e) {
+		e.preventDefault();
+		var finalAssetid = new Array();
+
+		$('.chkIndividualkd').each(function() {
+			if ($(this).prop('checked')) {
+				finalAssetid.push($(this).val());
+			}
+		});
+
+		if (confirm("Do you want to Complete ?")) {
+			$.ajax({
+				url: "completeInaugurationDetails",
+				type: "post",
+				data: { assetid: finalAssetid.toString() },
+				error: function(xhr, status, er) {
+					console.log(er);
+				},
+				success: function(data) {
+					console.log(data);
+					$('#loading').hide();
+					if (data === 'success') {
+						alert('Complete Successfully.');
+						window.location.href = 'inaugurationLocation';
+					}
+					else {
+						alert('Please check at least One Check Box, Data not Complete!');
+						window.location.href = 'inaugurationLocation';
+					}
+				}
+			});
+		}
+	});
 
 
 	//	$(document).on('change', '#block', function(e) {
@@ -347,7 +376,7 @@ $(function() {
 				totWorksLokarpan: $totWorksLokarpan, lokarpanPhotos: $lokarpanPhotos, noLocationShramdaan: $noLocationShramdaan, costPeopleShramdaan: $costPeopleShramdaan,
 				shramdaanPhotos: $shramdaanPhotos, areaPlantation: $areaPlantation, noPlantation: $noPlantation, plantationPhotos: $plantationPhotos, noAwards: $noAwards, awardPhotos: $awardPhotos
 			},
-			
+
 			error: function(xhr, status, er) {
 				console.log(er);
 				$('.error').append(' There is some error please try again !');
@@ -369,18 +398,18 @@ $(function() {
 			}
 		});
 	});
-	
-	
-	
+
+
+
 
 
 	$(document).on('click', '.showImage', function(e) {
 		//var inaugId = $('#inaugId').val();
-		$inaugId= e.target.getAttribute('data-id');
+		$inaugId = e.target.getAttribute('data-id');
 		$.ajax({
 			type: 'POST',
 			url: "getImageByInaugurationId",
-			data: { inaugId:$inaugId },
+			data: { inaugId: $inaugId },
 			error: function(xhr, status, er) {
 				console.log(er);
 			},
@@ -390,18 +419,18 @@ $(function() {
 				let list = '<ul>';
 				for (let i = 0; i < data.length; i++) {
 					if (data[i] != null) {
-//						https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/
-//						https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/
+						//						https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/
+						//						https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/
 
 						//PRD
-						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+												list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 
 						//TEST
-//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
-						
+						//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
 						//Local
 //						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
-						
+
 					}
 				}
 				list += '</ul>';
@@ -411,73 +440,108 @@ $(function() {
 		});
 	});
 
-	
-		
+	function getImageHash(file, callback) {
+		const reader = new FileReader();
+		reader.onload = function(e) {
+			const data = e.target.result;
+			const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(data)).toString(CryptoJS.enc.Hex);
+			callback(hash);
+		};
+		reader.readAsBinaryString(file);
+	}
+
+	const imageRecords = {}; // Store image records with filename as key and hash as value
+
+
 	function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
-    if (input.files && input.files[0]) {
-        let file = input.files[0];
-        let fileSizeKB = file.size / 1024;
+		if (input.files && input.files[0]) {
+			let file = input.files[0];
+			let fileSizeKB = file.size / 1024;
 
-        // Validate file size
-        if (fileSizeKB > maxSizeKB) {
-            alert("File size exceeds " + maxSizeKB + " KB. Please upload a smaller image.");
-            input.value = "";
-            return;
-        }
+			getImageHash(file, function(hash) {
+				if (imageRecords[file.name] && imageRecords[file.name] === hash) {
+					alert("This image has been already uploaded. Please upload a different image.");
+					input.value = "";
+					return;
+				}
 
-        let img = new Image();
-        img.src = URL.createObjectURL(file);
-        img.onload = function () {
-            // Validate image dimensions
-            if (this.width > maxWidth || this.height > maxHeight) {
-                alert("Image dimensions should not exceed " + maxWidth + "x" + maxHeight);
-                input.value = "";
-                return;
-            }
-        };
-
-        // Extract metadata using EXIF.js
-        EXIF.getData(file, function () {
-            let latitude = EXIF.getTag(this, "GPSLatitude");
-            let longitude = EXIF.getTag(this, "GPSLongitude");
-            let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
-
-            // Convert GPS coordinates to decimal format
-            function convertDMSToDD(dms, ref) {
-                if (!dms) return null;
-                let degrees = dms[0].numerator / dms[0].denominator;
-                let minutes = dms[1].numerator / dms[1].denominator / 60;
-                let seconds = dms[2].numerator / dms[2].denominator / 3600;
-                let decimal = degrees + minutes + seconds;
-                return ref === "S" || ref === "W" ? -decimal : decimal;
-            }
-
-            let latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
-            let lngRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
-            let lat = convertDMSToDD(latitude, latRef);
-            let lng = convertDMSToDD(longitude, lngRef);
-
-            // Set extracted values in hidden input fields
-            document.getElementById(photoId + "_lat").value = lat || "Not Available";
-            document.getElementById(photoId + "_lng").value = lng || "Not Available";
-            document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
-			if (!lat || !lng) {
-					 if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
-					 input.value = "";
-										                }
-														}
-            console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
-            
-               
-        });
-    }
-}
-
-// Attach validation to file inputs
-$('#flagoff_photo1, #flagoff_photo2, #themesong_photo1, #themesong_photo2, #bhoomipoojan_photo1, #bhoomipoojan_photo2, #lokarpan_photo1, #lokarpan_photo2, #shramdaan_photo1, #shramdaan_photo2, #plantation_photo1, #plantation_photo2, #award_photo1, #award_photo2, #dept_stalls_photo1, #dept_stalls_photo2, #shg_fpo_stalls_photo1, #shg_fpo_stalls_photo2, #lakhpati_didi_photo1, #lakhpati_didi_photo2').change(function () {
-    validatePhoto(this, this.id, 300, 300, 400);
-});
+				imageRecords[file.name] = hash;
 
 
+				// Validate file size
+				if (fileSizeKB > maxSizeKB) {
+					alert("File size exceeds " + maxSizeKB + " KB. Please upload a smaller image.");
+					input.value = "";
+					return;
+				}
 
-});
+				let img = new Image();
+				img.src = URL.createObjectURL(file);
+				img.onload = function() {
+					// Validate image dimensions
+					if (this.width > maxWidth || this.height > maxHeight) {
+						alert("Image dimensions should not exceed " + maxWidth + "x" + maxHeight);
+						input.value = "";
+						return;
+					}
+				};
+
+				let sanitizedFileName = file.name.replace(/\s+/g, '_');
+
+				// Create a new File object with the sanitized name
+				let newFile = new File([file], sanitizedFileName, { type: file.type });
+
+				let specialCharPattern = /[^\w.-]/;
+
+				// Check if file name contains special characters
+				if (specialCharPattern.test(newFile.name)) {
+					alert("File name contains special characters. Please rename the file without special characters and try again.");
+					input.value = "";
+					return;
+				}
+
+				// Extract metadata using EXIF.js
+				EXIF.getData(file, function() {
+					let latitude = EXIF.getTag(this, "GPSLatitude");
+					let longitude = EXIF.getTag(this, "GPSLongitude");
+					let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
+
+					// Convert GPS coordinates to decimal format
+					function convertDMSToDD(dms, ref) {
+						if (!dms) return null;
+						let degrees = dms[0].numerator / dms[0].denominator;
+						let minutes = dms[1].numerator / dms[1].denominator / 60;
+						let seconds = dms[2].numerator / dms[2].denominator / 3600;
+						let decimal = degrees + minutes + seconds;
+						return ref === "S" || ref === "W" ? -decimal : decimal;
+					}
+
+					let latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
+					let lngRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
+					let lat = convertDMSToDD(latitude, latRef);
+					let lng = convertDMSToDD(longitude, lngRef);
+
+					// Set extracted values in hidden input fields
+					document.getElementById(photoId + "_lat").value = lat || "Not Available";
+					document.getElementById(photoId + "_lng").value = lng || "Not Available";
+					document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
+					if (!lat || !lng) {
+						if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
+							input.value = "";
+						}
+					}
+					console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
+
+					});
+				});
+			}
+	}
+
+		// Attach validation to file inputs
+		$('#flagoff_photo1, #flagoff_photo2, #themesong_photo1, #themesong_photo2, #bhoomipoojan_photo1, #bhoomipoojan_photo2, #lokarpan_photo1, #lokarpan_photo2, #shramdaan_photo1, #shramdaan_photo2, #plantation_photo1, #plantation_photo2, #award_photo1, #award_photo2, #dept_stalls_photo1, #dept_stalls_photo2, #shg_fpo_stalls_photo1, #shg_fpo_stalls_photo2, #lakhpati_didi_photo1, #lakhpati_didi_photo2').change(function() {
+			validatePhoto(this, this.id, 300, 400, 400);
+		});
+
+
+
+	});

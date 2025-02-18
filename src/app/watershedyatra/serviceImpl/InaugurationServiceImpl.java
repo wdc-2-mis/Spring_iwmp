@@ -1,6 +1,5 @@
 package app.watershedyatra.serviceImpl;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -28,20 +27,27 @@ public class InaugurationServiceImpl implements InaugurationService {
 
 	@Override
 	public List<String> getImagesByInaugurationId(int inaugurationId) {
-		// TODO Auto-generated method stub
 		return dao.getImagesByInaugurationId(inaugurationId);
 	}
 
 	@Override
 	public String getExistingBlockInaguraCodes(Integer bCode) {
-		// TODO Auto-generated method stub
 		return dao.getExistingBlockInaguraCodes(bCode);
 	}
 
 	@Override
 	public String deleteInaugurationDetails(List<Integer> assetid, String userid) {
-		// TODO Auto-generated method stub
 		return dao.deleteInaugurationDetails(assetid, userid);
+	}
+
+	@Override
+	public String completeInaugurationDetails(List<Integer> assetid, String userid) {
+		return dao.completeInaugurationDetails(assetid, userid);
+	}
+
+	@Override
+	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd) {
+		return dao.getInaugurationDetailsComp(stcd);
 	}
 	
 

@@ -557,10 +557,6 @@ function showPrevImage() {
 </script>
 
 
-
-<meta charset="ISO-8859-1">
-<title>Inauguration Programm</title>
-
 <style>
 input[type=text] {
 	width: 100px;
@@ -702,7 +698,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra at Village Level</h4> </div>
 			<label>
-		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 300 x 400 pixels,Geo-referenced and Time-stamped.</span>
+		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 400 x 400 pixels,Geo-referenced and Time-stamped.</span>
 		</label>
 		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			

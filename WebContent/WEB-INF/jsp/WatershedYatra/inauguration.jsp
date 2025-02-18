@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <script src='<c:url value="/resources/js/inauguration.js" />'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 <script type="text/javascript">
 
 let formSubmitted = false;
@@ -36,6 +37,8 @@ function validation()
 	$council_members = $('#council_members').val();
 	$others = $('#others').val();
 	$gov_officials = $('#gov_officials').val();
+	$gram_sabha = $('input[name="gram_sabha"]:checked').val();
+	$prabhat_pheri = $('input[name="prabhat_pheri"]:checked').val();
 	$flagoff = $('input[name="flagoff"]:checked').val();
 	$flagOffPhotos = $('#flagOffPhotos').val();
 	$themesong = $('input[name="themesong"]:checked').val();
@@ -54,8 +57,7 @@ function validation()
 	$noPlantation = $('#noPlantation').val();
 	$plantationPhotos = $('#plantationPhotos').val();
 	$no_awards = $('#no_awards').val();
-	$awardPhotos = $('#awardPhotos').val();
-	
+	$awardPhotos = $('#awardPhotos').val();	
 	$dept_stalls = $('#dept_stalls').val();
 	$shg_fpo_stalls = $('#shg_fpo_stalls').val();
 	$no_lakhpati_didi = $('#no_lakhpati_didi').val();
@@ -158,6 +160,20 @@ function validation()
 	if ($gov_officials === '' || typeof $gov_officials === 'undefined') {
 		alert('Please enter the Number of Government Officials');
 		$('#gov_officials').focus();
+		allValid = false;
+		return false;
+	}	
+	if ($gram_sabha === '' || typeof $gram_sabha === 'undefined') {
+		alert('Please select Gram Sabha completed before the arrival of the van');
+// 		$('#gram_sabha').focus();
+		$('input[name="gram_sabha"]').first().focus();
+		allValid = false;
+		return false;
+	}
+	if ($prabhat_pheri === '' || typeof $prabhat_pheri === 'undefined') {
+		alert('Please select Prabhat Pheri completed before the arrival of the van');
+// 		$('#prabhat_pheri').focus();
+		$('input[name="prabhat_pheri"]').first().focus();
 		allValid = false;
 		return false;
 	}
@@ -684,7 +700,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 		<label>
-			<span style="color:blue;">Note:- The image size must be under 300KB, with dimensions of 300 x 400 pixels with Geo-referenced and Time-stamped.</span>
+			<span style="color:blue;">Note:- The image size must be under 300KB, with dimensions of 400 x 400 pixels with Geo-referenced and Time-stamped.</span>
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
@@ -773,6 +789,16 @@ display: none; /* Hidden by default */
      		<td>Number of Government Officials</td>
      		<td colspan=2><input type="text" id="gov_officials" name="gov_officials" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+     	</tr>
+     	<tr>
+     		<td>Gram Sabha completed before the arrival of the van</td>
+     		<td><input type="radio" id="gramSabhaYes" name="gram_sabha" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="gramSabhaNo" name="gram_sabha" value="false" autocomplete="off" />No</td>
+     	</tr>
+     	<tr>
+     		<td>Prabhat Pheri completed before the arrival of the van</td>
+     		<td><input type="radio" id="prabhatPheriYes" name="prabhat_pheri" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="prabhatPheriNo" name="prabhat_pheri" value="false" autocomplete="off" />No</td>
      	</tr>
      	</table>
      	<table id = "tblReport" class = "table">
@@ -978,7 +1004,7 @@ display: none; /* Hidden by default */
 	<div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Yatra - Inauguration Program Details</h5>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Yatra - Inauguration Program Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
@@ -989,7 +1015,7 @@ display: none; /* Hidden by default */
 								<th rowspan="3">Block Name</th>
 								<th rowspan="3">Location</th>
 								<th rowspan="3">Remarks</th>
-								<th colspan="9">Number of Participation</th>
+								<th colspan="11">Number of Participation</th>
 								<th colspan="19">Activities</th>
 							</tr>
 							<tr>
@@ -999,6 +1025,8 @@ display: none; /* Hidden by default */
 								<th colspan="2">Legislative Members</th>
 								<th rowspan="2">Other Public Representatives</th>
 								<th rowspan="2">Government Officials</th>
+								<th rowspan="2">Gram Sabha completed before the arrival of the van</th>
+								<th rowspan="2">Prabhat Pheri completed before the arrival of the van</th>
 								
 								<th rowspan="2">Flag off of Van</th>
 								<th rowspan="2">Launch of Theme Song</th>
@@ -1060,6 +1088,8 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.council_members}" /></td>
 								<td class="text-right"> <c:out value="${data.others}" /></td>
  								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-left"> <c:out value="${data.gram_sabha == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-left"> <c:out value="${data.prabhat_pheri == 'true' ? 'Yes' : 'No'}" /></td>
 								<td class="text-left"> <c:out value="${data.flagoff == 'true' ? 'Yes' : 'No'}" /></td>
  								<td class="text-left"> <c:out value="${data.themesong == 'true' ? 'Yes' : 'No'}" /></td>
 								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
@@ -1086,11 +1116,12 @@ display: none; /* Hidden by default */
  						<tr>
 								
 								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
 							</tr>
 						<c:if test="${dataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
-								<td colspan="10" ></td>
+								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="16" ></td>
 							</tr>
 						</c:if>
 		</table>
@@ -1098,6 +1129,133 @@ display: none; /* Hidden by default */
 		
 		</div>
 		</div>
+		
+		
+		<div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Yatra - Inauguration Program Details</h5>
+	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th rowspan="3">S.No. </th> 
+								<th rowspan="3">Date</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="3">District Name</th>
+								<th rowspan="3">Block Name</th>
+								<th rowspan="3">Location</th>
+								<th rowspan="3">Remarks</th>
+								<th colspan="11">Number of Participation</th>
+								<th colspan="19">Activities</th>
+							</tr>
+							<tr>
+								<th colspan="2">Participants/Villagers</th>
+								<th colspan="2">Ministers</th>
+								<th rowspan="2">Member of Parliament</th>
+								<th colspan="2">Legislative Members</th>
+								<th rowspan="2">Other Public Representatives</th>
+								<th rowspan="2">Government Officials</th>
+								<th rowspan="2">Gram Sabha completed before the arrival of the van</th>
+								<th rowspan="2">Prabhat Pheri completed before the arrival of the van</th>
+								
+								<th rowspan="2">Flag off of Van</th>
+								<th rowspan="2">Launch of Theme Song</th>
+								<th colspan="2">Bhoomi Poojan</th>
+								<th colspan="2">Lokarpan</th>
+								<th colspan="3">Shramdaan</th>
+								<th colspan="2">Plantation</th>
+								<th rowspan="2">Award Distribution (Felicitation)</th>
+								<th rowspan="2">Number of stalls of Departments</th>
+								<th rowspan="2">Number of stalls of SHGs/FPOs</th>
+								<th rowspan="2">Number of LakhPati Didi Participated</th>
+								<th rowspan="2">No of Uploaded Photographs</th>
+							</tr>
+							<tr>
+								<th>Male</th>
+								<th>Female</th>
+								<th>Central Level</th>
+								<th>State Level</th>
+								<th>Assembly</th>
+								<th>Council</th>
+								
+								<th>Number of Works</th>
+								<th>Cost of Total works (in Lakh)</th>
+								<th>Number of Works</th>
+								<th>Cost of Total works (in Lakh)</th>
+								<th>Number of Locations</th>
+								<th>No. of people participated</th>
+								<th>No. of Man Hours</th>
+								<th>Area (in ha.)</th>
+								<th>No. of Agro forestry / Horticultural Plants (No. of Sapling)</th>
+								
+							</tr>
+						</thead>
+						
+ 						<c:set var="st" value="" />
+ 						<c:forEach items="${compdataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /> </td>
+								<td> <c:out value="${data.date}" /></td>
+<%--  								<c:choose> --%>
+<%--  									<c:when test="${st ne data.stname}"> --%>
+<%--  										<c:set var="st" value="${data.stname}" /> --%>
+<%--  										<td> <c:out value="${data.stname}" /></td> --%>
+<%--  									</c:when> --%>
+<%--  								<c:otherwise> --%>
+<!--  										<td></td> -->
+<%--  								</c:otherwise> --%>
+<%--  								</c:choose> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+								<td class="text-left"> <c:out value="${data.location}" /></td>
+								<td class="text-left"> <c:out value="${data.remarks}" /></td>
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-left"> <c:out value="${data.gram_sabha == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-left"> <c:out value="${data.prabhat_pheri == 'true' ? 'Yes' : 'No'}" /></td>
+								<td class="text-left"> <c:out value="${data.flagoff == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-left"> <c:out value="${data.themesong == 'true' ? 'Yes' : 'No'}" /></td>
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								<td class="text-right"> <c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.man}" /></td>
+ 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
+								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+ 								<td class="text-right"> <c:out value="${data.dept_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shg_fpo_stalls}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_lakhpati_didi}" /></td>
+								<td class="text-right">
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
+					</tr>
+							
+					
+ 						</c:forEach>
+ 						
+ 						
+						<c:if test="${compdataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="16" ></td>
+							</tr>
+						</c:if>
+		</table>
+		
+		
+		</div>
+		</div>
+		
 		<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">
 		<div class="popup-content">

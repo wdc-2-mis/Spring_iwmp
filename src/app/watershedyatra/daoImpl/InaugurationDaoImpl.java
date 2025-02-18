@@ -28,7 +28,6 @@ import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
 import app.watershedyatra.bean.InaugurationBean;
-import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.dao.InaugurationDao;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
@@ -39,13 +38,13 @@ public class InaugurationDaoImpl implements InaugurationDao {
 	CommonFunctions commonFunction;
 	
 	@Autowired
-	protected SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory; 
 	
 	@Value("${getInaugurationDetails}")
 	String getInaugurationDetails;
 	
-//	@Value("${getImageByInaugurationId}")
-//	String getImageByInaugurationId;
+	@Value("${getInaugurationDetailscomp}")
+	String getInaugurationDetailscomp;
 	
 	private Timestamp parseTimestamp(String dateTimeString) {
 	    DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
@@ -71,8 +70,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
 			
-		String filePath="D:\\Inauguration\\";
-//			 String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
+//		String filePath="D:\\Inauguration\\";
+			 String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/vanyatradoc/Inauguration/";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/";
 			
 			MultipartFile[] mfile = {userfileup.getFlagoff_photo1(), userfileup.getFlagoff_photo2(), userfileup.getThemesong_photo1(), userfileup.getThemesong_photo2(),
@@ -127,7 +126,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setCreatedBy(session.getAttribute("loginID").toString());
 			data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 			data.setRequestedIp(ipAddr);
-			data.setStatus("C");
+			data.setStatus("D");
 			data.setRemarks(userfileup.getRemarks());
 			data.setInauguarationDate(inaugurationDate);
 			data.setInauguarationLocation(userfileup.getLocation());
@@ -140,6 +139,9 @@ public class InaugurationDaoImpl implements InaugurationDao {
 			data.setLegislativeCouncilMembers(userfileup.getCouncil_members());
 			data.setOtherPublicRepresentatives(userfileup.getOthers());
 			data.setGovOfficials(userfileup.getGov_officials());
+			data.setGramSabha(Boolean.valueOf(userfileup.getGram_sabha()));
+			data.setPrabhatPheri(Boolean.valueOf(userfileup.getPrabhat_pheri()));
+			
 			data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagoff()));
 //			data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
 //			data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
@@ -434,7 +436,7 @@ public class InaugurationDaoImpl implements InaugurationDao {
 					data.setCreatedBy(session.getAttribute("loginID").toString());
 					data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 					data.setRequestedIp(ipAddr);
-					data.setStatus("C");
+					data.setStatus("D");
 					data.setRemarks(userfileup.getRemarks());
 					data.setInauguarationDate(inaugurationDate);
 					data.setInauguarationLocation(userfileup.getLocation());
@@ -447,6 +449,9 @@ public class InaugurationDaoImpl implements InaugurationDao {
 					data.setLegislativeCouncilMembers(userfileup.getCouncil_members());
 					data.setOtherPublicRepresentatives(userfileup.getOthers());
 					data.setGovOfficials(userfileup.getGov_officials());
+					data.setGramSabha(Boolean.valueOf(userfileup.getGram_sabha()));
+					data.setPrabhatPheri(Boolean.valueOf(userfileup.getPrabhat_pheri()));
+					
 					data.setVanFlagOff(Boolean.valueOf(userfileup.getFlagoff()));
 //					data.setVanFlagPath1(filePath+userfileup.getFlagoff_photo1().getOriginalFilename());
 //					data.setVanFlagPath2(filePath+userfileup.getFlagoff_photo2().getOriginalFilename());
@@ -886,8 +891,8 @@ public class InaugurationDaoImpl implements InaugurationDao {
 				imgList.add(list.get(0).getLakhpatiDidiPath1().replaceAll(".*\\\\", ""));
 			if(list.get(0).getLakhpatiDidiPath2()!=null)
 				imgList.add(list.get(0).getLakhpatiDidiPath2().replaceAll(".*\\\\", ""));
-*/			
 			
+*/			
 		}catch(Exception ex) {
  			session.getTransaction().rollback();
 			ex.printStackTrace();
@@ -964,6 +969,77 @@ public class InaugurationDaoImpl implements InaugurationDao {
 		}
 		
 		return str;
+	}
+
+	@Override
+	public String completeInaugurationDetails(List<Integer> assetid, String userid) {
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("update watershed_yatra_inauguaration set status='C' where inauguaration_id=:nrmpkid");
+			 Date d= new Date();
+			 
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
+
+	@Override
+	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd) {
+		
+		String getReport=getInaugurationDetailscomp;
+		Session session = sessionFactory.getCurrentSession();
+		List<InaugurationBean> list = new ArrayList<InaugurationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 	
 	

@@ -59,6 +59,7 @@ public class InaugurationController extends HttpServlet {
 				int stCode = 0;
 				int distCode = 0;
 				List<InaugurationBean> data = new ArrayList<InaugurationBean>();
+				List<InaugurationBean> compdata = new ArrayList<InaugurationBean>();
 
 				for (ProfileBean bean : listm) {
 					distName = bean.getDistrictname();
@@ -75,6 +76,11 @@ public class InaugurationController extends HttpServlet {
 				data=iSer.getInaugurationDetails(stcd);
 				mav.addObject("dataList",data);
 				mav.addObject("dataListSize",data.size());
+				
+				
+				compdata=iSer.getInaugurationDetailsComp(stcd);
+				mav.addObject("compdataList",compdata);
+				mav.addObject("compdataListSize",compdata.size());
 
 			} else {
 				mav = new ModelAndView("login");
@@ -183,6 +189,28 @@ public class InaugurationController extends HttpServlet {
 			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
 			String userType= session.getAttribute("userType").toString();
 			res=iSer.deleteInaugurationDetails(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	
+	@RequestMapping(value="/completeInaugurationDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeInaugurationDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=iSer.completeInaugurationDetails(assetid, session.getAttribute("loginID").toString());
 		
 		 
 		}else {
