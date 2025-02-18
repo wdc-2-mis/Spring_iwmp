@@ -176,7 +176,7 @@ if (allValid) {
 	
 		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
 		<label>
-		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 300 x 400 pixels,Geo-referenced and Time-stamped.</span>
+		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 400 x 400 pixels,Geo-referenced and Time-stamped.</span>
 		</label>
 		<c:if test="${not empty result}">
              <script>alert("${result}");</script>
@@ -312,7 +312,15 @@ if (allValid) {
                 <input type="hidden" id="pheriphoto2_lng" name="pheriphoto2_lng">
                 <input type="hidden" id="pheriphoto2_time" name="pheriphoto2_time">
                </div>
+               
+               <hr/>
+               
+               
                </div>
+               <div class="form-group">
+    <label for="remarks"><b>Remarks:</b></label>
+    <textarea class="form-control" id="remarks" name="remarks" rows="3" placeholder="Enter any additional remarks..." style="width: 100%;"></textarea>
+</div>
 		</div>
     	<br/>
     	
