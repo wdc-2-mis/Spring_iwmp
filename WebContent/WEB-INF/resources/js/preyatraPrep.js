@@ -167,7 +167,7 @@ function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
 
 // Attach validation to file inputs
 $('#gramphoto1, #gramphoto2, #pheriphoto1, #pheriphoto2').change(function () {
-    validatePhoto(this, this.id, 300, 300, 400);
+    validatePhoto(this, this.id, 300, 400, 400);
 });
 
    $('#chkSelectAll').on('click',function(){
