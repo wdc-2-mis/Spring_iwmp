@@ -700,7 +700,7 @@ display: none; /* Hidden by default */
 	<div class="maindiv">
 		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Yatra - Inauguration Program</h4> </div>
 		<label>
-			<span style="color:blue;">Note:- The image size must be under 300KB, with dimensions of 400 x 400 pixels with Geo-referenced and Time-stamped.</span>
+			<span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
