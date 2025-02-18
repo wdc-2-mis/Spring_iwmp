@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
 
 <meta charset="ISO-8859-1">
 <title>Watershed Yatra Program</title>
@@ -1031,7 +1033,7 @@ display: none; /* Hidden by default */
       		<div class="form-row"> 
      <div class="form-group col">
       <hr/>
-      <h5 class="text-center font-weight-bold"><u> List of Watershed Yatra at Village Level</u></h5> 
+      <h5 class="text-center font-weight-bold"><u>Draft List of Watershed Yatra at Village Level</u></h5> 
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
@@ -1136,6 +1138,11 @@ display: none; /* Hidden by default */
  						<tr>
 								
 								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+							
+							
+							
+								
+								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
 							</tr>
  						
  						
@@ -1147,6 +1154,127 @@ display: none; /* Hidden by default */
 		</table>
 		</div>
 		</div> 
+     	
+     	
+      		<div class="form-row"> 
+     <div class="form-group col">
+      <hr/>
+      <h5 class="text-center font-weight-bold"><u>Complete List of Watershed Yatra at Village Level</u></h5> 
+      <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
+ 						<thead class ="theadlist" id = "theadlist"> 
+							<tr> 
+								<th rowspan="3">S.No.  </th>  
+								<th rowspan="3">Date</th> 
+<!--  								<th rowspan="3">State Name</th>  -->
+								<th rowspan="3">District Name</th> 
+								<th rowspan="3">Block Name</th> 
+ 								<th rowspan="3">GP Name</th>  
+								<th rowspan="3">Village Name</th>  
+								<th rowspan="3">Location</th>
+								<th rowspan="3">Remarks</th> 
+								<th colspan="9">Number of Participation</th> 
+ 								<th colspan="16">Activities</th> 
+							</tr> 
+							<tr>
+							<th colspan="2">Participants/Villagers</th> 
+								<th colspan="2">Ministers</th> 
+ 								<th rowspan="2">Member of Parliament</th> 
+ 								<th colspan="2">Legislative Members</th> 
+ 								<th rowspan="2">Other Public Representatives</th> 
+ 								<th rowspan="2">Government Officials</th> 
+								
+								<th rowspan="2">AR Experience</th> 
+								<th rowspan="2">Shapath</th> 
+ 								<th rowspan="2">Film on Yatra</th> 
+								<th rowspan="2">People Participated in Quiz</th> 
+ 								<th rowspan="2">Cultural Activity</th> 
+ 								<th colspan="2">Bhoomi Poojan</th> 
+ 								<th colspan="2">Lokarpan</th> 
+							<th colspan="3">Shramdaan</th> 
+ 								<th colspan="2">Plantation</th> 
+								<th rowspan="2">Award Distribution (Felicitation)</th> 
+								
+ 								<th rowspan="2">No of Uploaded Photographs</th> 
+							</tr> 
+							<tr> 
+								<th>Male</th> 
+								<th>Female</th> 
+ 								<th>Central Level</th> 
+ 								<th>State Level</th> 
+ 								<th>Assembly</th> 
+ 								<th>Council</th> 
+								
+							<th>Number of Works</th> 
+ 								<th>Cost of Total works (in Lakh)</th> 
+ 								<th>Number of Works</th> 
+							<th>Cost of Total works (in Lakh)</th> 
+								<th>Number of Locations</th> 
+ 								<th>No. of people participated</th> 
+ 								<th>No. of Man Hours</th>
+ 								<th>Area (in ha.)</th> 
+							<th>No. of Agro forestry / Horticultural Plants (No. of Sapling)</th> 
+								
+							</tr> 
+						</thead> 
+
+									
+ 						<c:set var="st" value="" />
+ 						<c:forEach items="${comdataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /> </td>
+								<td><c:out value="${data.date}" /></td>
+								<td><c:out value="${data.distname}" /></td>
+ 								<td><c:out value="${data.blockname}" /></td>
+ 								<td><c:out value="${data.gpname}" /></td>
+ 								<td><c:out value="${data.villagename}" /></td>
+								<td><c:out value="${data.location}" /></td>
+								<td class="text-right"><c:out value="${data.remarks}" /></td>
+ 								<td class="text-right"><c:out value="${data.male_participants}" /></td>
+								<td class="text-right"><c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"><c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"><c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"><c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"><c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"><c:out value="${data.council_members}" /></td>
+								<td class="text-right"><c:out value="${data.others}" /></td>
+ 								<td class="text-right"><c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_of_ar_experience_people}" /></td>
+								<td><c:out value="${data.bhumi_jal_sanrakshan == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td><c:out value="${data.watershed_yatra_film == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-right"><c:out value="${data.quiz_participants}" /></td>
+ 								<td><c:out value="${data.cultural_name}" /></td>
+								<td class="text-right"><c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"><c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_works_lokarpan}" /></td>
+								<td class="text-right"><c:out value="${data.tot_works_lokarpan}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"><c:out value="${data.no_people_shramdaan}" /></td>
+								<td class="text-right"><c:out value="${data.manhour}" /></td>
+ 								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
+								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
+ 								<td class="text-right"><c:out value="${data.no_awards}" /></td>
+ 								
+								<td class="text-right">
+									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
+ 								
+ 							</tr>
+ 						</c:forEach>
+ 						
+ 						
+ 						
+						<c:if test="${comdataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="18" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+		</table>
+		</div>
+		</div> 
+     	
+     	
+     	
+     	
      	
 		</form:form>
 	</div> 

@@ -55,4 +55,8 @@ public interface WatershedYatraService {
 	String deleteWatershedYatraDetails(List<Integer>  assetid, String userid);
 	
 	void deletePreYatraPrep(Integer prepid);
+	
+	String completeWatershedYatraDetails(List<Integer>  assetid, String userid);
+
+	List<WatershedYatraBean> getWatershedYatraListcomplete(Integer stcd);
 }

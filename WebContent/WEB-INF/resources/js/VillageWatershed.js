@@ -162,7 +162,43 @@ $(document).on('change', '#district', function(e) {
 														}
 													});	
 				
-				
+													$(document).on('click', '#complete', function(e){
+																											e.preventDefault();
+																											var finalAssetid=new Array();
+
+																											$('.chkIndividualkd').each(function(){
+																												if($(this).prop('checked'))
+																												{
+																													finalAssetid.push($(this).val());
+																												}
+																											});
+																													      
+																											if(confirm("Do you want to Complete ?"))
+																											{
+																												$.ajax({  
+																													    url:"completeWatershedYatraDetails",
+																													    type: "post",  
+																													    data: {assetid:finalAssetid.toString()},
+																													    error:function(xhr,status,er){
+																													         console.log(er);
+																													    },
+																													    success: function(data) 
+																														{
+																															console.log(data);
+																															$('#loading').hide();
+																															if(data==='success')
+																															{
+																																alert('Completed Successfully.');
+																																window.location.href='getWatershedYatraHeader';
+																															}
+																															else{
+																																alert('Please check at least One Check Box, Data not Complete!');
+																																window.location.href='getWatershedYatraHeader';
+																															} 
+																														}
+																												});
+																											}
+																										});		
 				
 				
 				
@@ -204,6 +240,18 @@ $(document).on('change', '#district', function(e) {
 					});
 				});
 
+				function getImageHash(file, callback) {
+				    const reader = new FileReader();
+				    reader.onload = function (e) {
+				        const data = e.target.result;
+				        const hash = CryptoJS.MD5(CryptoJS.enc.Latin1.parse(data)).toString(CryptoJS.enc.Hex);
+				        callback(hash);
+				    };
+				    reader.readAsBinaryString(file);
+				}
+
+				const imageRecords = {}; // Store image records with filename as key and hash as value
+
 				function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
 				    if (input.files && input.files[0]) {
 				        let file = input.files[0];
@@ -216,51 +264,68 @@ $(document).on('change', '#district', function(e) {
 				            return;
 				        }
 
-				        let img = new Image();
-				        img.src = URL.createObjectURL(file);
-				        img.onload = function () {
-				            // Validate image dimensions
-				            if (this.width > maxWidth || this.height > maxHeight) {
-				                alert("Image dimensions should not exceed " + maxWidth + "x" + maxHeight);
+				        let specialCharPattern = /[^\w.-]/;
+
+				        // Check if file name contains special characters
+				        if (specialCharPattern.test(file.name)) {
+				            alert("File name contains special characters. Please rename the file without special characters and try again.");
+				            input.value = "";
+				            return;
+				        }
+
+				        getImageHash(file, function (hash) {
+				            if (imageRecords[file.name] && imageRecords[file.name] === hash) {
+				                alert("This image has been already uploaded. Please upload a different image.");
 				                input.value = "";
 				                return;
 				            }
-				        };
 
-				        // Extract metadata using EXIF.js
-				        EXIF.getData(file, function () {
-				            let latitude = EXIF.getTag(this, "GPSLatitude");
-				            let longitude = EXIF.getTag(this, "GPSLongitude");
-				            let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
+				            imageRecords[file.name] = hash;
 
-				            // Convert GPS coordinates to decimal format
-				            function convertDMSToDD(dms, ref) {
-				                if (!dms) return null;
-				                let degrees = dms[0].numerator / dms[0].denominator;
-				                let minutes = dms[1].numerator / dms[1].denominator / 60;
-				                let seconds = dms[2].numerator / dms[2].denominator / 3600;
-				                let decimal = degrees + minutes + seconds;
-				                return ref === "S" || ref === "W" ? -decimal : decimal;
-				            }
+				            let img = new Image();
+				            img.src = URL.createObjectURL(file);
+				            img.onload = function () {
+				                // Validate image dimensions
+				                if (this.width > maxWidth || this.height > maxHeight) {
+				                    alert("Image dimensions should not exceed " + maxWidth + "x" + maxHeight);
+				                    input.value = "";
+				                    return;
+				                }
+				            };
 
-				            let latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
-				            let lngRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
-				            let lat = convertDMSToDD(latitude, latRef);
-				            let lng = convertDMSToDD(longitude, lngRef);
+				            // Extract metadata using EXIF.js
+				            EXIF.getData(file, function () {
+				                let latitude = EXIF.getTag(this, "GPSLatitude");
+				                let longitude = EXIF.getTag(this, "GPSLongitude");
+				                let dateTimeOriginal = EXIF.getTag(this, "DateTimeOriginal");
 
-				            // Set extracted values in hidden input fields
-				            document.getElementById(photoId + "_lat").value = lat || "Not Available";
-				            document.getElementById(photoId + "_lng").value = lng || "Not Available";
-				            document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
+				                // Convert GPS coordinates to decimal format
+				                function convertDMSToDD(dms, ref) {
+				                    if (!dms) return null;
+				                    let degrees = dms[0].numerator / dms[0].denominator;
+				                    let minutes = dms[1].numerator / dms[1].denominator / 60;
+				                    let seconds = dms[2].numerator / dms[2].denominator / 3600;
+				                    let decimal = degrees + minutes + seconds;
+				                    return ref === "S" || ref === "W" ? -decimal : decimal;
+				                }
 
-							if (!lat || !lng) {
-							                if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
-							                    input.value = "";
-							                }
-											}
-				            console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
-				            
-				                
+				                let latRef = EXIF.getTag(this, "GPSLatitudeRef") || "N";
+				                let lngRef = EXIF.getTag(this, "GPSLongitudeRef") || "E";
+				                let lat = convertDMSToDD(latitude, latRef);
+				                let lng = convertDMSToDD(longitude, lngRef);
+
+				                // Set extracted values in hidden input fields
+				                document.getElementById(photoId + "_lat").value = lat || "Not Available";
+				                document.getElementById(photoId + "_lng").value = lng || "Not Available";
+				                document.getElementById(photoId + "_time").value = dateTimeOriginal || "Not Available";
+
+				                if (!lat || !lng) {
+				                    if (!confirm("This photo does not contain longitude and latitude information. Are you sure you want to upload it?")) {
+				                        input.value = "";
+				                    }
+				                }
+				                console.log("Extracted Data:", { lat, lng, dateTimeOriginal });
+				            });
 				        });
 				    }
 				}

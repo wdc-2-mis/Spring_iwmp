@@ -99,6 +99,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${checkVillagestatus}")
 	String checkVillagestatus;
 	
+	@Value("${getWyatraDetailsComplete}")
+	String getWyatraDetailsComplete;
+	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
 	
@@ -488,8 +491,8 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			for (int i = 0; i < mfile.length; i++) {
 			    MultipartFile file = mfile[i];
 			    String act = fileDescriptions[i];
-			   
-			    upload = commonFunction.uploadFileforwatershedYatra(file, filePath, userfileup.getBlock(), act);
+			    
+			    upload = commonFunction.uploadFileforwatershedYatra(file, filePath, userfileup.getVillage(), act);
 			}
 			
 			
@@ -780,7 +783,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			        main.setCultural_activity_path2_time(null);
 				}
 				
-				main.setStatus("C");
+				main.setStatus("D");
 				main.setCreatedBy(session.getAttribute("loginID").toString());
 				main.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 				main.setRequestedIp(ipAddr);
@@ -1062,7 +1065,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				        main.setCultural_activity_path2_time(null);
 					}
 					
-					main.setStatus("C");
+					main.setStatus("D");
 					main.setCreatedBy(session.getAttribute("loginID").toString());
 					main.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
 					main.setRequestedIp(ipAddr);
@@ -1902,5 +1905,80 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	    }
 	}
 
+	@Override
+	public String completeWatershedYatraDetails(List<Integer> assetid, String userid) {
+		
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("update watershed_yatra_village_level set status='C' where watershed_yatra_id=:nrmpkid");
+			 Date d= new Date();
+			 
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
 
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraListcomplete(Integer stcd) {
+		// TODO Auto-generated method stub
+		String getReport=getWyatraDetailsComplete;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
+		return list;
+	}
 }

@@ -395,8 +395,9 @@ display: none; /* Hidden by default */
 
  <br/>
 <c:if test="${not empty dataList}">
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}', '${userdate}', '${dateto}')" class="btn btn-info">PDF</button>
+
 <button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}','${userdate}', '${dateto}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}', '${userdate}', '${dateto}')" class="btn btn-info">PDF</button>
 
 </c:if>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
@@ -409,7 +410,7 @@ display: none; /* Hidden by default */
             	<!-- <h5 class="text-center font-weight-bold"><u> List of Watershed Yatra at Village Level</u></h5>  -->
      		<table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
- 						<tr><td colspan="20" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
+ 						<tr><td colspan="35" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 							<tr> 
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Date</th> 
@@ -420,6 +421,7 @@ display: none; /* Hidden by default */
  								<th rowspan="3" style="text-align:center; vertical-align: middle;">GP Name</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Village Name</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
+								<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
 								<th colspan="9" style="text-align:center; vertical-align: middle;">Number of Participation</th> 
  								<th colspan="16" style="text-align:center; vertical-align: middle;">Activities</th> 
 							</tr> 
@@ -464,7 +466,7 @@ display: none; /* Hidden by default */
 							</tr> 
 							
 							<tr>
-								<% for (int i = 1; i <= 34; i++) { %>
+								<% for (int i = 1; i <= 35; i++) { %>
 									<th style="text-align:center; vertical-align: middle;"><%= i %></th>
 								<% } %>
 							</tr>
@@ -506,6 +508,7 @@ display: none; /* Hidden by default */
  								<td><c:out value="${data.gpname}" /></td>
  								<td><c:out value="${data.villagename}" /></td>
 								<td><c:out value="${data.location}" /></td>
+								<td><c:out value="${data.remarks}" /></td>
  								<td class="text-right"><c:out value="${data.male_participants}" /></td>
 								<td class="text-right"><c:out value="${data.female_participants}" /></td>
  								<td class="text-right"><c:out value="${data.central_ministers}" /></td>

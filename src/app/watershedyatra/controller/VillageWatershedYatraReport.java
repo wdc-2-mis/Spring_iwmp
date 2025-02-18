@@ -1,3 +1,4 @@
+
 package app.watershedyatra.controller;
 
 import java.io.ByteArrayOutputStream;
@@ -199,16 +200,17 @@ public class VillageWatershedYatraReport {
 		String distName= request.getParameter("distName");
 		String blkName= request.getParameter("blkName");
 		String gpkName= request.getParameter("gpkName");
-		
-		
+		String fromDateStr ="";
+		String toDateStr ="";
 		if(!userdate.equals("")) {
 			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		}
 		if(!userdateto.equals("")) {
 	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
-	        String toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 		}
+		
 		
 		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
 		
@@ -224,64 +226,77 @@ public class VillageWatershedYatraReport {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 33, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 34, areaAmtValDetail, workbook);
 			
-			
-			mergedRegion = new CellRangeAddress(5,7,0,0); 
+			mergedRegion = new CellRangeAddress(5,5,0,34);
+			sheet.addMergedRegion(mergedRegion);
+			mergedRegion = new CellRangeAddress(6,8,0,0); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,1,1); 
+	        mergedRegion = new CellRangeAddress(6,8,1,1); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,2,2); 
+	        mergedRegion = new CellRangeAddress(6,8,2,2); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,3,3); 
+	        mergedRegion = new CellRangeAddress(6,8,3,3); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,4,4); 
+	        mergedRegion = new CellRangeAddress(6,8,4,4); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,5,5); 
+	        mergedRegion = new CellRangeAddress(6,8,5,5); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,6,6); 
+	        mergedRegion = new CellRangeAddress(6,8,6,6); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,7,7); 
+	        mergedRegion = new CellRangeAddress(6,8,7,7); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,7,8,8); 
+	        mergedRegion = new CellRangeAddress(6,8,8,8); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,5,9,17); 
+	        mergedRegion = new CellRangeAddress(6,8,9,9); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,5,18,33); 
+	        mergedRegion = new CellRangeAddress(6,6,10,18); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,9,10); 
+	        mergedRegion = new CellRangeAddress(6,6,19,34); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,11,12); 
+	        mergedRegion = new CellRangeAddress(7,7,10,11); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,13,13); 
+	        mergedRegion = new CellRangeAddress(7,7,12,13); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,14,15); 
+	        mergedRegion = new CellRangeAddress(7,8,14,14); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,16,16); 
+	        mergedRegion = new CellRangeAddress(7,8,15,16); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,17,17); 
+	        mergedRegion = new CellRangeAddress(7,8,17,17); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,18,18); 
+	        mergedRegion = new CellRangeAddress(7,8,18,18); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,19,19); 
+	        mergedRegion = new CellRangeAddress(7,8,19,19); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,20,20); 
+	        mergedRegion = new CellRangeAddress(7,8,20,20); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,21,21); 
+	        mergedRegion = new CellRangeAddress(7,8,21,21); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,22,22); 
+	        mergedRegion = new CellRangeAddress(7,8,22,22); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,32,32); 
+	        mergedRegion = new CellRangeAddress(7,8,23,23); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,7,33,33); 
+	        mergedRegion = new CellRangeAddress(7,8,33,33); 
 	        sheet.addMergedRegion(mergedRegion);
-			mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,33); 
+	        mergedRegion = new CellRangeAddress(7,8,34,34); 
+	        sheet.addMergedRegion(mergedRegion);
+			mergedRegion = new CellRangeAddress(list.size()+10,list.size()+10,0,34); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
+	        Row rowDetail = sheet.createRow(5);
 			
-			Row rowhead = sheet.createRow(5); 
+			Cell cell = rowDetail.createCell(0);
+			cell.setCellValue("State : " + stName + "     District : " + distName + "     Block : " + blkName + "     From Date: "+ fromDateStr+"     To Date : "+toDateStr);
+			cell.setCellStyle(style);
 			
-			Cell cell = rowhead.createCell(0);
+			for(int i=1;i<34;i++)
+			{
+				cell =rowDetail.createCell(i);
+				cell.setCellStyle(style);
+			}
+			Row rowhead = sheet.createRow(6); 
+			
+			 cell = rowhead.createCell(0);
 			cell.setCellValue("S.No.");
 			cell.setCellStyle(style);
 			
@@ -318,176 +333,180 @@ public class VillageWatershedYatraReport {
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(9);
+			cell.setCellValue("Remarks");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(10);
 			cell.setCellValue("Number of Participation");
 			cell.setCellStyle(style);
-			for(int i = 10; i<18;i++) {
+			for(int i = 11; i<19;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
-			
-			cell = rowhead.createCell(18);
-			cell.setCellValue("Activities");  
-			cell.setCellStyle(style);
-			for(int i = 19; i<34;i++) {
-				rowhead.createCell(i).setCellStyle(style);
-			}
-			
-			rowhead = sheet.createRow(6);
-			for(int i = 0; i<9;i++) {
-				rowhead.createCell(i).setCellStyle(style);
-			}
-			
-			cell = rowhead.createCell(9);
-			cell.setCellValue("Participants/Villagers");  
-			cell.setCellStyle(style);
-			rowhead.createCell(10).setCellStyle(style);
-			
-			cell = rowhead.createCell(11);
-			cell.setCellValue("Ministers");  
-			cell.setCellStyle(style);
-			rowhead.createCell(12).setCellStyle(style);
-			
-			cell = rowhead.createCell(13);
-			cell.setCellValue("Member of Parliament");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(14);
-			cell.setCellValue("Legislative Members");  
-			cell.setCellStyle(style);
-			rowhead.createCell(15).setCellStyle(style);
-			
-			cell = rowhead.createCell(16);
-			cell.setCellValue("Other Public Representatives");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(17);
-			cell.setCellValue("Government Officials");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(18);
-			cell.setCellValue("AR Experience");  
-			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(19);
-			cell.setCellValue("Shramdan");  
+			cell.setCellValue("Activities");  
 			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(20);
-			cell.setCellValue("Film on Yatra");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(21);
-			cell.setCellValue("People Participated in Quiz");  	
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(22);
-			cell.setCellValue("Cultural Activity");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(23);
-			cell.setCellValue("Bhoomi Poojan");  
-			cell.setCellStyle(style);
-			rowhead.createCell(24).setCellStyle(style);
-			
-			cell = rowhead.createCell(25);
-			cell.setCellValue("Lokarpan");  
-			cell.setCellStyle(style);
-			rowhead.createCell(26).setCellStyle(style);
-			
-			cell = rowhead.createCell(27);
-			cell.setCellValue("Shramdaan");  
-			cell.setCellStyle(style);
-			rowhead.createCell(28).setCellStyle(style);
-			rowhead.createCell(29).setCellStyle(style);
-			
-			cell = rowhead.createCell(30);
-			cell.setCellValue("Plantation");  
-			cell.setCellStyle(style);
-			rowhead.createCell(31).setCellStyle(style);
-			
-			cell = rowhead.createCell(32);
-			cell.setCellValue("Award Distribution (Felicitation)");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(33);
-			cell.setCellValue("No of Uploaded Photographs");  
-			cell.setCellStyle(style);
+			for(int i = 20; i<34;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
 			
 			rowhead = sheet.createRow(7);
 			for(int i = 0; i<9;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
-			cell = rowhead.createCell(9);
-			cell.setCellValue("Male");  
-			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(10);
-			cell.setCellValue("Female");  		
+			cell.setCellValue("Participants/Villagers");  
 			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(11);
-			cell.setCellValue("Central Level");  
-			cell.setCellStyle(style);
+			rowhead.createCell(11).setCellStyle(style);
 			
 			cell = rowhead.createCell(12);
-			cell.setCellValue("State Level");  
+			cell.setCellValue("Ministers");  
 			cell.setCellStyle(style);
 			rowhead.createCell(13).setCellStyle(style);
 			
-			cell = rowhead.createCell(14);		
-			cell.setCellValue("Assembly");  
+			cell = rowhead.createCell(14);
+			cell.setCellValue("Member of Parliament");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(15);
-			cell.setCellValue("Council");  
+			cell.setCellValue("Legislative Members");  
 			cell.setCellStyle(style);
 			rowhead.createCell(16).setCellStyle(style);
+			
+			cell = rowhead.createCell(17);
+			cell.setCellValue("Other Public Representatives");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(18);
+			cell.setCellValue("Government Officials");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(19);
+			cell.setCellValue("AR Experience");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(20);
+			cell.setCellValue("Shramdan");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(21);
+			cell.setCellValue("Film on Yatra");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(22);
+			cell.setCellValue("People Participated in Quiz");  	
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(23);
+			cell.setCellValue("Cultural Activity");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(24);
+			cell.setCellValue("Bhoomi Poojan");  
+			cell.setCellStyle(style);
+			rowhead.createCell(25).setCellStyle(style);
+			
+			cell = rowhead.createCell(26);
+			cell.setCellValue("Lokarpan");  
+			cell.setCellStyle(style);
+			rowhead.createCell(27).setCellStyle(style);
+			
+			cell = rowhead.createCell(28);
+			cell.setCellValue("Shramdaan");  
+			cell.setCellStyle(style);
+			rowhead.createCell(29).setCellStyle(style);
+			rowhead.createCell(30).setCellStyle(style);
+			
+			cell = rowhead.createCell(31);
+			cell.setCellValue("Plantation");  
+			cell.setCellStyle(style);
+			rowhead.createCell(32).setCellStyle(style);
+			
+			cell = rowhead.createCell(33);
+			cell.setCellValue("Award Distribution (Felicitation)");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(34);
+			cell.setCellValue("No of Uploaded Photographs");  
+			cell.setCellStyle(style);
+			
+			rowhead = sheet.createRow(8);
+			for(int i = 0; i<10;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Male");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Female");  		
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Central Level");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(13);
+			cell.setCellValue("State Level");  
+			cell.setCellStyle(style);
+			rowhead.createCell(14).setCellStyle(style);
+			
+			cell = rowhead.createCell(15);		
+			cell.setCellValue("Assembly");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(16);
+			cell.setCellValue("Council");  
+			cell.setCellStyle(style);
 			rowhead.createCell(17).setCellStyle(style);
 			rowhead.createCell(18).setCellStyle(style);
 			rowhead.createCell(19).setCellStyle(style);
 			rowhead.createCell(20).setCellStyle(style);
 			rowhead.createCell(21).setCellStyle(style);
 			rowhead.createCell(22).setCellStyle(style);
-			
-			cell = rowhead.createCell(23);
-			cell.setCellValue("Number of Works");  
-			cell.setCellStyle(style);
+			rowhead.createCell(23).setCellStyle(style);
 			
 			cell = rowhead.createCell(24);
-			cell.setCellValue("Cost of Total works (in Lakh)");  
+			cell.setCellValue("Number of Works");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(25);
-			cell.setCellValue("Number of Works");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(26);
 			cell.setCellValue("Cost of Total works (in Lakh)");  
 			cell.setCellStyle(style);
 			
+			cell = rowhead.createCell(26);
+			cell.setCellValue("Number of Works");  
+			cell.setCellStyle(style);
+			
 			cell = rowhead.createCell(27);
-			cell.setCellValue("Number of Locations");		 
+			cell.setCellValue("Cost of Total works (in Lakh)");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(28);
-			cell.setCellValue("No. of people participated");  
+			cell.setCellValue("Number of Locations");		 
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(29);
-			cell.setCellValue("No. of Man Hours");  
+			cell.setCellValue("No. of people participated");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(30);
-			cell.setCellValue("Area (in ha.) ");  
+			cell.setCellValue("No. of Man Hours");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(31);
+			cell.setCellValue("Area (in ha.) ");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(32);
 			cell.setCellValue("No. of Agro forestry / Horticultural Plants (No. of Sapling)");  
 			cell.setCellStyle(style);
-			rowhead.createCell(32).setCellStyle(style);
 			rowhead.createCell(33).setCellStyle(style);
+			rowhead.createCell(34).setCellStyle(style);
 			
-			Row rowhead1 = sheet.createRow(8);
-			for(int i=0;i<34;i++)
+			Row rowhead1 = sheet.createRow(9);
+			for(int i=0;i<35;i++)
 			{
 				cell =rowhead1.createCell(i);
 				cell.setCellValue(i+1);
@@ -495,7 +514,7 @@ public class VillageWatershedYatraReport {
 			}
 	        
 	        int sno = 1;
-	        int rowno  = 8;
+	        int rowno  = 10;
 	        
 	        for(WatershedYatraBean bean: list) {
 	        	Row row = sheet.createRow(rowno);
@@ -508,42 +527,43 @@ public class VillageWatershedYatraReport {
 	        	row.createCell(6).setCellValue(bean.getGpname());
 	        	row.createCell(7).setCellValue(bean.getVillagename());
 	        	row.createCell(8).setCellValue(bean.getLocation());
-	        	row.createCell(9).setCellValue(bean.getMale_participants());
-	        	row.createCell(10).setCellValue(bean.getFemale_participants());
-	        	row.createCell(11).setCellValue(bean.getCentral_ministers());
-	        	row.createCell(12).setCellValue(bean.getState_ministers());
-	        	row.createCell(13).setCellValue(bean.getParliament());
-	        	row.createCell(14).setCellValue(bean.getAssembly_members());
-	        	row.createCell(15).setCellValue(bean.getCouncil_members());
-	        	row.createCell(16).setCellValue(bean.getOthers());
-	        	row.createCell(17).setCellValue(bean.getGov_officials());
-	        	row.createCell(18).setCellValue(bean.getNo_of_ar_experience_people());
+	        	row.createCell(9).setCellValue(bean.getRemarks());
+	        	row.createCell(10).setCellValue(bean.getMale_participants());
+	        	row.createCell(11).setCellValue(bean.getFemale_participants());
+	        	row.createCell(12).setCellValue(bean.getCentral_ministers());
+	        	row.createCell(13).setCellValue(bean.getState_ministers());
+	        	row.createCell(14).setCellValue(bean.getParliament());
+	        	row.createCell(15).setCellValue(bean.getAssembly_members());
+	        	row.createCell(16).setCellValue(bean.getCouncil_members());
+	        	row.createCell(17).setCellValue(bean.getOthers());
+	        	row.createCell(18).setCellValue(bean.getGov_officials());
+	        	row.createCell(19).setCellValue(bean.getNo_of_ar_experience_people());
 	        	
 	        	if(bean.getBhumi_jal_sanrakshan().equals("true")) {
-	        	row.createCell(19).setCellValue("Yes");
-	        	}
-	        	else {
-	        		row.createCell(19).setCellValue("No");
-	        	}
-	        	if(bean.getWatershed_yatra_film().equals("true")) {
 	        	row.createCell(20).setCellValue("Yes");
 	        	}
 	        	else {
 	        		row.createCell(20).setCellValue("No");
 	        	}
-	        	row.createCell(21).setCellValue(bean.getQuiz_participants());
-	        	row.createCell(22).setCellValue(bean.getCultural_name());
-	        	row.createCell(23).setCellValue(bean.getNo_works_bhoomipoojan());
-	        	row.createCell(24).setCellValue(bean.getTot_works_bhoomipoojan().doubleValue());
-	        	row.createCell(25).setCellValue(bean.getNo_works_lokarpan());
-	        	row.createCell(26).setCellValue(bean.getTot_works_lokarpan().doubleValue());
-	        	row.createCell(27).setCellValue(bean.getNo_location_shramdaan());
-	        	row.createCell(28).setCellValue(bean.getNo_people_shramdaan());
-	        	row.createCell(29).setCellValue(bean.getManhour());
-	        	row.createCell(30).setCellValue(bean.getArea_plantation().doubleValue());
-	        	row.createCell(31).setCellValue(bean.getNo_plantation());
-	        	row.createCell(32).setCellValue(bean.getNo_awards());
-	        	row.createCell(33).setCellValue(bean.getImage_count());
+	        	if(bean.getWatershed_yatra_film().equals("true")) {
+	        	row.createCell(21).setCellValue("Yes");
+	        	}
+	        	else {
+	        		row.createCell(21).setCellValue("No");
+	        	}
+	        	row.createCell(22).setCellValue(bean.getQuiz_participants());
+	        	row.createCell(23).setCellValue(bean.getCultural_name());
+	        	row.createCell(24).setCellValue(bean.getNo_works_bhoomipoojan());
+	        	row.createCell(25).setCellValue(bean.getTot_works_bhoomipoojan().doubleValue());
+	        	row.createCell(26).setCellValue(bean.getNo_works_lokarpan());
+	        	row.createCell(27).setCellValue(bean.getTot_works_lokarpan().doubleValue());
+	        	row.createCell(28).setCellValue(bean.getNo_location_shramdaan());
+	        	row.createCell(29).setCellValue(bean.getNo_people_shramdaan());
+	        	row.createCell(30).setCellValue(bean.getManhour());
+	        	row.createCell(31).setCellValue(bean.getArea_plantation().doubleValue());
+	        	row.createCell(32).setCellValue(bean.getNo_plantation());
+	        	row.createCell(33).setCellValue(bean.getNo_awards());
+	        	row.createCell(34).setCellValue(bean.getImage_count());
 	        	
 	        	sno++;
 	        	rowno++;
@@ -562,7 +582,7 @@ public class VillageWatershedYatraReport {
 //			font1.setColor(IndexedColors.WHITE.getIndex());
 			style1.setFont(font1);
 			
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 33);
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 34);
 	        String fileName = "attachment; filename=Report VillageYatra.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -632,8 +652,8 @@ public class VillageWatershedYatraReport {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			
-				table = new PdfPTable(34);
-				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 });
+				table = new PdfPTable(35);
+				table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 });
 				table.setWidthPercentage(100);
 			
 				table.setWidthPercentage(100);
@@ -641,7 +661,7 @@ public class VillageWatershedYatraReport {
 				table.setSpacingAfter(0f);							
 				table.setHeaderRows(4);
 				
-				CommonFunctions.insertCellHeader(table, "State : "+stName+" District : "+distName+" Block : "+blkName+" Gram Panchayat :"+gpkName+" From Date: "+ fromDateStr+" To Date :"+toDateStr  ,Element.ALIGN_LEFT, 34, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "State : "+stName+" District : "+distName+" Block : "+blkName+" Gram Panchayat :"+gpkName+" From Date: "+ fromDateStr+" To Date :"+toDateStr  ,Element.ALIGN_LEFT, 35, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "S.No.",Element.ALIGN_RIGHT, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Date", Element.ALIGN_RIGHT, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Time", Element.ALIGN_RIGHT, 1, 3, bf8Bold);
@@ -651,6 +671,7 @@ public class VillageWatershedYatraReport {
 				CommonFunctions.insertCellHeader(table, "GP Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Village Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Location", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 
 				CommonFunctions.insertCellHeader(table, "Number of Participation", Element.ALIGN_CENTER, 9, 1, bf8Bold);
 
@@ -732,6 +753,7 @@ public class VillageWatershedYatraReport {
 				CommonFunctions.insertCellHeader(table, "32", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "33", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "34", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "35", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				int i=0;
 				int k=1;
@@ -747,6 +769,7 @@ public class VillageWatershedYatraReport {
 						CommonFunctions.insertCell(table, list.get(i).getGpname(), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getVillagename(), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getLocation(), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getRemarks(), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getMale_participants().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getFemale_participants().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getCentral_ministers().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
