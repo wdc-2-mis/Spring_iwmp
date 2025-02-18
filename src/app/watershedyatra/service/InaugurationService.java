@@ -1,7 +1,5 @@
 package app.watershedyatra.service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,9 +14,9 @@ public interface InaugurationService {
 	
 	String getExistingBlockInaguraCodes(Integer bCode);
 	
-	String deleteInaugurationDetails(List<Integer>  assetid, String userid);
+	String deleteInaugurationDetails(List<Integer> assetid, String userid);
 	
+	String completeInaugurationDetails(List<Integer> assetid, String userid);
 	
-	
-	
+	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd);
 }

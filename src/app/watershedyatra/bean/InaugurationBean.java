@@ -22,6 +22,8 @@ public class InaugurationBean {
     private Integer council_members;
     private Integer others;
     private Integer gov_officials;
+    private String gram_sabha;
+    private String prabhat_pheri;
     private String flagoff;
     private MultipartFile flagoff_photo1;
     private String flagoff_photo1_lat;
@@ -203,6 +205,18 @@ public class InaugurationBean {
 	}
 	public void setGov_officials(Integer gov_officials) {
 		this.gov_officials = gov_officials;
+	}
+	public String getGram_sabha() {
+		return gram_sabha;
+	}
+	public void setGram_sabha(String gram_sabha) {
+		this.gram_sabha = gram_sabha;
+	}
+	public String getPrabhat_pheri() {
+		return prabhat_pheri;
+	}
+	public void setPrabhat_pheri(String prabhat_pheri) {
+		this.prabhat_pheri = prabhat_pheri;
 	}
 	public String getFlagoff() {
 		return flagoff;

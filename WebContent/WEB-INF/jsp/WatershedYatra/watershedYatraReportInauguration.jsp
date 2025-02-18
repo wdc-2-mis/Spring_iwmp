@@ -376,7 +376,7 @@ display: none; /* Hidden by default */
 
 			<table id="tblReport" class="table">
 				<thead class="theadlist" id="theadlist">
-				<tr><td colspan="31" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
+				<tr><td colspan="37" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 					<tr>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Date</th>
@@ -385,7 +385,7 @@ display: none; /* Hidden by default */
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Block Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
-						<th colspan="9" style="text-align:center; vertical-align: middle;">Number of Participation</th>
+						<th colspan="11" style="text-align:center; vertical-align: middle;">Number of Participation</th>
 						<th colspan="19" style="text-align:center; vertical-align: middle;">Activities</th>
 					</tr>
 					<tr>
@@ -395,6 +395,8 @@ display: none; /* Hidden by default */
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Legislative Members</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Other Public Representatives</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Government Officials</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Gram Sabha completed before the arrival of the van</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Prabhat Pheri completed before the arrival of the van</th>
 
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Flag off of Van</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Launch of Theme Song</th>
@@ -426,7 +428,7 @@ display: none; /* Hidden by default */
 						<th style="text-align:center; vertical-align: middle;">No. of Agro forestry / Horticultural Plants (No. of Sapling)</th>
 					</tr>
 					<tr>
-						<% for (int i = 1; i <= 31; i++) { %>
+						<% for (int i = 1; i <= 34; i++) { %>
 						<th class="text-center"><%= i %></th>
 						<% } %>
 					</tr>
@@ -465,6 +467,8 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.council_members}" /></td>
 								<td class="text-right"> <c:out value="${data.others}" /></td>
  								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-left"> <c:out value="${data.gram_sabha == 'true' ? 'Yes' : 'No'}" /></td>
+ 								<td class="text-left"> <c:out value="${data.prabhat_pheri == 'true' ? 'Yes' : 'No'}" /></td>
 								<td class="text-left"> <c:out value="${data.flagoff == 'true' ? 'Yes' : 'No'}" /></td>
  								<td class="text-left"> <c:out value="${data.themesong == 'true' ? 'Yes' : 'No'}" /></td>
 								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
@@ -489,8 +493,8 @@ display: none; /* Hidden by default */
 					</c:if>
 					<c:if test="${inaugurationListSize eq 0}">
 						<tr>
-							<td align="center" colspan="21" class="required" style="color:red;">Data Not Found</td>
-							<td colspan="10" ></td>
+							<td align="center" colspan="18" class="required" style="color:red;">Data Not Found</td>
+							<td colspan="16" ></td>
 						</tr>
 					</c:if>
 				</tbody>

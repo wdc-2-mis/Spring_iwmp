@@ -2,7 +2,6 @@ package app.watershedyatra.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.*;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -28,6 +27,8 @@ public class WatershedYatraInauguaration {
     private Integer legislativeCouncilMembers;
     private Integer otherPublicRepresentatives;
     private Integer govOfficials;
+    private Boolean gramSabha;
+    private Boolean prabhatPheri;
     private Boolean vanFlagOff;
     private String vanFlagPath1;
     private String vanFlagPath2;
@@ -145,7 +146,7 @@ public class WatershedYatraInauguaration {
 			Date inauguarationDate, String inauguarationLocation, Integer maleParticipants,
 			Integer femaleParticipants, Integer centralMinister, Integer stateMinister, Integer parliamentMembers,
 			Integer legislativeAssemblyMembers, Integer legislativeCouncilMembers, Integer otherPublicRepresentatives,
-			Integer govOfficials, Boolean vanFlagOff, String vanFlagPath1, String vanFlagPath2, Boolean themeSong,
+			Integer govOfficials, Boolean gramSabha, Boolean prabhatPheri, Boolean vanFlagOff, String vanFlagPath1, String vanFlagPath2, Boolean themeSong,
 			String themeSongPath1, String themeSongPath2, Integer bhoomiPoojanNoOfWorks,
 			BigDecimal bhoomiPoojanCostOfWorks, String bhoomiPoojanPath1, String bhoomiPoojanPath2,
 			Integer lokarpanNoOfWorks, BigDecimal lokarpanCostOfWorks, String lokarpanPath1, String lokarpanPath2,
@@ -169,6 +170,8 @@ public class WatershedYatraInauguaration {
 		this.legislativeCouncilMembers = legislativeCouncilMembers;
 		this.otherPublicRepresentatives = otherPublicRepresentatives;
 		this.govOfficials = govOfficials;
+		this.gramSabha = gramSabha;
+		this.prabhatPheri = prabhatPheri;
 		this.vanFlagOff = vanFlagOff;
 		this.vanFlagPath1 = vanFlagPath1;
 		this.vanFlagPath2 = vanFlagPath2;
@@ -325,6 +328,24 @@ public class WatershedYatraInauguaration {
 
 	public void setGovOfficials(Integer govOfficials) {
 		this.govOfficials = govOfficials;
+	}
+	
+	@Column(name = "gram_sabha")
+	public Boolean getGramSabha() {
+		return gramSabha;
+	}
+
+	public void setGramSabha(Boolean gramSabha) {
+		this.gramSabha = gramSabha;
+	}
+
+	@Column(name = "prabhat_pheri")
+	public Boolean getPrabhatPheri() {
+		return prabhatPheri;
+	}
+
+	public void setPrabhatPheri(Boolean prabhatPheri) {
+		this.prabhatPheri = prabhatPheri;
 	}
 
 	@Column(name = "van_flag_off")

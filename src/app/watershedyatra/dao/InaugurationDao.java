@@ -1,6 +1,5 @@
 package app.watershedyatra.dao;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +13,9 @@ public interface InaugurationDao {
 	public List<String> getImagesByInaugurationId(int inaugurationId);
 	
 	String getExistingBlockInaguraCodes(Integer bCode);
-	String deleteInaugurationDetails(List<Integer>  assetid, String userid);
+	String deleteInaugurationDetails(List<Integer> assetid, String userid);
+	String completeInaugurationDetails(List<Integer> assetid, String userid);
+	
+	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd);
 	
 }
