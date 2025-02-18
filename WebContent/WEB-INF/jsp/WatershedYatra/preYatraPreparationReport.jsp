@@ -339,7 +339,6 @@ function downloadExcel(state, district, blkd, grampn){
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 </footer>
 
-<script src='<c:url value="/resources/js/preyatraPrep.js" />'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 	
 </body>

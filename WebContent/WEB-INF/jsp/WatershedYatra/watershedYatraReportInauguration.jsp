@@ -14,7 +14,7 @@ function showReport(e)
 {
 	var state = $('#state').val();
 	var district = $('#district').val();
-	var block = $('#block').val();
+	var block = $('#blockk').val();
 	var userdate = $('#userdate').val();
 	$('#userdate').val(userdate);
 	
@@ -40,7 +40,7 @@ function showReport(e)
 	if(block==='')
 	{
 		alert('Please select Block');
-		$('#block').focus();
+		$('#blockk').focus();
 		e.preventDefault();
 	}
 	/* if(userdate==='')
@@ -81,7 +81,7 @@ function downloadPDF(state, district, blkd, udate, udateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var blkName = document.getElementById("blockk").options[document.getElementById("blockk").selectedIndex].text;
  
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
@@ -98,7 +98,7 @@ function downloadExcel(state, district, blkd, udate, udateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var blkName = document.getElementById("blockk").options[document.getElementById("blockk").selectedIndex].text;
  
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
@@ -343,7 +343,7 @@ display: none; /* Hidden by default */
 					</select></td>
 
 					<td class="label">Block <span style="color: red;">*</span></td>
-					<td><select name="block" id="block" required="required" onchange="showChangedata();">
+					<td><select name="blockk" id="blockk" required="required" >
 							<option value="0">--All Block--</option>
 							<c:if test="${not empty blockList}">
 								<c:forEach items="${blockList}" var="lists">

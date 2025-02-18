@@ -955,7 +955,7 @@ public class WatershedYatraReportController {
 			ModelAndView mav = new ModelAndView();
 			String userState= request.getParameter("state");
 			String district= request.getParameter("district");
-			String block= request.getParameter("block");
+			String block= request.getParameter("blockk");
 			String userdate= request.getParameter("userdate");
 			String userdateto= request.getParameter("userdateto");
 			
@@ -1022,7 +1022,7 @@ public class WatershedYatraReportController {
 		
 		int stCode = Integer.parseInt(request.getParameter("state"));
 		int distCode = Integer.parseInt(request.getParameter("district"));
-		int blkCode = Integer.parseInt(request.getParameter("block"));
+		int blkCode = Integer.parseInt(request.getParameter("blockk"));
 		String userdate= request.getParameter("udate");
 		String userdateto= request.getParameter("userdate2");
 		
@@ -1509,7 +1509,7 @@ public class WatershedYatraReportController {
 		
 		int stCode = Integer.parseInt(request.getParameter("state"));
 		int distCode = Integer.parseInt(request.getParameter("district"));
-		int blkCode = Integer.parseInt(request.getParameter("block"));
+		int blkCode = Integer.parseInt(request.getParameter("blockk"));
 		String userdateto= request.getParameter("userdate2");
 		
 		
