@@ -1844,11 +1844,104 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		String str="fail";
 		Integer value=0;
 		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<>();
+		List<WatershedYatVill> list = new ArrayList<>();
+
 		try {
 			 
 			 session.beginTransaction();
 			 InetAddress inetAddress = InetAddress.getLocalHost(); 
 			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			 	Query query1 = session.createQuery("from WatershedYatVill where watershedYatraId = :watershedYatraId");
+			 	for(int i=0;i<assetid.size(); i++)
+				{
+			 		query1.setInteger("watershedYatraId", assetid.get(i));
+					list = query1.list();
+					
+					if(list.get(0).getArExperiencePath1()!=null && !list.get(0).getArExperiencePath1().isEmpty())
+						imgList.add(list.get(0).getArExperiencePath1());
+							
+					if(list.get(0).getArExperiencePath2()!=null && !list.get(0).getArExperiencePath2().isEmpty())
+						imgList.add(list.get(0).getArExperiencePath2());
+					
+					if(list.get(0).getBhumiJalSanrakshanPath1()!=null && !list.get(0).getBhumiJalSanrakshanPath1().isEmpty())
+						imgList.add(list.get(0).getBhumiJalSanrakshanPath1());
+					
+					if(list.get(0).getBhumiJalSanrakshanPath2()!=null && !list.get(0).getBhumiJalSanrakshanPath2().isEmpty())
+						imgList.add(list.get(0).getBhumiJalSanrakshanPath2());
+					
+					if(list.get(0).getYatraFilmPath1()!=null && !list.get(0).getYatraFilmPath1().isEmpty())
+						imgList.add(list.get(0).getYatraFilmPath1());
+					
+					if(list.get(0).getYatraFilmPath2()!=null && !list.get(0).getYatraFilmPath2().isEmpty())
+						imgList.add(list.get(0).getYatraFilmPath2());
+					
+					if(list.get(0).getQuizParticipantsPath1()!=null && !list.get(0).getQuizParticipantsPath1().isEmpty())
+						imgList.add(list.get(0).getQuizParticipantsPath1());
+					
+					if(list.get(0).getQuizParticipantsPath2()!=null && !list.get(0).getQuizParticipantsPath2().isEmpty())
+						imgList.add(list.get(0).getQuizParticipantsPath2());
+					
+					if(list.get(0).getCulturalActivityPath1()!=null && !list.get(0).getCulturalActivityPath1().isEmpty())
+						imgList.add(list.get(0).getCulturalActivityPath1());
+					
+					if(list.get(0).getCulturalActivityPath2()!=null && !list.get(0).getCulturalActivityPath2().isEmpty())
+						imgList.add(list.get(0).getCulturalActivityPath2());
+					
+					if(list.get(0).getBhoomiPoojanPath1()!=null && !list.get(0).getBhoomiPoojanPath1().isEmpty())
+						imgList.add(list.get(0).getBhoomiPoojanPath1());
+					
+					if(list.get(0).getBhoomiPoojanPath2()!=null && !list.get(0).getBhoomiPoojanPath2().isEmpty())
+						imgList.add(list.get(0).getBhoomiPoojanPath2());
+					
+					if(list.get(0).getLokarpanPath1()!=null && !list.get(0).getLokarpanPath1().isEmpty())
+						imgList.add(list.get(0).getLokarpanPath1());
+					
+					if(list.get(0).getLokarpanPath2()!=null && !list.get(0).getLokarpanPath2().isEmpty())
+						imgList.add(list.get(0).getLokarpanPath2());
+					
+					if(list.get(0).getShramdaanPath1()!=null && !list.get(0).getShramdaanPath1().isEmpty())
+						imgList.add(list.get(0).getShramdaanPath1());
+					
+					if(list.get(0).getShramdaanPath2()!=null && !list.get(0).getShramdaanPath2().isEmpty())
+						imgList.add(list.get(0).getShramdaanPath2());
+					
+					if(list.get(0).getPlantationPath1()!=null && !list.get(0).getPlantationPath1().isEmpty())
+						imgList.add(list.get(0).getPlantationPath1());
+					
+					if(list.get(0).getPlantationPath2()!=null && !list.get(0).getPlantationPath2().isEmpty())
+						imgList.add(list.get(0).getPlantationPath2());
+					
+					if(list.get(0).getAwardDistributionPath1()!=null && !list.get(0).getAwardDistributionPath1().isEmpty())
+						imgList.add(list.get(0).getAwardDistributionPath1());
+					
+					if(list.get(0).getAwardDistributionPath2()!=null && !list.get(0).getAwardDistributionPath2().isEmpty())
+						imgList.add(list.get(0).getAwardDistributionPath2());
+					
+				}
+			 	for (String photo : imgList) 
+			 	{
+		            if (photo != null && !photo.isEmpty()) 
+		            {
+		                File file = new File(photo);
+		                if (file.exists()) 
+		                {
+		                    if (file.delete()) 
+		                    {
+		                        System.out.println("Deleted file: " + file.getAbsolutePath());
+		                    } 
+		                    else {
+		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+		                    }
+		                } 
+		                else {
+		                    System.out.println("File not found: " + file.getAbsolutePath());
+		                }
+		            }
+		        }
+			 
+			 
 			 SQLQuery query = session.createSQLQuery("delete from watershed_yatra_village_level where watershed_yatra_id=:nrmpkid");
 			 Date d= new Date();
 			 

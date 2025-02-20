@@ -107,100 +107,98 @@ $(document).on('change', '#district', function(e) {
 				});
 				
 				
-				$('#chkSelectAllkd').on('click',function(){
-							$chkValue=0;
-							if(this.checked)
+	$('#chkSelectAllkd').on('click',function(){
+		$chkValue=0;
+		if(this.checked)
+		{
+			$('.chkIndividualkd').each(function(){
+				this.checked = true;
+				$chkValue++;
+			});
+		}
+		else{
+				$('.chkIndividualkd').each(function(){
+					this.checked = false;
+				});
+				$chkValue=0;
+		}
+	});	
+													
+	$(document).on('click', '#delete', function(e){
+		e.preventDefault();
+		var finalAssetid=new Array();
+
+		$('.chkIndividualkd').each(function(){
+				if($(this).prop('checked'))
+				{
+					finalAssetid.push($(this).val());
+				}
+		});
+																      
+		if(confirm("Do you want to Delete ?"))
+		{
+			$.ajax({  
+					url:"deleteWatershedYatraDetails",
+					type: "post",  
+					data: {assetid:finalAssetid.toString()},
+					error:function(xhr,status,er){
+							console.log(er);
+					},
+					success: function(data) 
+					{
+						console.log(data);
+						$('#loading').hide();
+						if(data==='success')
+						{
+							alert('Deleted Data and Uploaded File Successfully.');
+							window.location.href='getWatershedYatraHeader';
+						}
+						else{
+							alert('Please check at least One Check Box, Data not Complete!');
+							window.location.href='getWatershedYatraHeader';
+						} 
+					}
+			});
+		}
+	});	
+				
+	$(document).on('click', '#complete', function(e){
+			e.preventDefault();
+			var finalAssetid=new Array();
+
+			$('.chkIndividualkd').each(function(){
+					if($(this).prop('checked'))
+					{
+						finalAssetid.push($(this).val());
+					}
+			});
+																													      
+			if(confirm("Do you want to Complete ?"))
+			{
+				$.ajax({  
+						url:"completeWatershedYatraDetails",
+						type: "post",  
+						data: {assetid:finalAssetid.toString()},
+						error:function(xhr,status,er){
+								console.log(er);
+						},
+						success: function(data) 
+						{
+							console.log(data);
+							$('#loading').hide();
+							if(data==='success')
 							{
-								$('.chkIndividualkd').each(function(){
-								this.checked = true;
-								$chkValue++;
-								});
+								alert('Completed Successfully.');
+								window.location.href='getWatershedYatraHeader';
 							}
 							else{
-									$('.chkIndividualkd').each(function(){
-									     this.checked = false;
-									 });
-								$chkValue=0;
-							}
-					});	
-													
-											$(document).on('click', '#delete', function(e){
-														e.preventDefault();
-														var finalAssetid=new Array();
-
-														$('.chkIndividualkd').each(function(){
-															if($(this).prop('checked'))
-															{
-																finalAssetid.push($(this).val());
-															}
-														});
-																      
-														if(confirm("Do you want to Delete ?"))
-														{
-															$.ajax({  
-																    url:"deleteWatershedYatraDetails",
-																    type: "post",  
-																    data: {assetid:finalAssetid.toString()},
-																    error:function(xhr,status,er){
-																         console.log(er);
-																    },
-																    success: function(data) 
-																	{
-																		console.log(data);
-																		$('#loading').hide();
-																		if(data==='success')
-																		{
-																			alert('Deleted Successfully.');
-																			window.location.href='getWatershedYatraHeader';
-																		}
-																		else{
-																			alert('Please check at least One Check Box, Data not Complete!');
-																			window.location.href='getWatershedYatraHeader';
-																		} 
-																	}
-															});
-														}
-													});	
-				
-													$(document).on('click', '#complete', function(e){
-																											e.preventDefault();
-																											var finalAssetid=new Array();
-
-																											$('.chkIndividualkd').each(function(){
-																												if($(this).prop('checked'))
-																												{
-																													finalAssetid.push($(this).val());
-																												}
-																											});
-																													      
-																											if(confirm("Do you want to Complete ?"))
-																											{
-																												$.ajax({  
-																													    url:"completeWatershedYatraDetails",
-																													    type: "post",  
-																													    data: {assetid:finalAssetid.toString()},
-																													    error:function(xhr,status,er){
-																													         console.log(er);
-																													    },
-																													    success: function(data) 
-																														{
-																															console.log(data);
-																															$('#loading').hide();
-																															if(data==='success')
-																															{
-																																alert('Completed Successfully.');
-																																window.location.href='getWatershedYatraHeader';
-																															}
-																															else{
-																																alert('Please check at least One Check Box, Data not Complete!');
-																																window.location.href='getWatershedYatraHeader';
-																															} 
-																														}
-																												});
-																											}
-																										});		
-				
-				
+									alert('Please check at least One Check Box, Data not Complete!');
+									window.location.href='getWatershedYatraHeader';
+							} 
+						}
+				});
+			}
+	});		
 				
 
 				$(document).on('click', '.showImage', function(e) {
