@@ -1,5 +1,6 @@
 package app.watershedyatra.daoImpl;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -947,11 +948,83 @@ public class InaugurationDaoImpl implements InaugurationDao {
 		String str="fail";
 		Integer value=0;
 		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<String>();
+		List<WatershedYatraInauguaration> list = new ArrayList<WatershedYatraInauguaration>();
+		
 		try {
 			 
 			 session.beginTransaction();
 			 InetAddress inetAddress = InetAddress.getLocalHost(); 
 			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			 
+			 Query query1 = session.createQuery("from WatershedYatraInauguaration where inauguarationId = :inaugid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				query1.setInteger("inaugid", assetid.get(i));
+				list = query1.list();
+				
+
+	 			if(list.get(0).getVanFlagPath1()!=null && !list.get(0).getVanFlagPath1().isEmpty())
+					imgList.add(list.get(0).getVanFlagPath1());
+				if(list.get(0).getVanFlagPath2()!=null && !list.get(0).getVanFlagPath2().isEmpty())
+					imgList.add(list.get(0).getVanFlagPath2());
+				if(list.get(0).getThemeSongPath1()!=null && !list.get(0).getThemeSongPath1().isEmpty())
+					imgList.add(list.get(0).getThemeSongPath1());
+				if(list.get(0).getThemeSongPath2()!=null && !list.get(0).getThemeSongPath2().isEmpty())
+					imgList.add(list.get(0).getThemeSongPath2());
+				if(list.get(0).getBhoomiPoojanPath1()!=null && !list.get(0).getBhoomiPoojanPath1().isEmpty())
+					imgList.add(list.get(0).getBhoomiPoojanPath1());
+				if(list.get(0).getBhoomiPoojanPath2()!=null && !list.get(0).getBhoomiPoojanPath2().isEmpty())
+					imgList.add(list.get(0).getBhoomiPoojanPath2());
+				if(list.get(0).getLokarpanPath1()!=null && !list.get(0).getLokarpanPath1().isEmpty())
+					imgList.add(list.get(0).getLokarpanPath1());
+				if(list.get(0).getLokarpanPath2()!=null && !list.get(0).getLokarpanPath2().isEmpty())
+					imgList.add(list.get(0).getLokarpanPath2());
+				if(list.get(0).getShramdaanPath1()!=null && !list.get(0).getShramdaanPath1().isEmpty())
+					imgList.add(list.get(0).getShramdaanPath1());
+				if(list.get(0).getShramdaanPath2()!=null && !list.get(0).getShramdaanPath2().isEmpty())
+					imgList.add(list.get(0).getShramdaanPath2());
+				if(list.get(0).getPlantationPath1()!=null && !list.get(0).getPlantationPath1().isEmpty())
+					imgList.add(list.get(0).getPlantationPath1());
+				if(list.get(0).getPlantationPath2()!=null && !list.get(0).getPlantationPath2().isEmpty())
+					imgList.add(list.get(0).getPlantationPath2());
+				if(list.get(0).getAwardDistributionPath1()!=null && !list.get(0).getAwardDistributionPath1().isEmpty())
+					imgList.add(list.get(0).getAwardDistributionPath1());
+				if(list.get(0).getAwardDistributionPath2()!=null && !list.get(0).getAwardDistributionPath2().isEmpty())
+					imgList.add(list.get(0).getAwardDistributionPath2());
+				if(list.get(0).getDeptStallsPath1()!=null && !list.get(0).getDeptStallsPath1().isEmpty())
+					imgList.add(list.get(0).getDeptStallsPath1());
+				if(list.get(0).getDeptStallsPath2()!=null && !list.get(0).getDeptStallsPath2().isEmpty())
+					imgList.add(list.get(0).getDeptStallsPath2());
+				if(list.get(0).getShgFpoPath1()!=null && !list.get(0).getShgFpoPath1().isEmpty())
+					imgList.add(list.get(0).getShgFpoPath1());
+				if(list.get(0).getShgFpoPath2()!=null && !list.get(0).getShgFpoPath2().isEmpty())
+					imgList.add(list.get(0).getShgFpoPath2());
+				if(list.get(0).getLakhpatiDidiPath1()!=null && !list.get(0).getLakhpatiDidiPath1().isEmpty())
+					imgList.add(list.get(0).getLakhpatiDidiPath1());
+				if(list.get(0).getLakhpatiDidiPath2()!=null && !list.get(0).getLakhpatiDidiPath2().isEmpty())
+					imgList.add(list.get(0).getLakhpatiDidiPath2());
+				
+			 }
+			 
+			 for (String photo : imgList) {
+		            if (photo != null && !photo.isEmpty()) {
+		                File file = new File(photo);
+		                if (file.exists()) {
+		                    if (file.delete()) {
+		                        System.out.println("Deleted file: " + file.getAbsolutePath());
+		                    } else {
+		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+		                    }
+		                } else {
+		                    System.out.println("File not found: " + file.getAbsolutePath());
+		                }
+		            }
+		        }
+			 
+			 
+			 
 			 SQLQuery query = session.createSQLQuery("delete from watershed_yatra_inauguaration where inauguaration_id=:nrmpkid");
 			 Date d= new Date();
 			 
