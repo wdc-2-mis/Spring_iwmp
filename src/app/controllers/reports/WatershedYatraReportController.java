@@ -74,14 +74,14 @@ public class WatershedYatraReportController {
 	@RequestMapping(value="/getWatershedYatraReport", method = RequestMethod.GET)
 	public ModelAndView getWatershedYatraReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		//session = request.getSession(true);
 	//	String st_code=session.getAttribute("stateCode").toString();
 		ModelAndView mav = new ModelAndView();
 		String userState= request.getParameter("state");
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
-		if(session!=null && session.getAttribute("loginID")!=null) {
+		/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 			
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportRoutePlan");
 			mav.addObject("menu", menuController.getMenuUserId(request));
@@ -111,10 +111,10 @@ public class WatershedYatraReportController {
 				mav.addObject("gpList", gpList);}
 				mav.addObject("grampn", grampan);	
 			
-		}else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+				/*
+				 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+				 * }
+				 */
 		return mav; 
 	}
 	
