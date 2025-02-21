@@ -55,7 +55,7 @@ import app.watershedyatra.bean.PreYatraPreparationBean;
 @Controller("WatershedYatraReportController")
 public class WatershedYatraReportController {
 	
-	HttpSession session;
+	 HttpSession session; 
 	
 	@Autowired(required = true)
 	MenuController menuController;
@@ -84,7 +84,7 @@ public class WatershedYatraReportController {
 		/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 			
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportRoutePlan");
-			mav.addObject("menu", menuController.getMenuUserId(request));
+			/* mav.addObject("menu", menuController.getMenuUserId(request)); */
 			
 		//	String fullPath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/WDC-PMKSY_file_0060.png";
 	    //    String removePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/";
@@ -121,7 +121,7 @@ public class WatershedYatraReportController {
 	@RequestMapping(value="/getRoutePlanReportData", method = RequestMethod.POST)
 	public ModelAndView getRoutePlanReportData(HttpServletRequest request, HttpServletResponse response)
 	{
-			session = request.getSession(true);
+			//session = request.getSession(true);
 		//	String st_code=session.getAttribute("stateCode").toString();
 			ModelAndView mav = new ModelAndView();
 			String userState= request.getParameter("state");
@@ -132,7 +132,7 @@ public class WatershedYatraReportController {
 			List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
 			
 			
-			if(session!=null && session.getAttribute("loginID")!=null) {
+			/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 				
 				mav = new ModelAndView("WatershedYatra/watershedYatraReportRoutePlan");
 				mav.addObject("menu", menuController.getMenuUserId(request));
@@ -161,10 +161,10 @@ public class WatershedYatraReportController {
 					mav.addObject("gpList", gpList);}
 					mav.addObject("grampn", grampan);	
 				
-			}else {
-				mav = new ModelAndView("login");
-				mav.addObject("login", new Login());
-			}
+					/*
+					 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+					 * }
+					 */
 			return mav; 
 	}
 	
@@ -317,7 +317,7 @@ public class WatershedYatraReportController {
 	@ResponseBody
 	public String downloadRoutePlanReportExcel(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 		
 		String stName= request.getParameter("stName");
 		String distName= request.getParameter("distName");
@@ -462,7 +462,7 @@ public class WatershedYatraReportController {
 	@RequestMapping(value="/getWatershedYatraNodalReport", method = RequestMethod.GET)
 	public ModelAndView getWatershedYatraNodalReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 	//	String st_code=session.getAttribute("stateCode").toString();
 		ModelAndView mav = new ModelAndView();
 		String lvl= request.getParameter("level");
@@ -470,8 +470,9 @@ public class WatershedYatraReportController {
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		
-		if(session!=null && session.getAttribute("loginID")!=null) 
-		{
+		/*
+		 * if(session!=null && session.getAttribute("loginID")!=null) {
+		 */
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportNodalOfficer");
 			mav.addObject("menu", menuController.getMenuUserId(request));
 			
@@ -497,18 +498,17 @@ public class WatershedYatraReportController {
 				mav.addObject("blockList", blockList);}
 				mav.addObject("blkd", block);
 			
-		}
-		else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+				/*
+				 * } else { mav = new ModelAndView("login"); mav.addObject("login", new
+				 * Login()); }
+				 */
 		return mav; 
 	}
 
 	@RequestMapping(value="/getNodalOfficerReportData", method = RequestMethod.POST)
 	public ModelAndView getNodalOfficerReportData(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 	//	String st_code=session.getAttribute("stateCode").toString();
 		ModelAndView mav = new ModelAndView();
 		String lvl= request.getParameter("level");
@@ -517,7 +517,7 @@ public class WatershedYatraReportController {
 		String block= request.getParameter("block");
 		
 		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
-		if(session!=null && session.getAttribute("loginID")!=null) {
+		/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 			
 			if(district==null)
 				district="0";
@@ -555,10 +555,10 @@ public class WatershedYatraReportController {
 				
 		
 			
-		}else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+				/*
+				 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+				 * }
+				 */
 		return mav; 
 	}
 	
@@ -759,7 +759,7 @@ public class WatershedYatraReportController {
 	@ResponseBody
 	public String downloadNodalOfficerReportExcel(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 		
 		String Level= request.getParameter("lvlName");
 		String stName= request.getParameter("stName");
@@ -915,14 +915,14 @@ public class WatershedYatraReportController {
 	@RequestMapping(value="/getInaugurationReport", method = RequestMethod.GET)
 	public ModelAndView getInaugurationReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 		
 		ModelAndView mav = new ModelAndView();
 		String userState= request.getParameter("state");
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		
-		if(session!=null && session.getAttribute("loginID")!=null) {
+		/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 			
 			mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
 			mav.addObject("menu", menuController.getMenuUserId(request));
@@ -941,17 +941,17 @@ public class WatershedYatraReportController {
 				mav.addObject("blockList", blockList);}
 				mav.addObject("blkd", block);
 				
-		}else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+				/*
+				 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+				 * }
+				 */
 		return mav; 
 	}
 	
 	@RequestMapping(value="/getInaugurationReportData", method = RequestMethod.POST)
 	public ModelAndView getInaugurationReportData(HttpServletRequest request, HttpServletResponse response)
 	{
-			session = request.getSession(true);
+		/* session = request.getSession(true); */
 			ModelAndView mav = new ModelAndView();
 			String userState= request.getParameter("state");
 			String district= request.getParameter("district");
@@ -973,7 +973,7 @@ public class WatershedYatraReportController {
 	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			}
 			
-			if(session!=null && session.getAttribute("loginID")!=null) {
+			/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 				
 				mav = new ModelAndView("WatershedYatra/watershedYatraReportInauguration");
 				mav.addObject("menu", menuController.getMenuUserId(request));
@@ -1002,10 +1002,10 @@ public class WatershedYatraReportController {
 					mav.addObject("toDateStr", toDateStr);
 					
 					
-			}else {
-				mav = new ModelAndView("login");
-				mav.addObject("login", new Login());
-			}
+					/*
+					 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+					 * }
+					 */
 			return mav; 
 	}
 	
@@ -1014,8 +1014,9 @@ public class WatershedYatraReportController {
 	@ResponseBody
 	public String downloadExcelInaugurationReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
-		
+		/*
+		 * session = request.getSession(true);
+		 */
 		String stName= request.getParameter("stName");
 		String distName= request.getParameter("distName");
 		String blkName= request.getParameter("blkName");
@@ -1732,15 +1733,15 @@ public class WatershedYatraReportController {
 	@RequestMapping(value="/getPreYatraPreparationReport", method = RequestMethod.GET)
 	public ModelAndView getPreYatraReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		/* session = request.getSession(true); */
 	//	String st_code=session.getAttribute("stateCode").toString();
 		ModelAndView mav = new ModelAndView();
 		String userState= request.getParameter("state");
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
-		if(session!=null && session.getAttribute("loginID")!=null) {
-			
+		/*if(session!=null && session.getAttribute("loginID")!=null) {
+			*/
 			mav = new ModelAndView("WatershedYatra/preYatraPreparationReport");
 			mav.addObject("menu", menuController.getMenuUserId(request));
 			
@@ -1763,17 +1764,17 @@ public class WatershedYatraReportController {
 				mav.addObject("gpList", gpList);}
 				mav.addObject("grampn", grampan);	
 			
-		}else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+				/*
+				 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+				 * }
+				 */
 		return mav; 
 	}
 	
 	@RequestMapping(value="/getPreYatraPreparationReportData", method = RequestMethod.POST)
 	public ModelAndView getPreYatraPreparationReportData(HttpServletRequest request, HttpServletResponse response)
 	{
-			session = request.getSession(true);
+		/* session = request.getSession(true); */
 		//	String st_code=session.getAttribute("stateCode").toString();
 			ModelAndView mav = new ModelAndView();
 			String userState= request.getParameter("state");
@@ -1784,9 +1785,9 @@ public class WatershedYatraReportController {
 			List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
 			
 			
-			if(session!=null && session.getAttribute("loginID")!=null) {
+			/*if(session!=null && session.getAttribute("loginID")!=null) {
 				
-				mav = new ModelAndView("WatershedYatra/preYatraPreparationReport");
+			*/	mav = new ModelAndView("WatershedYatra/preYatraPreparationReport");
 				mav.addObject("menu", menuController.getMenuUserId(request));
 				
 				list=ser.getPreYatraPreparationReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan));
@@ -1813,10 +1814,10 @@ public class WatershedYatraReportController {
 					mav.addObject("gpList", gpList);}
 					mav.addObject("grampn", grampan);	
 				
-			}else {
-				mav = new ModelAndView("login");
-				mav.addObject("login", new Login());
-			}
+					/*
+					 * }else { mav = new ModelAndView("login"); mav.addObject("login", new Login());
+					 * }
+					 */
 			return mav; 
 	}
 	

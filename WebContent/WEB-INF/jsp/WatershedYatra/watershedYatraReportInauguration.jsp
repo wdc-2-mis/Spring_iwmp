@@ -1,5 +1,14 @@
-<%@include file="/WEB-INF/jspf/header2.jspf"%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:choose>
+	<c:when test="${sessionScope.loginid eq null }">
+		<%@include file="/WEB-INF/jspf/header.jspf"%>
+	</c:when>
+	<c:otherwise>
+		<%@include file="/WEB-INF/jspf/header2.jspf"%>
+	</c:otherwise>
+</c:choose>
 
 <!DOCTYPE html>
 <html>
