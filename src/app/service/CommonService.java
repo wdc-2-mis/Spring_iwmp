@@ -53,7 +53,7 @@ public interface CommonService {
 	 
 	 Boolean authenticateUser(String url, HttpSession session, HttpServletRequest request);
 	 
-	 List<RoleMenuList> getPublicReport();	 
+	 List<RoleMenuList> getPublicReport(Integer roleId);	 
 	 
 	 public List<IwmpMPhyActivity> physicalActivityList();
 	 

@@ -15,6 +15,7 @@ import app.service.reports.WatershedYatraReportService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.WatershedYatraStatusBean;
 
 @Service("WatershedYatraReportService")
 public class WatershedYatraReportServiceImpl implements WatershedYatraReportService{
@@ -89,6 +90,14 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 	public List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district,
 			Integer block, Integer grampan) {
 		return dao.getPreYatraPreparationReportData(State, district, block, grampan);
+	}
+
+
+
+	@Override
+	public List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus() {
+		// TODO Auto-generated method stub
+		return dao.getStateWiseWatershedYatraStatus();
 	}
 
 }

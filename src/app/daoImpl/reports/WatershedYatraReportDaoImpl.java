@@ -3,10 +3,12 @@ package app.daoImpl.reports;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import app.bean.BaselineStateWiseAreaDetailBean;
 import app.dao.reports.WatershedYatraReportDao;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
@@ -22,6 +25,7 @@ import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
 import app.watershedyatra.bean.WatershedYatraBean;
+import app.watershedyatra.bean.WatershedYatraStatusBean;
 
 @Repository("WatershedYatraReportDao")
 public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
@@ -68,6 +72,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	@Value("${getInaugurationDatafromdate}") 
 	String getInaugurationDatafromdate;
 
+	@Value("${getStwiseWYRecords}") 
+	String getStwiseWYRecords;
+	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -341,6 +348,24 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 			ex.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus() {
+		List<WatershedYatraStatusBean> getDetails = new ArrayList<>();
+		String hql= getStwiseWYRecords;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraStatusBean.class));
+			getDetails = query.list();
+			session.getTransaction().commit();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return getDetails;
 	}
 
 }

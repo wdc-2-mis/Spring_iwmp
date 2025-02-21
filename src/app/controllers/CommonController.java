@@ -418,7 +418,7 @@ public class CommonController {
 
 	// Reports will return report page with data
 	@RequestMapping(value = "/reports", method = RequestMethod.GET)
-	public ModelAndView Reports(HttpServletRequest request, Locale locale) {
+	public ModelAndView Reports(HttpServletRequest request, @RequestParam(name = "roleId", required = false) Integer roleId, Locale locale) {
 
 		ModelAndView mav = new ModelAndView();
 
@@ -433,7 +433,7 @@ public class CommonController {
 		if (lang == "Hindi") {
 			list = commonService.getPublicHindiReport();
 		} else {
-			list = commonService.getPublicReport();
+			list = commonService.getPublicReport(roleId);
 		}
 
 		for (RoleMenuList bean : list) {
@@ -456,6 +456,7 @@ public class CommonController {
 
 		mav.addObject("dataList", dataList);
 		mav.addObject("dataListsize", dataList.size());
+		mav.addObject("roleId", roleId);
 		return mav;
 	}
 

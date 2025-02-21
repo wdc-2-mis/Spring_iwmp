@@ -107,9 +107,9 @@ public class CommonServiceImpl implements CommonService{
 		return commonDao.authenticateUser(url, session, request);
 	}
 	@Override
-	public List<RoleMenuList> getPublicReport() {
+	public List<RoleMenuList> getPublicReport(Integer roleId) {
 		// TODO Auto-generated method stub
-		return commonDao.getPublicReport();
+		return commonDao.getPublicReport(roleId);
 	}
 
 	@Override

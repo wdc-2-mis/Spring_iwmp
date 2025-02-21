@@ -13,8 +13,16 @@
 <div class="col">
 <section class="panel panel-primary">
   <header class="panel-heading">
-   <h3 class="panel-title"><center><spring:message code="label.report"/></center></h3>
+   <h3 class="panel-title">
+   <center>
+   <c:choose>
+            <c:when test="${roleId == 1}">MIS Report</c:when>
+            <c:otherwise>Watershed Yatra Report</c:otherwise>
+         </c:choose>
+   </center>
+   </h3>
   </header>
+  
   <div class="panel-body">
   
   </div>

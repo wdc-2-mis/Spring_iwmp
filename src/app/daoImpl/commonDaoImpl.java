@@ -432,7 +432,7 @@ public class commonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public List<RoleMenuList> getPublicReport() {
+	public List<RoleMenuList> getPublicReport(Integer roleId) {
 		// TODO Auto-generated method stub getAllMenuRole
 		List<RoleMenuList> result = new ArrayList<RoleMenuList>();
 		Session session = sessionFactory.openSession();
@@ -444,6 +444,7 @@ public class commonDaoImpl implements CommonDao {
 			Transaction tx = session.beginTransaction();
 			hql = getAllMenuRole;
 			query = session.createSQLQuery(hql);
+			query.setInteger("roleId", roleId);
 			query.setResultTransformer(Transformers.aliasToBean(RoleMenuList.class));
 			result = query.list();
 		} catch (HibernateException e) {

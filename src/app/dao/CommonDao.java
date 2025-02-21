@@ -52,7 +52,7 @@ public interface CommonDao {
 	Boolean updateGramPanchayatList(IwmpGramPanchayat gp);
 
 	Boolean authenticateUser(String url, HttpSession session, HttpServletRequest request);
-	List<RoleMenuList> getPublicReport();
+	List<RoleMenuList> getPublicReport(Integer roleId);
 	List<RoleMenuList> getPublicHindiReport();
 	public List<IwmpMPhyActivity> physicalActivityList();
 	
