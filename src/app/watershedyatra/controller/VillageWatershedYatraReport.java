@@ -60,7 +60,7 @@ import app.watershedyatra.service.VillageWatershedYatraReportService;
 public class VillageWatershedYatraReport {
 
 
-	HttpSession session;
+	HttpSession session; 
 	
 	@Autowired(required = true)
 	MenuController menuController;
@@ -82,15 +82,14 @@ public class VillageWatershedYatraReport {
 	@RequestMapping(value="/getWatershedYatraVillageReport", method = RequestMethod.GET)
 	public ModelAndView getWatershedYatraVillageReport(HttpServletRequest request, HttpServletResponse response)
 	{
-		session = request.getSession(true);
+		
 	//	String st_code=session.getAttribute("stateCode").toString();
 		ModelAndView mav = new ModelAndView();
 		String userState= request.getParameter("state");
 		String district= request.getParameter("district");
 		String block= request.getParameter("block");
 		String grampan= request.getParameter("grampan");
-		if(session!=null && session.getAttribute("loginID")!=null) 
-		{
+		
 			mav = new ModelAndView("WatershedYatra/wyVillageReport");
 			mav.addObject("menu", menuController.getMenuUserId(request));
 		
@@ -113,18 +112,14 @@ public class VillageWatershedYatraReport {
 				mav.addObject("gpList", gpList);}
 				mav.addObject("grampn", grampan);	
 			
-		}
-		else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
+		
 		return mav; 
 	}
 	
 	@RequestMapping(value="/showWatershedYatraVillageReport", method = RequestMethod.POST)
 	public ModelAndView showWatershedYatraVillageReport(HttpServletRequest request, HttpServletResponse response)
 	{
-			session = request.getSession(true);
+			
 		//	String st_code=session.getAttribute("stateCode").toString();
 			ModelAndView mav = new ModelAndView();
 			String userState= request.getParameter("state");
@@ -145,7 +140,6 @@ public class VillageWatershedYatraReport {
 	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
 	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			}
-			if(session!=null && session.getAttribute("loginID")!=null) {
 				
 				mav = new ModelAndView("WatershedYatra/wyVillageReport");
 				mav.addObject("menu", menuController.getMenuUserId(request));
@@ -177,10 +171,7 @@ public class VillageWatershedYatraReport {
 					mav.addObject("gpList", gpList);}
 					mav.addObject("grampn", grampan);	
 				
-			}else {
-				mav = new ModelAndView("login");
-				mav.addObject("login", new Login());
-			}
+			
 			return mav; 
 	}
 
