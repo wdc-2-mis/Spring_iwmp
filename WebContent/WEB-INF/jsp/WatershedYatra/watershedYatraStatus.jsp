@@ -6,6 +6,25 @@
 <html>
 <head>
 <title>Report - State wise Watershed Yatra Status</title>
+
+<script type="text/javascript">
+
+function downloadPDF(){
+	
+    document.getreport.action="downloadPDFWatershedYatraStatusReport";
+	document.getreport.method="post";
+	document.getreport.submit();
+}
+
+function exportExcel(){
+	
+    document.getreport.action="downloadExcelWatershedYatraStatusReport";
+	document.getreport.method="post";
+	document.getreport.submit();
+}
+
+</script>
+
 </head>
 
 <body>
@@ -15,8 +34,8 @@
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
 		<h5>Report - State wise Watershed Yatra Status</h5>
 	</div>
-	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()"	class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()"	class="btn btn-info">PDF</button> -->
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()"	class="btn btn-info">PDF</button>
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 
 <table id="tblReport" class="table">
@@ -60,8 +79,8 @@
 					<td class="text-right"><c:out value="${not empty project.activity_entered ? project.activity_entered : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.act_not_entered ? project.act_not_entered : 0}" /></td>
 					<td class="text-right"><c:out value="${project.inauguration_date}" /></td>
-					<td class="text-right"><c:out value="${not empty project.prabhatpheri ? project.prabhatpheri : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.gramsabha ? project.gramsabha : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.prabhatpheri ? project.prabhatpheri : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_arexp ? project.total_arexp : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_bhoomi_poojan ? project.total_bhoomi_poojan : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_lokarpan ? project.total_lokarpan : 0}" /></td>
