@@ -204,6 +204,18 @@ public class WatershedYatraBean {
     private String arExperiencephoto2_time;
     
     private String remarks;
+    private String yatra_date;
+    
+    private String photocheckar;
+    private String photocheckjal;
+    private String photocheckfilm;
+    private String photocheckquiz;
+    private String photocheckcul;
+    private String photocheckbhu;
+    private String photochecklok;
+    private String photochecksdn;
+    private String photocheckplt;
+    private String photocheckawd;
     
     
 	public String getRemarks() {
@@ -1199,12 +1211,80 @@ public class WatershedYatraBean {
 	public void setFemaleParticipants(int femaleParticipants) {
 		this.femaleParticipants = femaleParticipants;
 	}
-	 public Integer getManhour() {
+	public Integer getManhour() {
 			return manhour;
-		}
-		public void setManhour(Integer manhour) {
+	}
+	public void setManhour(Integer manhour) {
 			this.manhour = manhour;
-		}
+	}
+	public String getYatra_date() {
+		return yatra_date;
+	}
+	public void setYatra_date(String yatra_date) {
+		this.yatra_date = yatra_date;
+	}
+	public String getPhotocheckar() {
+		return photocheckar;
+	}
+	public void setPhotocheckar(String photocheckar) {
+		this.photocheckar = photocheckar;
+	}
+	public String getPhotocheckjal() {
+		return photocheckjal;
+	}
+	public void setPhotocheckjal(String photocheckjal) {
+		this.photocheckjal = photocheckjal;
+	}
+	public String getPhotocheckfilm() {
+		return photocheckfilm;
+	}
+	public void setPhotocheckfilm(String photocheckfilm) {
+		this.photocheckfilm = photocheckfilm;
+	}
+	public String getPhotocheckquiz() {
+		return photocheckquiz;
+	}
+	public void setPhotocheckquiz(String photocheckquiz) {
+		this.photocheckquiz = photocheckquiz;
+	}
+	public String getPhotocheckcul() {
+		return photocheckcul;
+	}
+	public void setPhotocheckcul(String photocheckcul) {
+		this.photocheckcul = photocheckcul;
+	}
+	public String getPhotocheckbhu() {
+		return photocheckbhu;
+	}
+	public void setPhotocheckbhu(String photocheckbhu) {
+		this.photocheckbhu = photocheckbhu;
+	}
+	public String getPhotochecklok() {
+		return photochecklok;
+	}
+	public void setPhotochecklok(String photochecklok) {
+		this.photochecklok = photochecklok;
+	}
+	public String getPhotochecksdn() {
+		return photochecksdn;
+	}
+	public void setPhotochecksdn(String photochecksdn) {
+		this.photochecksdn = photochecksdn;
+	}
+	public String getPhotocheckplt() {
+		return photocheckplt;
+	}
+	public void setPhotocheckplt(String photocheckplt) {
+		this.photocheckplt = photocheckplt;
+	}
+	public String getPhotocheckawd() {
+		return photocheckawd;
+	}
+	public void setPhotocheckawd(String photocheckawd) {
+		this.photocheckawd = photocheckawd;
+	}
+	
+	
 	
     
 }

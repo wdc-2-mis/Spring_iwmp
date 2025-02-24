@@ -218,4 +218,20 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		// TODO Auto-generated method stub
 		return dao.getWatershedYatraListcomplete(stcd);
 	}
+
+
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraEditList(Integer wcdid) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedYatraEditList( wcdid);
+	}
+
+
+
+	@Override
+	public String updateWatershedYatraAtVillage(WatershedYatraBean userfileup, HttpSession session) {
+		// TODO Auto-generated method stub
+		return dao.updateWatershedYatraAtVillage(userfileup, session);
+	}
 }

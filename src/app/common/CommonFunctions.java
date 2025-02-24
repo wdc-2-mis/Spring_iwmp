@@ -342,8 +342,8 @@ public class CommonFunctions {
 					//filePath="D:\\CircularMessageAlert\\";
 					String fileName = mfile.getOriginalFilename();
 					
-					MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
-				    String mimeType = fileTypeMap.getContentType(fileName);
+				//	MimetypesFileTypeMap fileTypeMap = new MimetypesFileTypeMap();
+				 //   String mimeType = fileTypeMap.getContentType(fileName);
 				    
 				  //  application/octet-stream
 					

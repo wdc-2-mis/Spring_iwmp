@@ -40,6 +40,8 @@ public interface WatershedYatraService {
 
 	List<WatershedYatraBean> getWatershedYatraList(Integer stcd);
 	
+	List<WatershedYatraBean> getWatershedYatraEditList(Integer wcdid);
+	
 	String getExistingWatershedYatraVillageCodes(Integer villageCode);
 
 	List<String> getImagesWatershedYatraId(Integer watershedYatraId);
@@ -62,4 +64,6 @@ public interface WatershedYatraService {
 	String completeWatershedYatraDetails(List<Integer>  assetid, String userid);
 
 	List<WatershedYatraBean> getWatershedYatraListcomplete(Integer stcd);
+	
+	public String updateWatershedYatraAtVillage(WatershedYatraBean userfileup, HttpSession session);
 }

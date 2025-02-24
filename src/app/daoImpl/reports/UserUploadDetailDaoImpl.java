@@ -179,7 +179,7 @@ public class UserUploadDetailDaoImpl implements UserUploadDetailDao{
 			    query.setDate("date_of_publish", d);
 			    query.setString("file_extension",ext);
 			    query.setString("file_name",fname+"."+ext);
-			    
+			       
 			    if(userfileup.getNew_File()==null)
 			    	query.setBoolean("is_new", false);
 			    else
@@ -198,6 +198,7 @@ public class UserUploadDetailDaoImpl implements UserUploadDetailDao{
 			    query.setString("updated_by",session.getAttribute("loginID").toString());
 			    query.setDate("updated_date", d);
 			    query.setInteger("upload_category_id", Integer.parseInt(userfileup.getCategory_type()));
+			    query.setString("lang", null);
 				value=query.executeUpdate();
 				if(value>0) 
 				{
