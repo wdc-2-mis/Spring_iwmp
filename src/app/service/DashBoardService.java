@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import app.bean.DolrSupportBean;
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 
 @Service("dashBoardService")
@@ -78,4 +79,5 @@ public interface DashBoardService {
 	List<TargetAchDashboardBean> getDistrictNameData(Integer dcode);
 	List<TargetAchDashboardBean> getStateNameData(Integer scode);
 	List<TargetAchDashboardBean> getStateProgressiveData(Integer headcode, Integer scode);
+	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData();
 	}

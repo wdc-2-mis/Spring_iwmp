@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 
 public interface DashBoardDao {
@@ -136,4 +138,6 @@ public interface DashBoardDao {
 	List<TargetAchDashboardBean> getStateNameData(Integer scode);
 
 	List<TargetAchDashboardBean> getStateProgressiveData(Integer headcode, Integer scode);
+	
+	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData();
 }

@@ -4,11 +4,13 @@ package app.serviceImpl;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 import app.dao.DashBoardDao;
 import app.service.DashBoardService;
@@ -364,6 +366,12 @@ public class DashBoardServiceImpl implements DashBoardService{
 	public List<TargetAchDashboardBean> getStateProgressiveData(Integer headcode, Integer scode) {
 		// TODO Auto-generated method stub
 		return dashBoardDao.getStateProgressiveData(headcode, scode);
+	}
+
+	@Override
+	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getWatrshdInagrtnPreYtraData();
 	}
 	
 	

@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 import app.model.UserReg;
 import app.model.WdcpmksyMQuadIndicators;
@@ -286,6 +288,21 @@ public class DashboardController {
        	proj = dashBoardService.getdashboardtarget(id);
 		System.out.println("proj data:" +proj);
 		return proj;
+	}
+	
+	@RequestMapping(value = "/watershedDashBoard", method = RequestMethod.GET)
+	public ModelAndView watershedDashBoard(HttpServletRequest request, HttpServletResponse response, Model model) {
+		ModelAndView mav = new ModelAndView();
+		try {
+			mav = new ModelAndView("WatershedYatra/watershedDashBoard");
+		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
+		map = dashBoardService.getWatrshdInagrtnPreYtraData();
+		model.addAttribute("map",map);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
 	}
 
 

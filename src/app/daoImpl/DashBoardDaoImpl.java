@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -20,6 +21,7 @@ import app.bean.AddOutcomeParaBean;
 import app.bean.DolrSupportBean;
 import app.bean.ProjectLocationBean;
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 import app.dao.DashBoardDao;
 import app.model.WdcpmksyMQuadIndicators;
@@ -255,6 +257,15 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	
 	@Value("${getSName}")
 	String getSName;
+	
+	@Value("${getWatershedYatraInaugurationData}")
+	String getWatershedYatraInaugurationData;
+	
+	@Value("${getWatershedYatraData}")
+	String getWatershedYatraData;
+	
+	@Value("${getPreYatraData}")
+	String getPreYatraData;
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -2248,6 +2259,47 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			ex.printStackTrace();
 		}
         return finddistprogdetails;
+	}
+
+	@Override
+	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData() {
+		String inghql=getWatershedYatraInaugurationData;
+		String wtrhql=getWatershedYatraData;
+		String prehql=getPreYatraData;
+		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+			session.beginTransaction();
+			query = session.createSQLQuery(inghql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("ing",list);
+			
+			list = new ArrayList<>();
+			query = session.createSQLQuery(wtrhql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("wtr",list);
+			
+			list = new ArrayList<>();
+			query = session.createSQLQuery(prehql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("pre",list);
+			session.getTransaction().commit();
+			
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return map;
 	}
 
 	
