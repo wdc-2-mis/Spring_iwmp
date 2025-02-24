@@ -529,7 +529,15 @@ function showPrevImage() {
 		document.getElementById('largeImage').src = prevImageSrc;
 	}
 }
-	
+
+function updateData(inaugurationId) 
+{
+	  document.getElementById('inaugurationId').value = inaugurationId;
+	  
+	  document.inauguration.action = "editInaugurationDetails";
+	  document.inauguration.method = "post";
+	  document.inauguration.submit();
+}
 	
 </script>
 
@@ -706,6 +714,9 @@ display: none; /* Hidden by default */
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
 		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="saveInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
 			  <hr/>
+			  
+		<input type="hidden" name="inaugurationId" id="inaugurationId" />
+			  
 			  <div class="row">
     			<div class="form-group col-3">
     			
@@ -1138,6 +1149,7 @@ display: none; /* Hidden by default */
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
+								<th rowspan="3">Action</th>
 								<th rowspan="3">S.No. </th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -1194,6 +1206,8 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${compdataList}" var="data" varStatus="count">
  							<tr>
+ 							<td><button class="btn btn-warning btn-sm" onclick="updateData(${data.inauguaration_id})" >Edit </button></td>
+<%-- 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  --%>
 								<td><c:out value='${count.count}' /> </td>
 								<td> <c:out value="${data.date}" /></td>
 <%--  								<c:choose> --%>

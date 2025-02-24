@@ -15,7 +15,8 @@ public interface InaugurationDao {
 	String getExistingBlockInaguraCodes(Integer bCode);
 	String deleteInaugurationDetails(List<Integer> assetid, String userid);
 	String completeInaugurationDetails(List<Integer> assetid, String userid);
-	
+	public List<InaugurationBean> editInaugurationDetails(Integer inagur);
+	public String updateInaugurationDetails(InaugurationBean userfileup, HttpSession session);
 	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd);
 	
 }

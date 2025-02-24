@@ -18,5 +18,10 @@ public interface InaugurationService {
 	
 	String completeInaugurationDetails(List<Integer> assetid, String userid);
 	
+	public List<InaugurationBean> editInaugurationDetails(Integer inagur);
+	
+	public String updateInaugurationDetails(InaugurationBean userfileup, HttpSession session);
+	
 	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd);
+	
 }

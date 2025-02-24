@@ -1,9 +1,6 @@
 package app.watershedyatra.bean;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -126,7 +123,40 @@ public class InaugurationBean {
     private String blockname;
     private Integer image_count;
     private String remarks;
+    private String inauguaration_date;
+    private String van_flag_path1;
+    private String van_flag_path2;
+    private String theme_song_path1;
+    private String theme_song_path2;
+    private String bhoomi_poojan_path1;
+    private String bhoomi_poojan_path2;
+    private String lokarpan_path1;
+    private String lokarpan_path2;
+    private String shramdaan_path1;
+    private String shramdaan_path2;
+    private String plantation_path1;
+    private String plantation_path2;
+    private String award_distribution_path1;
+    private String award_distribution_path2;
+    private String dept_stalls_path1;
+    private String dept_stalls_path2;
+    private String shg_fpo_path1;
+    private String shg_fpo_path2;
+    private String lakhpati_didi_path1;
+    private String lakhpati_didi_path2;
+    private String photocheck;
+    private Integer inaugurationId;
     
+    private String flagOffCheckbox;
+    private String themeSongCheckbox;
+    private String bhoomiPoojanCheckbox;
+    private String lokarpanCheckbox;
+    private String shramdaanCheckbox;
+    private String plantationCheckbox;
+    private String awardDistributionCheckbox;
+    private String noOfStallsDptCheckbox;
+    private String noOfStallsshgCheckbox;
+    private String lakhpatiDidiCheckbox;
     
 	public Integer getDistrict() {
 		return district;
@@ -829,6 +859,204 @@ public class InaugurationBean {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getInauguaration_date() {
+		return inauguaration_date;
+	}
+	public void setInauguaration_date(String inauguaration_date) {
+		this.inauguaration_date = inauguaration_date;
+	}
+	public String getVan_flag_path1() {
+		return van_flag_path1;
+	}
+	public void setVan_flag_path1(String van_flag_path1) {
+		this.van_flag_path1 = van_flag_path1;
+	}
+	public String getVan_flag_path2() {
+		return van_flag_path2;
+	}
+	public void setVan_flag_path2(String van_flag_path2) {
+		this.van_flag_path2 = van_flag_path2;
+	}
+	public String getTheme_song_path1() {
+		return theme_song_path1;
+	}
+	public void setTheme_song_path1(String theme_song_path1) {
+		this.theme_song_path1 = theme_song_path1;
+	}
+	public String getTheme_song_path2() {
+		return theme_song_path2;
+	}
+	public void setTheme_song_path2(String theme_song_path2) {
+		this.theme_song_path2 = theme_song_path2;
+	}
+	public String getBhoomi_poojan_path1() {
+		return bhoomi_poojan_path1;
+	}
+	public void setBhoomi_poojan_path1(String bhoomi_poojan_path1) {
+		this.bhoomi_poojan_path1 = bhoomi_poojan_path1;
+	}
+	public String getBhoomi_poojan_path2() {
+		return bhoomi_poojan_path2;
+	}
+	public void setBhoomi_poojan_path2(String bhoomi_poojan_path2) {
+		this.bhoomi_poojan_path2 = bhoomi_poojan_path2;
+	}
+	public String getLokarpan_path1() {
+		return lokarpan_path1;
+	}
+	public void setLokarpan_path1(String lokarpan_path1) {
+		this.lokarpan_path1 = lokarpan_path1;
+	}
+	public String getLokarpan_path2() {
+		return lokarpan_path2;
+	}
+	public void setLokarpan_path2(String lokarpan_path2) {
+		this.lokarpan_path2 = lokarpan_path2;
+	}
+	public String getShramdaan_path1() {
+		return shramdaan_path1;
+	}
+	public void setShramdaan_path1(String shramdaan_path1) {
+		this.shramdaan_path1 = shramdaan_path1;
+	}
+	public String getShramdaan_path2() {
+		return shramdaan_path2;
+	}
+	public void setShramdaan_path2(String shramdaan_path2) {
+		this.shramdaan_path2 = shramdaan_path2;
+	}
+	public String getPlantation_path1() {
+		return plantation_path1;
+	}
+	public void setPlantation_path1(String plantation_path1) {
+		this.plantation_path1 = plantation_path1;
+	}
+	public String getPlantation_path2() {
+		return plantation_path2;
+	}
+	public void setPlantation_path2(String plantation_path2) {
+		this.plantation_path2 = plantation_path2;
+	}
+	public String getAward_distribution_path1() {
+		return award_distribution_path1;
+	}
+	public void setAward_distribution_path1(String award_distribution_path1) {
+		this.award_distribution_path1 = award_distribution_path1;
+	}
+	public String getAward_distribution_path2() {
+		return award_distribution_path2;
+	}
+	public void setAward_distribution_path2(String award_distribution_path2) {
+		this.award_distribution_path2 = award_distribution_path2;
+	}
+	public String getDept_stalls_path1() {
+		return dept_stalls_path1;
+	}
+	public void setDept_stalls_path1(String dept_stalls_path1) {
+		this.dept_stalls_path1 = dept_stalls_path1;
+	}
+	public String getDept_stalls_path2() {
+		return dept_stalls_path2;
+	}
+	public void setDept_stalls_path2(String dept_stalls_path2) {
+		this.dept_stalls_path2 = dept_stalls_path2;
+	}
+	public String getShg_fpo_path1() {
+		return shg_fpo_path1;
+	}
+	public void setShg_fpo_path1(String shg_fpo_path1) {
+		this.shg_fpo_path1 = shg_fpo_path1;
+	}
+	public String getShg_fpo_path2() {
+		return shg_fpo_path2;
+	}
+	public void setShg_fpo_path2(String shg_fpo_path2) {
+		this.shg_fpo_path2 = shg_fpo_path2;
+	}
+	public String getLakhpati_didi_path1() {
+		return lakhpati_didi_path1;
+	}
+	public void setLakhpati_didi_path1(String lakhpati_didi_path1) {
+		this.lakhpati_didi_path1 = lakhpati_didi_path1;
+	}
+	public String getLakhpati_didi_path2() {
+		return lakhpati_didi_path2;
+	}
+	public void setLakhpati_didi_path2(String lakhpati_didi_path2) {
+		this.lakhpati_didi_path2 = lakhpati_didi_path2;
+	}
+	public String getPhotocheck() {
+		return photocheck;
+	}
+	public void setPhotocheck(String photocheck) {
+		this.photocheck = photocheck;
+	}
+	public Integer getInaugurationId() {
+		return inaugurationId;
+	}
+	public void setInaugurationId(Integer inaugurationId) {
+		this.inaugurationId = inaugurationId;
+	}
+	public String getFlagOffCheckbox() {
+		return flagOffCheckbox;
+	}
+	public void setFlagOffCheckbox(String flagOffCheckbox) {
+		this.flagOffCheckbox = flagOffCheckbox;
+	}
+	public String getThemeSongCheckbox() {
+		return themeSongCheckbox;
+	}
+	public void setThemeSongCheckbox(String themeSongCheckbox) {
+		this.themeSongCheckbox = themeSongCheckbox;
+	}
+	public String getBhoomiPoojanCheckbox() {
+		return bhoomiPoojanCheckbox;
+	}
+	public void setBhoomiPoojanCheckbox(String bhoomiPoojanCheckbox) {
+		this.bhoomiPoojanCheckbox = bhoomiPoojanCheckbox;
+	}
+	public String getLokarpanCheckbox() {
+		return lokarpanCheckbox;
+	}
+	public void setLokarpanCheckbox(String lokarpanCheckbox) {
+		this.lokarpanCheckbox = lokarpanCheckbox;
+	}
+	public String getShramdaanCheckbox() {
+		return shramdaanCheckbox;
+	}
+	public void setShramdaanCheckbox(String shramdaanCheckbox) {
+		this.shramdaanCheckbox = shramdaanCheckbox;
+	}
+	public String getPlantationCheckbox() {
+		return plantationCheckbox;
+	}
+	public void setPlantationCheckbox(String plantationCheckbox) {
+		this.plantationCheckbox = plantationCheckbox;
+	}
+	public String getAwardDistributionCheckbox() {
+		return awardDistributionCheckbox;
+	}
+	public void setAwardDistributionCheckbox(String awardDistributionCheckbox) {
+		this.awardDistributionCheckbox = awardDistributionCheckbox;
+	}
+	public String getNoOfStallsDptCheckbox() {
+		return noOfStallsDptCheckbox;
+	}
+	public void setNoOfStallsDptCheckbox(String noOfStallsDptCheckbox) {
+		this.noOfStallsDptCheckbox = noOfStallsDptCheckbox;
+	}
+	public String getNoOfStallsshgCheckbox() {
+		return noOfStallsshgCheckbox;
+	}
+	public void setNoOfStallsshgCheckbox(String noOfStallsshgCheckbox) {
+		this.noOfStallsshgCheckbox = noOfStallsshgCheckbox;
+	}
+	public String getLakhpatiDidiCheckbox() {
+		return lakhpatiDidiCheckbox;
+	}
+	public void setLakhpatiDidiCheckbox(String lakhpatiDidiCheckbox) {
+		this.lakhpatiDidiCheckbox = lakhpatiDidiCheckbox;
 	}
     
 	

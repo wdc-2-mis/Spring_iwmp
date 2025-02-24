@@ -49,6 +49,18 @@ public class InaugurationServiceImpl implements InaugurationService {
 	public List<InaugurationBean> getInaugurationDetailsComp(Integer stcd) {
 		return dao.getInaugurationDetailsComp(stcd);
 	}
+
+	@Override
+	public List<InaugurationBean> editInaugurationDetails(Integer inagur) {
+		return dao.editInaugurationDetails(inagur);
+	}
+
+	@Override
+	public String updateInaugurationDetails(InaugurationBean userfileup, HttpSession session) {
+		return dao.updateInaugurationDetails(userfileup, session);
+	}
+
+	
 	
 
 }

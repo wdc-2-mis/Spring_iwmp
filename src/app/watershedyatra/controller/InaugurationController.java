@@ -223,5 +223,122 @@ public class InaugurationController extends HttpServlet {
 		}
 		return res; 
 	}
+	
+	@RequestMapping(value="/editInaugurationDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView editInaugurationDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") InaugurationBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("WatershedYatra/updateInauguration");
+
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				
+				String inaugId= request.getParameter("inaugurationId");
+				String state= request.getParameter("stName");
+				String district= request.getParameter("distName");
+				String block= request.getParameter("blkName");
+				String date= request.getParameter("date");
+				String location= request.getParameter("location");
+				
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				List<InaugurationBean> edit = new ArrayList<InaugurationBean>();
+				List<InaugurationBean> compdata = new ArrayList<InaugurationBean>();
+
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+
+				mav.addObject("userType", userType);
+				mav.addObject("stateName", stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				
+				edit=iSer.editInaugurationDetails(Integer.parseInt(inaugId));
+				mav.addObject("dataList",edit);
+				mav.addObject("dataListSize",edit.size());
+				
+				
+
+			}
+ 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/updateInaugurationDetails", method = RequestMethod.POST)
+	public ModelAndView updateInaugurationDetails(HttpServletRequest request, HttpServletResponse response,RedirectAttributes redirectAttributes,
+			@ModelAttribute("useruploadign") InaugurationBean userfileup) throws Exception {
+
+		session = request.getSession(true);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String res=null;
+		try {
+		if (session != null && session.getAttribute("loginID") != null) 
+		{
+			Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+			Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+			String userType = session.getAttribute("userType").toString();
+			mav = new ModelAndView("WatershedYatra/inauguration");
+			
+			List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+			listm=profileService.getMapstate(regId, userType);
+			String distName = "";
+			String stateName = "";
+			int stCode = 0;
+			int distCode = 0;
+			for(ProfileBean bean : listm) {
+				distName =bean.getDistrictname();
+				distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+				stateName = bean.getStatename();
+				stCode = bean.getStatecode()==null?0:bean.getStatecode();
+			}
+			mav.addObject("userType",userType);
+			mav.addObject("distName",distName);
+			mav.addObject("stateName",stateName);
+			mav.addObject("distList", ser.getDistrictList(stcd));
+			
+			
+			res= iSer.updateInaugurationDetails(userfileup, session);
+			if (res.equals("success")) {
+				redirectAttributes.addFlashAttribute("result", "Data Update Successfully.");
+			} 
+			else {
+				redirectAttributes.addFlashAttribute("result1", "Data not Updated.");
+			}
+			return new ModelAndView("redirect:/inaugurationLocation");
+		} 
+		else {
+			return new ModelAndView("redirect:/login");
+
+		}	
+		
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 }
