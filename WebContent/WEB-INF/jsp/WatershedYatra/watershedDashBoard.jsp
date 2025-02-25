@@ -17,7 +17,7 @@
 	background-color: #FAF9F6;
 	margin: 10px;
 	padding: 10px;
-	border: 3px solid #ddd;
+	border: 1px solid gray;
 	border-radius: 10px;
 	/* 	width: 200px; */
 	/* 	height: 130px; */
@@ -51,10 +51,10 @@
 .field-title {
 	position: relative;
 	margin-left: 10px;
-    padding-left: 20px; /* Adjust padding to create space for the logo */
-    padding-right: 20px;
+    padding-left: 20px; /* Adjust padding to create space for the logo */ 
+/*     padding-right: 20px; */
 /* 	font-weight: bold; */
- 	text-align: center; 
+/*  	text-align: center;  */
 }
 
 .field-title::before {
