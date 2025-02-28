@@ -143,6 +143,18 @@ public class PreYatraPrepController {
         return ser.checkVillageStatus(vCode, preyatraType);
     }
     
+    @RequestMapping(value = "/updatePreYatraPreparation", method = RequestMethod.POST)
+    @ResponseBody
+    public String updatePreYatraPreparation(@RequestParam("id") Integer prepid, @RequestParam("noOfParticipant") Integer noOfParticipant) {
+        try {
+			ser.updatePreYatraPrep(prepid, noOfParticipant);
+            return "Record Updated successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error in updating record";
+        }
+    }
+    
     @RequestMapping(value = "/deletePreYatraPreparation", method = RequestMethod.POST)
     @ResponseBody
     public String deletePreYatraPreparation(@RequestParam("id") Integer prepid, @RequestParam("photo1") String photo1, @RequestParam("photo2") String photo2) {

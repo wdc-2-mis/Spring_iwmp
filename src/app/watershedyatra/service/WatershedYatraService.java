@@ -66,4 +66,6 @@ public interface WatershedYatraService {
 	List<WatershedYatraBean> getWatershedYatraListcomplete(Integer stcd);
 	
 	public String updateWatershedYatraAtVillage(WatershedYatraBean userfileup, HttpSession session);
+
+	void updatePreYatraPrep(Integer prepid, Integer noOfParticipant);
 }

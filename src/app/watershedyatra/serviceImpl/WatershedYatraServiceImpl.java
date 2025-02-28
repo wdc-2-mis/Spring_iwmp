@@ -234,4 +234,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		// TODO Auto-generated method stub
 		return dao.updateWatershedYatraAtVillage(userfileup, session);
 	}
+
+
+
+	@Override
+	public void updatePreYatraPrep(Integer prepid, Integer noOfParticipant) {
+		 dao.updatePreYatraPrep(prepid, noOfParticipant);;
+		
+	}
 }

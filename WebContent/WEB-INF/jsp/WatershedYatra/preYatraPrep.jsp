@@ -99,6 +99,12 @@ if ($date === '' || typeof $date === 'undefined') {
 	allValid = false;
 	return false;
 }
+if ($gramsabha_participants === '' || typeof $gramsabha_participants === 'undefined') {
+	alert('Please enter the Total Number of Participants');
+	$('#gramsabha_participants').focus();
+	allValid = false;
+	return false;
+}
 if ($gramphoto1 === '' || typeof $gramphoto1 === 'undefined') {
 	alert('Please upload the photo of Gram Sabha Photo1');
 	//$('#arExperiencephoto2').focus();
@@ -113,12 +119,7 @@ if ($gramphoto2 === '' || typeof $gramphoto2 === 'undefined') {
 	allValid = false;
 	return false;
 }
-if ($gramsabha_participants === '' || typeof $gramsabha_participants === 'undefined') {
-	alert('Please enter the Total Number of Participants');
-	$('#gramsabha_participants').focus();
-	allValid = false;
-	return false;
-}
+
 
 
 
@@ -152,6 +153,12 @@ if ($date1 === '' || typeof $date1 === 'undefined') {
 	allValid = false;
 	return false;
 }
+if ($prabhatpheri_participants === '' || typeof $prabhatpheri_participants === 'undefined') {
+	alert('Please enter the Total Number of Participants');
+	$('#prabhatpheri_participants').focus();
+	allValid = false;
+	return false;
+}
 if ($pheriphoto1 === '' || typeof $pheriphoto1 === 'undefined') {
 	alert('Please upload the photo of Prabhat Pheri Photo1');
 	//$('#arExperiencephoto2').focus();
@@ -166,12 +173,7 @@ if ($pheriphoto2 === '' || typeof $pheriphoto2 === 'undefined') {
 	allValid = false;
 	return false;
 }
-if ($prabhatpheri_participants === '' || typeof $prabhatpheri_participants === 'undefined') {
-	alert('Please enter the Total Number of Participants');
-	$('#prabhatpheri_participants').focus();
-	allValid = false;
-	return false;
-}
+
 
 if (allValid) {
 	if(confirm("Do you want to save Pre Yatra Preparation?")) {
@@ -241,7 +243,10 @@ if (allValid) {
                     <input type="date" name="date" id="date" class="form-control" required/>
                      </div>
 	    			
-
+				<div class="form-group col-3">
+               <label for="gramsabha_participants"><b>Total No. of Participants:</b> </label>
+               <input type="text" class="form-control activity" name="gramsabha_participants" id="gramsabha_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
+               </div>
 
                 <div class="form-group col-3">
                   <label for="photo1"><b>Upload Photo 1:</b> </label>
@@ -258,10 +263,7 @@ if (allValid) {
                 <input type="hidden" id="gramphoto2_lng" name="gramphoto2_lng">
                 <input type="hidden" id="gramphoto2_time" name="gramphoto2_time">
                </div>
-               <div class="form-group col-3">
-               <label for="gramsabha_participants"><b>Total No. of Participants:</b> </label>
-               <input type="text" class="form-control activity" name="gramsabha_participants" id="gramsabha_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
-               </div>
+               
 
 	    		</div>
 	    		</div>
@@ -316,6 +318,10 @@ if (allValid) {
                 <input type="date" name="date1" id="date1" class="form-control" required/>
                 </div>
 	    		
+	    		<div class="form-group col-3">
+               <label for="prabhatpheri_participants"><b>Total No. of Participants:</b> </label>
+               <input type="text" class="form-control activity" name="prabhatpheri_participants" id="prabhatpheri_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
+               </div>
 	    		
 	    		<div class="form-group col-3">
                   <label for="photo1"><b>Upload Photo 1:</b> </label>
@@ -332,10 +338,7 @@ if (allValid) {
                 <input type="hidden" id="pheriphoto2_lng" name="pheriphoto2_lng">
                 <input type="hidden" id="pheriphoto2_time" name="pheriphoto2_time">
                </div>
-               <div class="form-group col-3">
-               <label for="prabhatpheri_participants"><b>Total No. of Participants:</b> </label>
-               <input type="text" class="form-control activity" name="prabhatpheri_participants" id="prabhatpheri_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
-               </div>
+               
                <hr/>
                
                
@@ -359,17 +362,18 @@ if (allValid) {
    <thead>
     <tr>
         <th rowspan="2">S.No<input type="checkbox" id="chkSelectAll" name="chkSelectAll" /></th>
+        <th colspan="2" rowspan="2">Action</th>
         <th rowspan="2">District</th>
         <th rowspan="2">Block</th>
         <th rowspan="2">Gram Panchayat</th>
         <th rowspan="2">Village</th>
         <th rowspan="2">Activity Type</th>
         <th rowspan="2">Entry Date</th>
+        <th rowspan="2">Total No. of Participants</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>
-        <th rowspan="2">Total No. of Participants</th>
         <th rowspan="2">Remarks</th>
-        <th colspan="2" rowspan="2">Action</th>
+        
         
     </tr>
     <tr>
@@ -389,12 +393,15 @@ if (allValid) {
                 <tr>
                     <td>${loop.count}&nbsp;<input type="checkbox" class="chkIndividual" id="${record.prep_id}"  name="${record.prep_id}" value="${record.prep_id}"
                     data-photo1="${record.photo1}" data-photo2="${record.photo2}"/></td>  <%-- Correct serial number --%>
+                    <td><button class="btn btn-warning btn-sm" onclick="editRecord(${record.prep_id})"> Edit </button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id}, '${record.photo1}', '${record.photo2}')"> Delete </button></td>
                     <td>${record.districtname}</td>
                     <td>${record.blockname}</td>
                     <td>${record.gramname}</td>
                     <td>${record.villagename}</td>
                     <td>${record.yatratype}</td>
                     <td>${record.entrydate}</td>
+                    <td>${record.participants}</td>
                     
                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo1}')">View</button></td>
                     <td>${record.photo1long}</td>
@@ -404,10 +411,8 @@ if (allValid) {
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
-                    <td>${record.participants}</td>
                     <td>${record.remarks}</td>
-                    <td><button class="btn btn-warning btn-sm" onclick="editRecord(${record.prep_id})"> Edit </button></td>
-                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id}, '${record.photo1}', '${record.photo2}')"> Delete </button></td>
+                    
                 </tr>
             </c:forEach>
         </c:when>
@@ -439,15 +444,16 @@ if (allValid) {
    <thead>
     <tr>
         <th rowspan="2">S.No</th>
+        <th rowspan="2">Action</th>
         <th rowspan="2">District</th>
         <th rowspan="2">Block</th>
         <th rowspan="2">Gram Panchayat</th>
         <th rowspan="2">Village</th>
         <th rowspan="2">Activity Type</th>
         <th rowspan="2">Entry Date</th>
+        <th rowspan="2">Total No. of Participants</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>
-        <th rowspan="2">Total No. of Participants</th>
         <th rowspan="2">Remarks</th>
         
     </tr>
@@ -467,12 +473,14 @@ if (allValid) {
             <c:forEach var="comprecords" items="${comprecords}" varStatus="loop">
                 <tr>
                     <td>${loop.count}</td>  <%-- Correct serial number --%>
+                    <td><button class="btn btn-warning btn-sm" onclick="editCRecord(${comprecords.prep_id})"> Edit </button></td>
                     <td>${comprecords.districtname}</td>
                     <td>${comprecords.blockname}</td>
                     <td>${comprecords.gramname}</td>
                     <td>${comprecords.villagename}</td>
                     <td>${comprecords.yatratype}</td>
                     <td>${comprecords.entrydate}</td>
+                    <td>${comprecords.participants}</td>
                     
                     <td> <button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${comprecords.photo1}')">View</button></td>
                     <td>${comprecords.photo1long}</td>
@@ -482,7 +490,6 @@ if (allValid) {
                     <td>${comprecords.photo2long}</td>
                     <td>${comprecords.photo2lang}</td>
                     <td>${comprecords.photo2time}</td>
-                    <td>${comprecords.participants}</td>
                     <td>${comprecords.remarks}</td>
                     
                 </tr>

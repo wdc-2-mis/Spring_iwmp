@@ -2650,15 +2650,6 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 				sess.getTransaction().commit();
 				
 				
-				
-			
-			
-			
-			
-			
-			
-			
-				
 		}
 		catch(Exception ex) 
 		{
@@ -2672,5 +2663,45 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		
 		return res;
+	}
+
+	@Override
+	public void updatePreYatraPrep(Integer prepid, Integer noOfParticipant) {
+		Session session = sessionFactory.getCurrentSession();
+	    Transaction transaction = null;
+	    
+	    try {
+	        transaction = session.beginTransaction();
+	        
+	        String activityType = (String) session.createSQLQuery(
+	                "SELECT preyatra_type FROM pre_yatra_preparation WHERE prep_id = :prepid")
+	                .setParameter("prepid", prepid)
+	                .uniqueResult();
+	        
+	        if (activityType != null) {
+	            switch (activityType.toLowerCase()) {
+	                case "gramsabha":
+	                    session.createSQLQuery("update pre_yatra_gramsabha set gramsabha_participants = :noOfParticipant where prep_id = :prepid")
+	                            .setParameter("prepid", prepid)
+	                            .setParameter("noOfParticipant", noOfParticipant)
+	                            .executeUpdate();
+	                    break;
+	                case "prabhatpheri":
+	                    session.createSQLQuery("update pre_yatra_prabhatpheri set prabhatpheri_participants = :noOfParticipant where prep_id = :prepid")
+	                            .setParameter("prepid", prepid)
+	                            .setParameter("noOfParticipant", noOfParticipant)
+	                            .executeUpdate();
+	                    break;
+	            }
+	        }
+	        
+	        transaction.commit();
+
+	       
+	    } catch (Exception e) {
+	        if (transaction != null) transaction.rollback();
+	        throw e; // Or log the exception properly
+	    }
+		
 	}
 }

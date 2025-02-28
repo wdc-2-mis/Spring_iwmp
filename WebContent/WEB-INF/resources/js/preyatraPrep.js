@@ -321,15 +321,12 @@ $(document).on('click', '#completePreYatra', function(e){
     });
 
 function editRecord(prep_id) {
-    // Find the row containing the record
     var row = document.getElementById(prep_id).parentNode.parentNode;
-
-    // Enable the "Total No. of Participants" text box
-    var participantsCell = row.cells[15]; // Adjust the index if needed
+    var participantsCell = row.cells[9]; // Adjust the index if needed
     participantsCell.innerHTML = '<input type="text" value="' + participantsCell.innerText + '" />';
 
     // Change "Edit" button to "Update"
-    var editButton = row.cells[17].getElementsByTagName('button')[0]; // Adjust the index if needed
+    var editButton = row.cells[1].getElementsByTagName('button')[0]; // Adjust the index if needed
     editButton.innerHTML = 'Update';
     editButton.onclick = function() {
         saveRecord(prep_id);
@@ -338,18 +335,76 @@ function editRecord(prep_id) {
 
 function saveRecord(prep_id) {
     var row = document.getElementById(prep_id).parentNode.parentNode;
-    var participantsCell = row.cells[15]; // Adjust the index if needed
+    var participantsCell = row.cells[9]; // Adjust the index if needed
     var newParticipantsValue = participantsCell.getElementsByTagName('input')[0].value;
-    alert(newParticipantsValue);
-    
     participantsCell.innerHTML = newParticipantsValue;
 
+     var updateButton = row.cells[1].getElementsByTagName('button')[0];
+     // Adjust the index if needed
     
-    var updateButton = row.cells[17].getElementsByTagName('button')[0]; // Adjust the index if needed
-    updateButton.innerHTML = 'Edit';
-    updateButton.onclick = function() {
-        updateRecord(prep_id);
-    };
+    if (confirm("Are you sure you want to update this record?")) {
+        $.ajax({
+            type: "POST",
+            url: "updatePreYatraPreparation", 
+            data: {id: prep_id, noOfParticipant: newParticipantsValue},
+            success: function(response) {
+                alert(response);
+             updateButton.innerHTML = 'Edit';  
+            },
+            error: function(xhr, status, error) {
+                alert("Error updating record: " + error);
+                updateButton.innerHTML = 'Edit';  
+            }
+        });
+    }
 
-    
+
+}
+
+function editCRecord(prep_id) {
+    var row = event.target.closest('tr'); // Find the closest row
+    if (!row) {
+        console.error("Row not found");
+        return;
+    }
+
+    var participantsCell = row.cells[8]; // Adjust the index if needed
+    participantsCell.innerHTML = '<input type="text" value="' + participantsCell.innerText + '" />';
+
+    // Change "Edit" button to "Update"
+    var editButton = row.cells[1].getElementsByTagName('button')[0];
+    editButton.innerHTML = 'Update';
+    editButton.onclick = function(event) {
+        saveCRecord(prep_id, event);
+    };
+}
+
+function saveCRecord(prep_id, event) {
+    var row = event.target.closest('tr');
+    if (!row) {
+        console.error("Row not found");
+        return;
+    }
+
+    var participantsCell = row.cells[8]; // Adjust the index if needed
+    var newParticipantsValue = participantsCell.getElementsByTagName('input')[0].value;
+    participantsCell.innerHTML = newParticipantsValue;
+
+    var updateButton = row.cells[1].getElementsByTagName('button')[0];
+
+    if (confirm("Are you sure you want to update this record?")) {
+        $.ajax({
+            type: "POST",
+            url: "updatePreYatraPreparation", 
+            data: {id: prep_id, noOfParticipant: newParticipantsValue},
+            success: function(response) {
+                alert(response);
+                updateButton.innerHTML = 'Edit';
+            },
+            error: function(xhr, status, error) {
+                alert("Error updating record: " + error);
+                updateButton.innerHTML = 'Edit';
+            }
+        });
+    }
 }
