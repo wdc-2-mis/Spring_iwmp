@@ -1,9 +1,18 @@
-<%@include file="/WEB-INF/jspf/header2.jspf"%>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <%@ page import="app.watershedyatra.bean.PreYatraPreparationBean" %>
+
+<c:choose>
+	<c:when test="${sessionScope.loginid eq null }">
+		<%@include file="/WEB-INF/jspf/header.jspf"%>
+	</c:when>
+	<c:otherwise>
+		<%@include file="/WEB-INF/jspf/header2.jspf"%>
+	</c:otherwise>
+</c:choose>
 
 <!DOCTYPE html>
 <html>
@@ -77,23 +86,23 @@ function showReport(e)
 	}
 	return false;
 } 
-
-function downloadPDF(state, district, blkd, grampn){
-	
+function downloaddPDF(state, district, blkd, grampn){
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
     var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
     var gpkName = document.getElementById("grampan").options[document.getElementById("grampan").selectedIndex].text;
+  
  
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
 	
-    document.preYatra.action="downloadPDFPreYatraPrepReport";
+    document.preYatra.action="downloadPDFPreYatraReport";
 	document.preYatra.method="post";
 	document.preYatra.submit();
 }
+
 
 function showChangedata(){
 	
@@ -109,6 +118,7 @@ function downloadExcel(state, district, blkd, grampn){
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
     var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
     var gpkName = document.getElementById("grampan").options[document.getElementById("grampan").selectedIndex].text;
+  
  
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
@@ -119,7 +129,6 @@ function downloadExcel(state, district, blkd, grampn){
 	document.preYatra.method="post";
 	document.preYatra.submit();
 }
-
 </script>
 
 </head>
@@ -210,8 +219,8 @@ function downloadExcel(state, district, blkd, grampn){
 </form:form>
  <br/>
 <c:if test="${not empty preYatraList}">
-<%-- <button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button> --%>
-<%-- <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button> --%>
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloaddPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button>
 </c:if>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
@@ -227,6 +236,7 @@ function downloadExcel(state, district, blkd, grampn){
 				<th>Village</th>
 				<th>Yatra Type</th>
 				<th>Entry Date</th>
+				<th>Total No. of Participants</th>
 				<th>Photo 1</th>
 				<th>Photo1 longitude</th>
 				<th>Photo1 latitude</th>
@@ -235,9 +245,10 @@ function downloadExcel(state, district, blkd, grampn){
 				<th>Photo2 longitude</th>
 				<th>Photo2 latitude</th>
 				<th>Photo2 Date</th>
+				<th>Remarks</th>
 			</tr>
 			<tr>
-				<% for (int i = 1; i <= 16; i++) { %>
+				<% for (int i = 1; i <= 18; i++) { %>
 				<th class="text-center"><%= i %></th>
 				<% } %>
 			</tr>
@@ -273,6 +284,7 @@ function downloadExcel(state, district, blkd, grampn){
 								</c:if>
 							
 							<td>${record.entrydate}</td>
+							<td>${record.participants}</td>
 
 							<td>
 								<button onclick="showImage('https://wdcpmksy.dolr.gov.in/filepath/PRD/preyatraprep/${record.photo1}')">View</button>
@@ -288,6 +300,7 @@ function downloadExcel(state, district, blkd, grampn){
 							<td>${record.photo2long}</td>
 							<td>${record.photo2lang}</td>
 							<td>${record.photo2time}</td>
+							<td>${record.remarks}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

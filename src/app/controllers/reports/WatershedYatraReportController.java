@@ -17,9 +17,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellUtil;
@@ -27,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +48,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import app.bean.Login;
+import app.bean.reports.StateWiseCurrentStatusBean;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.service.StateMasterService;
@@ -1821,5 +1826,302 @@ public class WatershedYatraReportController {
 			return mav; 
 	}
 	
+	@RequestMapping(value = "/downloadPDFPreYatraReport", method = RequestMethod.POST)
+	public ModelAndView downloadPDFPreYatraReport(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String gpkName= request.getParameter("gpkName");
+		
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+		int gpCode = Integer.parseInt(request.getParameter("grampan"));
+        
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+
+		list = ser.getPreYatraPreparationReportData(stCode, distCode, blkCode, gpCode);
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("List of Pre - Yatra Preparation Details");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph("List of Pre - Yatra Preparation Details", f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(12);
+			table.setWidths(new int[] { 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 });
+			table.setWidthPercentage(70);
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(2);			
+			CommonFunctions.insertCellHeader(table,"State : " + stName + "     District : " + distName + "     Block : " + blkName + "     Gram Panchayat : " + gpkName , Element.ALIGN_LEFT, 12, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1,1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Gram Panchayat", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Village", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Yatra Type", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Entry Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Photo1 Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Photo2 Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			int i = 0;
+			int k = 1;
+			String StName = "";
+
+			if (list.size() != 0)
+				for (i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname().equals(StName) ? "" : list.get(i).getStname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistrictname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getGramname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getVillagename(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getYatratype().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getEntrydate().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					String participants = list.get(i).getParticipants() != null ? list.get(i).getParticipants().toString() : "";
+					CommonFunctions.insertCell(table, participants, Element.ALIGN_RIGHT, 1, 1, bf8);
+
+					//CommonFunctions.insertCell(table, list.get(i).getParticipants().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					String photo1Time = list.get(i).getPhoto1time() != null ? list.get(i).getPhoto1time().toString() : "";
+					CommonFunctions.insertCell(table, photo1Time, Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					String photo2Time = list.get(i).getPhoto2time() != null ? list.get(i).getPhoto2time().toString() : "";
+					CommonFunctions.insertCell(table, photo2Time, Element.ALIGN_RIGHT, 1, 1, bf8);
+
+//					CommonFunctions.insertCell(table, list.get(i).getPhoto1time().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, list.get(i).getPhoto2time().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getRemarks(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					StName = list.get(i).getStname();
+					k = k + 1;
+				}
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 10, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+					CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=PreYatraReport.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
 	
+	@RequestMapping(value = "/downloadExcelPreYatraPrepReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelPreYatraPrepReport(HttpServletRequest request, HttpServletResponse response, Model model) 
+	{
+		String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String blkName= request.getParameter("blkName");
+		String gpkName= request.getParameter("gpkName");
+		
+		int stCode = Integer.parseInt(request.getParameter("state"));
+		int distCode = Integer.parseInt(request.getParameter("district"));
+		int blkCode = Integer.parseInt(request.getParameter("block"));
+		int gpCode = Integer.parseInt(request.getParameter("grampan"));
+        
+
+		
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+		list = ser.getPreYatraPreparationReportData(stCode, distCode, blkCode, gpCode);
+		
+		Workbook workbook = new XSSFWorkbook();  
+		//invoking creatSheet() method and passing the name of the sheet to be created   
+		Sheet sheet = workbook.createSheet("List of Pre - Yatra Preparation Details");   
+
+
+		CellStyle style = CommonFunctions.getStyle(workbook);
+
+		String rptName = "List of Pre - Yatra Preparation Details";
+		String areaAmtValDetail = "";
+
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 11, areaAmtValDetail, workbook);
+
+		Row rowhead = sheet.createRow(5); 
+
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(1);
+		cell.setCellValue("State Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(2);
+		cell.setCellValue("District Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Block Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(4);
+		cell.setCellValue("Gram Panchayat");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(5);
+		cell.setCellValue("Village Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Yatra Type");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead.createCell(7);
+		cell.setCellValue("Entry Date");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("Total No. of Participants");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Photo1 Date");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+
+		cell = rowhead.createCell(10);
+		cell.setCellValue("Photo2 Date");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		cell = rowhead.createCell(11);
+		cell.setCellValue("Remarks");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		
+		Row rowhead1 = sheet.createRow(6); 
+		for(int i=0;i<12;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+
+		int sno = 1;
+		int rowno  = 7;
+		
+		
+		
+		for(PreYatraPreparationBean bean: list) {
+			Row row = sheet.createRow(rowno);
+			row.createCell(0).setCellValue(sno); 
+			row.createCell(1).setCellValue(bean.getStname());
+			row.createCell(2).setCellValue(bean.getDistrictname());  
+			row.createCell(3).setCellValue(bean.getBlockname());  
+			row.createCell(4).setCellValue(bean.getGramname()); 
+			row.createCell(5).setCellValue(bean.getVillagename()); 
+			row.createCell(6).setCellValue(bean.getYatratype()); 
+			row.createCell(7).setCellValue(bean.getEntrydate());
+			  String participants = (bean.getParticipants() != null) ? bean.getParticipants().toString() : "";
+			row.createCell(8).setCellValue(participants);
+//			row.createCell(8).setCellValue(bean.getParticipants()); 
+			row.createCell(9).setCellValue(bean.getPhoto1time());  
+			row.createCell(10).setCellValue(bean.getPhoto2time());
+			row.createCell(11).setCellValue(bean.getRemarks());
+			
+			sno++;
+			rowno++;
+		}
+
+		CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		style1.setFont(font1);
+
+
+		CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
+		String fileName = "attachment; filename=Report PreyatraReport- State.xlsx";
+
+		CommonFunctions.downloadExcel(response, workbook, fileName);
+
+		return "reports/preYatraPreparationReport";
+
+	}
 }
+
