@@ -15,12 +15,10 @@
 	display: flex;
 	flex-direction: column;
 	background-color: #FAF9F6;
-	margin: 10px;
+	margin: 20px;
 	padding: 10px;
 	border: 1px solid gray;
 	border-radius: 10px;
-	/* 	width: 200px; */
-	/* 	height: 130px; */
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -32,7 +30,6 @@
 .field-container {
 	display: flex;
 	flex-direction: column;
-/* 	align-items: center; */
 	background-color: white;
 	margin: 10px;
 	padding-top: 10px;
@@ -52,9 +49,6 @@
 	position: relative;
 	margin-left: 10px;
     padding-left: 20px; /* Adjust padding to create space for the logo */ 
-/*     padding-right: 20px; */
-/* 	font-weight: bold; */
-/*  	text-align: center;  */
 }
 
 .field-title::before {
@@ -179,6 +173,9 @@
         </div>
     </c:forEach>
 </div>
+
+
+
 
 
 
