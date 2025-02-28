@@ -4,6 +4,8 @@ public class WatershedYatraStatusBean {
 
 	public String st_name;
 	public Integer st_code;
+	public String dist_name;
+	public Integer dcode;
 	public Integer total_dist;
 	public Integer total_project;
 	public Integer total_vanplan;
@@ -18,6 +20,7 @@ public class WatershedYatraStatusBean {
 	public Integer total_plantation;
 	public Integer activity_entered;
 	public Integer act_not_entered;
+	
 	public String getSt_name() {
 		return st_name;
 	}
@@ -29,6 +32,18 @@ public class WatershedYatraStatusBean {
 	}
 	public void setSt_code(Integer st_code) {
 		this.st_code = st_code;
+	}
+	public String getDist_name() {
+		return dist_name;
+	}
+	public void setDist_name(String dist_name) {
+		this.dist_name = dist_name;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
 	}
 	public Integer getTotal_dist() {
 		return total_dist;

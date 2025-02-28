@@ -32,7 +32,7 @@ import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.dao.InaugurationDao;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
-@Repository("InaugurationDaoImpl")
+@Repository("InaugurationDao")
 public class InaugurationDaoImpl implements InaugurationDao {
 	
 	@Autowired

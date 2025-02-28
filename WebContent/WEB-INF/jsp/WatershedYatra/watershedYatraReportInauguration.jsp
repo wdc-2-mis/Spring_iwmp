@@ -393,9 +393,11 @@ display: none; /* Hidden by default */
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">District Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Block Name</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
-						<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">No of Uploaded Photographs</th>
+						
 						<th colspan="11" style="text-align:center; vertical-align: middle;">Number of Participation</th>
-						<th colspan="19" style="text-align:center; vertical-align: middle;">Activities</th>
+						<th colspan="15" style="text-align:center; vertical-align: middle;">Activities</th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
 					</tr>
 					<tr>
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Participants/Villagers</th>
@@ -417,7 +419,7 @@ display: none; /* Hidden by default */
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of stalls of Departments</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of stalls of SHGs/FPOs</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of LakhPati Didi Participated</th>
-						<th rowspan="2" style="text-align:center; vertical-align: middle;">No of Uploaded Photographs</th>
+						
 					</tr>
 					<tr>
 						<th style="text-align:center; vertical-align: middle;">Male</th>
@@ -466,7 +468,9 @@ display: none; /* Hidden by default */
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
-								<td class="text-left"> <c:out value="${data.remarks}" /></td>
+								<td class="text-right">
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
  								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
 								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
  								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
@@ -493,10 +497,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.dept_stalls}" /></td>
  								<td class="text-right"> <c:out value="${data.shg_fpo_stalls}" /></td>
  								<td class="text-right"> <c:out value="${data.no_lakhpati_didi}" /></td>
+ 								<td class="text-left"> <c:out value="${data.remarks}" /></td>
 <%--  								<td class="text-right"> <c:out value="${data.image_count}" /></td> --%>
- 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
-								</td>
+ 								
  							</tr>
  						</c:forEach>
 					</c:if>

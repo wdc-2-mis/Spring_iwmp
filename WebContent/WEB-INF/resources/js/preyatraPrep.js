@@ -296,7 +296,7 @@ $(document).on('click', '#completePreYatra', function(e){
             }
         });
        if(finalPreid.length > 0) {
-            if(confirm("Do you want to delete the selected records?")) {
+            if(confirm("Do you want to complete the selected records?")) {
                 $.ajax({  
                     url: "completeMulPreYatraPrep",
                     type: "post",  
@@ -310,7 +310,7 @@ $(document).on('click', '#completePreYatra', function(e){
                             alert('Pre Yatra Preparation Records Updated Successfully.');
                             window.location.href = 'getPreYatraPrep';
                         } else {
-                            alert('Error in Deletion. Please try again.');
+                            alert('Error in Completion. Please try again.');
                         } 
                     }
                 });
@@ -320,6 +320,36 @@ $(document).on('click', '#completePreYatra', function(e){
         }
     });
 
+function editRecord(prep_id) {
+    // Find the row containing the record
+    var row = document.getElementById(prep_id).parentNode.parentNode;
 
+    // Enable the "Total No. of Participants" text box
+    var participantsCell = row.cells[15]; // Adjust the index if needed
+    participantsCell.innerHTML = '<input type="text" value="' + participantsCell.innerText + '" />';
 
+    // Change "Edit" button to "Update"
+    var editButton = row.cells[17].getElementsByTagName('button')[0]; // Adjust the index if needed
+    editButton.innerHTML = 'Update';
+    editButton.onclick = function() {
+        saveRecord(prep_id);
+    };
+}
 
+function saveRecord(prep_id) {
+    var row = document.getElementById(prep_id).parentNode.parentNode;
+    var participantsCell = row.cells[15]; // Adjust the index if needed
+    var newParticipantsValue = participantsCell.getElementsByTagName('input')[0].value;
+    alert(newParticipantsValue);
+    
+    participantsCell.innerHTML = newParticipantsValue;
+
+    
+    var updateButton = row.cells[17].getElementsByTagName('button')[0]; // Adjust the index if needed
+    updateButton.innerHTML = 'Edit';
+    updateButton.onclick = function() {
+        updateRecord(prep_id);
+    };
+
+    
+}

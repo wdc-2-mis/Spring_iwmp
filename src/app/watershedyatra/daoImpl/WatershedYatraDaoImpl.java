@@ -1541,6 +1541,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		        gram.setGramsabhaPhoto2Latitude(preYatraPrep.getGramphoto2_lat());
 		        gram.setGramsabhaPhoto2Longitude(preYatraPrep.getGramphoto2_lng());
 		        gram.setGramsabhaPhoto2Time(Gtimestamp2);
+		        gram.setGramsabhaParticipants(preYatraPrep.getGramsabha_participants());
 		        gram.setCreatedBy(session.getAttribute("loginID").toString());
 		        gram.setRequestedIp(getClientIpAddr(request));
 		        gram.setCreatedDate(new Date());
@@ -1588,6 +1589,7 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		        pheri.setPrabhatpheriPhoto2Latitude(preYatraPrep.getPheriphoto2_lat());
 		        pheri.setPrabhatpheriPhoto2Longitude(preYatraPrep.getPheriphoto2_lng());
 		        pheri.setPrabhatpheriPhoto2Time(ptimestamp2);
+		        pheri.setPrabhatpheriParticipants(preYatraPrep.getPrabhatpheri_participants());
 		        pheri.setCreatedDate(new Date());
 		        pheri.setCreatedBy(session.getAttribute("loginID").toString());
 		        pheri.setRequestedIp(getClientIpAddr(request));

@@ -96,8 +96,14 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 
 	@Override
 	public List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus() {
-		// TODO Auto-generated method stub
 		return dao.getStateWiseWatershedYatraStatus();
+	}
+
+
+
+	@Override
+	public List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd) {
+		return dao.getDistWiseWatershedYatraStatus(stcd);
 	}
 
 }

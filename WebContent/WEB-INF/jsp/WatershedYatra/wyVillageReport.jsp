@@ -430,9 +430,10 @@ display: none; /* Hidden by default */
  								<th rowspan="3" style="text-align:center; vertical-align: middle;">GP Name</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Village Name</th>  
 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Location</th>
-								<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
+								<th rowspan="3" style="text-align:center; vertical-align: middle;">No of Uploaded Photographs</th> 
 								<th colspan="9" style="text-align:center; vertical-align: middle;">Number of Participation</th> 
- 								<th colspan="16" style="text-align:center; vertical-align: middle;">Activities</th> 
+ 								<th colspan="15" style="text-align:center; vertical-align: middle;">Activities</th>
+ 								<th rowspan="3" style="text-align:center; vertical-align: middle;">Remarks</th>
 							</tr> 
 							<tr>
 							<th colspan="2" style="text-align:center; vertical-align: middle;">Participants/Villagers</th> 
@@ -452,7 +453,6 @@ display: none; /* Hidden by default */
 								<th colspan="3" style="text-align:center; vertical-align: middle;">Shramdaan</th> 
  								<th colspan="2" style="text-align:center; vertical-align: middle;">Plantation</th> 
 								<th rowspan="2" style="text-align:center; vertical-align: middle;">Award Distribution (Felicitation)</th> 
- 								<th rowspan="2" style="text-align:center; vertical-align: middle;">No of Uploaded Photographs</th> 
 							</tr> 
 							<tr> 
 								<th style="text-align:center; vertical-align: middle;">Male</th> 
@@ -517,7 +517,9 @@ display: none; /* Hidden by default */
  								<td><c:out value="${data.gpname}" /></td>
  								<td><c:out value="${data.villagename}" /></td>
 								<td><c:out value="${data.location}" /></td>
-								<td><c:out value="${data.remarks}" /></td>
+								<td class="text-right">
+									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage"><c:out value="${data.image_count}" /></a> 
+								</td>
  								<td class="text-right"><c:out value="${data.male_participants}" /></td>
 								<td class="text-right"><c:out value="${data.female_participants}" /></td>
  								<td class="text-right"><c:out value="${data.central_ministers}" /></td>
@@ -542,9 +544,7 @@ display: none; /* Hidden by default */
  								<td class="text-right"><c:out value="${data.area_plantation}" /></td>
 								<td class="text-right"><c:out value="${data.no_plantation}" /></td>
  								<td class="text-right"><c:out value="${data.no_awards}" /></td>
-								<td class="text-right">
-									<a href="#" data-id="${data.watershed_yatra_id}" class="showImage"><c:out value="${data.image_count}" /></a> 
-								</td>
+ 								<td><c:out value="${data.remarks}" /></td>
  								
  							</tr>
  						</c:forEach>

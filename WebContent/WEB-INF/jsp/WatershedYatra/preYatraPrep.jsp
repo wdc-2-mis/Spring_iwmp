@@ -71,7 +71,8 @@ $village1 = $('#village1 option:selected').val();
 $date1 = $('#date1').val();
 $pheriphoto1 = $('#pheriphoto1').val();
 $pheriphoto2 = $('#pheriphoto2').val();
-
+$gramsabha_participants = $('#gramsabha_participants').val();
+$prabhatpheri_participants = $('#prabhatpheri_participants').val();
 
 
 if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
@@ -112,6 +113,14 @@ if ($gramphoto2 === '' || typeof $gramphoto2 === 'undefined') {
 	allValid = false;
 	return false;
 }
+if ($gramsabha_participants === '' || typeof $gramsabha_participants === 'undefined') {
+	alert('Please enter the Total Number of Participants');
+	$('#gramsabha_participants').focus();
+	allValid = false;
+	return false;
+}
+
+
 
 if ($('#district1 option:selected').val() === '' || typeof $('#district1 option:selected').val() === 'undefined') {
 	alert('Please select Prabhat Pheri District');
@@ -157,6 +166,13 @@ if ($pheriphoto2 === '' || typeof $pheriphoto2 === 'undefined') {
 	allValid = false;
 	return false;
 }
+if ($prabhatpheri_participants === '' || typeof $prabhatpheri_participants === 'undefined') {
+	alert('Please enter the Total Number of Participants');
+	$('#prabhatpheri_participants').focus();
+	allValid = false;
+	return false;
+}
+
 if (allValid) {
 	if(confirm("Do you want to save Pre Yatra Preparation?")) {
     document.preyatraprep.action="savePreYatraPreparation";
@@ -242,6 +258,10 @@ if (allValid) {
                 <input type="hidden" id="gramphoto2_lng" name="gramphoto2_lng">
                 <input type="hidden" id="gramphoto2_time" name="gramphoto2_time">
                </div>
+               <div class="form-group col-3">
+               <label for="gramsabha_participants"><b>Total No. of Participants:</b> </label>
+               <input type="text" class="form-control activity" name="gramsabha_participants" id="gramsabha_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
+               </div>
 
 	    		</div>
 	    		</div>
@@ -312,7 +332,10 @@ if (allValid) {
                 <input type="hidden" id="pheriphoto2_lng" name="pheriphoto2_lng">
                 <input type="hidden" id="pheriphoto2_time" name="pheriphoto2_time">
                </div>
-               
+               <div class="form-group col-3">
+               <label for="prabhatpheri_participants"><b>Total No. of Participants:</b> </label>
+               <input type="text" class="form-control activity" name="prabhatpheri_participants" id="prabhatpheri_participants" autocomplete="off" pattern="^\d{10}$" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'');" style="height: 58% ;width: 100%;" required />
+               </div>
                <hr/>
                
                
@@ -344,8 +367,9 @@ if (allValid) {
         <th rowspan="2">Entry Date</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>
+        <th rowspan="2">Total No. of Participants</th>
         <th rowspan="2">Remarks</th>
-        <th rowspan="2">Action</th>
+        <th colspan="2" rowspan="2">Action</th>
         
     </tr>
     <tr>
@@ -380,8 +404,10 @@ if (allValid) {
                     <td>${record.photo2long}</td>
                     <td>${record.photo2lang}</td>
                     <td>${record.photo2time}</td>
+                    <td>${record.participants}</td>
                     <td>${record.remarks}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id}, '${record.photo1}', '${record.photo2}')"> Delete </button>
+                    <td><button class="btn btn-warning btn-sm" onclick="editRecord(${record.prep_id})"> Edit </button></td>
+                    <td><button class="btn btn-danger btn-sm" onclick="deleteRecord(${record.prep_id}, '${record.photo1}', '${record.photo2}')"> Delete </button></td>
                 </tr>
             </c:forEach>
         </c:when>
@@ -421,6 +447,7 @@ if (allValid) {
         <th rowspan="2">Entry Date</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>
+        <th rowspan="2">Total No. of Participants</th>
         <th rowspan="2">Remarks</th>
         
     </tr>
@@ -455,6 +482,7 @@ if (allValid) {
                     <td>${comprecords.photo2long}</td>
                     <td>${comprecords.photo2lang}</td>
                     <td>${comprecords.photo2time}</td>
+                    <td>${comprecords.participants}</td>
                     <td>${comprecords.remarks}</td>
                     
                 </tr>

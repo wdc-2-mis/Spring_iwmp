@@ -92,7 +92,7 @@ $(function() {
 						window.location.href = 'inaugurationLocation';
 					}
 					else {
-						alert('Please check at least One Check Box, Data not Complete!');
+						alert('Please check at least One Check Box, Data not Delete!');
 						window.location.href = 'inaugurationLocation';
 					}
 				}

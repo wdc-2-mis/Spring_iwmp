@@ -75,6 +75,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	@Value("${getStwiseWYRecords}") 
 	String getStwiseWYRecords;
 	
+	@Value("${getDistwiseWYRecords}") 
+	String getDistwiseWYRecordsData;
+	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -358,6 +361,25 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 		try {
 			session.beginTransaction();
 			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraStatusBean.class));
+			getDetails = query.list();
+			session.getTransaction().commit();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return getDetails;
+	}
+
+	@Override
+	public List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd) {
+		List<WatershedYatraStatusBean> getDetails = new ArrayList<>();
+		String hql= getDistwiseWYRecordsData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraStatusBean.class));
 			getDetails = query.list();
 			session.getTransaction().commit();

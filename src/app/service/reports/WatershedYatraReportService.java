@@ -24,5 +24,6 @@ public interface WatershedYatraReportService {
 	List<InaugurationBean> getInaugurationReportData(Integer State, Integer district, Integer block, String userdate, String userdateto);
 	List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus();
+	List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd);
 
 }

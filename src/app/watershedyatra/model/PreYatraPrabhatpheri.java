@@ -21,6 +21,7 @@ public class PreYatraPrabhatpheri {
     private Date createdDate;
     private String createdBy;
     private String requestedIp;
+    private Integer prabhatpheriParticipants;
 
     public PreYatraPrabhatpheri() {}
 
@@ -154,5 +155,14 @@ public class PreYatraPrabhatpheri {
 		this.requestedIp = requestedIp;
 	}
 
-    
+	@Column(name = "prabhatpheri_participants")
+	public Integer getPrabhatpheriParticipants() {
+		return prabhatpheriParticipants;
+	}
+
+	public void setPrabhatpheriParticipants(Integer prabhatpheriParticipants) {
+		this.prabhatpheriParticipants = prabhatpheriParticipants;
+	}
+
+	
 }

@@ -21,6 +21,7 @@ public class PreYatraGramsabha {
     private Date createdDate;
     private String createdBy;
     private String requestedIp;
+    private Integer gramsabhaParticipants;
 
     public PreYatraGramsabha() {}
 
@@ -142,6 +143,14 @@ public class PreYatraGramsabha {
 
 	public void setRequestedIp(String requestedIp) {
 		this.requestedIp = requestedIp;
+	}
+	@Column(name ="gramsabha_participants")
+	public Integer getGramsabhaParticipants() {
+		return gramsabhaParticipants;
+	}
+
+	public void setGramsabhaParticipants(Integer gramsabhaParticipants) {
+		this.gramsabhaParticipants = gramsabhaParticipants;
 	}
 
     

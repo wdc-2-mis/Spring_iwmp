@@ -33,6 +33,8 @@ public class PreYatraPrepBean {
     private String pheriphoto2_lng;
     private String pheriphoto2_time;
     private String remarks;
+    private Integer gramsabha_participants;
+    private Integer prabhatpheri_participants;
     
     
 	public Integer getDistrict() {
@@ -196,10 +198,19 @@ public class PreYatraPrepBean {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public Integer getGramsabha_participants() {
+		return gramsabha_participants;
+	}
+	public void setGramsabha_participants(Integer gramsabha_participants) {
+		this.gramsabha_participants = gramsabha_participants;
+	}
+	public Integer getPrabhatpheri_participants() {
+		return prabhatpheri_participants;
+	}
+	public void setPrabhatpheri_participants(Integer prabhatpheri_participants) {
+		this.prabhatpheri_participants = prabhatpheri_participants;
+	}
 	
 	
-    
-    
-    
     
 }

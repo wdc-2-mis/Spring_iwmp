@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-<title>Report - State wise Watershed Yatra Status</title>
+<title>Report - State wise Watershed Yatra Activity Status</title>
 
 <script type="text/javascript">
 
@@ -32,7 +32,7 @@ function exportExcel(){
 <form action="downloadblOutcomePDF" method="post" name="getreport"></form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-		<h5>Report - State wise Watershed Yatra Status</h5>
+		<h5>Report - State wise Watershed Yatra Activity Status</h5>
 	</div>
 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()"	class="btn btn-info">PDF</button>
@@ -71,8 +71,8 @@ function exportExcel(){
 			<c:forEach items="${getRecords}" var="project" varStatus="sno">
 				<tr>
 					<td class="text-center"><c:out value="${sno.count}" /></td>
-                    <%-- <td><a href="getDistwiseWSYatraStatusDetail?stcode=<c:out value="${project.st_code}"/>&stname=<c:out value="${project.st_name}" />"><c:out value="${project.st_name}" /></a></td> --%>
-					<td><c:out value="${project.st_name}" /></td>
+                    <td><a href="getDistWatershedYatraStatus?stcd=<c:out value="${project.st_code}"/>&stName=<c:out value="${project.st_name}" />"><c:out value="${project.st_name}" /></a></td>
+<%-- 					<td><c:out value="${project.st_name}" /></td> --%>
 					<td class="text-right"><c:out value="${project.total_project}" /></td>
 					<td class="text-right"><c:out value="${project.total_vanplan}" /></td>
 					<td class="text-right"><c:out value="${project.total_locv}" /></td>

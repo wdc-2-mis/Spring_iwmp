@@ -4,7 +4,6 @@ package app.watershedyatra.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,11 +22,11 @@ import app.bean.Login;
 import app.bean.ProfileBean;
 import app.service.ProfileService;
 import app.watershedyatra.bean.InaugurationBean;
+import app.watershedyatra.service.InaugurationService;
 import app.watershedyatra.service.WatershedYatraService;
-import app.watershedyatra.serviceImpl.InaugurationServiceImpl;
 
 @Controller("InaugurationController")
-public class InaugurationController extends HttpServlet {
+public class InaugurationController{
 
 	HttpSession session;
 
@@ -38,7 +37,7 @@ public class InaugurationController extends HttpServlet {
 	ProfileService profileService;
 
 	@Autowired
-	InaugurationServiceImpl iSer;
+	InaugurationService iSer;
 
 	@RequestMapping(value = "/inaugurationLocation", method = RequestMethod.GET)
 	public ModelAndView inaugurationLocation(HttpServletRequest request, HttpServletResponse response) {

@@ -1010,7 +1010,7 @@ display: none; /* Hidden by default */
      	</table>
      	<table id = "tblReport" class = "table">
      	<tr>
-     		<th colspan=5 class="text-left">Activities : <span style="color:white; float: right;">If you want to change the photo then select the check box.</span></th>
+     		<th colspan=5 class="text-left">Activities : <span style="color:red;">If you want to change the photo then select the check box.</span></th>
      	</tr>
      	
    
@@ -1065,7 +1065,7 @@ display: none; /* Hidden by default */
      	<td><input type="checkbox" id="bhoomiPoojanCheckbox" name="bhoomiPoojanCheckbox" onclick="toggleUploadSection('bhoomiPoojanCheckbox', 'bhoomipoojan_photo1,bhoomipoojan_photo2')"/></td>
      		<td>Bhoomi Poojan</td>
      		<td>Number of Works<br><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off" value="${data.no_works_bhoomipoojan}"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,''); checkCheckbox()" required /></td>
 			<td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off" value="${data.tot_works_bhoomipoojan}"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
 			<td>Upload Photographs<br>

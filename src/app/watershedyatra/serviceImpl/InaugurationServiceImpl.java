@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.watershedyatra.bean.InaugurationBean;
-import app.watershedyatra.daoImpl.InaugurationDaoImpl;
+import app.watershedyatra.dao.InaugurationDao;
 import app.watershedyatra.service.InaugurationService;
 
 @Service("InaugurationService")
 public class InaugurationServiceImpl implements InaugurationService {
 	
 	@Autowired
-	InaugurationDaoImpl dao;
+	InaugurationDao dao;
 	
 	public String saveInauguration(InaugurationBean userfileup, HttpSession session) {
 		return dao.saveInauguration(userfileup, session);
