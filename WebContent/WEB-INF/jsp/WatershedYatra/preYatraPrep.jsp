@@ -75,12 +75,15 @@ $gramsabha_participants = $('#gramsabha_participants').val();
 $prabhatpheri_participants = $('#prabhatpheri_participants').val();
 
 
+<c:if test="${userType== 'SL' }">
 if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
 	alert('Please select District');
 	$('#district').focus();
 	allValid = false;
 	return false;
 }
+</c:if>
+
 if ($block === '' || typeof $block === 'undefined') {
 	alert('Please select Block');
 	$('#block').focus();
@@ -123,12 +126,15 @@ if ($gramphoto2 === '' || typeof $gramphoto2 === 'undefined') {
 
 
 
+<c:if test="${userType== 'SL' }">
 if ($('#district1 option:selected').val() === '' || typeof $('#district1 option:selected').val() === 'undefined') {
 	alert('Please select Prabhat Pheri District');
 	$('#district1').focus();
 	allValid = false;
 	return false;
 }
+</c:if>
+
 if ($block1 === '' || typeof $block1 === 'undefined') {
 	alert('Please select Prabhat Pheri Block');
 	$('#block1').focus();
@@ -215,7 +221,8 @@ if (allValid) {
 					
 				</div>
 	    		<div class="form-group col-3">
-	      			<label for="district"><b>District:</b> </label>
+			<c:if test="${userType== 'SL' }">
+			<label for="district"><b>District:</b> </label>
 	      			<span class="projectError"></span>
 	      			<select class="form-control district" id="district" name="district" required>
 	    				<option value="">--Select District--</option>
@@ -223,14 +230,35 @@ if (allValid) {
 						<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
 						</c:forEach>
 	    			</select>
-	    		</div>
+			</c:if>
+			<c:if test="${userType== 'PI' }">
+			<label for="district"><b>District:</b> </label> </br> <c:out value="${distName}"></c:out>
+			<input type="hidden" id="district" name="district" value="${distCode}">
+			</c:if>
+			
+			</div>
+
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	    			<label for="activity"><b>Block:</b> </label>
 	      			<span class="activityError"></span>
 	      			<select class="form-control activity" id="block" name="block" required>
 	    				<option value="">--Select Block--</option>
 	    			</select>
+	    		</c:if>	
+	    		<c:if test="${userType== 'PI' }">
+	    		<label for="activity">Block: </label>
+      			<span class="activityError"></span>
+      			<select class="form-control activity" id="block" name="block" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+					</c:forEach>
+    			</select>
+	    		</c:if>	
 	    		</div>
+	    		
+
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Gram Panchayat Name:</b> </label>
 	      			<span class="activityError"></span>
@@ -282,7 +310,8 @@ if (allValid) {
 					
 				</div>
 	    		<div class="form-group col-3">
-	      			<label for="district"><b>District:</b> </label>
+			<c:if test="${userType== 'SL' }">
+			<label for="district"><b>District:</b> </label>
 	      			<span class="projectError"></span>
 	      			<select class="form-control district1" id="district1" name="district1" required>
 	    				<option value="">--Select District--</option>
@@ -290,14 +319,35 @@ if (allValid) {
 						<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
 						</c:forEach>
 	    			</select>
-	    		</div>
+			</c:if>
+			<c:if test="${userType== 'PI' }">
+			<label for="district"><b>District:</b> </label> </br> <c:out value="${distName}"></c:out>
+			<input type="hidden" id="district1" name="district1" value="${distCode}">
+			</c:if>
+			
+			</div>
+
+	    		
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	    			<label for="activity"><b>Block:</b> </label>
 	      			<span class="activityError"></span>
 	      			<select class="form-control activity" id="block1" name="block1" required>
 	    				<option value="">--Select Block--</option>
 	    			</select>
+	    		</c:if>	
+	    		<c:if test="${userType== 'PI' }">
+	    		<label for="activity">Block: </label>
+      			<span class="activityError"></span>
+      			<select class="form-control activity" id="block1" name="block1" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+					</c:forEach>
+    			</select>
+	    		</c:if>	
 	    		</div>
+
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Gram Panchayat Name:</b> </label>
 	      			<span class="activityError"></span>
@@ -513,7 +563,15 @@ if (allValid) {
 	    		<footer class=" text-center">
 	            <%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
+	<c:if test="${userType== 'SL' }">
 	<script src='<c:url value="/resources/js/preyatraPrep.js" />'></script>
+	</c:if>
+	
+	<c:if test="${userType== 'PI' }">
+	<script src='<c:url value="/resources/js/preyatraPrepatPIA.js" />'></script>
+	</c:if>
+
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 	
 	    		</body>

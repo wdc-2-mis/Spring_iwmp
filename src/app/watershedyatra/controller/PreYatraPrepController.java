@@ -25,6 +25,7 @@ import app.service.ProfileService;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPrepBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.service.WatershedYatraPIALevelService;
 import app.watershedyatra.service.WatershedYatraService;
 
 @Controller("preYatraPrepController")
@@ -38,11 +39,16 @@ public class PreYatraPrepController {
 	@Autowired
 	WatershedYatraService  ser;
 	
+	@Autowired
+	WatershedYatraPIALevelService  serp;
+
+	
 	@RequestMapping(value = "/getPreYatraPrep", method = RequestMethod.GET)
 	public ModelAndView getPreYatraPrep(HttpServletRequest request, HttpServletResponse response) {
 	    HttpSession session = request.getSession(false); // Avoid unnecessary session creation
 	    ModelAndView mav;
 	    List<PreYatraPreparationBean> preyatrasavedata = new ArrayList<PreYatraPreparationBean>();
+	    
 	    List<PreYatraPreparationBean> preyatracompletedata = new ArrayList<PreYatraPreparationBean>();
 	    if (session != null && session.getAttribute("loginID") != null) {
 	        mav = new ModelAndView("WatershedYatra/preYatraPrep");
@@ -67,10 +73,23 @@ public class PreYatraPrepController {
 
 	        mav.addObject("userType", userType);
 	        mav.addObject("distList", ser.getDistrictList(stcd));
+	        
+	        if(userType.equals("SL")){
 	        preyatrasavedata=ser.getpreyatrasaveRecord(stcd);
+	        }
+	        else if(userType.equals("PI")){
+	        preyatrasavedata=ser.getpreyatraPIAsaveRecord(stcd, session.getAttribute("loginID").toString());
+	        }
+	        
+	        if(userType.equals("SL")){
 	        preyatracompletedata=ser.getpreyatracompleteRecord(stcd);
+	        }
+	        else if(userType.equals("PI")){
+	        preyatracompletedata=ser.getpreyatraPIAcompleteRecord(stcd, session.getAttribute("loginID").toString());
+	        }
 			mav.addObject("records",preyatrasavedata);
 			mav.addObject("comprecords",preyatracompletedata);
+			mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
 	    } else {
 	        mav = new ModelAndView("login");
 	        mav.addObject("login", new Login());
@@ -78,6 +97,7 @@ public class PreYatraPrepController {
 
 	    return mav;
 	}
+
 
 	@RequestMapping(value="/savePreYatraPreparation", method = RequestMethod.POST)
 	public ModelAndView savePreYatraPreparation(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes,

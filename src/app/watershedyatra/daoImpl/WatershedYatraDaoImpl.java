@@ -115,6 +115,13 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getWyatraPIADetailsComplete}")
 	String getWyatraPIADetailsComplete;
 	
+	@Value("${getpreyatraPIArcd}")
+	String getpreyatraPIArcd;
+	
+	@Value("${getpreyatraCompPIArdc}")
+	String getpreyatraCompPIArdc;
+	
+	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
 	
@@ -2777,5 +2784,67 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		}
 		return list;
 
+	}
+
+	@Override
+	public List<PreYatraPreparationBean> getpreyatraPIAsaveRecord(Integer stcd, String loginID) {
+		String getReport=getpreyatraPIArcd;
+		Session session = sessionFactory.getCurrentSession();
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
+				query.setResultTransformer(Transformers.aliasToBean(PreYatraPreparationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
+	}
+
+	@Override
+	public List<PreYatraPreparationBean> getpreyatraPIAcompleteRecord(Integer stcd, String loginID) {
+		String getReport=getpreyatraCompPIArdc;
+		Session session = sessionFactory.getCurrentSession();
+		List<PreYatraPreparationBean> list = new ArrayList<PreYatraPreparationBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
+				query.setResultTransformer(Transformers.aliasToBean(PreYatraPreparationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
 	}
 }

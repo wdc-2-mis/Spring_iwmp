@@ -349,6 +349,7 @@ function saveRecord(prep_id) {
             data: {id: prep_id, noOfParticipant: newParticipantsValue},
             success: function(response) {
                 alert(response);
+                window.location.href = 'getPreYatraPrep';
              updateButton.innerHTML = 'Edit';  
             },
             error: function(xhr, status, error) {
@@ -399,6 +400,7 @@ function saveCRecord(prep_id, event) {
             data: {id: prep_id, noOfParticipant: newParticipantsValue},
             success: function(response) {
                 alert(response);
+                window.location.href = 'getPreYatraPrep';
                 updateButton.innerHTML = 'Edit';
             },
             error: function(xhr, status, error) {

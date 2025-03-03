@@ -61,5 +61,7 @@ public interface WatershedYatraDao {
 	void updatePreYatraPrep(Integer prepid, Integer noOfParticipant);
 	List<WatershedYatraBean> getWatershedYatraPIAList(Integer stcd, String loginId);
 	List<WatershedYatraBean> getWatershedYatraPIAListcomplete(Integer stcd, String loginId);
+	List<PreYatraPreparationBean> getpreyatraPIAsaveRecord(Integer stcd, String loginID);
+	List<PreYatraPreparationBean> getpreyatraPIAcompleteRecord(Integer stcd, String loginID);
 	
 }
