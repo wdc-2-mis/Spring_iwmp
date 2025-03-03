@@ -109,6 +109,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getWatershedYatraEditData}")
 	String getWatershedYatraEditData;
 	
+	@Value("${getWyatraPIADetails}")
+	String getWyatraPIADetails;
+	
+	@Value("${getWyatraPIADetailsComplete}")
+	String getWyatraPIADetailsComplete;
+	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
 	
@@ -2703,5 +2709,73 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	        throw e; // Or log the exception properly
 	    }
 		
+	}
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraPIAList(Integer stcd, String loginId) {
+		String getReport=getWyatraPIADetails;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginId);
+				query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
+		return list;
+
+	}
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraPIAListcomplete(Integer stcd, String loginId) {
+		String getReport=getWyatraPIADetailsComplete;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedYatraBean> list = new ArrayList<WatershedYatraBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginId);
+				query.setResultTransformer(Transformers.aliasToBean(WatershedYatraBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
+		return list;
+
 	}
 }

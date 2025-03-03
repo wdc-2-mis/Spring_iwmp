@@ -242,4 +242,20 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		 dao.updatePreYatraPrep(prepid, noOfParticipant);;
 		
 	}
+
+
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraPIAList(Integer stcd, String loginId) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedYatraPIAList(stcd, loginId);
+	}
+
+
+
+	@Override
+	public List<WatershedYatraBean> getWatershedYatraPIAListcomplete(Integer stcd, String loginId) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedYatraPIAListcomplete(stcd, loginId);
+	}
 }

@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
-<%-- <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script> --%>
+ <%-- <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script>  --%>
 <script src='<c:url value="/resources/js/watershedYatraAtPiaVillage.js" />'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
@@ -456,7 +456,7 @@ function validation()
 	if (allValid) {
 		if(confirm("Do you want to save Watershed Yatra at Village Level?")) {
 	    formSubmitted = true; 
-		document.saveWatershed.action="saveWatershedYatraVillage";
+		document.saveWatershed.action="saveWatershedYatraPIAVillage";
 		document.saveWatershed.method="post";
 		document.saveWatershed.submit();
 		}
@@ -709,7 +709,7 @@ display: none; /* Hidden by default */
 			<label>
 		<span style="color:blue;">Note:- The Image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label>
-		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
+		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedYatraPIAVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			 <input type="hidden" id="waterid" name="waterid" />
 			<hr/>
 			  <div class="row">
@@ -726,6 +726,8 @@ display: none; /* Hidden by default */
 			</div>
     		<div class="form-group col-3">
       			District: </br> <c:out value="${distName}"></c:out>
+      			
+      		<input type="hidden" id="district" name="district" value="${distCode}">
       			
       			<%-- <select class="form-control district" id="district" name="district" >
     				<option value="">--Select--</option>
@@ -1045,7 +1047,7 @@ display: none; /* Hidden by default */
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
-								<!-- <th rowspan="3">Action</th>  -->
+								 <th rowspan="3">Action</th>  
 								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> Select All</th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
@@ -1104,7 +1106,7 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  --%>
+ 								 <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.watershed_yatra_id}"  name="${data.watershed_yatra_id}" value="${data.watershed_yatra_id}"/></td>
 								<td><c:out value="${data.date}" /></td>
 								<td><c:out value="${data.distname}" /></td>
@@ -1173,7 +1175,7 @@ display: none; /* Hidden by default */
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
-								<th rowspan="3">Action</th> 
+								<!-- <th rowspan="3">Action</th> --> 
 								<th rowspan="3">S.No.  </th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
@@ -1232,11 +1234,11 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${comdataList}" var="data" varStatus="count">
  							<tr>
- 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button> 
+ 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button> </td> --%>
  							<!-- &nbsp;&nbsp;	<a href="#editEmployeeModal" class="edit"
 								data-toggle="modal"><i class="material-icons"
 									data-toggle="tooltip" title="Edit">&#xE254;</i></a> -->
- 								</td>
+ 								
 								<td><c:out value='${count.count}' /> </td>
 								<td><c:out value="${data.date}" /></td>
 								<td><c:out value="${data.distname}" /></td>

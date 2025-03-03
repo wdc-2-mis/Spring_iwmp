@@ -79,5 +79,83 @@ $(function(){
 					});
 	
 	
-	
+					$(document).on('click', '#delete', function(e){
+						    e.preventDefault();
+						    var finalAssetid = new Array();
+
+						    $('.chkIndividualkd').each(function(){
+						        if($(this).prop('checked')) {
+						            finalAssetid.push($(this).val());
+						        }
+						    });
+
+						    if(finalAssetid.length === 0) {
+						        alert('Please check at least One Check Box, Data not Complete!');
+						    } else {
+						        if(confirm("Do you want to Delete ?")) {
+						            $.ajax({  
+						                url: "deleteWatershedYatraPIADetails",
+						                type: "post",  
+						                data: {assetid: finalAssetid.toString()},
+						                error: function(xhr, status, er){
+						                    console.log(er);
+						                },
+						                success: function(data) {
+						                    console.log(data);
+						                    $('#loading').hide();
+						                    if(data === 'success') {
+						                        alert('Deleted Data and Uploaded File Successfully.');
+						                        window.location.href = 'getWatershedYatraAtPiaHeader';
+						                    } else {
+						                        alert('Issue on Deleted Data!');
+						                        window.location.href = 'getWatershedYatraAtPiaHeader';
+						                    } 
+						                }
+						            });
+						        }
+						    }
+						});
+						
+						$(document).on('click', '#complete', function(e){
+									e.preventDefault();
+									var finalAssetid=new Array();
+
+									$('.chkIndividualkd').each(function(){
+											if($(this).prop('checked'))
+											{
+												finalAssetid.push($(this).val());
+											}
+									});
+																																			      
+									if(finalAssetid.length === 0) {
+										        alert('Please check at least One Check Box, Data not Complete!');
+										    } 
+											else{
+												if(confirm("Do you want to Complete ?"))
+									{
+										$.ajax({  
+												url:"completeWatershedYatraPIADetails",
+												type: "post",  
+												data: {assetid:finalAssetid.toString()},
+												error:function(xhr,status,er){
+														console.log(er);
+												},
+												success: function(data) 
+												{
+													console.log(data);
+													$('#loading').hide();
+													if(data==='success')
+													{
+														alert('Completed Successfully.');
+														window.location.href='getWatershedYatraAtPiaHeader';
+													}
+													else{
+															alert('Issue on Completed Record, Data not Complete!');
+															window.location.href='getWatershedYatraAtPiaHeader';
+													} 
+												}
+										});
+									}
+									}
+							});		
 });	
