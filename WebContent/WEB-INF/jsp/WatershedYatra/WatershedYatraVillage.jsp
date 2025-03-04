@@ -1100,7 +1100,8 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  --%>
+ 							
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button> 
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.watershed_yatra_id}"  name="${data.watershed_yatra_id}" value="${data.watershed_yatra_id}"/></td>
 								<td><c:out value="${data.date}" /></td>
 								<td><c:out value="${data.distname}" /></td>

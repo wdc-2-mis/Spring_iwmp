@@ -77,7 +77,22 @@ $(function(){
 					    }
 					  });
 					});
-	
+	$('#chkSelectAllkd').on('click',function(){
+		$chkValue=0;
+		if(this.checked)
+		{
+			$('.chkIndividualkd').each(function(){
+				this.checked = true;
+				$chkValue++;
+			});
+		}
+		else{
+				$('.chkIndividualkd').each(function(){
+					this.checked = false;
+				});
+				$chkValue=0;
+		}
+	});	
 	
 					$(document).on('click', '#delete', function(e){
 						    e.preventDefault();

@@ -469,7 +469,7 @@ function validation()
 function editChangedata(waterid){
 	
 	document.getElementById('waterid').value=waterid;
-    document.saveWatershed.action="getWatershedYatraEdit";
+    document.saveWatershed.action="getWatershedYatraPIAEdit";
 	document.saveWatershed.method="post";
 	document.saveWatershed.submit();
 }
@@ -1234,7 +1234,7 @@ display: none; /* Hidden by default */
  						<c:set var="st" value="" />
  						<c:forEach items="${comdataList}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button> </td> --%>
+ 								 <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button> </td> 
  							<!-- &nbsp;&nbsp;	<a href="#editEmployeeModal" class="edit"
 								data-toggle="modal"><i class="material-icons"
 									data-toggle="tooltip" title="Edit">&#xE254;</i></a> -->

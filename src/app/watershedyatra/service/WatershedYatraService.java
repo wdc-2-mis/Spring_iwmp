@@ -80,4 +80,6 @@ public interface WatershedYatraService {
 	List<NodalOfficerBean> getDraftListofPIANodalOfficer(Integer stcd, String loginID);
 
 	List<NodalOfficerBean> getCompleteListofPIANodalOfficer(Integer stcd, String loginID);
+
+	
 }

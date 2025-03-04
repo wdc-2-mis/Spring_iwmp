@@ -223,4 +223,109 @@ HttpSession session;
 		}
 		return res; 
 	}
+	
+	@RequestMapping(value = "/getWatershedYatraPIAEdit", method = RequestMethod.POST)
+	public ModelAndView getWatershedYatraPIAEdit(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedYatraBean> editlist = new ArrayList<WatershedYatraBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("WatershedYatra/WatershedYatraPIAVillageEdit");
+				String waterId=request.getParameter("waterid");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("stateName",stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+				map=ser.getCultActivity();
+				mav.addObject("cultMap", map);
+				editlist=ser.getWatershedYatraEditList(Integer.parseInt(waterId));
+				mav.addObject("dataList",editlist);
+				mav.addObject("dataListSize",editlist.size());
+				
+				
+				
+
+			} else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/updateWatershedYatraAtPIAVillage", method = RequestMethod.POST)
+	public ModelAndView updateWatershedYatraAtPIAVillage(HttpServletRequest request, HttpServletResponse response,RedirectAttributes redirectAttributes,
+			@ModelAttribute("useruploadsl") WatershedYatraBean userfileup) throws Exception {
+
+
+		session = request.getSession(true);
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String res=null;
+		try {
+		if (session != null && session.getAttribute("loginID") != null) 
+		{
+			Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+			Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+			String userType = session.getAttribute("userType").toString();
+			mav = new ModelAndView("WatershedYatra/WatershedYatraVillageAtPia");
+			
+			List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+			listm=profileService.getMapstate(regId, userType);
+			String distName = "";
+			String stateName = "";
+			int stCode = 0;
+			int distCode = 0;
+			for(ProfileBean bean : listm) {
+				distName =bean.getDistrictname();
+				distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+				stateName = bean.getStatename();
+				stCode = bean.getStatecode()==null?0:bean.getStatecode();
+			}
+			mav.addObject("userType",userType);
+			mav.addObject("distName",distName);
+			mav.addObject("stateName",stateName);
+			mav.addObject("distList", ser.getDistrictList(stcd));
+			
+			
+			res= ser.updateWatershedYatraAtVillage(userfileup, session);
+			if (res.equals("success")) {
+				redirectAttributes.addFlashAttribute("result", "Data Update Successfully.");
+			} 
+			else {
+				redirectAttributes.addFlashAttribute("result", "Data not Updated. ");
+			}
+			return new ModelAndView("redirect:/getWatershedYatraAtPiaHeader");
+		} 
+		else {
+			return new ModelAndView("redirect:/login");
+
+		}	
+		
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 }
