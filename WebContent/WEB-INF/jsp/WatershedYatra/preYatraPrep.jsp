@@ -200,7 +200,7 @@ if (allValid) {
 	
 		<div class="col formheading" style=""><h4><u>Pre- Yatra Preparation</u></h4> </div>
 		<label>
-		<span style="color:blue;">Note:- The Image size must be under 300KB with dimensions of 400 x 400 pixels,Geo-referenced and Time-stamped.</span>
+		<span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label>
 		<c:if test="${not empty result}">
              <script>alert("${result}");</script>
@@ -417,8 +417,8 @@ if (allValid) {
         <th rowspan="2">Block</th>
         <th rowspan="2">Gram Panchayat</th>
         <th rowspan="2">Village</th>
-        <th rowspan="2">Activity Type</th>
-        <th rowspan="2">Entry Date</th>
+        <th rowspan="2">Activity</th>
+        <th rowspan="2">Date</th>
         <th rowspan="2">Total No. of Participants</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>
@@ -499,8 +499,8 @@ if (allValid) {
         <th rowspan="2">Block</th>
         <th rowspan="2">Gram Panchayat</th>
         <th rowspan="2">Village</th>
-        <th rowspan="2">Activity Type</th>
-        <th rowspan="2">Entry Date</th>
+        <th rowspan="2">Activity</th>
+        <th rowspan="2">Date</th>
         <th rowspan="2">Total No. of Participants</th>
         <th colspan="4" style="text-align:center;">Photo 1 Details</th>
         <th colspan="4" style="text-align:center;">Photo 2 Details</th>

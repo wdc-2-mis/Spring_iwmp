@@ -234,8 +234,8 @@ function downloadExcel(state, district, blkd, grampn){
 				<th>Block</th>
 				<th>Gram Panchayat</th>
 				<th>Village</th>
-				<th>Yatra Type</th>
-				<th>Entry Date</th>
+				<th>Activity</th>
+				<th>Date</th>
 				<th>Total No. of Participants</th>
 				<th>Photo 1</th>
 				<th>Photo1 longitude</th>
