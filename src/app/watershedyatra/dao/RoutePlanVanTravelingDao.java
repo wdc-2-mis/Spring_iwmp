@@ -19,4 +19,8 @@ public interface RoutePlanVanTravelingDao {
 	String completeApproveRoutePlanforVanTraveling(List<Integer>  assetid, String userid);
 	String deleteRoutePlanforVanTraveling(List<Integer>  assetid, String userid);
 
+	List<NodalOfficerBean> getPIARoutePlanVanTraveling(Integer stcd, String loginID);
+
+	List<NodalOfficerBean> getPIARoutePlanVanTravelingComp(Integer stcd, String loginID);
+
 }

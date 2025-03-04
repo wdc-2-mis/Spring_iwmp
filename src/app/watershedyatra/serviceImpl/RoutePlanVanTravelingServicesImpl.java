@@ -73,4 +73,22 @@ public class RoutePlanVanTravelingServicesImpl implements RoutePlanVanTravelingS
 		return dao.getRoutePlanVanTravelingComp(stcd);
 	}
 
+
+
+
+	@Override
+	public List<NodalOfficerBean> getPIARoutePlanVanTraveling(Integer stcd, String loginID) {
+		// TODO Auto-generated method stub
+		return dao.getPIARoutePlanVanTraveling(stcd, loginID);
+	}
+
+
+
+
+	@Override
+	public List<NodalOfficerBean> getPIARoutePlanVanTravelingComp(Integer stcd, String loginID) {
+		// TODO Auto-generated method stub
+		return dao.getPIARoutePlanVanTravelingComp(stcd, loginID);
+	}
+
 }

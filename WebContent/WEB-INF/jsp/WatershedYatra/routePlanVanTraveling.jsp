@@ -38,13 +38,16 @@ input[type=email] {
 			
 			<div class="form-row">
 				<div class="form-group col-3">
-					<c:if test="${userType== 'SL' }">
+					
 						<label for="state">	<b> State Name:</b> </label>
 						<span class="projectError"></span> <br/>
 						<c:out value="${stateName}"></c:out>
-					</c:if>
+					
 				</div>
+				
+				
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	      			<label for="district"><b>District:</b> </label>
 	      			<span class="projectError"></span>
 	      			<select class="form-control district" id="district" name="district" required>
@@ -53,13 +56,31 @@ input[type=email] {
 						<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
 						</c:forEach>
 	    			</select>
+	    		</c:if>
+	    		<c:if test="${userType== 'PI' }">
+			    <label for="district"><b>District:</b> </label> </br> <c:out value="${distName}"></c:out>
+			    <input type="hidden" id="district" name="district" value="${distCode}">
+			    </c:if>	
+	    			
 	    		</div>
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	    			<label for="activity"><b>Block:</b> </label>
 	      			<span class="activityError"></span>
 	      			<select class="form-control activity" id="block" name="block" required>
 	    				<option value="">--Select Block--</option>
 	    			</select>
+	    		</c:if>
+	    		<c:if test="${userType== 'PI' }">
+	    		<label for="activity">Block: </label>
+      			<span class="activityError"></span>
+      			<select class="form-control activity" id="block" name="block" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+					</c:forEach>
+    			</select>
+	    		</c:if>		
 	    		</div>
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Gram Panchayat Name:</b> </label>
@@ -92,13 +113,13 @@ input[type=email] {
 			<hr/>
 			<div class="form-row">
 				<div class="form-group col-3">
-					<c:if test="${userType== 'SL' }">
 						<label for="state">	<b> State Name:</b> </label>
 						<span class="projectError"></span> <br/>
 						<c:out value="${stateName}"></c:out>
-					</c:if>
+					
 				</div>
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	      			<label for="district"><b>District:</b> </label>
 	      			<span class="projectError"></span>
 	      			<select class="form-control district1" id="district1" name="district1" >
@@ -107,13 +128,32 @@ input[type=email] {
 						<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
 						</c:forEach>
 	    			</select>
+	    			</c:if>
+	    			
+	    			<c:if test="${userType== 'PI' }">
+			    <label for="district"><b>District:</b> </label> </br> <c:out value="${distName}"></c:out>
+			    <input type="hidden" id="district1" name="district1" value="${distCode}">
+			    </c:if>	
 	    		</div>
 	    		<div class="form-group col-3">
+	    		<c:if test="${userType== 'SL' }">
 	    			<label for="activity"><b>Block:</b> </label>
 	      			<span class="activityError"></span>
 	      			<select class="form-control activity" id="block1" name="block1" >
 	    				<option value="">--Select Block--</option>
 	    			</select>
+	    		</c:if>	
+	    		<c:if test="${userType== 'PI' }">
+	    		<label for="activity">Block: </label>
+      			<span class="activityError"></span>
+      			<select class="form-control activity" id="block1" name="block1" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+					</c:forEach>
+    			</select>
+	    		</c:if>	
+	    		
 	    		</div>
 	    		<div class="form-group col-3">
 	    			<label for="activity"><b>Gram Panchayat Name:</b> </label>
@@ -333,6 +373,11 @@ input[type=email] {
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
 	<%-- <script src='<c:url value="/resources/js/WatershedYatraVillage.js" />'></script> --%>
+	<c:if test="${userType== 'SL' }">
 	<script src='<c:url value="/resources/js/routeplanvantraveling.js" />'></script> 
+	</c:if>
+	<c:if test="${userType== 'PI' }">
+	<script src='<c:url value="/resources/js/PIArouteplanvantraveling.js" />'></script> 
+	</c:if>
 </body>
 </html>

@@ -42,7 +42,11 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 	@Value("${getRoutePlanVanTravelcomp}")
 	String getRoutePlanVanTravelcomp;
 	
+	@Value("${getPIARoutePlanVanTravel}")
+	String getPIARoutePlanVanTravel;
 	
+	@Value("${getPIARoutePlanVanTravelcomp}")
+	String getPIARoutePlanVanTravelcomp;
 	
 	
 	
@@ -311,6 +315,70 @@ public class RoutePlanVanTravelingDaoImpl implements RoutePlanVanTravelingDao{
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
 				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
+	}
+
+
+	@Override
+	public List<NodalOfficerBean> getPIARoutePlanVanTraveling(Integer stcd, String loginID) {
+		String getReport=getPIARoutePlanVanTravel;  // getRoutePlanVanTravelcomp
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
+				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//  session.getTransaction().commit();
+		  }
+		return list;
+	}
+
+
+	@Override
+	public List<NodalOfficerBean> getPIARoutePlanVanTravelingComp(Integer stcd, String loginID) {
+		String getReport=getPIARoutePlanVanTravelcomp; 
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
 				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
 				list = query.list();
 				session.getTransaction().commit();

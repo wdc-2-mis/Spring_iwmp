@@ -23,6 +23,7 @@ import app.bean.ProfileBean;
 import app.service.ProfileService;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.service.RoutePlanVanTravelingServices;
+import app.watershedyatra.service.WatershedYatraPIALevelService;
 import app.watershedyatra.service.WatershedYatraService;
 
 @Controller("RoutePlanVanTravelingController")
@@ -39,6 +40,10 @@ HttpSession session;
 	
 	@Autowired
 	RoutePlanVanTravelingServices serr;
+	
+	@Autowired
+	WatershedYatraPIALevelService  serp;
+
 	
 	@RequestMapping(value = "/getRoutePlanVanTravelingHeader", method = RequestMethod.GET)
 	public ModelAndView getRoutePlanVanTravelingHeader(HttpServletRequest request, HttpServletResponse response) {
@@ -67,15 +72,30 @@ HttpSession session;
 					stCode = bean.getStatecode()==null?0:bean.getStatecode();
 				}
 				mav.addObject("userType",userType);
-			//	mav.addObject("distName",distName);
+				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
+				mav.addObject("distName",distName);
 				mav.addObject("stateName",stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				if(userType.equals("SL")){
 				draft=serr.getRoutePlanVanTraveling(stcd);
+				}
+				else if(userType.equals("PI")){
+				draft=serr.getPIARoutePlanVanTraveling(stcd, session.getAttribute("loginID").toString());
+					}
 				mav.addObject("draftList",draft);
 				mav.addObject("draftListSize",draft.size());
+				
+				if(userType.equals("SL")){
 				comp=serr.getRoutePlanVanTravelingComp(stcd);
+				}
+				else if(userType.equals("PI")){
+					comp=serr.getPIARoutePlanVanTravelingComp(stcd, session.getAttribute("loginID").toString());	
+				}
+				
 				mav.addObject("compList",comp);
 				mav.addObject("compListSize",comp.size());
+				mav.addObject("distCode", distCode);
 
 			} 
 			else {
