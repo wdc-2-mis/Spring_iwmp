@@ -121,6 +121,12 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getpreyatraCompPIArdc}")
 	String getpreyatraCompPIArdc;
 	
+	@Value("${getDraftListofPIANodalOfficer}")
+	String getDraftListofPIANodalOfficer;
+	
+	@Value("${getCompleteListofPIANodalOfficer}")
+	String getCompleteListofPIANodalOfficer;
+	
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -2845,6 +2851,72 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		finally {
 			//  session.getTransaction().commit();
 		  }
+		return list;
+	}
+
+	@Override
+	public List<NodalOfficerBean> getDraftListofPIANodalOfficer(Integer stcd, String loginID) {
+		String getReport=getDraftListofPIANodalOfficer;
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
+				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<NodalOfficerBean> getCompleteListofPIANodalOfficer(Integer stcd, String loginID) {
+		String getReport=getCompleteListofPIANodalOfficer;
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setParameter("loginID", loginID);
+				query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+		//	session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
 		return list;
 	}
 }

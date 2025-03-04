@@ -88,14 +88,14 @@ input[type=email] {
     		</div>
     		
 			<div class="form-group col-3">
-			<c:if test="${userType== 'SL' }"><br/>
 			<label for="state">	<b> State Name:</b> </label>
 			<span class="projectError"></span> <br/>
 			<c:out value="${stateName}"></c:out>
-			</c:if>
 			</div>
 			
+			
     		<div class="form-group col-3" >
+    		<c:if test="${userType== 'SL' }">
       			<label class="d-none yeark"><b> District:</b> </label>
       			<span class="projectError"></span>
       			<select class="form-control col d-none yeark" id="district" name="district" >
@@ -104,13 +104,35 @@ input[type=email] {
 					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
 					</c:forEach>
     			</select>
+    		</c:if>
+    			
+    		<c:if test="${userType == 'PI'}">
+        <label class="d-none yeark"><b> District:</b></label>
+        <span class="projectError"></span>
+        </br><label class="d-none yeark"><c:out value="${distName}"></c:out></label>
+        <input type="hidden" id="district" name="district" value="${distCode}">
+    </c:if>
     		</div>
+    		
+    		
     		<div class="form-group col-3" >
+    		<c:if test="${userType== 'SL' }">
     			<label class="d-none mont"><b> Block:</b> </label>
       			<span class="activityError"></span>
       			<select class="form-control col d-none mont" id="block" name="block" >
     				<option value="">--Select Block--</option>
     			</select>
+    			</c:if>
+    			<c:if test="${userType== 'PI' }">
+	    		<label class="d-none mont"><b>Block: </b></label>
+      			<span class="activityError"></span>
+      			<select class="form-control col d-none mont" id="block" name="block" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+					</c:forEach>
+    			</select>
+	    		</c:if>	
     		</div>
     		<!-- <div class="form-group col-3">
     			<label for="activity">Gram Panchayat Name: </label>
@@ -339,6 +361,14 @@ input[type=email] {
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
+	<c:if test="${userType== 'SL' }">
 	<script src='<c:url value="/resources/js/WatershedYatraVillage.js" />'></script>
+	</c:if>
+	
+	<c:if test="${userType== 'PI' }">
+	<script src='<c:url value="/resources/js/WatershedYatraPIAVillage.js" />'></script>
+	</c:if>
+	
+	
 </body>
 </html>

@@ -22,6 +22,7 @@ import app.bean.ProfileBean;
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
 import app.service.ProfileService;
 import app.watershedyatra.bean.NodalOfficerBean;
+import app.watershedyatra.service.WatershedYatraPIALevelService;
 import app.watershedyatra.service.WatershedYatraService;
 
 @Controller("NodalOfficerLMSController")
@@ -35,6 +36,9 @@ public class NodalOfficerLMSController {
 	
 	@Autowired(required = true)
 	ProfileService profileService;
+	
+	@Autowired
+	WatershedYatraPIALevelService  serp;
 	
 	@RequestMapping(value = "/getNodalOfficerHeader", method = RequestMethod.GET)
 	public ModelAndView getWatershedYatraHeader(HttpServletRequest request, HttpServletResponse response) {
@@ -61,24 +65,45 @@ public class NodalOfficerLMSController {
 					stCode = bean.getStatecode()==null?0:bean.getStatecode();
 				}
 				mav.addObject("userType",userType);
-			//	mav.addObject("distName",distName);
+				mav.addObject("distName",distName);
 				mav.addObject("stateName",stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 				
 				LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
+				
+				if(userType.equals("SL")){
 				map.put("state", "State");
 				map.put("district", "District");
 				map.put("block", "Block/Project");
 				map.put("village", "Village/Van Standing Point");
+				}
+				 else if(userType.equals("PI")){
+					 map.put("block", "Block/Project");
+					 map.put("village", "Village/Van Standing Point");
+				 }
 				
 				mav.addObject("level",map);
+				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
 				
+				if(userType.equals("SL")){
 				draft=ser.getDraftListofNodalOfficer(stcd);
+				}
+				else if(userType.equals("PI")){
+				draft=ser.getDraftListofPIANodalOfficer(stcd, session.getAttribute("loginID").toString());
+				}
+				
 				mav.addObject("draftList",draft);
 				mav.addObject("draftListSize",draft.size());
+				mav.addObject("distCode", distCode);
 				
-				
+				if(userType.equals("SL")){
 				complete=ser.getCompleteListofNodalOfficer(stcd);
+				}
+				
+				else if(userType.equals("PI")){
+					complete=ser.getCompleteListofPIANodalOfficer(stcd, session.getAttribute("loginID").toString());
+				}
+				
 				mav.addObject("completetList",complete);
 				mav.addObject("completeListSize",complete.size());
 

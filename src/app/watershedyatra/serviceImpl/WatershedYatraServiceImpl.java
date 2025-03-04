@@ -274,4 +274,19 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		// TODO Auto-generated method stub
 		return dao.getpreyatraPIAcompleteRecord(stcd, loginID);
 	}
+
+
+
+	@Override
+	public List<NodalOfficerBean> getDraftListofPIANodalOfficer(Integer stcd, String loginID) {
+		// TODO Auto-generated method stub
+		return dao.getDraftListofPIANodalOfficer(stcd, loginID);
+	}
+
+
+
+	@Override
+	public List<NodalOfficerBean> getCompleteListofPIANodalOfficer(Integer stcd, String loginID) {
+		return dao.getCompleteListofPIANodalOfficer(stcd, loginID);
+	}
 }

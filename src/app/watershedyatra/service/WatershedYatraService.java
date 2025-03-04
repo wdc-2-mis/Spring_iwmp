@@ -76,4 +76,8 @@ public interface WatershedYatraService {
 	List<PreYatraPreparationBean> getpreyatraPIAsaveRecord(Integer stcd, String loginID);
 
 	List<PreYatraPreparationBean> getpreyatraPIAcompleteRecord(Integer stcd, String loginID);
+
+	List<NodalOfficerBean> getDraftListofPIANodalOfficer(Integer stcd, String loginID);
+
+	List<NodalOfficerBean> getCompleteListofPIANodalOfficer(Integer stcd, String loginID);
 }
