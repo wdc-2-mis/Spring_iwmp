@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 
@@ -140,4 +141,6 @@ public interface DashBoardDao {
 	List<TargetAchDashboardBean> getStateProgressiveData(Integer headcode, Integer scode);
 	
 	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData();
+	
+	List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData();
 }

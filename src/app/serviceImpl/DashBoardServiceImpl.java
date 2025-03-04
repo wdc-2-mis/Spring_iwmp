@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 import app.dao.DashBoardDao;
@@ -372,6 +373,12 @@ public class DashBoardServiceImpl implements DashBoardService{
 	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData() {
 		// TODO Auto-generated method stub
 		return dashBoardDao.getWatrshdInagrtnPreYtraData();
+	}
+
+	@Override
+	public List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getWtrshdYtraChartData();
 	}
 	
 	

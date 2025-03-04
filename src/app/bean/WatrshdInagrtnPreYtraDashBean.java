@@ -13,8 +13,11 @@ public class WatrshdInagrtnPreYtraDashBean {
 	BigInteger totyatraloc;
 	BigInteger totarexperiencedpeople;
 	BigInteger totquizparticipants;
+	BigInteger totplantation;
 	BigInteger totgrabsabha;
+	BigInteger gramsabha_participants;
 	BigInteger totprabhatpheri;
+	BigInteger prabhatpheri_participants;
 	
 	
 	public Integer getTotstates() {
@@ -83,7 +86,23 @@ public class WatrshdInagrtnPreYtraDashBean {
 	public void setTotprabhatpheri(BigInteger totprabhatpheri) {
 		this.totprabhatpheri = totprabhatpheri;
 	}
-	
-	
+	public BigInteger getTotplantation() {
+		return totplantation;
+	}
+	public void setTotplantation(BigInteger totplantation) {
+		this.totplantation = totplantation;
+	}
+	public BigInteger getGramsabha_participants() {
+		return gramsabha_participants;
+	}
+	public void setGramsabha_participants(BigInteger gramsabha_participants) {
+		this.gramsabha_participants = gramsabha_participants;
+	}
+	public BigInteger getPrabhatpheri_participants() {
+		return prabhatpheri_participants;
+	}
+	public void setPrabhatpheri_participants(BigInteger prabhatpheri_participants) {
+		this.prabhatpheri_participants = prabhatpheri_participants;
+	}
 
 }

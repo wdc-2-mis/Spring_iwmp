@@ -74,11 +74,29 @@
 	border-top: 2px solid black;
 	margin-left: 10px;
 }
+
+ .chart-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .chart-item {
+    text-align: center;
+    margin: 20px;
+  }
+  .chart-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
 </style>
 </head>
 <body>
 
 <h2 class="panel-title" style ="text-align: center; margin: 10px;">Watershed Yatra Dashboard</h2>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <script>
  $(document).ready(function(){
 	 $('#loading').hide();
@@ -88,8 +106,8 @@
 <div>
     <c:forEach var="entry" items="${map}">
         <div class="component-container">
-            <c:if test ="${entry.key eq 'ing'}">
-            <h3 class ="component-field">Inauguration</h3>
+            <c:if test ="${entry.key eq 'wtr'}">
+            <h3 class ="component-field">Watershed Yatra Activities</h3>
             <div class="panel-underline"></div>
             <div class="field-row">
                 <c:forEach var="bean" items="${entry.value}">
@@ -98,15 +116,15 @@
                         <div class="field-value">${bean.totstates}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total Participants</div>
+                        <div class="field-title">Total Number of People Participated</div>
                         <div class="field-value">${bean.totparticipants}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total Bhoomi Poojan Works</div>
+                        <div class="field-title">Total Numbers of Works for BHOOMI POOJAN</div>
                         <div class="field-value">${bean.totbhumipujanworks}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total Lokarpan Works</div>
+                        <div class="field-title">Total Numbers of Works for LOKARPAN</div>
                         <div class="field-value">${bean.totlokarpanworks}</div>
                     </div>
                     <div class="field-container">
@@ -116,23 +134,6 @@
                     <div class="field-container">
                         <div class="field-title">Total Award Distribution</div>
                         <div class="field-value">${bean.totawarddistribution}</div>
-                    </div>
-                    
-                </c:forEach>
-            </div>
-            </c:if>
-            <c:if test ="${entry.key eq 'wtr'}">
-            <h3 class ="component-field">Watershed Yatra</h3>
-            <div class="panel-underline"></div>
-            <div class="field-row">
-                <c:forEach var="bean" items="${entry.value}">
-                    <div class="field-container">
-                        <div class="field-title">Total States</div>
-                        <div class="field-value">${bean.totstates}</div>
-                    </div>
-                    <div class="field-container">
-                        <div class="field-title">Total Participants</div>
-                        <div class="field-value">${bean.totparticipants}</div>
                     </div>
                     <div class="field-container">
                         <div class="field-title">Total Number of Yatra Location</div>
@@ -146,10 +147,32 @@
                         <div class="field-title">Total Number of People Participated in Quiz</div>
                         <div class="field-value">${bean.totquizparticipants}</div>
                     </div>
-                   
+                    <div class="field-container">
+                        <div class="field-title">Total Number of Sapling Planted</div>
+                        <div class="field-value">${bean.totplantation}</div>
+                    </div>
+                    
                 </c:forEach>
             </div>
             </c:if>
+<%--             <c:if test ="${entry.key eq 'wtr'}"> --%>
+<!--             <h3 class ="component-field">Watershed Yatra</h3> -->
+<!--             <div class="panel-underline"></div> -->
+<!--             <div class="field-row"> -->
+<%--                 <c:forEach var="bean" items="${entry.value}"> --%>
+<!--                     <div class="field-container"> -->
+<!--                         <div class="field-title">Total States</div> -->
+<%--                         <div class="field-value">${bean.totstates}</div> --%>
+<!--                     </div> -->
+<!--                     <div class="field-container"> -->
+<!--                         <div class="field-title">Total Participants</div> -->
+<%--                         <div class="field-value">${bean.totparticipants}</div> --%>
+<!--                     </div> -->
+                    
+                   
+<%--                 </c:forEach> --%>
+<!--             </div> -->
+<%--             </c:if> --%>
             <c:if test ="${entry.key eq 'pre'}">
             <h3 class ="component-field">Pre Yatra</h3>
             <div class="panel-underline"></div>
@@ -160,12 +183,20 @@
                         <div class="field-value">${bean.totstates}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total Gram Sabha</div>
+                        <div class="field-title">Total Number of Gram Sabha Organized</div>
                         <div class="field-value">${bean.totgrabsabha}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total Prabhat Pheri</div>
+                        <div class="field-title">Total Number of People Participated in Gram Sabha</div>
+                        <div class="field-value">${bean.gramsabha_participants}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of Prabhat Pheri Organized</div>
                         <div class="field-value">${bean.totprabhatpheri}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of People Participated in Prabhat Pheri</div>
+                        <div class="field-value">${bean.prabhatpheri_participants}</div>
                     </div>
                 </c:forEach>
             </div>
@@ -173,6 +204,151 @@
         </div>
     </c:forEach>
 </div>
+
+<div class="chart-container">
+  <div class="chart-item">
+    <div id="chart_div1"></div>
+  </div>
+  <div class="chart-item">
+    <div id="chart_div2"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#loading').hide();
+document.addEventListener('DOMContentLoaded', function () {
+    var totplannedloc = ${list[0].totplannedloc};
+    var completedyatraloc = ${list[0].completedyatraloc};
+    var totplannedact = ${list[0].totplannedact};
+    var totcompletedact = ${list[0].totcompletedact};
+
+    Highcharts.chart('chart_div1', {
+        chart: {
+            type: 'solidgauge',
+            height: '110%'
+        },
+        title: {
+            text: 'Completed Yatra Location',
+            style: {
+                fontSize: '24px'
+            }
+        },
+        pane: {
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+        yAxis: {
+            min: 0,
+            max: totplannedloc,
+            stops: [
+                [0.1, '#55BF3B'], // green
+                [0.5, '#DDDF0D'], // yellow
+                [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            tickWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            title: {
+                y: -70
+            },
+            labels: {
+                y: 16
+            }
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        },
+        series: [{
+            name: 'Completed Yatra Location',
+            data: [completedyatraloc],
+            dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/>' +
+                    '<span style="font-size:12px;opacity:0.4">Completed</span></div>'
+            },
+            tooltip: {
+                valueSuffix: ''
+            }
+        }]
+    });
+
+    Highcharts.chart('chart_div2', {
+        chart: {
+            type: 'solidgauge',
+            height: '110%'
+        },
+        title: {
+            text: 'Completed Activities',
+            style: {
+                fontSize: '24px'
+            }
+        },
+        pane: {
+            startAngle: -90,
+            endAngle: 90,
+            background: {
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
+                innerRadius: '60%',
+                outerRadius: '100%',
+                shape: 'arc'
+            }
+        },
+        yAxis: {
+            min: 0,
+            max: totplannedact,
+            stops: [
+                [0.1, '#55BF3B'], // green
+                [0.5, '#DDDF0D'], // yellow
+                [0.9, '#DF5353'] // red
+            ],
+            lineWidth: 0,
+            tickWidth: 0,
+            minorTickInterval: null,
+            tickAmount: 2,
+            title: {
+                y: -70
+            },
+            labels: {
+                y: 16
+            }
+        },
+        plotOptions: {
+            solidgauge: {
+                dataLabels: {
+                    y: 5,
+                    borderWidth: 0,
+                    useHTML: true
+                }
+            }
+        },
+        series: [{
+            name: 'Completed Activities',
+            data: [totcompletedact],
+            dataLabels: {
+                format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/>' +
+                    '<span style="font-size:12px;opacity:0.4">Completed</span></div>'
+            },
+            tooltip: {
+                valueSuffix: ''
+            }
+        }]
+    });
+});
+
+</script>
+
 
 
 

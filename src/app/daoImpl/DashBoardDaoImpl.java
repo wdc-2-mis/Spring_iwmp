@@ -21,6 +21,7 @@ import app.bean.AddOutcomeParaBean;
 import app.bean.DolrSupportBean;
 import app.bean.ProjectLocationBean;
 import app.bean.TargetAchDashboardBean;
+import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
 import app.dao.DashBoardDao;
@@ -266,6 +267,13 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	
 	@Value("${getPreYatraData}")
 	String getPreYatraData;
+	
+	@Value("${totplannedloc}")
+	String totplannedloc;
+	
+	@Value("${completedyatraloc}")
+	String completedyatraloc;
+	
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -2275,12 +2283,25 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			query = session.createSQLQuery(inghql);
 			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
 			list = query.list();
-			map.put("ing",list);
 			
-			list = new ArrayList<>();
+			List<WatrshdInagrtnPreYtraDashBean> villist = new ArrayList<>();
 			query = session.createSQLQuery(wtrhql);
 			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
-			list = query.list();
+			villist = query.list();
+			
+			WatrshdInagrtnPreYtraDashBean bean = new WatrshdInagrtnPreYtraDashBean();
+			bean.setTotstates(villist.get(0).getTotstates());
+			bean.setTotparticipants(list.get(0).getTotparticipants().add(villist.get(0).getTotparticipants()));
+			bean.setTotarexperiencedpeople(villist.get(0).getTotarexperiencedpeople());
+			bean.setTotquizparticipants(villist.get(0).getTotquizparticipants());
+			bean.setTotyatraloc(villist.get(0).getTotyatraloc());
+			bean.setTotbhumipujanworks(list.get(0).getTotbhumipujanworks().add(villist.get(0).getTotbhumipujanworks()));
+			bean.setTotlokarpanworks(list.get(0).getTotlokarpanworks().add(villist.get(0).getTotlokarpanworks()));
+			bean.setTotshramdannlocationno(list.get(0).getTotshramdannlocationno().add(villist.get(0).getTotshramdannlocationno()));
+			bean.setTotawarddistribution(list.get(0).getTotawarddistribution().add(villist.get(0).getTotawarddistribution()));
+			bean.setTotplantation(list.get(0).getTotplantation().add(villist.get(0).getTotplantation()));
+			list = new ArrayList<>();
+			list.add(bean);
 			map.put("wtr",list);
 			
 			list = new ArrayList<>();
@@ -2300,6 +2321,49 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			session.getTransaction().rollback();
 		}
 		return map;
+	}
+
+	@Override
+	public List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData() {
+		
+		String plochql = totplannedloc;
+		String clochql = completedyatraloc;
+		List<WatershedYatraDashboardChartBean> list = new ArrayList<WatershedYatraDashboardChartBean>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			WatershedYatraDashboardChartBean bean = new WatershedYatraDashboardChartBean();
+			session.beginTransaction();
+			query = session.createSQLQuery(plochql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
+			list = query.list();
+			Integer val1 = 200;
+//			bean.setTotplannedloc(list.get(0).getTotplannedloc().multiply(BigInteger.valueOf(val1)));
+			bean.setTotplannedloc(list.get(0).getTotplannedloc());
+			
+			query = session.createSQLQuery(clochql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
+			list = query.list();
+			bean.setCompletedyatraloc(list.get(0).getCompletedyatraloc());
+			Integer val = 10;
+			bean.setTotplannedact(list.get(0).getCompletedyatraloc().multiply(BigInteger.valueOf(val)));
+			bean.setTotcompletedact(list.get(0).getTotcompletedact());
+			list = new ArrayList<>();
+			list.add(bean);
+			
+			session.getTransaction().commit();
+			
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		
+		return list;
 	}
 
 	
