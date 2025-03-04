@@ -1891,8 +1891,8 @@ public class WatershedYatraReportController {
 			CommonFunctions.insertCellHeader(table, "Block Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Gram Panchayat", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Village", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Yatra Type", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Entry Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Photo1 Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Photo2 Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1924,21 +1924,29 @@ public class WatershedYatraReportController {
 					CommonFunctions.insertCell(table, list.get(i).getBlockname(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getGramname(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getVillagename(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getYatratype().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getEntrydate().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					if (list.get(i).getYatratype().equals("gramSabha")) {
+						CommonFunctions.insertCell(table,"Gram Sabha/Special Gram Sabha", Element.ALIGN_LEFT, 1, 1, bf8);
+					} else if (list.get(i).getYatratype().equals("prabhatPheri")) {
+						CommonFunctions.insertCell(table,"Prabhat Pheri", Element.ALIGN_LEFT, 1, 1, bf8);
+					} else {
+						CommonFunctions.insertCell(table,"", Element.ALIGN_LEFT, 1, 1, bf8);
+					}
+					
+					CommonFunctions.insertCell(table, list.get(i).getEntrydate().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					String participants = list.get(i).getParticipants() != null ? list.get(i).getParticipants().toString() : "";
-					CommonFunctions.insertCell(table, participants, Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, participants, Element.ALIGN_LEFT, 1, 1, bf8);
 
 					//CommonFunctions.insertCell(table, list.get(i).getParticipants().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					String photo1Time = list.get(i).getPhoto1time() != null ? list.get(i).getPhoto1time().toString() : "";
-					CommonFunctions.insertCell(table, photo1Time, Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, photo1Time, Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					String photo2Time = list.get(i).getPhoto2time() != null ? list.get(i).getPhoto2time().toString() : "";
-					CommonFunctions.insertCell(table, photo2Time, Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, photo2Time, Element.ALIGN_LEFT, 1, 1, bf8);
 
 //					CommonFunctions.insertCell(table, list.get(i).getPhoto1time().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 //					CommonFunctions.insertCell(table, list.get(i).getPhoto2time().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getRemarks(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getRemarks(), Element.ALIGN_LEFT, 1, 1, bf8);
 					StName = list.get(i).getStname();
 					k = k + 1;
 				}
@@ -2038,12 +2046,12 @@ public class WatershedYatraReportController {
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		
 		cell = rowhead.createCell(6);
-		cell.setCellValue("Yatra Type");  
+		cell.setCellValue("Activity");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		
 		cell = rowhead.createCell(7);
-		cell.setCellValue("Entry Date");  
+		cell.setCellValue("Date");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		
@@ -2089,7 +2097,13 @@ public class WatershedYatraReportController {
 			row.createCell(3).setCellValue(bean.getBlockname());  
 			row.createCell(4).setCellValue(bean.getGramname()); 
 			row.createCell(5).setCellValue(bean.getVillagename()); 
-			row.createCell(6).setCellValue(bean.getYatratype()); 
+			if (bean.getYatratype().equals("gramSabha")) {
+			    row.createCell(6).setCellValue("Gram Sabha/Special Gram Sabha");
+			} else if (bean.getYatratype().equals("prabhatPheri")) {
+			    row.createCell(6).setCellValue("Prabhat Pheri");
+			} else {
+			    row.createCell(6).setCellValue("");
+			}
 			row.createCell(7).setCellValue(bean.getEntrydate());
 			  String participants = (bean.getParticipants() != null) ? bean.getParticipants().toString() : "";
 			row.createCell(8).setCellValue(participants);
