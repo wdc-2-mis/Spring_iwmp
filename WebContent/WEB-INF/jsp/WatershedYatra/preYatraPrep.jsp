@@ -522,7 +522,15 @@ if (allValid) {
         <c:when test="${not empty comprecords}">
             <c:forEach var="comprecords" items="${comprecords}" varStatus="loop">
                 <tr>
-                    <td>${loop.count}</td>  <%-- Correct serial number --%>
+                    <c:if test="${userType== 'SL' }">
+	                <td>${loop.count}&nbsp;<input type="checkbox" class="chkIndividual" id="${comprecords.prep_id}"  name="${comprecords.prep_id}" value="${comprecords.prep_id}"
+                    data-photo1="${comprecords.photo1}" data-photo2="${comprecords.photo2}"/></td>
+                    </c:if>
+                    
+                    <c:if test="${userType== 'PI' }">
+                    <td>${loop.count}</td>
+                    </c:if>
+                    
                     <td><button class="btn btn-warning btn-sm" onclick="editCRecord(${comprecords.prep_id})"> Edit </button></td>
                     <td>${comprecords.districtname}</td>
                     <td>${comprecords.blockname}</td>
@@ -559,6 +567,11 @@ if (allValid) {
 
 	 </div>
 	 </div>   
+	 <c:if test="${userType== 'SL' }">
+	  <div class="form-group text-center">
+     				<input type="button" class="btn btn-info" id="deletePreYatra" name="deletePreYatra" value ="Delete"/>
+     			</div>
+     	</c:if>		
 	    			</div>
 	    		<footer class=" text-center">
 	            <%@include file="/WEB-INF/jspf/footer2.jspf"%>

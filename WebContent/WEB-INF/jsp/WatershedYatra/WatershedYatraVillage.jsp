@@ -1171,7 +1171,7 @@ display: none; /* Hidden by default */
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
 								<th rowspan="3">Action</th> 
-								<th rowspan="3">S.No.  </th>  
+								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> Select All</th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
 								<th rowspan="3">District Name</th> 
@@ -1274,7 +1274,12 @@ display: none; /* Hidden by default */
  							</tr>
  						</c:forEach>
  						
- 						
+ 						<tr>
+								
+								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+							
+							
+							</tr>
  						
 						<c:if test="${comdataListSize eq 0}">
 							<tr>

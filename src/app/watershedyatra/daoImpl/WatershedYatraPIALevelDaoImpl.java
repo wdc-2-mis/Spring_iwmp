@@ -64,13 +64,14 @@ public class WatershedYatraPIALevelDaoImpl implements WatershedYatraPIALevelDao{
 	public LinkedHashMap<String, Integer> getWatershedYatraAtPiaGPs(Integer blkCode, String userid) {
 		
 		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
-		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where createdBy=:userid) ";
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where createdBy=:userid) and village.iwmpGramPanchayat.iwmpBlock.bcode = :blkCode ";
 		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(hql);
 			query.setString("userid", userid);
+			query.setParameter("blkCode", blkCode);
 			villList = query.list();
 		
 			for (IwmpVillage vill : villList) {

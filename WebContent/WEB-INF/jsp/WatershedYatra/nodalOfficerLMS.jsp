@@ -312,7 +312,14 @@ input[type=email] {
 						<c:set var="proj" value="" />
 						<c:forEach items="${completetList}" var="dataV" varStatus="count">
 							<tr>
-							 	<td><c:out value='${count.count}' />  </td>
+							<c:if test="${userType== 'SL' }">
+							<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${dataV.nodal_id}"  name="${dataV.nodal_id}" value="${dataV.nodal_id}"/> </td>
+							</c:if>
+							
+							 <c:if test="${userType== 'PI' }">	
+							 <td><c:out value='${count.count}' />  </td>
+							 </c:if>	
+							 	
 								<c:if test="${dataV.level eq 'state'}">
 									<td> <c:out value="State" /></td>	
 								</c:if>
@@ -351,9 +358,15 @@ input[type=email] {
 		</table>
 		</div>
 		</div>
-     	
-     	
-     	
+     	<c:if test="${userType== 'SL' }">
+     	<c:if test="${completeListSize gt 0}">
+		<div class="form-row">
+				<div class="form-group col">
+     				<input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete Draft Nodal Officer"/>
+     			</div>
+     		</div>
+     	</c:if>
+     	</c:if>
      	
      	
 		</form>
