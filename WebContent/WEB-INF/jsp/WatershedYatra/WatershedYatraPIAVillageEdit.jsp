@@ -914,7 +914,7 @@ display: none; /* Hidden by default */
 			<label>
 		<span style="color:blue;">Note:- The Image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label>
-		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="updateWatershedYatraAtVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
+		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="updateWatershedYatraAtPIAVillage" modelAttribute="useruploadsl" enctype="multipart/form-data">
 			
 			<hr/>
 			<c:forEach items="${dataList}" var="data" varStatus="count">
