@@ -119,35 +119,48 @@ public class WatershedYatraStatusController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 14, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 16, areaAmtValDetail, workbook);
 		
-		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,0,0);
+		mergedRegion = new CellRangeAddress(5,7,0,0);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,1,1);
+		mergedRegion = new CellRangeAddress(5,7,1,1);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,2,2);
+		mergedRegion = new CellRangeAddress(5,7,2,2);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,3,3);
+		mergedRegion = new CellRangeAddress(5,7,3,3);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,4,4);
+		mergedRegion = new CellRangeAddress(5,7,4,4);
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(5,5,5,6);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,7,7);
+		
+		mergedRegion = new CellRangeAddress(6,7,5,5);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,5,8,9);
+		mergedRegion = new CellRangeAddress(6,7,6,6);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,10,10);
+		
+		mergedRegion = new CellRangeAddress(5,7,7,7);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,11,11);
+		
+		mergedRegion = new CellRangeAddress(6,6,8,9);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,12,12);
+		mergedRegion = new CellRangeAddress(6,6,10,11);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,13,13);
+		
+		
+		mergedRegion = new CellRangeAddress(5,5,8,11);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,14,14);
+		mergedRegion = new CellRangeAddress(5,7,12,12);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,13,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,14,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,15,15);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,16,16);
 		sheet.addMergedRegion(mergedRegion);
 		
 		
@@ -202,34 +215,37 @@ public class WatershedYatraStatusController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(9);
-		cell.setCellStyle(style);
+		for(int i=9; i<13; i++)
+		{
+			cell = rowhead.createCell(i); 
+			cell.setCellStyle(style);
+		}
 		
-		cell = rowhead.createCell(10);
+		cell = rowhead.createCell(12);
 		cell.setCellValue("AR Experience (No. of Peoples)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(11);
+		cell = rowhead.createCell(13);
 		cell.setCellValue("Bhoomi Poojan (No. of Works)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(12);
+		cell = rowhead.createCell(14);
 		cell.setCellValue("Lokarpan (No. of Works)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(13);
-		cell.setCellValue("Sharmdaan (No. of Locations)");
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Shramdaan (No. of Locations)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(14);
+		cell = rowhead.createCell(16);
 		cell.setCellValue("Plantation (No. of Agro Forestry)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
@@ -247,11 +263,13 @@ public class WatershedYatraStatusController {
 		cell = rowhead1.createCell(5);
 		cell.setCellValue("Completed Activity");
 		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
 		cell = rowhead1.createCell(6);
 		cell.setCellValue("Not Completed Activity");
 		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
 		cell = rowhead1.createCell(7);
@@ -263,11 +281,14 @@ public class WatershedYatraStatusController {
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
 		cell = rowhead1.createCell(9);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(10);
 		cell.setCellValue("Prabhat Phere");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		for(int i=10; i<15; i++)
+		for(int i=11; i<17; i++)
 		{
 			cell = rowhead1.createCell(i); 
 			cell.setCellStyle(style);
@@ -276,16 +297,51 @@ public class WatershedYatraStatusController {
 		
 		Row rowhead2 = sheet.createRow(7);
 		
-		for(int i=0;i<15;i++)
+		for(int i=0; i<8; i++)
 		{
-			cell =rowhead2.createCell(i);
+			cell = rowhead2.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("Total No. of Locations");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(9);
+		cell.setCellValue("Total No. of Participants");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(10);
+		cell.setCellValue("Total No. of Locations");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(11);
+		cell.setCellValue("Total No. of Participants");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=12; i<17; i++)
+		{
+			cell = rowhead2.createCell(i); 
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead3 = sheet.createRow(8);
+		
+		for(int i=0;i<17;i++)
+		{
+			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
 		
 		
 		int sno = 1;
-		int rowno  = 8;
+		int rowno  = 9;
 		int totproj = 0;
 		int locPlan = 0;
 		int locComp = 0;
@@ -298,6 +354,8 @@ public class WatershedYatraStatusController {
 		int lokarpan = 0;
 		int shramdaan = 0;
 		int plantation = 0;
+		int gramSabhaprtcpnts = 0;
+		int prabhatPheriprtcpnts = 0;
 		
 		
 	    for(WatershedYatraStatusBean bean: list) {
@@ -312,12 +370,14 @@ public class WatershedYatraStatusController {
 	    	row.createCell(6).setCellValue(bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
 	    	row.createCell(7).setCellValue(bean.getInauguration_date());
 	    	row.createCell(8).setCellValue(bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
-	    	row.createCell(9).setCellValue(bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
-	    	row.createCell(10).setCellValue(bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
-	    	row.createCell(11).setCellValue(bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
-	    	row.createCell(12).setCellValue(bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
-	    	row.createCell(13).setCellValue(bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
-	    	row.createCell(14).setCellValue(bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
+	    	row.createCell(9).setCellValue(bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
+	    	row.createCell(10).setCellValue(bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
+	    	row.createCell(11).setCellValue(bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
+	    	row.createCell(12).setCellValue(bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
+	    	row.createCell(13).setCellValue(bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
+	    	row.createCell(14).setCellValue(bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
+	    	row.createCell(15).setCellValue(bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
+	    	row.createCell(16).setCellValue(bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
 
 	    	totproj = totproj + bean.getTotal_project();
 	    	locPlan = locPlan + bean.getTotal_vanplan();
@@ -325,7 +385,9 @@ public class WatershedYatraStatusController {
 	    	compAct = compAct + (bean.getActivity_entered()!=null ? bean.getActivity_entered() : 0);
 	    	notCompAct = notCompAct + (bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
 			gramSabha = gramSabha + (bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
+			gramSabhaprtcpnts = gramSabhaprtcpnts + (bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
 			prabhatPheri = prabhatPheri + (bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
+			prabhatPheriprtcpnts = prabhatPheriprtcpnts + (bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
 			arExp = arExp + (bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
 			bhoomiPoojan = bhoomiPoojan + (bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
 			lokarpan = lokarpan + (bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
@@ -349,7 +411,7 @@ public class WatershedYatraStatusController {
 		//			font1.setColor(IndexedColors.WHITE.getIndex());
 		style1.setFont(font1);
 
-		Row row = sheet.createRow(list.size()+8);
+		Row row = sheet.createRow(list.size()+9);
 		cell = row.createCell(0);
 		cell.setCellValue("Grand Total");
 		cell.setCellStyle(style1);
@@ -377,26 +439,32 @@ public class WatershedYatraStatusController {
 		cell.setCellValue(gramSabha);
 		cell.setCellStyle(style1);
 		cell = row.createCell(9);
-		cell.setCellValue(prabhatPheri);
+		cell.setCellValue(gramSabhaprtcpnts);
 		cell.setCellStyle(style1);
 		cell = row.createCell(10);
-		cell.setCellValue(arExp);
+		cell.setCellValue(prabhatPheri);
 		cell.setCellStyle(style1);
 		cell = row.createCell(11);
-		cell.setCellValue(bhoomiPoojan);
+		cell.setCellValue(prabhatPheriprtcpnts);
 		cell.setCellStyle(style1);
 		cell = row.createCell(12);
-		cell.setCellValue(lokarpan);
+		cell.setCellValue(arExp);
 		cell.setCellStyle(style1);
 		cell = row.createCell(13);
-		cell.setCellValue(shramdaan);
+		cell.setCellValue(bhoomiPoojan);
 		cell.setCellStyle(style1);
 		cell = row.createCell(14);
+		cell.setCellValue(lokarpan);
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(shramdaan);
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
 		cell.setCellValue(plantation);
 		cell.setCellStyle(style1);
 	    
 		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 14);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 16);
 	    String fileName = "attachment; filename=Report Watershed Yatra Status - State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -445,32 +513,42 @@ public class WatershedYatraStatusController {
 		        CommonFunctions.addHeader(document);
 		        document.add(paragraph2);
 		        document.add(paragraph3);
-		        table = new PdfPTable(15);
-		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		        table = new PdfPTable(17);
+		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 		        table.setWidthPercentage(100);
 		        table.setSpacingBefore(0f);
 		        table.setSpacingAfter(0f);
-		        table.setHeaderRows(2);
+		        table.setHeaderRows(3);
 							
 		        
-				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Location Planned", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Location Completed", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Location Planned", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Location Completed", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Activity", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "State Inauguration Date", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "No. of Locations Where Pre Yatra Activities Completed", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "AR Experience (No. of Peoples)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Bhoomi Poojan (No. of Works)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Lokarpan (No. of Works)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Sharmdaan (No. of Locations)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Plantation (No. of Agro Forestry)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "State Inauguration Date", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of Locations Where Pre Yatra Activities Completed", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 				
-				CommonFunctions.insertCellHeader(table, "Completed Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Not Completed Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Gram Sabha", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Prabhat Phere", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table, "AR Experience (No. of Peoples)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Bhoomi Poojan (No. of Works)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Lokarpan (No. of Works)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Shramdaan (No. of Locations)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Plantation (No. of Agro Forestry)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table, "Completed Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Not Completed Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table, "Gram Sabha", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Prabhat Phere", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table, "Total No. of Locations", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Locations", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				
 				
 		        
 				CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -488,6 +566,8 @@ public class WatershedYatraStatusController {
 				CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "17", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 				
 				int k = 1;
@@ -497,7 +577,9 @@ public class WatershedYatraStatusController {
 				int compAct = 0;
 				int notCompAct = 0;
 				int gramSabha = 0;
+				int gramSabhaPrtcpnts = 0;
 				int prabhatPheri = 0;
+				int prabhatPheriPrtcpnts = 0;
 				int arExp = 0;
 				int bhoomiPoojan = 0;
 				int lokarpan = 0;
@@ -517,7 +599,9 @@ public class WatershedYatraStatusController {
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getInauguration_date()!=null ? list.get(i).getInauguration_date() : ""), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -531,7 +615,9 @@ public class WatershedYatraStatusController {
 				    	compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
 				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
 						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
+						gramSabhaPrtcpnts = gramSabhaPrtcpnts + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
 						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
+						prabhatPheriPrtcpnts = prabhatPheriPrtcpnts + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
 						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
 						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
 						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
@@ -550,7 +636,9 @@ public class WatershedYatraStatusController {
 				CommonFunctions.insertCell3(table, String.valueOf(notCompAct), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(gramSabha), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(gramSabhaPrtcpnts), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(prabhatPheri), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(prabhatPheriPrtcpnts), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(arExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(bhoomiPoojan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(lokarpan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -559,7 +647,7 @@ public class WatershedYatraStatusController {
 				
 				
 				if(list.size()==0) 
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 15, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 17, 1, bf8);
 				
 				
 		document.add(table);
@@ -615,7 +703,7 @@ public class WatershedYatraStatusController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 13, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 15, areaAmtValDetail, workbook);
 		
 		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
 		sheet.addMergedRegion(mergedRegion);
@@ -943,34 +1031,39 @@ public class WatershedYatraStatusController {
 		        CommonFunctions.addHeader(document);
 		        document.add(paragraph2);
 		        document.add(paragraph3);
-		        table = new PdfPTable(14);
-		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		        table = new PdfPTable(16);
+		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 		        table.setWidthPercentage(100);
 		        table.setSpacingBefore(0f);
 		        table.setSpacingAfter(0f);
-		        table.setHeaderRows(3);
+		        table.setHeaderRows(5);
 				
-		        CommonFunctions.insertCellHeader(table, "State : "+stName+"     Inauguration Date : "+inaugurationDate, Element.ALIGN_LEFT, 14, 1, bf8Bold);
+		        CommonFunctions.insertCellHeader(table, "State : "+stName+"     Inauguration Date : "+inaugurationDate, Element.ALIGN_LEFT, 16, 1, bf8Bold);
 		        
-				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Location Planned", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Location Completed", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Location Planned", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Location Completed", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Activity", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "No. of Locations Where Pre Yatra Activities Completed", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "AR Experience (No. of Peoples)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Bhoomi Poojan (No. of Works)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Lokarpan (No. of Works)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Sharmdaan (No. of Locations)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Plantation (No. of Agro Forestry)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of Locations Where Pre Yatra Activities Completed", Element.ALIGN_CENTER, 4, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "AR Experience (No. of Peoples)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Bhoomi Poojan (No. of Works)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Lokarpan (No. of Works)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Shramdaan (No. of Locations)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Plantation (No. of Agro Forestry)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 				
-				CommonFunctions.insertCellHeader(table, "Completed Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Not Completed Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Gram Sabha", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Prabhat Phere", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Completed Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Not Completed Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Gram Sabha", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Prabhat Phere", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 				
-		        
+				CommonFunctions.insertCellHeader(table, "Total No. of Locations", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Locations", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total No. of Participants", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				
 				CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -985,6 +1078,8 @@ public class WatershedYatraStatusController {
 				CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 				
 				int k = 1;
@@ -994,7 +1089,9 @@ public class WatershedYatraStatusController {
 				int compAct = 0;
 				int notCompAct = 0;
 				int gramSabha = 0;
+				int gramSabhapart = 0;
 				int prabhatPheri = 0;
+				int prabhatPheripart = 0;
 				int arExp = 0;
 				int bhoomiPoojan = 0;
 				int lokarpan = 0;
@@ -1007,32 +1104,53 @@ public class WatershedYatraStatusController {
 					{
 						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getDist_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_vanplan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_locv()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getActivity_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getAct_not_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_arexp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_bhoomi_poojan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_lokarpan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_shramdaan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						//CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_plantation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project()), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_vanplan()), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_locv()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getActivity_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getAct_not_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_arexp()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_bhoomi_poojan()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_lokarpan()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_shramdaan()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_plantation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						
 						
 						totproj = totproj + list.get(i).getTotal_project();
 				    	locPlan = locPlan + list.get(i).getTotal_vanplan();
 				    	locComp = locComp + list.get(i).getTotal_locv();
-				    	compAct = compAct + (list.get(i).getActivity_entered());
-				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered());
-						gramSabha = gramSabha + (list.get(i).getGramsabha());
-						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri());
-						arExp = arExp + (list.get(i).getTotal_arexp());
-						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan());
-						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan());
-						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan());
-						plantation =  plantation + (list.get(i).getTotal_plantation());
+						
+						compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
+				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
+						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
+						gramSabhapart= gramSabhapart + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
+						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
+						prabhatPheripart = prabhatPheripart + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
+						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
+						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
+						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
+						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0);
+						plantation =  plantation + (list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0);
+						
 						
 						k++;
 					}
@@ -1045,7 +1163,9 @@ public class WatershedYatraStatusController {
 				CommonFunctions.insertCell3(table, String.valueOf(compAct), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(notCompAct), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(gramSabha), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(gramSabhapart), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(prabhatPheri), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(prabhatPheripart), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(arExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(bhoomiPoojan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(lokarpan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -1054,7 +1174,7 @@ public class WatershedYatraStatusController {
 				
 				
 				if(list.size()==0) 
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 14, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 16, 1, bf8);
 				
 				
 		document.add(table);

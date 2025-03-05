@@ -48,20 +48,27 @@ function exportExcel(){
 		<th rowspan="3" class="text-center">Location Planned</th>
 		<th rowspan="3" class="text-center">Location Completed</th>
 		<th colspan="2" class="text-center">Activity</th>
-		<th rowspan="2" class="text-center">State Inauguration Date</th>
-		<th colspan="2" class="text-center">No. of Locations Where Pre Yatra Activities Completed</th>
-		<th rowspan="2" class="text-center">AR Experience (No. of Peoples)</th>
-		<th rowspan="2" class="text-center">Bhoomi Poojan (No. of Works)</th>
-		<th rowspan="2" class="text-center">Lokarpan (No. of Works)</th>
-		<th rowspan="2" class="text-center">Sharmdaan (No. of Locations)</th>
-		<th rowspan="2" class="text-center">Plantation (No. of Agro Forestry)</th>
+		<th rowspan="3" class="text-center">State Inauguration Date</th>
+		<th colspan="4" class="text-center">No. of Locations Where Pre Yatra Activities Completed</th>
+		<th rowspan="3" class="text-center">AR Experience (No. of Peoples)</th>
+		<th rowspan="3" class="text-center">Bhoomi Poojan (No. of Works)</th>
+		<th rowspan="3" class="text-center">Lokarpan (No. of Works)</th>
+		<th rowspan="3" class="text-center">Shramdaan (No. of Locations)</th>
+		<th rowspan="3" class="text-center">Plantation (No. of Agro Forestry)</th>
 		</tr>
 		
 		<tr>
 		<th rowspan="3" class="text-center">Completed Activity</th>
 		<th rowspan="3" class="text-center">Not Completed Activity</th>
-		<th rowspan="2" class="text-center">Gram Sabha</th>
-		<th rowspan="2" class="text-center">Prabhat Phere</th>
+		<th colspan="2" class="text-center">Gram Sabha</th>
+		<th colspan="2" class="text-center">Prabhat Phere</th>
+		
+		</tr>
+		<tr>
+		<th  class="text-center">Total No. of Locations</th>
+		<th  class="text-center">Total  No. of Participants</th>
+		<th  class="text-center">Total  No. of Locations</th>
+		<th  class="text-center">Total  No. of Participants</th>
 		
 		</tr>
 </thead>
@@ -78,9 +85,12 @@ function exportExcel(){
 					<td class="text-right"><c:out value="${project.total_locv}" /></td>
 					<td class="text-right"><c:out value="${not empty project.activity_entered ? project.activity_entered : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.act_not_entered ? project.act_not_entered : 0}" /></td>
+					
 					<td class="text-right"><c:out value="${project.inauguration_date}" /></td>
 					<td class="text-right"><c:out value="${not empty project.gramsabha ? project.gramsabha : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.gramsabha_participants ? project.gramsabha_participants : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.prabhatpheri ? project.prabhatpheri : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.prabhatpheri_participants ? project.prabhatpheri_participants : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_arexp ? project.total_arexp : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_bhoomi_poojan ? project.total_bhoomi_poojan : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_lokarpan ? project.total_lokarpan : 0}" /></td>
@@ -101,7 +111,9 @@ function exportExcel(){
         <td align="right" class="table-primary" id="totalActNotEntered"></td>
         <td align="right" class="table-primary"></td> <!-- For inauguration date -->
         <td align="right" class="table-primary" id="totalPrabhatpheri"></td>
+        <td align="right" class="table-primary" id="totalPrabhatpheripartcpnts"></td>
         <td align="right" class="table-primary" id="totalGramsabha"></td>
+        <td align="right" class="table-primary" id="totalGramsabhapartcpnts"></td>
         <td align="right" class="table-primary" id="totalArexp"></td>
         <td align="right" class="table-primary" id="totalBhoomiPoojan"></td>
         <td align="right" class="table-primary" id="totalLokarpan"></td>
@@ -129,12 +141,14 @@ window.onload = function() {
     const totalActivityEntered = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[5].innerText || 0), 0);
     const totalActNotEntered = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[6].innerText || 0), 0);
     const totalPrabhatpheri = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[8].innerText || 0), 0);
-    const totalGramsabha = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[9].innerText || 0), 0);
-    const totalArexp = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[10].innerText || 0), 0);
-    const totalBhoomiPoojan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[11].innerText || 0), 0);
-    const totalLokarpan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[12].innerText || 0), 0);
-    const totalShramdaan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[13].innerText || 0), 0);
-    const totalPlantation = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[14].innerText || 0), 0);
+    const totalPrabhatpheripartcpnts = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[9].innerText || 0), 0);
+    const totalGramsabha = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[10].innerText || 0), 0);
+    const totalGramsabhapartcpnts = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[11].innerText || 0), 0);
+    const totalArexp = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[12].innerText || 0), 0);
+    const totalBhoomiPoojan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[13].innerText || 0), 0);
+    const totalLokarpan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[14].innerText || 0), 0);
+    const totalShramdaan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[15].innerText || 0), 0);
+    const totalPlantation = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[16].innerText || 0), 0);
 
     document.getElementById('totalProjects').innerHTML = '<b>' + totalProjects + '</b>';
     document.getElementById('totalVanplan').innerHTML = '<b>' + totalVanplan + '</b>';
@@ -148,6 +162,8 @@ window.onload = function() {
     document.getElementById('totalLokarpan').innerHTML = '<b>' + totalLokarpan + '</b>';
     document.getElementById('totalShramdaan').innerHTML = '<b>' + totalShramdaan + '</b>';
     document.getElementById('totalPlantation').innerHTML = '<b>' + totalPlantation + '</b>';
+    document.getElementById('totalPrabhatpheripartcpnts').innerHTML = '<b>' + totalPrabhatpheripartcpnts + '</b>';
+    document.getElementById('totalGramsabhapartcpnts').innerHTML = '<b>' + totalGramsabhapartcpnts + '</b>';
 };
 
 </script>

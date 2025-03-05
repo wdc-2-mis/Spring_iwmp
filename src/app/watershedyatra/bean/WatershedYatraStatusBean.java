@@ -12,6 +12,8 @@ public class WatershedYatraStatusBean {
 	public Integer total_locv;
 	public Integer prabhatpheri;
 	public Integer gramsabha;
+	public Integer prabhatpheri_participants;
+	public Integer gramsabha_participants;
 	public String inauguration_date;
 	public Integer total_arexp;
 	public Integer total_bhoomi_poojan;
@@ -21,6 +23,19 @@ public class WatershedYatraStatusBean {
 	public Integer activity_entered;
 	public Integer act_not_entered;
 	
+	
+	public Integer getPrabhatpheri_participants() {
+		return prabhatpheri_participants;
+	}
+	public void setPrabhatpheri_participants(Integer prabhatpheri_participants) {
+		this.prabhatpheri_participants = prabhatpheri_participants;
+	}
+	public Integer getGramsabha_participants() {
+		return gramsabha_participants;
+	}
+	public void setGramsabha_participants(Integer gramsabha_participants) {
+		this.gramsabha_participants = gramsabha_participants;
+	}
 	public String getSt_name() {
 		return st_name;
 	}
