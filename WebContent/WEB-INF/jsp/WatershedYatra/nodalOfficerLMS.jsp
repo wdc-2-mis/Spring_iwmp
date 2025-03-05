@@ -362,7 +362,7 @@ input[type=email] {
      	<c:if test="${completeListSize gt 0}">
 		<div class="form-row">
 				<div class="form-group col">
-     				<input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete Draft Nodal Officer"/>
+     				<input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/>
      			</div>
      		</div>
      	</c:if>
