@@ -19,12 +19,16 @@
 	padding: 10px;
 	border: 1px solid gray;
 	border-radius: 10px;
+	width: 1870px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .field-row {
 	display: flex;
 	flex-wrap: wrap;
+	padding-left: 170px;
+	padding-right: 170px;
+	align-self: center;
 }
 
 .field-container {
@@ -35,14 +39,15 @@
 	padding-top: 10px;
 	border: 1px solid #ddd;
 	border-radius: 10px;
-	width: 250px;
-	height: 130px;
+	width: 280px;
+	height: 150px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .component-field {
 	margin-left: 10px;
 	color: Green;
+	align-self: center;
 }
 
 .field-title {
