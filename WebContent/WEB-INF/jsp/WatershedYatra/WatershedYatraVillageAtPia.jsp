@@ -1175,7 +1175,7 @@ display: none; /* Hidden by default */
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
-								<!-- <th rowspan="3">Action</th> --> 
+								 <th rowspan="3">Action</th> 
 								<th rowspan="3">S.No.  </th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->

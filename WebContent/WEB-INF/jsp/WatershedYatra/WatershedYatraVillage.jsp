@@ -1041,7 +1041,7 @@ display: none; /* Hidden by default */
       <table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
-								<!-- <th rowspan="3">Action</th>  -->
+								 <th rowspan="3">Action</th>  
 								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> Select All</th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
@@ -1171,7 +1171,7 @@ display: none; /* Hidden by default */
  						<thead class ="theadlist" id = "theadlist"> 
 							<tr> 
 								<th rowspan="3">Action</th> 
-								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /> Select All</th>  
+								<th rowspan="3">S.No.</th>  
 								<th rowspan="3">Date</th> 
 <!--  								<th rowspan="3">State Name</th>  -->
 								<th rowspan="3">District Name</th> 
@@ -1234,7 +1234,9 @@ display: none; /* Hidden by default */
 								data-toggle="modal"><i class="material-icons"
 									data-toggle="tooltip" title="Edit">&#xE254;</i></a> -->
  								</td>
-								<td><c:out value='${count.count}' /> </td>
+ 								
+ 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.watershed_yatra_id}"  name="${data.watershed_yatra_id}" value="${data.watershed_yatra_id}"/></td>
+								
 								<td><c:out value="${data.date}" /></td>
 								<td><c:out value="${data.distname}" /></td>
  								<td><c:out value="${data.blockname}" /></td>
