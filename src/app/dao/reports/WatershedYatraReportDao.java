@@ -1,6 +1,5 @@
 package app.dao.reports;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import app.model.IwmpDistrict;
@@ -9,6 +8,7 @@ import app.model.master.IwmpGramPanchayat;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.StatusVlgDataBean;
 import app.watershedyatra.bean.WatershedYatraStatusBean;
 
 public interface WatershedYatraReportDao {
@@ -23,5 +23,6 @@ public interface WatershedYatraReportDao {
 	List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus();
 	List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd);
+	List<StatusVlgDataBean> getStatusVlgReportData();
 	
 }

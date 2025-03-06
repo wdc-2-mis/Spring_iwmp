@@ -24,6 +24,7 @@ import app.model.master.IwmpGramPanchayat;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.StatusVlgDataBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.bean.WatershedYatraStatusBean;
 
@@ -77,6 +78,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	
 	@Value("${getDistwiseWYRecords}") 
 	String getDistwiseWYRecordsData;
+	
+	@Value("${getWYStatusVlgData}") 
+	String getWYStatusVlgRecordData;
 	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -388,6 +392,24 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 			session.getTransaction().rollback();
 		}
 		return getDetails;
+	}
+
+	@Override
+	public List<StatusVlgDataBean> getStatusVlgReportData() {
+		List<StatusVlgDataBean> getStatusVlgDetails = new ArrayList<StatusVlgDataBean>();
+		String hql= getWYStatusVlgRecordData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(StatusVlgDataBean.class));
+			getStatusVlgDetails = query.list();
+			session.getTransaction().commit();
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return getStatusVlgDetails;
 	}
 
 }

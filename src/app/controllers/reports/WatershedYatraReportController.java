@@ -56,6 +56,7 @@ import app.service.reports.WatershedYatraReportService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.StatusVlgDataBean;
 
 @Controller("WatershedYatraReportController")
 public class WatershedYatraReportController {
@@ -2137,5 +2138,292 @@ public class WatershedYatraReportController {
 		return "reports/preYatraPreparationReport";
 
 	}
+	
+	
+	@RequestMapping(value="/getStatusVlgDataReport", method = RequestMethod.GET)
+	public ModelAndView getStatusVlgDataReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		ModelAndView mav = new ModelAndView();
+		
+			
+		mav = new ModelAndView("WatershedYatra/watershedYatraReportStatusVlgData");
+		
+		List<StatusVlgDataBean> list = new ArrayList<StatusVlgDataBean>();
+		
+		list=ser.getStatusVlgReportData();
+		
+		mav.addObject("statusVlgDataList", list);
+		mav.addObject("statusVlgDataListSize", list.size());
+				
+		return mav; 
+	}
+	
+	@RequestMapping(value = "/downloadExcelStatusVlgDataReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelStatusVlgDataReport(HttpServletRequest request, HttpServletResponse response, Model model) 
+	{
+		
+		List<StatusVlgDataBean> list = new ArrayList<StatusVlgDataBean>();
+		
+		list=ser.getStatusVlgReportData();
+		
+		Workbook workbook = new XSSFWorkbook();  
+		//invoking creatSheet() method and passing the name of the sheet to be created   
+		Sheet sheet = workbook.createSheet("Report - Status of Village-wise Data Entries");   
+
+
+		CellStyle style = CommonFunctions.getStyle(workbook);
+
+		String rptName = "Report - Status of Village-wise Data Entries";
+		String areaAmtValDetail = "";
+
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 7, areaAmtValDetail, workbook);
+
+		mergedRegion = new CellRangeAddress(5,6,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,6,7);
+		sheet.addMergedRegion(mergedRegion);
+		
+		Row rowhead = sheet.createRow(5); 
+
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead.createCell(1);
+		cell.setCellValue("State Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Inauguration Date");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Data Entered Details");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead.createCell(4);
+		cell.setCellStyle(style);
+
+		cell = rowhead.createCell(5);
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Data Not Entered Details");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(7);
+		cell.setCellStyle(style);
+		
+		
+		Row rowhead1 = sheet.createRow(6); 
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(3);
+		cell.setCellValue("Start Date");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Last Date");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("Total No. of Days");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("Missed Dates");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellValue("Total No. of Days");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead2 = sheet.createRow(7); 
+		for(int i=0;i<8;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+
+		int sno = 1;
+		int rowno  = 8;
+		
+		
+		for(StatusVlgDataBean bean: list) {
+			Row row = sheet.createRow(rowno);
+			row.createCell(0).setCellValue(sno); 
+			row.createCell(1).setCellValue(bean.getSt_name());
+			row.createCell(2).setCellValue(bean.getInauguration_date());  
+			row.createCell(3).setCellValue(bean.getStart_date());  
+			row.createCell(4).setCellValue(bean.getLast_date()); 
+			row.createCell(5).setCellValue(bean.getEntered_days()); 
+			row.createCell(6).setCellValue(bean.getMissed_dates());
+			row.createCell(7).setCellValue(bean.getMissed_days());
+			
+			sno++;
+			rowno++;
+		}
+
+
+		CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+		String fileName = "attachment; filename=Report Status Village Data - State.xlsx";
+
+		CommonFunctions.downloadExcel(response, workbook, fileName);
+
+		return "WatershedYatra/watershedYatraReportStatusVlgData";
+
+	}
+	
+	@RequestMapping(value = "/downloadPDFStatusVlgDataReport", method = RequestMethod.POST)
+	public ModelAndView downloadPDFStatusVlgDataReport(HttpServletRequest request, HttpServletResponse response) {
+
+        
+		List<StatusVlgDataBean> list = new ArrayList<StatusVlgDataBean>();
+		
+		list=ser.getStatusVlgReportData();
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Report - Status of Village-wise Data Entries");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph("Report - Status of Village-wise Data Entries", f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(8);
+			table.setWidths(new int[] { 1, 4, 3, 2, 2, 3, 10, 3 });
+			table.setWidthPercentage(70);
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(2);
+			
+			
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Inauguration Date", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Data Entered Details", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Data Not Entered Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Start Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Last Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Days", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Missed Dates", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Days", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			int i = 0;
+			int k = 1;
+
+			if (list.size() != 0)
+				for (i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getInauguration_date(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStart_date(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getLast_date(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getEntered_days().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMissed_dates(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMissed_days().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+
+					k = k + 1;
+				}
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+			CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Status Village Data Report.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
 }
 
