@@ -15,6 +15,7 @@ import app.service.reports.WatershedYatraReportService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.StatusVlgDataBean;
 import app.watershedyatra.bean.WatershedYatraStatusBean;
 
 @Service("WatershedYatraReportService")
@@ -104,6 +105,13 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 	@Override
 	public List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd) {
 		return dao.getDistWiseWatershedYatraStatus(stcd);
+	}
+
+
+
+	@Override
+	public List<StatusVlgDataBean> getStatusVlgReportData() {
+		return dao.getStatusVlgReportData();
 	}
 
 }

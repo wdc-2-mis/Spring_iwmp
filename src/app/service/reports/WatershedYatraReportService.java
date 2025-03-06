@@ -1,15 +1,14 @@
 package app.service.reports;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import app.bean.AddOutcomeParaBean;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.StatusVlgDataBean;
 import app.watershedyatra.bean.WatershedYatraStatusBean;
 
 @Service("WatershedYatraReportService")
@@ -25,5 +24,6 @@ public interface WatershedYatraReportService {
 	List<PreYatraPreparationBean> getPreYatraPreparationReportData(Integer State, Integer district, Integer block, Integer grampan);
 	List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus();
 	List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd);
+	List<StatusVlgDataBean> getStatusVlgReportData();
 
 }
