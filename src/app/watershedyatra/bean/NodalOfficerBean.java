@@ -1,5 +1,7 @@
 package app.watershedyatra.bean;
 
+import java.util.Date;
+
 public class NodalOfficerBean {
 	
 	private int nodal_id;
@@ -27,6 +29,20 @@ public class NodalOfficerBean {
     private int flagwise;
     private String time1;
     private String time2;
+    
+    
+    private String st_name;
+    private int statecode;
+    private String yatradate;
+    private int monthid;
+    private String month_name;
+    private int total_participants;
+    private Date yatra_date11;
+    
+    
+    
+    
+    
     
 	public int getNodal_id() {
 		return nodal_id;
@@ -177,6 +193,48 @@ public class NodalOfficerBean {
 	}
 	public void setTime2(String time2) {
 		this.time2 = time2;
+	}
+	public String getSt_name() {
+		return st_name;
+	}
+	public void setSt_name(String st_name) {
+		this.st_name = st_name;
+	}
+	public int getStatecode() {
+		return statecode;
+	}
+	public void setStatecode(int statecode) {
+		this.statecode = statecode;
+	}
+	public String getYatradate() {
+		return yatradate;
+	}
+	public void setYatradate(String yatradate) {
+		this.yatradate = yatradate;
+	}
+	public int getMonthid() {
+		return monthid;
+	}
+	public void setMonthid(int monthid) {
+		this.monthid = monthid;
+	}
+	public String getMonth_name() {
+		return month_name;
+	}
+	public void setMonth_name(String month_name) {
+		this.month_name = month_name;
+	}
+	public int getTotal_participants() {
+		return total_participants;
+	}
+	public void setTotal_participants(int total_participants) {
+		this.total_participants = total_participants;
+	}
+	public Date getYatra_date11() {
+		return yatra_date11;
+	}
+	public void setYatra_date11(Date yatra_date11) {
+		this.yatra_date11 = yatra_date11;
 	}
     
     
