@@ -253,8 +253,55 @@ public class WatershedYatraParticipantController {
 				
 				
 				
-			//	list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
-				
+				List<String> monthList = (List<String>) request.getAttribute("monthList");
+	             
+	            String prevMonth = ""; // To track the previous month
+	            String prevMonthName = ""; // To track the previous month's name
+	            String currentMonthName = "";
+	            int monthCount = 0; // To count the number of columns for the current month
+	            for (int i = 0; i < monthListSize; i++) {
+	                // Get the current date
+	                String fullDate = monthdate1.get(i);
+	                String[] dateParts = fullDate.split("/"); // Split the date using "/"
+	                String month = dateParts[1]; // Get the MM part
+
+	                // Convert MM to Month Name
+	                switch (month) {
+	                    case "01": currentMonthName = "January"; break;
+	                    case "02": currentMonthName = "February"; break;
+	                    case "03": currentMonthName = "March"; break;
+	                    case "04": currentMonthName = "April"; break;
+	                    case "05": currentMonthName = "May"; break;
+	                    case "06": currentMonthName = "June"; break;
+	                    case "07": currentMonthName = "July"; break;
+	                    case "08": currentMonthName = "August"; break;
+	                    case "09": currentMonthName = "September"; break;
+	                    case "10": currentMonthName = "October"; break;
+	                    case "11": currentMonthName = "November"; break;
+	                    case "12": currentMonthName = "December"; break;
+	                    default: currentMonthName = "Invalid Month"; break;
+	                }
+
+	                // Check if the month has changed
+	                if (!month.equals(prevMonth)) {
+	                    // If it's a new month, print the previous month's header
+	                    if (!prevMonth.equals("")) {
+	                    	CommonFunctions.insertCellHeader(table, prevMonthName, Element.ALIGN_CENTER, monthCount+2, 1, bf8Bold);
+	                    }
+	                    prevMonth = month;
+	                    prevMonthName = currentMonthName;
+	                    monthCount = 1;
+	                } else {
+	                    // If it's the same month, increment the counter
+	                    monthCount++;
+	                }
+	            }
+	            
+	            // Print the last month's header after the loop ends
+	            if (!prevMonth.equals("")) {
+	            	
+	            	CommonFunctions.insertCellHeader(table, prevMonthName, Element.ALIGN_CENTER, monthCount+2, 1, bf8Bold);
+	            }
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				for (String monthdt : monthdate1) {
@@ -329,6 +376,7 @@ public class WatershedYatraParticipantController {
 		os.close();
 	
 	} 
+	            
 	catch (Exception ex) 
 	{
 		ex.printStackTrace();
