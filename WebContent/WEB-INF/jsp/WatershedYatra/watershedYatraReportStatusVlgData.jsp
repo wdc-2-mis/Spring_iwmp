@@ -54,7 +54,7 @@ function exportExcel()
 </div>
 
 <br>
-<div class ="card">
+<!-- <div class ="card"> -->
 <div class="row">
 <div class="col-1" ></div>
 <div class="col-10">
@@ -132,7 +132,7 @@ function exportExcel()
     <br>
 	
 	</div>
-</div>
+<!-- </div> -->
 
 
 	<footer>
