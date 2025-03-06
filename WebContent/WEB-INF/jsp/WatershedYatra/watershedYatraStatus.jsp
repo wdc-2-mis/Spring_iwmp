@@ -42,33 +42,40 @@ function exportExcel(){
 		<thead>
 		
 		<tr>
-		<th rowspan="3" class="text-center">S.No.</th>
-		<th rowspan="3" class="text-center">State</th>
-		<th rowspan="3" class="text-center">Total Projects</th>
-		<th rowspan="3" class="text-center">Location Planned</th>
-		<th rowspan="3" class="text-center">Location Completed</th>
+		<th rowspan="2" class="text-center">S.No.</th>
+		<th rowspan="2" class="text-center">State</th>
+<!-- 		<th rowspan="3" class="text-center">Total Projects</th> -->
+<!-- 		<th rowspan="3" class="text-center">Location Planned</th> -->
+<!-- 		<th rowspan="3" class="text-center">Location Completed</th> -->
+
+		<th rowspan="2" class="text-center">State Inauguration Date</th>
+		<th colspan="2" class="text-center">Pre Yatra Activity</th>
+		<th colspan="5" class="text-center">Total No. of Participants</th>
+		<th rowspan="2" class="text-center">No. of  Location Covered(Till Date)</th>
+		<th rowspan="2" class="text-center">Total No. of Location to be Covered for Van Activities </th>
+		<th rowspan="2" class="text-center">No. of People Availed AR Experience</th>
+		<th rowspan="2" class="text-center">No. of Works for Bhoomi Poojan</th>
+		<th rowspan="2" class="text-center">No. of Works for Lokarpan </th>
+		<th colspan="2" class="text-center">Shramdaan</th>
+		
+		<th rowspan="2" class="text-center">No. of Sapling Planted</th>
+		<th rowspan="2" class="text-center">No. of Watershed Margdarshak Honored</th>
 		<th colspan="2" class="text-center">Activity</th>
-		<th rowspan="3" class="text-center">State Inauguration Date</th>
-		<th colspan="4" class="text-center">No. of Locations Where Pre Yatra Activities Completed</th>
-		<th rowspan="3" class="text-center">AR Experience (No. of Peoples)</th>
-		<th rowspan="3" class="text-center">Bhoomi Poojan (No. of Works)</th>
-		<th rowspan="3" class="text-center">Lokarpan (No. of Works)</th>
-		<th rowspan="3" class="text-center">Shramdaan (No. of Locations)</th>
-		<th rowspan="3" class="text-center">Plantation (No. of Agro Forestry)</th>
 		</tr>
 		
 		<tr>
-		<th rowspan="3" class="text-center">Completed Activity</th>
-		<th rowspan="3" class="text-center">Not Completed Activity</th>
-		<th colspan="2" class="text-center">Gram Sabha</th>
-		<th colspan="2" class="text-center">Prabhat Phere</th>
+		<th  class="text-center">Gram Sabha</th>
+		<th  class="text-center">Prabhat Phere</th>
 		
-		</tr>
-		<tr>
-		<th  class="text-center">Total No. of Locations</th>
-		<th  class="text-center">Total  No. of Participants</th>
-		<th  class="text-center">Total  No. of Locations</th>
-		<th  class="text-center">Total  No. of Participants</th>
+		<th  class="text-center">Gram Sabha Participants</th>
+		<th  class="text-center">Prabhat Phere Participants</th>
+		<th  class="text-center">Inauguration Participants</th>
+		<th  class="text-center">Village Participants</th>
+		<th  class="text-center">Total</th>
+		<th  class="text-center">No. of Location</th>
+		<th  class="text-center">No. of People Participated</th>
+		<th  class="text-center">Completed Activity</th>
+		<th  class="text-center">Not Completed Activity</th>
 		
 		</tr>
 </thead>
@@ -80,22 +87,31 @@ function exportExcel(){
 					<td class="text-center"><c:out value="${sno.count}" /></td>
                     <td><a href="getDistWatershedYatraStatus?stcd=<c:out value="${project.st_code}"/>&stName=<c:out value="${project.st_name}" />"><c:out value="${project.st_name}" /></a></td>
 <%-- 					<td><c:out value="${project.st_name}" /></td> --%>
-					<td class="text-right"><c:out value="${project.total_project}" /></td>
-					<td class="text-right"><c:out value="${project.total_vanplan}" /></td>
-					<td class="text-right"><c:out value="${project.total_locv}" /></td>
-					<td class="text-right"><c:out value="${not empty project.activity_entered ? project.activity_entered : 0}" /></td>
-					<td class="text-right"><c:out value="${not empty project.act_not_entered ? project.act_not_entered : 0}" /></td>
+<%-- 					<td class="text-right"><c:out value="${project.total_project}" /></td> --%>
+					
+					
 					
 					<td class="text-right"><c:out value="${project.inauguration_date}" /></td>
 					<td class="text-right"><c:out value="${not empty project.gramsabha ? project.gramsabha : 0}" /></td>
-					<td class="text-right"><c:out value="${not empty project.gramsabha_participants ? project.gramsabha_participants : 0}" /></td>
+					
 					<td class="text-right"><c:out value="${not empty project.prabhatpheri ? project.prabhatpheri : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.gramsabha_participants ? project.gramsabha_participants : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.prabhatpheri_participants ? project.prabhatpheri_participants : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_inauguration_participants ? project.total_inauguration_participants : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_village_participants ? project.total_village_participants : 0}" /></td>
+					<td class="text-right">total</td>
+					<td class="text-right"><c:out value="${project.total_locv}" /></td>
+					<td class="text-right"><c:out value="${project.total_vanplan}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_arexp ? project.total_arexp : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_bhoomi_poojan ? project.total_bhoomi_poojan : 0}" /></td>
 					<td class="text-right"><c:out value="${not empty project.total_lokarpan ? project.total_lokarpan : 0}" /></td>
-					<td class="text-right"><c:out value="${not empty project.total_shramdaan ? project.total_shramdaan : 0}" /></td>
-					<td class="text-right"><c:out value="${not empty project.total_plantation ? project.total_plantation : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_loc_shramdaan ? project.total_loc_shramdaan : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_partcp_shramdaan ? project.total_partcp_shramdaan : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_plantation_area ? project.total_plantation_area : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.total_award_distribution ? project.total_award_distribution : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.activity_entered ? project.activity_entered : 0}" /></td>
+					<td class="text-right"><c:out value="${not empty project.act_not_entered ? project.act_not_entered : 0}" /></td>
+					
 					
 					</tr>
 			</c:forEach>	

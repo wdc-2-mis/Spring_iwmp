@@ -358,45 +358,45 @@ public class WatershedYatraStatusController {
 		int prabhatPheriprtcpnts = 0;
 		
 		
-	    for(WatershedYatraStatusBean bean: list) {
-	    	Row row = sheet.createRow(rowno);
-	        
-	    	row.createCell(0).setCellValue(sno);
-		    row.createCell(1).setCellValue(bean.getSt_name());
-		    row.createCell(2).setCellValue(bean.getTotal_project());
-	    	row.createCell(3).setCellValue(bean.getTotal_vanplan());
-	    	row.createCell(4).setCellValue(bean.getTotal_locv());
-	    	row.createCell(5).setCellValue(bean.getActivity_entered()!=null ? bean.getActivity_entered() : 0);
-	    	row.createCell(6).setCellValue(bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
-	    	row.createCell(7).setCellValue(bean.getInauguration_date());
-	    	row.createCell(8).setCellValue(bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
-	    	row.createCell(9).setCellValue(bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
-	    	row.createCell(10).setCellValue(bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
-	    	row.createCell(11).setCellValue(bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
-	    	row.createCell(12).setCellValue(bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
-	    	row.createCell(13).setCellValue(bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
-	    	row.createCell(14).setCellValue(bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
-	    	row.createCell(15).setCellValue(bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
-	    	row.createCell(16).setCellValue(bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
-
-	    	totproj = totproj + bean.getTotal_project();
-	    	locPlan = locPlan + bean.getTotal_vanplan();
-	    	locComp = locComp + bean.getTotal_locv();
-	    	compAct = compAct + (bean.getActivity_entered()!=null ? bean.getActivity_entered() : 0);
-	    	notCompAct = notCompAct + (bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
-			gramSabha = gramSabha + (bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
-			gramSabhaprtcpnts = gramSabhaprtcpnts + (bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
-			prabhatPheri = prabhatPheri + (bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
-			prabhatPheriprtcpnts = prabhatPheriprtcpnts + (bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
-			arExp = arExp + (bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
-			bhoomiPoojan = bhoomiPoojan + (bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
-			lokarpan = lokarpan + (bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
-			shramdaan = shramdaan + (bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
-			plantation =  plantation + (bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
-	    	
-	    	sno++;
-	    	rowno++;
-	    }
+//	    for(WatershedYatraStatusBean bean: list) {
+//	    	Row row = sheet.createRow(rowno);
+//	        
+//	    	row.createCell(0).setCellValue(sno);
+//		    row.createCell(1).setCellValue(bean.getSt_name());
+//		    row.createCell(2).setCellValue(bean.getTotal_project());
+//	    	row.createCell(3).setCellValue(bean.getTotal_vanplan());
+//	    	row.createCell(4).setCellValue(bean.getTotal_locv());
+//	    	row.createCell(5).setCellValue(bean.getActivity_entered()!=null ? bean.getActivity_entered() : 0);
+//	    	row.createCell(6).setCellValue(bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
+//	    	row.createCell(7).setCellValue(bean.getInauguration_date());
+//	    	row.createCell(8).setCellValue(bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
+//	    	row.createCell(9).setCellValue(bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
+//	    	row.createCell(10).setCellValue(bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
+//	    	row.createCell(11).setCellValue(bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
+//	    	row.createCell(12).setCellValue(bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
+//	    	row.createCell(13).setCellValue(bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
+//	    	row.createCell(14).setCellValue(bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
+//	    	row.createCell(15).setCellValue(bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
+//	    	row.createCell(16).setCellValue(bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
+//
+//	    	totproj = totproj + bean.getTotal_project();
+//	    	locPlan = locPlan + bean.getTotal_vanplan();
+//	    	locComp = locComp + bean.getTotal_locv();
+//	    	compAct = compAct + (bean.getActivity_entered()!=null ? bean.getActivity_entered() : 0);
+//	    	notCompAct = notCompAct + (bean.getAct_not_entered()!=null ? bean.getAct_not_entered() : 0);
+//			gramSabha = gramSabha + (bean.getGramsabha()!=null ? bean.getGramsabha() : 0);
+//			gramSabhaprtcpnts = gramSabhaprtcpnts + (bean.getGramsabha_participants()!=null ? bean.getGramsabha_participants() : 0);
+//			prabhatPheri = prabhatPheri + (bean.getPrabhatpheri()!=null ? bean.getPrabhatpheri() : 0);
+//			prabhatPheriprtcpnts = prabhatPheriprtcpnts + (bean.getPrabhatpheri_participants()!=null ? bean.getPrabhatpheri_participants() : 0);
+//			arExp = arExp + (bean.getTotal_arexp()!=null ? bean.getTotal_arexp() : 0);
+//			bhoomiPoojan = bhoomiPoojan + (bean.getTotal_bhoomi_poojan()!=null ? bean.getTotal_bhoomi_poojan() : 0);
+//			lokarpan = lokarpan + (bean.getTotal_lokarpan()!=null ? bean.getTotal_lokarpan() : 0);
+//			shramdaan = shramdaan + (bean.getTotal_shramdaan()!=null ? bean.getTotal_shramdaan() : 0);
+//			plantation =  plantation + (bean.getTotal_plantation()!=null ? bean.getTotal_plantation() : 0);
+//	    	
+//	    	sno++;
+//	    	rowno++;
+//	    }
 	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
@@ -608,21 +608,21 @@ public class WatershedYatraStatusController {
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						
-						
-						totproj = totproj + list.get(i).getTotal_project();
-				    	locPlan = locPlan + list.get(i).getTotal_vanplan();
-				    	locComp = locComp + list.get(i).getTotal_locv();
-				    	compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
-				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
-						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
-						gramSabhaPrtcpnts = gramSabhaPrtcpnts + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
-						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
-						prabhatPheriPrtcpnts = prabhatPheriPrtcpnts + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
-						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
-						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
-						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
-						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0);
-						plantation =  plantation + (list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0);
+//						
+//						totproj = totproj + list.get(i).getTotal_project();
+//				    	locPlan = locPlan + list.get(i).getTotal_vanplan();
+//				    	locComp = locComp + list.get(i).getTotal_locv();
+//				    	compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
+//				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
+//						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
+//						gramSabhaPrtcpnts = gramSabhaPrtcpnts + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
+//						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
+//						prabhatPheriPrtcpnts = prabhatPheriPrtcpnts + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
+//						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
+//						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
+//						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
+//						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0);
+//						plantation =  plantation + (list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0);
 						
 						k++;
 					}
@@ -888,40 +888,40 @@ public class WatershedYatraStatusController {
 		int plantation = 0;
 		
 		
-	    for(WatershedYatraStatusBean bean: list) {
-	    	Row row = sheet.createRow(rowno);
-	        
-	    	row.createCell(0).setCellValue(sno);
-		    row.createCell(1).setCellValue(bean.getDist_name());
-		    row.createCell(2).setCellValue(bean.getTotal_project());
-	    	row.createCell(3).setCellValue(bean.getTotal_vanplan());
-	    	row.createCell(4).setCellValue(bean.getTotal_locv());
-	    	row.createCell(5).setCellValue(bean.getActivity_entered());
-	    	row.createCell(6).setCellValue(bean.getAct_not_entered());
-	    	row.createCell(7).setCellValue(bean.getGramsabha());
-	    	row.createCell(8).setCellValue(bean.getPrabhatpheri());
-	    	row.createCell(9).setCellValue(bean.getTotal_arexp());
-	    	row.createCell(10).setCellValue(bean.getTotal_bhoomi_poojan());
-	    	row.createCell(11).setCellValue(bean.getTotal_lokarpan());
-	    	row.createCell(12).setCellValue(bean.getTotal_shramdaan());
-	    	row.createCell(13).setCellValue(bean.getTotal_plantation());
-
-	    	totproj = totproj + bean.getTotal_project();
-	    	locPlan = locPlan + bean.getTotal_vanplan();
-	    	locComp = locComp + bean.getTotal_locv();
-	    	compAct = compAct + (bean.getActivity_entered());
-	    	notCompAct = notCompAct + (bean.getAct_not_entered());
-			gramSabha = gramSabha + (bean.getGramsabha());
-			prabhatPheri = prabhatPheri + (bean.getPrabhatpheri());
-			arExp = arExp + (bean.getTotal_arexp());
-			bhoomiPoojan = bhoomiPoojan + (bean.getTotal_bhoomi_poojan());
-			lokarpan = lokarpan + (bean.getTotal_lokarpan());
-			shramdaan = shramdaan + (bean.getTotal_shramdaan());
-			plantation =  plantation + (bean.getTotal_plantation());
-	    	
-	    	sno++;
-	    	rowno++;
-	    }
+//	    for(WatershedYatraStatusBean bean: list) {
+//	    	Row row = sheet.createRow(rowno);
+//	        
+//	    	row.createCell(0).setCellValue(sno);
+//		    row.createCell(1).setCellValue(bean.getDist_name());
+//		    row.createCell(2).setCellValue(bean.getTotal_project());
+//	    	row.createCell(3).setCellValue(bean.getTotal_vanplan());
+//	    	row.createCell(4).setCellValue(bean.getTotal_locv());
+//	    	row.createCell(5).setCellValue(bean.getActivity_entered());
+//	    	row.createCell(6).setCellValue(bean.getAct_not_entered());
+//	    	row.createCell(7).setCellValue(bean.getGramsabha());
+//	    	row.createCell(8).setCellValue(bean.getPrabhatpheri());
+//	    	row.createCell(9).setCellValue(bean.getTotal_arexp());
+//	    	row.createCell(10).setCellValue(bean.getTotal_bhoomi_poojan());
+//	    	row.createCell(11).setCellValue(bean.getTotal_lokarpan());
+//	    	row.createCell(12).setCellValue(bean.getTotal_shramdaan());
+//	    	row.createCell(13).setCellValue(bean.getTotal_plantation());
+//
+//	    	totproj = totproj + bean.getTotal_project();
+//	    	locPlan = locPlan + bean.getTotal_vanplan();
+//	    	locComp = locComp + bean.getTotal_locv();
+//	    	compAct = compAct + (bean.getActivity_entered());
+//	    	notCompAct = notCompAct + (bean.getAct_not_entered());
+//			gramSabha = gramSabha + (bean.getGramsabha());
+//			prabhatPheri = prabhatPheri + (bean.getPrabhatpheri());
+//			arExp = arExp + (bean.getTotal_arexp());
+//			bhoomiPoojan = bhoomiPoojan + (bean.getTotal_bhoomi_poojan());
+//			lokarpan = lokarpan + (bean.getTotal_lokarpan());
+//			shramdaan = shramdaan + (bean.getTotal_shramdaan());
+//			plantation =  plantation + (bean.getTotal_plantation());
+//	    	
+//	    	sno++;
+//	    	rowno++;
+//	    }
 	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
@@ -1134,22 +1134,22 @@ public class WatershedYatraStatusController {
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0), Element.ALIGN_RIGHT, 1, 1, bf8);
 						
-						
-						totproj = totproj + list.get(i).getTotal_project();
-				    	locPlan = locPlan + list.get(i).getTotal_vanplan();
-				    	locComp = locComp + list.get(i).getTotal_locv();
-						
-						compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
-				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
-						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
-						gramSabhapart= gramSabhapart + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
-						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
-						prabhatPheripart = prabhatPheripart + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
-						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
-						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
-						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
-						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0);
-						plantation =  plantation + (list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0);
+//						
+//						totproj = totproj + list.get(i).getTotal_project();
+//				    	locPlan = locPlan + list.get(i).getTotal_vanplan();
+//				    	locComp = locComp + list.get(i).getTotal_locv();
+//						
+//						compAct = compAct + (list.get(i).getActivity_entered()!=null ? list.get(i).getActivity_entered() : 0);
+//				    	notCompAct = notCompAct + (list.get(i).getAct_not_entered()!=null ? list.get(i).getAct_not_entered() : 0);
+//						gramSabha = gramSabha + (list.get(i).getGramsabha()!=null ? list.get(i).getGramsabha() : 0);
+//						gramSabhapart= gramSabhapart + (list.get(i).getGramsabha_participants()!=null ? list.get(i).getGramsabha_participants() : 0);
+//						prabhatPheri = prabhatPheri + (list.get(i).getPrabhatpheri()!=null ? list.get(i).getPrabhatpheri() : 0);
+//						prabhatPheripart = prabhatPheripart + (list.get(i).getPrabhatpheri_participants()!=null ? list.get(i).getPrabhatpheri_participants() : 0);
+//						arExp = arExp + (list.get(i).getTotal_arexp()!=null ? list.get(i).getTotal_arexp() : 0);
+//						bhoomiPoojan = bhoomiPoojan + (list.get(i).getTotal_bhoomi_poojan()!=null ? list.get(i).getTotal_bhoomi_poojan() : 0);
+//						lokarpan = lokarpan + (list.get(i).getTotal_lokarpan()!=null ? list.get(i).getTotal_lokarpan() : 0);
+//						shramdaan = shramdaan + (list.get(i).getTotal_shramdaan()!=null ? list.get(i).getTotal_shramdaan() : 0);
+//						plantation =  plantation + (list.get(i).getTotal_plantation()!=null ? list.get(i).getTotal_plantation() : 0);
 						
 						
 						k++;
