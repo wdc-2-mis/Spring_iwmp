@@ -56,7 +56,7 @@ function exportExcel(stcd, stName)
 		</tr>
 			<tr>
 		<th rowspan="3" class="text-center">S.No.</th>
-		<th rowspan="3" class="text-center">Distict</th>
+		<th rowspan="3" class="text-center">District</th>
 		<th colspan="2" class="text-center">Pre Yatra Activity</th>
 		<th colspan="5" class="text-center">Total No. of Participants</th>
 		<th rowspan="2" class="text-center">No. of  Location Covered(Till Date)</th>
