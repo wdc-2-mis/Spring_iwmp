@@ -119,7 +119,7 @@ $(function(){
 						                    console.log(data);
 						                    $('#loading').hide();
 						                    if(data === 'success') {
-						                        alert('Deleted Data and Uploaded File Successfully.');
+						                        alert('Deleted Data Successfully.');
 						                        window.location.href = 'getWatershedYatraAtPiaHeader';
 						                    } else {
 						                        alert('Issue on Deleted Data!');

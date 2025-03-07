@@ -51,8 +51,13 @@ function exportExcel(stcd, stName)
 
 <table id="tblReport" class="table">
 		<thead>
-		
 		<tr>
+				<th colspan="20">State:- <c:out value="${stName}" />,&nbsp&nbsp&nbsp
+				Inauguration Date :  <c:out value="${inaugurationDate}" /><br /> 
+				</th>
+			</tr>
+		<tr>
+		
 		<th rowspan="2" class="text-center">S.No.</th>
 		<th rowspan="2" class="text-center">District</th>
 <!-- 		<th rowspan="3" class="text-center">Total Projects</th> -->

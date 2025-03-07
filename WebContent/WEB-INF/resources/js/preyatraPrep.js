@@ -307,7 +307,7 @@ $(document).on('click', '#completePreYatra', function(e){
                     success: function(data) {
                         console.log(data);
                         if(data === 'success') {
-                            alert('Pre Yatra Preparation Records Updated Successfully.');
+                            alert('Pre Yatra Preparation Records Completed Successfully.');
                             window.location.href = 'getPreYatraPrep';
                         } else {
                             alert('Error in Completion. Please try again.');

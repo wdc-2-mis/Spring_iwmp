@@ -135,7 +135,7 @@ public class PreYatraPrepController {
 	                redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 	            } 
 	            else if (res.equals("photonotupload")) {
-	                redirectAttributes.addFlashAttribute("result", "Issue on uploading Photos but upload valid Photos");
+	                redirectAttributes.addFlashAttribute("result", "Issue on uploading Photos please upload valid Photos");
 	            } 
 	            else {
 	                redirectAttributes.addFlashAttribute("result", "Data not saved Successfully!");
