@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.bean.InagrtnAndWtrShdDashBoardBean;
 import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.bean.reports.DolrDashboardBean;
@@ -298,10 +299,13 @@ public class DashboardController {
 			mav = new ModelAndView("WatershedYatra/watershedDashBoard");
 		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
 		List<WatershedYatraDashboardChartBean> list = new ArrayList<>();
+		List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
 		map = dashBoardService.getWatrshdInagrtnPreYtraData();
 		list = dashBoardService.getWtrshdYtraChartData();
+		pList = dashBoardService.getInagrtnAndWtrShdDashBoardData();
 		model.addAttribute("map",map);
 		model.addAttribute("list",list);
+		model.addAttribute("pList",pList);
 
 		} catch (Exception e) {
 			e.printStackTrace();

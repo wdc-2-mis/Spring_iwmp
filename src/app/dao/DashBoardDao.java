@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import app.bean.InagrtnAndWtrShdDashBoardBean;
 import app.bean.TargetAchDashboardBean;
 import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
@@ -143,4 +144,6 @@ public interface DashBoardDao {
 	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData();
 	
 	List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData();
+	
+	List<InagrtnAndWtrShdDashBoardBean> getInagrtnAndWtrShdDashBoardData();
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import app.bean.AddOutcomeParaBean;
 import app.bean.DolrSupportBean;
+import app.bean.InagrtnAndWtrShdDashBoardBean;
 import app.bean.ProjectLocationBean;
 import app.bean.TargetAchDashboardBean;
 import app.bean.WatershedYatraDashboardChartBean;
@@ -273,6 +274,9 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	
 	@Value("${completedyatraloc}")
 	String completedyatraloc;
+	
+	@Value("${getParticipantsfrmIngAndWtrshd}")
+	String getParticipantsfrmIngAndWtrshd;
 	
 	
 	@Autowired
@@ -2338,8 +2342,8 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
 			list = query.list();
 			Integer val1 = 200;
-//			bean.setTotplannedloc(list.get(0).getTotplannedloc().multiply(BigInteger.valueOf(val1)));
-			bean.setTotplannedloc(list.get(0).getTotplannedloc());
+			bean.setTotplannedloc(list.get(0).getTotplannedloc().multiply(BigInteger.valueOf(val1)));
+//			bean.setTotplannedloc(list.get(0).getTotplannedloc());
 			
 			query = session.createSQLQuery(clochql);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
@@ -2363,6 +2367,30 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			session.getTransaction().rollback();
 		}
 		
+		return list;
+	}
+
+	@Override
+	public List<InagrtnAndWtrShdDashBoardBean> getInagrtnAndWtrShdDashBoardData() {
+		String hql = getParticipantsfrmIngAndWtrshd;
+		List<InagrtnAndWtrShdDashBoardBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(InagrtnAndWtrShdDashBoardBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
 		return list;
 	}
 

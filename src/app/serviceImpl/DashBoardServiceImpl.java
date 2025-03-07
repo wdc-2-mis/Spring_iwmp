@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.bean.InagrtnAndWtrShdDashBoardBean;
 import app.bean.TargetAchDashboardBean;
 import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
@@ -379,6 +380,12 @@ public class DashBoardServiceImpl implements DashBoardService{
 	public List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData() {
 		// TODO Auto-generated method stub
 		return dashBoardDao.getWtrshdYtraChartData();
+	}
+
+	@Override
+	public List<InagrtnAndWtrShdDashBoardBean> getInagrtnAndWtrShdDashBoardData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getInagrtnAndWtrShdDashBoardData();
 	}
 	
 	

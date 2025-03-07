@@ -84,15 +84,45 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
   }
   .chart-item {
     text-align: center;
-    margin: 20px;
+    margin: 10px;
   }
   .chart-title {
     font-weight: bold;
     margin-bottom: 10px;
+  }
+  #chart_div1{
+  	border: 1px solid #ccc;
+  	background-color: #FAF9F6; 
+  	padding: 15px; 
+  	width: 500px; 
+  	height: 600px; 
+  	margin: 10px; 
+  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  	border-radius: 10px;
+  }
+  #chart_div2{
+  	border: 1px solid #ccc;
+  	background-color: #FAF9F6; 
+  	padding: 15px; 
+  	width: 500px; 
+  	height: 600px; 
+  	margin: 10px; 
+  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  	border-radius: 10px;
+  }
+  .piechart-container{
+  	border: 1px solid #ccc;
+  	background-color: #FAF9F6; 
+  	padding: 15px; 
+  	width: 500px; 
+  	height: 600px; 
+  	margin: 10px; 
+  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+  	border-radius: 10px;
   }
 </style>
 </head>
@@ -102,6 +132,7 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
  $(document).ready(function(){
 	 $('#loading').hide();
@@ -160,24 +191,7 @@
                 </c:forEach>
             </div>
             </c:if>
-<%--             <c:if test ="${entry.key eq 'wtr'}"> --%>
-<!--             <h3 class ="component-field">Watershed Yatra</h3> -->
-<!--             <div class="panel-underline"></div> -->
-<!--             <div class="field-row"> -->
-<%--                 <c:forEach var="bean" items="${entry.value}"> --%>
-<!--                     <div class="field-container"> -->
-<!--                         <div class="field-title">Total States</div> -->
-<%--                         <div class="field-value">${bean.totstates}</div> --%>
-<!--                     </div> -->
-<!--                     <div class="field-container"> -->
-<!--                         <div class="field-title">Total Participants</div> -->
-<%--                         <div class="field-value">${bean.totparticipants}</div> --%>
-<!--                     </div> -->
-                    
-                   
-<%--                 </c:forEach> --%>
-<!--             </div> -->
-<%--             </c:if> --%>
+
             <c:if test ="${entry.key eq 'pre'}">
             <h3 class ="component-field">Pre Yatra</h3>
             <div class="panel-underline"></div>
@@ -210,14 +224,18 @@
     </c:forEach>
 </div>
 
-<div class="chart-container">
-  <div class="chart-item">
-    <div id="chart_div1"></div>
-  </div>
-  <div class="chart-item">
-    <div id="chart_div2"></div>
-  </div>
-</div>
+	<div class="chart-container">
+		<div class="chart-item">
+			<div id="chart_div1"></div>
+		</div>
+		<div class="chart-item">
+			<div id="chart_div2"></div>
+		</div>
+
+		<div class="piechart-container">
+			<canvas id="participantsChart"></canvas>
+		</div>
+	</div>
 
 <script type="text/javascript">
 $('#loading').hide();
@@ -351,14 +369,95 @@ document.addEventListener('DOMContentLoaded', function () {
         }]
     });
 });
-
 </script>
 
+    <script>
+        // Data from the backend
+        var data = {
+            labels: [
+                "Male Participants",
+                "Female Participants",
+                "Central Ministers",
+                "State Ministers",
+                "Parliament Members",
+                "Legislative Assembly Members",
+                "Legislative Council Members",
+                "Other Public Representatives",
+                "Government Officials"
+            ],
+            datasets: [{
+                label: 'Participants Data',
+                data: [
+                    <c:out value="${pList[0].maleparticipants}" />,
+                    <c:out value="${pList[0].femaleparticipants}" />,
+                    <c:out value="${pList[0].centralminister}" />,
+                    <c:out value="${pList[0].stateminister}" />,
+                    <c:out value="${pList[0].parliamentmembers}" />,
+                    <c:out value="${pList[0].legislativeassemblymembers}" />,
+                    <c:out value="${pList[0].legislativecouncilmembers}" />,
+                    <c:out value="${pList[0].otherpublicrepresentatives}" />,
+                    <c:out value="${pList[0].govofficials}" />
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(199, 199, 199, 0.2)',
+                    'rgba(83, 102, 255, 0.2)',
+                    'rgba(255, 120, 170, 0.4)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(199, 199, 199, 1)',
+                    'rgba(83, 102, 255, 1)',
+                    'rgba(255, 120, 170, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
 
-
-
-
-
+        // Configure and render the chart
+        var ctx = document.getElementById('participantsChart').getContext('2d');
+        var participantsChart = new Chart(ctx, {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Data For All Participants',
+                        font: {
+                            size: 30 // Adjust this value to increase or decrease the font size
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Append the total below the chart
+        var container = document.querySelector('.piechart-container');
+        if (container) {
+            var totalElement = document.createElement('div');
+            totalElement.style.textAlign = 'center';
+            totalElement.style.marginTop = '20px';
+            totalElement.style.fontSize = '20px';
+            totalElement.innerHTML = `<strong>Total Participants: 
+            	<c:out value ="${pList[0].maleparticipants + pList[0].femaleparticipants + pList[0].centralminister + pList[0].stateminister + pList[0].parliamentmembers 
+            		+ pList[0].legislativeassemblymembers + pList[0].legislativecouncilmembers + pList[0].otherpublicrepresentatives + pList[0].govofficials}"/></strong>`;
+            container.appendChild(totalElement);
+        } else {
+            console.error("Container element '.piechart-container' not found.");
+        }
+    </script>
 
 	<footer class="text-center">
     <%@include file="/WEB-INF/jspf/footer.jspf"%>
