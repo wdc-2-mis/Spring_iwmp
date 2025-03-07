@@ -78,6 +78,11 @@ function exportExcel(){
 		<th  class="text-center">Not Completed Activity</th>
 		
 		</tr>
+		<tr>
+						<% for (int i = 1; i <= 21; i++) { %>
+						<th class="text-center"><%= i %></th>
+						<% } %>
+					</tr>
 </thead>
 
 <tbody id="stwiseAreaRptTbody">

@@ -50,24 +50,27 @@ function exportExcel(stcd, stName)
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 
 <table id="tblReport" class="table">
-	<thead>
+		<thead>
+		
 		<tr>
-			<th colspan=20 class="text-left">State : ${stName} &emsp; Inauguration Date : ${inaugurationDate}</th>
-		</tr>
-			<tr>
-		<th rowspan="3" class="text-center">S.No.</th>
-		<th rowspan="3" class="text-center">District</th>
+		<th rowspan="2" class="text-center">S.No.</th>
+		<th rowspan="2" class="text-center">District</th>
+<!-- 		<th rowspan="3" class="text-center">Total Projects</th> -->
+<!-- 		<th rowspan="3" class="text-center">Location Planned</th> -->
+<!-- 		<th rowspan="3" class="text-center">Location Completed</th> -->
+
+<!-- 		<th rowspan="2" class="text-center">State Inauguration Date</th> -->
 		<th colspan="2" class="text-center">Pre Yatra Activity</th>
 		<th colspan="5" class="text-center">Total No. of Participants</th>
-		<th rowspan="2" class="text-center">No. of  Location Covered(Till Date)</th>
-		<th rowspan="2" class="text-center">Total No. of Location to be Covered for Van Activities </th>
+		<th rowspan="2" class="text-center">No. of  Locations Covered(Till Date)</th>
+		<th rowspan="2" class="text-center">Total No. of Locations to be Covered for Van Activities </th>
 		<th rowspan="2" class="text-center">No. of People Availed AR Experience</th>
 		<th rowspan="2" class="text-center">No. of Works for Bhoomi Poojan</th>
 		<th rowspan="2" class="text-center">No. of Works for Lokarpan </th>
 		<th colspan="2" class="text-center">Shramdaan</th>
 		
 		<th rowspan="2" class="text-center">No. of Sapling Planted</th>
-		<th rowspan="2" class="text-center">No. of Watershed Margdarshak Honored</th>
+		<th rowspan="2" class="text-center">No. of Watershed Margdarshaks Honored</th>
 		<th colspan="2" class="text-center">Activity</th>
 		</tr>
 		
@@ -80,12 +83,17 @@ function exportExcel(stcd, stName)
 		<th  class="text-center">Inauguration Participants</th>
 		<th  class="text-center">Village Participants</th>
 		<th  class="text-center">Total</th>
-		<th  class="text-center">No. of Location</th>
+		<th  class="text-center">No. of Locations</th>
 		<th  class="text-center">No. of People Participated</th>
 		<th  class="text-center">Completed Activity</th>
 		<th  class="text-center">Not Completed Activity</th>
 		
 		</tr>
+		<tr>
+						<% for (int i = 1; i <= 20; i++) { %>
+						<th class="text-center"><%= i %></th>
+						<% } %>
+					</tr>
 </thead>
 
 	<tbody id="distwiseAreaRptTbody">
