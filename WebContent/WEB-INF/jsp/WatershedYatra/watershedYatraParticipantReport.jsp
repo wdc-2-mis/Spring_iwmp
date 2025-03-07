@@ -247,7 +247,9 @@ display: none; /* Hidden by default */
  				<thead>
     <!-- First row for Month Header -->
     <tr>
-        <th colspan="2" class="text-left"></th>
+<!--         <th colspan="2" class="text-left"></th> -->
+        <th rowspan="2" style="text-align:center; vertical-align: middle;">S.No.</th>
+        <th rowspan="2" style="text-align:center; vertical-align: middle;">State Name</th>
         <% 
             List<String> monthList = (List<String>) request.getAttribute("monthList");
             int monthListSize = (int) request.getAttribute("monthListSize");
@@ -303,12 +305,12 @@ display: none; /* Hidden by default */
         <% 
             }
         %>
+        
+        <th rowspan="2" style="text-align:center; vertical-align: middle;">Total</th>
     </tr>
 
     <!-- Second row for Dates Header -->
     <tr>
-        <th style="text-align:center; vertical-align: middle;">S.No.</th>
-        <th style="text-align:center; vertical-align: middle;">State Name</th>
         <% 
             for (int i = 0; i < monthListSize; i++) {
                 String fullDate = monthList.get(i);
@@ -317,7 +319,6 @@ display: none; /* Hidden by default */
         <% 
             }
         %>
-        <th style="text-align:center; vertical-align: middle;">Total</th>
     </tr>
 </thead>
  				
@@ -365,14 +366,13 @@ display: none; /* Hidden by default */
 						</c:forEach>
 
 						<tr>
-									<td class="table-primary"></td>
-										<td align="right" class="table-primary" ><b>Grand Total </b></td>
+								<td colspan="2" align="right" class="table-primary" ><b>Grand Total </b></td>
 								<c:forEach items="${listgrand}" var="data1">
-										<td align="center" class="table-primary"><c:out value='${data1.total_participants}' /></td>
+										<td align="center" class="table-primary"><b><c:out value='${data1.total_participants}' /></b></td>
 								
 								</c:forEach>
 						
-								<td align="center" class="table-primary"><c:out value='${gtotal}' /></td>
+								<td align="center" class="table-primary"><b><c:out value='${gtotal}' /></b></td>
 						</tr>
 						
 						

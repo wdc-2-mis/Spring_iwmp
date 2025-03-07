@@ -461,6 +461,13 @@ public class WatershedYatraParticipantController {
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
 		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, monthListSize+3, areaAmtValDetail, workbook);
 
+		mergedRegion = new CellRangeAddress(5,6,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,monthdate1.size()+2,monthdate1.size()+2);
+		sheet.addMergedRegion(mergedRegion);
+		
 		Row rowhead = sheet.createRow(5); 
 
 		Cell cell = rowhead.createCell(0);
@@ -473,20 +480,109 @@ public class WatershedYatraParticipantController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		
-		for (int i=2; i<monthdate1.size()+2; i++)
-		{
-			cell = rowhead.createCell(i);
-			cell.setCellValue(monthdate1.get(i - 2));  
-			cell.setCellStyle(style);
-			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		for (int i=2; i<monthdate1.size()+2; i++)
+//		{
+//			cell = rowhead.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+		
+		String prevMonth = "";
+		String prevMonthName = "";
+		int monthCount = 1;
+
+		// Iterate through month dates
+		for (int i = 0; i < monthdate1.size(); i++) {
+		    // Get the current date
+		    String fullDate = monthdate1.get(i);
+		    String[] dateParts = fullDate.split("/"); // Split the date using "/"
+		    String month = dateParts[1]; // Get the MM part
+
+		    // Convert MM to Month Name
+		    String currentMonthName = "";
+		    switch (month) {
+		        case "01": currentMonthName = "January"; break;
+		        case "02": currentMonthName = "February"; break;
+		        case "03": currentMonthName = "March"; break;
+		        case "04": currentMonthName = "April"; break;
+		        case "05": currentMonthName = "May"; break;
+		        case "06": currentMonthName = "June"; break;
+		        case "07": currentMonthName = "July"; break;
+		        case "08": currentMonthName = "August"; break;
+		        case "09": currentMonthName = "September"; break;
+		        case "10": currentMonthName = "October"; break;
+		        case "11": currentMonthName = "November"; break;
+		        case "12": currentMonthName = "December"; break;
+		        default: currentMonthName = "Invalid Month"; break;
+		    }
+
+		    // Check if the month has changed
+		    if (!month.equals(prevMonth)) {
+		        // If it's a new month, merge cells for the previous month's header
+		        if (!prevMonth.equals("")) {
+		            CellRangeAddress range = new CellRangeAddress(5, 5, i - monthCount + 2, i + 1);
+		            sheet.addMergedRegion(range);
+		            cell = rowhead.getCell(i - monthCount + 2);
+		            if (cell == null) {
+		                cell = rowhead.createCell(i - monthCount + 2);
+		            }
+		            cell.setCellValue(prevMonthName);
+		            cell.setCellStyle(style);
+		        }
+		        prevMonth = month;
+		        prevMonthName = currentMonthName;
+		        monthCount = 1;
+		    } else {
+		        // If it's the same month, increment the counter
+		        monthCount++;
+		    }
 		}
+
+		// Merge cells for the last month's header
+		if (!prevMonth.equals("")) {
+		    CellRangeAddress range = new CellRangeAddress(5, 5, monthdate1.size() - monthCount + 2, monthdate1.size() + 1);
+		    sheet.addMergedRegion(range);
+		    cell = rowhead.getCell(monthdate1.size() - monthCount + 2);
+		    if (cell == null) {
+		        cell = rowhead.createCell(monthdate1.size() - monthCount + 2);
+		    }
+		    cell.setCellValue(prevMonthName);
+		    cell.setCellStyle(style);
+		}
+
+		// Create cell for Total
+		cell = rowhead.getCell(monthdate1.size() + 2);
+		if (cell == null) {
+		    cell = rowhead.createCell(monthdate1.size() + 2);
+		}
+		
 
 		cell = rowhead.createCell(monthdate1.size()+2);
 		cell.setCellValue("Total");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		
-		Row rowhead1 = sheet.createRow(6); 
+		
+		Row rowhead2 = sheet.createRow(6); 
+
+		cell = rowhead2.createCell(0);
+		cell.setCellStyle(style);
+
+		cell = rowhead2.createCell(1);
+		cell.setCellStyle(style);
+		
+		for (int i=2; i<monthdate1.size()+2; i++)
+		{
+			cell = rowhead2.createCell(i);
+			cell.setCellValue(monthdate1.get(i - 2));  
+			cell.setCellStyle(style);
+		}
+
+		cell = rowhead2.createCell(monthdate1.size()+2);
+		cell.setCellStyle(style);
+		
+		
+		
+		Row rowhead1 = sheet.createRow(7); 
 		for(int i=0;i<monthdate1.size()+3;i++)
 		{
 			cell =rowhead1.createCell(i);
@@ -494,7 +590,7 @@ public class WatershedYatraParticipantController {
 			cell.setCellStyle(style);
 		}
 		
-		int rowno  = 7;
+		int rowno  = 8;
 		int col=0;
 		int k=1;
 		int p=2;
@@ -557,12 +653,16 @@ public class WatershedYatraParticipantController {
 		style1.setFont(font1);
 		
 		int h=2;
+		
+		mergedRegion = new CellRangeAddress(rowno,rowno,0,1); 
+		sheet.addMergedRegion(mergedRegion);
+		
 		Row row = sheet.createRow(rowno);
         cell = row.createCell(0);
+        cell.setCellValue("Grand Total");
         cell.setCellStyle(style1);
         CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
         cell = row.createCell(1);
-        cell.setCellValue("Grand Total");
         cell.setCellStyle(style1);
         
         for(int i=0;i<listgrand.size();i++) 
