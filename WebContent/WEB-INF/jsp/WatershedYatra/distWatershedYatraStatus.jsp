@@ -183,7 +183,7 @@ window.onload = function() {
     const totalLokarpan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[13].innerText || 0), 0);
     const totalShramdaan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[14].innerText || 0), 0);
     const totalSharamdaanPP = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[15].innerText || 0), 0);
-    const totalSapling = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[16].innerText || 0), 0).toFixed(2);
+    const totalSapling = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[16].innerText || 0), 0);
     const totalWatershedMargdarshak = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[17].innerText || 0), 0);
     const totalCompletedActivity = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[18].innerText || 0), 0);
     const totalNotCompletedActivity = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[19].innerText || 0), 0);

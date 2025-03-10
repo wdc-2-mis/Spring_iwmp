@@ -28,7 +28,7 @@ public class WatershedYatraStatusBean {
 	public Integer activity_entered;
 	public Integer act_not_entered;
 	public BigInteger total_award_distribution;
-	public BigDecimal total_plantation_area;
+	public BigInteger total_plantation_area;
 	public BigInteger total_partcp_shramdaan;
 	public BigInteger total_loc_shramdaan;
 	
@@ -52,10 +52,10 @@ public class WatershedYatraStatusBean {
 	public void setTotal_award_distribution(BigInteger total_award_distribution) {
 		this.total_award_distribution = total_award_distribution;
 	}
-	public BigDecimal getTotal_plantation_area() {
+	public BigInteger getTotal_plantation_area() {
 		return total_plantation_area;
 	}
-	public void setTotal_plantation_area(BigDecimal total_plantation_area) {
+	public void setTotal_plantation_area(BigInteger total_plantation_area) {
 		this.total_plantation_area = total_plantation_area;
 	}
 	public BigInteger getTotal_partcp_shramdaan() {

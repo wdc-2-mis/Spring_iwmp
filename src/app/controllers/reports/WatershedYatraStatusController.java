@@ -367,7 +367,7 @@ public class WatershedYatraStatusController {
 		BigInteger lokarpan = BigInteger.ZERO;
 		BigInteger shramloc = BigInteger.ZERO;
 		BigInteger shramPrtcpnts = BigInteger.ZERO;
-		BigDecimal plantationsapl = BigDecimal.ZERO;
+		BigInteger plantationsapl = BigInteger.ZERO;
 		BigInteger award = BigInteger.ZERO;
 		int compAct = 0;
 		int notCompAct = 0;
@@ -633,7 +633,7 @@ public class WatershedYatraStatusController {
 				BigInteger lokarpan = BigInteger.ZERO;
 				BigInteger shramloc = BigInteger.ZERO;
 				BigInteger shramPrtcpnts = BigInteger.ZERO;
-				BigDecimal plantationsapl = BigDecimal.ZERO;
+				BigInteger plantationsapl = BigInteger.ZERO;
 				BigInteger award = BigInteger.ZERO;
 				int compAct = 0;
 				int notCompAct = 0;
@@ -1018,7 +1018,7 @@ public class WatershedYatraStatusController {
 		BigInteger lokarpan = BigInteger.ZERO;
 		BigInteger shramloc = BigInteger.ZERO;
 		BigInteger shramPrtcpnts = BigInteger.ZERO;
-		BigDecimal plantationsapl = BigDecimal.ZERO;
+		BigInteger plantationsapl = BigInteger.ZERO;
 		BigInteger award = BigInteger.ZERO;
 		int compAct = 0;
 		int notCompAct = 0;
@@ -1282,7 +1282,7 @@ public class WatershedYatraStatusController {
 				BigInteger lokarpan = BigInteger.ZERO;
 				BigInteger shramloc = BigInteger.ZERO;
 				BigInteger shramPrtcpnts = BigInteger.ZERO;
-				BigDecimal plantationsapl = BigDecimal.ZERO;
+				BigInteger plantationsapl = BigInteger.ZERO;
 				BigInteger award = BigInteger.ZERO;
 				int compAct = 0;
 				int notCompAct = 0;

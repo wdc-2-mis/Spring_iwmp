@@ -185,7 +185,7 @@ window.onload = function() {
     const totalLokarpan = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[14].innerText || 0), 0);
     const totalShramdaanloc = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[15].innerText || 0), 0);
     const totalShramdaanprt = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[16].innerText || 0), 0);
-    const totalPlantation = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[17].innerText || 0), 0).toFixed(2);
+    const totalPlantation = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[17].innerText || 0), 0);
     const totalaward = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[18].innerText || 0), 0);
     const totalActivityEntered = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[19].innerText || 0), 0);
     const totalActNotEntered = [...tbody.getElementsByTagName('tr')].reduce((sum, row) => sum + Number(row.cells[20].innerText || 0), 0);
