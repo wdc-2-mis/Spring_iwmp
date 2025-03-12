@@ -171,6 +171,7 @@ p:basename="classpath:messages/messages">
 	<bean name="WatershedYatraInauguaration" class="app.watershedyatra.model.WatershedYatraInauguaration" />
 	<bean name="WatershedYatVill" class="app.watershedyatra.model.WatershedYatVill" />
 	<bean name="MCulturalActivity" class="app.watershedyatra.model.MCulturalActivity" />
+	<bean name="WatershedYatVillDuplicate" class="app.watershedyatra.model.WatershedYatVillDuplicate" />
 	
 	
 	

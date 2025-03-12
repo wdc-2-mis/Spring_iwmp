@@ -94,6 +94,7 @@
         <mapping class="app.watershedyatra.model.PreYatraPreparation" />
         <mapping class="app.watershedyatra.model.PreYatraGramsabha" />
         <mapping class="app.watershedyatra.model.PreYatraPrabhatpheri" />
+        <mapping class="app.watershedyatra.model.WatershedYatVillDuplicate" />
         
         
         
