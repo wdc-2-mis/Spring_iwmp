@@ -2947,14 +2947,9 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 					
 					if(location.equalsIgnoreCase(loc.toUpperCase()))
 						data="success";
-				  //  System.out.println(location);
+					
 				}
-				
 			//	result=list.get(0).toString();
-				
-				
-		   
-			
 			} 
 			catch (HibernateException e) {
 			    System.err.print("Hibernate error");
