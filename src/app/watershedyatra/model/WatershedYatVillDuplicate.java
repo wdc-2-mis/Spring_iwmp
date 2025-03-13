@@ -41,6 +41,7 @@ public class WatershedYatVillDuplicate {
 			this.iwmpVillage = iwmpVillage;
 		}
 		
+		@Column(name = "village_name")
 		public String getVillageName() {
 			return villageName;
 		}
