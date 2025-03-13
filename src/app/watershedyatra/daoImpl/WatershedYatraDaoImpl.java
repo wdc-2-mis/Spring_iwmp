@@ -2936,27 +2936,32 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Override
 	public String getExistingWatershedYatraVillageLoction(Integer villageCode, String loc) {
 		
-		Session session = sessionFactory.getCurrentSession();
-		  String result;
-		  String data="fail";
-		  try {
-		    session.beginTransaction();
+			Session session = sessionFactory.getCurrentSession();
+			String result;
+			String data="fail";
+			try {
+				session.beginTransaction();
 		    
-		  
-		    
-				List list = session.createQuery("SELECT UPPER(yatraLocation) FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
-				result=list.get(0).toString();
+				List<String> list = session.createQuery("SELECT UPPER(yatraLocation) FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
+				for (String location : list) {
+					
+					if(location.equalsIgnoreCase(loc.toUpperCase()))
+						data="success";
+				  //  System.out.println(location);
+				}
 				
-				if(result.equalsIgnoreCase(loc.toUpperCase()))
-					data="success";
+			//	result=list.get(0).toString();
+				
+				
 		   
 			
-		  } 
-		  catch (HibernateException e) {
-		    System.err.print("Hibernate error");
-		    e.printStackTrace();
-		    session.getTransaction().rollback();
-		  } catch (Exception ex) {
+			} 
+			catch (HibernateException e) {
+			    System.err.print("Hibernate error");
+			    e.printStackTrace();
+			    session.getTransaction().rollback();
+			} 
+			catch (Exception ex) {
 		    session.getTransaction().rollback();
 		    ex.printStackTrace();
 		  }
