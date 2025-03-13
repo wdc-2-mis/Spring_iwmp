@@ -204,7 +204,7 @@ display: none; /* Hidden by default */
 
 <div class="table-responsive">
 <br/>
-<div class="col" style="text-align:center;"><h5>State wise daily Public Participants </h5></div>
+<div class="col" style="text-align:center;"><h5>State wise Daily Public Participants </h5></div>
  <form:form autocomplete="off" name="routePlan" id="routePlan"  action="getWatershedYatraParticipantReport" method="get">
  		<br/>
  		

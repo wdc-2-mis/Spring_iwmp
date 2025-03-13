@@ -1230,10 +1230,23 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		  String data="fail";
 		  try {
 		    session.beginTransaction();
-			List list = session.createQuery("SELECT iwmpVillage.vcode FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
-		//	result=Integer.parseInt(list.get(0).toString());
-			if(!list.isEmpty())
-				data="success";
+		    
+		    List listd = session.createQuery("SELECT iwmpVillage.vcode FROM WatershedYatVillDuplicate where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
+		    if(listd.isEmpty()) 
+		    {
+		    
+				List list = session.createQuery("SELECT iwmpVillage.vcode FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
+			//	result=Integer.parseInt(list.get(0).toString());
+				if(!list.isEmpty())
+					data="success";
+		    }
+		    else {
+		    	
+		    	data="successkd";
+		    }
+			
+			
+			
 		  } 
 		  catch (HibernateException e) {
 		    System.err.print("Hibernate error");
@@ -2918,5 +2931,38 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		//session.close();
 		}
 		return list;
+	}
+
+	@Override
+	public String getExistingWatershedYatraVillageLoction(Integer villageCode, String loc) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		  String result;
+		  String data="fail";
+		  try {
+		    session.beginTransaction();
+		    
+		  
+		    
+				List list = session.createQuery("SELECT UPPER(yatraLocation) FROM WatershedYatVill where iwmpVillage.vcode=:villageCode").setInteger("villageCode", villageCode).list();
+				result=list.get(0).toString();
+				
+				if(result.equalsIgnoreCase(loc.toUpperCase()))
+					data="success";
+		   
+			
+		  } 
+		  catch (HibernateException e) {
+		    System.err.print("Hibernate error");
+		    e.printStackTrace();
+		    session.getTransaction().rollback();
+		  } catch (Exception ex) {
+		    session.getTransaction().rollback();
+		    ex.printStackTrace();
+		  }
+		  finally {
+			  session.getTransaction().commit();
+		  }
+		  return data;
 	}
 }

@@ -69,10 +69,15 @@ $(function(){
 					    {
 							if(data==='success')
 							{
-								alert('Village already exists. Please select a different village. !');
+								alert('Village already exists. Please select a different village');
 								$("select#village")[0].selectedIndex = 0;
 											
 							}
+						//	if(data==='successkd')
+						//	{
+						//		alert('Village already exists. Do you want to again entry for this village !');
+								//$("select#village")[0].selectedIndex = 0;
+						//	}
 										
 					    }
 					  });
@@ -308,6 +313,28 @@ $(document).on('click', '.showImage', function(e) {
 
 });	
 
-
+function myOverFunction(e) {
+		
+		$villageCode = $('#village option:selected').val();
+		$loc= $('#location').val();
+	//	alert($loc);
+						  $.ajax({
+						    url: "getExistingWatershedYatraVillageLoction",
+						    type: "post",
+						    data: {villageCode: $villageCode, loct:$loc },
+						    error: function(xhr, status, er) {
+						      console.log(er);
+						    },
+						    success: function(data) 
+						    {
+								if(data==='success')
+								{
+									alert('Location can not be same, you have already enter.');
+									$('#location').val('');
+								}
+						    }
+						  });
+										   
+	}
 
 				

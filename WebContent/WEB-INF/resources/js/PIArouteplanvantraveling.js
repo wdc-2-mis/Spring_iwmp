@@ -203,7 +203,7 @@ $(function(){
 			return false;
 		}
 
-		
+		if ($('#block1 option:selected').val() >0) {
 		if ($('#block1 option:selected').val() === '' || typeof $('#block1 option:selected').val() === 'undefined') {
 			alert('Please Select Block for Location-02 !');
 			$('#block1').focus();
@@ -229,9 +229,19 @@ $(function(){
 			$('#location1').focus();
 			return false;
 		}
+		}
+		else{
+					
+					$district1 = 0;
+					$block1 = 0;
+					$grampan1 = 0;
+					$village1 = 0;
+					$location1 ="";
+					$datetime1 ="";
+					
+				}
 		
-		
-		if ($('#district1 option:selected').val() >0) {
+		if ($('#block1 option:selected').val() >0) {
 
 		const dateTimeStr = $('#datetime').val();
 		const dateObj = new Date(dateTimeStr); // Extract date components 

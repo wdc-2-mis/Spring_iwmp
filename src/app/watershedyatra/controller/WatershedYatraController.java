@@ -126,6 +126,13 @@ public class WatershedYatraController {
 	public String getExistingWatershedYatraVillageCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="villageCode") Integer villageCode ) {
 	  return ser.getExistingWatershedYatraVillageCodes(villageCode);
 	}
+	
+	@RequestMapping(value = "/getExistingWatershedYatraVillageLoction", method = RequestMethod.POST)
+	@ResponseBody
+	public String getExistingWatershedYatraVillageLoction( HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(value ="villageCode") Integer villageCode, @RequestParam(value ="loct") String loct ) {
+	  return ser.getExistingWatershedYatraVillageLoction(villageCode, loct);
+	}
 
 
 @RequestMapping(value = "/getImageWatershedYatraId", method = RequestMethod.POST)

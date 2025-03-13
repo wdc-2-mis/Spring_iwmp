@@ -21,31 +21,9 @@
 
 function showReport(e)
 {
-	var state = $('#state').val();
-	var district = $('#district').val();
-	var block = $('#block').val();
-	var gp = $('#grampan').val();
+	
 	var userdate = $('#userdate').val();
 	var userdateto = $('#userdateto').val();
-	
-	if(state==='')
-	{
-		alert('Please select state ');
-		$('#state').focus();
-		e.preventDefault();
-	}
-	if(district==='')
-	{
-		alert('Please select District ');
-		$('#district').focus();
-		e.preventDefault();
-	}
-	if(block==='')
-	{
-		alert('Please select Block ');
-		$('#block').focus();
-		e.preventDefault();
-	}
 	
 	/*  if(userdateto!='')
 	{

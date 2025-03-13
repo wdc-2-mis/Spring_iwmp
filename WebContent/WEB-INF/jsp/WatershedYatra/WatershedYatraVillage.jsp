@@ -758,7 +758,7 @@ display: none; /* Hidden by default */
     		
     		<div class="form-group col-3">
     <label for="activity">Location (Nearby/Milestone)</label>
-    <input type="text" class="form-control activity" name="location" id="location" style="width: 100%; max-width: 800px;" />
+    <input type="text" class="form-control activity" name="location" id="location" onblur="myOverFunction(this)" style="width: 100%; max-width: 800px;" />
 </div>
 
     		
