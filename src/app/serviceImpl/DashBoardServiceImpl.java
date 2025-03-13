@@ -393,6 +393,17 @@ public class DashBoardServiceImpl implements DashBoardService{
 		// TODO Auto-generated method stub
 		return dashBoardDao.getWatrshdInagrtnData();
 	}
-	
+	@Override
+	public List<WatershedYatraDashboardChartBean> getParticipantslist(Integer stCode) {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getParticipantslist(stCode);
+	}
+
+	@Override
+	public List<WatershedYatraDashboardChartBean> getDateWiseCovLocations(Integer stCode) {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getDateWiseCovLocations(stCode);
+	}
+
 	
 }

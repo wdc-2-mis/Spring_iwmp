@@ -115,6 +115,95 @@
   	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
   	border-radius: 10px;
   }
+  
+   /* Main Frame Container */
+.dashboard-frame {
+    background-color: #FAF9F6;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin: 20px auto;
+    width: 1870px;
+    /* max-width: 1200px; */
+}
+
+/* Frame Title */
+.frame-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #2C3E50;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Dropdown and Chart Unified Layout */
+.frame-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Space between dropdown and chart */
+}
+
+/* Dropdown Section Styling */
+.dropdown-container {
+    text-align: center;
+}
+
+.dropdown-label {
+    font-size: 1rem;
+    color: #34495E;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.state-dropdown {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.state-dropdown:hover {
+    border-color: #1ABC9C;
+    background-color: #F4F8F9;
+}
+
+.chart-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between the two charts */
+    width: 100%;
+    background-color: #F4F8F9;
+}
+ /* Chart Styling */
+.chart-container1 {
+    flex: 1 1 45%; /* Adjust width, 45% ensures two charts in one row */
+    min-width: 800px; /* Ensures charts don't get too small */
+    max-width: 100% /* Prevents excessive stretching */
+    background-color: #F4F8F9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin: auto;
+    height: 500px;
+} 
+
+
+
+@media screen and (max-width: 1300px) {
+    .chart-container1 {
+        flex: 1 1 100%; /* Each chart takes full width on smaller screens */
+    }
+}  
+  
 </style>
 </head>
 <body>
@@ -710,6 +799,191 @@
       
 
 </script>
+
+<div class="dashboard-frame">
+    <h3 class="frame-title">Day Wise Watershed Yatra Total Participants & Covered Location Overview</h3>
+    
+    <div class="frame-content">
+        <!-- Dropdown Section -->
+        <div class="dropdown-container">
+            <label for="stateDropdown" class="dropdown-label">Select State:</label>
+            <select name="stCode" id="stateDropdown" class="state-dropdown">
+                <c:forEach var="state" items="${stateList}">
+                    <option value="${state.key}" ${state.key == param.stCode ? 'selected' : ''}>${state.value}</option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="chart-wrapper">
+        <div class="chart-container1">
+            <h4 class="frame-title">Total Participants</h4>
+            <canvas id="participantChart"></canvas>
+        </div>
+
+        <div class="chart-container1">
+            <h4 class="frame-title">Covered Locations</h4>
+            <canvas id="locationChart1"></canvas>
+        </div>
+    </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        const chartLabels = [];
+        const chartParticipants = [];
+        const chartCoveredLocations = [];
+
+        // Ensure JSP data is correctly extracted
+        <c:forEach var="entry" items="${chartData}">
+        chartLabels.push('<c:out value="${entry.key}"/>');
+        chartParticipants.push(Number('<c:out value="${entry.value}"/>'));
+    </c:forEach>;
+
+    <c:forEach var="entry1" items="${chartLocData}">
+        chartCoveredLocations.push(Number('<c:out value="${entry1.value}"/>'));
+    </c:forEach>;
+    
+        
+        // Initialize Chart.js
+        const ctx = document.getElementById('participantChart').getContext('2d');
+        const participantChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Total Participants',
+                    data: chartParticipants,
+                    borderColor: 'rgb(75, 192, 192)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        },
+                ticks: {
+                    autoSkip: false,  // Force all labels to display
+                    maxRotation: 45,  // Rotate labels for better fit
+                    minRotation: 45
+                }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Participants'
+                        },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        const ctx2 = document.getElementById('locationChart1').getContext('2d');
+        const locationChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Covered Locations',
+                    data: chartCoveredLocations,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,  // Allows width adjustment but within limits
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: { 
+                        title: { display: true, text: 'Date' }, 
+                        ticks: {
+                            autoSkip: false,  
+                            maxRotation: 45,  
+                            minRotation: 45  
+                        }
+                    },
+                    y: { 
+                        title: { display: true, text: 'Covered Locations' }, 
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,  
+                            callback: function(value) {
+                                return Number.isInteger(value) ? value : null;  
+                            }
+                        }
+                    }
+                },
+                layout: {
+                    padding: 10  // Adds space inside the chart
+                }
+            }
+        });
+
+        // AJAX call when state dropdown is changed
+        $('#stateDropdown').change(function () {
+            var selectedState = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: 'getParticipantData',
+                data: { stateCode: selectedState },
+                dataType: 'json',
+                success: function (response) {
+                	if (!response.chartData || Object.keys(response.chartData).length === 0) {
+                        alert("No data available for the selected state.");
+                        $('#stateDropdown').val(lastValidState); // Revert dropdown to last valid state
+                        return;
+                    }
+
+                    lastValidState = selectedState; // Update last valid state
+                    updateCharts(response.chartData, response.chartLocData);
+                },
+                error: function () {
+                    alert('Error fetching data. Please try again.');
+                    $('#stateDropdown').val(lastValidState); 
+                }
+            });
+        });
+
+        function updateCharts(participantData, coveredLocationData) {
+          
+            var chartLabels = Object.keys(participantData);
+            var chartParticipants = Object.values(participantData).map(Number);
+            var chartCoveredLocations = Object.values(coveredLocationData || {}).map(Number);
+
+            // Update Participants Chart
+            participantChart.data.labels = chartLabels;
+            participantChart.data.datasets[0].data = chartParticipants;
+            participantChart.update();
+
+            // Update Covered Locations Chart
+            locationChart.data.labels = chartLabels;
+            locationChart.data.datasets[0].data = chartCoveredLocations;
+            locationChart.update();
+        }
+    });
+</script>    
 
 
 	<footer class="text-center">

@@ -49,14 +49,6 @@
 						</div>
 					</div>
 					<div class="testimonial-carousel">
-					
-					
-						
-						
-
-						
-
-						
 						<div class="one-slide white">
 							<div class="testimonial w-100 h-100  p-0 text-center">
 								<div class="brand">

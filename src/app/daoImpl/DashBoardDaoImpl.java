@@ -278,6 +278,13 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	@Value("${getParticipantsfrmIngAndWtrshd}")
 	String getParticipantsfrmIngAndWtrshd;
 	
+	@Value("${getparticipantsList}")
+	String getparticipantsList;
+	
+	@Value("${getDateWiseLocList}")
+	String getDateWiseLocList;
+
+
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -2433,5 +2440,54 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 		return map;
 	}
 
-	
+	@Override
+	public List<WatershedYatraDashboardChartBean> getParticipantslist(Integer stCode) {
+		String hql = getparticipantsList;
+		List<WatershedYatraDashboardChartBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
+			query.setInteger("stCode", stCode);
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
+	@Override
+	public List<WatershedYatraDashboardChartBean> getDateWiseCovLocations(Integer stCode) {
+		String hql = getDateWiseLocList;
+		List<WatershedYatraDashboardChartBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
+			query.setInteger("stCode", stCode);
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
 }

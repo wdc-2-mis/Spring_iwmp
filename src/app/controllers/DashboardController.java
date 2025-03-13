@@ -3,6 +3,7 @@ package app.controllers;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,8 @@ import app.service.StateMasterService;
 public class DashboardController {
 	@Autowired(required = true)
 	StateMasterService stateMasterService;
+	private Map<Integer, String> stateList;
+
 	
 	@Autowired(required = true)
 	private CommonService commonService;
@@ -295,26 +298,79 @@ public class DashboardController {
 	@RequestMapping(value = "/watershedDashBoard", method = RequestMethod.GET)
 	public ModelAndView watershedDashBoard(HttpServletRequest request, HttpServletResponse response, Model model) {
 		ModelAndView mav = new ModelAndView();
+		String stCode = request.getParameter("stCode");
+
 		try {
-			mav = new ModelAndView("WatershedYatra/watershedDashBoard");
+		mav = new ModelAndView("WatershedYatra/watershedDashBoard");
 		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
 		Map<String, List<WatrshdInagrtnPreYtraDashBean>> wtrIngMap = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
 		List<WatershedYatraDashboardChartBean> list = new ArrayList<>();
-		List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
+		List<WatershedYatraDashboardChartBean> ParticipantList = new ArrayList<>();
+		List<WatershedYatraDashboardChartBean> CoveredLocations = new ArrayList<>();
+        List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
+        
+        stateList=stateMasterService.getAllState();
+		mav.addObject("stateList", stateList);
+		
 		map = dashBoardService.getWatrshdInagrtnPreYtraData();
 		wtrIngMap = dashBoardService.getWatrshdInagrtnData();
 		list = dashBoardService.getWtrshdYtraChartData();
 		pList = dashBoardService.getInagrtnAndWtrShdDashBoardData();
+		
+        Integer stCode1 = (stCode == null || stCode.isEmpty()) ? null : Integer.parseInt(stCode);
+		ParticipantList = (stCode == null) 
+	            ? dashBoardService.getParticipantslist(28) // Default state code
+	                    : dashBoardService.getParticipantslist(stCode1);
+		CoveredLocations = dashBoardService.getDateWiseCovLocations(28);
+		
+		Map<String, Integer> chartData = new LinkedHashMap<>();
+		Map<String, Integer> chartLocData = new LinkedHashMap<>();
+        for (WatershedYatraDashboardChartBean bean : ParticipantList) {
+            chartData.put(bean.getYatradate(), bean.getTotal_participants());
+        }
+        for (WatershedYatraDashboardChartBean bean : CoveredLocations) {
+        	chartLocData.put(bean.getYatradate(), bean.getCoveredlocations());
+        }
+
 		model.addAttribute("map",map);
 		model.addAttribute("list",list);
 		model.addAttribute("pList",pList);
-		model.addAttribute("ing",wtrIngMap.get("ing"));
+		model.addAttribute("chartData", chartData);
+		model.addAttribute("chartLocData", chartLocData);
+		model.addAttribute("statelist", stateMasterService.getAllState());
+        model.addAttribute("ing",wtrIngMap.get("ing"));
 		model.addAttribute("wtr",wtrIngMap.get("wtr"));
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+	@RequestMapping(value = "/getParticipantData", method = RequestMethod.GET)
+	@ResponseBody // Ensures only the data (not a view) is returned
+	public Map<String, Object> getParticipantData(@RequestParam("stateCode") Integer stCode) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // Fetch participant data for the selected state
+	        List<WatershedYatraDashboardChartBean> ParticipantList = dashBoardService.getParticipantslist(stCode);
+	        List<WatershedYatraDashboardChartBean> CoveredLocations = dashBoardService.getDateWiseCovLocations(stCode);
+	        
+	        Map<String, Integer> chartData = new LinkedHashMap<>();
+	        for (WatershedYatraDashboardChartBean bean : ParticipantList) {
+	            chartData.put(bean.getYatradate(), bean.getTotal_participants());
+	        }
+
+	        Map<String, Integer> chartLocData = new LinkedHashMap<>();
+	        for (WatershedYatraDashboardChartBean bean : CoveredLocations) {
+	        	chartLocData.put(bean.getYatradate(), bean.getCoveredlocations());
+	        }
+	        // Populate the response with chart data
+	        response.put("chartData", chartData);
+	        response.put("chartLocData", chartLocData);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return response;
 	}
 
 
