@@ -123,9 +123,8 @@
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    margin: 20px auto;
+    margin: 20px;
     width: 1870px;
-    /* max-width: 1200px; */
 }
 
 /* Frame Title */
