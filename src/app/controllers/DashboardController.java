@@ -298,14 +298,18 @@ public class DashboardController {
 		try {
 			mav = new ModelAndView("WatershedYatra/watershedDashBoard");
 		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
+		Map<String, List<WatrshdInagrtnPreYtraDashBean>> wtrIngMap = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
 		List<WatershedYatraDashboardChartBean> list = new ArrayList<>();
 		List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
 		map = dashBoardService.getWatrshdInagrtnPreYtraData();
+		wtrIngMap = dashBoardService.getWatrshdInagrtnData();
 		list = dashBoardService.getWtrshdYtraChartData();
 		pList = dashBoardService.getInagrtnAndWtrShdDashBoardData();
 		model.addAttribute("map",map);
 		model.addAttribute("list",list);
 		model.addAttribute("pList",pList);
+		model.addAttribute("ing",wtrIngMap.get("ing"));
+		model.addAttribute("wtr",wtrIngMap.get("wtr"));
 
 		} catch (Exception e) {
 			e.printStackTrace();

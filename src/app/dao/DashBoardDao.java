@@ -146,4 +146,6 @@ public interface DashBoardDao {
 	List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData();
 	
 	List<InagrtnAndWtrShdDashBoardBean> getInagrtnAndWtrShdDashBoardData();
+	
+	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnData();
 }

@@ -85,26 +85,9 @@
     justify-content: space-around;
     align-items: center;
     flex-wrap: nowrap;
+    width: 1870px;
   }
-  .chart-item {
-    text-align: center;
-    margin: 10px;
-  }
-  .chart-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  #chart_div1{
-  	border: 1px solid #ccc;
-  	background-color: #FAF9F6; 
-  	padding: 15px; 
-  	width: 500px; 
-  	height: 600px; 
-  	margin: 10px; 
-  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-  	border-radius: 10px;
-  }
-  #chart_div2{
+  .chart_items{
   	border: 1px solid #ccc;
   	background-color: #FAF9F6; 
   	padding: 15px; 
@@ -115,6 +98,14 @@
   	border-radius: 10px;
   }
   .piechart-container{
+  	display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 1870px;
+  }
+  
+  .pie-items{
   	border: 1px solid #ccc;
   	background-color: #FAF9F6; 
   	padding: 15px; 
@@ -129,9 +120,6 @@
 <body>
 
 <h2 class="panel-title" style ="text-align: center; margin: 10px;">Watershed Yatra Dashboard</h2>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-more.js"></script>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
  $(document).ready(function(){
@@ -139,9 +127,40 @@
  });
  </script>
  <div class="panel-body" style ="text-align: center; margin: 20px;"></div>
+ <p style ="text-align: right; margin: 20px; font-weight: bold;">As on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 <div>
     <c:forEach var="entry" items="${map}">
         <div class="component-container">
+        	
+        	<c:if test ="${entry.key eq 'pre'}">
+            <h3 class ="component-field">Pre Yatra Details</h3>
+            <div class="panel-underline"></div>
+            <div class="field-row">
+                <c:forEach var="bean" items="${entry.value}">
+                    <div class="field-container">
+                        <div class="field-title">Total States</div>
+                        <div class="field-value">${bean.totstates}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of Gram Sabha Organized</div>
+                        <div class="field-value">${bean.totgrabsabha}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of People Participated in Gram Sabha</div>
+                        <div class="field-value">${bean.gramsabha_participants}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of Prabhat Pheri Organized</div>
+                        <div class="field-value">${bean.totprabhatpheri}</div>
+                    </div>
+                    <div class="field-container">
+                        <div class="field-title">Total Number of People Participated in Prabhat Pheri</div>
+                        <div class="field-value">${bean.prabhatpheri_participants}</div>
+                    </div>
+                </c:forEach>
+            </div>
+            </c:if>
+        	
             <c:if test ="${entry.key eq 'wtr'}">
             <h3 class ="component-field">Watershed Yatra Activities</h3>
             <div class="panel-underline"></div>
@@ -192,186 +211,416 @@
             </div>
             </c:if>
 
-            <c:if test ="${entry.key eq 'pre'}">
-            <h3 class ="component-field">Pre Yatra</h3>
-            <div class="panel-underline"></div>
-            <div class="field-row">
-                <c:forEach var="bean" items="${entry.value}">
-                    <div class="field-container">
-                        <div class="field-title">Total States</div>
-                        <div class="field-value">${bean.totstates}</div>
-                    </div>
-                    <div class="field-container">
-                        <div class="field-title">Total Number of Gram Sabha Organized</div>
-                        <div class="field-value">${bean.totgrabsabha}</div>
-                    </div>
-                    <div class="field-container">
-                        <div class="field-title">Total Number of People Participated in Gram Sabha</div>
-                        <div class="field-value">${bean.gramsabha_participants}</div>
-                    </div>
-                    <div class="field-container">
-                        <div class="field-title">Total Number of Prabhat Pheri Organized</div>
-                        <div class="field-value">${bean.totprabhatpheri}</div>
-                    </div>
-                    <div class="field-container">
-                        <div class="field-title">Total Number of People Participated in Prabhat Pheri</div>
-                        <div class="field-value">${bean.prabhatpheri_participants}</div>
-                    </div>
-                </c:forEach>
-            </div>
-            </c:if>
+           
         </div>
     </c:forEach>
 </div>
 
-	<div class="chart-container">
-		<div class="chart-item">
-			<div id="chart_div1"></div>
-		</div>
-		<div class="chart-item">
-			<div id="chart_div2"></div>
-		</div>
+	
 
-		<div class="piechart-container">
-			<canvas id="participantsChart"></canvas>
+	<div class="piechart-container">
+		<div class ="pie-items">
+			<div class ="pie-div1">
+				<canvas id="prticpntsChrt"></canvas>
+			</div>
+		</div>
+		<div class ="pie-items">
+			<div class ="pie-div2">
+				<canvas id="awrdPieChart"></canvas>
+			</div>
+		</div>
+		<div class ="pie-items">
+			<div class ="pie-div3">
+				<canvas id="plntPieChart"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	var ingparticipants = ${ing[0].totparticipants }
+    var wtrparticipants =  ${wtr[0].totparticipants}
+    
+    const partData = [ingparticipants, wtrparticipants];
+	// Participants Gauge Chart
+    new Chart(document.getElementById('prticpntsChrt'), {
+      type: 'pie',
+      data: {
+        labels: ['Inauguration Participants', 'Watershed Yatra Participants'],
+        datasets: [{
+        data: partData,
+          backgroundColor: ['#2196f3', '#ffc107'],
+        }]
+      },
+      options: {
+      	responsive: true,
+          plugins: {
+            title: {
+                  display: true,
+                  text: 'Participants Details',
+                  font: {
+                      size: 30 // Adjust this value to increase or decrease the font size
+                  }
+              }
+          },
+        }
+    });
+    
+    var container = document.querySelector('.pie-div1');
+    if (container) {
+        var totalElement = document.createElement('div');
+        totalElement.style.textAlign = 'center';
+        totalElement.style.marginTop = '20px';
+        totalElement.style.fontSize = '20px';
+        totalElement.innerHTML = `<strong>Total Number of People Participated: 
+        	<c:out value ="${ing[0].totparticipants + wtr[0].totparticipants}"/></strong>`;
+        container.appendChild(totalElement);
+    } else {
+        console.error("Container element '.piechart-container' not found.");
+    }
+        
+        var labels = ["Inauguration Award Distribution", "Watershed Yatra Award Distribution"];
+        // Create Pie Chart for "wtr"
+        new Chart(document.getElementById('awrdPieChart'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Award Distribution Data',
+                    data: [
+                    		<c:out value="${ing[0].totawarddistribution}" />,
+                            <c:out value="${wtr[0].totawarddistribution}" />
+                        ],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Award Distribution',
+                        font: {
+                            size: 30 // Adjust this value to increase or decrease the font size
+                        }
+                    }
+                }
+            }
+        });
+        
+        var container = document.querySelector('.pie-div2');
+        if (container) {
+            var totalElement = document.createElement('div');
+            totalElement.style.textAlign = 'center';
+            totalElement.style.marginTop = '20px';
+            totalElement.style.fontSize = '20px';
+            totalElement.innerHTML = `<strong>Total Award Distribution: 
+            	<c:out value ="${ing[0].totawarddistribution + wtr[0].totawarddistribution}"/></strong>`;
+            container.appendChild(totalElement);
+        } else {
+            console.error("Container element '.piechart-container' not found.");
+        }
+        
+        
+        var labels = ["Inauguration Sapling Plant", "Watershed Sapling Plant"];
+        // Create Pie Chart for "wtr"
+        new Chart(document.getElementById('plntPieChart'), {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sapling Plant Data',
+                    data: [
+                    		<c:out value="${ing[0].totplantation}" />,
+                            <c:out value="${wtr[0].totplantation}" />
+                        ],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Sapling Plants',
+                        font: {
+                            size: 30 // Adjust this value to increase or decrease the font size
+                        }
+                    }
+                }
+            }
+        });
+        
+        var container = document.querySelector('.pie-div3');
+        if (container) {
+            var totalElement = document.createElement('div');
+            totalElement.style.textAlign = 'center';
+            totalElement.style.marginTop = '20px';
+            totalElement.style.fontSize = '20px';
+            totalElement.innerHTML = `<strong>Total Number of Sapling Planted: 
+            	<c:out value ="${ing[0].totplantation + wtr[0].totplantation}"/></strong>`;
+            container.appendChild(totalElement);
+        } else {
+            console.error("Container element '.piechart-container' not found.");
+        }
+        
+    </script>
+
+	<div class="piechart-container">
+		<div class ="pie-items">
+			<div class ="pie-div4">
+				<canvas id="ingPieChart"></canvas>
+			</div>
+		</div>
+		<div class ="pie-items">
+			<div class ="pie-div5">
+				<canvas id="wtrPieChart"></canvas>
+			</div>
+		</div>
+		<div class ="pie-items">
+			<div class ="pie-div6">
+				<canvas id="shrmPieChart"></canvas>
+			</div>
+		</div>
+	</div>
+	<script>
+    
+    // Labels for the pie chart
+    var labels = ["Inauguration Participants", "Watershed Yatra Participants"];
+
+    // Create Pie Chart for "ing"
+    new Chart(document.getElementById('ingPieChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Bhoomi Poojan Data',
+                data: [
+                	<c:out value="${ing[0].totbhumipujanworks}" />,
+                    <c:out value="${wtr[0].totbhumipujanworks}" />
+                ],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Bhoomi Poojan Works',
+                    font: {
+                        size: 30 // Adjust this value to increase or decrease the font size
+                    }
+                }
+            }
+        }
+    });   
+    
+    // Append the total below the chart
+    var container = document.querySelector('.pie-div4');
+    if (container) {
+        var totalElement = document.createElement('div');
+        totalElement.style.textAlign = 'center';
+        totalElement.style.marginTop = '20px';
+        totalElement.style.fontSize = '20px';
+        totalElement.innerHTML = `<strong>Total Numbers of Works for BHOOMI POOJAN: 
+        	<c:out value ="${ing[0].totbhumipujanworks + wtr[0].totbhumipujanworks}"/></strong>`;
+        container.appendChild(totalElement);
+    } else {
+        console.error("Container element '.piechart-container' not found.");
+    }
+	
+    var labels = ["Inauguration LOKARPAN", "Watershed Yatra LOKARPAN"];
+    // Create Pie Chart for "wtr"
+    new Chart(document.getElementById('wtrPieChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'LOKARPAN Data',
+                data: [
+                		<c:out value="${ing[0].totlokarpanworks}" />,
+                        <c:out value="${wtr[0].totlokarpanworks}" />
+                    ],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Lokarpan Works',
+                    font: {
+                        size: 30 // Adjust this value to increase or decrease the font size
+                    }
+                }
+            }
+        }
+    });
+    
+    var container = document.querySelector('.pie-div5');
+    if (container) {
+        var totalElement = document.createElement('div');
+        totalElement.style.textAlign = 'center';
+        totalElement.style.marginTop = '20px';
+        totalElement.style.fontSize = '20px';
+        totalElement.innerHTML = `<strong>Total Numbers of Works for LOKARPAN: 
+        	<c:out value ="${ing[0].totlokarpanworks + wtr[0].totlokarpanworks}"/></strong>`;
+        container.appendChild(totalElement);
+    } else {
+        console.error("Container element '.piechart-container' not found.");
+    }
+    
+    
+    var labels = ["Inauguration Shramdaan", "Watershed Yatra Shramdaan"];
+    // Create Pie Chart for "wtr"
+    new Chart(document.getElementById('shrmPieChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Shramdaan Data',
+                data: [
+                		<c:out value="${ing[0].totshramdannlocationno}" />,
+                        <c:out value="${wtr[0].totshramdannlocationno}" />
+                    ],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Shramdaan Locations',
+                    font: {
+                        size: 30 // Adjust this value to increase or decrease the font size
+                    }
+                }
+            }
+        }
+    });
+    
+    var container = document.querySelector('.pie-div6');
+    if (container) {
+        var totalElement = document.createElement('div');
+        totalElement.style.textAlign = 'center';
+        totalElement.style.marginTop = '20px';
+        totalElement.style.fontSize = '20px';
+        totalElement.innerHTML = `<strong>Shramdaan on Total Location: 
+        	<c:out value ="${ing[0].totshramdannlocationno + wtr[0].totshramdannlocationno}"/></strong>`;
+        container.appendChild(totalElement);
+    } else {
+        console.error("Container element '.piechart-container' not found.");
+    }
+</script>
+
+	<div class="chart-container">
+		<div class="chart_items">
+			<div class="chart-div1">
+				<canvas id="locationChart"></canvas>
+			</div>
+		</div>
+		<div class="chart_items">
+			<div class="chart-div2">
+				<canvas id="activityChart"></canvas>
+			</div>
+		</div>
+		<div class="chart_items">
+			<div class="chart-div3">
+				<canvas id="participantsChart"></canvas>
+			</div>
 		</div>
 	</div>
 
 <script type="text/javascript">
-$('#loading').hide();
-document.addEventListener('DOMContentLoaded', function () {
     var totplannedloc = ${list[0].totplannedloc};
     var completedyatraloc = ${list[0].completedyatraloc};
     var totplannedact = ${list[0].totplannedact};
     var totcompletedact = ${list[0].totcompletedact};
 
-    Highcharts.chart('chart_div1', {
-        chart: {
-            type: 'solidgauge',
-            height: '110%'
-        },
-        title: {
-            text: 'Completed Yatra Location',
-            style: {
-                fontSize: '24px'
-            }
-        },
-        pane: {
-            startAngle: -90,
-            endAngle: 90,
-            background: {
-                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                innerRadius: '60%',
-                outerRadius: '100%',
-                shape: 'arc'
-            }
-        },
-        yAxis: {
-            min: 0,
-            max: totplannedloc,
-            stops: [
-                [0.1, '#55BF3B'], // green
-                [0.5, '#DDDF0D'], // yellow
-                [0.9, '#DF5353'] // red
-            ],
-            lineWidth: 0,
-            tickWidth: 0,
-            minorTickInterval: null,
-            tickAmount: 2,
-            title: {
-                y: -70
-            },
-            labels: {
-                y: 16
-            }
-        },
-        plotOptions: {
-            solidgauge: {
-                dataLabels: {
-                    y: 5,
-                    borderWidth: 0,
-                    useHTML: true
-                }
-            }
-        },
-        series: [{
-            name: 'Completed Yatra Location',
-            data: [completedyatraloc],
-            dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/>' +
-                    '<span style="font-size:12px;opacity:0.4">Completed</span></div>'
-            },
-            tooltip: {
-                valueSuffix: ''
-            }
-        }]
-    });
+        // Prepare datasets
+        const locData = [completedyatraloc, totplannedloc - completedyatraloc];
+        const actData = [totcompletedact, totplannedact - totcompletedact];
 
-    Highcharts.chart('chart_div2', {
-        chart: {
-            type: 'solidgauge',
-            height: '110%'
-        },
-        title: {
-            text: 'Completed Activities',
-            style: {
-                fontSize: '24px'
-            }
-        },
-        pane: {
-            startAngle: -90,
-            endAngle: 90,
-            background: {
-                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#EEE',
-                innerRadius: '60%',
-                outerRadius: '100%',
-                shape: 'arc'
-            }
-        },
-        yAxis: {
-            min: 0,
-            max: totplannedact,
-            stops: [
-                [0.1, '#55BF3B'], // green
-                [0.5, '#DDDF0D'], // yellow
-                [0.9, '#DF5353'] // red
-            ],
-            lineWidth: 0,
-            tickWidth: 0,
-            minorTickInterval: null,
-            tickAmount: 2,
-            title: {
-                y: -70
-            },
-            labels: {
-                y: 16
-            }
-        },
-        plotOptions: {
-            solidgauge: {
-                dataLabels: {
-                    y: 5,
-                    borderWidth: 0,
-                    useHTML: true
+        // Location Gauge Chart
+        new Chart(document.getElementById('locationChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Completed Yatra Locations', 'Remaining Yatra Locations'],
+            datasets: [{
+              data: locData,
+              backgroundColor: ['#4caf50', '#f44336'],
+            }]
+          },
+          options: {
+        	responsive: true,
+            plugins: {
+              title: {
+                    display: true,
+                    text: 'Watershed Yatra Locations',
+                    font: {
+                        size: 30 // Adjust this value to increase or decrease the font size
+                    }
                 }
-            }
-        },
-        series: [{
-            name: 'Completed Activities',
-            data: [totcompletedact],
-            dataLabels: {
-                format: '<div style="text-align:center"><span style="font-size:25px">{y}</span><br/>' +
-                    '<span style="font-size:12px;opacity:0.4">Completed</span></div>'
             },
-            tooltip: {
-                valueSuffix: ''
-            }
-        }]
-    });
-});
-</script>
+            cutout: '60%',
+          }
+        });
+        
+        var container = document.querySelector('.chart-div1');
+        if (container) {
+            var totalElement = document.createElement('div');
+            totalElement.style.textAlign = 'center';
+            totalElement.style.marginTop = '20px';
+            totalElement.style.fontSize = '20px';
+            totalElement.innerHTML = `<strong>Planned Locations: 
+            	<c:out value ="${list[0].totplannedloc}"/></strong>`;
+            container.appendChild(totalElement);
+        } else {
+            console.error("Container element '.piechart-container' not found.");
+        }
 
-    <script>
+        // Activity Gauge Chart
+        new Chart(document.getElementById('activityChart'), {
+          type: 'doughnut',
+          data: {
+            labels: ['Completed Activities', 'Remaining Activities'],
+            datasets: [{
+              data: actData,
+              backgroundColor: ['#2196f3', '#ffc107'],
+            }]
+          },
+          options: {
+          	responsive: true,
+              plugins: {
+                title: {
+                      display: true,
+                      text: 'Watershed Yatra Activities',
+                      font: {
+                          size: 30 // Adjust this value to increase or decrease the font size
+                      }
+                  }
+              },
+              cutout: '60%',
+            }
+        });
+        
+        var container = document.querySelector('.chart-div2');
+        if (container) {
+            var totalElement = document.createElement('div');
+            totalElement.style.textAlign = 'center';
+            totalElement.style.marginTop = '20px';
+            totalElement.style.fontSize = '20px';
+            totalElement.innerHTML = `<strong>Total Activities: 
+            	<c:out value ="${list[0].totplannedact}"/></strong>`;
+            container.appendChild(totalElement);
+        } else {
+            console.error("Container element '.piechart-container' not found.");
+        }
+        
+     
+        
         // Data from the backend
         var data = {
             labels: [
@@ -427,24 +676,25 @@ document.addEventListener('DOMContentLoaded', function () {
         // Configure and render the chart
         var ctx = document.getElementById('participantsChart').getContext('2d');
         var participantsChart = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: data,
             options: {
                 responsive: true,
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Data For All Participants',
+                        text: 'Participants Details',
                         font: {
                             size: 30 // Adjust this value to increase or decrease the font size
                         }
                     }
-                }
+                },
+                cutout: '60%',
             }
         });
         
         // Append the total below the chart
-        var container = document.querySelector('.piechart-container');
+        var container = document.querySelector('.chart-div3');
         if (container) {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
@@ -457,7 +707,10 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             console.error("Container element '.piechart-container' not found.");
         }
-    </script>
+      
+
+</script>
+
 
 	<footer class="text-center">
     <%@include file="/WEB-INF/jspf/footer.jspf"%>

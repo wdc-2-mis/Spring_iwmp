@@ -84,4 +84,5 @@ public interface DashBoardService {
 	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData();
 	List<WatershedYatraDashboardChartBean> getWtrshdYtraChartData();
 	List<InagrtnAndWtrShdDashBoardBean> getInagrtnAndWtrShdDashBoardData();
-	}
+	Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnData();
+}

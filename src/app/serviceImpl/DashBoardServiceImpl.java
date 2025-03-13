@@ -387,6 +387,12 @@ public class DashBoardServiceImpl implements DashBoardService{
 		// TODO Auto-generated method stub
 		return dashBoardDao.getInagrtnAndWtrShdDashBoardData();
 	}
+
+	@Override
+	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getWatrshdInagrtnData();
+	}
 	
 	
 }

@@ -2284,6 +2284,13 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 		try {
 			List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
 			session.beginTransaction();
+			
+			query = session.createSQLQuery(prehql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("pre",list);
+			
+			list = new ArrayList<>();
 			query = session.createSQLQuery(inghql);
 			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
 			list = query.list();
@@ -2308,11 +2315,8 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			list.add(bean);
 			map.put("wtr",list);
 			
-			list = new ArrayList<>();
-			query = session.createSQLQuery(prehql);
-			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
-			list = query.list();
-			map.put("pre",list);
+			
+			
 			session.getTransaction().commit();
 			
 		}
@@ -2341,9 +2345,9 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			query = session.createSQLQuery(plochql);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
 			list = query.list();
-			Integer val1 = 200;
-			bean.setTotplannedloc(list.get(0).getTotplannedloc().multiply(BigInteger.valueOf(val1)));
-//			bean.setTotplannedloc(list.get(0).getTotplannedloc());
+//			Integer val1 = 200;
+//			bean.setTotplannedloc(list.get(0).getTotplannedloc().multiply(BigInteger.valueOf(val1)));
+			bean.setTotplannedloc(list.get(0).getTotplannedloc());
 			
 			query = session.createSQLQuery(clochql);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
@@ -2392,6 +2396,41 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			session.getTransaction().rollback();
 		}
 		return list;
+	}
+
+	@Override
+	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnData() {
+		String inghql=getWatershedYatraInaugurationData;
+		String wtrhql=getWatershedYatraData;
+		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+			session.beginTransaction();
+			query = session.createSQLQuery(inghql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("ing",list);
+			
+			list = new ArrayList<>();
+			query = session.createSQLQuery(wtrhql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			map.put("wtr",list);
+			
+			session.getTransaction().commit();
+			
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return map;
 	}
 
 	
