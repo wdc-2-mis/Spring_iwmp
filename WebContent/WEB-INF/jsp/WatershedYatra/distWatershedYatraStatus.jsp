@@ -105,7 +105,7 @@ function exportExcel(stcd, stName)
 		<c:forEach items="${getRecords}" var="project" varStatus="sno">
 			 <tr>
 				<td class="text-center"><c:out value="${sno.count}" /></td>
-				<td class="text-right"><c:out value="${project.dist_name}" /></td>
+				<td class="text-left"><c:out value="${project.dist_name}" /></td>
                	<td class="text-right"><c:out value="${not empty project.gramsabha ? project.gramsabha : 0}" /></td>
 					
 					<td class="text-right"><c:out value="${not empty project.prabhatpheri ? project.prabhatpheri : 0}" /></td>
