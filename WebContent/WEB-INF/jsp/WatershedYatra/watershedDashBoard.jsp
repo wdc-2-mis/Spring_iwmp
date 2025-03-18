@@ -109,8 +109,8 @@
   	border: 1px solid #ccc;
   	background-color: #FAF9F6; 
   	padding: 15px; 
-  	width: 500px; 
-  	height: 600px; 
+  	width: 350px; 
+  	height: 450px; 
   	margin: 10px; 
   	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
   	border-radius: 10px;
@@ -322,6 +322,11 @@
 				<canvas id="plntPieChart"></canvas>
 			</div>
 		</div>
+		<div class ="pie-items">
+			<div class ="pie-div4">
+				<canvas id="ingPieChart"></canvas>
+			</div>
+		</div>
 	</div>
 
 	<script>
@@ -454,11 +459,7 @@
     </script>
 
 	<div class="piechart-container">
-		<div class ="pie-items">
-			<div class ="pie-div4">
-				<canvas id="ingPieChart"></canvas>
-			</div>
-		</div>
+		
 		<div class ="pie-items">
 			<div class ="pie-div5">
 				<canvas id="wtrPieChart"></canvas>
@@ -467,6 +468,16 @@
 		<div class ="pie-items">
 			<div class ="pie-div6">
 				<canvas id="shrmPieChart"></canvas>
+			</div>
+		</div>
+		<div class="pie-items">
+			<div class="chart-div1">
+				<canvas id="locationChart"></canvas>
+			</div>
+		</div>
+		<div class="pie-items">
+			<div class="chart-div2">
+				<canvas id="activityChart"></canvas>
 			</div>
 		</div>
 	</div>
@@ -604,21 +615,12 @@
 </script>
 
 	<div class="chart-container">
-		<div class="chart_items">
-			<div class="chart-div1">
-				<canvas id="locationChart"></canvas>
-			</div>
-		</div>
-		<div class="chart_items">
-			<div class="chart-div2">
-				<canvas id="activityChart"></canvas>
-			</div>
-		</div>
-		<div class="chart_items">
-			<div class="chart-div3">
-				<canvas id="participantsChart"></canvas>
-			</div>
-		</div>
+		
+<!-- 		<div class="chart_items"> -->
+<!-- 			<div class="chart-div3"> -->
+<%-- 				<canvas id="participantsChart"></canvas> --%>
+<!-- 			</div> -->
+<!-- 		</div> -->
 	</div>
 
 <script type="text/javascript">
