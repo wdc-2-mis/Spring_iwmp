@@ -378,7 +378,7 @@ public class VillageWatershedYatraReport {
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(20);
-			cell.setCellValue("Shramdan");  
+			cell.setCellValue("Shapath");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(21);
@@ -679,7 +679,7 @@ public class VillageWatershedYatraReport {
 				CommonFunctions.insertCellHeader(table, "Government Officials", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 
 				CommonFunctions.insertCellHeader(table, "AR Experience", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Shramdan", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Shapath", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Film on Yatra", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "People Participated in Quiz", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Cultural Activity", Element.ALIGN_CENTER, 1, 2, bf8Bold);

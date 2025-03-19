@@ -462,7 +462,7 @@ display: none; /* Hidden by default */
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Government Officials</th> 
 								
 								<th rowspan="2" style="text-align:center; vertical-align: middle;">AR Experience</th> 
-								<th rowspan="2" style="text-align:center; vertical-align: middle;">Shramdan</th> 
+								<th rowspan="2" style="text-align:center; vertical-align: middle;">Shapath</th> 
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Film on Yatra</th> 
 								<th rowspan="2" style="text-align:center; vertical-align: middle;">People Participated in Quiz</th> 
  								<th rowspan="2" style="text-align:center; vertical-align: middle;">Cultural Activity</th> 
