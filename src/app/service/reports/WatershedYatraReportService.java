@@ -25,5 +25,7 @@ public interface WatershedYatraReportService {
 	List<WatershedYatraStatusBean> getStateWiseWatershedYatraStatus();
 	List<WatershedYatraStatusBean> getDistWiseWatershedYatraStatus(Integer stcd);
 	List<StatusVlgDataBean> getStatusVlgReportData();
+	
+	List<NodalOfficerBean> getRoutePlanReportDataA(Integer State, Integer district, Integer block, Integer grampan,String userdate, String userdateto);
 
 }

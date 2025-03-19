@@ -114,4 +114,13 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 		return dao.getStatusVlgReportData();
 	}
 
+
+
+	@Override
+	public List<NodalOfficerBean> getRoutePlanReportDataA(Integer State, Integer district, Integer block,Integer grampan,
+			String userdate, String userdateto) {
+		// TODO Auto-generated method stub
+		return dao.getRoutePlanReportDataA(State, district, block,grampan, userdate, userdateto);
+	}
+
 }

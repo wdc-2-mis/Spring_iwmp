@@ -52,7 +52,7 @@ function showReport(e)
 	return false;
 } 
 
-function downloadPDF(state, district, blkd, grampn){
+function downloadPDF(state, district, blkd, grampn, userdate, dateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -63,6 +63,8 @@ function downloadPDF(state, district, blkd, grampn){
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
+    document.getElementById("userdate1").value=userdate;
+    document.getElementById("userdate2").value=dateto;
 	
     document.routePlan.action="downloadRoutePlanReportPDF";
 	document.routePlan.method="post";
@@ -77,7 +79,7 @@ function showChangedata(){
 	document.routePlan.submit();
 }
 
-function downloadExcel(state, district, blkd, grampn){
+function downloadExcel(state, district, blkd, grampn, userdate, dateto){
 	
 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
@@ -88,6 +90,8 @@ function downloadExcel(state, district, blkd, grampn){
     document.getElementById("distName").value=distName;
     document.getElementById("blkName").value=blkName;
     document.getElementById("gpkName").value=gpkName;
+    document.getElementById("userdate1").value=userdate;
+    document.getElementById("userdate2").value=dateto;
 	
     document.routePlan.action="downloadRoutePlanReportExcel";
 	document.routePlan.method="post";
@@ -108,6 +112,9 @@ function downloadExcel(state, district, blkd, grampn){
 		<input type="hidden" name="distName" id="distName" value="" />
 		<input type="hidden" name="blkName" id="blkName" value="" />
 		<input type="hidden" name="gpkName" id="gpkName" value="" />
+		<input type="hidden" name="userdate1" id="userdate1" value="" />
+		<input type="hidden" name="userdate2" id="userdate2" value="" />
+		
 		
       <table >
         <tr>
@@ -178,14 +185,35 @@ function downloadExcel(state, district, blkd, grampn){
 					</c:if> 	
               </select>
           </td>
+           <td>
+           <div class="row">
+    			<div class="form-group col-12">
+    			
+      		  <label for="date">From Date : </label>
+      		  <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />
+       		 
+    		</div>
+			</div>
+			 </td>
+			 
+			 <td>
+           <div class="row">
+    			<div class="form-group col-12">
+    			
+      		  <label for="date">To Date&nbsp; : </label>
+      		  <input type="date" name="userdateto" id="userdateto" class="form-control activity" style="width: 100%;" />
+       		 
+    		</div>
+			</div>
+			 </td>
           <td align="left"> &nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);"  name="view" value='Get Data' /> </td>
        </tr>
       </table>
 
  <br/>
 <c:if test="${not empty routePlanList}">
-<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">PDF</button>
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}','${userdate}','${dateto}')" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${district}','${blkd}','${grampn}','${userdate}','${dateto}')" class="btn btn-info">PDF</button>
 </c:if>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
@@ -271,7 +299,6 @@ function downloadExcel(state, district, blkd, grampn){
 								<td align="center" colspan="9" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 					</c:if>
-                	</tbody>
                 	</tbody>
                		
               </table>

@@ -16,14 +16,51 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
 <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script>
 <script type="text/javascript">
+$(document).ready(function () {
+    $('#convergenceTable').DataTable({
+    	 "paging": true,          // Enable pagination
+         "pageLength": 10,        // Default rows per page
+         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
+         "lengthChange": true,    // Allow changing page size
+         "searching": true,       // Enable search box
+         "ordering": true,        // Enable sorting
+         "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
+    });
+});
 
 function showReport(e)
 {
-	
+	var state = $('#state').val();
+	var district = $('#district').val();
+	var block = $('#block').val();
+	var gp = $('#grampan').val();
 	var userdate = $('#userdate').val();
 	var userdateto = $('#userdateto').val();
+	
+	if(state==='')
+	{
+		alert('Please select state ');
+		$('#state').focus();
+		e.preventDefault();
+	}
+	if(district==='')
+	{
+		alert('Please select District ');
+		$('#district').focus();
+		e.preventDefault();
+	}
+	if(block==='')
+	{
+		alert('Please select Block ');
+		$('#block').focus();
+		e.preventDefault();
+	}
 	
 	/*  if(userdateto!='')
 	{
@@ -379,7 +416,9 @@ display: none; /* Hidden by default */
           <td align="left"> &nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);"  name="view" value='Get Data' /> </td>
        </tr>
       </table>
-
+ </form:form>
+    </div>
+	</div>
  <br/>
 <c:if test="${not empty dataList}">
 
@@ -395,7 +434,8 @@ display: none; /* Hidden by default */
           
             <td>
             	<!-- <h5 class="text-center font-weight-bold"><u> List of Watershed Yatra at Village Level</u></h5>  -->
-     		<table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable"> 
+     		<table class="table table-bordered table-striped table-highlight w-auto" id="convergenceTable">
+     		 
  						<thead class ="theadlist" id = "theadlist"> 
  						<tr><td colspan="35" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 							<tr> 
@@ -539,11 +579,8 @@ display: none; /* Hidden by default */
           </tr>
         </table>
         
-         </form:form>
     <br>
     
-	</div>
-	</div>
 	
 	<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">

@@ -57,6 +57,7 @@ import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
 import app.watershedyatra.bean.StatusVlgDataBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 
 @Controller("WatershedYatraReportController")
 public class WatershedYatraReportController {
@@ -134,19 +135,35 @@ public class WatershedYatraReportController {
 			String district= request.getParameter("district");
 			String block= request.getParameter("block");
 			String grampan= request.getParameter("grampan");
+			String userdate= request.getParameter("userdate");
+			String userdateto= request.getParameter("userdateto");
 			
 			List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+			String fromDateStr=null;
+			String toDateStr =null;
 			
+			if(!userdate.equals("")) {
+	        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
 			
 			/*if(session!=null && session.getAttribute("loginID")!=null) {*/
 				
 				mav = new ModelAndView("WatershedYatra/watershedYatraReportRoutePlan");
 				mav.addObject("menu", menuController.getMenuUserId(request));
 				
-				list=ser.getRoutePlanReportData(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan));
+				list=ser.getRoutePlanReportDataA(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate,  userdateto);
+				
 				mav.addObject("routePlanList", list);
 				mav.addObject("routePlanListSize", list.size());
-				
+				mav.addObject("userdate", userdate);
+				mav.addObject("dateto", userdateto);
+				mav.addObject("fromDateStr", fromDateStr);
+				mav.addObject("toDateStr", toDateStr);
 				
 				stateList=stateMasterService.getAllState();
 				mav.addObject("stateList", stateList);
@@ -177,18 +194,32 @@ public class WatershedYatraReportController {
 	@RequestMapping(value = "/downloadRoutePlanReportPDF", method = RequestMethod.POST)
 	public ModelAndView downloadRoutePlanReportPDF(HttpServletRequest request, HttpServletResponse response) 
 	{
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String block= request.getParameter("block");
+		String grampan= request.getParameter("grampan");
+		String userdate= request.getParameter("userdate1");
+		String userdateto= request.getParameter("userdate2");
+		
 		String stName= request.getParameter("stName");
 		String distName= request.getParameter("distName");
 		String blkName= request.getParameter("blkName");
 		String gpkName= request.getParameter("gpkName");
-		
-		int stCode = Integer.parseInt(request.getParameter("state"));
-		int distCode = Integer.parseInt(request.getParameter("district"));
-		int blkCode = Integer.parseInt(request.getParameter("block"));
-		int gpCode = Integer.parseInt(request.getParameter("grampan"));
-		
+		String fromDateStr ="";
+		String toDateStr ="";
+		if(!userdate.equals("")) {
+			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+		if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+
+        
 		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
-		
+		list=ser.getRoutePlanReportDataA(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate, userdateto);
+		//list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
 		try {
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
@@ -230,9 +261,9 @@ public class WatershedYatraReportController {
 				table.setSpacingAfter(0f);
 				table.setHeaderRows(2);
 				
-				list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
 				
-				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchayat Name : "+gpkName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
+				
+				CommonFunctions.insertCellHeader(table,"State : "+ stName+"     District : "+distName+" Block : "+blkName+"  Gram Panchayat Name : "+gpkName +" From Date: "+ fromDateStr+" To Date :"+toDateStr, Element.ALIGN_LEFT, 9, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Route Plan Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Route Plan Time", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -323,22 +354,32 @@ public class WatershedYatraReportController {
 	@ResponseBody
 	public String downloadRoutePlanReportExcel(HttpServletRequest request, HttpServletResponse response)
 	{
-		/* session = request.getSession(true); */
+		
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String block= request.getParameter("block");
+		String grampan= request.getParameter("grampan");
+		String userdate= request.getParameter("userdate1");
+		String userdateto= request.getParameter("userdate2");
 		
 		String stName= request.getParameter("stName");
 		String distName= request.getParameter("distName");
 		String blkName= request.getParameter("blkName");
 		String gpkName= request.getParameter("gpkName");
-		
-		int stCode = Integer.parseInt(request.getParameter("state"));
-		int distCode = Integer.parseInt(request.getParameter("district"));
-		int blkCode = Integer.parseInt(request.getParameter("block"));
-		int gpCode = Integer.parseInt(request.getParameter("grampan"));
-		
+		String fromDateStr ="";
+		String toDateStr ="";
+		if(!userdate.equals("")) {
+			LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+		if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		}
+
+        
 		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
-		
-		list=ser.getRoutePlanReportData(stCode, distCode, blkCode, gpCode);
-		
+		list=ser.getRoutePlanReportDataA(Integer.parseInt(userState), Integer.parseInt(district), Integer.parseInt(block), Integer.parseInt(grampan), userdate, userdateto);
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
 		Sheet sheet = workbook.createSheet("Route Plan for Van Traveling Watershed Mahotsawa");
@@ -357,7 +398,7 @@ public class WatershedYatraReportController {
 		Row rowDetail = sheet.createRow(5);
 		
 		Cell cell = rowDetail.createCell(0);
-		cell.setCellValue("State : "+ stName+"     District : "+distName+"     Block : "+blkName+"     Gram Panchayat : "+gpkName);
+		cell.setCellValue("State : "+ stName+"     District : "+distName+"     Block : "+blkName+"     Gram Panchayat : "+gpkName+" From Date: "+ fromDateStr+" To Date :"+toDateStr);
 		cell.setCellStyle(style);
 		
 		for(int i=1;i<9;i++)

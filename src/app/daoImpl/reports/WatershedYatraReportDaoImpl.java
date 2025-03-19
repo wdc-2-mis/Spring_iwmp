@@ -46,6 +46,12 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	@Value("${getRoutePlanVanTravelwatershed}") 
 	String getRoutePlanVanTravelwatershed;
 	
+	@Value("${getRoutePlanUserdate}") 
+	String getRoutePlanUserdate;
+	
+	@Value("${getRoutPlanFromToDate}") 
+	String getRoutPlanFromToDate;
+	
 	@Value("${getNodalOfficerwatershedAllLevel}") 
 	String getNodalOfficerwatershedAllLevel;
 	
@@ -410,6 +416,81 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 			session.getTransaction().rollback();
 		}
 		return getStatusVlgDetails;
+	}
+
+	@Override
+	public List<NodalOfficerBean> getRoutePlanReportDataA(Integer State, Integer district, Integer block,Integer grampan,
+			String userdate, String userdateto) {
+		
+		String getReport=getRoutePlanVanTravelwatershed;
+		
+		String getReport1=getRoutPlanFromToDate;
+		
+		
+		String getReport2=getRoutePlanUserdate;
+		
+		Date yadate =null;
+		Date yadateto =null;
+		Query query;
+		Query query1;
+		Query query2;
+		Session session = sessionFactory.getCurrentSession();
+		List<NodalOfficerBean> list = new ArrayList<NodalOfficerBean>();
+		try {
+			
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			
+			if(!userdate.equals("")) 
+				yadate = formatter.parse(userdate);
+			
+			if(!userdateto.equals("")) 
+				yadateto = formatter.parse(userdateto);
+			
+				session.beginTransaction();
+				if(userdate.equals("") && userdateto.equals("")) {
+					query= session.createSQLQuery(getReport);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block); 
+					query.setInteger("gpkcd",grampan); 
+					query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+					list = query.list();
+				}
+				if( !userdate.equals("") && !userdateto.equals("")) {
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block); 
+					query.setInteger("gpkcd",grampan); 
+					query.setParameter("userdate",yadate);
+					query.setParameter("yadateto",yadateto);
+					query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+					list = query.list();
+				}
+				if(!userdate.equals("")  &&  userdateto.equals("")) {
+					query= session.createSQLQuery(getReport2);
+					query.setInteger("statecd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("blkcd",block); 
+					query.setInteger("gpkcd",grampan); 
+					query.setParameter("userdate",yadate);
+					query.setResultTransformer(Transformers.aliasToBean(NodalOfficerBean.class));
+					list = query.list();
+				}
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }
