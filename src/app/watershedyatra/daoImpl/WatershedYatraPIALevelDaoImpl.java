@@ -30,13 +30,13 @@ public class WatershedYatraPIALevelDaoImpl implements WatershedYatraPIALevelDao{
 	public LinkedHashMap<Integer, String> getBlockListpia(String userid) {
 		// TODO Auto-generated method stub
 		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
-		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where createdBy=:userid) ";
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId in(select iwmpMProject.projectId from IwmpUserProjectMap where userReg.regId=:userid))";
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(hql);
-			query.setString("userid", userid);
+			query.setInteger("userid", Integer.parseInt(userid));
 			villList = query.list();
 		
 			for (IwmpVillage vill : villList) {
@@ -64,13 +64,13 @@ public class WatershedYatraPIALevelDaoImpl implements WatershedYatraPIALevelDao{
 	public LinkedHashMap<String, Integer> getWatershedYatraAtPiaGPs(Integer blkCode, String userid) {
 		
 		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
-		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where createdBy=:userid) and village.iwmpGramPanchayat.iwmpBlock.bcode = :blkCode ";
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId in(select iwmpMProject.projectId from IwmpUserProjectMap where userReg.regId=:userid)) and village.iwmpGramPanchayat.iwmpBlock.bcode=:blkCode";
 		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(hql);
-			query.setString("userid", userid);
+			query.setInteger("userid", Integer.parseInt(userid));
 			query.setParameter("blkCode", blkCode);
 			villList = query.list();
 		
@@ -99,13 +99,13 @@ public class WatershedYatraPIALevelDaoImpl implements WatershedYatraPIALevelDao{
 	public LinkedHashMap<String, Integer> getWatershedYatraAtPiaVillage(Integer gpCode, String userid) {
 		// TODO Auto-generated method stub
 		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
-		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where createdBy=:userid) and village.iwmpGramPanchayat.gcode=:gpCode order by village.villageName";
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId in(select iwmpMProject.projectId from IwmpUserProjectMap where userReg.regId=:userid)) and village.iwmpGramPanchayat.gcode=:gpCode order by village.villageName";
 		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query = session.createQuery(hql);
-			query.setString("userid", userid);
+			query.setInteger("userid", Integer.parseInt(userid));
 			query.setInteger("gpCode", gpCode);
 			villList = query.list();
 		

@@ -78,7 +78,7 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
+				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
 				
 				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 				map=ser.getCultActivity();
@@ -108,7 +108,7 @@ HttpSession session;
 		
 		session = request.getSession(true);
 		
-		return serp.getWatershedYatraAtPiaGPs(blkCode, session.getAttribute("loginID").toString());
+		return serp.getWatershedYatraAtPiaGPs(blkCode, session.getAttribute("regId").toString());
 	}	
 	
 	@RequestMapping(value = "/getWatershedYatraAtPiaVillage", method = RequestMethod.POST)
@@ -117,7 +117,7 @@ HttpSession session;
 		
 		session = request.getSession(true);
 		
-		return serp.getWatershedYatraAtPiaVillage(gpCode, session.getAttribute("loginID").toString());
+		return serp.getWatershedYatraAtPiaVillage(gpCode, session.getAttribute("regId").toString());
 	}
 
 	

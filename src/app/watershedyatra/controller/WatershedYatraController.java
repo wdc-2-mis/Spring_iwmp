@@ -143,7 +143,8 @@ public class WatershedYatraController {
 		try {
 			imgList = ser.getImagesWatershedYatraId(watershedYatraId);
 			
-		}catch(Exception ex) {
+		}
+		catch(Exception ex) {
 			ex.printStackTrace();
 		}
 		return imgList;
