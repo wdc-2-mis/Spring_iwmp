@@ -16,7 +16,13 @@
 <meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
 <script src='<c:url value="/resources/js/inauguration.js" />'></script>
+
+
 <script type="text/javascript">
 
 function showReport(e)
@@ -153,6 +159,19 @@ function showPrevImage() {
 		document.getElementById('largeImage').src = prevImageSrc;
 	}
 }
+
+//paging
+$(document).ready(function () {
+    $('#tblReport').DataTable({
+    	 "paging": true,          // Enable pagination
+         "pageLength": 10,        // Default rows per page
+         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
+         "lengthChange": true,    // Allow changing page size
+         "searching": true,       // Enable search box
+         "ordering": false,        // Disable sorting
+         "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
+    });
+});
 
 </script>
 
@@ -374,7 +393,9 @@ display: none; /* Hidden by default */
 					<td align="left">&nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);" name="view" value='Get Data' /></td>
 				</tr>
 			</table>
-
+			</form:form>
+	</div>
+</div>
 			<br />
 			<c:if test="${not empty inaugurationList}">
 				<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${udate}','${dateto}')" class="btn btn-info">Excel</button>
@@ -382,8 +403,9 @@ display: none; /* Hidden by default */
 			</c:if>
 			<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			<br />
-
-			<table id="tblReport" class="table">
+			
+			
+			<table id="tblReport" class="table table-bordered table-striped table-highlight w-auto">
 				<thead class="theadlist" id="theadlist">
 				<tr><td colspan="37" align="left"> <b>From Date :</b> ${fromDateStr} &nbsp; &nbsp; <b> To Date :</b> ${toDateStr}</td></tr>
 					<tr>
@@ -513,15 +535,9 @@ display: none; /* Hidden by default */
 				</tbody>
 
 			</table>
-			<!--           <tr> -->
-			<!--             <td>&nbsp;</td> -->
-			<!--           </tr> -->
 
-		</form:form>
 		<br>
 
-	</div>
-</div>
 
 		<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">

@@ -17,6 +17,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
 <%-- <script src='<c:url value="/resources/js/unfreezeProjectLocation.js" />'></script> --%>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
 <script type="text/javascript">
 
 function showReport(e)
@@ -97,6 +101,33 @@ function downloadExcel(state, district, blkd, grampn, userdate, dateto){
 	document.routePlan.method="post";
 	document.routePlan.submit();
 }
+
+//paging
+$(document).ready(function () {
+    $('#tblReport').DataTable({
+        "paging": true,          // Enable pagination
+        "pageLength": 10,        // Default rows per page
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
+        "lengthChange": true,    // Allow changing page size
+        "searching": true,       // Enable search box
+        "ordering": false,        // Disable sorting
+        "info": true,            // Show info (e.g., "Showing 1 to 10 of 50 entries")
+        "columnDefs": [{
+            "targets": 0,        // Apply to the first column (Sl. No.)
+            "render": function (data, type, row, meta) {
+                // Use a counter for even rows; leave odd rows blank
+                if (meta.row % 2 === 0) { // Even rows
+                    return (Math.floor(meta.row / 2) + 1 + Math.floor(meta.settings._iDisplayStart / 2)); // Continuous numbers
+                } else {
+                    return ""; // Leave odd rows blank
+                }
+            }
+        }],
+        "drawCallback": function (settings) {
+            // Reset serial logic if needed on redraw
+        }
+    });
+});
 
 </script>
 
@@ -220,7 +251,7 @@ function downloadExcel(state, district, blkd, grampn, userdate, dateto){
         <table class="table">
           <tr>
             <td>
-            	<table id="tblReport" class="table">
+            	<table id="tblReport" class="table table-bordered table-striped table-highlight w-auto">
             	<thead>
               		<tr>	<th class="displ" align="center">Sl. No.</th>
               				<th class="displ" align="center">Route Plan Date</th>

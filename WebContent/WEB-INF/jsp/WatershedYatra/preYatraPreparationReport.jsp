@@ -4,6 +4,9 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <%@ page import="app.watershedyatra.bean.PreYatraPreparationBean" %>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
 <c:choose>
 	<c:when test="${sessionScope.loginid eq null }">
@@ -129,6 +132,20 @@ function downloadExcel(state, district, blkd, grampn){
 	document.preYatra.method="post";
 	document.preYatra.submit();
 }
+
+//paging
+$(document).ready(function () {
+    $('#tblReport').DataTable({
+    	 "paging": true,          // Enable pagination
+         "pageLength": 10,        // Default rows per page
+         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
+         "lengthChange": true,    // Allow changing page size
+         "searching": true,       // Enable search box
+         "ordering": false,        // Disable sorting
+         "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
+    });
+});
+
 </script>
 
 </head>
@@ -217,6 +234,8 @@ function downloadExcel(state, district, blkd, grampn){
        </tr>
       </table>
 </form:form>
+</div>
+</div>
  <br/>
 <c:if test="${not empty preYatraList}">
 <button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${district}','${blkd}','${grampn}')" class="btn btn-info">Excel</button>
@@ -225,7 +244,7 @@ function downloadExcel(state, district, blkd, grampn){
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
  <br/>
         
-	<table id="tblReport" class="table">
+	<table id="tblReport" class="table table-bordered table-striped table-highlight w-auto">
     	<thead>
         	<tr>
 				<th>S.No.</th>
@@ -306,7 +325,7 @@ function downloadExcel(state, district, blkd, grampn){
 				</c:when>
 				<c:otherwise>
 					<tr>
-						<td align="center" colspan="16" class="required" style="color:red;">Data Not Found</td>
+						<td align="center" colspan="18" class="required" style="color:red;">Data Not Found</td>
 					</tr>
 				</c:otherwise>
 			</c:choose>
@@ -337,8 +356,7 @@ function downloadExcel(state, district, blkd, grampn){
     }
 </script>
 
-	</div>
-	</div>
+	
 
 
 <script type="text/javascript">

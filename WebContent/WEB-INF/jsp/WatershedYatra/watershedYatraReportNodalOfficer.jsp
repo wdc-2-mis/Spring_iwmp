@@ -17,6 +17,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
 <%-- <script src='<c:url value="/resources/js/unfreezeProjectLocation.js" />'></script> --%>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
 <script type="text/javascript">
 
 $(document).on( 'change', '#level', function (e) {
@@ -158,6 +162,18 @@ function downloadExcel(lvl, state, district, blkd) {
     document.nodalOfficers.submit();
 }
 
+//paging
+$(document).ready(function () {
+    $('#tblReport').DataTable({
+    	 "paging": true,          // Enable pagination
+         "pageLength": 10,        // Default rows per page
+         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
+         "lengthChange": true,    // Allow changing page size
+         "searching": true,       // Enable search box
+         "ordering": false,        // Disable sorting
+         "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
+    });
+});
 
 </script>
 
@@ -258,7 +274,7 @@ function downloadExcel(lvl, state, district, blkd) {
         <table class="table">
           <tr>
             <td>
-            	<table id="tblReport" class="table">
+            	<table id="tblReport" class="table table-bordered table-striped table-highlight w-auto">
             	<thead>
               		<tr>	
               			<th style="width:2%">S.No. </th> 

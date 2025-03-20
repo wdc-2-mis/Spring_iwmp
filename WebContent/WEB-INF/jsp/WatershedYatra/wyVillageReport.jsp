@@ -29,7 +29,7 @@ $(document).ready(function () {
          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
          "lengthChange": true,    // Allow changing page size
          "searching": true,       // Enable search box
-         "ordering": true,        // Enable sorting
+         "ordering": false,        // Disable sorting
          "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
     });
 });
