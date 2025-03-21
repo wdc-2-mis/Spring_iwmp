@@ -808,7 +808,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	            proj.setProjectId(projid);
 	            fin.setFinYrCd(fcode);
-	            month.setMonthId(mcode);
+	            month.setFinmonthId(mcode);
 
 	            eva.setIwmpMProject(proj);
 	            eva.setIwmpMFinYear(fin);
@@ -1171,7 +1171,6 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	    }
 
 	    String status = null;
-	    Integer value = 0;
 	    Session session = sessionFactory.openSession();
 
 	    Transaction tx = null;
@@ -1183,10 +1182,10 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	        SQLQuery query = session.createSQLQuery(savesql);
 	        query.setParameter("projid", Integer.parseInt(project));
 
-	        value = ((Number) query.uniqueResult()).intValue();
+	        Object result = query.uniqueResult(); // Get result
 
-	        if (value > 0) {
-	            status = value.toString();
+	        if (result != null) {
+	            status = result.toString(); // Convert result to string
 	        }
 
 	        tx.commit();  // Commit transaction
