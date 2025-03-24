@@ -80,9 +80,10 @@ public class ProjectEvaluationController {
 		String finyear = request.getParameter("finyear");
 		String month = request.getParameter("month");
 		String data[] = null;
-		Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
+		
 		ModelAndView mav = new ModelAndView();
 		if(session!=null && session.getAttribute("loginID")!=null) {
+			Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
 			mav = new ModelAndView("projectEvaluation/profilestart");
 			mav.addObject("districtList", districtMasterService.getDistrictByStateCodeWithDcode(stcode));
 			mav.addObject("finYear", PEService.getCurrentFinYear());
