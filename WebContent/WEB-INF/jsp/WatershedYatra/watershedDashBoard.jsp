@@ -203,11 +203,6 @@
     }
 }
 
-#popup {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    overflow: auto;
-    max-height: 80%;
 }
   
   
@@ -314,7 +309,7 @@
 </div>
 
 <!-- Popup Modal -->
-<div id="popup" style="display:none; position:fixed; top:0%; left:25%; width:50%; overflow:scroll; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;">
+<div id="popup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;">
     <div style="text-align:right;">
         <span onclick="closePopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
     </div>
@@ -335,10 +330,10 @@
                 <tr>
                     <td><c:out value='${count.count}' />
                     <td><a href="javascript:void(0);" onclick="showDPopup(${data.stcode})">${data.stname}</a></td>
-                    <td>${data.totgrabsabha}</td>
-                    <td>${data.gramsabha_participants}</td>
-                    <td>${data.totprabhatpheri}</td>
-                    <td>${data.prabhatpheri_participants}</td>
+                    <td align="right">${data.totgrabsabha}</td>
+                    <td align="right">${data.gramsabha_participants}</td>
+                    <td align="right">${data.totprabhatpheri}</td>
+                    <td align="right">${data.prabhatpheri_participants}</td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -346,7 +341,7 @@
 </div>
 
 <!-- PopDup Modal -->
-<div id="popDup" style="display:none; position:fixed; top:0%; left:25%; width:50%; overflow:scroll; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;" >
+<div id="popDup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;" >
 		<div style="text-align: right;">
 			<span onclick="closeDPopup()" style="cursor: pointer; font-size: 16px; font-weight: bold;">&#10006;</span>
 		</div>
@@ -385,10 +380,10 @@ function showDPopup(stcode) {
                 html += `<tr>
                             <td>`+i+`</td> 
                             <td>`+data[key].distname+`</td>
-                            <td>`+data[key].totgrabsabha+`</td>
-                            <td>`+data[key].gramsabha_participants+`</td>
-                            <td>`+data[key].totprabhatpheri+`</td>
-                            <td>`+data[key].prabhatpheri_participants+`</td>
+                            <td align="right">`+data[key].totgrabsabha+`</td>
+                            <td align="right">`+data[key].gramsabha_participants+`</td>
+                            <td align="right">`+data[key].totprabhatpheri+`</td>
+                            <td align="right">`+data[key].prabhatpheri_participants+`</td>
                         </tr>`;
             }
             html += '</tbody>';
