@@ -308,6 +308,7 @@ public class DashboardController {
 		List<WatershedYatraDashboardChartBean> ParticipantList = new ArrayList<>();
 		List<WatershedYatraDashboardChartBean> CoveredLocations = new ArrayList<>();
         List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
+        List<WatrshdInagrtnPreYtraDashBean> data = dashBoardService.getStWisePreYatraData();
         
         stateList=stateMasterService.getAllState();
 		mav.addObject("stateList", stateList);
@@ -340,6 +341,7 @@ public class DashboardController {
 		model.addAttribute("statelist", stateMasterService.getAllState());
         model.addAttribute("ing",wtrIngMap.get("ing"));
 		model.addAttribute("wtr",wtrIngMap.get("wtr"));
+		model.addAttribute("bean", data);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -372,6 +374,20 @@ public class DashboardController {
 	    }
 	    return response;
 	}
+	
+	@RequestMapping(value = "/getDistWisePreYatraData", method = RequestMethod.POST)
+	@ResponseBody
+	public List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(@RequestParam Integer stcode) {
+	    List<WatrshdInagrtnPreYtraDashBean> response = new ArrayList<>();
+	    try {
+	        response = dashBoardService.getDistWisePreYatraData(stcode); // Implement the service method to filter data by state code
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return response;
+	}
+
+
 
 
 }

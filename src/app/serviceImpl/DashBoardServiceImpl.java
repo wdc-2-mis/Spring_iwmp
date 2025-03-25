@@ -405,5 +405,17 @@ public class DashBoardServiceImpl implements DashBoardService{
 		return dashBoardDao.getDateWiseCovLocations(stCode);
 	}
 
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getStWisePreYatraData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getStWisePreYatraData();
+	}
+
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(Integer stcode) {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getDistWisePreYatraData(stcode);
+	}
+
 	
 }

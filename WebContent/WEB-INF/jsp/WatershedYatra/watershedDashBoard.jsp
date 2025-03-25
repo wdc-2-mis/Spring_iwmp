@@ -201,7 +201,15 @@
     .chart-container1 {
         flex: 1 1 100%; /* Each chart takes full width on smaller screens */
     }
-}  
+}
+
+#popup {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow: auto;
+    max-height: 80%;
+}
+  
   
 </style>
 </head>
@@ -227,7 +235,8 @@
                 <c:forEach var="bean" items="${entry.value}">
                     <div class="field-container">
                         <div class="field-title">Total States</div>
-                        <div class="field-value">${bean.totstates}</div>
+                        <div class="field-value">
+                        <a href="javascript:void(0);" onclick="showPopup()">${bean.totstates}</a></div>
                     </div>
                     <div class="field-container">
                         <div class="field-title">Total Number of Gram Sabha Organized</div>
@@ -248,7 +257,7 @@
                 </c:forEach>
             </div>
             </c:if>
-        	
+            
             <c:if test ="${entry.key eq 'wtr'}">
             <h3 class ="component-field">Watershed Yatra Activities</h3>
             <div class="panel-underline"></div>
@@ -304,6 +313,95 @@
     </c:forEach>
 </div>
 
+<!-- Popup Modal -->
+<div id="popup" style="display:none; position:fixed; top:0%; left:25%; width:50%; overflow:scroll; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;">
+    <div style="text-align:right;">
+        <span onclick="closePopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
+    </div>
+    <h3 style="text-align: center;">State Wise Pre Yatra Details Data</h3>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>State Name</th>
+                <th>Total Gram Sabhas</th>
+                <th>Gram Sabha Participants</th>
+                <th>Total Prabhat Pheris</th>
+                <th>Prabhat Pheri Participants</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="data" items="${bean}" varStatus="count">
+                <tr>
+                    <td><c:out value='${count.count}' />
+                    <td><a href="javascript:void(0);" onclick="showDPopup(${data.stcode})">${data.stname}</a></td>
+                    <td>${data.totgrabsabha}</td>
+                    <td>${data.gramsabha_participants}</td>
+                    <td>${data.totprabhatpheri}</td>
+                    <td>${data.prabhatpheri_participants}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<!-- PopDup Modal -->
+<div id="popDup" style="display:none; position:fixed; top:0%; left:25%; width:50%; overflow:scroll; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;" >
+		<div style="text-align: right;">
+			<span onclick="closeDPopup()" style="cursor: pointer; font-size: 16px; font-weight: bold;">&#10006;</span>
+		</div>
+		<h3 style="text-align: center;">District Wise Pre Yatra Details Data</h3>
+    <table class ="district-table" border="1" style="width:100%; border-collapse:collapse;">
+        
+    </table>
+</div>
+
+<script>
+function showPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+}
+function showDPopup(stcode) {
+    document.getElementById('popDup').style.display = 'block';
+    // Example AJAX call using jQuery (Ensure jQuery is included)
+    $.ajax({
+        url: "getDistWisePreYatraData", // Controller endpoint
+        type: "post",
+        data: {stcode:stcode},
+        error: function(xhr, status, error) {
+            console.error(error);
+        },
+        success: function(data) {
+            // Handle response (e.g., display data in a modal or refresh part of the page)
+            console.log(data);
+            $table = $('.district-table');
+            var i = 0;
+            let html = '<thead><tr><th>S.No.</th><th>District Name</th><th>Total Gram Sabhas</th><th>Gram Sabha Participants</th><th>Total Prabhat Pheris</th><th>Prabhat Pheri Participants</th></tr></thead><tbody>';
+            for ( var key in data) {
+            	i = i+1;
+                html += `<tr>
+                            <td>`+i+`</td> 
+                            <td>`+data[key].distname+`</td>
+                            <td>`+data[key].totgrabsabha+`</td>
+                            <td>`+data[key].gramsabha_participants+`</td>
+                            <td>`+data[key].totprabhatpheri+`</td>
+                            <td>`+data[key].prabhatpheri_participants+`</td>
+                        </tr>`;
+            }
+            html += '</tbody>';
+            $table.html(html);
+        }
+        
+    });
+}
+
+function closeDPopup() {
+    document.getElementById('popDup').style.display = 'none';
+}
+</script>
 	
 
 	<div class="piechart-container">

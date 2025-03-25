@@ -284,7 +284,11 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	@Value("${getDateWiseLocList}")
 	String getDateWiseLocList;
 
-
+	@Value("${getStWisePreYatraData}")
+	String getStWisePreYatraData;
+	
+	@Value("${getDistWisePreYatraData}")
+	String getDistWisePreYatraData;
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -2297,29 +2301,29 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			list = query.list();
 			map.put("pre",list);
 			
-			list = new ArrayList<>();
-			query = session.createSQLQuery(inghql);
+//			list = new ArrayList<>();
+//			query = session.createSQLQuery(inghql);
+//			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+//			list = query.list();
+			
+//			List<WatrshdInagrtnPreYtraDashBean> villist = new ArrayList<>();
+			query = session.createSQLQuery(wtrhql);
 			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
 			list = query.list();
 			
-			List<WatrshdInagrtnPreYtraDashBean> villist = new ArrayList<>();
-			query = session.createSQLQuery(wtrhql);
-			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
-			villist = query.list();
-			
-			WatrshdInagrtnPreYtraDashBean bean = new WatrshdInagrtnPreYtraDashBean();
-			bean.setTotstates(villist.get(0).getTotstates());
-			bean.setTotparticipants(list.get(0).getTotparticipants().add(villist.get(0).getTotparticipants()));
-			bean.setTotarexperiencedpeople(villist.get(0).getTotarexperiencedpeople());
-			bean.setTotquizparticipants(villist.get(0).getTotquizparticipants());
-			bean.setTotyatraloc(villist.get(0).getTotyatraloc());
-			bean.setTotbhumipujanworks(list.get(0).getTotbhumipujanworks().add(villist.get(0).getTotbhumipujanworks()));
-			bean.setTotlokarpanworks(list.get(0).getTotlokarpanworks().add(villist.get(0).getTotlokarpanworks()));
-			bean.setTotshramdannlocationno(list.get(0).getTotshramdannlocationno().add(villist.get(0).getTotshramdannlocationno()));
-			bean.setTotawarddistribution(list.get(0).getTotawarddistribution().add(villist.get(0).getTotawarddistribution()));
-			bean.setTotplantation(list.get(0).getTotplantation().add(villist.get(0).getTotplantation()));
-			list = new ArrayList<>();
-			list.add(bean);
+//			WatrshdInagrtnPreYtraDashBean bean = new WatrshdInagrtnPreYtraDashBean();
+//			bean.setTotstates(villist.get(0).getTotstates());
+//			bean.setTotparticipants(list.get(0).getTotparticipants().add(villist.get(0).getTotparticipants()));
+//			bean.setTotarexperiencedpeople(villist.get(0).getTotarexperiencedpeople());
+//			bean.setTotquizparticipants(villist.get(0).getTotquizparticipants());
+//			bean.setTotyatraloc(villist.get(0).getTotyatraloc());
+//			bean.setTotbhumipujanworks(list.get(0).getTotbhumipujanworks().add(villist.get(0).getTotbhumipujanworks()));
+//			bean.setTotlokarpanworks(list.get(0).getTotlokarpanworks().add(villist.get(0).getTotlokarpanworks()));
+//			bean.setTotshramdannlocationno(list.get(0).getTotshramdannlocationno().add(villist.get(0).getTotshramdannlocationno()));
+//			bean.setTotawarddistribution(list.get(0).getTotawarddistribution().add(villist.get(0).getTotawarddistribution()));
+//			bean.setTotplantation(list.get(0).getTotplantation().add(villist.get(0).getTotplantation()));
+//			list = new ArrayList<>();
+//			list.add(bean);
 			map.put("wtr",list);
 			
 			
@@ -2476,6 +2480,55 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 			query = session.createSQLQuery(hql);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedYatraDashboardChartBean.class));
 			query.setInteger("stCode", stCode);
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getStWisePreYatraData() {
+		String hql = getStWisePreYatraData;
+		List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(Integer stcode) {
+		String hql = getDistWisePreYatraData;
+		List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			query.setInteger("stcode", stcode);
 			list = query.list();
 			session.getTransaction().commit();
 		}

@@ -152,4 +152,6 @@ public interface DashBoardDao {
 
 	List<WatershedYatraDashboardChartBean> getDateWiseCovLocations(Integer stCode);
 
+	List<WatrshdInagrtnPreYtraDashBean> getStWisePreYatraData();
+	List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(Integer stcode);
 }

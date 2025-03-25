@@ -5,6 +5,10 @@ import java.math.BigInteger;
 public class WatrshdInagrtnPreYtraDashBean {
 	
 	Integer totstates;
+	Integer stcode;
+	String stname;
+	Integer dcode;
+	String distname;
 	BigInteger totparticipants;
 	BigInteger totbhumipujanworks;
 	BigInteger totlokarpanworks;
@@ -25,6 +29,30 @@ public class WatrshdInagrtnPreYtraDashBean {
 	}
 	public void setTotstates(Integer totstates) {
 		this.totstates = totstates;
+	}
+	public Integer getStcode() {
+		return stcode;
+	}
+	public void setStcode(Integer stcode) {
+		this.stcode = stcode;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
 	}
 	public BigInteger getTotparticipants() {
 		return totparticipants;
