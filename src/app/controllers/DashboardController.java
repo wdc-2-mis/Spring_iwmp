@@ -324,10 +324,12 @@ public class DashboardController {
 	                    : dashBoardService.getParticipantslist(stCode1);
 		CoveredLocations = dashBoardService.getDateWiseCovLocations(28);
 		
-		Map<String, Integer> chartData = new LinkedHashMap<>();
+		Map<String, BigInteger> chartData = new LinkedHashMap<>();
+		Map<String, Integer> sumTotalChartData = new LinkedHashMap<>();
 		Map<String, Integer> chartLocData = new LinkedHashMap<>();
-        for (WatershedYatraDashboardChartBean bean : ParticipantList) {
+		for (WatershedYatraDashboardChartBean bean : ParticipantList) {
             chartData.put(bean.getYatradate(), bean.getTotal_participants());
+            sumTotalChartData.put(bean.getYatradate(), bean.getSumtotal_participants());
         }
         for (WatershedYatraDashboardChartBean bean : CoveredLocations) {
         	chartLocData.put(bean.getYatradate(), bean.getCoveredlocations());
@@ -337,6 +339,7 @@ public class DashboardController {
 		model.addAttribute("list",list);
 		model.addAttribute("pList",pList);
 		model.addAttribute("chartData", chartData);
+		model.addAttribute("sumTotalChartData", sumTotalChartData);
 		model.addAttribute("chartLocData", chartLocData);
 		model.addAttribute("statelist", stateMasterService.getAllState());
         model.addAttribute("ing",wtrIngMap.get("ing"));
@@ -357,9 +360,11 @@ public class DashboardController {
 	        List<WatershedYatraDashboardChartBean> ParticipantList = dashBoardService.getParticipantslist(stCode);
 	        List<WatershedYatraDashboardChartBean> CoveredLocations = dashBoardService.getDateWiseCovLocations(stCode);
 	        
-	        Map<String, Integer> chartData = new LinkedHashMap<>();
+	        Map<String, BigInteger> chartData = new LinkedHashMap<>();
+	        Map<String, Integer> sumTotalChartData = new LinkedHashMap<>();
 	        for (WatershedYatraDashboardChartBean bean : ParticipantList) {
 	            chartData.put(bean.getYatradate(), bean.getTotal_participants());
+	            sumTotalChartData.put(bean.getYatradate(), bean.getSumtotal_participants());
 	        }
 
 	        Map<String, Integer> chartLocData = new LinkedHashMap<>();
@@ -368,6 +373,7 @@ public class DashboardController {
 	        }
 	        // Populate the response with chart data
 	        response.put("chartData", chartData);
+	        response.put("sumTotalChartData", sumTotalChartData);
 	        response.put("chartLocData", chartLocData);
 	    } catch (Exception e) {
 	        e.printStackTrace();

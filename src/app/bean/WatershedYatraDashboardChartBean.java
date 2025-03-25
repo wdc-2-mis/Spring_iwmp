@@ -11,9 +11,10 @@ public class WatershedYatraDashboardChartBean {
 	public Integer statecode;
 	public String st_name;
 	public String yatradate;
-    public Integer total_participants;
+    public BigInteger total_participants;
 	public Integer coveredlocations;
-    
+    public Integer sumtotal_participants;
+	
 	public BigInteger getTotplannedloc() {
 		return totplannedloc;
 	}
@@ -56,10 +57,10 @@ public class WatershedYatraDashboardChartBean {
 	public void setYatradate(String yatradate) {
 		this.yatradate = yatradate;
 	}
-	public Integer getTotal_participants() {
+	public BigInteger getTotal_participants() {
 		return total_participants;
 	}
-	public void setTotal_participants(Integer total_participants) {
+	public void setTotal_participants(BigInteger total_participants) {
 		this.total_participants = total_participants;
 	}
 	public Integer getCoveredlocations() {
@@ -67,6 +68,12 @@ public class WatershedYatraDashboardChartBean {
 	}
 	public void setCoveredlocations(Integer coveredlocations) {
 		this.coveredlocations = coveredlocations;
+	}
+	public Integer getSumtotal_participants() {
+		return sumtotal_participants;
+	}
+	public void setSumtotal_participants(Integer sumtotal_participants) {
+		this.sumtotal_participants = sumtotal_participants;
 	}
 	
 	

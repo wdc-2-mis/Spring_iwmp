@@ -195,7 +195,36 @@
     height: 500px;
 } 
 
+.chart-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
 
+.nav-icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s ease-in-out;
+    opacity: 0.7;
+}
+
+.nav-icon:hover {
+   transform: scale(1.2);
+    opacity: 1;
+}
+
+.left-icon {
+    left: -25px;
+}
+
+.right-icon {
+    right: -15px;
+}
 
 @media screen and (max-width: 1300px) {
     .chart-container1 {
@@ -911,173 +940,191 @@ function closeDPopup() {
         <!-- Chart Section -->
         <div class="chart-wrapper">
         <div class="chart-container1">
-            <h4 class="frame-title">Total Participants</h4>
-            <canvas id="participantChart"></canvas>
-        </div>
+    <h4 class="frame-title">Total Participants</h4>
+    <div class="chart-navigation">
+        <img id="prevIconParticipants" src="<c:url value='/resources/images/back-button.png'/>" alt="Previous" class="nav-icon left-icon" />
+        <canvas id="participantChart"></canvas>
+        <img id="nextIconParticipants" src="<c:url value='/resources/images/forward-button.png'/>" alt="Next" class="nav-icon right-icon" />
+    </div>
+</div>
 
-        <div class="chart-container1">
-            <h4 class="frame-title">Covered Locations</h4>
-            <canvas id="locationChart1"></canvas>
-        </div>
+<div class="chart-container1">
+    <h4 class="frame-title">Covered Locations</h4>
+    <div class="chart-navigation">
+        <img id="prevIconLocations" src="<c:url value='/resources/images/back-button.png'/>" alt="Previous" class="nav-icon left-icon" />
+        <canvas id="locationChart1"></canvas>
+        <img id="nextIconLocations" src="<c:url value='/resources/images/forward-button.png'/>" alt="Next" class="nav-icon right-icon" />
+    </div>
+</div>
+
+
     </div>
     </div>
 </div>
 
 <script>
-    $(document).ready(function () {
-        const chartLabels = [];
-        const chartParticipants = [];
-        const chartCoveredLocations = [];
+$(document).ready(function () {
+    let chartLabels = [];
+    let chartParticipants = [];
+    let chartSumTotalParticipants = [];
+    let chartCoveredLocations = [];
 
-        // Ensure JSP data is correctly extracted
-        <c:forEach var="entry" items="${chartData}">
+    <c:forEach var="entry" items="${chartData}">
         chartLabels.push('<c:out value="${entry.key}"/>');
         chartParticipants.push(Number('<c:out value="${entry.value}"/>'));
+    </c:forEach>;
+
+    <c:forEach var="entry2" items="${sumTotalChartData}">
+    chartSumTotalParticipants.push(Number('<c:out value="${entry2.value}"/>'));
     </c:forEach>;
 
     <c:forEach var="entry1" items="${chartLocData}">
         chartCoveredLocations.push(Number('<c:out value="${entry1.value}"/>'));
     </c:forEach>;
+
+    let startIndexParticipants = 0;
+    let startIndexLocations = 0;
+    const range = 10;
+
+    function updateChartRange(chart, labels, data1, data2, startIndex) {
+        chart.data.labels = labels.slice(startIndex, startIndex + range);
+        chart.data.datasets[0].data = data1.slice(startIndex, startIndex + range);
+        chart.data.datasets[1].data = data2.slice(startIndex, startIndex + range);
+        chart.update();
+    }
     
-        
-        // Initialize Chart.js
-        const ctx = document.getElementById('participantChart').getContext('2d');
-        const participantChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: chartLabels,
-                datasets: [{
-                    label: 'Total Participants',
-                    data: chartParticipants,
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    },
-                },
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        },
-                ticks: {
-                    autoSkip: false,  // Force all labels to display
-                    maxRotation: 45,  // Rotate labels for better fit
-                    minRotation: 45
-                }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Participants'
-                        },
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+    function updateChartRangeLoc(chart, labels, data, startIndex) {
+        chart.data.labels = labels.slice(startIndex, startIndex + range);
+        chart.data.datasets[0].data = data.slice(startIndex, startIndex + range);
+        chart.update();
+    }
 
-        const ctx2 = document.getElementById('locationChart1').getContext('2d');
-        const locationChart = new Chart(ctx2, {
-            type: 'line',
-            data: {
-                labels: chartLabels,
-                datasets: [{
-                    label: 'Covered Locations',
-                    data: chartCoveredLocations,
-                    borderColor: 'rgba(255, 99, 132, 1)',
+    // Initialize Participant Chart
+     const ctx = document.getElementById('participantChart').getContext('2d');
+    const participantChart = new Chart(ctx, {
+        type: 'bar', // Base chart type
+        data: {
+            labels: chartLabels.slice(0, range),
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'Total Participants (Daily)',
+                    data: chartParticipants.slice(0, range),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    borderWidth: 2
+                },
+                {
+                    type: 'line',
+                    label: 'Cumulative Participants (Sum Total)',
+                    data: chartSumTotalParticipants.slice(0, range),
+                    borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,  // Allows width adjustment but within limits
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                scales: {
-                    x: { 
-                        title: { display: true, text: 'Date' }, 
-                        ticks: {
-                            autoSkip: false,  
-                            maxRotation: 45,  
-                            minRotation: 45  
-                        }
-                    },
-                    y: { 
-                        title: { display: true, text: 'Covered Locations' }, 
-                        beginAtZero: true,
-                        ticks: {
-                            stepSize: 1,  
-                            callback: function(value) {
-                                return Number.isInteger(value) ? value : null;  
-                            }
-                        }
-                    }
-                },
-                layout: {
-                    padding: 10  // Adds space inside the chart
+                    borderWidth: 3, // Thicker line for visibility
+                    pointRadius: 4, // Bigger points for clarity
+                    pointBackgroundColor: 'red',
+                    fill: false
                 }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Date' } },
+                y: { title: { display: true, text: 'Participants' }, beginAtZero: true }
             }
-        });
-
-        // AJAX call when state dropdown is changed
-        $('#stateDropdown').change(function () {
-            var selectedState = $(this).val();
-            $.ajax({
-                type: 'GET',
-                url: 'getParticipantData',
-                data: { stateCode: selectedState },
-                dataType: 'json',
-                success: function (response) {
-                	if (!response.chartData || Object.keys(response.chartData).length === 0) {
-                        alert("No data available for the selected state.");
-                        $('#stateDropdown').val(lastValidState); // Revert dropdown to last valid state
-                        return;
-                    }
-
-                    lastValidState = selectedState; // Update last valid state
-                    updateCharts(response.chartData, response.chartLocData);
-                },
-                error: function () {
-                    alert('Error fetching data. Please try again.');
-                    $('#stateDropdown').val(lastValidState); 
-                }
-            });
-        });
-
-        function updateCharts(participantData, coveredLocationData) {
-          
-            var chartLabels = Object.keys(participantData);
-            var chartParticipants = Object.values(participantData).map(Number);
-            var chartCoveredLocations = Object.values(coveredLocationData || {}).map(Number);
-
-            // Update Participants Chart
-            participantChart.data.labels = chartLabels;
-            participantChart.data.datasets[0].data = chartParticipants;
-            participantChart.update();
-
-            // Update Covered Locations Chart
-            locationChart.data.labels = chartLabels;
-            locationChart.data.datasets[0].data = chartCoveredLocations;
-            locationChart.update();
         }
     });
-</script>    
+
+
+    // Initialize Locations Chart
+    const ctx2 = document.getElementById('locationChart1').getContext('2d');
+    const locationChart = new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: chartLabels.slice(0, range),
+            datasets: [{
+                label: 'Covered Locations',
+                data: chartCoveredLocations.slice(0, range),
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 2,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Date' } },
+                y: { title: { display: true, text: 'Covered Locations' }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Participants Navigation
+    $('#nextIconParticipants').click(() => {
+        if (startIndexParticipants + range < chartLabels.length) {
+            startIndexParticipants++;
+            updateChartRange(participantChart, chartLabels, chartParticipants, chartSumTotalParticipants, startIndexParticipants);
+        }
+    });
+
+    $('#prevIconParticipants').click(() => {
+        if (startIndexParticipants > 0) {
+            startIndexParticipants--;
+            updateChartRange(participantChart, chartLabels, chartParticipants, chartSumTotalParticipants, startIndexParticipants);
+        }
+    });
+
+    // Locations Navigation
+    $('#nextIconLocations').click(() => {
+        if (startIndexLocations + range < chartLabels.length) {
+            startIndexLocations++;
+            updateChartRangeLoc(locationChart, chartLabels, chartCoveredLocations, startIndexLocations);
+        }
+    });
+
+    $('#prevIconLocations').click(() => {
+        if (startIndexLocations > 0) {
+            startIndexLocations--;
+            updateChartRangeLoc(locationChart, chartLabels, chartCoveredLocations, startIndexLocations);
+        }
+    });
+
+    // AJAX call when the user selects a new state
+    $('#stateDropdown').change(function () {
+        let selectedState = $(this).val();
+        $.ajax({
+            type: 'GET',
+            url: 'getParticipantData',
+            data: { stateCode: selectedState },
+            dataType: 'json',
+            success: function (response) {
+                if (!response.chartData || Object.keys(response.chartData).length === 0) {
+                    alert("No data available for the selected state.");
+                    $('#stateDropdown').val(lastValidState);
+                    return;
+                }
+
+                chartLabels = Object.keys(response.chartData);
+                chartParticipants = Object.values(response.chartData).map(Number);
+                chartSumTotalParticipants = Object.values(response.sumTotalChartData).map(Number);
+                chartCoveredLocations = Object.values(response.chartLocData || {}).map(Number);
+                startIndexParticipants = 0;
+                startIndexLocations = 0;
+                lastValidState = selectedState;
+                updateChartRange(participantChart, chartLabels, chartParticipants, chartSumTotalParticipants, startIndexParticipants);
+                updateChartRangeLoc(locationChart, chartLabels, chartCoveredLocations, startIndexLocations);
+            },
+            error: function () {
+                alert('Error fetching data. Please try again.');
+            }
+        });
+    });
+});
+
+
+</script>
 
 
 	<footer class="text-center">
