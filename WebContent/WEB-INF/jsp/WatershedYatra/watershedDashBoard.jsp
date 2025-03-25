@@ -355,6 +355,10 @@
             </tr>
         </thead>
         <tbody>
+        	<c:set var ="totGram" value ="0"/>
+        	<c:set var ="gramPrticpnts" value ="0"/>
+        	<c:set var ="totPrbhtphri" value ="0"/>
+        	<c:set var ="prbhtPhriPrticpnts" value ="0"/>
             <c:forEach var="data" items="${bean}" varStatus="count">
                 <tr>
                     <td><c:out value='${count.count}' />
@@ -364,7 +368,18 @@
                     <td align="right">${data.totprabhatpheri}</td>
                     <td align="right">${data.prabhatpheri_participants}</td>
                 </tr>
+                <c:set var ="totGram" value ="${totGram + data.totgrabsabha}"/>
+        	<c:set var ="gramPrticpnts" value ="${gramPrticpnts + data.gramsabha_participants}"/>
+        	<c:set var ="totPrbhtphri" value ="${totPrbhtphri + data.totprabhatpheri}"/>
+        	<c:set var ="prbhtPhriPrticpnts" value ="${prbhtPhriPrticpnts + data.prabhatpheri_participants}"/>
             </c:forEach>
+            <tr>
+            	<th colspan ="2" style="text-align: center">Total</th>
+            	<th style="text-align: right;">${totGram}</th>
+            	<th style="text-align: right;">${gramPrticpnts}</th>
+            	<th style="text-align: right;">${totPrbhtphri}</th>
+            	<th style="text-align: right;">${prbhtPhriPrticpnts}</th>
+            </tr>
         </tbody>
     </table>
 </div>
@@ -403,6 +418,10 @@ function showDPopup(stcode) {
             console.log(data);
             $table = $('.district-table');
             var i = 0;
+            var totgram = 0;
+            var gramPrticpnts = 0;
+            var totPrbhtphri = 0;
+            var prbhtPhriPrticpnts = 0;
             let html = '<thead><tr><th>S.No.</th><th>District Name</th><th>Total Gram Sabhas</th><th>Gram Sabha Participants</th><th>Total Prabhat Pheris</th><th>Prabhat Pheri Participants</th></tr></thead><tbody>';
             for ( var key in data) {
             	i = i+1;
@@ -414,8 +433,18 @@ function showDPopup(stcode) {
                             <td align="right">`+data[key].totprabhatpheri+`</td>
                             <td align="right">`+data[key].prabhatpheri_participants+`</td>
                         </tr>`;
+                totgram = data[key].totgrabsabha + totgram;
+                gramPrticpnts = data[key].gramsabha_participants + gramPrticpnts;
+                totPrbhtphri = data[key].totprabhatpheri + totPrbhtphri;
+                prbhtPhriPrticpnts = data[key].prabhatpheri_participants + prbhtPhriPrticpnts;
+                
             }
-            html += '</tbody>';
+            html += `<th colspan = "2" style="text-align: center">Total</th> 
+            <th style="text-align: right">`+totgram+`</th>
+            <th style="text-align: right">`+gramPrticpnts+`</th>
+            <th style="text-align: right">`+totPrbhtphri+`</th>
+            <th style="text-align: right">`+prbhtPhriPrticpnts+`</th>
+            </tbody>`;
             $table.html(html);
         }
         
