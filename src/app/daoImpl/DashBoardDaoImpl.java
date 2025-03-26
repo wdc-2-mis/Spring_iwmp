@@ -266,6 +266,9 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	@Value("${getWatershedYatraData}")
 	String getWatershedYatraData;
 	
+	@Value("${getWatershedYatraAndInagurationData}")
+	String getWatershedYatraAndInagurationData;
+	
 	@Value("${getPreYatraData}")
 	String getPreYatraData;
 	
@@ -2293,7 +2296,7 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 	@Override
 	public Map<String, List<WatrshdInagrtnPreYtraDashBean>> getWatrshdInagrtnPreYtraData() {
 		String inghql=getWatershedYatraInaugurationData;
-		String wtrhql=getWatershedYatraData;
+		String wtrhql=getWatershedYatraAndInagurationData;
 		String prehql=getPreYatraData;
 		Map<String, List<WatrshdInagrtnPreYtraDashBean>> map = new LinkedHashMap<String, List<WatrshdInagrtnPreYtraDashBean>>();
 		Session session = sessionFactory.getCurrentSession();
