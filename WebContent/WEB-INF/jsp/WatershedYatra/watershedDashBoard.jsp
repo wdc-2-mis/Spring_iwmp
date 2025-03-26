@@ -289,7 +289,8 @@
                 <c:forEach var="bean" items="${entry.value}">
                     <div class="field-container">
                         <div class="field-title">Total States</div>
-                        <div class="field-value">${bean.totstates}</div>
+                        <div class="field-value">
+                        <a href="javascript:void(0);" onclick="showWyPopup()">${bean.totstates}</a></div>
                     </div>
                     <div class="field-container">
                         <div class="field-title">Total Number of People Participated</div>
@@ -336,7 +337,140 @@
         </div>
     </c:forEach>
 </div>
+<!-- Popup Modal -->
+<div id="popwyup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;overflow:auto; height:100vh;">
+    <div style="text-align:right;">
+<!--         <button onclick="closeWyPopup()">Close</button> -->
+         <span onclick="closeWyPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
+    </div>
+    <h3 style="text-align: center;">State Wise Watershed Yatra Activities Data</h3>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>State Name</th>
+                <th>Total Number of People Participated</th>
+                <th>Total Numbers of Works for BHOOMI POOJAN</th>
+                <th>Total Numbers of Works for LOKARPAN</th>
+                <th>Shramdaan on Total Location</th>
+                <th>Total Award Distribution</th>
+                <th>Total Number of Yatra Location</th>
+                <th>Total Number of AR Experienced People</th>
+                <th>Total Number of People Participated in Quiz</th>
+                <th>Total Number of Sapling Planted</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<c:set var ="totalparticipants" value ="0"/>
+        	<c:set var ="bhoomipoojan" value ="0"/>
+        	<c:set var ="tlokarpan" value ="0"/>
+        	<c:set var ="tshramdaan" value ="0"/>
+        	<c:set var ="awarddistribution" value ="0"/>
+        	<c:set var ="totallocations" value ="0"/>
+        	<c:set var ="arexp" value ="0"/>
+        	<c:set var ="quizparticipants" value ="0"/>
+        	<c:set var ="tplantation" value ="0"/>
+            <c:forEach var="data1" items="${bean1}" varStatus="count">
+                <tr>
+                    <td><c:out value='${count.count}' />
+                    <td><a href="javascript:void(0);" onclick="showDWyPopup(${data1.stcode})">${data1.st_name}</a></td>
+                    <td class="text-right">${data1.total_participants}</td>
+                    <td class="text-right">${data1.bhoomi_poojan}</td>
+                    <td class="text-right">${data1.lokarpan}</td>
+                    <td class="text-right">${data1.shramdaan}</td>
+                    <td class="text-right">${data1.award_distribution}</td>
+                    <td class="text-right">${data1.total_locations}</td>
+                    <td class="text-right">${data1.ar_exp}</td>
+                    <td class="text-right">${data1.quiz_participants}</td>
+                    <td class="text-right">${data1.plantation}</td>
+                </tr>
+            <c:set var ="totalparticipants" value ="${totalparticipants + data1.total_participants}"/>
+        	<c:set var ="bhoomipoojan" value ="${bhoomipoojan + data1.bhoomi_poojan}"/>
+        	<c:set var ="tlokarpan" value ="${tlokarpan + data1.lokarpan}"/>
+        	<c:set var ="tshramdaan" value ="${tshramdaan + data1.shramdaan}"/>
+        	<c:set var ="awarddistribution" value ="${awarddistribution + data1.award_distribution}"/>
+        	<c:set var ="totallocations" value ="${totallocations + data1.total_locations}"/>
+        	<c:set var ="arexp" value ="${arexp + data1.ar_exp}"/>
+        	<c:set var ="quizparticipants" value ="${quizparticipants + data1.quiz_participants}"/>
+        	<c:set var ="tplantation" value ="${tplantation + data1.plantation}"/>
+            </c:forEach>
+            <tr>
+            	<th colspan ="2" style="text-align: center">Total</th>
+            	<th style="text-align: right;">${totalparticipants}</th>
+            	<th style="text-align: right;">${bhoomipoojan}</th>
+            	<th style="text-align: right;">${tlokarpan}</th>
+            	<th style="text-align: right;">${tshramdaan}</th>
+            	<th style="text-align: right;">${awarddistribution}</th>
+            	<th style="text-align: right;">${totallocations}</th>
+            	<th style="text-align: right;">${arexp}</th>
+            	<th style="text-align: right;">${quizparticipants}</th>
+            	<th style="text-align: right;">${tplantation}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
+<!-- PopDup Modal -->
+<div id="popDwyup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;overflow:auto; height:100vh;">
+    <div style="text-align:right;">
+<!--         <button onclick="closeDWyPopup()">Close</button> -->
+         <span onclick="closeDWyPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
+    </div>
+    <h3 style="text-align: center;">District Wise Watershed Yatra Activities Data</h3>
+    <table class ="district-table1" border="1" style="width:100%; border-collapse:collapse;">
+        
+    </table>
+</div>
+
+<script>
+    function showWyPopup() {
+        document.getElementById('popwyup').style.display = 'block';
+    }
+
+    function closeWyPopup() {
+        document.getElementById('popwyup').style.display = 'none';
+    }
+    function showDWyPopup(stcode) {
+
+        document.getElementById('popDwyup').style.display = 'block';
+        // Example AJAX call using jQuery (Ensure jQuery is included)
+        $.ajax({
+            url: 'getDistrictWatershedYatraDashboardReport', // Controller endpoint
+            type: 'post',
+            data: {stcode:stcode},
+            error: function(xhr, status, error) {
+                console.error(error);
+            },
+            success: function(response) {
+                // Handle response (e.g., display data in a modal or refresh part of the page)
+                console.log(response);
+                let table = $('.district-table1');
+                let html = '<thead><tr><th>S.No.</th><th>District Name</th><th>Total Number of People Participated</th><th>Total Numbers of Works for BHOOMI POOJAN</th><th>Total Numbers of Works for LOKARPAN</th><th>Shramdaan on Total Location</th><th>Total Award Distribution</th><th>Total Number of Yatra Location</th><th>Total Number of AR Experienced People</th><th>Total Number of People Participated in Quiz</th><th>Total Number of Sapling Planted</th></tr></thead><tbody>';
+                response.forEach((data1, index) => {
+                    html += `<tr>
+                                <td>`+(index + 1)+`</td> <!-- Generates serial number dynamically -->
+                                <td>`+data1.dist_name+`</td>
+                                <td align="right">`+data1.total_participants+`</td>
+                                <td align="right">`+data1.bhoomi_poojan+`</td>
+                                <td align="right">`+data1.lokarpan+`</td>
+                                <td align="right">`+data1.shramdaan+`</td>
+                                <td align="right">`+data1.award_distribution+`</td>
+                                <td align="right">`+data1.total_locations+`</td>
+                                <td align="right">`+data1.ar_exp+`</td>
+                                <td align="right">`+data1.quiz_participants+`</td>
+                                <td align="right">`+data1.plantation+`</td>
+                            </tr>`;
+                });
+                html += '</tbody>';
+                table.html(html);
+            }
+        });
+    }
+   
+    function closeDWyPopup() {
+        document.getElementById('popDwyup').style.display = 'none';
+    }
+</script>
 <!-- Popup Modal -->
 <div id="popup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;">
     <div style="text-align:right;">

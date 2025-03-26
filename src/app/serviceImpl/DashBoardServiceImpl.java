@@ -416,6 +416,16 @@ public class DashBoardServiceImpl implements DashBoardService{
 		// TODO Auto-generated method stub
 		return dashBoardDao.getDistWisePreYatraData(stcode);
 	}
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getStWiseWatershedYatraDashboardData() {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getStWiseWatershedYatraDashboardData();
+	}
 
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getDistrictWatershedYatraDashboardReport(Integer stcode) {
+		// TODO Auto-generated method stub
+		return dashBoardDao.getDistrictWatershedYatraDashboardReport(stcode);
+	}
 	
 }

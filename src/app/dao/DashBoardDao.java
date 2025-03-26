@@ -154,4 +154,8 @@ public interface DashBoardDao {
 
 	List<WatrshdInagrtnPreYtraDashBean> getStWisePreYatraData();
 	List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(Integer stcode);
+	
+    List<WatrshdInagrtnPreYtraDashBean> getStWiseWatershedYatraDashboardData();
+	List<WatrshdInagrtnPreYtraDashBean> getDistrictWatershedYatraDashboardReport(Integer stcode);
+
 }

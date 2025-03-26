@@ -89,4 +89,7 @@ public interface DashBoardService {
 	List<WatershedYatraDashboardChartBean> getDateWiseCovLocations(Integer stCode);
 	List<WatrshdInagrtnPreYtraDashBean> getStWisePreYatraData();
 	List<WatrshdInagrtnPreYtraDashBean> getDistWisePreYatraData(Integer stcode);
+	List<WatrshdInagrtnPreYtraDashBean> getStWiseWatershedYatraDashboardData();
+	List<WatrshdInagrtnPreYtraDashBean> getDistrictWatershedYatraDashboardReport(Integer stcode);
+
 }

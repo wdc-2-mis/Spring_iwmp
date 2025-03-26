@@ -290,6 +290,12 @@ public class DashBoardDaoImpl implements DashBoardDao{
 	@Value("${getDistWisePreYatraData}")
 	String getDistWisePreYatraData;
 	
+	@Value("${getWatershedYatraDashboardReport}")
+	String getWatershedYatraDashboardReport;
+	
+	@Value("${getDistrictWatershedYatraDashboardReport}")
+	String getDistrictWatershedYatraDashboardReport;
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 	
@@ -2542,5 +2548,53 @@ List<TargetAchDashboardBean> findactdesc=new ArrayList<TargetAchDashboardBean>()
 		}
 		return list;
 	}
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getStWiseWatershedYatraDashboardData() {
+			
+		String hql = getWatershedYatraDashboardReport;
+			List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+			Session session = sessionFactory.getCurrentSession();
+			SQLQuery query = null;
+			try {
+				session.beginTransaction();
+				query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+			}
+			catch (HibernateException e) {
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+			} 
+			catch(Exception ex){
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return list;
+		}
 
+	@Override
+	public List<WatrshdInagrtnPreYtraDashBean> getDistrictWatershedYatraDashboardReport(Integer stcode) {
+		String hql = getDistrictWatershedYatraDashboardReport;
+		List<WatrshdInagrtnPreYtraDashBean> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatrshdInagrtnPreYtraDashBean.class));
+			query.setInteger("stcode", stcode);
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
 }
