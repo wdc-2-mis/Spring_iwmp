@@ -446,7 +446,22 @@
                 console.log(response);
                 let table = $('.district-table1');
                 let html = '<thead><tr><th>S.No.</th><th>District Name</th><th>Total Number of People Participated</th><th>Total Numbers of Works for BHOOMI POOJAN</th><th>Total Numbers of Works for LOKARPAN</th><th>Shramdaan on Total Location</th><th>Total Award Distribution</th><th>Total Number of Yatra Location</th><th>Total Number of AR Experienced People</th><th>Total Number of People Participated in Quiz</th><th>Total Number of Sapling Planted</th></tr></thead><tbody>';
+                
+                let totalParticipants = 0, totalBhoomiPoojan = 0, totalLokarpan = 0, totalShramdaan = 0,
+                totalAwardDistribution = 0, totalLocations = 0, totalARExp = 0, totalQuizParticipants = 0, totalPlantation = 0;
+                
                 response.forEach((data1, index) => {
+
+                	totalParticipants += data1.total_participants || 0;
+                    totalBhoomiPoojan += data1.bhoomi_poojan || 0;
+                    totalLokarpan += data1.lokarpan || 0;
+                    totalShramdaan += data1.shramdaan || 0;
+                    totalAwardDistribution += data1.award_distribution || 0;
+                    totalLocations += data1.total_locations || 0;
+                    totalARExp += data1.ar_exp || 0;
+                    totalQuizParticipants += data1.quiz_participants || 0;
+                    totalPlantation += data1.plantation || 0;
+                	
                     html += `<tr>
                                 <td>`+(index + 1)+`</td> <!-- Generates serial number dynamically -->
                                 <td>`+data1.dist_name+`</td>
@@ -461,6 +476,21 @@
                                 <td align="right">`+data1.plantation+`</td>
                             </tr>`;
                 });
+                
+             // Add the grand total row
+                html += `<tr>
+                            <th colspan="2" style="text-align: center"><strong>Total</strong></th>
+                            <th style="text-align: right;"><strong>` + totalParticipants + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalBhoomiPoojan + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalLokarpan + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalShramdaan + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalAwardDistribution + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalLocations + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalARExp + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalQuizParticipants + `</strong></th>
+                            <th style="text-align: right;"><strong>` + totalPlantation + `</strong></th>
+                        </tr>`;
+                
                 html += '</tbody>';
                 table.html(html);
             }
