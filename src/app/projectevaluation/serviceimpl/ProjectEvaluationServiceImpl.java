@@ -177,8 +177,8 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		return PEDAO.getCurrentFinYear();
 	}
 	@Override
-	public LinkedHashMap<Integer, String> getmonthforproject(int project) {
-		return PEDAO.getmonthforproject(project);
+	public LinkedHashMap<Integer, String> getmonthforproject() {
+		return PEDAO.getmonthforproject();
 	}
     @Override
     public List<ProjectEvaluationBean> getprojectstatus(int project, int month) {
@@ -249,6 +249,13 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public List<WdcpmksyProjectProfileEvaluation> getprojectevorptdata(Integer pCode) {
 		// TODO Auto-generated method stub
 		return PEDAO.getprojectevorptdata(pCode);
+	}
+
+	
+	@Override
+	public ProjectEvaluationBean getProjectDetails(int projId) {
+		// TODO Auto-generated method stub
+		return PEDAO.getProjectDetails(projId);
 	}
 
 

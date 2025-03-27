@@ -85,7 +85,7 @@ public interface ProjectEvaluationDAO {
 
     LinkedHashMap<Integer, String> getCurrentFinYear();
 
-	LinkedHashMap<Integer, String> getmonthforproject(int project);
+	LinkedHashMap<Integer, String> getmonthforproject();
 
 	List<ProjectEvaluationBean> getprojectstatus(int project, int month);
 	
@@ -116,6 +116,8 @@ public interface ProjectEvaluationDAO {
 	LinkedHashMap<Integer, String> getProjByDCode(Integer dCode);
 
 	List<WdcpmksyProjectProfileEvaluation> getprojectevorptdata(Integer pCode);
+
+	ProjectEvaluationBean getProjectDetails(int projId);
 
 
 

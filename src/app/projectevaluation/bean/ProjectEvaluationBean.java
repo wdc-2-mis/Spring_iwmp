@@ -101,7 +101,8 @@ public class ProjectEvaluationBean {
 	private Boolean control_norms_relating;
 	private Boolean control_antural_asset;
     private String distname;
-
+    private Character status;
+    
 	public String getSt_name() {
 		return st_name;
 	}
@@ -640,6 +641,12 @@ public class ProjectEvaluationBean {
 	}
 	public void setDistname(String distname) {
 		this.distname = distname;
+	}
+	public Character getStatus() {
+		return status;
+	}
+	public void setStatus(Character status) {
+		this.status = status;
 	}
 	
 

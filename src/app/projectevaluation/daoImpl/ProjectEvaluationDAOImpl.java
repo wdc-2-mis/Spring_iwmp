@@ -107,6 +107,10 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getprojevorptDetails}")
 	String getprojevorptDetails;
 	
+	@Value("${getProjDetailsData}")
+	String getProjDetailsData;
+	
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -808,7 +812,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	            proj.setProjectId(projid);
 	            fin.setFinYrCd(fcode);
-	            month.setFinmonthId(mcode);
+	            month.setMonthId(mcode);
 
 	            eva.setIwmpMProject(proj);
 	            eva.setIwmpMFinYear(fin);
@@ -1345,14 +1349,13 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	}
 
 	@Override
-	public LinkedHashMap<Integer, String> getmonthforproject(int project) {
+	public LinkedHashMap<Integer, String> getmonthforproject() {
 		String getMonth=getprojMonth;
 		Session session = sessionFactory.getCurrentSession();
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 		try {
 			session.beginTransaction();
 			SQLQuery query= session.createSQLQuery(getMonth);
-			query.setInteger("proj",project);
 			
 			List<Object[]> rows = query.list();
 			  for(Object[] row : rows){
@@ -1772,6 +1775,34 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		        }
 		    }
 		    return list;
+		}
+
+		
+		@Override
+		public ProjectEvaluationBean getProjectDetails(int projId) {
+			 String hql = getProjDetailsData;
+			Session session = null;
+			ProjectEvaluationBean project = null;
+			try {
+				session = sessionFactory.getCurrentSession(); 
+				session.beginTransaction();
+		        Query<ProjectEvaluationBean> query = session.createSQLQuery(hql)
+		        .setParameter("projId", projId)
+                .setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+
+		        project = (ProjectEvaluationBean) query.uniqueResult();
+		        
+		        session.getTransaction().commit(); 
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+
+		        if (session != null && session.getTransaction() != null && session.getTransaction().isActive()) {
+		            session.getTransaction().rollback();
+		        }
+		    }
+
+			return project;
 		}
 
 

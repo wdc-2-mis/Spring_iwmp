@@ -90,7 +90,7 @@ public interface ProjectEvaluationService {
 	Integer getProjectProfileId(Integer projId, Integer finYrId, Integer monthId);
 	List<ProjectEvaluationBean> getIndicatorEvaluation(Integer profile_id);
 	LinkedHashMap<Integer, String> getCurrentFinYear();
-	LinkedHashMap<Integer, String> getmonthforproject(int project);
+	LinkedHashMap<Integer, String> getmonthforproject();
 	List<ProjectEvaluationBean> getprojectstatus(int project, int month);
 	
 	public String saveEcoperspectiveDetails(Integer profile_id, String naturalresource, String naturalresourceRemark,
@@ -116,5 +116,7 @@ public interface ProjectEvaluationService {
 	LinkedHashMap<Integer, String> getProjByDCode(Integer dCode);
 
 	List<WdcpmksyProjectProfileEvaluation> getprojectevorptdata(Integer pCode);
+
+	ProjectEvaluationBean getProjectDetails(int projId);
 
 }

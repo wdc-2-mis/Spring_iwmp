@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -87,13 +87,14 @@ public class ProjectEvaluationController {
 			mav = new ModelAndView("projectEvaluation/profilestart");
 			mav.addObject("districtList", districtMasterService.getDistrictByStateCodeWithDcode(stcode));
 			mav.addObject("finYear", PEService.getCurrentFinYear());
+			monthList = PEService.getmonthforproject();
+			mav.addObject("monthList", monthList);
+			
 			if( district!=null && !district.equalsIgnoreCase("")) {
 				projectList = physicalActionPlanService.getprojectfordistrict(Integer.parseInt(district), stcode);
 				mav.addObject("projectList", projectList);}
 			
-			if( project!=null && !project.equalsIgnoreCase("")) {
-				monthList = PEService.getmonthforproject(Integer.parseInt(project));
-				mav.addObject("monthList", monthList);}  
+			
 			
 			if( month!=null && !month.equalsIgnoreCase("")) {
 				List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
@@ -124,6 +125,32 @@ public class ProjectEvaluationController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping(value="checkProjIdExists", method=RequestMethod.GET)
+	@ResponseBody
+    public Map<String, Object> checkProjIdExists(@RequestParam("projectId") int projId) {
+		Map<String, Object> response = new HashMap<>();
+		ProjectEvaluationBean projData = PEService.getProjectDetails(projId);
+		
+		if (projData != null) {
+	        response.put("exists", true);
+	        response.put("projId", projData.getProject());
+	        response.put("projName", projData.getProjname());
+	        response.put("distCode", projData.getDistrict());
+	        response.put("distName", projData.getDistname());
+	        response.put("finYearCode", projData.getFin_cd());
+	        response.put("finYearDesc", projData.getFin_yr());
+	        response.put("monthId", projData.getMonthid());
+	        response.put("monthName", projData.getMonthname());
+	        response.put("status", projData.getStatus()); // Assuming status is present
+	    } else {
+	        response.put("exists", false);
+	        response.put("message", "Project not found.");
+	    }
+
+	    return response;
+    }
+
 	
 	@RequestMapping(value="getProjectProfile", method=RequestMethod.GET)
 	public ModelAndView ProjectProfile(HttpServletRequest request, HttpServletResponse response)

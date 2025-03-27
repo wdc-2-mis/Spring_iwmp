@@ -122,9 +122,21 @@ function savedata(event){
       </thead>
       <c:forEach var="list" items="${projectList}" varStatus="status">
            <c:forEach var="listUser" items="${list.value}" >
+    
+    <tr>
+ <td width="4%">
+  <b><c:out	value="1."></c:out></b>
+ </td>
+  <td width="40%">
+   <b><c:out	value="Total Sanctioned Project Area (in ha.)"></c:out></b>
+  </td><td>
+     <input type="text" id="sancitonedP" name="sancitonedP" value="${listUser.sanctioned_area}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="15" placeholder="Only Decimal" />
+ </td>
+</tr>
+
      <tr>
       <td width="4%">
-       <b><c:out	value="1."></c:out></b>
+       <b><c:out	value="2."></c:out></b>
      </td>
      <td width="40%">
       <b><c:out	value="Total Sanctioned Cost of the Project (Rs. Crore)"></c:out></b>
@@ -135,7 +147,7 @@ function savedata(event){
 
 <tr>
  <td width="4%">
-  <b><c:out	value="2."></c:out></b>
+  <b><c:out	value="3."></c:out></b>
  </td>
   <td width="40%">
    <b><c:out	value="Central Share (Rs. Crore)"></c:out></b>
@@ -146,7 +158,7 @@ function savedata(event){
 
 <tr>
  <td width="4%">
-  <b><c:out	value="3."></c:out></b>
+  <b><c:out	value="4."></c:out></b>
  </td>
   <td width="40%">
    <b><c:out	value="State Share (Rs. Crore)"></c:out></b>
@@ -155,16 +167,7 @@ function savedata(event){
  </td>
 </tr> 
 
-<tr>
- <td width="4%">
-  <b><c:out	value="4."></c:out></b>
- </td>
-  <td width="40%">
-   <b><c:out	value="Total Sanctioned Project Area (in ha.)"></c:out></b>
-  </td><td>
-     <input type="text" id="sancitonedP" name="sancitonedP" value="${listUser.sanctioned_area}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="15" placeholder="Only Decimal" />
- </td>
-</tr>
+
 
 <tr>
  <td width="4%">

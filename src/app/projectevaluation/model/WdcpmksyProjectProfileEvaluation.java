@@ -123,7 +123,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 		}
 
 		@ManyToOne(fetch=FetchType.EAGER)
-	    @JoinColumn(name="fin_month_id", referencedColumnName = "fin_month_id")
+	    @JoinColumn(name="month_id", referencedColumnName = "month_id")
 		public IwmpMMonth getIwmpMMonth() {
 			return iwmpMMonth;
 		}
