@@ -1,6 +1,7 @@
 <%@ include file="/WEB-INF/jspf/header2.jspf"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 
 <html>
 
@@ -13,32 +14,6 @@
 
 <script type="text/javascript">
 let formSubmitted = false;  
-$(document).ready(function() {
-    // Function to toggle visibility based on the selected radio button
-    function toggleWdcRow() {
-        var isYesSelected = $('#mpyes').is(':checked');
-        if (isYesSelected) {
-            $('#wdcRow').show();
-            $('#piRow').show();
-            $('#wcRow').show();// Show the row
-        } else {
-            $('#wdcRow').hide();
-            $('#piRow').hide();
-            $('#wcRow').hide();// Hide the row
-        }
-    }
-
-    // Initial call to set the correct state on page load
-    toggleWdcRow();
-
-    // Set up event listeners to handle changes in radio button selection
-    $('input[name="mp"]').change(function() {
-        toggleWdcRow();
-    });
-});
-
-
-
 function savedata(){
   
     if (formSubmitted) return false;  
@@ -69,8 +44,7 @@ function savedata(){
 	if(wc==='')
 		wc=0;
 
-
-if (allManpower === 'true') {
+	if (allManpower === 'F') {
     if (wcdc === '' || wcdc === undefined || wcdc === null || wcdc===0) {
         alert('Please fill WCDC Level Details');
         $('#wdc').focus();
@@ -91,8 +65,7 @@ if (allManpower === 'true') {
 	          return false;
 	      }
 	
-}
-
+	}
 
 		   if(admiMechanism=='' || admiMechanism == undefined || admiMechanism == null)
 		   {
@@ -156,30 +129,10 @@ if (allManpower === 'true') {
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
 		<input type="hidden" name="fromno" id="fromno" value="2" />
            
-<!--             <div class="form-row"> -->
-<!--                 <div class="form-group col-md-3"> -->
-<%--                     <label for="district">District Name: <b><c:out value="${distName}"/></b></label> --%>
-<!--                 </div> -->
-
-<!--                 <div class="form-group col-md-3"> -->
-<%--                     <label for="project">Project Name: <b><c:out value="${projName}"/></b></label> --%>
-<!--                 </div> -->
-<!--             </div> -->
-
-<!--             <div class="form-row"> -->
-<!--                 <div class="form-group col-md-3"> -->
-<%--                     <label for="month">Month: <b><c:out value="${month}"/></b></label> --%>
-<!--                 </div> -->
-
-<!--                 <div class="form-group col-md-3"> -->
-<%--                     <label for="finyear">Financial Year: <b><c:out value="${finyear}"/></b></label> --%>
-<!--                 </div> -->
-<!--             </div> -->
 <div class="form-group">
 			District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp;Month Name : &nbsp;<b> <c:out value='${month}' /></b>, &nbsp;&nbsp;&nbsp; 
 		Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>
 			</div>
-
 
             <hr />
             <div>
@@ -202,19 +155,20 @@ if (allManpower === 'true') {
                         <td class="text-right"><b><c:out value="a"/></b></td>
                         <td><b><c:out value="Whether DPR approved by SLNA"/></b></td>
                         <td>
+                        
                        <c:if test="${dpr eq null }">
-                            <input type="radio" id="dpryes" name="dpr" value="true" value="${dpr}" /> Yes
-                            <input type="radio" id="dprno" name="dpr" value="false"  value="${dpr}"/> No
+                            <input type="radio" id="dpryes" name="dpr" value="F"/> Fully
+                            <input type="radio" id="dprno" name="dpr" value="P"/> Partially
                             
                            </c:if>
-                           <c:if test="${dpr eq false }">
-                            <input type="radio" id="dpryes" name="dpr" value="true" value="${dpr}" /> Yes
-                            <input type="radio" id="dprno" name="dpr" value="false" checked="checked"  value="${dpr}"/> No
+                           <c:if test="${dpr eq 'P' }">
+                            <input type="radio" id="dpryes" name="dpr"  value="${dpr}" /> Fully
+                            <input type="radio" id="dprno" name="dpr" checked="checked"  value="${dpr}"/> Partially
                             
                            </c:if>
-                            <c:if test="${dpr eq true }">
-                            <input type="radio" id="dpryes" name="dpr" value="true" checked="checked" value="${dpr}" /> Yes
-                            <input type="radio" id="dprno" name="dpr" value="false" value="${dpr}"/> No
+                            <c:if test="${dpr eq 'F' }">
+                            <input type="radio" id="dpryes" name="dpr" checked="checked" value="${dpr}" /> Fully
+                            <input type="radio" id="dprno" name="dpr" value="${dpr}"/> Partially
                             
                            </c:if>
                         </td>
@@ -227,17 +181,17 @@ if (allManpower === 'true') {
                         <td><b><c:out value="Whether all manpower positions in place at"/></b></td>
                         <td>
                         <c:if test="${mp eq null }">
-                            <input type="radio" id="mpyes" name="mp" value="true" value="${mp}" /> Yes
-                            <input type="radio" id="mpno" name="mp" value="false" value="${mp}" /> No
+                            <input type="radio" id="mpyes" name="mp" value="F" value="${mp}" /> Fully
+                            <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially
                             </c:if>
-                            <c:if test="${mp eq true }">
-                            <input type="radio" id="mpyes" name="mp" value="true" checked="checked" value="${mp}" /> Yes
-                            <input type="radio" id="mpno" name="mp" value="false" value="${mp}" /> No
-                            </c:if>
-                            <c:if test="${mp eq false }">
-                            <input type="radio" id="mpyes" name="mp" value="true"  value="${mp}" /> Yes
-                            <input type="radio" id="mpno" name="mp" value="false" checked="checked" value="${mp}" /> No
-                            </c:if>
+<%--                             <c:if test="${mp eq 'F' }"> --%>
+<%--                             <input type="radio" id="mpyes" name="mp" value="F" checked="checked" value="${mp}" /> Fully --%>
+<%--                             <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially --%>
+<%--                             </c:if> --%>
+<%--                             <c:if test="${mp eq 'P' }"> --%>
+<%--                             <input type="radio" id="mpyes" name="mp" value="F"  value="${mp}" /> Fully --%>
+<%--                             <input type="radio" id="mpno" name="mp" value="P" checked="checked" value="${mp}" /> Partially --%>
+<%--                             </c:if> --%>
                             
                         </td>
                         <td>

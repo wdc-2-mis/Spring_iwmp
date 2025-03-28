@@ -979,8 +979,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	@Override
 	public String saveIndicatorEvaluationDetails(Integer profile_id, Integer fromno, Integer wcdc, Integer wc,
-			Integer pia, String admiMechanism, String admiMechanismRemark, String dprSlna, String dprSlnaRemark,
-			String allManpower, String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark,
+			Integer pia, String admiMechanism, String admiMechanismRemark, Character dprSlna, String dprSlnaRemark,
+			Character allManpower, String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark,
 			HttpSession session) {
 		Session sess = sessionFactory.getCurrentSession();
 		int a=0;
@@ -1000,16 +1000,16 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				WdcpmksyProjectProfileEvaluation ppv= new WdcpmksyProjectProfileEvaluation();
 				IndicatorEvaluation ieval= new IndicatorEvaluation();
 				
-				 Boolean dprSlnaBool = parseBoolean(dprSlna);
-			     Boolean allManpowerBool = parseBoolean(allManpower);
+//				 Boolean dprSlnaBool = parseBoolean(dprSlna);
+//			     Boolean allManpowerBool = parseBoolean(allManpower);
 			        
 			        ppv.setProjectProfileId(profile_id);
 			        ieval.setWdcpmksyProjectProfileEvaluation(ppv);
 			        ieval.setAdminMechanism(admiMechanism);
 			        ieval.setAdminMechanismRemark(admiMechanismRemark);
-			        ieval.setDprSlna(dprSlnaBool);
+			        ieval.setDprSlna(dprSlna);
 			        ieval.setDprSlnaRemark(dprSlnaRemark);
-			        ieval.setAllManpower(allManpowerBool);
+			        ieval.setAllManpower(allManpower);
 			        ieval.setAllManpowerRemark(allManpowerRemark);
 			        
 			        if(wcdc==0) {
@@ -1053,15 +1053,15 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				
 				IndicatorEvaluation ieval1 = sess.load(IndicatorEvaluation.class, pevlid);
 				
-				Boolean dprSlnaBool = parseBoolean(dprSlna);
-		        Boolean allManpowerBool = parseBoolean(allManpower);
+//				Boolean dprSlnaBool = parseBoolean(dprSlna);
+//		        Boolean allManpowerBool = parseBoolean(allManpower);
 //		        ieval.setWdcpmksyProjectProfileEvaluation(main);
 
                 ieval1.setAdminMechanism(admiMechanism);
 		        ieval1.setAdminMechanismRemark(admiMechanismRemark);
-		        ieval1.setDprSlna(dprSlnaBool);
+		        ieval1.setDprSlna(dprSlna);
 		        ieval1.setDprSlnaRemark(dprSlnaRemark);
-		        ieval1.setAllManpower(allManpowerBool);
+		        ieval1.setAllManpower(allManpower);
 		        ieval1.setAllManpowerRemark(allManpowerRemark);
 		        if(wcdc==0) {
 		        	ieval1.setWcdc(null);}

@@ -314,9 +314,9 @@ public class ProjectEvaluationController {
 		Integer profile_id=0;
 		 String admiMechanism=null;
 		 String admiMechanismRemark=null;
-		 Boolean dprSlna=null;
+		 Character dprSlna=null;
 		 String dprSlnaRemark=null;
-		 Boolean allManpower=null;
+		 Character allManpower=null;
 		 String allManpowerRemark=null;
 		 Integer wcdc=null;
 		 String wcdcRemark=null;
@@ -393,11 +393,15 @@ public class ProjectEvaluationController {
 	     	//Character area = request.getParameter("area").charAt(0);
 	        String admiMechanism= request.getParameter("am");
 	        String admiMechanismRemark=request.getParameter("amd");
-	        String dprSlna =request.getParameter("dpr");
+//	        Character dprSlna =request.getParameter("dpr");
+	        String dpr = request.getParameter("dpr");
+	        Character dprSlna = (dpr != null && !dpr.isEmpty()) ? dpr.charAt(0) : null;
 	        String dprSlnaRemark= request.getParameter("dprremark");
-	        String allManpower=request.getParameter("mp");
+//	        Character allManpower=request.getParameter("mp");
+	        String mp = request.getParameter("mp");
+	        Character allManpower = (mp != null && !mp.isEmpty()) ? mp.charAt(0) : null;
 	        String allManpowerRemark=request.getParameter("mpremark");
-	        if(!allManpower.equals("false")) {
+	        if(!allManpower.equals('P')) {
 	        	wcdc = Integer.parseInt(request.getParameter("wdc"));
 	        
 	        	pia = Integer.parseInt(request.getParameter("pi"));
@@ -3427,9 +3431,9 @@ public class ProjectEvaluationController {
 					
 				 admiMechanism=bean.getAdmin_mechanism().toString();
 				 admiMechanismRemark=bean.getAdmin_mechanism_remark().toString();
-				 dprSlna=bean.getDpr_slna();
+				 //dprSlna=bean.getDpr_slna();
 				 dprSlnaRemark=bean.getDpr_slna_remark().toString();
-				 allManpower=bean.getAll_manpower();
+				 //allManpower=bean.getAll_manpower();
 				 allManpowerRemark=bean.getAll_manpower_remark().toString();
 				 wcdc=bean.getWcdc();
 				 wcdcRemark=bean.getWcdc_remark().toString();

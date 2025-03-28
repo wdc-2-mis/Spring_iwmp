@@ -57,7 +57,7 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	
 	@Override
 	public String saveIndicatorEvaluationDetails(Integer profile_id,Integer fromno, Integer wcdc, Integer wc, Integer pia, String admiMechanism,
-			String admiMechanismRemark, String dprSlna, String dprSlnaRemark, String allManpower,
+			String admiMechanismRemark, Character dprSlna, String dprSlnaRemark, Character allManpower,
 			String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark, HttpSession session) {
 		return PEDAO.saveIndicatorEvaluationDetails(profile_id,fromno, wcdc, wc, pia, admiMechanism, admiMechanismRemark, dprSlna, dprSlnaRemark, allManpower, allManpowerRemark, wcdcRemark, piaRemark, wcRemark, session);
 	}

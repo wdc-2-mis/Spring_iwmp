@@ -24,9 +24,9 @@ public class IndicatorEvaluation implements java.io.Serializable{
 	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;				//project_profile_id integer,
 	private String adminMechanism;					//admin_mechanism 
 	private String adminMechanismRemark;			//admin_mechanism_remark 
-	private Boolean dprSlna;						//dpr_slna 
+	private Character dprSlna;						//dpr_slna 
 	private String dprSlnaRemark;					// dpr_slna_remark 
-	private Boolean allManpower;					//  all_manpower
+	private Character allManpower;					//  all_manpower
 	private String 	allManpowerRemark;							// all_manpower_remark 
 	private Integer wcdc ;
 	private String 	wcdcRemark; 					//  wcdc_remark
@@ -49,7 +49,7 @@ public class IndicatorEvaluation implements java.io.Serializable{
 	    }
 	
 	
-	    public IndicatorEvaluation(int indicatorEvaluationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, String adminMechanism, String adminMechanismRemark, Boolean dprSlna, String dprSlnaRemark, Boolean allManpower, String allManpowerRemark, Integer wcdc, String wcdcRemark, Integer pia, String piaRemark, Integer wc, String wcRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp ) {
+	    public IndicatorEvaluation(int indicatorEvaluationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, String adminMechanism, String adminMechanismRemark, Character dprSlna, String dprSlnaRemark, Character allManpower, String allManpowerRemark, Integer wcdc, String wcdcRemark, Integer pia, String piaRemark, Integer wc, String wcRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp ) {
 	        this.indicatorEvaluationId = indicatorEvaluationId;
 		    this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
 		    this.adminMechanism = adminMechanism;
@@ -114,12 +114,12 @@ public class IndicatorEvaluation implements java.io.Serializable{
 		}
 
 		@Column(name="dpr_slna")
-		public Boolean getDprSlna() {
+		public Character getDprSlna() {
 			return dprSlna;
 		}
 
 
-		public void setDprSlna(Boolean dprSlna) {
+		public void setDprSlna(Character dprSlna) {
 			this.dprSlna = dprSlna;
 		}
 
@@ -134,12 +134,12 @@ public class IndicatorEvaluation implements java.io.Serializable{
 		}
 
 		@Column(name="all_manpower")
-		public Boolean getAllManpower() {
+		public Character getAllManpower() {
 			return allManpower;
 		}
 
 
-		public void setAllManpower(Boolean allManpower) {
+		public void setAllManpower(Character allManpower) {
 			this.allManpower = allManpower;
 		}
 

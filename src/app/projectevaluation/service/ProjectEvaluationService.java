@@ -46,7 +46,7 @@ public interface ProjectEvaluationService {
     List<ProjectEvaluationBean> monthYear();
 	
 	public String saveIndicatorEvaluationDetails(Integer profile_id, Integer fromno,Integer wcdc, Integer wc, Integer pia, String admiMechanism,
-			String admiMechanismRemark, String dprSlna, String dprSlnaRemark, String allManpower,
+			String admiMechanismRemark, Character dprSlna, String dprSlnaRemark, Character allManpower,
 			String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark, HttpSession session);
 	
 	public String insertprojectProfile(Integer projid, Integer fcode, Integer mcode, Integer evaId, BigDecimal sanctionedC,

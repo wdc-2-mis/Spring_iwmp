@@ -79,9 +79,9 @@ public class ProjectEvaluationBean {
 		
 	private String admin_mechanism;
 	private String admin_mechanism_remark;
-	private Boolean dpr_slna;
+	private Character dpr_slna;
 	private String dpr_slna_remark;
-	private Boolean all_manpower;
+	private Character all_manpower;
 	private String all_manpower_remark;
 	private String wcdc_remark;
 	private String pia_remark;
@@ -444,16 +444,16 @@ public class ProjectEvaluationBean {
 	public void setProjname(String projname) {
 		this.projname = projname;
 	}
-	public Boolean getDpr_slna() {
+	public Character getDpr_slna() {
 		return dpr_slna;
 	}
-	public void setDpr_slna(Boolean dpr_slna) {
+	public void setDpr_slna(Character dpr_slna) {
 		this.dpr_slna = dpr_slna;
 	}
-	public Boolean getAll_manpower() {
+	public Character getAll_manpower() {
 		return all_manpower;
 	}
-	public void setAll_manpower(Boolean all_manpower) {
+	public void setAll_manpower(Character all_manpower) {
 		this.all_manpower = all_manpower;
 	}
 	public BigDecimal getShape_file_area() {
