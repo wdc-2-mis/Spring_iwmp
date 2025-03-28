@@ -52,6 +52,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	private Set<WdcpmksyMandaysDetails> wdcpmksyMandaysDetails = new HashSet<WdcpmksyMandaysDetails>(0);
 	private Set<WdcpmksyCroppedDetails1> wdcpmksyCroppedDetails1 = new HashSet<WdcpmksyCroppedDetails1>(0);
 	private Set<WdcpmksyCroppedDetails2> wdcpmksyCroppedDetails2 = new HashSet<WdcpmksyCroppedDetails2>(0);
+	private Set<WdcpmksyCroppedDetails3> wdcpmksyCroppedDetails3 = new HashSet<WdcpmksyCroppedDetails3>(0);
 	private Set<WdcpmksyExecutionPlannedWork> wdcpmksyExecutionPlannedWork = new HashSet<WdcpmksyExecutionPlannedWork>(0);
 	private Set<WdcpmksyQualityShapeFiles> wdcpmksyQualityShapeFiles = new HashSet<WdcpmksyQualityShapeFiles>(0);
 	private Set<WdcpmksyStatusGeotaggWork> wdcpmksyStatusGeotaggWork = new HashSet<WdcpmksyStatusGeotaggWork>(0);
@@ -354,6 +355,16 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 
 		public void setWdcpmksyCroppedDetails2(Set<WdcpmksyCroppedDetails2> wdcpmksyCroppedDetails2) {
 			this.wdcpmksyCroppedDetails2 = wdcpmksyCroppedDetails2;
+		}
+		
+		@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksyProjectProfileEvaluation", cascade=CascadeType.ALL)
+		public Set<WdcpmksyCroppedDetails3> getWdcpmksyCroppedDetails3() {
+			return wdcpmksyCroppedDetails3;
+		}
+
+
+		public void setWdcpmksyCroppedDetails3(Set<WdcpmksyCroppedDetails3> wdcpmksyCroppedDetails3) {
+			this.wdcpmksyCroppedDetails3 = wdcpmksyCroppedDetails3;
 		}
 
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksyProjectProfileEvaluation", cascade=CascadeType.ALL)

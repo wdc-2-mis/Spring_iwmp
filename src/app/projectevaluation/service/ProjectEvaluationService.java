@@ -59,9 +59,9 @@ public interface ProjectEvaluationService {
 	
 	List<ProjectEvaluationBean> getFundUtilization(Integer profileid);
 	
-	public String saveFundUtilization(Integer projectProfileId, BigDecimal preCentralShare, BigDecimal midCentralShare, String rmkCentralShare, 
-			BigDecimal preStateShare, BigDecimal midStateShare, String rmkStatelShare, BigDecimal preTotalFund, BigDecimal midTotalFund, String rmkTotalFund, 
-			BigDecimal preConPlannedFund, BigDecimal midConPlannedFund, String rmkConPlannedFund, BigDecimal preExCon, BigDecimal midExCon, String rmkExCon, HttpSession session, Integer fromno);
+	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
+			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon, 
+			HttpSession session, Integer fromno);
 	
 	List<WdcpmksyEquityAspect> getEquityAspect(Integer profileid);
 	

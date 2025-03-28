@@ -22,29 +22,22 @@ public class FundUtilization implements java.io.Serializable{
 	
 	private int fundUtilizationId;						//   fund_utilization_id ;
 	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;   ///   project_profile_id
-	private BigDecimal fundUtilizationPrestatus;			//  fund_utilization_prestatus 
-	private BigDecimal fundUtilizationMidstatus;			//   fund_utilization_midstatus 
-	private String fundUtilizationRemark;					//fund_utilization_remark;
-	private BigDecimal centralSharePrestatus;				//   central_share_prestatus
-	private BigDecimal centralShareMidstatus;				//  central_share_midstatus
+	private BigDecimal centralShare;				//   central_share
 	private String centralShareRemark; 						//central_share_remark
-    private BigDecimal stateSharePrestatus; 					// state_share_prestatus
-    private BigDecimal stateShareMidstatus; 				//  state_share_midstatus
+    private BigDecimal stateShare; 					// state_share
     private String stateShareRemark;						//  state_share_remark
-    private BigDecimal totalFundPrestatus ;				// total_fund_prestatus
-    private BigDecimal totalFundMidstatus; 				//   total_fund_midstatus
+    private BigDecimal totalFund;				// total_fund
     private String totalFundRemark ;						//  total_fund_remark
-    private BigDecimal totalFundPlannedPrestatus;				//   total_fund_planned_prestatus
-    private BigDecimal totalFundPlannedMidstatus;				//   total_fund_planned_midstatus
+    private BigDecimal totalFundPlanned;				//   total_fund_planned
     private String totalFundPlannedRemark; 					//   total_fund_planned_remark
-    private BigDecimal totalExpenditurePrestatus ;				///   total_expenditure_prestatus
-    private BigDecimal totalExpenditureMidstatus; 					//  total_expenditure_midstatus
+    private BigDecimal totalExpenditure;				///   total_expenditure
     private String totalExpenditureRemark	;						//  total_expenditure_remark
     
     private Date createdOn ;                    //created_on ;
 	private String createdBy ;         //created_by ;
 	private Date updatedOn ;                 //updated_on ;
 	private String requestIp; 
+	
 	
 	public FundUtilization() {
  	}
@@ -55,29 +48,21 @@ public class FundUtilization implements java.io.Serializable{
     }
 	
 	
-    public FundUtilization(int fundUtilizationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, BigDecimal fundUtilizationPrestatus, BigDecimal fundUtilizationMidstatus, String fundUtilizationRemark, BigDecimal centralSharePrestatus, BigDecimal centralShareMidstatus, String centralShareRemark,
-    		BigDecimal stateSharePrestatus, BigDecimal stateShareMidstatus, String stateShareRemark, BigDecimal totalFundPrestatus, BigDecimal totalFundMidstatus, String totalFundRemark, BigDecimal totalFundPlannedPrestatus, BigDecimal totalFundPlannedMidstatus, String totalFundPlannedRemark, BigDecimal totalExpenditurePrestatus,
-    		BigDecimal totalExpenditureMidstatus, String totalExpenditureRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
+    public FundUtilization(int fundUtilizationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, BigDecimal centralShare, String centralShareRemark,
+    		BigDecimal stateShare, String stateShareRemark, BigDecimal totalFund, String totalFundRemark, BigDecimal totalFundPlanned, String totalFundPlannedRemark, 
+    		BigDecimal totalExpenditure, String totalExpenditureRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
     		
     	this.fundUtilizationId = fundUtilizationId;
         this.wdcpmksyProjectProfileEvaluation=wdcpmksyProjectProfileEvaluation;
-        this.fundUtilizationPrestatus=fundUtilizationPrestatus;
-        this.fundUtilizationMidstatus=fundUtilizationMidstatus;
-        this.fundUtilizationRemark=fundUtilizationRemark;
-        this.centralSharePrestatus=centralSharePrestatus;
-        this.centralShareMidstatus=centralShareMidstatus;
+        this.centralShare=centralShare;
         this.centralShareRemark=centralShareRemark;
-        this.stateSharePrestatus=stateSharePrestatus;
-        this.stateShareMidstatus=stateShareMidstatus;
+        this.stateShare=stateShare;
         this.stateShareRemark=stateShareRemark;
-        this.totalFundPrestatus=totalFundPrestatus;
-        this.totalFundMidstatus=totalFundMidstatus;
+        this.totalFund=totalFund;
         this.totalFundRemark=totalFundRemark;
-        this.totalFundPlannedPrestatus=totalFundPlannedPrestatus;
-        this.totalFundPlannedMidstatus=totalFundPlannedMidstatus;
+        this.totalFundPlanned=totalFundPlanned;
         this.totalFundPlannedRemark=totalFundPlannedRemark;
-        this.totalExpenditurePrestatus=totalExpenditurePrestatus;
-        this.totalExpenditureMidstatus=totalExpenditureMidstatus;
+        this.totalExpenditure=totalExpenditure;
         this.totalExpenditureRemark=totalExpenditureRemark;
         this.createdOn=CreatedOn;
 	    this.createdBy=CreatedBy;
@@ -92,7 +77,6 @@ public class FundUtilization implements java.io.Serializable{
 		return fundUtilizationId;
 	}
 
-
 	public void setFundUtilizationId(int fundUtilizationId) {
 		this.fundUtilizationId = fundUtilizationId;
 	}
@@ -103,59 +87,17 @@ public class FundUtilization implements java.io.Serializable{
 		return wdcpmksyProjectProfileEvaluation;
 	}
 
-
 	public void setWdcpmksyProjectProfileEvaluation(WdcpmksyProjectProfileEvaluation wdcpmksyProjectProfileEvaluation) {
 		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
 	}
 
-	@Column(name="fund_utilization_prestatus", precision=20)
-	public BigDecimal getFundUtilizationPrestatus() {
-		return fundUtilizationPrestatus;
+	@Column(name="central_share", precision=20)
+	public BigDecimal getCentralShare() {
+		return centralShare;
 	}
 
-
-	public void setFundUtilizationPrestatus(BigDecimal fundUtilizationPrestatus) {
-		this.fundUtilizationPrestatus = fundUtilizationPrestatus;
-	}
-
-	@Column(name="fund_utilization_midstatus", precision=20)
-	public BigDecimal getFundUtilizationMidstatus() {
-		return fundUtilizationMidstatus;
-	}
-
-
-	public void setFundUtilizationMidstatus(BigDecimal fundUtilizationMidstatus) {
-		this.fundUtilizationMidstatus = fundUtilizationMidstatus;
-	}
-
-	@Column(name="fund_utilization_remark", length=200)
-	public String getFundUtilizationRemark() {
-		return fundUtilizationRemark;
-	}
-
-
-	public void setFundUtilizationRemark(String fundUtilizationRemark) {
-		this.fundUtilizationRemark = fundUtilizationRemark;
-	}
-
-	@Column(name="central_share_prestatus", precision=20)
-	public BigDecimal getCentralSharePrestatus() {
-		return centralSharePrestatus;
-	}
-
-
-	public void setCentralSharePrestatus(BigDecimal centralSharePrestatus) {
-		this.centralSharePrestatus = centralSharePrestatus;
-	}
-
-	@Column(name="central_share_midstatus", precision=20)
-	public BigDecimal getCentralShareMidstatus() {
-		return centralShareMidstatus;
-	}
-
-
-	public void setCentralShareMidstatus(BigDecimal centralShareMidstatus) {
-		this.centralShareMidstatus = centralShareMidstatus;
+	public void setCentralShare(BigDecimal centralShare) {
+		this.centralShare = centralShare;
 	}
 
 	@Column(name="central_share_remark", length=200)
@@ -163,29 +105,17 @@ public class FundUtilization implements java.io.Serializable{
 		return centralShareRemark;
 	}
 
-
 	public void setCentralShareRemark(String centralShareRemark) {
 		this.centralShareRemark = centralShareRemark;
 	}
 
-	@Column(name="state_share_prestatus", precision=20)
-	public BigDecimal getStateSharePrestatus() {
-		return stateSharePrestatus;
+	@Column(name="state_share", precision=20)
+	public BigDecimal getStateShare() {
+		return stateShare;
 	}
 
-
-	public void setStateSharePrestatus(BigDecimal stateSharePrestatus) {
-		this.stateSharePrestatus = stateSharePrestatus;
-	}
-
-	@Column(name="state_share_midstatus", precision=20)
-	public BigDecimal getStateShareMidstatus() {
-		return stateShareMidstatus;
-	}
-
-
-	public void setStateShareMidstatus(BigDecimal stateShareMidstatus) {
-		this.stateShareMidstatus = stateShareMidstatus;
+	public void setStateShare(BigDecimal stateShare) {
+		this.stateShare = stateShare;
 	}
 
 	@Column(name="state_share_remark", length=200)
@@ -193,29 +123,17 @@ public class FundUtilization implements java.io.Serializable{
 		return stateShareRemark;
 	}
 
-
 	public void setStateShareRemark(String stateShareRemark) {
 		this.stateShareRemark = stateShareRemark;
 	}
 
-	@Column(name="total_fund_prestatus", precision=20)
-	public BigDecimal getTotalFundPrestatus() {
-		return totalFundPrestatus;
+	@Column(name="total_fund", precision=20)
+	public BigDecimal getTotalFund() {
+		return totalFund;
 	}
 
-
-	public void setTotalFundPrestatus(BigDecimal totalFundPrestatus) {
-		this.totalFundPrestatus = totalFundPrestatus;
-	}
-
-	@Column(name="total_fund_midstatus", precision=20)
-	public BigDecimal getTotalFundMidstatus() {
-		return totalFundMidstatus;
-	}
-
-
-	public void setTotalFundMidstatus(BigDecimal totalFundMidstatus) {
-		this.totalFundMidstatus = totalFundMidstatus;
+	public void setTotalFund(BigDecimal totalFund) {
+		this.totalFund = totalFund;
 	}
 
 	@Column(name="total_fund_remark", length=200)
@@ -223,29 +141,17 @@ public class FundUtilization implements java.io.Serializable{
 		return totalFundRemark;
 	}
 
-
 	public void setTotalFundRemark(String totalFundRemark) {
 		this.totalFundRemark = totalFundRemark;
 	}
 
-	@Column(name="total_fund_planned_prestatus", precision=20)
-	public BigDecimal getTotalFundPlannedPrestatus() {
-		return totalFundPlannedPrestatus;
+	@Column(name="total_fund_planned", precision=20)
+	public BigDecimal getTotalFundPlanned() {
+		return totalFundPlanned;
 	}
 
-
-	public void setTotalFundPlannedPrestatus(BigDecimal totalFundPlannedPrestatus) {
-		this.totalFundPlannedPrestatus = totalFundPlannedPrestatus;
-	}
-
-	@Column(name="total_fund_planned_midstatus", precision=20)
-	public BigDecimal getTotalFundPlannedMidstatus() {
-		return totalFundPlannedMidstatus;
-	}
-
-
-	public void setTotalFundPlannedMidstatus(BigDecimal totalFundPlannedMidstatus) {
-		this.totalFundPlannedMidstatus = totalFundPlannedMidstatus;
+	public void setTotalFundPlanned(BigDecimal totalFundPlanned) {
+		this.totalFundPlanned = totalFundPlanned;
 	}
 
 	@Column(name="total_fund_planned_remark", length=200)
@@ -253,29 +159,17 @@ public class FundUtilization implements java.io.Serializable{
 		return totalFundPlannedRemark;
 	}
 
-
 	public void setTotalFundPlannedRemark(String totalFundPlannedRemark) {
 		this.totalFundPlannedRemark = totalFundPlannedRemark;
 	}
 
-	@Column(name="total_expenditure_prestatus", precision=20)
-	public BigDecimal getTotalExpenditurePrestatus() {
-		return totalExpenditurePrestatus;
+	@Column(name="total_expenditure", precision=20)
+	public BigDecimal getTotalExpenditure() {
+		return totalExpenditure;
 	}
 
-
-	public void setTotalExpenditurePrestatus(BigDecimal totalExpenditurePrestatus) {
-		this.totalExpenditurePrestatus = totalExpenditurePrestatus;
-	}
-
-	@Column(name="total_expenditure_midstatus", precision=20)
-	public BigDecimal getTotalExpenditureMidstatus() {
-		return totalExpenditureMidstatus;
-	}
-
-
-	public void setTotalExpenditureMidstatus(BigDecimal totalExpenditureMidstatus) {
-		this.totalExpenditureMidstatus = totalExpenditureMidstatus;
+	public void setTotalExpenditure(BigDecimal totalExpenditure) {
+		this.totalExpenditure = totalExpenditure;
 	}
 
 	@Column(name="total_expenditure_remark", length=200)
@@ -283,18 +177,15 @@ public class FundUtilization implements java.io.Serializable{
 		return totalExpenditureRemark;
 	}
 
-
 	public void setTotalExpenditureRemark(String totalExpenditureRemark) {
 		this.totalExpenditureRemark = totalExpenditureRemark;
 	}
-
 
 	@Temporal(TemporalType.DATE)
     @Column(name="created_on")
 	public Date getCreatedOn() {
 		return createdOn;
 	}
-
 
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
@@ -304,7 +195,6 @@ public class FundUtilization implements java.io.Serializable{
 	public String getCreatedBy() {
 		return createdBy;
 	}
-
 	
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
@@ -316,7 +206,6 @@ public class FundUtilization implements java.io.Serializable{
 		return updatedOn;
 	}
 
-
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
@@ -326,19 +215,10 @@ public class FundUtilization implements java.io.Serializable{
 		return requestIp;
 	}
 
-
 	public void setRequestIp(String requestIp) {
 		this.requestIp = requestIp;
 	}
     
     
-    
-    
-    
-    
-    
-	
-	
-	
 
 }

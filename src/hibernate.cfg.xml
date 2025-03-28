@@ -82,6 +82,7 @@
         <mapping class="app.projectevaluation.model.WdcpmksyQualityShapeFiles"  />
         <mapping class="app.projectevaluation.model.WdcpmksyStatusGeotaggWork"  />
         <mapping class="app.projectevaluation.model.WdcpmksyCroppedDetails2"  />
+        <mapping class="app.projectevaluation.model.WdcpmksyCroppedDetails3"  />
         <mapping class="app.projectevaluation.model.WdcpmksyEcologicalPerspective"  />
         <mapping class="app.projectevaluation.model.WdcpmksyEquityAspect"  />
         <mapping class="app.projectevaluation.model.WdcpmksyProductionDetails"  />

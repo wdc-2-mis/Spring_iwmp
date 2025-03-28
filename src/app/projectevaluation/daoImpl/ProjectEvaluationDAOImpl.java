@@ -552,9 +552,10 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		
 	@SuppressWarnings("deprecation")
 	@Override
-	public String saveFundUtilization(Integer projectProfileId, BigDecimal preCentralShare, BigDecimal midCentralShare, String rmkCentralShare, 
-			BigDecimal preStateShare, BigDecimal midStateShare, String rmkStatelShare, BigDecimal preTotalFund, BigDecimal midTotalFund, String rmkTotalFund, 
-			BigDecimal preConPlannedFund, BigDecimal midConPlannedFund, String rmkConPlannedFund, BigDecimal preExCon, BigDecimal midExCon, String rmkExCon, HttpSession session, Integer fromno) {
+	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
+			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon, 
+			HttpSession session, Integer fromno) {
+		
 		Session sess = sessionFactory.getCurrentSession();
 		//System.out.println("projectProfileId:" + projectProfileId);
 		String res = "fail";
@@ -598,20 +599,15 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	            res = "success";
 	        }
 						
-			fundUtilization.setCentralSharePrestatus(preCentralShare);
-			fundUtilization.setCentralShareMidstatus(midCentralShare);
+			fundUtilization.setCentralShare(centralShare);
 			fundUtilization.setCentralShareRemark(rmkCentralShare);
-			fundUtilization.setStateSharePrestatus(preStateShare);
-			fundUtilization.setStateShareMidstatus(midStateShare);
+			fundUtilization.setStateShare(stateShare);
 			fundUtilization.setStateShareRemark(rmkStatelShare);
-			fundUtilization.setTotalFundPrestatus(preTotalFund);
-			fundUtilization.setTotalFundMidstatus(midTotalFund);
+			fundUtilization.setTotalFund(totalFund);
 			fundUtilization.setTotalFundRemark(rmkTotalFund);
-			fundUtilization.setTotalFundPlannedPrestatus(preConPlannedFund);
-			fundUtilization.setTotalFundPlannedMidstatus(midConPlannedFund);
+			fundUtilization.setTotalFundPlanned(conPlannedFund);
 			fundUtilization.setTotalFundPlannedRemark(rmkConPlannedFund);
-			fundUtilization.setTotalExpenditurePrestatus(preExCon);
-			fundUtilization.setTotalExpenditureMidstatus(midExCon);
+			fundUtilization.setTotalExpenditure(exCon);
 			fundUtilization.setTotalExpenditureRemark(rmkExCon);
 			fundUtilization.setRequestIp(ipAddr);
 			
@@ -1437,24 +1433,24 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				crpDtl.setCreatedBy(userId);
 				crpDtl.setRequestIp(getClientIpAddr(request));
 			}
-			crpDtl.setNillSingle(niltosingle);
-			crpDtl.setSingelDoublemore(sdcrop);
-			crpDtl.setPlantationCover(plantation);
-			crpDtl.setWheat(wheat);
-			crpDtl.setRice(rice);
-			crpDtl.setPulses(pulses);
-			crpDtl.setOil_seed(oilseed);
-			crpDtl.setMillets(millets);
-			crpDtl.setOther(others);
-			crpDtl.setControl_nill_single(cniltosingle);
-			crpDtl.setControl_singel_doublemore(csdcrop);
-			crpDtl.setControl_plantation_cover(cplantation);
-			crpDtl.setControl_wheat(cwheat);
-			crpDtl.setControl_rice(crice);
-			crpDtl.setControl_pulses(cpulses);
-			crpDtl.setControl_oil_seed(coilseed);
-			crpDtl.setControl_millets(cmillets);
-			crpDtl.setControl_other(cothers);
+//			crpDtl.setNillSingle(niltosingle);
+//			crpDtl.setSingelDoublemore(sdcrop);
+//			crpDtl.setPlantationCover(plantation);
+//			crpDtl.setWheat(wheat);
+//			crpDtl.setRice(rice);
+//			crpDtl.setPulses(pulses);
+//			crpDtl.setOil_seed(oilseed);
+//			crpDtl.setMillets(millets);
+//			crpDtl.setOther(others);
+//			crpDtl.setControl_nill_single(cniltosingle);
+//			crpDtl.setControl_singel_doublemore(csdcrop);
+//			crpDtl.setControl_plantation_cover(cplantation);
+//			crpDtl.setControl_wheat(cwheat);
+//			crpDtl.setControl_rice(crice);
+//			crpDtl.setControl_pulses(cpulses);
+//			crpDtl.setControl_oil_seed(coilseed);
+//			crpDtl.setControl_millets(cmillets);
+//			crpDtl.setControl_other(cothers);
 			session.saveOrUpdate(crpDtl);
 			session.getTransaction().commit();
 			res = "success";
@@ -1667,9 +1663,9 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 					prdDtl.setCreatedBy(userId);
 					prdDtl.setRequestIp(getClientIpAddr(request));
 				}
-				prdDtl.setMilchCattle(milch);
-				prdDtl.setFodderProduction(fodder);
-				prdDtl.setRuralUrban(ruralUrban);
+//				prdDtl.setMilchCattle(milch);
+//				prdDtl.setFodderProduction(fodder);
+//				prdDtl.setRuralUrban(ruralUrban);
 				prdDtl.setSpringRejuvenated(spring);
 				prdDtl.setPersonBenefitte(benefit);
 				prdDtl.setCommunityBasedShg(shg);
@@ -1678,24 +1674,24 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				prdDtl.setMemberBasedShg(mshg);
 				prdDtl.setMemberBasedFpo(mfpo);
 				prdDtl.setMemberBasedUg(mug);
-				prdDtl.setTrunoverFpo(trunoverFpo);
-				prdDtl.setIncomeFpo(incomeFpo);
-				prdDtl.setAnnualIncomeShg(annualIncomeShg);
-				
-				prdDtl.setControl_milch_cattle(cmilch);
-				prdDtl.setControl_fodder_production(cfodder);
-				prdDtl.setControl_rural_urban(cmug);
-				prdDtl.setControl_spring_rejuvenated(cspring);
-				prdDtl.setControl_person_benefitte(cbenefit);
-				prdDtl.setControl_community_based_shg(cmshg);
-				prdDtl.setControl_community_based_fpo(cmfpo);
-				prdDtl.setControl_community_based_ug(cug);
-				prdDtl.setControl_member_based_shg(cmshg);
-				prdDtl.setControl_member_based_fpo(cmfpo);
-				prdDtl.setControl_member_based_ug(cug);
-				prdDtl.setControl_trunover_fpo(ctrunoverFpo);
-				prdDtl.setControl_income_fpo(cincomeFpo);
-				prdDtl.setControl_annual_income_shg(cincomeFpo);
+//				prdDtl.setTrunoverFpo(trunoverFpo);
+//				prdDtl.setIncomeFpo(incomeFpo);
+//				prdDtl.setAnnualIncomeShg(annualIncomeShg);
+//				
+//				prdDtl.setControl_milch_cattle(cmilch);
+//				prdDtl.setControl_fodder_production(cfodder);
+//				prdDtl.setControl_rural_urban(cmug);
+//				prdDtl.setControl_spring_rejuvenated(cspring);
+//				prdDtl.setControl_person_benefitte(cbenefit);
+//				prdDtl.setControl_community_based_shg(cmshg);
+//				prdDtl.setControl_community_based_fpo(cmfpo);
+//				prdDtl.setControl_community_based_ug(cug);
+//				prdDtl.setControl_member_based_shg(cmshg);
+//				prdDtl.setControl_member_based_fpo(cmfpo);
+//				prdDtl.setControl_member_based_ug(cug);
+//				prdDtl.setControl_trunover_fpo(ctrunoverFpo);
+//				prdDtl.setControl_income_fpo(cincomeFpo);
+//				prdDtl.setControl_annual_income_shg(cincomeFpo);
 				
 				session.saveOrUpdate(prdDtl);
 				session.getTransaction().commit();

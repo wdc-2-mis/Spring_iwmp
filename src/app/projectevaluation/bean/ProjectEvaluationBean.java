@@ -61,20 +61,15 @@ public class ProjectEvaluationBean {
 	private Integer geo_tagg_work;
 	private String geo_tagg_work_remark;
 
-	private BigDecimal central_share_prestatus;
-	private BigDecimal central_share_midstatus;
+	private BigDecimal central_share;
 	private String central_share_remark;
-	private BigDecimal state_share_prestatus;
-	private BigDecimal state_share_midstatus;
+	private BigDecimal state_share;
 	private String state_share_remark;
-	private BigDecimal total_fund_prestatus;
-	private BigDecimal total_fund_midstatus;
+	private BigDecimal total_fund;
 	private String total_fund_remark;
-	private BigDecimal total_fund_planned_prestatus;
-	private BigDecimal total_fund_planned_midstatus;
+	private BigDecimal total_fund_planned;
 	private String total_fund_planned_remark;
-	private BigDecimal total_expenditure_prestatus;
-	private BigDecimal total_expenditure_midstatus;
+	private BigDecimal total_expenditure;
 	private String total_expenditure_remark;
 		
 	private String admin_mechanism;
@@ -492,17 +487,11 @@ public class ProjectEvaluationBean {
 	public void setGeo_tagg_work_remark(String geo_tagg_work_remark) {
 		this.geo_tagg_work_remark = geo_tagg_work_remark;
 	}
-	public BigDecimal getCentral_share_prestatus() {
-		return central_share_prestatus;
+	public BigDecimal getCentral_share() {
+		return central_share;
 	}
-	public void setCentral_share_prestatus(BigDecimal central_share_prestatus) {
-		this.central_share_prestatus = central_share_prestatus;
-	}
-	public BigDecimal getCentral_share_midstatus() {
-		return central_share_midstatus;
-	}
-	public void setCentral_share_midstatus(BigDecimal central_share_midstatus) {
-		this.central_share_midstatus = central_share_midstatus;
+	public void setCentral_share(BigDecimal central_share) {
+		this.central_share = central_share;
 	}
 	public String getCentral_share_remark() {
 		return central_share_remark;
@@ -510,17 +499,11 @@ public class ProjectEvaluationBean {
 	public void setCentral_share_remark(String central_share_remark) {
 		this.central_share_remark = central_share_remark;
 	}
-	public BigDecimal getState_share_prestatus() {
-		return state_share_prestatus;
+	public BigDecimal getState_share() {
+		return state_share;
 	}
-	public void setState_share_prestatus(BigDecimal state_share_prestatus) {
-		this.state_share_prestatus = state_share_prestatus;
-	}
-	public BigDecimal getState_share_midstatus() {
-		return state_share_midstatus;
-	}
-	public void setState_share_midstatus(BigDecimal state_share_midstatus) {
-		this.state_share_midstatus = state_share_midstatus;
+	public void setState_share(BigDecimal state_share) {
+		this.state_share = state_share;
 	}
 	public String getState_share_remark() {
 		return state_share_remark;
@@ -528,17 +511,11 @@ public class ProjectEvaluationBean {
 	public void setState_share_remark(String state_share_remark) {
 		this.state_share_remark = state_share_remark;
 	}
-	public BigDecimal getTotal_fund_prestatus() {
-		return total_fund_prestatus;
+	public BigDecimal getTotal_fund() {
+		return total_fund;
 	}
-	public void setTotal_fund_prestatus(BigDecimal total_fund_prestatus) {
-		this.total_fund_prestatus = total_fund_prestatus;
-	}
-	public BigDecimal getTotal_fund_midstatus() {
-		return total_fund_midstatus;
-	}
-	public void setTotal_fund_midstatus(BigDecimal total_fund_midstatus) {
-		this.total_fund_midstatus = total_fund_midstatus;
+	public void setTotal_fund(BigDecimal total_fund) {
+		this.total_fund = total_fund;
 	}
 	public String getTotal_fund_remark() {
 		return total_fund_remark;
@@ -546,17 +523,11 @@ public class ProjectEvaluationBean {
 	public void setTotal_fund_remark(String total_fund_remark) {
 		this.total_fund_remark = total_fund_remark;
 	}
-	public BigDecimal getTotal_fund_planned_prestatus() {
-		return total_fund_planned_prestatus;
+	public BigDecimal getTotal_fund_planned() {
+		return total_fund_planned;
 	}
-	public void setTotal_fund_planned_prestatus(BigDecimal total_fund_planned_prestatus) {
-		this.total_fund_planned_prestatus = total_fund_planned_prestatus;
-	}
-	public BigDecimal getTotal_fund_planned_midstatus() {
-		return total_fund_planned_midstatus;
-	}
-	public void setTotal_fund_planned_midstatus(BigDecimal total_fund_planned_midstatus) {
-		this.total_fund_planned_midstatus = total_fund_planned_midstatus;
+	public void setTotal_fund_planned(BigDecimal total_fund_planned) {
+		this.total_fund_planned = total_fund_planned;
 	}
 	public String getTotal_fund_planned_remark() {
 		return total_fund_planned_remark;
@@ -564,17 +535,11 @@ public class ProjectEvaluationBean {
 	public void setTotal_fund_planned_remark(String total_fund_planned_remark) {
 		this.total_fund_planned_remark = total_fund_planned_remark;
 	}
-	public BigDecimal getTotal_expenditure_prestatus() {
-		return total_expenditure_prestatus;
+	public BigDecimal getTotal_expenditure() {
+		return total_expenditure;
 	}
-	public void setTotal_expenditure_prestatus(BigDecimal total_expenditure_prestatus) {
-		this.total_expenditure_prestatus = total_expenditure_prestatus;
-	}
-	public BigDecimal getTotal_expenditure_midstatus() {
-		return total_expenditure_midstatus;
-	}
-	public void setTotal_expenditure_midstatus(BigDecimal total_expenditure_midstatus) {
-		this.total_expenditure_midstatus = total_expenditure_midstatus;
+	public void setTotal_expenditure(BigDecimal total_expenditure) {
+		this.total_expenditure = total_expenditure;
 	}
 	public String getTotal_expenditure_remark() {
 		return total_expenditure_remark;

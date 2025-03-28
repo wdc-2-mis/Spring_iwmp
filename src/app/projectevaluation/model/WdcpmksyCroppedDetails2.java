@@ -22,33 +22,28 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
 	
 	private int croppedDetails2Id;								//  cropped_details_2_id
 	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;					// project_profile_id
-	//private Character projectControlled;               //   project_controlled
-	private BigDecimal nillSingle;						//	nill_single 
-	private BigDecimal singelDoublemore;		//   singel_doublemore 
-	private BigDecimal plantationCover;		//		plantation_cover
-	private BigDecimal wheat;
-	private BigDecimal rice; 
-	private BigDecimal pulses; 
-	private BigDecimal oil_seed;			//   oil_seed 
-	private BigDecimal millets; 
-	private BigDecimal other;
-	
-	private BigDecimal control_nill_single;
-	private BigDecimal control_singel_doublemore;
-	private BigDecimal control_plantation_cover ;
-	private BigDecimal control_wheat;
-	private BigDecimal control_rice ;
-	private BigDecimal control_pulses ;
-	private BigDecimal control_oil_seed ;
-	private BigDecimal control_millets ;
-	private BigDecimal control_other ;
-	
-	
-	
-	private Date createdOn ;                    //created_on ;
-	private String createdBy ;         //created_by ;
-	private Date updatedOn ;                 //updated_on ;
-	private String requestIp; 
+	private BigDecimal projectDiversifiedChange;				// project_diversified_change
+	private BigDecimal controlDiversifiedChange;				// control_diversified_change
+	private String remarkDiversifiedChange;						// remark_diversified_change
+	private Integer projectWhsConstructedRejuvenated;			// project_whs_constructed_rejuvenated
+	private Integer controlWhsConstructedRejuvenated;			// control_whs_constructed_rejuvenated
+    private String remarkWhsConstructedRejuvenated;				// remark_whs_constructed_rejuvenated
+    private BigDecimal projectSoilMoisture;						// project_soil_moisture
+    private BigDecimal controlSoilMoisture;						// control_soil_moisture
+    private String remarkSoilMoisture;							// remark_soil_moisture
+    private BigDecimal projectDegradedRainfed;					// project_degraded_rainfed
+    private BigDecimal controlDegradedRainfed;					// control_degraded_rainfed
+    private String remarkDegradedRainfed;						// remark_degraded_rainfed
+    private BigDecimal projectNillSingle;						// project_nill_single
+    private BigDecimal controlNillSingle;						// control_nill_single
+    private String remarkNillSingle;							// remark_nill_single
+    private BigDecimal projectSingleDoublemore;					// project_single_doublemore
+    private BigDecimal controlSingleDoublemore;					// control_single_doublemore
+    private String remarkSingleDoublemore;						// remark_single_doublemore
+	private Date createdOn ;                    				//created_on ;
+	private String createdBy ;         							//created_by ;
+	private Date updatedOn ;                 					//updated_on ;
+	private String requestIp; 									//request_ip
 	
 	public WdcpmksyCroppedDetails2() {
  	}
@@ -58,20 +53,33 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
         this.croppedDetails2Id = croppedDetails2Id;
     }
 	
-    public WdcpmksyCroppedDetails2(int croppedDetails2Id, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, Character projectControlled, BigDecimal nillSingle, BigDecimal singelDoublemore, BigDecimal plantationCover, BigDecimal wheat, BigDecimal rice, BigDecimal pulses,
-    		BigDecimal oil_seed, BigDecimal millets, BigDecimal other, Date createdOn, String createdBy, Date updatedOn, String requestIp) {
+    public WdcpmksyCroppedDetails2(int croppedDetails2Id, WdcpmksyProjectProfileEvaluation wdcpmksyProjectProfileEvaluation, BigDecimal projectDiversifiedChange, 
+    		BigDecimal controlDiversifiedChange, String remarkDiversifiedChange, Integer projectWhsConstructedRejuvenated, Integer controlWhsConstructedRejuvenated, 
+    		String remarkWhsConstructedRejuvenated, BigDecimal projectSoilMoisture, BigDecimal controlSoilMoisture, String remarkSoilMoisture, 
+    		BigDecimal projectDegradedRainfed, BigDecimal controlDegradedRainfed, String remarkDegradedRainfed, BigDecimal projectNillSingle, 
+    		BigDecimal controlNillSingle, String remarkNillSingle, BigDecimal projectSingleDoublemore, BigDecimal controlSingleDoublemore, String remarkSingleDoublemore,  
+    		Date createdOn, String createdBy, Date updatedOn, String requestIp) {
+    	
         this.croppedDetails2Id = croppedDetails2Id;
         this.wdcpmksyProjectProfileEvaluation=wdcpmksyProjectProfileEvaluation;
-      //  this.projectControlled=projectControlled;
-        this.nillSingle=nillSingle;
-        this.singelDoublemore=singelDoublemore;
-        this.plantationCover=plantationCover;
-        this.wheat=wheat;
-        this.rice=rice;
-        this.pulses=pulses;
-        this.oil_seed=oil_seed;
-        this.millets=millets;
-        this.other=other;
+        this.projectDiversifiedChange = projectDiversifiedChange;
+    	this.controlDiversifiedChange = controlDiversifiedChange;
+    	this.remarkDiversifiedChange = remarkDiversifiedChange;
+    	this.projectWhsConstructedRejuvenated = projectWhsConstructedRejuvenated;
+    	this.controlWhsConstructedRejuvenated = controlWhsConstructedRejuvenated;
+    	this.remarkWhsConstructedRejuvenated = remarkWhsConstructedRejuvenated;
+    	this.projectSoilMoisture = projectSoilMoisture;
+    	this.controlSoilMoisture = controlSoilMoisture;
+    	this.remarkSoilMoisture = remarkSoilMoisture;
+    	this.projectDegradedRainfed = projectDegradedRainfed;
+    	this.controlDegradedRainfed = controlDegradedRainfed;
+    	this.remarkDegradedRainfed = remarkDegradedRainfed;
+    	this.projectNillSingle = projectNillSingle;
+    	this.controlNillSingle = controlNillSingle;
+    	this.remarkNillSingle = remarkNillSingle;
+    	this.projectSingleDoublemore = projectSingleDoublemore;
+    	this.controlSingleDoublemore = controlSingleDoublemore;
+    	this.remarkSingleDoublemore = remarkSingleDoublemore;
         this.createdOn=createdOn;
     	this.createdBy=createdBy;
     	this.updatedOn=updatedOn;
@@ -79,6 +87,7 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
         
     }
 
+    
     @Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="cropped_details_2_id", unique=true, nullable=false)
@@ -86,120 +95,201 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
 		return croppedDetails2Id;
 	}
 
-
 	public void setCroppedDetails2Id(int croppedDetails2Id) {
 		this.croppedDetails2Id = croppedDetails2Id;
 	}
 
+	
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="project_profile_id")
 	public WdcpmksyProjectProfileEvaluation getWdcpmksyProjectProfileEvaluation() {
 		return wdcpmksyProjectProfileEvaluation;
 	}
 
-
 	public void setWdcpmksyProjectProfileEvaluation(WdcpmksyProjectProfileEvaluation wdcpmksyProjectProfileEvaluation) {
 		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
 	}
 
-	/*
-	 * @Column(name="project_controlled", length=1) public Character
-	 * getProjectControlled() { return projectControlled; }
-	 * 
-	 * 
-	 * public void setProjectControlled(Character projectControlled) {
-	 * this.projectControlled = projectControlled; }
-	 */
 
-	@Column(name="nill_single", precision=20)
-	public BigDecimal getNillSingle() {
-		return nillSingle;
+	@Column(name="project_diversified_change", precision=20)
+	public BigDecimal getProjectDiversifiedChange() {
+		return projectDiversifiedChange;
+	}
+
+	public void setProjectDiversifiedChange(BigDecimal projectDiversifiedChange) {
+		this.projectDiversifiedChange = projectDiversifiedChange;
 	}
 
 
-	public void setNillSingle(BigDecimal nillSingle) {
-		this.nillSingle = nillSingle;
+	@Column(name="control_diversified_change", precision=20)
+	public BigDecimal getControlDiversifiedChange() {
+		return controlDiversifiedChange;
 	}
 
-	@Column(name="singel_doublemore", precision=20)
-	public BigDecimal getSingelDoublemore() {
-		return singelDoublemore;
-	}
-
-
-	public void setSingelDoublemore(BigDecimal singelDoublemore) {
-		this.singelDoublemore = singelDoublemore;
-	}
-
-	@Column(name="plantation_cover", precision=20)
-	public BigDecimal getPlantationCover() {
-		return plantationCover;
+	public void setControlDiversifiedChange(BigDecimal controlDiversifiedChange) {
+		this.controlDiversifiedChange = controlDiversifiedChange;
 	}
 
 
-	public void setPlantationCover(BigDecimal plantationCover) {
-		this.plantationCover = plantationCover;
+	@Column(name="remark_diversified_change", length=200)
+	public String getRemarkDiversifiedChange() {
+		return remarkDiversifiedChange;
 	}
 
-	@Column(name="wheat", precision=20)
-	public BigDecimal getWheat() {
-		return wheat;
-	}
-
-
-	public void setWheat(BigDecimal wheat) {
-		this.wheat = wheat;
-	}
-
-	@Column(name="rice", precision=20)
-	public BigDecimal getRice() {
-		return rice;
+	public void setRemarkDiversifiedChange(String remarkDiversifiedChange) {
+		this.remarkDiversifiedChange = remarkDiversifiedChange;
 	}
 
 
-	public void setRice(BigDecimal rice) {
-		this.rice = rice;
+	@Column(name="project_whs_constructed_rejuvenated")
+	public Integer getProjectWhsConstructedRejuvenated() {
+		return projectWhsConstructedRejuvenated;
 	}
 
-	@Column(name="pulses", precision=20)
-	public BigDecimal getPulses() {
-		return pulses;
-	}
-
-
-	public void setPulses(BigDecimal pulses) {
-		this.pulses = pulses;
-	}
-
-	@Column(name="oil_seed", precision=20)
-	public BigDecimal getOil_seed() {
-		return oil_seed;
+	public void setProjectWhsConstructedRejuvenated(Integer projectWhsConstructedRejuvenated) {
+		this.projectWhsConstructedRejuvenated = projectWhsConstructedRejuvenated;
 	}
 
 
-	public void setOil_seed(BigDecimal oil_seed) {
-		this.oil_seed = oil_seed;
+	@Column(name="control_whs_constructed_rejuvenated")
+	public Integer getControlWhsConstructedRejuvenated() {
+		return controlWhsConstructedRejuvenated;
 	}
 
-	@Column(name="millets", precision=20)
-	public BigDecimal getMillets() {
-		return millets;
+	public void setControlWhsConstructedRejuvenated(Integer controlWhsConstructedRejuvenated) {
+		this.controlWhsConstructedRejuvenated = controlWhsConstructedRejuvenated;
+	}
+
+	
+	@Column(name="remark_whs_constructed_rejuvenated", length=200)
+	public String getRemarkWhsConstructedRejuvenated() {
+		return remarkWhsConstructedRejuvenated;
+	}
+
+	public void setRemarkWhsConstructedRejuvenated(String remarkWhsConstructedRejuvenated) {
+		this.remarkWhsConstructedRejuvenated = remarkWhsConstructedRejuvenated;
 	}
 
 
-	public void setMillets(BigDecimal millets) {
-		this.millets = millets;
+	@Column(name="project_soil_moisture", precision=20)
+	public BigDecimal getProjectSoilMoisture() {
+		return projectSoilMoisture;
 	}
 
-	@Column(name="other", precision=20)
-	public BigDecimal getOther() {
-		return other;
+	public void setProjectSoilMoisture(BigDecimal projectSoilMoisture) {
+		this.projectSoilMoisture = projectSoilMoisture;
 	}
 
 
-	public void setOther(BigDecimal other) {
-		this.other = other;
+	@Column(name="control_soil_moisture", precision=20)
+	public BigDecimal getControlSoilMoisture() {
+		return controlSoilMoisture;
 	}
+
+	public void setControlSoilMoisture(BigDecimal controlSoilMoisture) {
+		this.controlSoilMoisture = controlSoilMoisture;
+	}
+
+
+	@Column(name="remark_soil_moisture", length=200)
+	public String getRemarkSoilMoisture() {
+		return remarkSoilMoisture;
+	}
+
+	public void setRemarkSoilMoisture(String remarkSoilMoisture) {
+		this.remarkSoilMoisture = remarkSoilMoisture;
+	}
+
+
+	@Column(name="project_degraded_rainfed", precision=20)
+	public BigDecimal getProjectDegradedRainfed() {
+		return projectDegradedRainfed;
+	}
+
+	public void setProjectDegradedRainfed(BigDecimal projectDegradedRainfed) {
+		this.projectDegradedRainfed = projectDegradedRainfed;
+	}
+
+
+	@Column(name="control_degraded_rainfed", precision=20)
+	public BigDecimal getControlDegradedRainfed() {
+		return controlDegradedRainfed;
+	}
+	
+	public void setControlDegradedRainfed(BigDecimal controlDegradedRainfed) {
+		this.controlDegradedRainfed = controlDegradedRainfed;
+	}
+
+
+	@Column(name="remark_degraded_rainfed", length=200)
+	public String getRemarkDegradedRainfed() {
+		return remarkDegradedRainfed;
+	}
+
+	public void setRemarkDegradedRainfed(String remarkDegradedRainfed) {
+		this.remarkDegradedRainfed = remarkDegradedRainfed;
+	}
+
+
+	@Column(name="project_nill_single", precision=20)
+	public BigDecimal getProjectNillSingle() {
+		return projectNillSingle;
+	}
+
+	public void setProjectNillSingle(BigDecimal projectNillSingle) {
+		this.projectNillSingle = projectNillSingle;
+	}
+
+
+	@Column(name="control_nill_single", precision=20)
+	public BigDecimal getControlNillSingle() {
+		return controlNillSingle;
+	}
+
+	public void setControlNillSingle(BigDecimal controlNillSingle) {
+		this.controlNillSingle = controlNillSingle;
+	}
+
+
+	@Column(name="remark_nill_single", length=200)
+	public String getRemarkNillSingle() {
+		return remarkNillSingle;
+	}
+
+	public void setRemarkNillSingle(String remarkNillSingle) {
+		this.remarkNillSingle = remarkNillSingle;
+	}
+
+
+	@Column(name="project_single_doublemore", precision=20)
+	public BigDecimal getProjectSingleDoublemore() {
+		return projectSingleDoublemore;
+	}
+
+	public void setProjectSingleDoublemore(BigDecimal projectSingleDoublemore) {
+		this.projectSingleDoublemore = projectSingleDoublemore;
+	}
+
+
+	@Column(name="control_single_doublemore", precision=20)
+	public BigDecimal getControlSingleDoublemore() {
+		return controlSingleDoublemore;
+	}
+
+	public void setControlSingleDoublemore(BigDecimal controlSingleDoublemore) {
+		this.controlSingleDoublemore = controlSingleDoublemore;
+	}
+
+
+	@Column(name="remark_single_doublemore", length=200)
+	public String getRemarkSingleDoublemore() {
+		return remarkSingleDoublemore;
+	}
+
+	public void setRemarkSingleDoublemore(String remarkSingleDoublemore) {
+		this.remarkSingleDoublemore = remarkSingleDoublemore;
+	}
+
 
 	@Temporal(TemporalType.DATE)
     @Column(name="created_on")
@@ -207,20 +297,20 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
 		return createdOn;
 	}
 
-
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
+	
 	@Column(name="created_by", length=20)
 	public String getCreatedBy() {
 		return createdBy;
 	}
 
-	
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
+
 
 	@Temporal(TemporalType.DATE)
     @Column(name="updated_on")
@@ -228,117 +318,19 @@ public class WdcpmksyCroppedDetails2 implements java.io.Serializable{
 		return updatedOn;
 	}
 
-
 	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
+
 
 	@Column(name="request_ip", length=20)
 	public String getRequestIp() {
 		return requestIp;
 	}
 
-
 	public void setRequestIp(String requestIp) {
 		this.requestIp = requestIp;
 	}
 
-	@Column(name="control_nill_single", precision=20)
-	public BigDecimal getControl_nill_single() {
-		return control_nill_single;
-	}
-
-
-	public void setControl_nill_single(BigDecimal control_nill_single) {
-		this.control_nill_single = control_nill_single;
-	}
-
-	@Column(name="control_singel_doublemore", precision=20)
-	public BigDecimal getControl_singel_doublemore() {
-		return control_singel_doublemore;
-	}
-
-
-	public void setControl_singel_doublemore(BigDecimal control_singel_doublemore) {
-		this.control_singel_doublemore = control_singel_doublemore;
-	}
-
-	@Column(name="control_plantation_cover", precision=20)
-	public BigDecimal getControl_plantation_cover() {
-		return control_plantation_cover;
-	}
-
-
-	public void setControl_plantation_cover(BigDecimal control_plantation_cover) {
-		this.control_plantation_cover = control_plantation_cover;
-	}
-
-	@Column(name="control_wheat", precision=20)
-	public BigDecimal getControl_wheat() {
-		return control_wheat;
-	}
-
-
-	public void setControl_wheat(BigDecimal control_wheat) {
-		this.control_wheat = control_wheat;
-	}
-
-	@Column(name="control_rice", precision=20)
-	public BigDecimal getControl_rice() {
-		return control_rice;
-	}
-
-
-	public void setControl_rice(BigDecimal control_rice) {
-		this.control_rice = control_rice;
-	}
-
-	@Column(name="control_pulses", precision=20)
-	public BigDecimal getControl_pulses() {
-		return control_pulses;
-	}
-
-
-	public void setControl_pulses(BigDecimal control_pulses) {
-		this.control_pulses = control_pulses;
-	}
-
-	@Column(name="control_oil_seed", precision=20)
-	public BigDecimal getControl_oil_seed() {
-		return control_oil_seed;
-	}
-
-
-	public void setControl_oil_seed(BigDecimal control_oil_seed) {
-		this.control_oil_seed = control_oil_seed;
-	}
-
-	@Column(name="control_millets", precision=20)
-	public BigDecimal getControl_millets() {
-		return control_millets;
-	}
-
-
-	public void setControl_millets(BigDecimal control_millets) {
-		this.control_millets = control_millets;
-	}
-
-	@Column(name="control_other", precision=20)
-	public BigDecimal getControl_other() {
-		return control_other;
-	}
-
-
-	public void setControl_other(BigDecimal control_other) {
-		this.control_other = control_other;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
