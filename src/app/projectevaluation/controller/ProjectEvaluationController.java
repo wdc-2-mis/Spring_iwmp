@@ -401,14 +401,24 @@ public class ProjectEvaluationController {
 	        String mp = request.getParameter("mp");
 	        Character allManpower = (mp != null && !mp.isEmpty()) ? mp.charAt(0) : null;
 	        String allManpowerRemark=request.getParameter("mpremark");
-	        if(!allManpower.equals('P')) {
-	        	wcdc = Integer.parseInt(request.getParameter("wdc"));
-	        
-	        	pia = Integer.parseInt(request.getParameter("pi"));
-	        
-	        	wc = Integer.parseInt(request.getParameter("wc"));
-	        
+//	        if(!allManpower.equals('F')) {
+	        String wcdcParam = request.getParameter("wdc");
+	        String piaParam = request.getParameter("pi");
+	        String wcParam = request.getParameter("wc");
+
+	        if (wcdcParam != null && !wcdcParam.trim().isEmpty()) {
+	            wcdc = Integer.parseInt(wcdcParam);
 	        }
+
+	        if (piaParam != null && !piaParam.trim().isEmpty()) {
+	            pia = Integer.parseInt(piaParam);
+	        }
+
+	        if (wcParam != null && !wcParam.trim().isEmpty()) {
+	            wc = Integer.parseInt(wcParam);
+	        }
+	        
+//	        }
 	       
 	        String wcdcRemark=request.getParameter("wdcd");
 	        String piaRemark=request.getParameter("pid");
