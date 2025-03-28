@@ -882,10 +882,11 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public String saveOrUpdateCroppedDetails(HttpServletRequest request, HttpSession sess, Integer projProfId, BigDecimal kharifCrop,BigDecimal rabiCrop, BigDecimal thirdCrop, BigDecimal cereals,BigDecimal pulses, BigDecimal oilSeed, BigDecimal millets,
-			BigDecimal others, BigDecimal horticulture,BigDecimal netSown,BigDecimal cropIntensity, BigDecimal diversifiedCrop, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses,
-			BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, BigDecimal chorticulture, BigDecimal cnetSown,
-			BigDecimal ccropIntensity, BigDecimal cdiversifiedCrop) {
+	public String saveOrUpdateCroppedDetails(HttpServletRequest request, HttpSession sess, Integer projProfId, BigDecimal prekharifCrop,BigDecimal prerabiCrop, BigDecimal prethirdCrop, BigDecimal precereals,BigDecimal prepulses, BigDecimal preoilSeed, BigDecimal premillets,
+			BigDecimal preothers, BigDecimal prehorticulture,BigDecimal prenetSown, BigDecimal precropIntensity, BigDecimal midkharifCrop, BigDecimal midrabiCrop, BigDecimal midthirdCrop, BigDecimal midcereals,BigDecimal midpulses, BigDecimal midoilSeed, BigDecimal midmillets,
+			BigDecimal midothers, BigDecimal midhorticulture,BigDecimal midnetSown, BigDecimal midcropIntensity, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses, BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, 
+			BigDecimal chorticulture, BigDecimal cnetSown, BigDecimal ccropIntensity, String kharifCropremark, String rabiCropremark, String thirdCropremark, String cerealsremark, String pulsesremark, String oilSeedremark, String milletsremark, String othersremark, String horticultureremark, 
+			String netSownremark, String cropIntensityremark) {
 		Session session = sessionFactory.getCurrentSession();
 		List<WdcpmksyCroppedDetails1> list = new ArrayList<>();
 		String res = "fail";
@@ -913,18 +914,30 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				crpDtl.setCreatedBy(userId);
 				crpDtl.setRequestIp(getClientIpAddr(request));
 			}
-			crpDtl.setGrossKharifCropArea(kharifCrop);
-			crpDtl.setGrossRabiCropArea(rabiCrop);
-			crpDtl.setGrossThirdCropArea(thirdCrop);
-			crpDtl.setDifferentCropCereals(cereals);
-			crpDtl.setDifferentCropPulses(pulses);
-			crpDtl.setDifferentCropOilSeed(oilSeed);
-			crpDtl.setDifferentCropMillets(millets);
-			crpDtl.setDifferentCropOther(others);
-			crpDtl.setHorticultureArea(horticulture);
-			crpDtl.setNetsownArea(netSown);
-			crpDtl.setCroppingIntensity(cropIntensity);
-			crpDtl.setDiversifiedChange(diversifiedCrop);
+			crpDtl.setPregrossKharifCropArea(prekharifCrop);
+			crpDtl.setPregrossRabiCropArea(prerabiCrop);
+			crpDtl.setPregrossThirdCropArea(prethirdCrop);
+			crpDtl.setPredifferentCropCereals(precereals);
+			crpDtl.setPredifferentCropPulses(prepulses);
+			crpDtl.setPredifferentCropOilSeed(preoilSeed);
+			crpDtl.setPredifferentCropMillets(premillets);
+			crpDtl.setPredifferentCropOther(preothers);
+			crpDtl.setPrehorticultureArea(prehorticulture);
+			crpDtl.setPrenetsownArea(prenetSown);
+			crpDtl.setPrecroppingIntensity(precropIntensity);
+			
+			crpDtl.setMidgrossKharifCropArea(midkharifCrop);
+			crpDtl.setMidgrossRabiCropArea(midrabiCrop);
+			crpDtl.setMidgrossThirdCropArea(midthirdCrop);
+			crpDtl.setMiddifferentCropCereals(midcereals);
+			crpDtl.setMiddifferentCropPulses(midpulses);
+			crpDtl.setMiddifferentCropOilSeed(midoilSeed);
+			crpDtl.setMiddifferentCropMillets(midmillets);
+			crpDtl.setMiddifferentCropOther(midothers);
+			crpDtl.setMidhorticultureArea(midhorticulture);
+			crpDtl.setMidnetsownArea(midnetSown);
+			crpDtl.setMidcroppingIntensity(midcropIntensity);
+			
 			crpDtl.setControl_gross_kharif_crop_area(ckharifCrop);
 			crpDtl.setControl_gross_rabi_crop_area(crabiCrop);
 			crpDtl.setControl_gross_third_crop_area(cthirdCrop);
@@ -936,7 +949,18 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			crpDtl.setControl_horticulture_area(chorticulture);
 			crpDtl.setControl_netsown_area(cnetSown);
 			crpDtl.setControl_cropping_intensity(ccropIntensity);
-			crpDtl.setControl_diversified_change(cdiversifiedCrop);
+			
+			crpDtl.setKharifCropremark(kharifCropremark);
+			crpDtl.setRabiCropremark(rabiCropremark);
+			crpDtl.setThirdCropremark(thirdCropremark);
+			crpDtl.setCerealsremark(cerealsremark);
+			crpDtl.setPulsesremark(pulsesremark);
+			crpDtl.setOilSeedremark(oilSeedremark);
+			crpDtl.setMilletsremark(milletsremark);
+			crpDtl.setOthersremark(othersremark);
+			crpDtl.setHorticultureremark(horticultureremark);
+			crpDtl.setNetSownremark(netSownremark);
+			crpDtl.setCropIntensityremark(cropIntensityremark);
 			session.saveOrUpdate(crpDtl);
 			session.getTransaction().commit();
 			res = "success";

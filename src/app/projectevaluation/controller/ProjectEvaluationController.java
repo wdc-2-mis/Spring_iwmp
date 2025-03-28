@@ -2383,206 +2383,238 @@ public class ProjectEvaluationController {
 	
 	@RequestMapping(value = "/saveOrUpdateCroppedDetails", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView saveOrUpdateCroppedDetails(HttpServletRequest request) {
-		
-		ModelAndView mav = new ModelAndView();
-		String res="";
-		session = request.getSession(true);
-		
-		try { 
-			if (session != null && session.getAttribute("loginID") != null) {
-				Integer dcode = Integer.parseInt(request.getParameter("dcode"));
-		        String distName = request.getParameter("dname");
-		        Integer projid = Integer.parseInt(request.getParameter("pcode"));
-		        String project = request.getParameter("pcode");
-		        String projName = request.getParameter("pname");
-		        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
-		        String mname = request.getParameter("mname");
-		        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
-		        String fname = request.getParameter("fname");
-		        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
-				
-				BigDecimal kharifCrop = new BigDecimal(request.getParameter("kharif"));
-				
-				BigDecimal rabiCrop = new BigDecimal(request.getParameter("rabi"));
-				BigDecimal thirdCrop = new BigDecimal(request.getParameter("thirdCrop"));
-				
-				BigDecimal cereals = new BigDecimal(request.getParameter("cereals"));
-				BigDecimal pulses = new BigDecimal(request.getParameter("pulses"));
-				
-				BigDecimal oilSeed = new BigDecimal(request.getParameter("oilSeed"));
-				BigDecimal millets = new BigDecimal(request.getParameter("millets"));
-				
-				BigDecimal others = new BigDecimal(request.getParameter("others"));
-				BigDecimal horticulture = new BigDecimal(request.getParameter("horticulture"));
-				
-				BigDecimal netSown = new BigDecimal(request.getParameter("netSown"));
-				BigDecimal cropIntensity = new BigDecimal(request.getParameter("cropIntensity"));
-				
-				BigDecimal diversifiedCrop = new BigDecimal(request.getParameter("diversifiedCrop"));
-				
-				BigDecimal ckharifCrop = new BigDecimal(request.getParameter("ckharif"));
-				
-				BigDecimal crabiCrop = new BigDecimal(request.getParameter("crabi"));
-				BigDecimal cthirdCrop = new BigDecimal(request.getParameter("cthirdCrop"));
-				
-				BigDecimal ccereals = new BigDecimal(request.getParameter("ccereals"));
-				BigDecimal cpulses = new BigDecimal(request.getParameter("cpulses"));
-				
-				BigDecimal coilSeed = new BigDecimal(request.getParameter("coilSeed"));
-				BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
-				
-				BigDecimal cothers = new BigDecimal(request.getParameter("cothers"));
-				BigDecimal chorticulture = new BigDecimal(request.getParameter("chorticulture"));
-				
-				BigDecimal cnetSown = new BigDecimal(request.getParameter("cnetSown"));
-				BigDecimal ccropIntensity = new BigDecimal(request.getParameter("ccropIntensity"));
-				
-				BigDecimal cdiversifiedCrop = new BigDecimal(request.getParameter("cdiversifiedCrop"));
-				
-				
-							
-				mav.setViewName("projectEvaluation/projectProfileMain");
-				String projProfilestatus = PEService.checkProjectProfileStatus(project);
-				if(projProfilestatus != null) {
-				if ("1".equals(projProfilestatus)) {
-		            request.setAttribute("projectProfileConfirmed", "true");
-		        }
-				if ("2".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		        }
-				if ("3".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		        }
-				if ("4".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				if ("5".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		        }
-				if ("6".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		        }
-				if ("7".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		        }
-				if ("8".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		        }
-				if ("9".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		        }
-				if ("10".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		        }
-				if ("11".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		        }
-				if ("12".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		            request.setAttribute("geoTagDetailsConfirmed", "true");
-		        }
-				}
-				String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, kharifCrop, rabiCrop, thirdCrop, cereals, pulses, oilSeed, millets, others, horticulture, netSown, cropIntensity, diversifiedCrop,
-						ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, cothers, chorticulture, cnetSown, ccropIntensity, cdiversifiedCrop);
-				
-				if ("success".equals(result)) {
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				
+	public ModelAndView saveOrUpdateCroppedDetails(HttpServletRequest request) {ModelAndView mav = new ModelAndView();
+	String res="";
+	session = request.getSession(true);
+	
+	try { 
+		if (session != null && session.getAttribute("loginID") != null) {
+			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+	        String distName = request.getParameter("dname");
+	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
+	        String project = request.getParameter("pcode");
+	        String projName = request.getParameter("pname");
+	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
+	        String mname = request.getParameter("mname");
+	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        String fname = request.getParameter("fname");
+	        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
+			
+			BigDecimal prekharifCrop = new BigDecimal(request.getParameter("prekharif"));
+			
+			BigDecimal prerabiCrop = new BigDecimal(request.getParameter("prerabi"));
+			BigDecimal prethirdCrop = new BigDecimal(request.getParameter("prethirdCrop"));
+			
+			BigDecimal precereals = new BigDecimal(request.getParameter("precereals"));
+			BigDecimal prepulses = new BigDecimal(request.getParameter("prepulses"));
+			
+			BigDecimal preoilSeed = new BigDecimal(request.getParameter("preoilSeed"));
+			BigDecimal premillets = new BigDecimal(request.getParameter("premillets"));
+			
+			BigDecimal preothers = new BigDecimal(request.getParameter("preothers"));
+			BigDecimal prehorticulture = new BigDecimal(request.getParameter("prehorticulture"));
+			
+			BigDecimal prenetSown = new BigDecimal(request.getParameter("prenetSown"));
+			BigDecimal precropIntensity = new BigDecimal(request.getParameter("precropIntensity"));
+			
+			BigDecimal midkharifCrop = new BigDecimal(request.getParameter("midkharif"));
+			
+			BigDecimal midrabiCrop = new BigDecimal(request.getParameter("midrabi"));
+			BigDecimal midthirdCrop = new BigDecimal(request.getParameter("midthirdCrop"));
+			
+			BigDecimal midcereals = new BigDecimal(request.getParameter("midcereals"));
+			BigDecimal midpulses = new BigDecimal(request.getParameter("midpulses"));
+			
+			BigDecimal midoilSeed = new BigDecimal(request.getParameter("midoilSeed"));
+			BigDecimal midmillets = new BigDecimal(request.getParameter("midmillets"));
+			
+			BigDecimal midothers = new BigDecimal(request.getParameter("midothers"));
+			BigDecimal midhorticulture = new BigDecimal(request.getParameter("midhorticulture"));
+			
+			BigDecimal midnetSown = new BigDecimal(request.getParameter("midnetSown"));
+			BigDecimal midcropIntensity = new BigDecimal(request.getParameter("midcropIntensity"));
+			
+//			BigDecimal diversifiedCrop = new BigDecimal(request.getParameter("diversifiedCrop"));
+			
+			BigDecimal ckharifCrop = new BigDecimal(request.getParameter("ckharif"));
+			
+			BigDecimal crabiCrop = new BigDecimal(request.getParameter("crabi"));
+			BigDecimal cthirdCrop = new BigDecimal(request.getParameter("cthirdCrop"));
+			
+			BigDecimal ccereals = new BigDecimal(request.getParameter("ccereals"));
+			BigDecimal cpulses = new BigDecimal(request.getParameter("cpulses"));
+			
+			BigDecimal coilSeed = new BigDecimal(request.getParameter("coilSeed"));
+			BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
+			
+			BigDecimal cothers = new BigDecimal(request.getParameter("cothers"));
+			BigDecimal chorticulture = new BigDecimal(request.getParameter("chorticulture"));
+			
+			BigDecimal cnetSown = new BigDecimal(request.getParameter("cnetSown"));
+			BigDecimal ccropIntensity = new BigDecimal(request.getParameter("ccropIntensity"));
+			
+			String kharifCropremark = request.getParameter("kharifremark");
+			
+			String rabiCropremark = request.getParameter("rabiremark");
+			String thirdCropremark = request.getParameter("thirdCropremark");
+			
+			String cerealsremark = request.getParameter("cerealsremark");
+			String pulsesremark = request.getParameter("pulsesremark");
+			
+			String oilSeedremark = request.getParameter("oilSeedremark");
+			String milletsremark = request.getParameter("milletsremark");
+			
+			String othersremark = request.getParameter("othersremark");
+			String horticultureremark = request.getParameter("horticultureremark");
+			
+			String netSownremark = request.getParameter("netSownremark");
+			String cropIntensityremark = request.getParameter("cropIntensityremark");
+			
+//			BigDecimal cdiversifiedCrop = new BigDecimal(request.getParameter("cdiversifiedCrop"));
+			
+			
+						
+			mav.setViewName("projectEvaluation/projectProfileMain");
+			String projProfilestatus = PEService.checkProjectProfileStatus(project);
+			if(projProfilestatus != null) {
+			if ("1".equals(projProfilestatus)) {
+	            request.setAttribute("projectProfileConfirmed", "true");
+	        }
+			if ("2".equals(projProfilestatus)) {
 				request.setAttribute("projectProfileConfirmed", "true");
 				request.setAttribute("evaluationDetailConfirmed", "true");
-				request.setAttribute("fundUtilizationConfirmed","true");
+	        }
+			if ("3".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	        }
+			if ("4".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	        }
+			if ("5".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	        }
+			if ("6".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	        }
+			if ("7".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	        }
+			if ("8".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	        }
+			if ("9".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	        }
+			if ("10".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	        }
+			if ("11".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	            request.setAttribute("qualityShapeFileConfirmed", "true");
+	        }
+			if ("12".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	            request.setAttribute("qualityShapeFileConfirmed", "true");
+	            request.setAttribute("geoTagDetailsConfirmed", "true");
+	        }
+			}
+			String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
+					midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
+					cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark);
+			
+			if ("success".equals(result)) {
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	        }
+			
+			request.setAttribute("projectProfileConfirmed", "true");
+			request.setAttribute("evaluationDetailConfirmed", "true");
+			request.setAttribute("fundUtilizationConfirmed","true");
 
-		        mav.addObject("distName", distName);
-		        mav.addObject("projName", projName);
-		        mav.addObject("monthname", mname);
-		        mav.addObject("fincd", fcode);
-		        mav.addObject("dcode", dcode);
-		        mav.addObject("projid", projid);
-		        mav.addObject("monthid", mcode);
-		        mav.addObject("finyr", fname);
-	    
-		    } else {
-		        if (session != null) {
-		            session.invalidate();
-		        }
-		        mav.setViewName("login");
-		        mav.addObject("login", new Login());
-		    }
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		
-		return mav;
-		
-	}
+	        mav.addObject("distName", distName);
+	        mav.addObject("projName", projName);
+	        mav.addObject("monthname", mname);
+	        mav.addObject("fincd", fcode);
+	        mav.addObject("dcode", dcode);
+	        mav.addObject("projid", projid);
+	        mav.addObject("monthid", mcode);
+	        mav.addObject("finyr", fname);
+    
+	    } else {
+	        if (session != null) {
+	            session.invalidate();
+	        }
+	        mav.setViewName("login");
+	        mav.addObject("login", new Login());
+	    }
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	return mav;
+}
 	@RequestMapping(value="/ecologicalPerspective", method=RequestMethod.GET)
 	public ModelAndView ecologicalPerspective(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -3907,17 +3939,17 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Area under kharif crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getGrossKharifCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPregrossKharifCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_gross_kharif_crop_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Area under rabi crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getGrossRabiCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPregrossRabiCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_gross_rabi_crop_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Area under Third crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getGrossThirdCropArea().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getPregrossThirdCropArea().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getControl_gross_third_crop_area().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -3925,48 +3957,48 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Cereals", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDifferentCropCereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropCereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_cereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Pulses", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDifferentCropPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_pulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Oil seed", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDifferentCropOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_oil_seed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "d", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Millets", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDifferentCropMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_millets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Others", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDifferentCropOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_other().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Area of horticulture crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getHorticultureArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrehorticultureArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_horticulture_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Net Sown Area(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getNetsownArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrenetsownArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_netsown_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Cropping Intensity", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getCroppingIntensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrecroppingIntensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_cropping_intensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "6", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area covered under diversified crops/change in cropping systems(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDiversifiedChange().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_diversified_change().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, "6", Element.ALIGN_LEFT, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, "Area covered under diversified crops/change in cropping systems(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDiversifiedChange().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_diversified_change().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
 					

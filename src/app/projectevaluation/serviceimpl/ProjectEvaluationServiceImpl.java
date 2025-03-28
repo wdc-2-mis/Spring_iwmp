@@ -138,12 +138,14 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 
 	@Override
-	public String saveOrUpdateCroppedDetails(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal kharifCrop,BigDecimal rabiCrop, BigDecimal thirdCrop, BigDecimal cereals,BigDecimal pulses, BigDecimal oilSeed, BigDecimal millets,
-			BigDecimal others, BigDecimal horticulture,BigDecimal netSown,BigDecimal cropIntensity, BigDecimal diversifiedCrop, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses,
-			BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, BigDecimal chorticulture, BigDecimal cnetSown,
-			BigDecimal ccropIntensity, BigDecimal cdiversifiedCrop) {
-		return PEDAO.saveOrUpdateCroppedDetails(request, session, projProfId, kharifCrop, rabiCrop, thirdCrop, cereals, pulses, oilSeed, millets, others, horticulture, netSown, cropIntensity, diversifiedCrop
-				, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, cothers, chorticulture, cnetSown, ccropIntensity, cdiversifiedCrop);
+	public String saveOrUpdateCroppedDetails(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal prekharifCrop,BigDecimal prerabiCrop, BigDecimal prethirdCrop, BigDecimal precereals,BigDecimal prepulses, BigDecimal preoilSeed, BigDecimal premillets,
+			BigDecimal preothers, BigDecimal prehorticulture,BigDecimal prenetSown, BigDecimal precropIntensity, BigDecimal midkharifCrop, BigDecimal midrabiCrop, BigDecimal midthirdCrop, BigDecimal midcereals,BigDecimal midpulses, BigDecimal midoilSeed, BigDecimal midmillets,
+			BigDecimal midothers, BigDecimal midhorticulture,BigDecimal midnetSown, BigDecimal midcropIntensity, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses, BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, 
+			BigDecimal chorticulture, BigDecimal cnetSown, BigDecimal ccropIntensity, String kharifCropremark, String rabiCropremark, String thirdCropremark, String cerealsremark, String pulsesremark, String oilSeedremark, String milletsremark, String othersremark, String horticultureremark, 
+			String netSownremark, String cropIntensityremark) {
+		return PEDAO.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
+				midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
+				cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark);
 	}
 
 	@Override

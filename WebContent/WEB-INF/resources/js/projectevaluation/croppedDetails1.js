@@ -1,35 +1,49 @@
 /******************************************Calculate Sum for Gross Croped Area******************************/
 function calSum(){
 	
-	var kharif = parseFloat(document.getElementById('kharif').value);
-	var rabi = parseFloat(document.getElementById('rabi').value);
-	var third = parseFloat(document.getElementById('thirdCrop').value);
+	var prekharif = parseFloat(document.getElementById('prekharif').value);
+	var prerabi = parseFloat(document.getElementById('prerabi').value);
+	var prethird = parseFloat(document.getElementById('prethirdCrop').value);
+	var midkharif = parseFloat(document.getElementById('midkharif').value);
+	var midrabi = parseFloat(document.getElementById('midrabi').value);
+	var midthird = parseFloat(document.getElementById('midthirdCrop').value);
 	var ckharif = parseFloat(document.getElementById('ckharif').value);
 	var crabi = parseFloat(document.getElementById('crabi').value);
 	var cthirdCrop = parseFloat(document.getElementById('cthirdCrop').value);
 //	var ms = parseFloat(document.getElementById('midStateShare').value);
-	var psum = kharif + rabi + third;
+	var presum = prekharif + prerabi + prethird;
+	var midsum = midkharif + midrabi + midthird;
 	var csum = ckharif + crabi + cthirdCrop;
-	document.getElementById('cropedArea').value = psum.toFixed(4);
+	document.getElementById('precropedArea').value = presum.toFixed(4);
+	document.getElementById('midcropedArea').value = midsum.toFixed(4);
 	document.getElementById('ccropedArea').value = csum.toFixed(4);
 }
 
 function diffcalSum(){
 	
-	var cereals = parseFloat(document.getElementById('cereals').value);
-	var pulses = parseFloat(document.getElementById('pulses').value);
-	var oilSeed = parseFloat(document.getElementById('oilSeed').value);
-	var millets = parseFloat(document.getElementById('millets').value);
-	var others = parseFloat(document.getElementById('others').value);
+	var precereals = parseFloat(document.getElementById('precereals').value);
+	var prepulses = parseFloat(document.getElementById('prepulses').value);
+	var preoilSeed = parseFloat(document.getElementById('preoilSeed').value);
+	var premillets = parseFloat(document.getElementById('premillets').value);
+	var preothers = parseFloat(document.getElementById('preothers').value);
+	
+	var midcereals = parseFloat(document.getElementById('midcereals').value);
+	var midpulses = parseFloat(document.getElementById('midpulses').value);
+	var midoilSeed = parseFloat(document.getElementById('midoilSeed').value);
+	var midmillets = parseFloat(document.getElementById('midmillets').value);
+	var midothers = parseFloat(document.getElementById('midothers').value);
+	
 	var ccereals = parseFloat(document.getElementById('ccereals').value);
 	var cpulses = parseFloat(document.getElementById('cpulses').value);
 	var coilSeed = parseFloat(document.getElementById('coilSeed').value);
 	var cmillets = parseFloat(document.getElementById('cmillets').value);
 	var cothers = parseFloat(document.getElementById('cothers').value);
 //	var ms = parseFloat(document.getElementById('midStateShare').value);
-	var psum = cereals + pulses + oilSeed + millets + others;
+	var presum = precereals + prepulses + preoilSeed + premillets + preothers;
+	var midsum = midcereals + midpulses + midoilSeed + midmillets + midothers;
 	var csum = ccereals + cpulses + coilSeed + cmillets + cothers;
-	document.getElementById('diffCrop').value = psum.toFixed(4);
+	document.getElementById('prediffCrop').value = presum.toFixed(4);
+	document.getElementById('middiffCrop').value = midsum.toFixed(4);
 	document.getElementById('cdiffCrop').value = csum.toFixed(4);
 }
 
@@ -37,18 +51,30 @@ function diffcalSum(){
 /************************************************ ***************************************************************/
 $(document).on('click', '#view', function(e){ 
 	
-	$kharifCrop = $('#kharif').val();
-	$rabiCrop = $('#rabi').val();
-	$thirdCrop = $('#thirdCrop').val();
-	$cereals = $('#cereals').val();
-	$pulses = $('#pulses').val();
-	$oilSeed = $('#oilSeed').val();
-	$millets = $('#millets').val();
-	$others = $('#others').val();
-	$horticulture = $('#horticulture').val();
-	$netSown = $('#netSown').val();
-	$cropIntensity = $('#cropIntensity').val();
-	$diversifiedCrop = $('#diversifiedCrop').val();
+	$prekharifCrop = $('#prekharif').val();
+	$prerabiCrop = $('#prerabi').val();
+	$prethirdCrop = $('#prethirdCrop').val();
+	$precereals = $('#precereals').val();
+	$prepulses = $('#prepulses').val();
+	$preoilSeed = $('#preoilSeed').val();
+	$premillets = $('#premillets').val();
+	$preothers = $('#preothers').val();
+	$prehorticulture = $('#prehorticulture').val();
+	$prenetSown = $('#prenetSown').val();
+	$precropIntensity = $('#precropIntensity').val();
+//	$diversifiedCrop = $('#diversifiedCrop').val();
+
+	$midkharifCrop = $('#midkharif').val();
+	$midrabiCrop = $('#midrabi').val();
+	$midthirdCrop = $('#midthirdCrop').val();
+	$midcereals = $('#midcereals').val();
+	$midpulses = $('#midpulses').val();
+	$midoilSeed = $('#midoilSeed').val();
+	$midmillets = $('#midmillets').val();
+	$midothers = $('#midothers').val();
+	$midhorticulture = $('#midhorticulture').val();
+	$midnetSown = $('#midnetSown').val();
+	$midcropIntensity = $('#midcropIntensity').val();
 	
 	$ckharifCrop = $('#ckharif').val();
 	$crabiCrop = $('#crabi').val();
@@ -61,12 +87,18 @@ $(document).on('click', '#view', function(e){
 	$chorticulture = $('#chorticulture').val();
 	$cnetSown = $('#cnetSown').val();
 	$ccropIntensity = $('#ccropIntensity').val();
-	$cdiversifiedCrop = $('#cdiversifiedCrop').val();
+//	$cdiversifiedCrop = $('#cdiversifiedCrop').val();
 	
 
-	if ($kharifCrop == '' || $kharifCrop == undefined || $kharifCrop == null) {
-		alert('Please Enter Kharif Crop Area Details for Project Area.');
-		$('#kharif').focus();
+	if ($prekharifCrop == '' || $prekharifCrop == undefined || $prekharifCrop == null) {
+		alert('Please Enter Pre Kharif Crop Area Details for Project Area.');
+		$('#prekharif').focus();
+		return false;
+	}
+	
+	if ($midkharifCrop == '' || $midkharifCrop == undefined || $midkharifCrop == null) {
+		alert('Please Enter Mid Kharif Crop Area Details for Project Area.');
+		$('#midkharif').focus();
 		return false;
 	}
 
@@ -76,9 +108,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($rabiCrop == '' || $rabiCrop == undefined || $rabiCrop == null) {
-		alert('Please Enter Rabi Crop Area Details for Project Area.');
-		$('#rabi').focus();
+	if ($prerabiCrop == '' || $prerabiCrop == undefined || $prerabiCrop == null) {
+		alert('Please Enter Pre Rabi Crop Area Details for Project Area.');
+		$('#prerabi').focus();
+		return false;
+	}
+	
+	if ($midrabiCrop == '' || $midrabiCrop == undefined || $midrabiCrop == null) {
+		alert('Please Enter Mid Rabi Crop Area Details for Project Area.');
+		$('#midrabi').focus();
 		return false;
 	}
 
@@ -88,9 +126,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($thirdCrop == '' || $thirdCrop == undefined || $thirdCrop == null) {
-		alert('Please Enter Third Crop Area Details for Project Area.')
-		$('#thirdCrop').focus();
+	if ($prethirdCrop == '' || $prethirdCrop == undefined || $prethirdCrop == null) {
+		alert('Please Enter Pre Third Crop Area Details for Project Area.')
+		$('#prethirdCrop').focus();
+		return false;
+	}
+	
+	if ($midthirdCrop == '' || $midthirdCrop == undefined || $midthirdCrop == null) {
+		alert('Please Enter Mid Third Crop Area Details for Project Area.')
+		$('#midthirdCrop').focus();
 		return false;
 	}
 	
@@ -100,10 +144,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
+	if ($precereals == '' || $precereals == undefined || $precereals == null) {
+		alert('Please Enter Pre Cereals Crop Area Details for Project Area.')
+		$('#precereals').focus();
+		return false;
+	}
 	
-	if ($cereals == '' || $cereals == undefined || $cereals == null) {
-		alert('Please Enter Cereals Crop Area Details for Project Area.')
-		$('#cereals').focus();
+	if ($midcereals == '' || $midcereals == undefined || $midcereals == null) {
+		alert('Please Enter Mid Cereals Crop Area Details for Project Area.')
+		$('#midcereals').focus();
 		return false;
 	}
 	
@@ -113,9 +162,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($pulses == '' || $pulses == undefined || $pulses == null) {
-		alert('Please Enter Pulses Crop Area Details for Project Area.');
-		$('#pulses').focus();
+	if ($prepulses == '' || $prepulses == undefined || $prepulses == null) {
+		alert('Please Enter Pre Pulses Crop Area Details for Project Area.');
+		$('#prepulses').focus();
+		return false;
+	}
+	
+	if ($midpulses == '' || $midpulses == undefined || $midpulses == null) {
+		alert('Please Enter Mid Pulses Crop Area Details for Project Area.');
+		$('#midpulses').focus();
 		return false;
 	}
 	
@@ -125,9 +180,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($oilSeed == '' || $oilSeed == undefined || $oilSeed == null) {
-		alert('Please Enter OilSeed Crop Area Details for Project Area.');
-		$('#oilSeed').focus();
+	if ($preoilSeed == '' || $preoilSeed == undefined || $preoilSeed == null) {
+		alert('Please Enter Pre OilSeed Crop Area Details for Project Area.');
+		$('#preoilSeed').focus();
+		return false;
+	}
+	
+	if ($midoilSeed == '' || $midoilSeed == undefined || $midoilSeed == null) {
+		alert('Please Enter Mid OilSeed Crop Area Details for Project Area.');
+		$('#midoilSeed').focus();
 		return false;
 	}
 	
@@ -137,9 +198,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($millets == '' || $millets == undefined || $millets == null) {
-		alert('Please Enter Millets Crop Area Details for Project Area.');
-		$('#millets').focus();
+	if ($premillets == '' || $premillets == undefined || $premillets == null) {
+		alert('Please Enter Pre Millets Crop Area Details for Project Area.');
+		$('#premillets').focus();
+		return false;
+	}
+	
+	if ($midmillets == '' || $midmillets == undefined || $midmillets == null) {
+		alert('Please Enter Mid Millets Crop Area Details for Project Area.');
+		$('#midmillets').focus();
 		return false;
 	}
 	
@@ -149,9 +216,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($others == '' || $others == undefined || $others == null) {
-		alert('Please Enter Others Crop Area Details for Project Area.');
-		$('#others').focus();
+	if ($preothers == '' || $preothers == undefined || $preothers == null) {
+		alert('Please Enter Pre Others Crop Area Details for Project Area.');
+		$('#preothers').focus();
+		return false;
+	}
+	
+	if ($midothers == '' || $midothers == undefined || $midothers == null) {
+		alert('Please Enter Mid Others Crop Area Details for Project Area.');
+		$('#midothers').focus();
 		return false;
 	}
 	
@@ -161,9 +234,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($horticulture == '' || $horticulture == undefined || $horticulture == null) {
-		alert('Please Enter Horticulture Crop Area Details for Project Area.');
-		$('#horticulture').focus();
+	if ($prehorticulture == '' || $prehorticulture == undefined || $prehorticulture == null) {
+		alert('Please Enter Pre Horticulture Crop Area Details for Project Area.');
+		$('#prehorticulture').focus();
+		return false;
+	}
+	
+	if ($midhorticulture == '' || $midhorticulture == undefined || $midhorticulture == null) {
+		alert('Please Enter Mid Horticulture Crop Area Details for Project Area.');
+		$('#midhorticulture').focus();
 		return false;
 	}
 	
@@ -173,9 +252,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($netSown == '' || $netSown == undefined || $netSown == null) {
-		alert('Please Enter Net Sown Area Details for Project Area.');
-		$('#netSown').focus();
+	if ($prenetSown == '' || $prenetSown == undefined || $prenetSown == null) {
+		alert('Please Enter Pre Net Sown Area Details for Project Area.');
+		$('#prenetSown').focus();
+		return false;
+	}
+	
+	if ($midnetSown == '' || $midnetSown == undefined || $midnetSown == null) {
+		alert('Please Enter Mid Net Sown Area Details for Project Area.');
+		$('#midnetSown').focus();
 		return false;
 	}
 	
@@ -185,9 +270,15 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($cropIntensity == '' || $cropIntensity == undefined || $cropIntensity == null) {
-		alert('Please Enter Crop Intensity Area Details for Project Area.')
-		$('#cropIntensity').focus();
+	if ($precropIntensity == '' || $precropIntensity == undefined || $precropIntensity == null) {
+		alert('Please Enter Pre Crop Intensity Area Details for Project Area.')
+		$('#precropIntensity').focus();
+		return false;
+	}
+	
+	if ($midcropIntensity == '' || $midcropIntensity == undefined || $midcropIntensity == null) {
+		alert('Please Enter Mid Crop Intensity Area Details for Project Area.')
+		$('#midcropIntensity').focus();
 		return false;
 	}
 	
@@ -197,17 +288,17 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($diversifiedCrop == '' || $diversifiedCrop == undefined || $diversifiedCrop == null) {
-		alert('Please Enter Diversified Crop Area Details for Project Area.')
-		$('#diversifiedCrop').focus();
-		return false;
-	}
-	
-	if ($cdiversifiedCrop == '' || $cdiversifiedCrop == undefined || $cdiversifiedCrop == null) {
-		alert('Please Enter Diversified Crop Area Details for Controlled Area.')
-		$('#cdiversifiedCrop').focus();
-		return false;
-	}
+//	if ($diversifiedCrop == '' || $diversifiedCrop == undefined || $diversifiedCrop == null) {
+//		alert('Please Enter Diversified Crop Area Details for Project Area.')
+//		$('#diversifiedCrop').focus();
+//		return false;
+//	}
+//	
+//	if ($cdiversifiedCrop == '' || $cdiversifiedCrop == undefined || $cdiversifiedCrop == null) {
+//		alert('Please Enter Diversified Crop Area Details for Controlled Area.')
+//		$('#cdiversifiedCrop').focus();
+//		return false;
+//	}
 	
 
 	if (confirm("Do You Want to Save Cropped Details-1 ?")) {
