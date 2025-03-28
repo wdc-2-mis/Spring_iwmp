@@ -7,7 +7,6 @@
 $(document).ready(function() {
 	$("#project").change(function() {
 	    var selectedProject = $(this).val();
-	    alert(selectedProject);
 	     if (selectedProject) {
 			 $.ajax({
 	            url: "checkProjIdExists",  // URL mapped to Spring Controller

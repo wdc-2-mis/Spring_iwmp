@@ -156,21 +156,21 @@ function savedata(){
                         <td><b><c:out value="Whether DPR approved by SLNA"/></b></td>
                         <td>
                         
-                       <c:if test="${dpr eq null }">
-                            <input type="radio" id="dpryes" name="dpr" value="F"/> Fully
-                            <input type="radio" id="dprno" name="dpr" value="P"/> Partially
+                        <c:if test="${dpr eq null}">
+                            <input type="radio" id="dpryes" name="dpr" value="F" value="${dpr}" /> Fully
+                            <input type="radio" id="dprno" name="dpr" value="P"  value="${dpr}"/> Partially
                             
                            </c:if>
-                           <c:if test="${dpr eq 'P' }">
-                            <input type="radio" id="dpryes" name="dpr"  value="${dpr}" /> Fully
-                            <input type="radio" id="dprno" name="dpr" checked="checked"  value="${dpr}"/> Partially
+                           <c:if test="${dpr == 'P'.charAt(0)}">
+                            <input type="radio" id="dpryes" name="dpr" value="F" value="${dpr}" /> Fully
+                            <input type="radio" id="dprno" name="dpr" value="P" checked="checked"  value="${dpr}"/> Partially
+                           </c:if>
+                            <c:if test="${dpr == 'F'.charAt(0)}">
+                            <input type="radio" id="dpryes" name="dpr" value="F" checked="checked" value="${dpr}" /> Fully
+                            <input type="radio" id="dprno" name="dpr" value="P" value="${dpr}"/> Partially
                             
                            </c:if>
-                            <c:if test="${dpr eq 'F' }">
-                            <input type="radio" id="dpryes" name="dpr" checked="checked" value="${dpr}" /> Fully
-                            <input type="radio" id="dprno" name="dpr" value="${dpr}"/> Partially
-                            
-                           </c:if>
+                           
                         </td>
                        <td> 
                        <textarea id="dprremark" name="dprremark" autocomplete="off" rows="2" cols="22" maxlength="200">${dprremark}</textarea>
@@ -184,14 +184,14 @@ function savedata(){
                             <input type="radio" id="mpyes" name="mp" value="F" value="${mp}" /> Fully
                             <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially
                             </c:if>
-<%--                             <c:if test="${mp eq 'F' }"> --%>
-<%--                             <input type="radio" id="mpyes" name="mp" value="F" checked="checked" value="${mp}" /> Fully --%>
-<%--                             <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially --%>
-<%--                             </c:if> --%>
-<%--                             <c:if test="${mp eq 'P' }"> --%>
-<%--                             <input type="radio" id="mpyes" name="mp" value="F"  value="${mp}" /> Fully --%>
-<%--                             <input type="radio" id="mpno" name="mp" value="P" checked="checked" value="${mp}" /> Partially --%>
-<%--                             </c:if> --%>
+                             <c:if test="${mp == 'F'.charAt(0)}"> 
+                            <input type="radio" id="mpyes" name="mp" value="F" checked="checked" value="${mp}" /> Fully
+                            <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially
+                            </c:if>
+                            <c:if test="${mp == 'P'.charAt(0)}">
+                            <input type="radio" id="mpyes" name="mp" value="F"  value="${mp}" /> Fully
+                            <input type="radio" id="mpno" name="mp" value="P" checked="checked" value="${mp}" /> Partially
+                            </c:if>
                             
                         </td>
                         <td>
