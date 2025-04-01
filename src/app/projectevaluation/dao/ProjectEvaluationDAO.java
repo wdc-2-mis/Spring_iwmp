@@ -94,13 +94,14 @@ public interface ProjectEvaluationDAO {
 	
 	List<WdcpmksyProductionDetails> getProductionDetails(Integer projProfId);
 	
-	String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession session, Integer projProfId,
-			BigDecimal milch, BigDecimal fodder, Integer ruralUrban, Integer spring, Integer benefit, Integer shg,
-			Integer fpo, Integer ug, Integer mshg, Integer mfpo, Integer mug, BigDecimal trunoverFpo,
-			BigDecimal incomeFpo, BigDecimal annualIncomeShg, BigDecimal cmilch, BigDecimal cfodder,
-			Integer cruralUrban, Integer cspring, Integer cbenefit, Integer cshg, Integer cfpo, Integer cug,
-			Integer cmshg, Integer cmfpo, Integer cmug, BigDecimal ctrunoverFpo, BigDecimal cincomeFpo,
-			BigDecimal cannualIncomeShg);
+	String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal preMilch, BigDecimal midMilch, 
+			BigDecimal cMilch, String rmkMilch, BigDecimal preFodder, BigDecimal midFodder, BigDecimal cFodder, String rmkFodder, Integer preRuralUrban, 
+			Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer spring, Integer cSpring, String rmkSpring, Integer benefit, Integer cBenefit, 
+			String rmkBenefit, Integer shg, Integer cShg, String rmkShg, Integer fpo, Integer cFpo, String rmkFpo, Integer ug, Integer cUg, String rmkUg, Integer mShg, 
+			Integer cMshg, String rmkMshg, Integer mFpo, Integer cMfpo, String rmkMfpo, Integer mUg, Integer cMug, String rmkMug, BigDecimal preTrunOverFpo, 
+			BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, BigDecimal cIncomeFpo, 
+			String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg);
+	
 	List<WdcpmksyCroppedDetails2> getCroppedDetails2(Integer projProfId);
 
 	String completeprojEvaldata(Integer projProfId);

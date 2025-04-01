@@ -321,27 +321,28 @@ function pcalSum(){
 	var fpo =  parseInt(document.getElementById('fpo').value);
 	var ug =  parseInt(document.getElementById('ug').value);
 	
-	var cshg =  parseInt(document.getElementById('cshg').value);
-	var cfpo =  parseInt(document.getElementById('cfpo').value);
-	var cug =  parseInt(document.getElementById('cug').value);
+	var cShg =  parseInt(document.getElementById('cShg').value);
+	var cFpo =  parseInt(document.getElementById('cFpo').value);
+	var cUg =  parseInt(document.getElementById('cUg').value);
+	
 	var psum = shg + fpo + ug;
-	var csum = cshg + cfpo + cug;
+	var csum = cShg + cFpo + cUg;
 	document.getElementById('noOfCom').value = psum;
 	document.getElementById('cnoOfCom').value = csum;
 }
 
 function mpcalSum(){
 	
-	var mshg = parseInt(document.getElementById('mshg').value);
-	var mfpo =  parseInt(document.getElementById('mfpo').value);
-	var mug =  parseInt(document.getElementById('mug').value);
+	var mShg = parseInt(document.getElementById('mShg').value);
+	var mFpo =  parseInt(document.getElementById('mFpo').value);
+	var mUg =  parseInt(document.getElementById('mUg').value);
 	
-	var cmshg =  parseInt(document.getElementById('cmshg').value);
-	var cmfpo =  parseInt(document.getElementById('cmfpo').value);
-	var cmug =  parseInt(document.getElementById('cmug').value);
+	var cMshg =  parseInt(document.getElementById('cMshg').value);
+	var cMfpo =  parseInt(document.getElementById('cMfpo').value);
+	var cMug =  parseInt(document.getElementById('cMug').value);
 	
-	var psum = mshg + mfpo + mug;
-	var csum = cmshg + cmfpo + cmug;
+	var psum = mShg + mFpo + mUg;
+	var csum = cMshg + cMfpo + cMug;
 	document.getElementById('mnoOfCom').value = psum;
 	document.getElementById('cmnoOfCom').value = csum;
 }
@@ -350,71 +351,112 @@ function mpcalSum(){
 /************************************************ ***************************************************************/
 $(document).on('click', '#viewProd', function(e){ 
 	
-	$milch = $('#milch').val();
-	$fodder = $('#fodder').val();
-	$ruralUrban = $('#ruralUrban').val();
+	$preMilch = $('#preMilch').val();
+	$midMilch = $('#midMilch').val();
+	$cMilch = $('#cMilch').val();
+	
+	$preFodder = $('#preFodder').val();
+	$midFodder = $('#midFodder').val();
+	$cFodder = $('#cFodder').val();
+	
+	$preRuralUrban = $('#preRuralUrban').val();
+	$midRuralUrban = $('#midRuralUrban').val();
+	$cRuralUrban = $('#cRuralUrban').val();
+	
 	$spring = $('#spring').val();
+	$cSpring = $('#cSpring').val();
+	
 	$benefit = $('#benefit').val();
+	$cBenefit = $('#cBenefit').val();
+	
 	$shg = $('#shg').val();
+	$cShg = $('#cShg').val();
+	
 	$fpo = $('#fpo').val();
+	$cFpo = $('#cFpo').val();
+	
 	$ug = $('#ug').val();
-	$mshg = $('#mshg').val();
-	$mfpo = $('#mfpo').val();
-	$mug = $('#mug').val();
-	$trunoverFpo = $('#trunoverFpo').val();
-	$incomeFpo = $('#incomeFpo').val();
-	$annualIncomeShg = $('#annualIncomeShg').val();
+	$cUg = $('#cUg').val();
 	
-	$cmilch = $('#cmilch').val();
-	$cfodder = $('#cfodder').val();
-	$cruralUrban = $('#cruralUrban').val();
-	$cspring = $('#cspring').val();
-	$cbenefit = $('#cbenefit').val();
-	$cshg = $('#cshg').val();
-	$cfpo = $('#cfpo').val();
-	$cug = $('#cug').val();
-	$cmshg = $('#cmshg').val();
-	$cmfpo = $('#cmfpo').val();
-	$cmug = $('#cmug').val();
-	$ctrunoverFpo = $('#ctrunoverFpo').val();
-	$cincomeFpo = $('#cincomeFpo').val();
-	$cannualIncomeShg = $('#cannualIncomeShg').val();
+	$mShg = $('#mShg').val();
+	$cMshg = $('#cMshg').val();
 	
-	if ($milch == '' || $milch == undefined || $milch == null) {
-		alert('Please Enter Milk Production Details for Project Area.');
-		$('#milch').focus();
+	$mFpo = $('#mFpo').val();
+	$cMfpo = $('#cMfpo').val();
+	
+	$mUg = $('#mUg').val();
+	$cMug = $('#cMug').val();
+	
+	$preTrunOverFpo = $('#preTrunOverFpo').val();
+	$midTrunOverFpo = $('#midTrunOverFpo').val();
+	$cTrunOverFpo = $('#cTrunOverFpo').val();
+	
+	$preIncomeFpo = $('#preIncomeFpo').val();
+	$midIncomeFpo = $('#midIncomeFpo').val();
+	$cIncomeFpo = $('#cIncomeFpo').val();
+	
+	$preAnnualIncomeShg = $('#preAnnualIncomeShg').val();
+	$midAnnualIncomeShg = $('#midAnnualIncomeShg').val();
+	$cAnnualIncomeShg = $('#cAnnualIncomeShg').val();
+	
+
+	
+	if ($preMilch == '' || $preMilch == undefined || $preMilch == null) {
+		alert('Please Enter Pre-Project Status of Milk Production Details for Project Area.');
+		$('#preMilch').focus();
 		return false;
 	}
 	
-	if ($cmilch == '' || $cmilch == undefined || $cmilch == null) {
+	if ($midMilch == '' || $midMilch == undefined || $midMilch == null) {
+		alert('Please Enter Mid-Project Status of Milk Production Details for Project Area.');
+		$('#midMilch').focus();
+		return false;
+	}
+	
+	if ($cMilch == '' || $cMilch == undefined || $cMilch == null) {
 		alert('Please Enter Milk Production Details for Controlled Area.');
-		$('#cmilch').focus();
+		$('#cMilch').focus();
 		return false;
 	}
 
-	if ($fodder == '' || $fodder == undefined || $fodder == null) {
-		alert('Please Enter fodder Production Details for Project Area.');
-		$('#fodder').focus();
+
+	if ($preFodder == '' || $preFodder == undefined || $preFodder == null) {
+		alert('Please Enter Pre-Project Status of Fodder Production Details for Project Area.');
+		$('#preFodder').focus();
 		return false;
 	}
 	
-	if ($cfodder == '' || $cfodder == undefined || $cfodder == null) {
-		alert('Please Enter fodder Production Details for Controlled Area.');
-		$('#cfodder').focus();
+	if ($midFodder == '' || $midFodder == undefined || $midFodder == null) {
+		alert('Please Enter Mid-Project Status of Fodder Production Details for Project Area.');
+		$('#midFodder').focus();
+		return false;
+	}
+	
+	if ($cFodder == '' || $cFodder == undefined || $cFodder == null) {
+		alert('Please Enter Fodder Production Details for Controlled Area.');
+		$('#cFodder').focus();
 		return false;
 	}
 
-	if ($ruralUrban == '' || $ruralUrban == undefined || $ruralUrban == null) {
-		alert('Please Enter Annual Migration Details for Project Area.');
-		$('#ruralUrban').focus();
+
+	if ($preRuralUrban == '' || $preRuralUrban == undefined || $preRuralUrban == null) {
+		alert('Please Enter Pre-Project Status of Annual Migration Details for Project Area.');
+		$('#preRuralUrban').focus();
 		return false;
 	}
 	
-	if ($cruralUrban == '' || $cruralUrban == undefined || $cruralUrban == null) {
+	if ($midRuralUrban == '' || $midRuralUrban == undefined || $midRuralUrban == null) {
+		alert('Please Enter Mid-Project Status of Annual Migration Details for Project Area.');
+		$('#midRuralUrban').focus();
+		return false;
+	}
+	
+	if ($cRuralUrban == '' || $cRuralUrban == undefined || $cRuralUrban == null) {
 		alert('Please Enter Annual Migration Details for Controlled Area.');
-		$('#cruralUrban').focus();
+		$('#cRuralUrban').focus();
 		return false;
 	}
+
 
 	if ($spring == '' || $spring == undefined || $spring == null) {
 		alert('Please Enter No. of Springs Details for Project Area.');
@@ -422,11 +464,12 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cspring == '' || $cspring == undefined || $cspring == null) {
+	if ($cSpring == '' || $cSpring == undefined || $cSpring == null) {
 		alert('Please Enter No. of Springs Details for Controlled Area.');
-		$('#cspring').focus();
+		$('#cSpring').focus();
 		return false;
 	}
+	
 
 	if ($benefit == '' || $benefit == undefined || $benefit == null) {
 		alert('Please Enter No. of Person Benefitted Details for Project Area.');
@@ -434,11 +477,12 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cbenefit == '' || $cbenefit == undefined || $cbenefit == null) {
+	if ($cBenefit == '' || $cBenefit == undefined || $cBenefit == null) {
 		alert('Please Enter No. of Person Benefitted Details for Controlled Area.');
-		$('#cbenefit').focus();
+		$('#cBenefit').focus();
 		return false;
 	}
+
 
 	if ($shg == '' || $shg == undefined || $shg == null) {
 		alert('Please Enter SHG Details for Project Area.');
@@ -446,11 +490,12 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cshg == '' || $cshg == undefined || $cshg == null) {
+	if ($cShg == '' || $cShg == undefined || $cShg == null) {
 		alert('Please Enter SHG Details for Controlled Area.');
-		$('#cshg').focus();
+		$('#cShg').focus();
 		return false;
 	}
+
 
 	if ($fpo == '' || $fpo == undefined || $fpo == null) {
 		alert('Please Enter FPO Details for Project Area.');
@@ -458,11 +503,12 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cfpo == '' || $cfpo == undefined || $cfpo == null) {
+	if ($cFpo == '' || $cFpo == undefined || $cFpo == null) {
 		alert('Please Enter FPO Details for Controlled Area.');
-		$('#cfpo').focus();
+		$('#cFpo').focus();
 		return false;
 	}
+
 
 	if ($ug == '' || $ug == undefined || $ug == null) {
 		alert('Please Enter UG Details for Project Area.');
@@ -470,81 +516,105 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cug == '' || $cug == undefined || $cug == null) {
+	if ($cUg == '' || $cUg == undefined || $cUg == null) {
 		alert('Please Enter UG Details for Controlled Area.');
-		$('#cug').focus();
+		$('#cUg').focus();
 		return false;
 	}
 
-	if ($mshg == '' || $mshg == undefined || $mshg == null) {
+
+	if ($mShg == '' || $mShg == undefined || $mShg == null) {
 		alert('Please Enter No. of SHG Members Details for Project Area.');
-		$('#mshg').focus();
+		$('#mShg').focus();
 		return false;
 	}
 	
-	if ($cmshg == '' || $cmshg == undefined || $cmshg == null) {
+	if ($cMshg == '' || $cMshg == undefined || $cMshg == null) {
 		alert('Please Enter No. of SHG Members Details for Controlled Area.');
-		$('#cmshg').focus();
+		$('#cMshg').focus();
 		return false;
 	}
 
-	if ($mfpo == '' || $mfpo == undefined || $mfpo == null) {
+
+	if ($mFpo == '' || $mFpo == undefined || $mFpo == null) {
 		alert('Please Enter No. of FPO Members Details for Project Area.');
-		$('#mfpo').focus();
+		$('#mFpo').focus();
 		return false;
 	}
 	
-	if ($cmfpo == '' || $cmfpo == undefined || $cmfpo == null) {
+	if ($cMfpo == '' || $cMfpo == undefined || $cMfpo == null) {
 		alert('Please Enter No. of FPO Members Details for Controlled Area.');
-		$('#cmfpo').focus();
+		$('#cMfpo').focus();
 		return false;
 	}
 
-	if ($mug == '' || $mug == undefined || $mug == null) {
+
+	if ($mUg == '' || $mUg == undefined || $mUg == null) {
 		alert('Please Enter No. of UG Members Details for Project Area.');
-		$('#mug').focus();
+		$('#mUg').focus();
 		return false;
 	}
 	
-	if ($cmug == '' || $cmug == undefined || $cmug == null) {
+	if ($cMug == '' || $cMug == undefined || $cMug == null) {
 		alert('Please Enter No. of UG Members Details for Controlled Area.');
-		$('#cmug').focus();
+		$('#cMug').focus();
 		return false;
 	}
 
-	if ($trunoverFpo == '' || $trunoverFpo == undefined || $trunoverFpo == null) {
-		alert('*Please Enter Turnovers of FPOs Details for Project Area.');
-		$('#trunoverFpo').focus();
+
+	if ($preTrunOverFpo == '' || $preTrunOverFpo == undefined || $preTrunOverFpo == null) {
+		alert('Please Enter Pre-Project Turnovers Status of FPOs Details for Project Area.');
+		$('#preTrunOverFpo').focus();
 		return false;
 	}
 	
-	if ($ctrunoverFpo == '' || $ctrunoverFpo == undefined || $ctrunoverFpo == null) {
-		alert('*Please Enter Turnovers of FPOs Details for Controlled Area.');
-		$('#ctrunoverFpo').focus();
+	if ($midTrunOverFpo == '' || $midTrunOverFpo == undefined || $midTrunOverFpo == null) {
+		alert('Please Enter Mid-Project Turnovers Status of FPOs Details for Project Area.');
+		$('#midTrunOverFpo').focus();
+		return false;
+	}
+	
+	if ($cTrunOverFpo == '' || $cTrunOverFpo == undefined || $cTrunOverFpo == null) {
+		alert('Please Enter Turnovers of FPOs Details for Controlled Area.');
+		$('#cTrunOverFpo').focus();
 		return false;
 	}
 
-	if ($incomeFpo == '' || $incomeFpo == undefined || $incomeFpo == null) {
-		alert('Please Enter Income of FPO Member Details for Project Area.');
-		$('#incomeFpo').focus();
+
+	if ($preIncomeFpo == '' || $preIncomeFpo == undefined || $preIncomeFpo == null) {
+		alert('Please Enter Pre-Project Income Status of FPO Member Details for Project Area.');
+		$('#preIncomeFpo').focus();
 		return false;
 	}
 	
-	if ($cincomeFpo == '' || $cincomeFpo == undefined || $cincomeFpo == null) {
+	if ($midIncomeFpo == '' || $midIncomeFpo == undefined || $midIncomeFpo == null) {
+		alert('Please Enter Mid-Project Income Status of FPO Member Details for Project Area.');
+		$('#midIncomeFpo').focus();
+		return false;
+	}
+	
+	if ($cIncomeFpo == '' || $cIncomeFpo == undefined || $cIncomeFpo == null) {
 		alert('Please Enter Income of FPO Member Details for Controlled Area.');
-		$('#cincomeFpo').focus();
+		$('#cIncomeFpo').focus();
 		return false;
 	}
 
-	if ($annualIncomeShg == '' || $annualIncomeShg == undefined || $annualIncomeShg == null) {
-		alert('Please Enter Income of SHG Member Details for Project Area.');
-		$('#annualIncomeShg').focus();
+
+	if ($preAnnualIncomeShg == '' || $preAnnualIncomeShg == undefined || $preAnnualIncomeShg == null) {
+		alert('Please Enter Pre-Project Income Status of SHG Member Details for Project Area.');
+		$('#preAnnualIncomeShg').focus();
 		return false;
 	}
 	
-	if ($cannualIncomeShg == '' || $cannualIncomeShg == undefined || $cannualIncomeShg == null) {
+	if ($midAnnualIncomeShg == '' || $midAnnualIncomeShg == undefined || $midAnnualIncomeShg == null) {
+		alert('Please Enter Mid-Project Income Status of SHG Member Details for Project Area.');
+		$('#midAnnualIncomeShg').focus();
+		return false;
+	}
+	
+	if ($cAnnualIncomeShg == '' || $cAnnualIncomeShg == undefined || $cAnnualIncomeShg == null) {
 		alert('Please Enter Income of SHG Member Details for Controlled Area.');
-		$('#cannualIncomeShg').focus();
+		$('#cAnnualIncomeShg').focus();
 		return false;
 	}
 	

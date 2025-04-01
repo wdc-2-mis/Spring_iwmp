@@ -2916,6 +2916,8 @@ public class ProjectEvaluationController {
 		 String mname = request.getParameter("mname");
 		 String fname = request.getParameter("fname");
 		 Integer projectProfileId = PEService.getProjectProfileId(pcode, fcode, mcode);
+		 
+		 
 		 List<WdcpmksyProductionDetails> wdcPrdDtlList = new ArrayList<>();
 		 wdcPrdDtlList = PEService.getProductionDetails(projectProfileId);
 		 if(session!=null && session.getAttribute("loginID")!=null) {
@@ -2961,56 +2963,74 @@ public class ProjectEvaluationController {
 		        String fname = request.getParameter("fname");
 		        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
 				
-				BigDecimal milch = new BigDecimal(request.getParameter("milch"));
+		        BigDecimal preMilch = new BigDecimal(request.getParameter("preMilch"));
+				BigDecimal midMilch = new BigDecimal(request.getParameter("midMilch"));
+				BigDecimal cMilch = new BigDecimal(request.getParameter("cMilch"));
+				String rmkMilch = request.getParameter("rmkMilch");
 				
-				BigDecimal fodder = new BigDecimal(request.getParameter("fodder"));
-				Integer ruralUrban = Integer.parseInt(request.getParameter("ruralUrban"));
+				BigDecimal preFodder = new BigDecimal(request.getParameter("preFodder"));
+				BigDecimal midFodder = new BigDecimal(request.getParameter("midFodder"));
+				BigDecimal cFodder = new BigDecimal(request.getParameter("cFodder"));
+				String rmkFodder = request.getParameter("rmkFodder");
+				
+				Integer preRuralUrban = Integer.parseInt(request.getParameter("preRuralUrban"));
+				Integer midRuralUrban = Integer.parseInt(request.getParameter("midRuralUrban"));
+				Integer cRuralUrban = Integer.parseInt(request.getParameter("cRuralUrban"));
+				String rmkRuralUrban = request.getParameter("rmkRuralUrban");
 				
 				Integer spring = Integer.parseInt(request.getParameter("spring"));
+				Integer cSpring = Integer.parseInt(request.getParameter("cSpring"));
+				String rmkSpring = request.getParameter("rmkSpring");
+				
 				Integer benefit = Integer.parseInt(request.getParameter("benefit"));
+				Integer cBenefit = Integer.parseInt(request.getParameter("cBenefit"));
+				String rmkBenefit = request.getParameter("rmkBenefit");
 				
 				Integer shg = Integer.parseInt(request.getParameter("shg"));
+				Integer cShg = Integer.parseInt(request.getParameter("cShg"));
+				String rmkShg = request.getParameter("rmkShg");
+				
 				Integer fpo = Integer.parseInt(request.getParameter("fpo"));
+				Integer cFpo = Integer.parseInt(request.getParameter("cFpo"));
+				String rmkFpo = request.getParameter("rmkFpo");
 				
 				Integer ug = Integer.parseInt(request.getParameter("ug"));
-				Integer mshg = Integer.parseInt(request.getParameter("mshg"));
+				Integer cUg = Integer.parseInt(request.getParameter("cUg"));
+				String rmkUg = request.getParameter("rmkUg");
 				
-				Integer mfpo = Integer.parseInt(request.getParameter("mfpo"));
-				Integer mug = Integer.parseInt(request.getParameter("mug"));
+				Integer mShg = Integer.parseInt(request.getParameter("mShg"));
+				Integer cMshg = Integer.parseInt(request.getParameter("cMshg"));
+				String rmkMshg = request.getParameter("rmkMshg");
 				
-				BigDecimal trunoverFpo = new BigDecimal(request.getParameter("trunoverFpo"));
+				Integer mFpo = Integer.parseInt(request.getParameter("mFpo"));
+				Integer cMfpo = Integer.parseInt(request.getParameter("cMfpo"));
+				String rmkMfpo = request.getParameter("rmkMfpo");
 				
-				BigDecimal incomeFpo = new BigDecimal(request.getParameter("incomeFpo"));
+				Integer mUg = Integer.parseInt(request.getParameter("mUg"));
+				Integer cMug = Integer.parseInt(request.getParameter("cMug"));
+				String rmkMug = request.getParameter("rmkMug");
 				
-				BigDecimal annualIncomeShg = new BigDecimal(request.getParameter("annualIncomeShg"));
+				BigDecimal preTrunOverFpo = new BigDecimal(request.getParameter("preTrunOverFpo"));
+				BigDecimal midTrunOverFpo = new BigDecimal(request.getParameter("midTrunOverFpo"));
+				BigDecimal cTrunOverFpo = new BigDecimal(request.getParameter("cTrunOverFpo"));
+				String rmkTrunOverFpo = request.getParameter("rmkTrunOverFpo");
 				
-				BigDecimal cmilch = new BigDecimal(request.getParameter("cmilch"));
+				BigDecimal preIncomeFpo = new BigDecimal(request.getParameter("preIncomeFpo"));
+				BigDecimal midIncomeFpo = new BigDecimal(request.getParameter("midIncomeFpo"));
+				BigDecimal cIncomeFpo = new BigDecimal(request.getParameter("cIncomeFpo"));
+				String rmkIncomeFpo = request.getParameter("rmkIncomeFpo");
 				
-				BigDecimal cfodder = new BigDecimal(request.getParameter("cfodder"));
-				Integer cruralUrban = Integer.parseInt(request.getParameter("cruralUrban"));
-				
-				Integer cspring = Integer.parseInt(request.getParameter("cspring"));
-				Integer cbenefit = Integer.parseInt(request.getParameter("cbenefit"));
-				
-				Integer cshg = Integer.parseInt(request.getParameter("cshg"));
-				Integer cfpo = Integer.parseInt(request.getParameter("cfpo"));
-				
-				Integer cug = Integer.parseInt(request.getParameter("cug"));
-				Integer cmshg = Integer.parseInt(request.getParameter("cmshg"));
-				
-				Integer cmfpo = Integer.parseInt(request.getParameter("cmfpo"));
-				Integer cmug = Integer.parseInt(request.getParameter("cmug"));
-				
-				BigDecimal ctrunoverFpo = new BigDecimal(request.getParameter("ctrunoverFpo"));
-				
-				BigDecimal cincomeFpo = new BigDecimal(request.getParameter("cincomeFpo"));
-				
-				BigDecimal cannualIncomeShg = new BigDecimal(request.getParameter("cannualIncomeShg"));
+				BigDecimal preAnnualIncomeShg = new BigDecimal(request.getParameter("preAnnualIncomeShg"));
+				BigDecimal midAnnualIncomeShg = new BigDecimal(request.getParameter("midAnnualIncomeShg"));
+				BigDecimal cAnnualIncomeShg = new BigDecimal(request.getParameter("cAnnualIncomeShg"));
+				String rmkAnnualIncomeShg = request.getParameter("rmkAnnualIncomeShg");
 				
 				
 							
 				mav.setViewName("projectEvaluation/projectProfileMain");
+				
 				String projProfilestatus = PEService.checkProjectProfileStatus(project);
+				
 				if(projProfilestatus != null) {
 				if ("1".equals(projProfilestatus)) {
 		            request.setAttribute("projectProfileConfirmed", "true");
@@ -3115,8 +3135,12 @@ public class ProjectEvaluationController {
 		            request.setAttribute("geoTagDetailsConfirmed", "true");
 		        }
 				}
-				String result = PEService.saveOrUpdateProductionDetails(request, session, projProfId, milch, fodder, ruralUrban, spring, benefit, shg, fpo, ug, mshg, mfpo, mug, trunoverFpo,
-						incomeFpo, annualIncomeShg, cmilch, cfodder, cruralUrban, cspring, cbenefit, cshg, cfpo, cug, cmshg, cmfpo, cmug, ctrunoverFpo, cincomeFpo, cannualIncomeShg);
+				
+				String result = PEService.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, 
+						cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, spring, cSpring, rmkSpring, benefit, cBenefit, rmkBenefit, 
+						shg, cShg, rmkShg, fpo, cFpo, rmkFpo, ug, cUg, rmkUg, mShg, cMshg, rmkMshg, mFpo, cMfpo, rmkMfpo, mUg, cMug, rmkMug, preTrunOverFpo, 
+						midTrunOverFpo, cTrunOverFpo, rmkTrunOverFpo, preIncomeFpo, midIncomeFpo, cIncomeFpo, rmkIncomeFpo, preAnnualIncomeShg, midAnnualIncomeShg, 
+						cAnnualIncomeShg, rmkAnnualIncomeShg);
 				
 				if ("success".equals(result)) {
 		            request.setAttribute("productionDetailsConfirmed", "true");

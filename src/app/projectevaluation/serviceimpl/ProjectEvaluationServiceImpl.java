@@ -209,17 +209,19 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 
 	@Override
-	public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession session, Integer projProfId,
-			BigDecimal milch, BigDecimal fodder, Integer ruralUrban, Integer spring, Integer benefit, Integer shg,
-			Integer fpo, Integer ug, Integer mshg, Integer mfpo, Integer mug, BigDecimal trunoverFpo,
-			BigDecimal incomeFpo, BigDecimal annualIncomeShg, BigDecimal cmilch, BigDecimal cfodder,
-			Integer cruralUrban, Integer cspring, Integer cbenefit, Integer cshg, Integer cfpo, Integer cug,
-			Integer cmshg, Integer cmfpo, Integer cmug, BigDecimal ctrunoverFpo, BigDecimal cincomeFpo,
-			BigDecimal cannualIncomeShg) {
-		return PEDAO.saveOrUpdateProductionDetails(request, session, projProfId, milch, fodder, ruralUrban, spring,
-				benefit, shg, fpo, ug, mshg, mfpo, mug, trunoverFpo, incomeFpo, annualIncomeShg, cmilch, cfodder,
-				cruralUrban, cspring, cbenefit, cshg, cfpo, cug, cmshg, cmfpo, cmug, ctrunoverFpo, cincomeFpo,
-				cannualIncomeShg);
+	public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal preMilch, BigDecimal midMilch, 
+			BigDecimal cMilch, String rmkMilch, BigDecimal preFodder, BigDecimal midFodder, BigDecimal cFodder, String rmkFodder, Integer preRuralUrban, 
+			Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer spring, Integer cSpring, String rmkSpring, Integer benefit, Integer cBenefit, 
+			String rmkBenefit, Integer shg, Integer cShg, String rmkShg, Integer fpo, Integer cFpo, String rmkFpo, Integer ug, Integer cUg, String rmkUg, Integer mShg, 
+			Integer cMshg, String rmkMshg, Integer mFpo, Integer cMfpo, String rmkMfpo, Integer mUg, Integer cMug, String rmkMug, BigDecimal preTrunOverFpo, 
+			BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, BigDecimal cIncomeFpo, 
+			String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg) 
+	{
+		return PEDAO.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, 
+				cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, spring, cSpring, rmkSpring, benefit, cBenefit, rmkBenefit, 
+				shg, cShg, rmkShg, fpo, cFpo, rmkFpo, ug, cUg, rmkUg, mShg, cMshg, rmkMshg, mFpo, cMfpo, rmkMfpo, mUg, cMug, rmkMug, preTrunOverFpo, 
+				midTrunOverFpo, cTrunOverFpo, rmkTrunOverFpo, preIncomeFpo, midIncomeFpo, cIncomeFpo, rmkIncomeFpo, preAnnualIncomeShg, midAnnualIncomeShg, 
+				cAnnualIncomeShg, rmkAnnualIncomeShg);
 	}
 
 	@Override

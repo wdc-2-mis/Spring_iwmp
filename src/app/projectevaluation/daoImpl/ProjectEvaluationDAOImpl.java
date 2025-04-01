@@ -1647,19 +1647,23 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		}
 
 		@Override
-		public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession sess, Integer projProfId,
-				BigDecimal milch, BigDecimal fodder, Integer ruralUrban, Integer spring, Integer benefit, Integer shg,
-				Integer fpo, Integer ug, Integer mshg, Integer mfpo, Integer mug, BigDecimal trunoverFpo,
-				BigDecimal incomeFpo, BigDecimal annualIncomeShg, BigDecimal cmilch, BigDecimal cfodder,
-				Integer cruralUrban, Integer cspring, Integer cbenefit, Integer cshg, Integer cfpo, Integer cug,
-				Integer cmshg, Integer cmfpo, Integer cmug, BigDecimal ctrunoverFpo, BigDecimal cincomeFpo,
-				BigDecimal cannualIncomeShg) {
+		public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession sess, Integer projProfId, BigDecimal preMilch, BigDecimal midMilch, 
+				BigDecimal cMilch, String rmkMilch, BigDecimal preFodder, BigDecimal midFodder, BigDecimal cFodder, String rmkFodder, Integer preRuralUrban, 
+				Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer spring, Integer cSpring, String rmkSpring, Integer benefit, Integer cBenefit, 
+				String rmkBenefit, Integer shg, Integer cShg, String rmkShg, Integer fpo, Integer cFpo, String rmkFpo, Integer ug, Integer cUg, String rmkUg, 
+				Integer mShg, Integer cMshg, String rmkMshg, Integer mFpo, Integer cMfpo, String rmkMfpo, Integer mUg, Integer cMug, String rmkMug, 
+				BigDecimal preTrunOverFpo, BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, 
+				BigDecimal cIncomeFpo, String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, 
+				BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg)
+		{
+			
 			Session session = sessionFactory.getCurrentSession();
 			List<WdcpmksyProductionDetails> list = new ArrayList<>();
 			String res = "fail";
 			try {
 				String userId = sess.getAttribute("loginID").toString();
-				
+				InetAddress inet = InetAddress.getLocalHost();
+				String ipAddr = inet.getHostAddress();
 				session.beginTransaction();
 				Query query = session.createQuery("from WdcpmksyProductionDetails where wdcpmksyProjectProfileEvaluation.projectProfileId =:projProfId");
 				query.setInteger("projProfId", projProfId);
@@ -1679,37 +1683,71 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 					prdDtl.setWdcpmksyProjectProfileEvaluation(projProEval);
 					prdDtl.setCreatedOn(new Date());
 					prdDtl.setCreatedBy(userId);
-					prdDtl.setRequestIp(getClientIpAddr(request));
+					prdDtl.setRequestIp(ipAddr);
+//					prdDtl.setRequestIp(getClientIpAddr(request));
 				}
-//				prdDtl.setMilchCattle(milch);
-//				prdDtl.setFodderProduction(fodder);
-//				prdDtl.setRuralUrban(ruralUrban);
+				
+				prdDtl.setPreMilchCattle(preMilch);
+				prdDtl.setMidMilchCattle(midMilch);
+				prdDtl.setControlMilchCattle(cMilch);
+				prdDtl.setRemarkMilchCattle(rmkMilch);
+				
+				prdDtl.setPreFodderProduction(preFodder);
+				prdDtl.setMidFodderProduction(midFodder);
+				prdDtl.setControlFodderProduction(cFodder);
+				prdDtl.setRemarkFodderProduction(rmkFodder);
+				
+				prdDtl.setPreRuralUrban(preRuralUrban);
+				prdDtl.setMidRuralUrban(midRuralUrban);
+				prdDtl.setControlRuralUrban(cRuralUrban);
+				prdDtl.setRemarkRuralUrban(rmkRuralUrban);
+				
 				prdDtl.setSpringRejuvenated(spring);
+				prdDtl.setControlSpringRejuvenated(cSpring);
+				prdDtl.setRemarkSpringRejuvenated(rmkSpring);
+				
 				prdDtl.setPersonBenefitte(benefit);
+				prdDtl.setControlPersonBenefitte(cBenefit);
+				prdDtl.setRemarkPersonBenefitte(rmkBenefit);
+				
 				prdDtl.setCommunityBasedShg(shg);
+				prdDtl.setControlCommunityBasedShg(cShg);
+				prdDtl.setRemarkCommunityBasedShg(rmkShg);
+				
 				prdDtl.setCommunityBasedFpo(fpo);
+				prdDtl.setControlCommunityBasedFpo(cFpo);
+				prdDtl.setRemarkCommunityBasedFpo(rmkFpo);
+				
 				prdDtl.setCommunityBasedUg(ug);
-				prdDtl.setMemberBasedShg(mshg);
-				prdDtl.setMemberBasedFpo(mfpo);
-				prdDtl.setMemberBasedUg(mug);
-//				prdDtl.setTrunoverFpo(trunoverFpo);
-//				prdDtl.setIncomeFpo(incomeFpo);
-//				prdDtl.setAnnualIncomeShg(annualIncomeShg);
-//				
-//				prdDtl.setControl_milch_cattle(cmilch);
-//				prdDtl.setControl_fodder_production(cfodder);
-//				prdDtl.setControl_rural_urban(cmug);
-//				prdDtl.setControl_spring_rejuvenated(cspring);
-//				prdDtl.setControl_person_benefitte(cbenefit);
-//				prdDtl.setControl_community_based_shg(cmshg);
-//				prdDtl.setControl_community_based_fpo(cmfpo);
-//				prdDtl.setControl_community_based_ug(cug);
-//				prdDtl.setControl_member_based_shg(cmshg);
-//				prdDtl.setControl_member_based_fpo(cmfpo);
-//				prdDtl.setControl_member_based_ug(cug);
-//				prdDtl.setControl_trunover_fpo(ctrunoverFpo);
-//				prdDtl.setControl_income_fpo(cincomeFpo);
-//				prdDtl.setControl_annual_income_shg(cincomeFpo);
+				prdDtl.setControlCommunityBasedUg(cUg);
+				prdDtl.setRemarkCommunityBasedUg(rmkUg);
+				
+				prdDtl.setMemberBasedShg(mShg);
+				prdDtl.setControlMemberBasedShg(cMshg);
+				prdDtl.setRemarkMemberBasedShg(rmkMshg);
+				
+				prdDtl.setMemberBasedFpo(mFpo);
+				prdDtl.setControlMemberBasedFpo(cMfpo);
+				prdDtl.setRemarkMemberBasedFpo(rmkMfpo);
+				
+				prdDtl.setMemberBasedUg(mUg);
+				prdDtl.setControlMemberBasedUg(cMug);
+				prdDtl.setRemarkMemberBasedUg(rmkMug);
+				
+				prdDtl.setPreTrunoverFpo(preTrunOverFpo);
+				prdDtl.setMidTrunoverFpo(midTrunOverFpo);
+				prdDtl.setControlTrunoverFpo(cTrunOverFpo);
+				prdDtl.setRemarkTrunoverFpo(rmkTrunOverFpo);
+				
+				prdDtl.setPreIncomeFpo(preIncomeFpo);
+				prdDtl.setMidIncomeFpo(midIncomeFpo);
+				prdDtl.setControlIncomeFpo(cIncomeFpo);
+				prdDtl.setRemarkIncomeFpo(rmkIncomeFpo);
+				
+				prdDtl.setPreAnnualIncomeShg(preAnnualIncomeShg);
+				prdDtl.setMidAnnualIncomeShg(midAnnualIncomeShg);
+				prdDtl.setControlAnnualIncomeShg(cAnnualIncomeShg);
+				prdDtl.setRemarkAnnualIncomeShg(rmkAnnualIncomeShg);
 				
 				session.saveOrUpdate(prdDtl);
 				session.getTransaction().commit();
