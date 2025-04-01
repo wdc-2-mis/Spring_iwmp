@@ -175,7 +175,8 @@ public class ProjectEvaluationController {
 		 */
 		ModelAndView mav = new ModelAndView();
 		if(session!=null && session.getAttribute("loginID")!=null) {
-			String projProfilestatus = PEService.checkProjectProfileStatus(project);
+			monthList = PEService.getmonthforproject();
+            String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
 			if ("1".equals(projProfilestatus)) {
 	            request.setAttribute("projectProfileConfirmed", "true");
@@ -281,7 +282,8 @@ public class ProjectEvaluationController {
 	        }
 			}
 		    mav = new ModelAndView("projectEvaluation/projectProfileMain");
-			mav.addObject("distName",distName);
+		    mav.addObject("monthList", monthList);
+            mav.addObject("distName",distName);
 			mav.addObject("projName",projName);
 			mav.addObject("dcode",district);
 			mav.addObject("projid",project);
@@ -1132,7 +1134,8 @@ public class ProjectEvaluationController {
 	    ModelAndView mav = new ModelAndView();
         try {
 	    if (session != null && session.getAttribute("loginID") != null) {
-	        BigDecimal sanctionedC = new BigDecimal(request.getParameter("sanctionedC"));
+	    	monthList = PEService.getmonthforproject();
+            BigDecimal sanctionedC = new BigDecimal(request.getParameter("sanctionedC"));
 	        BigDecimal cShare = new BigDecimal(request.getParameter("cShare"));
 	        BigDecimal sShare = new BigDecimal(request.getParameter("sShare"));
 	        BigDecimal sancitonedP = new BigDecimal(request.getParameter("sancitonedP"));
@@ -1265,6 +1268,7 @@ public class ProjectEvaluationController {
 	        }
 
 	        mav.addObject("distName", distName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
@@ -4416,6 +4420,34 @@ public class ProjectEvaluationController {
 		} 
 
 		return null;
+	}
+	
+	@RequestMapping(value = "/updateMonth", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> updateMonth(@RequestParam("projid") Integer projid, @RequestParam("monthid") Integer monthid) {
+	    Map<String, String> response = new HashMap<>();
+	    
+	    try {
+	        String res = PEService.updateProjProfileMonth(projid, monthid);
+
+	        if ("success".equals(res)) {
+	            response.put("status", "success");
+	            response.put("message", "Month successfully updated!");
+	            response.put("redirectUrl", "getProjectProfile?projid=" + projid); // Redirect to project profile
+	        } else if ("not_found".equals(res)) {
+	            response.put("status", "not_found");
+	            response.put("message", "Project ID not found!");
+	        } else {
+	            response.put("status", "fail");
+	            response.put("message", "Month update failed. Please try again.");
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        response.put("status", "error");
+	        response.put("message", "An error occurred while updating the month.");
+	    }
+
+	    return response;
 	}
 }
 

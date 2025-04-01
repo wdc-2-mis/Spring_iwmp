@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -74,6 +76,66 @@
     }
     
 </style>
+
+<script type="text/javascript">
+
+$(document).ready(function () {
+    $('#updateMonthForm').submit(function (e) {
+        e.preventDefault();
+        var projid = $("#projid").val();
+        var district = "<%= request.getParameter("district") %>";
+        var distName = "<%= request.getParameter("distName") %>";
+        var projName = "<%= request.getParameter("projName") %>";
+        var finyear = "<%= request.getParameter("finyear") %>";
+        var finName = "<%= request.getParameter("finName") %>";
+        
+        // Get the selected month value from dropdown instead of request parameters
+        var monthid = $("#updmonth").val(); 
+        var monthName = $("#updmonth option:selected").length ? $("#updmonth option:selected").text() : "N/A";
+
+
+ 
+ if (!monthid) {
+            alert("Please select Month!");
+            $("#updmonth").focus();
+            return;
+        }
+ $.ajax({
+     type: 'POST',
+     url: 'updateMonth',
+     data: {projid: projid, monthid: monthid},
+     dataType: 'json',
+     success: function (response) {
+         if (response.status === "success") {
+             alert(response.message);
+             var redirectUrl = "getProjectProfile?project=" + encodeURIComponent(projid) +
+             "&district=" + encodeURIComponent(district) +
+             "&distName=" + encodeURIComponent(distName) +
+             "&projName=" + encodeURIComponent(projName) +
+             "&finyear=" + encodeURIComponent(finyear) +
+             "&finName=" + encodeURIComponent(finName) +
+             "&month=" + encodeURIComponent(monthid) +
+             "&monthName=" + encodeURIComponent(monthName);
+             window.location.href = redirectUrl;  
+         } else {
+             alert("Error: " + response.message); 
+         }
+     },
+     error: function () {
+         alert("An error occurred while updating the month.");
+     }
+ });
+
+ function getQueryParam(param) {
+     var urlParams = new URLSearchParams(window.location.search);
+     return urlParams.get(param) || "";
+ }
+     
+
+});
+});
+
+</script>
 </head>
 
 <body>
@@ -91,8 +153,8 @@
 </div>
 	 <hr/>
     <div class="tabs-container">  
-        <b> District Name: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Month Name: &nbsp; <c:out value='${monthname}' />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' /></b>
-       <hr/>
+        <b> District Name: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Month Name: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' /></b>
+<hr/>
         <a href="projectProfile?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link">Project Profile
         <%
                 if ("true".equals(request.getAttribute("projectProfileConfirmed"))) {
@@ -217,6 +279,54 @@
         
         </a>
    </div>
+    <div id="editMonth" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Month</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="updateMonthForm">
+                    <input type="hidden" id="projid" name="projid" value="<c:out value='${projid}' />">
+                    
+                    <div class="form-group">
+                       <b>District Name: &nbsp; <c:out value='${distName},' /></b>
+                    </div>
+                    <div class="form-group">
+                    <b> <label>Project Name:</label>
+                        &nbsp; <c:out value='${projName},'  /></b>
+                    </div>
+                    <div class="form-group">
+                    <b> <label>Financial Year:</label>
+                        &nbsp; <c:out value='${finyr},'  /></b>
+                    </div>
+                    <div class="form-group">
+                    <b> <label>Current Month:</label>
+                        &nbsp; <c:out value='${monthname},' /></b>
+                    </div>
+                    
+                        
+                    <div class="form-group">
+                        <label><b>Change Month:</b></label>
+                         <select class="form-control month" name="updmonth" id="updmonth">
+              		<option value="">--Select Month--</option>
+              		
+                  	 			<c:forEach var="lists" items="${monthList}">
+                                <option value="<c:out value='${lists.key}'/>" 
+                                    <c:if test="${lists.key eq month}">selected="selected"</c:if> >
+                                    <c:out value="${lists.value}" />
+                                </option>
+                            </c:forEach>
+					</select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
    <br>
    <%
    if ("true".equals(request.getAttribute("geoTagDetailsConfirmed"))) {

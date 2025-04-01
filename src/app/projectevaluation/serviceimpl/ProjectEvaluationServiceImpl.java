@@ -259,4 +259,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 
 
+	@Override
+	public String updateProjProfileMonth(Integer projid, Integer monthid) {
+		// TODO Auto-generated method stub
+		return PEDAO.updateProjProfileMonth(projid, monthid);
+	}
+
 }

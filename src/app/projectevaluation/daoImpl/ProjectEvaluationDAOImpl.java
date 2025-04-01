@@ -1825,6 +1825,40 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			return project;
 		}
 
+		@Override
+		public String updateProjProfileMonth(Integer projid, Integer monthid) {
+		    Session session = sessionFactory.getCurrentSession();
+		    String res = "fail";
+		    try {
+		        session.beginTransaction(); // ✅ Ensure transaction is started
+
+		        Query<WdcpmksyProjectProfileEvaluation> query = session.createQuery(
+		            "FROM WdcpmksyProjectProfileEvaluation w WHERE w.iwmpMProject.projectId = :projid",
+		            WdcpmksyProjectProfileEvaluation.class
+		        );
+		        query.setParameter("projid", projid);
+		        WdcpmksyProjectProfileEvaluation savedata = query.uniqueResult();
+
+		        if (savedata != null) {
+		            IwmpMMonth month = session.get(IwmpMMonth.class, monthid);
+		            savedata.setIwmpMMonth(month);
+		            session.update(savedata);
+		            session.getTransaction().commit(); 
+		            res = "success";
+		        } else {
+		            res = "not_found";
+		            session.getTransaction().rollback(); 
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        res = "fail";
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().rollback(); 
+		        }
+		    }
+		    return res;
+		}
+
 
 
 

@@ -115,7 +115,8 @@ public interface ProjectEvaluationDAO {
 	List<WdcpmksyProjectProfileEvaluation> getprojectevorptdata(Integer pCode);
 
 	ProjectEvaluationBean getProjectDetails(int projId);
-
+ 
+	String updateProjProfileMonth(Integer projid, Integer monthid); 
 
 
 }

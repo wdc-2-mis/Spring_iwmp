@@ -120,4 +120,6 @@ public interface ProjectEvaluationService {
 
 	ProjectEvaluationBean getProjectDetails(int projId);
 
+	String updateProjProfileMonth(Integer projid, Integer monthid);
+
 }
