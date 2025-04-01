@@ -11,51 +11,36 @@ function calSum(){
 	document.getElementById('ctotalArea').value = csum.toFixed(4);
 }
 
-function diffcalSum(){
-	
-	var rice = parseFloat(document.getElementById('rice').value);
-	var wheat = parseFloat(document.getElementById('wheat').value);
-	var pulses = parseFloat(document.getElementById('pulses').value);
-	var millets = parseFloat(document.getElementById('millets').value);
-	var oilseed = parseFloat(document.getElementById('oilseed').value);
-	var others = parseFloat(document.getElementById('others').value);
-	var crice = parseFloat(document.getElementById('crice').value);
-	var cwheat = parseFloat(document.getElementById('cwheat').value);
-	var cpulses = parseFloat(document.getElementById('cpulses').value);
-	var cmillets = parseFloat(document.getElementById('cmillets').value);
-	var coilSeed = parseFloat(document.getElementById('coilseed').value);
-	var cothers = parseFloat(document.getElementById('cothers').value);
-//	var ms = parseFloat(document.getElementById('midStateShare').value);
-	var psum = rice + wheat+ pulses + millets + oilseed + others;
-	var csum = crice + cwheat+ cpulses + cmillets + coilSeed + cothers;
-	
-	document.getElementById('majorCrop').value = psum.toFixed(4);
-	document.getElementById('cmajorCrop').value = csum.toFixed(4);
-}
 
 /*************************************************************save and update records********************************************/
 $(document).on('click', '#view', function(e){ 
+	
+	$diversifiedcrops = $('#diversifiedcrops').val();
 	$niltosingle = $('#niltosingle').val();
 	$sdcrop = $('#sdcrop').val();
-	$plantation = $('#plantation').val();
-	$rice = $('#rice').val();
-	$wheat = $('#wheat').val();
-	$pulses = $('#pulses').val();
-	$millets = $('#millets').val();
-	$oilseed = $('#oilseed').val();
-	$others = $('#others').val();
+	$WHSConReju = $('#WHSConReju').val();
+	$soilandmoiscrops = $('#soilandmoiscrops').val();
+	$degradedrainfed = $('#degradedrainfed').val();
 	
+	$cdiversifiedcrops = $('#cdiversifiedcrops').val();
 	$cniltosingle = $('#cniltosingle').val();
 	$csdcrop = $('#csdcrop').val();
-	$cplantation = $('#cplantation').val();
-	$crice = $('#crice').val();
-	$cwheat = $('#cwheat').val();
-	$cpulses = $('#cpulses').val();
-	$cmillets = $('#cmillets').val();
-	$coilseed = $('#coilseed').val();
-	$cothers = $('#cothers').val();
+	$cWHSConReju = $('#cWHSConReju').val();
+	$csoilandmoiscrops = $('#csoilandmoiscrops').val();
+	$cdegradedrainfed = $('#cdegradedrainfed').val();
 	
+	if ($diversifiedcrops == '' || $diversifiedcrops == undefined || $diversifiedcrops == null) {
+			alert('Please Enter diversified crops/ change in cropping system (Ha.) for Project Area');
+			$('#diversifiedcrops').focus();
+			return false;
+		}
 	
+	if ($cdiversifiedcrops == '' || $cdiversifiedcrops == undefined || $cdiversifiedcrops == null) {
+			alert('Please Enter diversified crops/ change in cropping system (Ha.) for Controlled Area');
+			$('#cdiversifiedcrops').focus();
+			return false;
+		}
+		
 	if ($niltosingle == '' || $niltosingle == undefined || $niltosingle == null) {
 			alert('Please Enter Nil to single crop(ha.) for Project Area');
 			$('#niltosingle').focus();
@@ -80,91 +65,47 @@ $(document).on('click', '#view', function(e){
 			return false;
 		}
 		
-		if ($plantation == '' || $plantation == undefined || $plantation == null) {
-			alert('Please Enter Area under plantation cover for Project Area')
-			$('#plantation').focus();
+		if ($WHSConReju == '' || $WHSConReju == undefined || $WHSConReju == null) {
+			alert('Please Enter No. of Water Harvesting Structure (WHS) constructed /rejuvenated for Project Area')
+			$('#WHSConReju').focus();
 			return false;
 		}
 		
-		if ($cplantation == '' || $cplantation == undefined || $cplantation == null) {
-			alert('Please Enter Area under plantation cover for Controlled Area')
-			$('#cplantation').focus();
+		if ($cWHSConReju == '' || $cWHSConReju == undefined || $cWHSConReju == null) {
+			alert('Please Enter No. of Water Harvesting Structure (WHS) constructed /rejuvenated for Controlled Area')
+			$('#cWHSConReju').focus();
 			return false;
 		}
 		
 		
-		if ($rice == '' || $rice == undefined || $rice == null) {
-			alert('Please Enter Rice Details for Project Area')
-			$('#rice').focus();
+		if ($soilandmoiscrops == '' || $soilandmoiscrops == undefined || $soilandmoiscrops == null) {
+			alert('Please Enter Area Covered with soil and Moisture (Ha.) for Project Area')
+			$('#soilandmoiscrops').focus();
 			return false;
 		}
 		
-		if ($crice == '' || $crice == undefined || $crice == null) {
-			alert('Please Enter Rice Details for Controlled Area')
-			$('#crice').focus();
+		if ($csoilandmoiscrops == '' || $csoilandmoiscrops == undefined || $csoilandmoiscrops == null) {
+			alert('Please Enter Area Covered with soil and Moisture (Ha.) for Controlled Area')
+			$('#csoilandmoiscrops').focus();
 			return false;
 		}
 		
-		if ($wheat == '' || $wheat == undefined || $wheat == null) {
-			alert('Please Enter Wheat Details for Project Area');
-			$('#wheat').focus();
+		if ($degradedrainfed == '' || $degradedrainfed == undefined || $degradedrainfed == null) {
+			alert('Please Enter Area of degraded land covered /rainfed area developed (Ha.) for Project Area');
+			$('#degradedrainfed').focus();
 			return false;
 		}
 		
-		if ($cwheat == '' || $cwheat == undefined || $cwheat == null) {
-			alert('Please Enter Wheat Details for Controlled Area');
-			$('#cwheat').focus();
+		if ($cdegradedrainfed == '' || $cdegradedrainfed == undefined || $cdegradedrainfed == null) {
+			alert('Please Enter Area of degraded land covered /rainfed area developed (Ha.) for Controlled Area');
+			$('#cdegradedrainfed').focus();
 			return false;
 		}
 		
-		if ($pulses == '' || $pulses == undefined || $pulses == null) {
-			alert('Please Enter Pulses Details for Project Area');
-			$('#pulses').focus();
-			return false;
-		}
 		
-	if ($cpulses == '' || $cpulses == undefined || $cpulses == null) {
-		alert('Please Enter Pulses Details for Controlled Area');
-		$('#cpulses').focus();
-		return false;
-	}
-	if ($millets == '' || $millets == undefined || $millets == null) {
-		alert('Please Enter Millets Details for Project Area');
-		$('#millets').focus();
-		return false;
-	}
-
-	if ($cmillets == '' || $cmillets == undefined || $cmillets == null) {
-		alert('Please Enter Millets Details for Controlled Area');
-		$('#cmillets').focus();
-		return false;
-	}
-	if ($oilseed == '' || $oilseed == undefined || $oilseed == null) {
-		alert('Please Enter Oil Seed  Details for Project Area');
-		$('#oilseed').focus();
-		return false;
-	}
-						
-	if ($coilseed == '' || $coilseed == undefined || $coilseed == null) {
-		alert('Please Enter Oil Seed  Area Details for Controlled Area');
-		$('#coilseed').focus();
-		return false;
-	}
-	
-	if ($others == '' || $others == undefined || $others == null) {
-		alert('Please Enter Others(Specify name of the crop) Details for Project Area');
-		$('#others').focus();
-		return false;
-	}
-
-	if ($cothers == '' || $cothers == undefined || $cothers == null) {
-		alert('Please Enter Others(Specify name of the crop) Details for Controlled Area');
-		$('#cothers').focus();
-		return false;
-	}
 
 	if (confirm("Do You Want to Save Cropped Details-2 ?")) {
-		formSubmitted = true;    ////    saveprojectProfile
+		formSubmitted = true;    
 		document.getElementById('croppedDetails2').action = "saveOrUpdateCroppedDetails2";
 		document.getElementById('croppedDetails2').method = "post";
 		document.getElementById('croppedDetails2').submit();

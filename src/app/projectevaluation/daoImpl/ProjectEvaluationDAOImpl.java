@@ -1415,11 +1415,12 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	}
 
 	@Override
-	public String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession sess, Integer projProfId, BigDecimal niltosingle,
-			BigDecimal sdcrop, BigDecimal plantation, BigDecimal rice, BigDecimal wheat, BigDecimal pulses,
-			BigDecimal millets, BigDecimal oilseed, BigDecimal others, BigDecimal cniltosingle, BigDecimal csdcrop,
-			BigDecimal cplantation, BigDecimal crice, BigDecimal cwheat, BigDecimal cpulses, BigDecimal cmillets,
-			BigDecimal coilseed, BigDecimal cothers) {
+	public String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession sess, Integer profile_id, Integer projProfId,
+			BigDecimal diversifiedcrops, BigDecimal niltosingle, BigDecimal sdcrop, Integer wHSConReju,
+			BigDecimal soilandmoiscrops, BigDecimal degradedrainfed, BigDecimal cdiversifiedcrops,
+			BigDecimal cniltosingle, BigDecimal csdcrop, Integer cWHSConReju, BigDecimal csoilandmoiscrops,
+			BigDecimal cdegradedrainfed, String diversifiedcropsremark, String niltosingleremark, String sdcropremark,
+			String WHSConRejuremark, String soilandmoiscropsremark, String degradedrainfedremark) {
 		Session session = sessionFactory.getCurrentSession();
 		List<WdcpmksyCroppedDetails2> list = new ArrayList<>();
 		String res = "fail";
@@ -1447,24 +1448,25 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				crpDtl.setCreatedBy(userId);
 				crpDtl.setRequestIp(getClientIpAddr(request));
 			}
-//			crpDtl.setNillSingle(niltosingle);
-//			crpDtl.setSingelDoublemore(sdcrop);
-//			crpDtl.setPlantationCover(plantation);
-//			crpDtl.setWheat(wheat);
-//			crpDtl.setRice(rice);
-//			crpDtl.setPulses(pulses);
-//			crpDtl.setOil_seed(oilseed);
-//			crpDtl.setMillets(millets);
-//			crpDtl.setOther(others);
-//			crpDtl.setControl_nill_single(cniltosingle);
-//			crpDtl.setControl_singel_doublemore(csdcrop);
-//			crpDtl.setControl_plantation_cover(cplantation);
-//			crpDtl.setControl_wheat(cwheat);
-//			crpDtl.setControl_rice(crice);
-//			crpDtl.setControl_pulses(cpulses);
-//			crpDtl.setControl_oil_seed(coilseed);
-//			crpDtl.setControl_millets(cmillets);
-//			crpDtl.setControl_other(cothers);
+			crpDtl.setProjectDiversifiedChange(diversifiedcrops);
+			crpDtl.setProjectNillSingle(niltosingle);
+			crpDtl.setProjectSingleDoublemore(sdcrop);
+			crpDtl.setProjectWhsConstructedRejuvenated(wHSConReju);
+			crpDtl.setProjectSoilMoisture(soilandmoiscrops);
+			crpDtl.setProjectDegradedRainfed(degradedrainfed);
+			crpDtl.setControlDiversifiedChange(cdiversifiedcrops);
+			crpDtl.setControlNillSingle(cniltosingle);
+			crpDtl.setControlSingleDoublemore(csdcrop);
+			crpDtl.setControlWhsConstructedRejuvenated(cWHSConReju);
+			crpDtl.setControlSoilMoisture(csoilandmoiscrops);
+			crpDtl.setControlDegradedRainfed(cdegradedrainfed);
+			crpDtl.setRemarkDiversifiedChange(diversifiedcropsremark);
+			crpDtl.setRemarkNillSingle(niltosingleremark);
+			crpDtl.setRemarkSingleDoublemore(sdcropremark);
+			crpDtl.setRemarkWhsConstructedRejuvenated(WHSConRejuremark);
+			crpDtl.setRemarkSoilMoisture(soilandmoiscropsremark);
+			crpDtl.setRemarkDegradedRainfed(degradedrainfedremark);
+			
 			session.saveOrUpdate(crpDtl);
 			session.getTransaction().commit();
 			res = "success";
@@ -1476,6 +1478,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		}
 		return res;
 	}
+
+
 
 	@Override
 	public List<WdcpmksyCroppedDetails2> getCroppedDetails2(Integer projProfId) {

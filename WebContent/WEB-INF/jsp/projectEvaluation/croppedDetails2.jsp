@@ -44,17 +44,33 @@
 
 		<hr />
 		<div>
-			<table style="width: 80%">
+			<table style="width: 100%">
 				<tr>
 					<th><b>Sl.No.</b></th>
 					<th><b>Crop Details</b></th>
 					<th><b>Project Area Details</b></th>
 					<th><b> Controlled Area Details</b></th>
+					<th><b> Remarks</b></th>
 
 					<c:if test="${wdcCrpDtlListSize > 0}">
 						<c:forEach items="${wdcCrpDtlList}" var="list">
-							<tr>
-								<td><b><c:out value="1." /></b></td>
+						
+						    <tr>
+							<td><b><c:out value="1." /></b></td>
+							<td><b> <c:out value="Area covered under diversified crops/ change in cropping system (Ha.)" /></b></td>
+							<td><input type="text" id="diversifiedcrops" name="diversifiedcrops"
+								onfocusin="decimalToFourPlace(event)" value=<c:out value="${list.projectDiversifiedChange}"/>
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="diversifiedcropsError"></span></td>
+							<td><input type="text" id="cdiversifiedcrops"
+								name="cdiversifiedcrops" onfocusin="decimalToFourPlace(event)" value=<c:out value="${list.controlDiversifiedChange}"/>
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="cdiversifiedcropsError"></span></td>
+								<td><textArea id="diversifiedcropsremark" name="diversifiedcropsremark" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.remarkDiversifiedChange}"/></textArea>
+							<span class="diversifiedcropsError"></span></td>
+						</tr>
+						    
+							 <tr>
+								<td><b><c:out value="2." /></b></td>
 								<td><b><c:out value="Area brought from Nil/Single crop to double or more crop(ha.)" /></b></td>
 								<td></td>
 								<td></td>
@@ -64,14 +80,16 @@
 								<td><b> <c:out value="Nil to single crop(ha.)" /></b></td>
 								<td><input type="text" id="niltosingle" name="niltosingle"
 									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.nillSingle}"/>
+									value=<c:out value="${list.projectNillSingle}"/>
 									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 									class="niltosingleError" autocomplete = "off"></span></td>
 								<td><input type="text" id="cniltosingle" name="cniltosingle"
 									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_nill_single}"/>
+									value=<c:out value="${list.controlNillSingle}"/>
 									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 									class="cniltosingleError" autocomplete = "off"></span></td>
+									<td><textArea id="niltosingleremark" name="niltosingleremark" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.remarkNillSingle}"/></textArea>
+							<span class="niltosingleremarkremarkError"></span></td>
 							</tr>
 
 							<tr>
@@ -79,166 +97,99 @@
 								<td><b> <c:out value="Single to double or more crop(ha.)" /></b></td>
 								<td><input type="text" id="sdcrop" name="sdcrop"
 									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.singelDoublemore}"/>
+									value=<c:out value="${list.projectSingleDoublemore}"/>
 									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 									class="sdcropError" autocomplete = "off"></span></td>
 								<td><input type="text" id="csdcrop" name="csdcrop"
 									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_singel_doublemore}"/>
+									value=<c:out value="${list.controlSingleDoublemore}"/>
 									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 									class="csdcropError" autocomplete = "off"></span></td>
-							
+									<td><textArea id="sdcropremark" name="sdcropremark" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.remarkSingleDoublemore}"/></textArea>
+							        <span class="sdcropremarkError"></span></td>
+							</tr>
 							
 							<tr>
 								<td></td>
 								<td><b><c:out value="Total Gross Cropped Area(ha)" /></b></td>
 								<td><input type="text" id="totalArea" name="totalArea"
 									autocomplete="off" maxlength="15"
-									value=<c:out value="${list.nillSingle + list.singelDoublemore}"/> readonly="readonly"/>
+									value=<c:out value="${list.projectNillSingle + list.projectSingleDoublemore}"/> readonly="readonly"/>
 								</td>
 								<td><input type="text" id="ctotalArea" name="ctotalArea"
 									autocomplete="off" maxlength="15"
-									value=<c:out value="${list.control_nill_single + list.control_singel_doublemore}"/> readonly="readonly"/>
+									value=<c:out value="${list.controlNillSingle + list.controlSingleDoublemore}"/> readonly="readonly"/>
 								</td>
 							</tr>
 
-                           </tr>
-                              <tr>
-								<td><b><c:out value="2." /></b></td>
-								<td><b> <c:out value="Area under plantation cover" /></b>
-								</td>
-								<td><input type="text" id="plantation"
-									name="plantation" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.plantationCover}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" autocomplete = "off" maxlength="15"/><span class="plantationError"></span></td>
-								<td><input type="text" id="cplantation"
-									name="cplantation" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_plantation_cover}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" autocomplete = "off" maxlength="15"/><span class="cplantationError"></span></td>
-							</tr>
-							<tr>
-								<td><b><c:out value="3." /></b></td>
-								<td><b><c:out value="Yeild per hectare of major crops(Qtl./ha.)" /></b>
-								</td>
-								<td></td>
-							</tr>
-							<tr>
-								<td style="text-align: right;"><b><c:out value="a" /></b></td>
-								<td><b> <c:out value="Rice" /></b></td>
-								<td><input type="text" id="rice" name="rice"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.rice}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="riceError" autocomplete = "off"></span></td>
-								<td><input type="text" id="crice" name="crice"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_rice}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="criceError" autocomplete = "off"></span></td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="b" /></b></td>
-								<td><b> <c:out value="Wheat" /></b></td>
-								<td><input type="text" id="wheat" name="wheat"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.wheat}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="wheatError" autocomplete = "off"></span></td>
-								<td><input type="text" id="cwheat" name="cwheat"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_wheat}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="cwheatError" autocomplete = "off"></span></td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="c" /></b></td>
-								<td><b> <c:out value="Pulses" /></b></td>
-								<td><input type="text" id="pulses" name="pulses"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.pulses}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="pulsesError" autocomplete = "off"></span></td>
-								<td><input type="text" id="cpulses" name="cpulses"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_pulses}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="cpulsesError" autocomplete = "off"></span></td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="d" /></b></td>
-								<td><b> <c:out value="Millets" /></b></td>
-								<td><input type="text" id="millets" name="millets"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.millets}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="milletsError" autocomplete = "off"></span></td>
-								<td><input type="text" id="cmillets" name="cmillets"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_millets}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="cmilletsError" autocomplete = "off"></span></td>
-							</tr>
-
-<tr>
-								<td style="text-align: right;"><b><c:out value="e" /></b></td>
-								<td><b> <c:out value="Oil Seed" /></b></td>
-								<td><input type="text" id="oilseed" name="oilseed"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.oil_seed}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="oilseedError" autocomplete = "off"></span></td>
-								<td><input type="text" id="coilseed" name="coilseed"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_oil_seed}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="coilseedError" autocomplete = "off"></span></td>
-							</tr>
-							<tr>
-								<td style="text-align: right;"><b><c:out value="f" /></b></td>
-								<td><b> <c:out value="Others(Specify name of the crop)" /></b>
-								</td>
-								<td><input type="text" id="others" name="others"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.other}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="othersError" autocomplete = "off"></span></td>
-								<td><input type="text" id="cothers" name="cothers"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.control_other}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-									class="cothersError" autocomplete = "off"></span></td>
-							</tr>
-
-							<tr>
-								<td></td>
-								<td><b><c:out
-											value="Total Area under different Crops(ha)" /></b></td>
-								<td><input type="text" id="diffCrop" name="diffCrop"
-									class=""
-									value=<c:out value="${list.rice + list.wheat + list.pulses + list.millets + list.oil_seed + list.other}"/>
-									readonly="readonly" /></td>
-								<td><input type="text" id="cdiffCrop" name="cdiffCrop"
-									class=""
-									value=<c:out value="${list.control_rice + list.control_wheat + list.control_pulses + list.control_millets + list.control_oil_seed + list.control_other}"/>
-									readonly="readonly" /></td>
-							</tr>
-
-							
+							 <tr>
+							<td><b><c:out value="3." /></b></td>
+							<td><b> <c:out value="No. of Water Harvesting Structure (WHS) constructed /rejuvenated" /></b></td>
+							<td><input type="text" id="WHSConReju" name="WHSConReju"
+								 value=<c:out value="${list.projectWhsConstructedRejuvenated}"/>
+								placeholder="Only Numeric" onmousedown="numericOnly(event);" autocomplete="off" maxlength="10" /><span class="WHSConRejuError"></span></td>
+							<td><input type="text" id="cWHSConReju"
+								name="cWHSConReju"  value=<c:out value="${list.controlWhsConstructedRejuvenated}"/>
+								class="" placeholder="Only Numeric" onmousedown="numericOnly(event);" autocomplete="off" maxlength="10" /><span
+								class="cWHSConRejuError"></span></td>
+								<td><textArea id="WHSConRejuremark" name="WHSConRejuremark" autocomplete = "off" rows="2" cols="22" maxlength="200" ><c:out value="${list.remarkWhsConstructedRejuvenated}"/></textArea>
+							<span class="WHSConRejuremarkError"></span></td>
+						</tr>
+                        
+                        <tr>
+							<td><b><c:out value="4." /></b></td>
+							<td><b> <c:out value="Area Covered with soil and Moisture (Ha.)" /></b></td>
+							<td><input type="text" id="soilandmoiscrops" name="soilandmoiscrops"
+								onfocusin="decimalToFourPlace(event)" value=<c:out value="${list.projectSoilMoisture}"/>
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="soilandmoiscropsError"></span></td>
+							<td><input type="text" id="csoilandmoiscrops" value=<c:out value="${list.controlSoilMoisture}"/>
+								name="csoilandmoiscrops" onfocusin="decimalToFourPlace(event)"
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="csoilandmoiscropsError"></span></td>
+								<td><textArea id="soilandmoiscropsremark" name="soilandmoiscropsremark" autocomplete = "off" rows="2" cols="22" maxlength="200"> <c:out value="${list.remarkSoilMoisture}"/></textArea>
+							<span class="soilandmoiscropsError"></span></td>
+						</tr>
+						
+						<tr>
+							<td><b><c:out value="5." /></b></td>
+							<td><b> <c:out value="Area of degraded land covered /rainfed area developed (Ha.)" /></b></td>
+							<td><input type="text" id="degradedrainfed" name="degradedrainfed"
+								onfocusin="decimalToFourPlace(event)" class="" value=<c:out value="${list.projectDegradedRainfed}"/>
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="degradedrainfedError"></span></td>
+							<td><input type="text" id="cdegradedrainfed"
+								name="cdegradedrainfed" onfocusin="decimalToFourPlace(event)" value=<c:out value="${list.controlDegradedRainfed}"/>
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="cdegradedrainfedError"></span></td>
+								<td><textArea id="degradedrainfedremark" name="degradedrainfedremark" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.remarkDegradedRainfed}"/></textArea>
+							<span class="degradedrainfedError"></span></td>
+						</tr>
 						</c:forEach>
 					</c:if>
 
 					<c:if test="${wdcCrpDtlListSize eq 0}">
-						<tr>
+					
+					    <tr>
 							<td><b><c:out value="1." /></b></td>
-							<td><b><c:out value="Area brought from Nil/Single crop to double or more crop(ha.)" /></b></td>
+							<td><b> <c:out value="Area covered under diversified crops/ change in cropping system (Ha.)" /></b></td>
+							<td><input type="text" id="diversifiedcrops" name="diversifiedcrops"
+								onfocusin="decimalToFourPlace(event)" class=""
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="diversifiedcropsError"></span></td>
+							<td><input type="text" id="cdiversifiedcrops"
+								name="cdiversifiedcrops" onfocusin="decimalToFourPlace(event)"
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="cdiversifiedcropsError"></span></td>
+								<td><textArea id="diversifiedcropsremark" name="diversifiedcropsremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="diversifiedcropsError"></span></td>
+						</tr>
+						
+						<tr>
+							<td><b><c:out value="2." /></b></td>
+							<td><b><c:out value="Area brought from Nil/Single crop to double or more crop (Ha.)" /></b></td>
 							<td></td>
 						</tr>
 						<tr>
 							<td style="text-align: right;"><b><c:out value="a." /></b></td>
-							<td><b> <c:out value="Nil to single crop(ha.)" /></b></td>
+							<td><b> <c:out value="Nil to single crop (Ha.)" /></b></td>
 							<td><input type="text" id="niltosingle" name="niltosingle"
 								onfocusin="decimalToFourPlace(event)" class=""
 								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
@@ -247,11 +198,13 @@
 								onfocusin="decimalToFourPlace(event)" class=""
 								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 								class="cniltosingleError"></span></td>
+							<td><textArea id="niltosingleremark" name="niltosingleremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="niltosingleremarkError"></span></td>
 						</tr>
 
 						<tr>
 							<td style="text-align: right;"><b><c:out value="b." /></b></td>
-							<td><b> <c:out value="Single to double or more crop(ha.)" /></b></td>
+							<td><b> <c:out value="Single to double or more crop (Ha.)" /></b></td>
 							<td><input type="text" id="sdcrop" name="sdcrop" 
 							onfocusin="decimalToFourPlace(event)" class="" 
 							placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
@@ -260,126 +213,66 @@
 								onfocusin="decimalToFourPlace(event)" class=""
 								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="calSum()" /><span
 								class="csdcropError"></span></td>
+							<td><textArea id="sdcropremark" name="sdcropremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="sdcropremarkError"></span></td>
 						</tr>
 
 						<tr>
 							<td></td>
-							<td><b><c:out value="Total Nil to Single / Single to double Area(ha)" /></b></td>
+							<td><b><c:out value="Total Nil to Single / Single to double Area (Ha)" /></b></td>
 							<td><input type="number" id="totalArea" name="totalArea"
 								autocomplete="off" maxlength="15" readonly="readonly" /></td>
 							<td><input type="number" id="ctotalArea" name="ctotalArea"
 								autocomplete="off" maxlength="15" readonly="readonly" /></td>
 						</tr>
 
+
                         <tr>
-							<td><b><c:out value="2." /></b></td>
-							<td><b> <c:out value="Area under plantation cover(ha.)" /></b></td>
-							<td><input type="text" id="plantation" name="plantation"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="plantationError"></span></td>
-							<td><input type="text" id="cplantation"
-								name="cplantation" onfocusin="decimalToFourPlace(event)"
-								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
-								class="cplantationError"></span></td>
-						</tr>
-						<tr>
 							<td><b><c:out value="3." /></b></td>
-							<td><b><c:out value="Yield per hectare of major crops(Qtl./ha.)" /></b></td>
-							<td></td>
+							<td><b> <c:out value="No. of Water Harvesting Structure (WHS) constructed /rejuvenated" /></b></td>
+							<td><input type="text" id="WHSConReju" name="WHSConReju"
+								 class=""
+								placeholder="Only Numeric" onmousedown="numericOnly(event);" autocomplete="off" maxlength="10" /><span class="WHSConRejuError"></span></td>
+							<td><input type="text" id="cWHSConReju"
+								name="cWHSConReju" 
+								class="" placeholder="Only Numeric" onmousedown="numericOnly(event);" autocomplete="off" maxlength="10" /><span
+								class="cWHSConRejuError"></span></td>
+								<td><textArea id="WHSConRejuremark" name="WHSConRejuremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="WHSConRejuremarkError"></span></td>
 						</tr>
-						<tr>
-							<td style="text-align: right;"><b><c:out value="a." /></b></td>
-							<td><b> <c:out value="Rice" /></b></td>
-							<td><input type="text" id="rice" name="rice"
+                        
+                        <tr>
+							<td><b><c:out value="4." /></b></td>
+							<td><b> <c:out value="Area Covered with soil and Moisture (Ha.)" /></b></td>
+							<td><input type="text" id="soilandmoiscrops" name="soilandmoiscrops"
 								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="riceError"></span></td>
-							<td><input type="text" id="crice" name="crice"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="criceError"></span></td>
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="soilandmoiscropsError"></span></td>
+							<td><input type="text" id="csoilandmoiscrops"
+								name="csoilandmoiscrops" onfocusin="decimalToFourPlace(event)"
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="csoilandmoiscropsError"></span></td>
+								<td><textArea id="soilandmoiscropsremark" name="soilandmoiscropsremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="soilandmoiscropsError"></span></td>
 						</tr>
-
-						<tr>
-							<td style="text-align: right;"><b><c:out value="b." /></b></td>
-							<td><b> <c:out value="Wheat" /></b></td>
-							<td><input type="text" id="wheat" name="wheat"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="wheatError"></span></td>
-							<td><input type="text" id="cwheat" name="cwheat"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="cwheatError"></span></td>
-						</tr>
-
-						<tr>
-							<td style="text-align: right;"><b><c:out value="c." /></b></td>
-							<td><b> <c:out value="Pulses" /></b></td>
-							<td><input type="text" id="pulses" name="pulses"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="pulsesError"></span></td>
-							<td><input type="text" id="cpulses" name="cpulses"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="cpulsesError"></span></td>
-						</tr>
-
-						<tr>
-							<td style="text-align: right;"><b><c:out value="d." /></b></td>
-							<td><b> <c:out value="Millets" /></b></td>
-							<td><input type="text" id="millets" name="millets"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="milletsError"></span></td>
-							<td><input type="text" id="cmillets" name="cmillets"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="cmilletsError"></span></td>
-						</tr>
-
-                       <tr>
-							<td style="text-align: right;"><b><c:out value="e." /></b></td>
-							<td><b> <c:out value="Oil seed" /></b>
-							</td>
-							<td><input type="text" id="oilseed" name="oilseed"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="oilseedError"></span></td>
-							<td><input type="text" id="coilseed" name="coilseed"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="coilseedError"></span></td>
-						</tr>
-						<tr>
-							<td style="text-align: right;"><b><c:out value="f." /></b></td>
-							<td><b> <c:out value="Others(Specify name of the crop)" /></b>
-							</td>
-							<td><input type="text" id="others" name="others"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="othersError"></span></td>
-							<td><input type="text" id="cothers" name="cothers"
-								onfocusin="decimalToFourPlace(event)" class=""
-								placeholder="Only Decimal" autocomplete="off" maxlength="15" onchange="diffcalSum()" /><span
-								class="cothersError"></span></td>
-						</tr>
-
-						<tr>
-							<td></td>
-							<td><b><c:out
-										value="Total Yield per hectare of major crops(Qtl./ha.)" /></b></td>
-							<td><input type="number" id="majorCrop" name="majorCrop"
-								class="" readonly="readonly" /></td>
-							<td><input type="number" id="cmajorCrop" name="cmajorCrop"
-								class="" readonly="readonly" /></td>
-						</tr>
-
 						
+						<tr>
+							<td><b><c:out value="5." /></b></td>
+							<td><b> <c:out value="Area of degraded land covered /rainfed area developed (Ha.)" /></b></td>
+							<td><input type="text" id="degradedrainfed" name="degradedrainfed"
+								onfocusin="decimalToFourPlace(event)" class=""
+								placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span class="degradedrainfedError"></span></td>
+							<td><input type="text" id="cdegradedrainfed"
+								name="cdegradedrainfed" onfocusin="decimalToFourPlace(event)"
+								class="" placeholder="Only Decimal" autocomplete="off" maxlength="15" /><span
+								class="cdegradedrainfedError"></span></td>
+								<td><textArea id="degradedrainfedremark" name="degradedrainfedremark" autocomplete = "off" rows="2" cols="22" maxlength="200"></textArea>
+							<span class="degradedrainfedError"></span></td>
+						</tr>
+                        
+                        
 					</c:if>
 				<tr>
-					<th colspan="4" style="align-content: center;">
+					<th colspan="5" style="align-content: center;">
 						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 						<input type="button" name="view" id="view" value="Confirm"
 						class="btn btn-info" />

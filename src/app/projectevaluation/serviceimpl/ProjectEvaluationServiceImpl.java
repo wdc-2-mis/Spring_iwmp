@@ -185,15 +185,17 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 
 	@Override
-	public String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal niltosingle,
-			BigDecimal sdcrop, BigDecimal plantation, BigDecimal rice, BigDecimal wheat, BigDecimal pulses,
-			BigDecimal millets, BigDecimal oilseed, BigDecimal others, BigDecimal cniltosingle, BigDecimal csdcrop,
-			BigDecimal cplantation, BigDecimal crice, BigDecimal cwheat, BigDecimal cpulses, BigDecimal cmillets,
-			BigDecimal coilseed, BigDecimal cothers) {
-		// TODO Auto-generated method stub
-		return PEDAO.saveOrUpdateCroppedDetails2(request, session, projProfId, niltosingle, sdcrop, plantation, rice, wheat, pulses, millets, oilseed,
-				others, cniltosingle, csdcrop, cplantation, crice, cwheat, cpulses, cmillets, coilseed, cothers);
+	public String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession session, Integer profile_id, Integer projProfId,
+			BigDecimal diversifiedcrops, BigDecimal niltosingle, BigDecimal sdcrop, Integer wHSConReju,
+			BigDecimal soilandmoiscrops, BigDecimal degradedrainfed, BigDecimal cdiversifiedcrops,
+			BigDecimal cniltosingle, BigDecimal csdcrop, Integer cWHSConReju, BigDecimal csoilandmoiscrops,
+			BigDecimal cdegradedrainfed, String diversifiedcropsremark, String niltosingleremark, String sdcropremark,
+			String WHSConRejuremark, String soilandmoiscropsremark, String degradedrainfedremark) {
+		return PEDAO.saveOrUpdateCroppedDetails2(request, session, profile_id, projProfId, diversifiedcrops, niltosingle, sdcrop, wHSConReju, soilandmoiscrops, degradedrainfed,
+				cdiversifiedcrops, cniltosingle, csdcrop, cWHSConReju, csoilandmoiscrops, cdegradedrainfed, diversifiedcropsremark, niltosingleremark,
+				sdcropremark, WHSConRejuremark, soilandmoiscropsremark, degradedrainfedremark);
 	}
+
 
 	@Override
 	public List<WdcpmksyCroppedDetails2> getCroppedDetails2(Integer projProfId) {

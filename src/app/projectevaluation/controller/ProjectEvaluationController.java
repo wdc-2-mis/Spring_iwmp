@@ -3164,7 +3164,8 @@ public class ProjectEvaluationController {
 		
 		try { 
 			if (session != null && session.getAttribute("loginID") != null) {
-				Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+				monthList = PEService.getmonthforproject();
+                Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		        String distName = request.getParameter("dname");
 		        Integer projid = Integer.parseInt(request.getParameter("pcode"));
 		        String project = request.getParameter("pcode");
@@ -3175,25 +3176,25 @@ public class ProjectEvaluationController {
 		        String fname = request.getParameter("fname");
 		        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
 				
+		        BigDecimal diversifiedcrops = new BigDecimal(request.getParameter("diversifiedcrops"));
 				BigDecimal niltosingle = new BigDecimal(request.getParameter("niltosingle"));
 				BigDecimal sdcrop = new BigDecimal(request.getParameter("sdcrop"));
-				BigDecimal plantation = new BigDecimal(request.getParameter("plantation"));
-				BigDecimal rice = new BigDecimal(request.getParameter("rice"));
-				BigDecimal wheat = new BigDecimal(request.getParameter("wheat"));
-				BigDecimal pulses = new BigDecimal(request.getParameter("pulses"));
-				BigDecimal millets = new BigDecimal(request.getParameter("millets"));
-				BigDecimal oilseed = new BigDecimal(request.getParameter("oilseed"));
-				BigDecimal others = new BigDecimal(request.getParameter("others"));
+				Integer WHSConReju = Integer.parseInt(request.getParameter("WHSConReju"));
+                BigDecimal soilandmoiscrops = new BigDecimal(request.getParameter("soilandmoiscrops"));
+                BigDecimal degradedrainfed = new BigDecimal(request.getParameter("degradedrainfed"));
 				
+				BigDecimal cdiversifiedcrops = new BigDecimal(request.getParameter("cdiversifiedcrops"));
 				BigDecimal cniltosingle = new BigDecimal(request.getParameter("cniltosingle"));
 				BigDecimal csdcrop = new BigDecimal(request.getParameter("csdcrop"));
-				BigDecimal cplantation = new BigDecimal(request.getParameter("cplantation"));
-				BigDecimal crice = new BigDecimal(request.getParameter("crice"));
-				BigDecimal cwheat = new BigDecimal(request.getParameter("cwheat"));
-				BigDecimal cpulses = new BigDecimal(request.getParameter("cpulses"));
-				BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
-				BigDecimal coilseed = new BigDecimal(request.getParameter("coilseed"));
-				BigDecimal cothers = new BigDecimal(request.getParameter("cothers"));
+				Integer cWHSConReju = Integer.parseInt(request.getParameter("cWHSConReju"));
+				BigDecimal csoilandmoiscrops = new BigDecimal(request.getParameter("csoilandmoiscrops"));
+                BigDecimal cdegradedrainfed = new BigDecimal(request.getParameter("cdegradedrainfed"));
+                String diversifiedcropsremark = request.getParameter("diversifiedcropsremark");
+                String niltosingleremark = request.getParameter("niltosingleremark");
+                String sdcropremark = request.getParameter("sdcropremark");
+                String WHSConRejuremark = request.getParameter("WHSConRejuremark");
+                String soilandmoiscropsremark = request.getParameter("soilandmoiscropsremark");
+                String degradedrainfedremark = request.getParameter("degradedrainfedremark");
 				
 				Integer profile_id=0;
 		        profile_id=PEService.getProjectProfileId( projid, fcode, mcode);
@@ -3304,14 +3305,16 @@ public class ProjectEvaluationController {
 		            request.setAttribute("geoTagDetailsConfirmed", "true");
 		        }
 				}
-				String result = PEService.saveOrUpdateCroppedDetails2(request, session, profile_id, niltosingle, sdcrop, plantation, rice, wheat, pulses,
-						millets, oilseed, others, cniltosingle, csdcrop, cplantation, crice, cwheat, cpulses, cmillets, coilseed, cothers);
+				String result = PEService.saveOrUpdateCroppedDetails2(request, session, profile_id, projProfId, diversifiedcrops, niltosingle, sdcrop, WHSConReju, soilandmoiscrops,
+						degradedrainfed, cdiversifiedcrops, cniltosingle, csdcrop, cWHSConReju, csoilandmoiscrops, cdegradedrainfed, diversifiedcropsremark,
+						niltosingleremark, sdcropremark, WHSConRejuremark, soilandmoiscropsremark, degradedrainfedremark);
 				
-				if ("success".equals(result)) {
+                if ("success".equals(result)) {
 		            request.setAttribute("croppedDetails2Confirmed", "true");
 		        }
 				
 		        mav.addObject("distName", distName);
+		        mav.addObject("monthList", monthList);
 		        mav.addObject("projName", projName);
 		        mav.addObject("monthname", mname);
 		        mav.addObject("fincd", fcode);

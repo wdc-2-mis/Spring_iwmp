@@ -99,11 +99,12 @@ public interface ProjectEvaluationService {
 	
 	
 
-	String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal niltosingle,
-			BigDecimal sdcrop, BigDecimal plantation, BigDecimal rice, BigDecimal wheat, BigDecimal pulses,
-			BigDecimal millets, BigDecimal oilseed, BigDecimal others, BigDecimal cniltosingle, BigDecimal csdcrop,
-			BigDecimal cplantation, BigDecimal crice, BigDecimal cwheat, BigDecimal cpulses, BigDecimal cmillets,
-			BigDecimal coilseed, BigDecimal cothers);
+	String saveOrUpdateCroppedDetails2(HttpServletRequest request, HttpSession session, Integer profile_id, Integer projProfId,
+			BigDecimal diversifiedcrops, BigDecimal niltosingle, BigDecimal sdcrop, Integer WHSConReju,
+			BigDecimal soilandmoiscrops, BigDecimal degradedrainfed, BigDecimal cdiversifiedcrops,
+			BigDecimal cniltosingle, BigDecimal csdcrop, Integer cWHSConReju, BigDecimal csoilandmoiscrops,
+			BigDecimal cdegradedrainfed, String diversifiedcropsremark, String niltosingleremark, String sdcropremark, String wHSConRejuremark, String soilandmoiscropsremark, String degradedrainfedremark);
+
 
 	List<WdcpmksyCroppedDetails2> getCroppedDetails2(Integer projProfId);
 
