@@ -24,84 +24,24 @@ function savedata(event){
 		area=$('#controlledArea:checked').val();
 		
 	} */
-    
-	if($('#culturable_wasteland').val()==='')
+	
+	if($('#pre_farmer_income').val()==='')
 	{
-		alert('Please enter Culturable Wasteland for Project Area.');
-		$('#culturable_wasteland').focus();
+		alert('Please enter pre farmer income for Project Area.');
+		$('#pre_farmer_income').focus();
+		return false;
+	}
+	if($('#mid_farmer_income').val()==='')
+	{
+		alert('Please enter mid farmer income for Project Area.');
+		$('#mid_farmer_income').focus();
 		return false;
 	}
 	
-	if($('#conculturable_wasteland').val()==='')
-	{
-		alert('Please enter Culturable Wasteland for Controlled Area.');
-		$('#conculturable_wasteland').focus();
-		return false;
-	}
-	
-	
-	if($('#whs_constructed_rejuvenated').val()==='')
-	{
-		alert('Please enter WHS for Project Area.');
-		$('#whs_constructed_rejuvenated').focus();
-		return false;
-	}
-	if($('#conwhs_constructed_rejuvenated').val()==='')
-	{
-		alert('Please enter WHS for Controlled Area.');
-		$('#conwhs_constructed_rejuvenated').focus();
-		return false;
-	}
-	
-	if($('#soil_moisture').val()==='')
-	{
-		alert('Please enter area of Soil and moisture for Project Area.');
-		$('#soil_moisture').focus();
-		return false;
-	}
-	if($('#consoil_moisture').val()==='')
-	{
-		alert('Please enter area of Soil and moisture for Controlled Area.');
-		$('#consoil_moisture').focus();
-		return false;
-	}
-	
-	if($('#protective_irrigation').val()==='')
-	{
-		alert('Please enter Protective Irrigation for Project Area.');
-		$('#protective_irrigation').focus();
-		return false;
-	}
-	if($('#conprotective_irrigation').val()==='')
-	{
-		alert('Please enter Protective Irrigation for Controlled Area.');
-		$('#conprotective_irrigation').focus();
-		return false;
-	}
-	
-	if($('#degraded_rainfed').val()==='')
-	{
-		alert('Please enter Degraded land and rainfed Area for Project Area.');
-		$('#degraded_rainfed').focus();
-		return false;
-	}
-	if($('#condegraded_rainfed').val()==='')
-	{
-		alert('Please enter Degraded land and rainfed Area for Controlled Area.');
-		$('#condegraded_rainfed').focus();
-		return false;
-	}
-	
-	if($('#farmer_income').val()==='')
-	{
-		alert('Please enter farmer income for Project Area.');
-		$('#farmer_income').focus();
-		return false;
-	}
-	if($('#confarmer_income').val()==='')
+	if($('#control_farmer_income').val()==='')
 	{
 		alert('Please enter farmer income for Controlled Area.');
-		$('#confarmer_income').focus();
+		$('#control_farmer_income').focus();
 		return false;
 	}
 	
@@ -111,10 +51,10 @@ function savedata(event){
 		$('#farmer_benefited').focus();
 		return false;
 	}
-	if($('#confarmer_benefited').val()==='')
+	if($('#control_farmer_benefited').val()==='')
 	{
 		alert('Please enter farmer benefited for Controlled Area.');
-		$('#confarmer_benefited').focus();
+		$('#control_farmer_benefited').focus();
 		return false;
 	}
 	
@@ -124,36 +64,48 @@ function savedata(event){
 		$('#mandays_generated').focus();
 		return false;
 	}
-	if($('#conmandays_generated').val()==='')
+	if($('#control_mandays_generated').val()==='')
 	{
 		alert('Please enter mandays generated for Controlled Area.');
-		$('#conmandays_generated').focus();
+		$('#control_mandays_generated').focus();
 		return false;
 	}
 	
-	if($('#dug_well').val()==='')
+	if($('#pre_dug_well').val()==='')
 	{
-		alert('Please enter dug well for Project Area.');
-		$('#dug_well').focus();
+		alert('Please enter pre dug well for Project Area.');
+		$('#pre_dug_well').focus();
 		return false;
 	}
-	if($('#condug_well').val()==='')
+	if($('#mid_dug_well').val()==='')
+	{
+		alert('Please enter mid dug well for Project Area.');
+		$('#mid_dug_well').focus();
+		return false;
+	}
+	if($('#control_dug_well').val()==='')
 	{
 		alert('Please enter dug well for Controlled Area.');
-		$('#condug_well').focus();
+		$('#control_dug_well').focus();
 		return false;
 	}
 	
-	if($('#tube_well').val()==='')
+	if($('#pre_tube_well').val()==='')
 	{
-		alert('Please enter tube well');
-		$('#tube_well').focus();
+		alert('Please pre enter tube well');
+		$('#pre_tube_well').focus();
 		return false;
 	}
-	if($('#contube_well').val()==='')
+	if($('#mid_tube_well').val()==='')
+	{
+		alert('Please mid enter tube well');
+		$('#mid_tube_well').focus();
+		return false;
+	}
+	if($('#control_tube_well').val()==='')
 	{
 		alert('Please enter tube well');
-		$('#contube_well').focus();
+		$('#control_tube_well').focus();
 		return false;
 	}	
 	
@@ -196,99 +148,6 @@ function savedata(event){
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
 		<input type="hidden" name="fromno" id="fromno" value="6" />
 		
-		
-		
-		
-		
-		<%--  <table style="width:100%; align-content: center;" >
-        	<tr align="center" >
-          		<td>District Name:-</td>
-          		<td>
-    					<b><c:out value="${distName}"/> GWALIOR </b>
-          		</td>
-          		
-          		<td>Project Name:-</td>
-          		<td>
-            		<b><c:out value="${projName}"/> GWALIOR-WDC - 1 /2021-22</b>
-          		</td>
-          	</tr>	
-          	<tr align="center" >	
-          		<td >Area:-</td>
-          		<td >
-             		<b>Project Area</b> &nbsp;<input type='radio' class='projectArea' value='P' name = 'projectArea' id='projectArea' checked='checked'> &nbsp;
-					&nbsp; <input type='radio' class='controlledArea' value='C' name = 'projectArea' id='controlledArea'> &nbsp; <b>Controlled Area</b>
-          		</td>
-          	</tr>
-          	<tr align="center" >	
-          		<td >Month:-</td>
-          		<td >
-              		<b><c:out value="${month}"/> July</b>
-          		</td>
-         		<td >Financial Year:-</td>
-          		<td >
-              		<b><c:out value="${finyear}"/> 2024-25</b>
-          		</td>
-       		</tr>
-      	</table>  --%>
-      	
-      	
-      	
-<!--     	<div class = "form-row"> -->
-<!-- 			<div class="form-group col-md-6"> -->
-<%-- 				<label for="district" class="">District Name: &nbsp;<b><c:out value="${distName}"/> </b></label>  --%>
-<!-- 			</div> -->
-<!-- 	<br/> <br/> -->
-<!-- 			<div class="form-group col-md-10"> -->
-<%-- 				<label for="project" class="">Project Name: &nbsp;<b><c:out value="${projName}"/></b></label>  --%>
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<br/> <br/><br/> -->
-	<!-- 	<div class = "form-row">
-			<div class="form-group col-md-2">
-				<label for="project" class="">Area:</label> 
-			</div>
-			<div class="form-group col-md-7">
-				<b>Project Area</b> &nbsp;<input type='radio' class='projectArea' value='P' name = 'projectArea' id='projectArea' checked='checked'> &nbsp;
-						&nbsp; <input type='radio' class='controlledArea' value='C' name = 'projectArea' id='controlledArea'> &nbsp; <b>Controlled Area</b>
-			</div>
-		</div> -->
-		
-<!-- 	<div class = "form-row"> -->
-<!-- 		<div class="form-group col"> -->
-<%-- 			<label for="month" class="">Month: &nbsp;<b><c:out value="${month}"/></b></label> --%>
-<!-- 		</div> -->
-<!-- 		<br/> <br/> -->
-<!-- 		<div class="form-group col"> -->
-<%-- 			<label for="finyear" class="">Financial Year: &nbsp;<b><c:out value="${finyear}"/></b></label> --%>
-<!-- 		</div>  -->
-<!-- 	</div> -->
-      	
-      	
-      	
-<!--       <br/> <br/><br/> <br/><br/> -->
-		
-	
-	
-	
-<!-- 	<div class = "form-row"> -->
-<!-- 		<div class="form-group col-md-6"> -->
-<%-- 			<label for="district" class="">District Name: <b><c:out value="${distName}"/></b></label>  --%>
-<!-- 		</div> -->
-
-<!-- 		<div class="form-group col-md-6"> -->
-<%-- 			<label for="project" class="">Project Name: <b><c:out value="${projName}"/></b></label>  --%>
-<!-- 		</div> -->
-<!-- 	</div> -->
-			
-<!-- 	<div class = "form-row"> -->
-<!-- 		<div class="form-group col"> -->
-<%-- 			<label for="month" class="">Month: <b><c:out value="${month}"/></b></label> --%>
-<!-- 		</div> -->
-		
-<!-- 		<div class="form-group col"> -->
-<%-- 			<label for="finyear" class="">Financial Year: <b><c:out value="${finyear}"/></b></label> --%>
-<!-- 		</div>  -->
-<!-- 	</div> -->
 
 <div class="form-group">
 	District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp; 
@@ -301,117 +160,154 @@ function savedata(event){
 		
 		
 	<table id="projectprofile" cellspacing="0" class="table"   width="auto">
-  	  <thead>
-		<tr>
-	      <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
-	      <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th>
-	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Project Area</th>
-	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
-      	</tr>
-      </thead>
+<!--   	  <thead> -->
+<!-- 		<tr> -->
+<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th> -->
+<!-- 	      <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th> -->
+<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Project Area</th> -->
+<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th> -->
+<!--       	</tr> -->
+<!--       </thead> -->
+<thead>
+    <tr>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
+        <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th>
+        <th colspan="2" style="text-align:center; vertical-align: middle;">Project Area</th>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
+    </tr>
+    <tr>
+        <th style="text-align:left; vertical-align: middle;">Pre Project Status(aggregate)</th>
+        <th style="text-align:left; vertical-align: middle;">Mid Project Status(Aggregate)</th>
+    </tr>
+</thead>
+<!--  		<tr> -->
+<%--         	<td width="4%"> <b><c:out value="1."></c:out></b></td> --%>
+<%--      		<td width="40%"><b><c:out value="Area of Culturable Wasteland (ha)"></c:out></b></td> --%>
+<!--      		<td> -->
+<%--      			<input type="text" id="culturable_wasteland" name="culturable_wasteland" maxlength="15" value="${culturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" /> --%>
+<!-- 			</td> -->
+<!-- 			<td> -->
+<%--      			<input type="text" id="conculturable_wasteland" name="conculturable_wasteland" maxlength="15" value="${conculturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" /> --%>
+<!-- 			</td> -->
+<!-- 		</tr>  -->
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="2."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="Number of Water Harvesting Structures(WHS) constructed/rejuvenated"></c:out></b></td> --%>
+<!--   			<td> -->
+<%--      			<input type="text" id="whs_constructed_rejuvenated" name="whs_constructed_rejuvenated" maxlength="5" value="${whs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="conwhs_constructed_rejuvenated" name="conwhs_constructed_rejuvenated" maxlength="5" value="${conwhs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   /> --%>
+<!--  			</td> -->
+<!-- 		</tr>  -->
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="3."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="Area Covered with Soil and Moisture Conservation Activities (ha)"></c:out></b></td> --%>
+<!--   			<td> -->
+<%--      			<input type="text" id="soil_moisture" name="soil_moisture" maxlength="15" value="${soil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="consoil_moisture" name="consoil_moisture" maxlength="15" value="${consoil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
+<!--  			</td> -->
+<!-- 		</tr>  -->
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="4."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="Area under Protective Irrigation (ha)"></c:out></b></td> --%>
+<!--   			<td> -->
+<%--      			<input type="text" id="protective_irrigation" name="protective_irrigation" maxlength="15" value="${protective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="conprotective_irrigation" name="conprotective_irrigation" maxlength="15" value="${conprotective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
+<!--  			</td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="5."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="Area of degraded land covered/ rainfed area development (ha)"></c:out></b></td> --%>
+<!--   			<td> -->
+<%--      			<input type="text" id="degraded_rainfed" name="degraded_rainfed" maxlength="15" value="${degraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="condegraded_rainfed" name="condegraded_rainfed" maxlength="15" value="${condegraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  /> --%>
+<!--  			</td> -->
+<!-- 		</tr> -->
  		<tr>
-        	<td width="4%"> <b><c:out value="1."></c:out></b></td>
-     		<td width="40%"><b><c:out value="Area of Culturable Wasteland (ha)"></c:out></b></td>
-     		<td>
-     			<input type="text" id="culturable_wasteland" name="culturable_wasteland" maxlength="15" value="${culturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" />
-			</td>
-			<td>
-     			<input type="text" id="conculturable_wasteland" name="conculturable_wasteland" maxlength="15" value="${conculturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" />
-			</td>
-		</tr> 
+ 			<td width="4%"><b><c:out value="1."></c:out></b></td>
+  			<td width="40%"><b><c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)"></c:out></b></td>
+  			<td>
+     			<input type="text" id="pre_farmer_income" name="pre_farmer_income" value="${pre_farmer_income}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+ 			</td>
+ 			<td>
+     			<input type="text" id="mid_farmer_income" name="mid_farmer_income" value="${mid_farmer_income}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+ 			</td>
+ 			<td>
+     			<input type="text" id="control_farmer_income" name="control_farmer_income" value="${control_farmer_income}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+ 			</td>
+ 			 <td> 
+                 <textarea id="remark_farmer_income" name="remark_farmer_income" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_income}</textarea>
+             </td>
+		</tr>
 		<tr>
  			<td width="4%"><b><c:out value="2."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Number of Water Harvesting Structures(WHS) constructed/rejuvenated"></c:out></b></td>
-  			<td>
-     			<input type="text" id="whs_constructed_rejuvenated" name="whs_constructed_rejuvenated" maxlength="5" value="${whs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   />
+  			<td width="40%"><b><c:out value="No. of Farmers Benefited"></c:out></b></td>
+  			<td colspan="2">
+     			<input type="text" id="farmer_benefited" name="farmer_benefited" maxlength="5" value="${farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
  			</td>
  			<td>
-     			<input type="text" id="conwhs_constructed_rejuvenated" name="conwhs_constructed_rejuvenated" maxlength="5" value="${conwhs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   />
+     			<input type="text" id="control_farmer_benefited" name="control_farmer_benefited" maxlength="5" value="${control_farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
  			</td>
-		</tr> 
+ 			 <td> 
+                       <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea>
+                       </td>
+		</tr>
 		<tr>
  			<td width="4%"><b><c:out value="3."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Area Covered with Soil and Moisture Conservation Activities (ha)"></c:out></b></td>
-  			<td>
-     			<input type="text" id="soil_moisture" name="soil_moisture" maxlength="15" value="${soil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
+  			<td width="40%"><b><c:out value="No. of Persondays Generated (man-days)"></c:out></b></td>
+  			<td colspan="2">
+     			<input type="text" id="mandays_generated" name="mandays_generated" maxlength="5" value="${mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
  			</td>
  			<td>
-     			<input type="text" id="consoil_moisture" name="consoil_moisture" maxlength="15" value="${consoil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
+     			<input type="text" id="control_mandays_generated" name="control_mandays_generated" maxlength="5" value="${control_mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
  			</td>
-		</tr> 
+ 			 <td> 
+                       <textarea id="remark_mandays_generated" name="remark_mandays_generated" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_mandays_generated}</textarea>
+                       </td>
+		</tr>
 		<tr>
  			<td width="4%"><b><c:out value="4."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Area under Protective Irrigation (ha)"></c:out></b></td>
+  			<td width="40%"><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season"></c:out></b></td>
   			<td>
-     			<input type="text" id="protective_irrigation" name="protective_irrigation" maxlength="15" value="${protective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
+     			<input type="text" id="pre_dug_well" name="pre_dug_well" value="${pre_dug_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
  			</td>
  			<td>
-     			<input type="text" id="conprotective_irrigation" name="conprotective_irrigation" maxlength="15" value="${conprotective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
+     			<input type="text" id="mid_dug_well" name="mid_dug_well" value="${mid_dug_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
  			</td>
+ 			<td>
+     			<input type="text" id="control_dug_well" name="control_dug_well" value="${control_dug_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
+ 			</td>
+ 			 <td> 
+                       <textarea id="remark_dug_well" name="remark_dug_well" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_dug_well}</textarea>
+                       </td>
 		</tr>
 		<tr>
  			<td width="4%"><b><c:out value="5."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Area of degraded land covered/ rainfed area development (ha)"></c:out></b></td>
-  			<td>
-     			<input type="text" id="degraded_rainfed" name="degraded_rainfed" maxlength="15" value="${degraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
- 			</td>
- 			<td>
-     			<input type="text" id="condegraded_rainfed" name="condegraded_rainfed" maxlength="15" value="${condegraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
- 			</td>
-		</tr>
- 		<tr>
- 			<td width="4%"><b><c:out value="6."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)"></c:out></b></td>
-  			<td>
-     			<input type="text" id="farmer_income" name="farmer_income" value="${income}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
- 			</td>
- 			<td>
-     			<input type="text" id="confarmer_income" name="confarmer_income" value="${conincome}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
- 			</td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="7."></c:out></b></td>
-  			<td width="40%"><b><c:out value="No. of Farmers Benefited"></c:out></b></td>
-  			<td>
-     			<input type="text" id="farmer_benefited" name="farmer_benefited" maxlength="5" value="${benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			<td>
-     			<input type="text" id="confarmer_benefited" name="confarmer_benefited" maxlength="5" value="${conbenefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="8."></c:out></b></td>
-  			<td width="40%"><b><c:out value="No. of Persondays Generated (man-days)"></c:out></b></td>
-  			<td>
-     			<input type="text" id="mandays_generated" name="mandays_generated" maxlength="5" value="${mandays}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			<td>
-     			<input type="text" id="conmandays_generated" name="conmandays_generated" maxlength="5" value="${conmandays}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="9."></c:out></b></td>
-  			<td width="40%"><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season"></c:out></b></td>
-  			<td>
-     			<input type="text" id="dug_well" name="dug_well" value="${dug}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
- 			</td>
- 			<td>
-     			<input type="text" id="condug_well" name="condug_well" value="${condug}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
- 			</td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="10."></c:out></b></td>
   			<td width="40%"><b><c:out value="Average depth of Water table in tube wells (mts.)- Summer Season"></c:out></b></td>
   			<td>
-     			<input type="text" id="tube_well" name="tube_well" value="${tube}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+     			<input type="text" id="pre_tube_well" name="pre_tube_well" value="${pre_tube_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
  			</td>
  			<td>
-     			<input type="text" id="contube_well" name="contube_well" value="${contube}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+     			<input type="text" id="mid_tube_well" name="mid_tube_well" value="${mid_tube_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
  			</td>
+ 			<td>
+     			<input type="text" id="control_tube_well" name="control_tube_well" value="${control_tube_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
+ 			</td>
+ 			 <td> 
+                       <textarea id="remark_tube_well" name="remark_tube_well" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_tube_well}</textarea>
+                       </td>
 		</tr>
 
 		<tr>
-			<td  colspan="4"   align="center" >
+			<td  colspan="6"   align="center" >
 			 	<input type="button" name="view"  id = "view" value="Confirm" class="btn btn-info" onclick="savedata(event);"/>
 				<!--  <button  class="btn btn-info col-2" id="btnSave" name="btnSave">Submit</button> -->
 			</td>

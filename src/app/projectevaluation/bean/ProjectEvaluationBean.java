@@ -98,6 +98,89 @@ public class ProjectEvaluationBean {
     private String distname;
     private Character status;
     
+    private BigDecimal pre_farmer_income;
+	private BigDecimal mid_farmer_income;
+	private String remark_farmer_income;
+    private String remark_farmer_benefited; 
+    private String remark_mandays_generated;
+    
+    private BigDecimal pre_dug_well;
+    private  BigDecimal mid_dug_well;
+    private String remark_dug_well;
+    
+    private BigDecimal pre_tube_well;
+    private BigDecimal mid_tube_well;
+    private String remark_tube_well;
+    
+    
+    
+	public BigDecimal getPre_farmer_income() {
+		return pre_farmer_income;
+	}
+	public void setPre_farmer_income(BigDecimal pre_farmer_income) {
+		this.pre_farmer_income = pre_farmer_income;
+	}
+	public BigDecimal getMid_farmer_income() {
+		return mid_farmer_income;
+	}
+	public void setMid_farmer_income(BigDecimal mid_farmer_income) {
+		this.mid_farmer_income = mid_farmer_income;
+	}
+	public String getRemark_farmer_income() {
+		return remark_farmer_income;
+	}
+	public void setRemark_farmer_income(String remark_farmer_income) {
+		this.remark_farmer_income = remark_farmer_income;
+	}
+	public String getRemark_farmer_benefited() {
+		return remark_farmer_benefited;
+	}
+	public void setRemark_farmer_benefited(String remark_farmer_benefited) {
+		this.remark_farmer_benefited = remark_farmer_benefited;
+	}
+	public String getRemark_mandays_generated() {
+		return remark_mandays_generated;
+	}
+	public void setRemark_mandays_generated(String remark_mandays_generated) {
+		this.remark_mandays_generated = remark_mandays_generated;
+	}
+	public BigDecimal getPre_dug_well() {
+		return pre_dug_well;
+	}
+	public void setPre_dug_well(BigDecimal pre_dug_well) {
+		this.pre_dug_well = pre_dug_well;
+	}
+	public BigDecimal getMid_dug_well() {
+		return mid_dug_well;
+	}
+	public void setMid_dug_well(BigDecimal mid_dug_well) {
+		this.mid_dug_well = mid_dug_well;
+	}
+	public String getRemark_dug_well() {
+		return remark_dug_well;
+	}
+	public void setRemark_dug_well(String remark_dug_well) {
+		this.remark_dug_well = remark_dug_well;
+	}
+	public BigDecimal getPre_tube_well() {
+		return pre_tube_well;
+	}
+	public void setPre_tube_well(BigDecimal pre_tube_well) {
+		this.pre_tube_well = pre_tube_well;
+	}
+	public BigDecimal getMid_tube_well() {
+		return mid_tube_well;
+	}
+	public void setMid_tube_well(BigDecimal mid_tube_well) {
+		this.mid_tube_well = mid_tube_well;
+	}
+	public String getRemark_tube_well() {
+		return remark_tube_well;
+	}
+	public void setRemark_tube_well(String remark_tube_well) {
+		this.remark_tube_well = remark_tube_well;
+	}
+    
 	public String getSt_name() {
 		return st_name;
 	}

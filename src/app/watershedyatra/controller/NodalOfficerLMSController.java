@@ -83,7 +83,7 @@ public class NodalOfficerLMSController {
 				 }
 				
 				mav.addObject("level",map);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
+				mav.addObject("blkList", serp.getBlockListpia(regId.toString()));
 				
 				if(userType.equals("SL")){
 				draft=ser.getDraftListofNodalOfficer(stcd);

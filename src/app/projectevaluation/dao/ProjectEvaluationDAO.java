@@ -17,14 +17,7 @@ import app.projectevaluation.model.WdcpmksyProjectProfileEvaluation;
 public interface ProjectEvaluationDAO {
 
 	List<ProjectEvaluationBean> getMandayDeatails(Integer profileid);
-
-	String saveMandaysDetails(Integer profile_id, BigDecimal culturable_wasteland, Integer whs_constructed_rejuvenated,
-			BigDecimal soil_moisture, BigDecimal protective_irrigation, BigDecimal degraded_rainfed,
-			BigDecimal farmer_income, Integer farmer_benefited, BigDecimal dug_well, Integer fromno,
-			Integer mandays_generated, BigDecimal tube_well, HttpSession session, Character areatype, BigDecimal conculturable, Integer conwhs, 
-			BigDecimal consoil, BigDecimal conprotective, BigDecimal condegraded_rainfed, BigDecimal confarmer_income, Integer confarmer_benefited, 
-			Integer conmandays, BigDecimal condug_well, BigDecimal contube_well);
-
+	
 	LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode);
 	List<ProjectEvaluationBean> monthYear();
 
@@ -116,7 +109,15 @@ public interface ProjectEvaluationDAO {
 
 	ProjectEvaluationBean getProjectDetails(int projId);
  
-	String updateProjProfileMonth(Integer projid, Integer monthid); 
+	String updateProjProfileMonth(Integer projid, Integer monthid);
+	
+	String saveMandaysDetails(Integer profile_id, BigDecimal pre_farmer_income, BigDecimal mid_farmer_income,
+			BigDecimal control_farmer_income, String remark_farmer_income, Integer farmer_benefited,
+			Integer control_farmer_benefited, String remark_farmer_benefited, Integer mandays_generated,
+			Integer control_mandays_generated, String remark_mandays_generated, BigDecimal pre_dug_well,
+			BigDecimal mid_dug_well, BigDecimal control_dug_well, String remark_dug_well, BigDecimal pre_tube_well,
+			BigDecimal mid_tube_well, BigDecimal control_tube_well, String remark_tube_well, Integer fromno,
+			HttpSession session, Character area);
 
 
 }

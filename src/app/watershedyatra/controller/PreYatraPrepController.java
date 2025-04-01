@@ -89,7 +89,7 @@ public class PreYatraPrepController {
 	        }
 			mav.addObject("records",preyatrasavedata);
 			mav.addObject("comprecords",preyatracompletedata);
-			mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
+			mav.addObject("blkList", serp.getBlockListpia(regId.toString()));
 	    } else {
 	        mav = new ModelAndView("login");
 	        mav.addObject("login", new Login());

@@ -1307,28 +1307,25 @@ public class ProjectEvaluationController {
 		 String fname = request.getParameter("fname");
 		 Integer profile_id=0;
 		 
-		 String pcradio=null;
-		 String culturablew=null;
-		 String whs=null;
-		 String soil=null;
-		 String protective=null;
-		 String degraded=null;
-		 String income=null;
-		 String benefited=null;
-		 String mandays=null;
-		 String dug=null;
-		 String tube=null;
+		 String pre_farmer_income=null;
+		 String mid_farmer_income=null;
+		 String control_farmer_income=null;
+		 String remark_farmer_income=null;
+		 String farmer_benefited=null;
+		 String control_farmer_benefited=null;
+		 String remark_farmer_benefited=null;
+		 String mandays_generated=null;
+		 String control_mandays_generated=null;
+		 String remark_mandays_generated=null;
+		 String pre_dug_well=null;
+		 String mid_dug_well=null;
+		 String control_dug_well=null;
+		 String remark_dug_well=null;
+		 String pre_tube_well=null;
+		 String mid_tube_well=null;
+		 String control_tube_well=null;
+		 String remark_tube_well=null;
 		 
-		 String conculturablew=null;
-		 String conwhs=null;
-		 String consoil=null;
-		 String conprotective=null;
-		 String condegraded=null;
-		 String conincome=null;
-		 String conbenefited=null;
-		 String conmandays=null;
-		 String condug=null;
-		 String contube=null;
 		 
 		 try {
 				 Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
@@ -1344,53 +1341,51 @@ public class ProjectEvaluationController {
 					 for(ProjectEvaluationBean bean : list) 
 					 {
 						
-						// pcradio=bean.getProject_controlled().toString();
-						 culturablew=bean.getCulturable_wasteland().toString();
-						 whs=bean.getWhs_constructed_rejuvenated().toString();
-						 soil=bean.getSoil_moisture().toString();
-						 protective=bean.getProtective_irrigation().toString();
-						 degraded=bean.getDegraded_rainfed().toString();
-						 income=bean.getFarmer_income().toString();
-						 benefited=bean.getFarmer_benefited().toString();
-						 mandays=bean.getMandays_generated().toString();
-						 dug=bean.getDug_well().toString();
-						 tube=bean.getTube_well().toString();
+						 pre_farmer_income=bean.getPre_farmer_income().toString();
+						 mid_farmer_income=bean.getMid_farmer_income().toString();
+						 control_farmer_income=bean.getControl_farmer_income().toString();
+						 remark_farmer_income=bean.getRemark_farmer_income();
 						 
-						 conculturablew=bean.getControl_culturable_wasteland().toString();
-						 conwhs=bean.getControl_whs_constructed_rejuvenated().toString();
-						 consoil=bean.getControl_soil_moisture().toString();
-						 conprotective=bean.getControl_protective_irrigation().toString();
-						 condegraded=bean.getControl_degraded_rainfed().toString();
-						 conincome=bean.getControl_farmer_income().toString();
-						 conbenefited=bean.getControl_farmer_benefited().toString();
-						 conmandays=bean.getControl_mandays_generated().toString();
-						 condug=bean.getControl_dug_well().toString();
-						 contube=bean.getControl_tube_well().toString();
+						 farmer_benefited=bean.getFarmer_benefited().toString();
+						 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
+						 remark_farmer_benefited=bean.getRemark_farmer_benefited();
+						
+						 mandays_generated=bean.getMandays_generated().toString();
+						 control_mandays_generated=bean.getControl_mandays_generated().toString();
+						 remark_mandays_generated=bean.getRemark_mandays_generated();
+						
+						 pre_dug_well=bean.getPre_dug_well().toString();
+						 mid_dug_well=bean.getMid_dug_well().toString();
+						 control_dug_well=bean.getControl_dug_well().toString();
+						 remark_dug_well=bean.getRemark_dug_well().toString();
+						 
+						 pre_tube_well=bean.getPre_tube_well().toString();
+						 mid_tube_well=bean.getMid_tube_well().toString();
+						 control_tube_well=bean.getControl_tube_well().toString();
+						 remark_tube_well=bean.getRemark_tube_well().toString();
 						 
 					 }
 					 
-					 mav.addObject("areaType",pcradio); 
-					 mav.addObject("culturablew",culturablew); 
-					 mav.addObject("whs",whs); 
-					 mav.addObject("soil",soil); 
-					 mav.addObject("protective",protective); 
-					 mav.addObject("degraded",degraded); 
-					 mav.addObject("income",income); 
-					 mav.addObject("benefited",benefited); 
-					 mav.addObject("mandays",mandays); 
-					 mav.addObject("dug",dug); 
-					 mav.addObject("tube",tube); 
+					 mav.addObject("pre_farmer_income",pre_farmer_income); 
+					 mav.addObject("mid_farmer_income",mid_farmer_income); 
+					 mav.addObject("control_farmer_income",control_farmer_income); 
+					 mav.addObject("remark_farmer_income",remark_farmer_income); 
+					 mav.addObject("farmer_benefited",farmer_benefited); 
+					 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
+					 mav.addObject("remark_farmer_benefited",remark_farmer_benefited); 
+					 mav.addObject("mandays_generated",mandays_generated); 
+					 mav.addObject("control_mandays_generated",control_mandays_generated); 
+					 mav.addObject("remark_mandays_generated",remark_mandays_generated);
 					 
-					 mav.addObject("conculturablew",conculturablew); 
-					 mav.addObject("conwhs",conwhs); 
-					 mav.addObject("consoil",consoil); 
-					 mav.addObject("conprotective",conprotective); 
-					 mav.addObject("condegraded",condegraded); 
-					 mav.addObject("conincome",conincome); 
-					 mav.addObject("conbenefited",conbenefited); 
-					 mav.addObject("conmandays",conmandays); 
-					 mav.addObject("condug",condug); 
-					 mav.addObject("contube",contube); 
+					 mav.addObject("pre_dug_well",pre_dug_well); 
+					 mav.addObject("mid_dug_well",mid_dug_well); 
+					 mav.addObject("control_dug_well",control_dug_well); 
+					 mav.addObject("remark_dug_well",remark_dug_well); 
+					 mav.addObject("pre_tube_well",pre_tube_well); 
+					 mav.addObject("mid_tube_well",mid_tube_well); 
+					 mav.addObject("control_tube_well",control_tube_well); 
+					 mav.addObject("remark_tube_well",remark_tube_well);
+					 
 			
 					 mav.addObject("dcode",dcode); 
 					 mav.addObject("pcode",pcode);
@@ -1423,27 +1418,29 @@ public class ProjectEvaluationController {
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
 	    	Character area = 'P';
-	        BigDecimal culturable_wasteland = new BigDecimal(request.getParameter("culturable_wasteland"));
-	        Integer whs_constructed_rejuvenated = Integer.parseInt(request.getParameter("whs_constructed_rejuvenated"));
-	        BigDecimal soil_moisture = new BigDecimal(request.getParameter("soil_moisture"));
-	        BigDecimal protective_irrigation = new BigDecimal(request.getParameter("protective_irrigation"));
-	        BigDecimal degraded_rainfed = new BigDecimal(request.getParameter("degraded_rainfed"));
-	        BigDecimal farmer_income = new BigDecimal(request.getParameter("farmer_income"));
-	        Integer farmer_benefited = Integer.parseInt(request.getParameter("farmer_benefited"));
-	        Integer mandays_generated = Integer.parseInt(request.getParameter("mandays_generated"));
-	        BigDecimal dug_well = new BigDecimal(request.getParameter("dug_well"));
-	        BigDecimal tube_well = new BigDecimal(request.getParameter("tube_well"));
 	        
-	        BigDecimal conculturable_wasteland = new BigDecimal(request.getParameter("conculturable_wasteland"));
-	        Integer conwhs_constructed_rejuvenated = Integer.parseInt(request.getParameter("conwhs_constructed_rejuvenated"));
-	        BigDecimal consoil_moisture = new BigDecimal(request.getParameter("consoil_moisture"));
-	        BigDecimal conprotective_irrigation = new BigDecimal(request.getParameter("conprotective_irrigation"));
-	        BigDecimal condegraded_rainfed = new BigDecimal(request.getParameter("condegraded_rainfed")); 
-	        BigDecimal confarmer_income = new BigDecimal(request.getParameter("confarmer_income"));
-	        Integer confarmer_benefited = Integer.parseInt(request.getParameter("confarmer_benefited"));
-	        Integer conmandays_generated = Integer.parseInt(request.getParameter("conmandays_generated"));
-	        BigDecimal condug_well = new BigDecimal(request.getParameter("condug_well"));
-	        BigDecimal contube_well = new BigDecimal(request.getParameter("contube_well"));
+	    	BigDecimal pre_farmer_income = new BigDecimal(request.getParameter("pre_farmer_income"));
+	    	BigDecimal mid_farmer_income = new BigDecimal(request.getParameter("mid_farmer_income"));
+	    	BigDecimal control_farmer_income = new BigDecimal(request.getParameter("control_farmer_income"));
+	    	String remark_farmer_income = request.getParameter("remark_farmer_income");
+	    	
+	        Integer farmer_benefited = Integer.parseInt(request.getParameter("farmer_benefited"));
+	        Integer control_farmer_benefited = Integer.parseInt(request.getParameter("control_farmer_benefited"));
+	        String remark_farmer_benefited = request.getParameter("remark_farmer_benefited");
+	        
+	        Integer mandays_generated = Integer.parseInt(request.getParameter("mandays_generated"));
+	        Integer control_mandays_generated = Integer.parseInt(request.getParameter("control_mandays_generated"));
+	        String remark_mandays_generated = request.getParameter("remark_mandays_generated");
+	        
+	        BigDecimal pre_dug_well = new BigDecimal(request.getParameter("pre_dug_well"));
+	        BigDecimal mid_dug_well = new BigDecimal(request.getParameter("mid_dug_well"));
+	        BigDecimal control_dug_well = new BigDecimal(request.getParameter("control_dug_well"));
+	        String remark_dug_well = request.getParameter("remark_dug_well");
+	        
+	        BigDecimal pre_tube_well = new BigDecimal(request.getParameter("pre_tube_well"));
+	        BigDecimal mid_tube_well = new BigDecimal(request.getParameter("mid_tube_well"));
+	        BigDecimal control_tube_well = new BigDecimal(request.getParameter("control_tube_well"));
+	        String remark_tube_well = request.getParameter("remark_tube_well");
 	        
 	        Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 	        Integer dcode = Integer.parseInt(request.getParameter("dcode"));
@@ -1566,9 +1563,11 @@ public class ProjectEvaluationController {
 	        }
 			}
 	        
-	        result=PEService.saveMandaysDetails(profile_id, culturable_wasteland, whs_constructed_rejuvenated, soil_moisture, protective_irrigation, degraded_rainfed, farmer_income,
-					farmer_benefited, dug_well, fromno, mandays_generated, tube_well, session, area, conculturable_wasteland, conwhs_constructed_rejuvenated,  consoil_moisture, 
-					conprotective_irrigation, condegraded_rainfed, confarmer_income, confarmer_benefited, conmandays_generated, condug_well, contube_well );
+	        result=PEService.saveMandaysDetails(profile_id,pre_farmer_income,mid_farmer_income,control_farmer_income,remark_farmer_income,
+					farmer_benefited,control_farmer_benefited,remark_farmer_benefited, mandays_generated,control_mandays_generated,remark_mandays_generated,
+					pre_dug_well,mid_dug_well,control_dug_well,remark_dug_well,pre_tube_well, mid_tube_well,control_tube_well,remark_tube_well,
+					fromno,session, area 
+					  );
 	   
 	        if ("success".equals(result)) {
 	            request.setAttribute("manDaysDetailConfirmed", "true");
@@ -1598,7 +1597,6 @@ public class ProjectEvaluationController {
 	    }
 	    return mav;
 	}
-	
 	
 	@RequestMapping(value="getExecutionPlanWork", method=RequestMethod.GET)
 	public ModelAndView getExecutionPlanWork(HttpServletRequest request, HttpServletResponse response)

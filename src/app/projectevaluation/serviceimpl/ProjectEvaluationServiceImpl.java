@@ -38,19 +38,6 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 	
 	@Override
-	public String saveMandaysDetails(Integer profile_id, BigDecimal culturable_wasteland,
-			Integer whs_constructed_rejuvenated, BigDecimal soil_moisture, BigDecimal protective_irrigation,
-			BigDecimal degraded_rainfed, BigDecimal farmer_income, Integer farmer_benefited, BigDecimal dug_well,
-			Integer fromno, Integer mandays_generated, BigDecimal tube_well, HttpSession session, Character areatype, BigDecimal conculturable, 
-			Integer conwhs, BigDecimal consoil, BigDecimal conprotective, BigDecimal condegraded_rainfed, BigDecimal confarmer_income, 
-			Integer confarmer_benefited, Integer conmandays, BigDecimal condug_well, BigDecimal contube_well) {
-		return PEDAO.saveMandaysDetails(profile_id, culturable_wasteland, whs_constructed_rejuvenated, soil_moisture, protective_irrigation, 
-				degraded_rainfed, farmer_income, farmer_benefited, dug_well, fromno, mandays_generated, tube_well, session, areatype, 
-				conculturable, conwhs, consoil, conprotective, condegraded_rainfed, confarmer_income, confarmer_benefited, conmandays, 
-				condug_well, contube_well);
-	}
-	
-	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		return PEDAO.getprojProfileData(dcode, pcode);
 	}
@@ -264,5 +251,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.updateProjProfileMonth(projid, monthid);
 	}
-
+	@Override
+	public String saveMandaysDetails(Integer profile_id, BigDecimal pre_farmer_income, BigDecimal mid_farmer_income,
+			BigDecimal control_farmer_income, String remark_farmer_income, Integer farmer_benefited,
+			Integer control_farmer_benefited, String remark_farmer_benefited, Integer mandays_generated,
+			Integer control_mandays_generated, String remark_mandays_generated, BigDecimal pre_dug_well,
+			BigDecimal mid_dug_well, BigDecimal control_dug_well, String remark_dug_well, BigDecimal pre_tube_well,
+			BigDecimal mid_tube_well, BigDecimal control_tube_well, String remark_tube_well, Integer fromno,
+			HttpSession session, Character area) {
+		
+		return PEDAO.saveMandaysDetails(profile_id, pre_farmer_income, mid_farmer_income, control_farmer_income, remark_farmer_income, 
+				farmer_benefited, control_farmer_benefited, remark_farmer_benefited, mandays_generated, control_mandays_generated, 
+				remark_mandays_generated, pre_dug_well, mid_dug_well, control_dug_well, remark_dug_well, pre_tube_well, mid_tube_well, 
+				control_tube_well, remark_tube_well, fromno, session, area);
+	}
 }

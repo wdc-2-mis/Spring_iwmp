@@ -188,15 +188,14 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	
 	
-	
 	@Override
-	public String saveMandaysDetails(Integer profile_id, BigDecimal culturable_wasteland,
-			Integer whs_constructed_rejuvenated, BigDecimal soil_moisture, BigDecimal protective_irrigation,
-			BigDecimal degraded_rainfed, BigDecimal farmer_income, Integer farmer_benefited, BigDecimal dug_well,
-			Integer fromno, Integer mandays_generated, BigDecimal tube_well, HttpSession session, Character areatype, 
-			BigDecimal conculturable, Integer conwhs, BigDecimal consoil, BigDecimal conprotective, BigDecimal condegraded_rainfed, 
-			BigDecimal confarmer_income, Integer confarmer_benefited, Integer conmandays, BigDecimal condug_well, BigDecimal contube_well) {
-		
+	public String saveMandaysDetails(Integer profile_id, BigDecimal pre_farmer_income, BigDecimal mid_farmer_income,
+			BigDecimal control_farmer_income, String remark_farmer_income, Integer farmer_benefited,
+			Integer control_farmer_benefited, String remark_farmer_benefited, Integer mandays_generated,
+			Integer control_mandays_generated, String remark_mandays_generated, BigDecimal pre_dug_well,
+			BigDecimal mid_dug_well, BigDecimal control_dug_well, String remark_dug_well, BigDecimal pre_tube_well,
+			BigDecimal mid_tube_well, BigDecimal control_tube_well, String remark_tube_well, Integer fromno,
+			HttpSession session, Character area) {
 		Session sess = sessionFactory.getCurrentSession();
 		int a=0;
 		String res="fail";
@@ -218,31 +217,27 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				
 				ppv.setProjectProfileId(profile_id);
 				md.setWdcpmksyProjectProfileEvaluation(ppv);
-			//	md.setProjectControlled(areatype);
-				md.setCulturableWasteland(culturable_wasteland);
-				md.setWhsConstructedRejuvenated(whs_constructed_rejuvenated);
-				md.setSoilMoisture(soil_moisture);
-				md.setProtectiveIrrigation(protective_irrigation);
-				md.setDegradedRainfed(degraded_rainfed);
-				md.setFarmerIncome(farmer_income);
+				md.setPrefarmerIncome(pre_farmer_income);
+				md.setMidfarmerIncome(mid_farmer_income);
+				md.setControlfarmerincome(control_farmer_income);
+				md.setRemarkFormerIncome(remark_farmer_income);
 				md.setFarmerBenefited(farmer_benefited);
+				md.setControl_farmer_benefited(control_farmer_benefited);
+				md.setRemarkFormerBenefited(remark_farmer_benefited);
 				md.setMandaysGenerated(mandays_generated);
-				md.setDugWell(dug_well);
-				md.setTubeWell(tube_well);
+				md.setControl_mandays_generated(control_mandays_generated);
+				md.setRemarkmandaysGenerated(remark_mandays_generated);
+				md.setPredugWell(pre_dug_well);
+				md.setMiddugWell(mid_dug_well);
+				md.setControl_dug_well(control_dug_well);
+				md.setRemarkdugWell(remark_dug_well);
+				md.setPretubeWell(pre_tube_well);
+				md.setMidtubeWell(mid_tube_well);
+				md.setControl_tube_well(control_tube_well);
+				md.setRemarktubeWell(remark_tube_well);
 				md.setCreatedBy(session.getAttribute("loginID").toString());
 				md.setCreatedOn(new java.util.Date());
 				md.setRequestIp(ipAddr);
-				
-				md.setControl_culturable_wasteland(conculturable);
-				md.setControl_whs_constructed_rejuvenated(conwhs);
-				md.setControl_soil_moisture(consoil);
-				md.setControl_protective_irrigation(conprotective);
-				md.setControl_degraded_rainfed(condegraded_rainfed);
-				md.setControl_farmer_income(confarmer_income);
-				md.setControl_farmer_benefited(confarmer_benefited);
-				md.setControl_mandays_generated(conmandays);
-				md.setControl_dug_well(condug_well);
-				md.setControl_tube_well(contube_well);
 				sess.save(md);
 				
 				SQLQuery sqlQuery = sess.createSQLQuery("update wdcpmksy_project_profile_evaluation set evaluation_id=:evid where project_profile_id=:profile");
@@ -258,32 +253,28 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				
 				WdcpmksyMandaysDetails mdd = sess.load(WdcpmksyMandaysDetails.class, mandaysid);
 			
-				//mdd.setProjectControlled(areatype);
-				mdd.setCulturableWasteland(culturable_wasteland);
-				mdd.setWhsConstructedRejuvenated(whs_constructed_rejuvenated);
-				mdd.setSoilMoisture(soil_moisture);
-				mdd.setProtectiveIrrigation(protective_irrigation);
-				mdd.setDegradedRainfed(degraded_rainfed);
-				mdd.setFarmerIncome(farmer_income);
+				
+				mdd.setPrefarmerIncome(pre_farmer_income);
+				mdd.setMidfarmerIncome(mid_farmer_income);
+				mdd.setControlfarmerincome(control_farmer_income);
+				mdd.setRemarkFormerIncome(remark_farmer_income);
 				mdd.setFarmerBenefited(farmer_benefited);
+				mdd.setControl_farmer_benefited(control_farmer_benefited);
+				mdd.setRemarkFormerBenefited(remark_farmer_benefited);
 				mdd.setMandaysGenerated(mandays_generated);
-				mdd.setDugWell(dug_well);
-				mdd.setTubeWell(tube_well);
+				mdd.setControl_mandays_generated(control_mandays_generated);
+				mdd.setRemarkmandaysGenerated(remark_mandays_generated);
+				mdd.setPredugWell(pre_dug_well);
+				mdd.setMiddugWell(mid_dug_well);
+				mdd.setControl_dug_well(control_dug_well);
+				mdd.setRemarkdugWell(remark_dug_well);
+				mdd.setPretubeWell(pre_tube_well);
+				mdd.setMidtubeWell(mid_tube_well);
+				mdd.setControl_tube_well(control_tube_well);
+				mdd.setRemarktubeWell(remark_tube_well);
+				
 				mdd.setUpdatedOn(new java.util.Date());
 				mdd.setRequestIp(ipAddr);
-				
-				mdd.setControl_culturable_wasteland(conculturable);
-				mdd.setControl_whs_constructed_rejuvenated(conwhs);
-				mdd.setControl_soil_moisture(consoil);
-				mdd.setControl_protective_irrigation(conprotective);
-				mdd.setControl_degraded_rainfed(condegraded_rainfed);
-				mdd.setControl_farmer_income(confarmer_income);
-				mdd.setControl_farmer_benefited(confarmer_benefited);
-				mdd.setControl_mandays_generated(conmandays);
-				mdd.setControl_dug_well(condug_well);
-				mdd.setControl_tube_well(contube_well);
-				
-				
 				sess.saveOrUpdate(mdd);
 				sess.getTransaction().commit();
 				res="success";
@@ -297,7 +288,6 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		
 		return res;
 	}
-
 
 	@Override
 	public String saveExecutionPlanWork(Integer profile_id, Integer created_work, String created_work_remark,

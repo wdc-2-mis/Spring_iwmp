@@ -72,7 +72,7 @@ HttpSession session;
 					stCode = bean.getStatecode()==null?0:bean.getStatecode();
 				}
 				mav.addObject("userType",userType);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("loginID").toString()));
+				mav.addObject("blkList", serp.getBlockListpia(regId.toString()));
 				mav.addObject("distName",distName);
 				mav.addObject("stateName",stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));

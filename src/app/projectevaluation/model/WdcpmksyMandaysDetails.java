@@ -21,32 +21,34 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
 	
 	private int mandaysDetailId;									//    mandays_detail_id;
 	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;   ///   project_profile_id
-	//private Character projectControlled;               //   project_controlled
-	private BigDecimal culturableWasteland;								//	culturable_wasteland 
-	private Integer whsConstructedRejuvenated;						//	whs_constructed_rejuvenated 
-	private BigDecimal soilMoisture;									//	soil_moisture
-	private BigDecimal protectiveIrrigation;							//  protective_irrigation
-	private BigDecimal degradedRainfed; 								//	degraded_rainfed 
-	private BigDecimal farmerIncome; 									//	farmer_income
-	private Integer farmerBenefited;									//	farmer_benefited
-	private Integer mandaysGenerated;								//	mandays_generated
-	private BigDecimal dugWell ;									//	dug_well
-	private BigDecimal tubeWell ;										//	tube_well
-	private Date createdOn ;                    //created_on ;
-	private String createdBy ;         //created_by ;
-	private Date updatedOn ;                 //updated_on ; 
-	private String requestIp; 
 	
-	private BigDecimal control_culturable_wasteland ;
-	private Integer control_whs_constructed_rejuvenated ;
-	private BigDecimal control_soil_moisture;
-	private BigDecimal control_protective_irrigation; 
-	private BigDecimal control_degraded_rainfed;
-	private BigDecimal control_farmer_income ;
-    private Integer control_farmer_benefited ;
-    private Integer  control_mandays_generated ;
-    private BigDecimal control_dug_well;
-    private BigDecimal control_tube_well;
+	private BigDecimal prefarmerIncome; 									
+	private BigDecimal midfarmerIncome;
+	private BigDecimal controlfarmerincome ;
+	private String 	remarkFormerIncome;
+	
+	private Integer farmerBenefited;
+	private Integer control_farmer_benefited ;
+	private String 	remarkFormerBenefited;
+	
+	private Integer mandaysGenerated;								
+	private Integer  control_mandays_generated ;
+	private String  remarkmandaysGenerated ;
+	
+	private BigDecimal predugWell ;
+	private BigDecimal middugWell ;
+	private BigDecimal control_dug_well;
+	private String remarkdugWell; 
+	
+	private BigDecimal pretubeWell ;
+	private BigDecimal midtubeWell ;
+	private BigDecimal control_tube_well;
+	private String remarktubeWell;
+	
+	private Date createdOn ;                    
+	private String createdBy ;         
+	private Date updatedOn ;                 
+	private String requestIp; 
 	
 	public WdcpmksyMandaysDetails() {
     }
@@ -56,21 +58,30 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
         this.mandaysDetailId = mandaysDetailId;
     }
     
-    public WdcpmksyMandaysDetails(int mandaysDetailId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, Character projectControlled, BigDecimal culturableWasteland, Integer whsConstructedRejuvenated, BigDecimal soilMoisture, BigDecimal protectiveIrrigation, BigDecimal degradedRainfed, BigDecimal farmerIncome, Integer farmerBenefited,
-    		Integer mandaysGenerated, BigDecimal dugWell, BigDecimal tubeWell,  Date createdOn, String createdBy, Date updatedOn, String requestIp) {
+    public WdcpmksyMandaysDetails(int mandaysDetailId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation,BigDecimal prefarmerIncome,
+    		BigDecimal midfarmerIncome, BigDecimal controlfarmerincome, String remarkFormerIncome, Integer farmerBenefited,Integer control_farmer_benefited,
+    		String 	remarkFormerBenefited, Integer mandaysGenerated,Integer  control_mandays_generated,String  remarkmandaysGenerated, String remarkdugWell, BigDecimal control_dug_well,BigDecimal middugWell, 
+    		BigDecimal predugWell, BigDecimal pretubeWell, BigDecimal midtubeWell,BigDecimal control_tube_well, String remarktubeWell,  Date createdOn, String createdBy, Date updatedOn, String requestIp) {
         this.mandaysDetailId = mandaysDetailId;
         this.wdcpmksyProjectProfileEvaluation=wdcpmksyProjectProfileEvaluation;
-     //   this.projectControlled=projectControlled;
-        this.culturableWasteland=culturableWasteland;
-        this.whsConstructedRejuvenated=whsConstructedRejuvenated;
-        this.soilMoisture=soilMoisture;
-        this.protectiveIrrigation=protectiveIrrigation;
-        this.degradedRainfed=degradedRainfed;
-        this.farmerIncome=farmerIncome;
+        this.prefarmerIncome=prefarmerIncome;
+        this.midfarmerIncome=midfarmerIncome;
+        this.controlfarmerincome=controlfarmerincome;
+        this.remarkFormerIncome=remarkFormerIncome;
         this.farmerBenefited=farmerBenefited;
+        this.control_farmer_benefited=control_farmer_benefited;
+        this.remarkFormerBenefited=remarkFormerBenefited;
         this.mandaysGenerated=mandaysGenerated;
-        this.dugWell=dugWell;
-        this.tubeWell=tubeWell;
+        this.control_mandays_generated=control_mandays_generated;
+        this.remarkmandaysGenerated=remarkmandaysGenerated;
+        this.predugWell=predugWell;
+        this.middugWell=middugWell;
+        this.control_dug_well=control_dug_well;
+        this.remarkdugWell=remarkdugWell;
+        this.pretubeWell=pretubeWell;
+        this.midtubeWell=midtubeWell;
+        this.control_tube_well=control_tube_well;
+        this.remarktubeWell=remarktubeWell;
         this.createdOn=createdOn;
         this.createdBy=createdBy;
         this.updatedOn=updatedOn;
@@ -101,79 +112,130 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
 		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
 	}
 
-	/*
-	 * @Column(name="project_controlled", length=1) public Character
-	 * getProjectControlled() { return projectControlled; }
-	 * 
-	 * 
-	 * public void setProjectControlled(Character projectControlled) {
-	 * this.projectControlled = projectControlled; }
-	 */
-
-	@Column(name="culturable_wasteland", precision=20)
-	public BigDecimal getCulturableWasteland() {
-		return culturableWasteland;
+	@Column(name="pre_farmer_income", precision=20)
+	public BigDecimal getPrefarmerIncome() {
+		return prefarmerIncome;
 	}
 
 
-	public void setCulturableWasteland(BigDecimal culturableWasteland) {
-		this.culturableWasteland = culturableWasteland;
+	public void setPrefarmerIncome(BigDecimal prefarmerIncome) {
+		this.prefarmerIncome = prefarmerIncome;
 	}
 
-	@Column(name="whs_constructed_rejuvenated")
-	public Integer getWhsConstructedRejuvenated() {
-		return whsConstructedRejuvenated;
-	}
-
-
-	public void setWhsConstructedRejuvenated(Integer whsConstructedRejuvenated) {
-		this.whsConstructedRejuvenated = whsConstructedRejuvenated;
-	}
-
-	@Column(name="soil_moisture", precision=20)
-	public BigDecimal getSoilMoisture() {
-		return soilMoisture;
+	@Column(name="mid_farmer_income", precision=20)
+	public BigDecimal getMidfarmerIncome() {
+		return midfarmerIncome;
 	}
 
 
-	public void setSoilMoisture(BigDecimal soilMoisture) {
-		this.soilMoisture = soilMoisture;
+	public void setMidfarmerIncome(BigDecimal midfarmerIncome) {
+		this.midfarmerIncome = midfarmerIncome;
 	}
 
-	@Column(name="protective_irrigation", precision=20)
-	public BigDecimal getProtectiveIrrigation() {
-		return protectiveIrrigation;
-	}
-
-
-	public void setProtectiveIrrigation(BigDecimal protectiveIrrigation) {
-		this.protectiveIrrigation = protectiveIrrigation;
-	}
-
-	@Column(name="degraded_rainfed", precision=20)
-	public BigDecimal getDegradedRainfed() {
-		return degradedRainfed;
+	@Column(name="control_farmer_income", precision=20)
+	public BigDecimal getControlfarmerincome() {
+		return controlfarmerincome;
 	}
 
 
-	public void setDegradedRainfed(BigDecimal degradedRainfed) {
-		this.degradedRainfed = degradedRainfed;
+	public void setControlfarmerincome(BigDecimal controlfarmerincome) {
+		this.controlfarmerincome = controlfarmerincome;
 	}
 
-	@Column(name="farmer_income", precision=20)
-	public BigDecimal getFarmerIncome() {
-		return farmerIncome;
+	@Column(name="remark_farmer_income", length=200)
+	public String getRemarkFormerIncome() {
+		return remarkFormerIncome;
 	}
 
-	public void setFarmerIncome(BigDecimal farmerIncome) {
-		this.farmerIncome = farmerIncome;
+
+	public void setRemarkFormerIncome(String remarkFormerIncome) {
+		this.remarkFormerIncome = remarkFormerIncome;
 	}
+
+	@Column(name="remark_farmer_benefited", length=200)
+	public String getRemarkFormerBenefited() {
+		return remarkFormerBenefited;
+	}
+
+
+	public void setRemarkFormerBenefited(String remarkFormerBenefited) {
+		this.remarkFormerBenefited = remarkFormerBenefited;
+	}
+
+	@Column(name="remark_mandays_generated", length=200)
+	public String getRemarkmandaysGenerated() {
+		return remarkmandaysGenerated;
+	}
+
+
+	public void setRemarkmandaysGenerated(String remarkmandaysGenerated) {
+		this.remarkmandaysGenerated = remarkmandaysGenerated;
+	}
+
+	@Column(name="pre_dug_well", precision=20)
+	public BigDecimal getPredugWell() {
+		return predugWell;
+	}
+
+
+	public void setPredugWell(BigDecimal predugWell) {
+		this.predugWell = predugWell;
+	}
+
+	@Column(name="mid_dug_well", precision=20)
+	public BigDecimal getMiddugWell() {
+		return middugWell;
+	}
+
+
+	public void setMiddugWell(BigDecimal middugWell) {
+		this.middugWell = middugWell;
+	}
+
+	@Column(name="remark_dug_well", length=200)
+	public String getRemarkdugWell() {
+		return remarkdugWell;
+	}
+
+
+	public void setRemarkdugWell(String remarkdugWell) {
+		this.remarkdugWell = remarkdugWell;
+	}
+
+	@Column(name="pre_tube_well", precision=20)
+	public BigDecimal getPretubeWell() {
+		return pretubeWell;
+	}
+
+
+	public void setPretubeWell(BigDecimal pretubeWell) {
+		this.pretubeWell = pretubeWell;
+	}
+
+	@Column(name="mid_tube_well", precision=20)
+	public BigDecimal getMidtubeWell() {
+		return midtubeWell;
+	}
+
+
+	public void setMidtubeWell(BigDecimal midtubeWell) {
+		this.midtubeWell = midtubeWell;
+	}
+
+	@Column(name="remark_tube_well", length=200)
+	public String getRemarktubeWell() {
+		return remarktubeWell;
+	}
+
+	public void setRemarktubeWell(String remarktubeWell) {
+		this.remarktubeWell = remarktubeWell;
+	}
+
 
 	@Column(name="farmer_benefited")
 	public Integer getFarmerBenefited() {
 		return farmerBenefited;
 	}
-
 
 	public void setFarmerBenefited(Integer farmerBenefited) {
 		this.farmerBenefited = farmerBenefited;
@@ -184,31 +246,9 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
 		return mandaysGenerated;
 	}
 
-
 	public void setMandaysGenerated(Integer mandaysGenerated) {
 		this.mandaysGenerated = mandaysGenerated;
 	}
-
-	@Column(name="dug_well", precision=20)
-	public BigDecimal getDugWell() {
-		return dugWell;
-	}
-
-
-	public void setDugWell(BigDecimal dugWell) {
-		this.dugWell = dugWell;
-	}
-
-	@Column(name="tube_well", precision=20)
-	public BigDecimal getTubeWell() {
-		return tubeWell;
-	}
-
-
-	public void setTubeWell(BigDecimal tubeWell) {
-		this.tubeWell = tubeWell;
-	}
-
 
 	@Temporal(TemporalType.DATE)
     @Column(name="created_on")
@@ -252,65 +292,6 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
 		this.requestIp = requestIp;
 	}
 
-	@Column(name="control_culturable_wasteland", precision=20)
-	public BigDecimal getControl_culturable_wasteland() {
-		return control_culturable_wasteland;
-	}
-
-	
-	public void setControl_culturable_wasteland(BigDecimal control_culturable_wasteland) {
-		this.control_culturable_wasteland = control_culturable_wasteland;
-	}
-
-	@Column(name="control_whs_constructed_rejuvenated")
-	public Integer getControl_whs_constructed_rejuvenated() {
-		return control_whs_constructed_rejuvenated;
-	}
-
-	
-	public void setControl_whs_constructed_rejuvenated(Integer control_whs_constructed_rejuvenated) {
-		this.control_whs_constructed_rejuvenated = control_whs_constructed_rejuvenated;
-	}
-
-	@Column(name="control_soil_moisture", precision=20)
-	public BigDecimal getControl_soil_moisture() {
-		return control_soil_moisture;
-	}
-
-
-	public void setControl_soil_moisture(BigDecimal control_soil_moisture) {
-		this.control_soil_moisture = control_soil_moisture;
-	}
-
-	@Column(name="control_protective_irrigation", precision=20)
-	public BigDecimal getControl_protective_irrigation() {
-		return control_protective_irrigation;
-	}
-
-
-	public void setControl_protective_irrigation(BigDecimal control_protective_irrigation) {
-		this.control_protective_irrigation = control_protective_irrigation;
-	}
-
-	@Column(name="control_degraded_rainfed", precision=20)
-	public BigDecimal getControl_degraded_rainfed() {
-		return control_degraded_rainfed;
-	}
-
-
-	public void setControl_degraded_rainfed(BigDecimal control_degraded_rainfed) {
-		this.control_degraded_rainfed = control_degraded_rainfed;
-	}
-
-	@Column(name="control_farmer_income", precision=20)
-	public BigDecimal getControl_farmer_income() {
-		return control_farmer_income;
-	}
-
-
-	public void setControl_farmer_income(BigDecimal control_farmer_income) {
-		this.control_farmer_income = control_farmer_income;
-	}
 
 	@Column(name="control_farmer_benefited")
 	public Integer getControl_farmer_benefited() {
@@ -352,11 +333,4 @@ public class WdcpmksyMandaysDetails implements java.io.Serializable{
 		this.control_tube_well = control_tube_well;
 	}
     
-    
-    
-    
-    
-    
-    
-
 }
