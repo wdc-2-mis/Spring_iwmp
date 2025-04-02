@@ -160,14 +160,6 @@ function savedata(event){
 		
 		
 	<table id="projectprofile" cellspacing="0" class="table"   width="auto">
-<!--   	  <thead> -->
-<!-- 		<tr> -->
-<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th> -->
-<!-- 	      <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th> -->
-<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Project Area</th> -->
-<!-- 	      <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th> -->
-<!--       	</tr> -->
-<!--       </thead> -->
 <thead>
     <tr>
         <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
@@ -177,8 +169,8 @@ function savedata(event){
         <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
     </tr>
     <tr>
-        <th style="text-align:left; vertical-align: middle;">Pre Project Status(aggregate)</th>
-        <th style="text-align:left; vertical-align: middle;">Mid Project Status(Aggregate)</th>
+        <th style="text-align:center; vertical-align: middle;">Pre Project Status(Aggregate)</th>
+        <th style="text-align:center; vertical-align: middle;">Mid Project Status(Aggregate)</th>
     </tr>
 </thead>
  		<tr>
