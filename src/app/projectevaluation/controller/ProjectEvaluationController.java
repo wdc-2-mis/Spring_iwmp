@@ -441,6 +441,7 @@ public class ProjectEvaluationController {
 	       
 	    	mav.setViewName("projectEvaluation/projectProfileMain");
 	        	Integer profile_id=0;
+	        	monthList = PEService.getmonthforproject();
 		        profile_id=PEService.getProjectProfileId( projid, fcode, mcode);
 		        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 				if(projProfilestatus != null) {
@@ -559,6 +560,7 @@ public class ProjectEvaluationController {
 	        	        }
 
 	        	        mav.addObject("distName", distName);
+	        	        mav.addObject("monthList", monthList);
 	        	        mav.addObject("projName", projName);
 	        	        mav.addObject("monthname", mname);
 	        	        mav.addObject("fincd", fcode);
@@ -680,6 +682,7 @@ public class ProjectEvaluationController {
 		try {
 			
 		if (session != null && session.getAttribute("loginID") != null) {
+			monthList = PEService.getmonthforproject();
 			Integer projectProfileId = 0;
 			Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
@@ -822,6 +825,7 @@ public class ProjectEvaluationController {
 			request.setAttribute("evaluationDetailConfirmed", "true");
 
 	        mav.addObject("distName", distName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
@@ -919,6 +923,7 @@ public class ProjectEvaluationController {
 		try {
 			
 		if (session != null && session.getAttribute("loginID") != null) {
+			monthList = PEService.getmonthforproject();
 			Integer projectProfileId = 0;
 			Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
@@ -1064,6 +1069,7 @@ public class ProjectEvaluationController {
 			request.setAttribute("ecoPerspectiveConfirmed", "true");
 
 	        mav.addObject("distName", distName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
@@ -1418,7 +1424,7 @@ public class ProjectEvaluationController {
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
 	    	Character area = 'P';
-	        
+	    	monthList = PEService.getmonthforproject();
 	    	BigDecimal pre_farmer_income = new BigDecimal(request.getParameter("pre_farmer_income"));
 	    	BigDecimal mid_farmer_income = new BigDecimal(request.getParameter("mid_farmer_income"));
 	    	BigDecimal control_farmer_income = new BigDecimal(request.getParameter("control_farmer_income"));
@@ -1579,7 +1585,8 @@ public class ProjectEvaluationController {
 			request.setAttribute("croppedDetails1Confirmed", "true");
 
 	        mav.addObject("distName", distName);
-	        mav.addObject("projName", projName);
+	        mav.addObject("monthList", monthList);
+            mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
 	        mav.addObject("dcode", dcode);
@@ -1678,7 +1685,8 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
-	        Integer created_work = Integer.parseInt(request.getParameter("created_work"));
+	    	monthList = PEService.getmonthforproject();
+            Integer created_work = Integer.parseInt(request.getParameter("created_work"));
 	        String created_work_remark = request.getParameter("created_work_remark");
 	        Integer completed_work = Integer.parseInt(request.getParameter("completed_work"));
 	        String completed_work_remark = request.getParameter("completed_work_remark");
@@ -1820,6 +1828,7 @@ public class ProjectEvaluationController {
 			request.setAttribute("equityAspectConfirmed", "true");
 
 	        mav.addObject("distName", distName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
@@ -1921,6 +1930,7 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
+	    	monthList = PEService.getmonthforproject();
 	    	BigDecimal shape_file_area = new BigDecimal(request.getParameter("shape_file_area"));
 	        String shape_file_area_remark = request.getParameter("shape_file_area_remark");
 	        BigDecimal variation_area = new BigDecimal(request.getParameter("variation_area"));
@@ -2062,7 +2072,8 @@ public class ProjectEvaluationController {
 			request.setAttribute("executionOfPlannedWorkConfirmed", "true");
 
 	        mav.addObject("distName", distName);
-	        mav.addObject("projName", projName);
+	        mav.addObject("monthList", monthList);
+            mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
 	        mav.addObject("dcode", dcode);
@@ -2151,7 +2162,7 @@ public class ProjectEvaluationController {
 	    	Integer geo_tagg_work = Integer.parseInt(request.getParameter("geo_tagg_work"));
 	        String geo_tagg_work_remark = request.getParameter("geo_tagg_work_remark");
 	        
-	        
+	        monthList = PEService.getmonthforproject();
 	        Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 	        Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 	        String distName = request.getParameter("distName");
@@ -2291,7 +2302,8 @@ public class ProjectEvaluationController {
 			
 
 	        mav.addObject("distName", distName);
-	        mav.addObject("projName", projName);
+	        mav.addObject("monthList", monthList);
+            mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
 	        mav.addObject("dcode", dcode);
@@ -2391,6 +2403,7 @@ public class ProjectEvaluationController {
 	
 	try { 
 		if (session != null && session.getAttribute("loginID") != null) {
+			monthList = PEService.getmonthforproject();
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 	        String distName = request.getParameter("dname");
 	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -2596,6 +2609,7 @@ public class ProjectEvaluationController {
 
 	        mav.addObject("distName", distName);
 	        mav.addObject("projName", projName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
 	        mav.addObject("dcode", dcode);
@@ -2699,7 +2713,8 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
-	        String naturalresource =request.getParameter("ntrlresource");
+	    	monthList = PEService.getmonthforproject();
+            String naturalresource =request.getParameter("ntrlresource");
 	        String naturalresourceRemark= request.getParameter("ntrlresourceremark");
 	        String norm=request.getParameter("norm");
 	        String normRemark=request.getParameter("normremark");
@@ -2842,6 +2857,7 @@ public class ProjectEvaluationController {
 			request.setAttribute("croppedDetails1Confirmed", "true");
 			request.setAttribute("manDaysDetailConfirmed", "true");
 			mav.addObject("distName", distName);
+			mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
@@ -2952,7 +2968,8 @@ public class ProjectEvaluationController {
 		
 		try { 
 			if (session != null && session.getAttribute("loginID") != null) {
-				Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+				monthList = PEService.getmonthforproject();
+                Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		        String distName = request.getParameter("dname");
 		        Integer projid = Integer.parseInt(request.getParameter("pcode"));
 		        String project = request.getParameter("pcode");
@@ -3154,6 +3171,7 @@ public class ProjectEvaluationController {
 				request.setAttribute("manDaysDetailConfirmed", "true");
 
 		        mav.addObject("distName", distName);
+		        mav.addObject("monthList", monthList);
 		        mav.addObject("projName", projName);
 		        mav.addObject("monthname", mname);
 		        mav.addObject("fincd", fcode);

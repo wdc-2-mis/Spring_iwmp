@@ -83,11 +83,12 @@ $(document).ready(function () {
     $('#updateMonthForm').submit(function (e) {
         e.preventDefault();
         var projid = $("#projid").val();
-        var district = "<%= request.getParameter("district") %>";
-        var distName = "<%= request.getParameter("distName") %>";
-        var projName = "<%= request.getParameter("projName") %>";
-        var finyear = "<%= request.getParameter("finyear") %>";
-        var finName = "<%= request.getParameter("finName") %>";
+        
+        var district = $("#dcode").val();
+        var distName = $("#distName").val();
+        var projName = $("#projName").val();
+        var finyear = $("#fincd").val();
+        var finName = $("#finyr").val();
         
         // Get the selected month value from dropdown instead of request parameters
         var monthid = $("#updmonth").val(); 
@@ -289,6 +290,12 @@ $(document).ready(function () {
             <div class="modal-body">
                 <form id="updateMonthForm">
                     <input type="hidden" id="projid" name="projid" value="<c:out value='${projid}' />">
+                    <input type="hidden" id="projName" name="projName" value="<c:out value='${projName}' />">
+                    <input type="hidden" id="dcode" name="dcode" value="<c:out value='${dcode}' />">
+                    <input type="hidden" id="finyr" name="finyr" value="<c:out value='${finyr}' />">
+                    <input type="hidden" id="fincd" name="fincd" value="<c:out value='${fincd}' />">
+                    <input type="hidden" id="distName" name="distName" value="<c:out value='${distName}' />">
+                    
                     
                     <div class="form-group">
                        <b>District Name: &nbsp; <c:out value='${distName},' /></b>
