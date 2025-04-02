@@ -130,7 +130,7 @@ function savedata(event){
     	<img src="<c:url value='/resources/images/backbutton_PE.png'/>" alt="Back" style="height: 40px; width: 40px;">
 	</a>
 	<h4 style="margin: 0;">
-		<span style="text-decoration:underline;">Project Evaluation - No. of Man-days Details</span>
+		<span style="text-decoration:underline;">Project Evaluation - No. of Man-days, Farmer and Water Details</span>
 	</h4>
 </div>
 
@@ -181,56 +181,6 @@ function savedata(event){
         <th style="text-align:left; vertical-align: middle;">Mid Project Status(Aggregate)</th>
     </tr>
 </thead>
-<!--  		<tr> -->
-<%--         	<td width="4%"> <b><c:out value="1."></c:out></b></td> --%>
-<%--      		<td width="40%"><b><c:out value="Area of Culturable Wasteland (ha)"></c:out></b></td> --%>
-<!--      		<td> -->
-<%--      			<input type="text" id="culturable_wasteland" name="culturable_wasteland" maxlength="15" value="${culturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" /> --%>
-<!-- 			</td> -->
-<!-- 			<td> -->
-<%--      			<input type="text" id="conculturable_wasteland" name="conculturable_wasteland" maxlength="15" value="${conculturablew}"  autocomplete = "off" onfocusin="decimalToFourPlace(event)"  placeholder="Only decimal" /> --%>
-<!-- 			</td> -->
-<!-- 		</tr>  -->
-<!-- 		<tr> -->
-<%--  			<td width="4%"><b><c:out value="2."></c:out></b></td> --%>
-<%--   			<td width="40%"><b><c:out value="Number of Water Harvesting Structures(WHS) constructed/rejuvenated"></c:out></b></td> --%>
-<!--   			<td> -->
-<%--      			<input type="text" id="whs_constructed_rejuvenated" name="whs_constructed_rejuvenated" maxlength="5" value="${whs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   /> --%>
-<!--  			</td> -->
-<!--  			<td> -->
-<%--      			<input type="text" id="conwhs_constructed_rejuvenated" name="conwhs_constructed_rejuvenated" maxlength="5" value="${conwhs}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"   /> --%>
-<!--  			</td> -->
-<!-- 		</tr>  -->
-<!-- 		<tr> -->
-<%--  			<td width="4%"><b><c:out value="3."></c:out></b></td> --%>
-<%--   			<td width="40%"><b><c:out value="Area Covered with Soil and Moisture Conservation Activities (ha)"></c:out></b></td> --%>
-<!--   			<td> -->
-<%--      			<input type="text" id="soil_moisture" name="soil_moisture" maxlength="15" value="${soil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
-<!--  			</td> -->
-<!--  			<td> -->
-<%--      			<input type="text" id="consoil_moisture" name="consoil_moisture" maxlength="15" value="${consoil}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
-<!--  			</td> -->
-<!-- 		</tr>  -->
-<!-- 		<tr> -->
-<%--  			<td width="4%"><b><c:out value="4."></c:out></b></td> --%>
-<%--   			<td width="40%"><b><c:out value="Area under Protective Irrigation (ha)"></c:out></b></td> --%>
-<!--   			<td> -->
-<%--      			<input type="text" id="protective_irrigation" name="protective_irrigation" maxlength="15" value="${protective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
-<!--  			</td> -->
-<!--  			<td> -->
-<%--      			<input type="text" id="conprotective_irrigation" name="conprotective_irrigation" maxlength="15" value="${conprotective}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   /> --%>
-<!--  			</td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<%--  			<td width="4%"><b><c:out value="5."></c:out></b></td> --%>
-<%--   			<td width="40%"><b><c:out value="Area of degraded land covered/ rainfed area development (ha)"></c:out></b></td> --%>
-<!--   			<td> -->
-<%--      			<input type="text" id="degraded_rainfed" name="degraded_rainfed" maxlength="15" value="${degraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  /> --%>
-<!--  			</td> -->
-<!--  			<td> -->
-<%--      			<input type="text" id="condegraded_rainfed" name="condegraded_rainfed" maxlength="15" value="${condegraded}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  /> --%>
-<!--  			</td> -->
-<!-- 		</tr> -->
  		<tr>
  			<td width="4%"><b><c:out value="1."></c:out></b></td>
   			<td width="40%"><b><c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)"></c:out></b></td>
