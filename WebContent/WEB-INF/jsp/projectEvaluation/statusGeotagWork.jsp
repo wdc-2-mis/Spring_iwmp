@@ -52,7 +52,7 @@ function savedata(event){
 		<input type="hidden" id="mname" name="mname" value= <c:out value='${month}' /> />
 		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
-		<input type="hidden" name="fromno" id="fromno" value="12" />
+		<input type="hidden" name="fromno" id="fromno" value="13" />
 		
 		<%--  <table style="width:100%; align-content: center;" >
         	<tr align="center" >

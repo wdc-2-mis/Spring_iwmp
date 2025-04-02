@@ -111,7 +111,7 @@ function savedata(){
 		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${fname}' /> />  
  		
-		<input type="hidden" name="fromno" id="fromno" value="9" />
+		<input type="hidden" name="fromno" id="fromno" value="10" />
 		<input type="hidden" id="WatershedCompc" name="WatershedCompc" />
 		
 <!-- 	<div class = "form-row"> -->

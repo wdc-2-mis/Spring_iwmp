@@ -95,7 +95,7 @@ function savedata(){
 		<input type="hidden" id="mname" name="mname" value= <c:out value='${month}' /> />
 		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
-		<input type="hidden" name="fromno" id="fromno" value="8" />
+		<input type="hidden" name="fromno" id="fromno" value="9" />
            
 <div class="form-group">
 				District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp;Month Name : &nbsp; <b><c:out value='${month}' /></b>, &nbsp;&nbsp;&nbsp; 

@@ -1669,7 +1669,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				Query query = session.createQuery("from WdcpmksyProductionDetails where wdcpmksyProjectProfileEvaluation.projectProfileId =:projProfId");
 				query.setInteger("projProfId", projProfId);
 				list = query.list();
-				MEvaluationIndicator mEval = session.load(MEvaluationIndicator.class,7);
+				MEvaluationIndicator mEval = session.load(MEvaluationIndicator.class,8);
 				WdcpmksyProjectProfileEvaluation projProEval = session.load(WdcpmksyProjectProfileEvaluation.class, projProfId);
 				
 

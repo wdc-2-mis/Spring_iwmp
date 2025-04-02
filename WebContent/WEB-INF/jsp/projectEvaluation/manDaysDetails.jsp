@@ -144,7 +144,7 @@ function savedata(event){
 		<input type="hidden" id="mname" name="mname" value= <c:out value='${month}' /> />
 		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
-		<input type="hidden" name="fromno" id="fromno" value="6" />
+		<input type="hidden" name="fromno" id="fromno" value="7" />
 		
 
 <div class="form-group">
