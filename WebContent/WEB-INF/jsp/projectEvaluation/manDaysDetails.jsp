@@ -92,19 +92,19 @@ function savedata(event){
 	
 	if($('#pre_tube_well').val()==='')
 	{
-		alert('Please pre enter tube well');
+		alert('Please pre enter tube well for Project Area.');
 		$('#pre_tube_well').focus();
 		return false;
 	}
 	if($('#mid_tube_well').val()==='')
 	{
-		alert('Please mid enter tube well');
+		alert('Please mid enter tube well for Project Area.');
 		$('#mid_tube_well').focus();
 		return false;
 	}
 	if($('#control_tube_well').val()==='')
 	{
-		alert('Please enter tube well');
+		alert('Please enter tube well for Controlled Area.');
 		$('#control_tube_well').focus();
 		return false;
 	}	
@@ -119,8 +119,6 @@ function savedata(event){
     return false;
 }
 </script>
-
-
 </head>
 <body>
 <div class="maindiv">
@@ -155,10 +153,6 @@ function savedata(event){
 </div>
   
 <hr />
-	
-	
-		
-		
 	<table id="projectprofile" cellspacing="0" class="table"   width="auto">
 <thead>
     <tr>
