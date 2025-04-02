@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
+import app.projectevaluation.model.WdcpmksyCroppedDetails3;
 import app.projectevaluation.model.WdcpmksyEquityAspect;
 import app.projectevaluation.model.WdcpmksyProductionDetails;
 import app.projectevaluation.model.WdcpmksyProjectProfileEvaluation;
@@ -121,6 +122,9 @@ public interface ProjectEvaluationDAO {
 			BigDecimal mid_dug_well, BigDecimal control_dug_well, String remark_dug_well, BigDecimal pre_tube_well,
 			BigDecimal mid_tube_well, BigDecimal control_tube_well, String remark_tube_well, Integer fromno,
 			HttpSession session, Character area);
-
+	
+	List<WdcpmksyCroppedDetails3> getCroppedDetails3(Integer projProfId);
+	
+	String saveOrUpdateCroppedDetails3(HttpServletRequest request, HttpSession session, Integer projProfId, WdcpmksyCroppedDetails3 cropDetail3);
 
 }

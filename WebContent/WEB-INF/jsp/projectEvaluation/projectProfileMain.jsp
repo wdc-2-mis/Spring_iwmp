@@ -206,8 +206,16 @@ $(document).ready(function () {
                 <span class="tab-confirmation">Confirm</span>
             <% } %>
         </a>
+        <a href="croppedDetails3?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link <% if (request.getAttribute("croppedDetails2Confirmed") == null) { %>read-only<% } %>">
+        Cropped Details-3
+        <%
+                if ("true".equals(request.getAttribute("croppedDetails3Confirmed"))) {
+            %>
+                <span class="tab-confirmation">Confirm</span>
+            <% } %>
+        </a>
         
-       <a href="getMandayDeatails?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link <% if (request.getAttribute("croppedDetails2Confirmed") == null) { %>read-only<% } %>">
+       <a href="getMandayDeatails?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link <% if (request.getAttribute("croppedDetails3Confirmed") == null) { %>read-only<% } %>">
         No. of Man-days Details
         
         <%

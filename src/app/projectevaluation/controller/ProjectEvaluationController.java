@@ -47,6 +47,7 @@ import app.service.PhysicalActionPlanService;
 import app.service.ProfileService;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
+import app.projectevaluation.model.WdcpmksyCroppedDetails3;
 import app.projectevaluation.model.WdcpmksyEquityAspect;
 import app.projectevaluation.model.WdcpmksyProductionDetails;
 
@@ -178,109 +179,124 @@ public class ProjectEvaluationController {
 			monthList = PEService.getmonthforproject();
             String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 		    mav = new ModelAndView("projectEvaluation/projectProfileMain");
 		    mav.addObject("monthList", monthList);
             mav.addObject("distName",distName);
@@ -445,109 +461,124 @@ public class ProjectEvaluationController {
 		        profile_id=PEService.getProjectProfileId( projid, fcode, mcode);
 		        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 				if(projProfilestatus != null) {
-				if ("1".equals(projProfilestatus)) {
-		            request.setAttribute("projectProfileConfirmed", "true");
-		        }
-				if ("2".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		        }
-				if ("3".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		        }
-				if ("4".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				if ("5".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		        }
-				if ("6".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		        }
-				if ("7".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		        }
-				if ("8".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		        }
-				if ("9".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		        }
-				if ("10".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		        }
-				if ("11".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		        }
-				if ("12".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		            request.setAttribute("geoTagDetailsConfirmed", "true");
-		        }
-				}
+					if ("1".equals(projProfilestatus)) {
+			            request.setAttribute("projectProfileConfirmed", "true");
+			        }
+					if ("2".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			        }
+					if ("3".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			        }
+					if ("4".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			        }
+					if ("5".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			        }
+					if ("6".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			        }
+					if ("7".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			        }
+					if ("8".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			        }
+					if ("9".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			        }
+					if ("10".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			        }
+					if ("11".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			        }
+					if ("12".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			        }
+					if ("13".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			            request.setAttribute("geoTagDetailsConfirmed", "true");
+			        }
+					}
 	            result = PEService.saveIndicatorEvaluationDetails(profile_id, fromno,
 	                wcdc, wc, pia, admiMechanism, admiMechanismRemark, dprSlna,
 	                dprSlnaRemark, allManpower, allManpowerRemark, wcdcRemark,
@@ -711,109 +742,124 @@ public class ProjectEvaluationController {
 			mav.setViewName("projectEvaluation/projectProfileMain");
 			String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 			String result = PEService.saveFundUtilization(projectProfileId, centralShare, rmkCentralShare, stateShare, rmkStateShare, totalFund, rmkTotalFund, 
 					conPlannedFund, rmkConPlannedFund, exCon, rmkExCon, session, fromno);
 			
@@ -951,109 +997,124 @@ public class ProjectEvaluationController {
 			mav.setViewName("projectEvaluation/projectProfileMain");
 			String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 			result = PEService.saveEquityAspect(projectProfileId, pWatershedCom, cWatershedCom, rmkWatershedCom, pFpoShgVli, cFpoShgVli, rmkFpoShgVli, 
 												pLivelihood, cLivelihood, rmkLivelihood, session, fromno);
 						
@@ -1163,109 +1224,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        String result = PEService.insertprojectProfile(projid, fcode, mcode, evaId, sanctionedC, cShare, sShare, sancitonedP, villageC,
 	                waterC, membersWC, householdsC, session, request);
 
@@ -1465,109 +1541,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        
 	        result=PEService.saveMandaysDetails(profile_id,pre_farmer_income,mid_farmer_income,control_farmer_income,remark_farmer_income,
 					farmer_benefited,control_farmer_benefited,remark_farmer_benefited, mandays_generated,control_mandays_generated,remark_mandays_generated,
@@ -1710,109 +1801,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        result=PEService.saveExecutionPlanWork(profile_id, created_work, created_work_remark, completed_work, completed_work_remark, ongoing_work, ongoing_work_remark, fromno,  session );
 	   
 	        if ("success".equals(result)) {
@@ -1953,109 +2059,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        result=PEService.saveQualityShapeFile(profile_id, shape_file_area, shape_file_area_remark, variation_area, variation_area_remark, fromno,  session );
 	   
 	        if ("success".equals(result)) {
@@ -2180,109 +2301,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        result=PEService.saveGeoTagDetails(profile_id, geo_tagg_work, geo_tagg_work_remark, fromno, session );
 	   
 	        if ("success".equals(result)) {
@@ -2492,109 +2628,124 @@ public class ProjectEvaluationController {
 			mav.setViewName("projectEvaluation/projectProfileMain");
 			String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 			String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
 					midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
 					cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark);
@@ -2741,109 +2892,124 @@ public class ProjectEvaluationController {
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
-			if ("1".equals(projProfilestatus)) {
-	            request.setAttribute("projectProfileConfirmed", "true");
-	        }
-			if ("2".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	        }
-			if ("3".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	        }
-			if ("4".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			if ("5".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	        }
-			if ("6".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	        }
-			if ("7".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	        }
-			if ("8".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	        }
-			if ("9".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	        }
-			if ("10".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	        }
-			if ("11".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	        }
-			if ("12".equals(projProfilestatus)) {
-				request.setAttribute("projectProfileConfirmed", "true");
-				request.setAttribute("evaluationDetailConfirmed", "true");
-	            request.setAttribute("fundUtilizationConfirmed", "true");
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	            request.setAttribute("croppedDetails2Confirmed", "true");
-	            request.setAttribute("manDaysDetailConfirmed", "true");
-	            request.setAttribute("productionDetailsConfirmed", "true");
-	            request.setAttribute("ecoPerspectiveConfirmed", "true");
-	            request.setAttribute("equityAspectConfirmed", "true");
-	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-	            request.setAttribute("qualityShapeFileConfirmed", "true");
-	            request.setAttribute("geoTagDetailsConfirmed", "true");
-	        }
-			}
+				if ("1".equals(projProfilestatus)) {
+		            request.setAttribute("projectProfileConfirmed", "true");
+		        }
+				if ("2".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		        }
+				if ("3".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		        }
+				if ("4".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		        }
+				if ("5".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		        }
+				if ("6".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		        }
+				if ("7".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		        }
+				if ("8".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		        }
+				if ("9".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		        }
+				if ("10".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		        }
+				if ("11".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		        }
+				if ("12".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		        }
+				if ("13".equals(projProfilestatus)) {
+					request.setAttribute("projectProfileConfirmed", "true");
+					request.setAttribute("evaluationDetailConfirmed", "true");
+		            request.setAttribute("fundUtilizationConfirmed", "true");
+		            request.setAttribute("croppedDetails1Confirmed", "true");
+		            request.setAttribute("croppedDetails2Confirmed", "true");
+		            request.setAttribute("croppedDetails3Confirmed", "true");
+		            request.setAttribute("manDaysDetailConfirmed", "true");
+		            request.setAttribute("productionDetailsConfirmed", "true");
+		            request.setAttribute("ecoPerspectiveConfirmed", "true");
+		            request.setAttribute("equityAspectConfirmed", "true");
+		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+		            request.setAttribute("qualityShapeFileConfirmed", "true");
+		            request.setAttribute("geoTagDetailsConfirmed", "true");
+		        }
+				}
 	        result=PEService.saveEcoperspectiveDetails(profile_id, naturalresource, naturalresourceRemark, norm, normRemark, antrlasset, antrlassetRemark,
 	        		controlntlresource, controlnorm, fromno, controlantrlasset, session );
 	   
@@ -3049,109 +3215,124 @@ public class ProjectEvaluationController {
 				String projProfilestatus = PEService.checkProjectProfileStatus(project);
 				
 				if(projProfilestatus != null) {
-				if ("1".equals(projProfilestatus)) {
-		            request.setAttribute("projectProfileConfirmed", "true");
-		        }
-				if ("2".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		        }
-				if ("3".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		        }
-				if ("4".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				if ("5".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		        }
-				if ("6".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		        }
-				if ("7".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		        }
-				if ("8".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		        }
-				if ("9".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		        }
-				if ("10".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		        }
-				if ("11".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		        }
-				if ("12".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		            request.setAttribute("geoTagDetailsConfirmed", "true");
-		        }
-				}
+					if ("1".equals(projProfilestatus)) {
+			            request.setAttribute("projectProfileConfirmed", "true");
+			        }
+					if ("2".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			        }
+					if ("3".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			        }
+					if ("4".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			        }
+					if ("5".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			        }
+					if ("6".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			        }
+					if ("7".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			        }
+					if ("8".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			        }
+					if ("9".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			        }
+					if ("10".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			        }
+					if ("11".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			        }
+					if ("12".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			        }
+					if ("13".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			            request.setAttribute("geoTagDetailsConfirmed", "true");
+			        }
+					}
 				
 				String result = PEService.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, 
 						cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, spring, cSpring, rmkSpring, benefit, cBenefit, rmkBenefit, 
@@ -3244,109 +3425,124 @@ public class ProjectEvaluationController {
 				mav.setViewName("projectEvaluation/projectProfileMain");
 				String projProfilestatus = PEService.checkProjectProfileStatus(project);
 				if(projProfilestatus != null) {
-				if ("1".equals(projProfilestatus)) {
-		            request.setAttribute("projectProfileConfirmed", "true");
-		        }
-				if ("2".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		        }
-				if ("3".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		        }
-				if ("4".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				if ("5".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		        }
-				if ("6".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		        }
-				if ("7".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		        }
-				if ("8".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		        }
-				if ("9".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		        }
-				if ("10".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		        }
-				if ("11".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		             request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		        }
-				if ("12".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		            request.setAttribute("geoTagDetailsConfirmed", "true");
-		        }
-				}
+					if ("1".equals(projProfilestatus)) {
+			            request.setAttribute("projectProfileConfirmed", "true");
+			        }
+					if ("2".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			        }
+					if ("3".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			        }
+					if ("4".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			        }
+					if ("5".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			        }
+					if ("6".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			        }
+					if ("7".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			        }
+					if ("8".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			        }
+					if ("9".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			        }
+					if ("10".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			        }
+					if ("11".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			        }
+					if ("12".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			        }
+					if ("13".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+			            request.setAttribute("fundUtilizationConfirmed", "true");
+			            request.setAttribute("croppedDetails1Confirmed", "true");
+			            request.setAttribute("croppedDetails2Confirmed", "true");
+			            request.setAttribute("croppedDetails3Confirmed", "true");
+			            request.setAttribute("manDaysDetailConfirmed", "true");
+			            request.setAttribute("productionDetailsConfirmed", "true");
+			            request.setAttribute("ecoPerspectiveConfirmed", "true");
+			            request.setAttribute("equityAspectConfirmed", "true");
+			            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+			            request.setAttribute("qualityShapeFileConfirmed", "true");
+			            request.setAttribute("geoTagDetailsConfirmed", "true");
+			        }
+					}
 				String result = PEService.saveOrUpdateCroppedDetails2(request, session, profile_id, projProfId, diversifiedcrops, niltosingle, sdcrop, WHSConReju, soilandmoiscrops,
 						degradedrainfed, cdiversifiedcrops, cniltosingle, csdcrop, cWHSConReju, csoilandmoiscrops, cdegradedrainfed, diversifiedcropsremark,
 						niltosingleremark, sdcropremark, WHSConRejuremark, soilandmoiscropsremark, degradedrainfedremark);
@@ -4492,5 +4688,307 @@ public class ProjectEvaluationController {
 
 	    return response;
 	}
+	
+	
+	@RequestMapping(value = "/croppedDetails3", method = RequestMethod.GET)
+	public ModelAndView croppedDetails3(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		session = request.getSession(true);
+		 Integer pcode = Integer.parseInt(request.getParameter("pcode")==null?"0":request.getParameter("pcode"));
+		 Integer fcode = Integer.parseInt(request.getParameter("fcode")==null?"0":request.getParameter("fcode"));
+		 Integer mcode = Integer.parseInt(request.getParameter("mcode")==null?"0":request.getParameter("mcode"));
+		 Integer dcode = Integer.parseInt(request.getParameter("dcode")==null?"0":request.getParameter("dcode"));
+		 
+		 String areaType = null;
+		 String dname = request.getParameter("dname");
+		 String pname = request.getParameter("pname");
+		 String mname = request.getParameter("mname");
+		 String fname = request.getParameter("fname");
+		 Integer projectProfileId = PEService.getProjectProfileId(pcode, fcode, mcode);
+		 List<WdcpmksyCroppedDetails3> wdcCrpDtlList = new ArrayList<>();
+		 wdcCrpDtlList = PEService.getCroppedDetails3(projectProfileId);
+		 if(session!=null && session.getAttribute("loginID")!=null) {
+			int regId = (int)session.getAttribute("regId");
+			mav = new ModelAndView("projectEvaluation/croppedDetails3");
+			mav.addObject("wdcCrpDtlList", wdcCrpDtlList);
+			mav.addObject("wdcCrpDtlListSize", wdcCrpDtlList.size());
+			mav.addObject("projProId", projectProfileId);
+			mav.addObject("areaType", areaType);
+			mav.addObject("pcode", pcode);
+			mav.addObject("fcode", fcode);
+			mav.addObject("mcode", mcode);
+			mav.addObject("dcode", dcode);
+			mav.addObject("dname",dname);
+			mav.addObject("pname", pname);
+			mav.addObject("fname", fname);
+			mav.addObject("mname", mname);
+		}
+		else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return mav; 
+	}
+	
+	@RequestMapping(value = "/saveOrUpdateCroppedDetails3", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView saveOrUpdateCroppedDetails3(HttpServletRequest request) {ModelAndView mav = new ModelAndView();
+	String res="";
+	session = request.getSession(true);
+	
+	try { 
+		if (session != null && session.getAttribute("loginID") != null) {
+			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+	        String distName = request.getParameter("dname");
+	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
+	        String project = request.getParameter("pcode");
+	        String projName = request.getParameter("pname");
+	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
+	        String mname = request.getParameter("mname");
+	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        String fname = request.getParameter("fname");
+	        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
+			
+			BigDecimal prePlantationCover = new BigDecimal(request.getParameter("prePlantationCover"));
+			BigDecimal preRice = new BigDecimal(request.getParameter("preRice"));
+			BigDecimal preWheat = new BigDecimal(request.getParameter("preWheat"));
+			BigDecimal prePulses = new BigDecimal(request.getParameter("prePulses"));
+			BigDecimal preOilSeed = new BigDecimal(request.getParameter("preOilSeed"));
+			BigDecimal preMillets = new BigDecimal(request.getParameter("preMillets"));
+			BigDecimal preOther = new BigDecimal(request.getParameter("preOther"));
+			BigDecimal preCulturableWasteland = new BigDecimal(request.getParameter("preCulturableWasteland"));
+			BigDecimal preProtectiveIrrigation = new BigDecimal(request.getParameter("preProtectiveIrrigation"));
+			
+			BigDecimal midPlantationCover = new BigDecimal(request.getParameter("midPlantationCover"));
+			BigDecimal midRice = new BigDecimal(request.getParameter("midRice"));
+			BigDecimal midWheat = new BigDecimal(request.getParameter("midWheat"));
+			BigDecimal midPulses = new BigDecimal(request.getParameter("midPulses"));
+			BigDecimal midOilSeed = new BigDecimal(request.getParameter("midOilSeed"));
+			BigDecimal midMillets = new BigDecimal(request.getParameter("midMillets"));
+			BigDecimal midOther = new BigDecimal(request.getParameter("midOther"));
+			BigDecimal midCulturableWasteland = new BigDecimal(request.getParameter("midCulturableWasteland"));
+			BigDecimal midProtectiveIrrigation = new BigDecimal(request.getParameter("midProtectiveIrrigation"));
+			
+			BigDecimal controlPlantationCover = new BigDecimal(request.getParameter("controlPlantationCover"));
+			BigDecimal controlRice = new BigDecimal(request.getParameter("controlRice"));
+			BigDecimal controlWheat = new BigDecimal(request.getParameter("controlWheat"));
+			BigDecimal controlPulses = new BigDecimal(request.getParameter("controlPulses"));
+			BigDecimal controlOilSeed = new BigDecimal(request.getParameter("controlOilSeed"));
+			BigDecimal controlMillets = new BigDecimal(request.getParameter("controlMillets"));
+			BigDecimal controlOther = new BigDecimal(request.getParameter("controlOther"));
+			BigDecimal controlCulturableWasteland = new BigDecimal(request.getParameter("controlCulturableWasteland"));
+			BigDecimal controlProtectiveIrrigation = new BigDecimal(request.getParameter("controlProtectiveIrrigation"));
+			
+			String remarkPlantationCover = request.getParameter("remarkPlantationCover");
+			String remarkRice = request.getParameter("remarkRice");
+			String remarkWheat = request.getParameter("remarkWheat");
+			String remarkPulses = request.getParameter("remarkPulses");
+			String remarkOilSeed = request.getParameter("remarkOilSeed");
+			String remarkMillets = request.getParameter("remarkMillets");
+			String remarkOther = request.getParameter("remarkOther");
+			String remarkCulturableWasteland = request.getParameter("remarkCulturableWasteland");
+			String remarkProtectiveIrrigation = request.getParameter("remarkProtectiveIrrigation");
+			
+			
+			WdcpmksyCroppedDetails3 crpDtl = new WdcpmksyCroppedDetails3();
+			
+			crpDtl.setPrePlantationCover(prePlantationCover);
+			crpDtl.setPreRice(preRice);
+			crpDtl.setPreWheat(preWheat);
+			crpDtl.setPrePulses(prePulses);
+			crpDtl.setPreMillets(preMillets);
+			crpDtl.setPreOilSeed(preOilSeed);
+			crpDtl.setPreOther(preOther);
+			crpDtl.setPreCulturableWasteland(preCulturableWasteland);
+			crpDtl.setPreProtectiveIrrigation(preProtectiveIrrigation);	
+			
+			crpDtl.setMidPlantationCover(midPlantationCover);
+			crpDtl.setMidRice(midRice);
+			crpDtl.setMidWheat(midWheat);
+			crpDtl.setMidPulses(midPulses);
+			crpDtl.setMidMillets(midMillets);
+			crpDtl.setMidOilSeed(midOilSeed);
+			crpDtl.setMidOther(midOther);
+			crpDtl.setMidCulturableWasteland(midCulturableWasteland);
+			crpDtl.setMidProtectiveIrrigation(midProtectiveIrrigation);
+
+			
+			crpDtl.setControlPlantationCover(controlPlantationCover);
+			crpDtl.setControlRice(controlRice);
+			crpDtl.setControlWheat(controlWheat);
+			crpDtl.setControlPulses(controlPulses);
+			crpDtl.setControlMillets(controlMillets);
+			crpDtl.setControlOilSeed(controlOilSeed);
+			crpDtl.setControlOther(controlOther);
+			crpDtl.setControlCulturableWasteland(controlCulturableWasteland);
+			crpDtl.setControlProtectiveIrrigation(controlProtectiveIrrigation);
+			
+			crpDtl.setRemarkPlantationCover(remarkPlantationCover);
+			crpDtl.setRemarkRice(remarkRice);
+			crpDtl.setRemarkWheat(remarkWheat);
+			crpDtl.setRemarkPulses(remarkPulses);
+			crpDtl.setRemarkMillets(remarkMillets);
+			crpDtl.setRemarkOilSeed(remarkOilSeed);
+			crpDtl.setRemarkOther(remarkOther);
+			crpDtl.setRemarkCulturableWasteland(remarkCulturableWasteland);
+			crpDtl.setRemarkProtectiveIrrigation(remarkProtectiveIrrigation);
+			
+						
+			mav.setViewName("projectEvaluation/projectProfileMain");
+			String projProfilestatus = PEService.checkProjectProfileStatus(project);
+			if(projProfilestatus != null) {
+			if ("1".equals(projProfilestatus)) {
+	            request.setAttribute("projectProfileConfirmed", "true");
+	        }
+			if ("2".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	        }
+			if ("3".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	        }
+			if ("4".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	        }
+			if ("5".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	        }
+			if ("6".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	        }
+			if ("7".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	        }
+			if ("8".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	        }
+			if ("9".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	        }
+			if ("10".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	        }
+			if ("11".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	        }
+			if ("12".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	            request.setAttribute("qualityShapeFileConfirmed", "true");
+	        }
+			if ("13".equals(projProfilestatus)) {
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+	            request.setAttribute("fundUtilizationConfirmed", "true");
+	            request.setAttribute("croppedDetails1Confirmed", "true");
+	            request.setAttribute("croppedDetails2Confirmed", "true");
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	            request.setAttribute("manDaysDetailConfirmed", "true");
+	            request.setAttribute("productionDetailsConfirmed", "true");
+	            request.setAttribute("ecoPerspectiveConfirmed", "true");
+	            request.setAttribute("equityAspectConfirmed", "true");
+	            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+	            request.setAttribute("qualityShapeFileConfirmed", "true");
+	            request.setAttribute("geoTagDetailsConfirmed", "true");
+	        }
+			}
+			String result = PEService.saveOrUpdateCroppedDetails3(request, session, projProfId, crpDtl);
+			
+			if ("success".equals(result)) {
+	            request.setAttribute("croppedDetails3Confirmed", "true");
+	        }
+			
+			request.setAttribute("projectProfileConfirmed", "true");
+			request.setAttribute("evaluationDetailConfirmed", "true");
+			request.setAttribute("fundUtilizationConfirmed","true");
+			request.setAttribute("croppedDetails1Confirmed", "true");
+            request.setAttribute("croppedDetails2Confirmed", "true");
+
+	        mav.addObject("distName", distName);
+	        mav.addObject("projName", projName);
+	        mav.addObject("monthname", mname);
+	        mav.addObject("fincd", fcode);
+	        mav.addObject("dcode", dcode);
+	        mav.addObject("projid", projid);
+	        mav.addObject("monthid", mcode);
+	        mav.addObject("finyr", fname);
+    
+	    } else {
+	        if (session != null) {
+	            session.invalidate();
+	        }
+	        mav.setViewName("login");
+	        mav.addObject("login", new Login());
+	    }
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+	return mav;
+}
 }
 

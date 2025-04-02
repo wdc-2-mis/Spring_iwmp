@@ -45,6 +45,7 @@ import app.projectevaluation.model.FundUtilization;
 import app.projectevaluation.model.IndicatorEvaluation;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
+import app.projectevaluation.model.WdcpmksyCroppedDetails3;
 import app.projectevaluation.model.WdcpmksyEquityAspect;
 import app.projectevaluation.model.WdcpmksyEcologicalPerspective;
 import app.projectevaluation.model.WdcpmksyProductionDetails;
@@ -1891,7 +1892,106 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		    return res;
 		}
 
+		
+		@Override
+		public List<WdcpmksyCroppedDetails3> getCroppedDetails3(Integer projProfId) {
+			List<WdcpmksyCroppedDetails3> list = new ArrayList<>();
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				
+				Query query = session.createQuery("from WdcpmksyCroppedDetails3 where wdcpmksyProjectProfileEvaluation.projectProfileId =:projProfId");
+				query.setInteger("projProfId", projProfId);
+				list = query.list();
+				session.getTransaction().commit();
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return list;
+		}
 
+		@Override
+		public String saveOrUpdateCroppedDetails3(HttpServletRequest request, HttpSession sess, Integer projProfId,
+				WdcpmksyCroppedDetails3 cropDetail3) {
+			Session session = sessionFactory.getCurrentSession();
+			List<WdcpmksyCroppedDetails3> list = new ArrayList<>();
+			String res = "fail";
+			try {
+				String userId = sess.getAttribute("loginID").toString();
+				
+				session.beginTransaction();
+				Query query = session.createQuery("from WdcpmksyCroppedDetails3 where wdcpmksyProjectProfileEvaluation.projectProfileId =:projProfId");
+				query.setInteger("projProfId", projProfId);
+				list = query.list();
+				MEvaluationIndicator mEval = session.load(MEvaluationIndicator.class,6);
+				WdcpmksyProjectProfileEvaluation projProEval = session.load(WdcpmksyProjectProfileEvaluation.class, projProfId);
+				
+
+				WdcpmksyCroppedDetails3 crpDtl;
+				
+				if(list.size()>0) {
+					crpDtl = session.load(WdcpmksyCroppedDetails3.class,list.get(0).getCroppedDetails3Id());
+					crpDtl.setUpdatedOn(new Date());
+				}else {
+					crpDtl = new WdcpmksyCroppedDetails3();
+					projProEval.setmEvaluationIndicator(mEval);
+					crpDtl.setWdcpmksyProjectProfileEvaluation(projProEval);
+					crpDtl.setCreatedOn(new Date());
+					crpDtl.setCreatedBy(userId);
+					crpDtl.setRequestIp(getClientIpAddr(request));
+				}
+				crpDtl.setPrePlantationCover(cropDetail3.getPrePlantationCover());
+				crpDtl.setPreRice(cropDetail3.getPreRice());
+				crpDtl.setPreWheat(cropDetail3.getPreWheat());
+				crpDtl.setPrePulses(cropDetail3.getPrePulses());
+				crpDtl.setPreMillets(cropDetail3.getPreMillets());
+				crpDtl.setPreOilSeed(cropDetail3.getPreOilSeed());
+				crpDtl.setPreOther(cropDetail3.getPreOther());
+				crpDtl.setPreCulturableWasteland(cropDetail3.getPreCulturableWasteland());
+				crpDtl.setPreProtectiveIrrigation(cropDetail3.getPreProtectiveIrrigation());
+				
+				crpDtl.setMidPlantationCover(cropDetail3.getMidPlantationCover());
+				crpDtl.setMidRice(cropDetail3.getMidRice());
+				crpDtl.setMidWheat(cropDetail3.getMidWheat());
+				crpDtl.setMidPulses(cropDetail3.getMidPulses());
+				crpDtl.setMidMillets(cropDetail3.getMidMillets());
+				crpDtl.setMidOilSeed(cropDetail3.getMidOilSeed());
+				crpDtl.setMidOther(cropDetail3.getMidOther());
+				crpDtl.setMidCulturableWasteland(cropDetail3.getMidCulturableWasteland());
+				crpDtl.setMidProtectiveIrrigation(cropDetail3.getMidProtectiveIrrigation());
+				
+				crpDtl.setControlPlantationCover(cropDetail3.getControlPlantationCover());
+				crpDtl.setControlRice(cropDetail3.getControlRice());
+				crpDtl.setControlWheat(cropDetail3.getControlWheat());
+				crpDtl.setControlPulses(cropDetail3.getControlPulses());
+				crpDtl.setControlMillets(cropDetail3.getControlMillets());
+				crpDtl.setControlOilSeed(cropDetail3.getControlOilSeed());
+				crpDtl.setControlOther(cropDetail3.getControlOther());
+				crpDtl.setControlCulturableWasteland(cropDetail3.getControlCulturableWasteland());
+				crpDtl.setControlProtectiveIrrigation(cropDetail3.getControlProtectiveIrrigation());
+				
+				crpDtl.setRemarkPlantationCover(cropDetail3.getRemarkPlantationCover());
+				crpDtl.setRemarkRice(cropDetail3.getRemarkRice());
+				crpDtl.setRemarkWheat(cropDetail3.getRemarkWheat());
+				crpDtl.setRemarkPulses(cropDetail3.getRemarkPulses());
+				crpDtl.setRemarkMillets(cropDetail3.getRemarkMillets());
+				crpDtl.setRemarkOilSeed(cropDetail3.getRemarkOilSeed());
+				crpDtl.setRemarkOther(cropDetail3.getRemarkOther());
+				crpDtl.setRemarkCulturableWasteland(cropDetail3.getRemarkCulturableWasteland());
+				crpDtl.setRemarkProtectiveIrrigation(cropDetail3.getRemarkProtectiveIrrigation());
+				
+				session.saveOrUpdate(crpDtl);
+				session.getTransaction().commit();
+				res = "success";
+				
+			}catch(Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+				res = "fail";
+			}
+			return res;
+		}
 
 
 }

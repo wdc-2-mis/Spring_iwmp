@@ -21,6 +21,7 @@ import app.projectevaluation.dao.ProjectEvaluationDAO;
 import app.projectevaluation.service.ProjectEvaluationService;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
+import app.projectevaluation.model.WdcpmksyCroppedDetails3;
 import app.projectevaluation.model.WdcpmksyEquityAspect;
 import app.projectevaluation.model.WdcpmksyProductionDetails;
 import app.projectevaluation.model.WdcpmksyProjectProfileEvaluation;
@@ -268,5 +269,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 				farmer_benefited, control_farmer_benefited, remark_farmer_benefited, mandays_generated, control_mandays_generated, 
 				remark_mandays_generated, pre_dug_well, mid_dug_well, control_dug_well, remark_dug_well, pre_tube_well, mid_tube_well, 
 				control_tube_well, remark_tube_well, fromno, session, area);
+	}
+	
+	@Override
+	public List<WdcpmksyCroppedDetails3> getCroppedDetails3(Integer projProfId) {
+		// TODO Auto-generated method stub
+		return PEDAO.getCroppedDetails3(projProfId);
+	}
+
+	@Override
+	public String saveOrUpdateCroppedDetails3(HttpServletRequest request, HttpSession session, Integer projProfId,
+			WdcpmksyCroppedDetails3 cropDetail3) {
+		// TODO Auto-generated method stub
+		return PEDAO.saveOrUpdateCroppedDetails3(request, session, projProfId, cropDetail3);
 	}
 }
