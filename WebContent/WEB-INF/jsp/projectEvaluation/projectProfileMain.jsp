@@ -149,12 +149,12 @@ $(document).ready(function () {
   </a>
   
   <h4 style="margin: 0;">
-    <u>Project Evaluation</u>
+    <u>Mid Term Project Evaluation</u>
   </h4>
 </div>
 	 <hr/>
     <div class="tabs-container">  
-        <b> District Name: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Month Name: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' /></b>
+        <b> District Name: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month Name: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> </b>
 <hr/>
         <a href="projectProfile?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link">Project Profile
         <%

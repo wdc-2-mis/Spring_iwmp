@@ -90,7 +90,7 @@ $(document).ready(function() {
 <div class="maindiv">
 <div class="col formheading" style="">
 		<h4>
-			<u>Project Evaluation</u>
+			<u>Mid Term Project Evaluation</u>
 		</h4>
 	</div>
 <hr />

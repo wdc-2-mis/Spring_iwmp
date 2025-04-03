@@ -94,7 +94,7 @@ function savedata(){
     	<img src="<c:url value='/resources/images/backbutton_PE.png'/>" alt="Back" style="height: 40px; width: 40px;">
 	</a>
 	<h4 style="margin: 0;">
-		<span style="text-decoration:underline;">Project Evaluation - Equity Aspect</span>
+		<span style="text-decoration:underline;">Mid Term Project Evaluation - Equity Aspect</span>
 	</h4>
 </div>
 
@@ -135,7 +135,7 @@ function savedata(){
 
 <div class="form-group">
 	District Name : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; 
-	Month Name : &nbsp; <b><c:out value='${mname}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>
+	Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month Name : &nbsp; <b><c:out value='${mname}' /></b>
 </div>
   
 <hr />
@@ -144,7 +144,7 @@ function savedata(){
 	<thead>
 		<tr>
 			<th><b>Sl.No.</b></th>
-			<th style="width:35%"><b>Aspect Description</b></th>
+			<th style="width:35%"><b>Equity Aspect Description</b></th>
 			<th><b>Project Area</b></th>
 			<th><b>Controlled Area</b></th>
 			<th><b>Remarks</b></th>

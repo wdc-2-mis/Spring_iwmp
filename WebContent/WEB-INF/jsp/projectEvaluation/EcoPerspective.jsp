@@ -30,12 +30,12 @@ function savedata(){
 // 	alert('dprSlnaRemark=='+dprSlnaRemark);natural resources intervals
     $flag=true;
     if (naturalresource === '' ||naturalresource === undefined || naturalresource === null) {
-            alert('Please check the  status of natural resources intervals for Project Area');
+            alert('Please check the  status of natural resources at intervals for Project Area');
             $flag = false; 
             return false;
         }
     if (controlntlresource === '' ||controlntlresource === undefined || controlntlresource === null) {
-        alert('Please check the  status of natural resources intervals for Controlled Area');
+        alert('Please check the  status of natural resources at intervals for Controlled Area');
         $flag = false; 
         return false;
     }
@@ -81,7 +81,7 @@ function savedata(){
     			<img src="<c:url value='/resources/images/backbutton_PE.png'/>" alt="Back" style="height: 40px; width: 40px;">
 			</a>
 			<h4 style="margin: 0;">
-				<span style="text-decoration:underline;">Project Evaluation - Ecological Perspective</span>
+				<span style="text-decoration:underline;">Mid Term Project Evaluation - Ecological Perspective</span>
 			</h4>
 		</div>
        	
@@ -98,8 +98,8 @@ function savedata(){
 		<input type="hidden" name="fromno" id="fromno" value="9" />
            
 <div class="form-group">
-				District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp;Month Name : &nbsp; <b><c:out value='${month}' /></b>, &nbsp;&nbsp;&nbsp; 
-		Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>
+				District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>, &nbsp;&nbsp;&nbsp; Month Name : &nbsp; <b><c:out value='${month}' /></b> 
+		
 			</div>
 
             <hr />
@@ -115,7 +115,7 @@ function savedata(){
                     <tr>
                     
                         <td><b><c:out value="1"/></b></td>
-                        <td><b><c:out value="Is there a system of auditing of status of natural resources intervals"/></b></td>
+                        <td><b><c:out value="Is there a system of auditing of status of natural resources at intervals"/></b></td>
                         <td>
                             <c:if test="${ntrlresource eq null }">
                             <input type="radio" id="naturalyes" name="ntrlresource" value="true" value="${ntrlresource}" /> Yes

@@ -43,7 +43,7 @@ function savedata(event){
     	<img src="<c:url value='/resources/images/backbutton_PE.png'/>" alt="Back" style="height: 40px; width: 40px;">
 	</a>
 	<h4 style="margin: 0;">
-		<span style="text-decoration:underline;">Project Evaluation - Quality of Project Shape Files</span>
+		<span style="text-decoration:underline;">Mid Term Project Evaluation - Quality of Project Shape Files</span>
 	</h4>
 </div>
 
@@ -136,7 +136,7 @@ function savedata(event){
 
 <div class="form-group">
 	District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp; 
-	Month Name : &nbsp; <b><c:out value='${month}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>
+	Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>, &nbsp;&nbsp;&nbsp; Month Name : &nbsp; <b><c:out value='${month}' /></b> 
 </div>
   
 <hr />	
