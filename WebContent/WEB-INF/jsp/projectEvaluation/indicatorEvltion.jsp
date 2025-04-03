@@ -130,7 +130,7 @@ function savedata(){
 		<input type="hidden" name="fromno" id="fromno" value="2" />
            
 <div class="form-group">
-			District Name : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>, &nbsp;&nbsp;&nbsp; Month Name : &nbsp;<b> <c:out value='${month}' /></b>
+			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${distName}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${projName}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${finyear}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp;<b> <c:out value='${month}' /></b>
 		
 			</div>
 

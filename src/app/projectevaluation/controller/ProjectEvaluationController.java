@@ -158,6 +158,7 @@ public class ProjectEvaluationController {
 	{
 		session = request.getSession(true);
 		String data[] = null;
+		String stName = (String) session.getAttribute("stName");
 		String district= request.getParameter("district");
 		String project= request.getParameter("project");
 		String distName= request.getParameter("distName");
@@ -299,6 +300,7 @@ public class ProjectEvaluationController {
 				}
 		    mav = new ModelAndView("projectEvaluation/projectProfileMain");
 		    mav.addObject("monthList", monthList);
+		    mav.addObject("stName",stName);
             mav.addObject("distName",distName);
 			mav.addObject("projName",projName);
 			mav.addObject("dcode",district);
@@ -320,6 +322,7 @@ public class ProjectEvaluationController {
 	public ModelAndView saveIndicatorEvaluation(HttpServletRequest request, HttpServletResponse response)
 	{
 		session = request.getSession(true);
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		Integer pcode = Integer.parseInt(request.getParameter("pcode"));
 		String dname = request.getParameter("dname");
@@ -367,6 +370,7 @@ public class ProjectEvaluationController {
 				 wcRemark=bean.getWc_remark().toString();
 			}
 			mav = new ModelAndView("projectEvaluation/indicatorEvltion");
+			mav.addObject("stName",stName);
 			mav.addObject("dcode",dcode);
 			mav.addObject("pcode",pcode);
 			mav.addObject("distName",dname);
@@ -623,6 +627,7 @@ public class ProjectEvaluationController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		Integer pcode = Integer.parseInt(request.getParameter("pcode"));
 		String dname = request.getParameter("dname");
@@ -670,7 +675,8 @@ public class ProjectEvaluationController {
 					 exCon = bean.getTotal_expenditure().toString();
 					 rmkExCon = bean.getTotal_expenditure_remark();
 				 }
-				 
+				
+				mav.addObject("stName",stName); 
 				mav.addObject("dcode",dcode);
 				mav.addObject("pcode",pcode);
 				mav.addObject("dname",dname);
@@ -901,6 +907,7 @@ public class ProjectEvaluationController {
 		
 		ModelAndView mav = new ModelAndView();
 		
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		Integer pcode = Integer.parseInt(request.getParameter("pcode"));
 		String dname = request.getParameter("dname");
@@ -938,6 +945,7 @@ public class ProjectEvaluationController {
 		            mav.addObject("error", "No data found");
 		        }
 		        
+		        mav.addObject("stName",stName);
 		        mav.addObject("dcode",dcode);
 				mav.addObject("pcode",pcode);
 				mav.addObject("dname",dname);
@@ -1156,6 +1164,7 @@ public class ProjectEvaluationController {
 	@RequestMapping(value="projectProfile", method=RequestMethod.GET)
     public ModelAndView projectProfile(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		Integer pcode = Integer.parseInt(request.getParameter("pcode"));
 		String project = request.getParameter("pcode");
@@ -1178,6 +1187,7 @@ public class ProjectEvaluationController {
 			     }
 			mav = new ModelAndView("projectEvaluation/projectProfile");
 			mav.addObject("projectList",getprojectProfileData);
+			mav.addObject("stName",stName);
 			mav.addObject("dcode",dcode);
 			mav.addObject("pcode",pcode);
 			mav.addObject("dname",dname);
@@ -1379,6 +1389,7 @@ public class ProjectEvaluationController {
 	{
 		 session = request.getSession(true);
 		 ModelAndView mav = new ModelAndView();
+		 String stName = (String) session.getAttribute("stName");
 		 Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
 		 Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
 		 String dname = request.getParameter("dname"); 
@@ -1469,6 +1480,7 @@ public class ProjectEvaluationController {
 					 mav.addObject("remark_tube_well",remark_tube_well);
 					 
 			
+					 mav.addObject("stName",stName);
 					 mav.addObject("dcode",dcode); 
 					 mav.addObject("pcode",pcode);
 					 mav.addObject("distName",dname); 
@@ -1701,6 +1713,7 @@ public class ProjectEvaluationController {
 	{
 			session = request.getSession(true);
 		
+			String stName = (String) session.getAttribute("stName");
 			Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
 			Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
 			String dname = request.getParameter("dname"); 
@@ -1752,7 +1765,8 @@ public class ProjectEvaluationController {
 				mav = new ModelAndView("login");
 				mav.addObject("login", new Login());
 			}
-			
+			 
+			 mav.addObject("stName",stName);
 			 mav.addObject("dcode",dcode); 
 			 mav.addObject("pcode",pcode);
 			 mav.addObject("distName",dname); 
@@ -1961,6 +1975,7 @@ public class ProjectEvaluationController {
 		Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
 		ModelAndView mav = new ModelAndView();
 		
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
 		Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
 		String dname = request.getParameter("dname"); 
@@ -2009,6 +2024,7 @@ public class ProjectEvaluationController {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}
+		 mav.addObject("stName",stName);
 		 mav.addObject("dcode",dcode); 
 		 mav.addObject("pcode",pcode);
 		 mav.addObject("distName",dname); 
@@ -2221,6 +2237,7 @@ public class ProjectEvaluationController {
 		Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
 		ModelAndView mav = new ModelAndView();
 		
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
 		Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
 		String dname = request.getParameter("dname"); 
@@ -2260,6 +2277,7 @@ public class ProjectEvaluationController {
 			mav.addObject("login", new Login());
 		}
 		
+		 mav.addObject("stName",stName);
 		 mav.addObject("dcode",dcode); 
 		 mav.addObject("pcode",pcode);
 		 mav.addObject("distName",dname); 
@@ -2500,6 +2518,7 @@ public class ProjectEvaluationController {
 		 Integer dcode = Integer.parseInt(request.getParameter("dcode")==null?"0":request.getParameter("dcode"));
 		 
 		 String areaType = null;
+		 String stName = (String) session.getAttribute("stName");
 		 String dname = request.getParameter("dname");
 		 String pname = request.getParameter("pname");
 		 String mname = request.getParameter("mname");
@@ -2522,6 +2541,7 @@ public class ProjectEvaluationController {
 			mav.addObject("pname", pname);
 			mav.addObject("fname", fname);
 			mav.addObject("mname", mname);
+			mav.addObject("stName",stName);
 		}
 		else {
 			mav = new ModelAndView("login");
@@ -2786,6 +2806,7 @@ public class ProjectEvaluationController {
 	public ModelAndView ecologicalPerspective(HttpServletRequest request, HttpServletResponse response)
 	{
 		session = request.getSession(true);
+		String stName = (String) session.getAttribute("stName");
 		Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		Integer pcode = Integer.parseInt(request.getParameter("pcode"));
 		String dname = request.getParameter("dname");
@@ -2828,6 +2849,7 @@ public class ProjectEvaluationController {
 				 
 			 }
 			mav = new ModelAndView("projectEvaluation/EcoPerspective");
+			mav.addObject("stName",stName);
 			mav.addObject("dcode",dcode);
 			mav.addObject("pcode",pcode);
 			mav.addObject("distName",dname);
@@ -3053,6 +3075,7 @@ public class ProjectEvaluationController {
 		 Integer dcode = Integer.parseInt(request.getParameter("dcode")==null?"0":request.getParameter("dcode"));
 		 
 		 String areaType = null;
+		 String stName = (String) session.getAttribute("stName");
 		 String dname = request.getParameter("dname");
 		 String pname = request.getParameter("pname");
 		 String mname = request.getParameter("mname");
@@ -3075,6 +3098,7 @@ public class ProjectEvaluationController {
 			mav.addObject("pname", pname);
 			mav.addObject("fname", fname);
 			mav.addObject("mname", mname);
+			mav.addObject("stName",stName);
 		}
 		else {
 			mav = new ModelAndView("login");
@@ -3093,6 +3117,7 @@ public class ProjectEvaluationController {
 		 Integer mcode = Integer.parseInt(request.getParameter("mcode")==null?"0":request.getParameter("mcode"));
 		 Integer dcode = Integer.parseInt(request.getParameter("dcode")==null?"0":request.getParameter("dcode"));
 		 
+		 String stName = (String) session.getAttribute("stName");
 		 String dname = request.getParameter("dname");
 		 String pname = request.getParameter("pname");
 		 String mname = request.getParameter("mname");
@@ -3116,6 +3141,7 @@ public class ProjectEvaluationController {
 			mav.addObject("pname", pname);
 			mav.addObject("fname", fname);
 			mav.addObject("mname", mname);
+			mav.addObject("stName",stName);
 		}
 		else {
 			mav = new ModelAndView("login");
@@ -4700,6 +4726,7 @@ public class ProjectEvaluationController {
 		 Integer dcode = Integer.parseInt(request.getParameter("dcode")==null?"0":request.getParameter("dcode"));
 		 
 		 String areaType = null;
+		 String stName = (String) session.getAttribute("stName");
 		 String dname = request.getParameter("dname");
 		 String pname = request.getParameter("pname");
 		 String mname = request.getParameter("mname");
@@ -4722,6 +4749,7 @@ public class ProjectEvaluationController {
 			mav.addObject("pname", pname);
 			mav.addObject("fname", fname);
 			mav.addObject("mname", mname);
+			mav.addObject("stName",stName);
 		}
 		else {
 			mav = new ModelAndView("login");
