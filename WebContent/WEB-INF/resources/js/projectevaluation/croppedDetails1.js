@@ -10,10 +10,10 @@ function calSum(){
 	var ckharif = parseFloat(document.getElementById('ckharif').value);
 	var crabi = parseFloat(document.getElementById('crabi').value);
 	var cthirdCrop = parseFloat(document.getElementById('cthirdCrop').value);
-//	var ms = parseFloat(document.getElementById('midStateShare').value);
-	var presum = prekharif + prerabi + prethird;
-	var midsum = midkharif + midrabi + midthird;
-	var csum = ckharif + crabi + cthirdCrop;
+	
+	var presum = (isNaN(prekharif)?0.0:prekharif) + (isNaN(prerabi)?0.0:prerabi) + (isNaN(prethird)?0.0:prethird);
+	var midsum = (isNaN(midkharif)?0.0:midkharif) + (isNaN(midrabi)?0.0:midrabi) + (isNaN(midthird)?0.0:midthird);
+	var csum = (isNaN(ckharif)?0.0:ckharif) + (isNaN(crabi)?0.0:crabi) + (isNaN(cthirdCrop)?0.0:cthirdCrop);
 	document.getElementById('precropedArea').value = presum.toFixed(4);
 	document.getElementById('midcropedArea').value = midsum.toFixed(4);
 	document.getElementById('ccropedArea').value = csum.toFixed(4);
@@ -39,9 +39,9 @@ function diffcalSum(){
 	var cmillets = parseFloat(document.getElementById('cmillets').value);
 	var cothers = parseFloat(document.getElementById('cothers').value);
 //	var ms = parseFloat(document.getElementById('midStateShare').value);
-	var presum = precereals + prepulses + preoilSeed + premillets + preothers;
-	var midsum = midcereals + midpulses + midoilSeed + midmillets + midothers;
-	var csum = ccereals + cpulses + coilSeed + cmillets + cothers;
+	var presum = (isNaN(precereals)?0.0:precereals) + (isNaN(prepulses)?0.0:prepulses) + (isNaN(preoilSeed)?0.0:preoilSeed) + (isNaN(premillets)?0.0:premillets) + (isNaN(preothers)?0.0:preothers);
+	var midsum = (isNaN(midcereals)?0.0:midcereals) + (isNaN(midpulses)?0.0:midpulses) + (isNaN(midoilSeed)?0.0:midoilSeed) + (isNaN(midmillets)?0.0:midmillets) + (isNaN(midothers)?0.0:midothers);
+	var csum = (isNaN(ccereals)?0.0:ccereals) + (isNaN(cpulses)?0.0:cpulses) + (isNaN(coilSeed)?0.0:coilSeed) + (isNaN(cmillets)?0.0:cmillets) + (isNaN(cothers)?0.0:cothers);
 	document.getElementById('prediffCrop').value = presum.toFixed(4);
 	document.getElementById('middiffCrop').value = midsum.toFixed(4);
 	document.getElementById('cdiffCrop').value = csum.toFixed(4);

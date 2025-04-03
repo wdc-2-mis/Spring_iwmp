@@ -23,9 +23,9 @@ function calSum(){
 	var controlMillets = parseFloat(document.getElementById('controlMillets').value);
 	var controlOther = parseFloat(document.getElementById('controlOther').value);
 	
-	var presum = preRice + preWheat + prePulses + preOilSeed + preMillets + preOther;
-	var midsum = midRice + midWheat + midPulses + midOilSeed + midMillets + midOther;
-	var csum = controlRice + controlWheat + controlPulses + controlOilSeed + controlMillets + controlOther;
+	var presum = (isNaN(preRice)?0.0:preRice) + (isNaN(preWheat)?0.0:preWheat) + (isNaN(prePulses)?0.0:prePulses) + (isNaN(preOilSeed)?0.0:preOilSeed) + (isNaN(preMillets)?0.0:preMillets) + (isNaN(preOther)?0.0:preOther);
+	var midsum = (isNaN(midRice)?0.0:midRice) + (isNaN(midWheat)?0.0:midWheat) + (isNaN(midPulses)?0.0:midPulses) + (isNaN(midOilSeed)?0.0:midOilSeed) + (isNaN(midMillets)?0.0:midMillets) + (isNaN(midOther)?0.0:midOther);
+	var csum = (isNaN(controlRice)?0.0:controlRice) + (isNaN(controlWheat)?0.0:controlWheat) + (isNaN(controlPulses)?0.0:controlPulses) + (isNaN(controlOilSeed)?0.0:controlOilSeed) + (isNaN(controlMillets)?0.0:controlMillets) + (isNaN(controlOther)?0.0:controlOther);
 	document.getElementById('prediffCrop').value = presum.toFixed(4);
 	document.getElementById('middiffCrop').value = midsum.toFixed(4);
 	document.getElementById('cdiffCrop').value = csum.toFixed(4);
