@@ -249,7 +249,8 @@ public class AssetWiseStatusController {
 			if (f.getAchievStatus() == null) {
 				for (IwmpMMonth m : mlist) {
 					if (m.getAchievStatus() == null) {
-						map.put(m.getMonthId(),  f.getFinYrCd());
+						Integer year = map.containsKey(m.getMonthId())?map.get(m.getMonthId())>f.getFinYrCd()?f.getFinYrCd():map.get(m.getMonthId()):f.getFinYrCd();
+						map.put(m.getMonthId(), year);
 					}
 				}
 			}
