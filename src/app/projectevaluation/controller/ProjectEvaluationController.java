@@ -3632,6 +3632,7 @@ public class ProjectEvaluationController {
 		Integer fcode = Integer.parseInt(request.getParameter("finyear")); 
 		String mname =request.getParameter("monthName"); 
 		String fname = request.getParameter("finName");
+		String stName = (String) session.getAttribute("stName");
 		Integer profile_id=0;
 		String admiMechanism=null;
 		String admiMechanismRemark=null;
@@ -3934,6 +3935,7 @@ public class ProjectEvaluationController {
 			 mav.addObject("variationareare",variation_area_remark); 
 			 mav.addObject("twork",twork); 
 			 mav.addObject("tworkre",tworkre); 
+			 mav.addObject("stName", stName);
 			 
 		}
 		

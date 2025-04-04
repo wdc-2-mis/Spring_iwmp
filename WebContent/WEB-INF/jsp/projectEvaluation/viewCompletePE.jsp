@@ -89,7 +89,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 <%--   	<b>District Name : &nbsp; <c:out value='${dname}' />, &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${pname}' />, &nbsp;&nbsp;&nbsp;Month : &nbsp; <c:out value='${mname}' />, &nbsp;&nbsp;&nbsp;  --%>
 <%-- 		Financial Year : &nbsp; <c:out value='${fname}' />  </b> --%>
 		
-	District Name : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; 
+	State Name : &nbsp; <b><c:out value='${stName}' /></b>, District Name : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; 
 	Month Name : &nbsp; <b><c:out value='${mname}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>
 	
 <!-- 	<div class ="card"> -->
