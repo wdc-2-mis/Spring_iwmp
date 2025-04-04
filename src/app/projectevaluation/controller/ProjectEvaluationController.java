@@ -4790,6 +4790,7 @@ public class ProjectEvaluationController {
 	
 	try { 
 		if (session != null && session.getAttribute("loginID") != null) {
+			monthList = PEService.getmonthforproject();
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 	        String distName = request.getParameter("dname");
 	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -5020,6 +5021,7 @@ public class ProjectEvaluationController {
             request.setAttribute("croppedDetails2Confirmed", "true");
 
 	        mav.addObject("distName", distName);
+	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
 	        mav.addObject("monthname", mname);
 	        mav.addObject("fincd", fcode);
