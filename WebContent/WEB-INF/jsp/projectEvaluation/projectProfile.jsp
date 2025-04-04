@@ -69,6 +69,14 @@ function savedata(event){
 
     return false;
 }
+
+function updateTotal() {
+    const centralShare = parseFloat(document.getElementById('cShare').value) || 0; 
+    const stateShare = parseFloat(document.getElementById('sShare').value) || 0;   
+    const totalSanctioned = centralShare + stateShare;                            
+    document.getElementById('sanctionedC').value = totalSanctioned.toFixed(4);    
+}
+
 </script>
 
 
@@ -151,7 +159,7 @@ function savedata(event){
   <td width="40%">
    <b><c:out	value="Central Share (Rs. Crore)"></c:out></b>
   </td><td>
-     <input type="text" id="cShare" name="cShare" value="${listUser.central}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" />
+     <input type="text" id="cShare" name="cShare" value="${listUser.central}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
  </td>
 </tr> 
 
@@ -162,7 +170,7 @@ function savedata(event){
   <td width="40%">
    <b><c:out	value="State Share (Rs. Crore)"></c:out></b>
   </td><td>
-     <input type="text" id="sShare" name="sShare" value="${listUser.state}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal"/>
+     <input type="text" id="sShare" name="sShare" value="${listUser.state}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
  </td>
 </tr> 
 
