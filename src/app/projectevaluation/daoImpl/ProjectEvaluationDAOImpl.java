@@ -909,7 +909,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			BigDecimal preothers, BigDecimal prehorticulture,BigDecimal prenetSown, BigDecimal precropIntensity, BigDecimal midkharifCrop, BigDecimal midrabiCrop, BigDecimal midthirdCrop, BigDecimal midcereals,BigDecimal midpulses, BigDecimal midoilSeed, BigDecimal midmillets,
 			BigDecimal midothers, BigDecimal midhorticulture,BigDecimal midnetSown, BigDecimal midcropIntensity, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses, BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, 
 			BigDecimal chorticulture, BigDecimal cnetSown, BigDecimal ccropIntensity, String kharifCropremark, String rabiCropremark, String thirdCropremark, String cerealsremark, String pulsesremark, String oilSeedremark, String milletsremark, String othersremark, String horticultureremark, 
-			String netSownremark, String cropIntensityremark) {
+			String netSownremark, String cropIntensityremark, String othercrop) {
 		Session session = sessionFactory.getCurrentSession();
 		List<WdcpmksyCroppedDetails1> list = new ArrayList<>();
 		String res = "fail";
@@ -984,6 +984,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			crpDtl.setHorticultureremark(horticultureremark);
 			crpDtl.setNetSownremark(netSownremark);
 			crpDtl.setCropIntensityremark(cropIntensityremark);
+			crpDtl.setOthercrop(othercrop);
 			session.saveOrUpdate(crpDtl);
 			session.getTransaction().commit();
 			res = "success";
@@ -2015,6 +2016,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				crpDtl.setRemarkOther(cropDetail3.getRemarkOther());
 				crpDtl.setRemarkCulturableWasteland(cropDetail3.getRemarkCulturableWasteland());
 				crpDtl.setRemarkProtectiveIrrigation(cropDetail3.getRemarkProtectiveIrrigation());
+				
+				crpDtl.setOthercrop(cropDetail3.getOthercrop());
 				
 				session.saveOrUpdate(crpDtl);
 				session.getTransaction().commit();

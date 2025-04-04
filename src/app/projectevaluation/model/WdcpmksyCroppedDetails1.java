@@ -74,7 +74,7 @@ public class WdcpmksyCroppedDetails1 implements java.io.Serializable{
 	private String netSownremark;
 	private String cropIntensityremark;
 	
-	
+	private String othercrop;
 	
 	
 	
@@ -109,7 +109,7 @@ public class WdcpmksyCroppedDetails1 implements java.io.Serializable{
 			BigDecimal control_cropping_intensity, String kharifCropremark, String rabiCropremark,
 			String thirdCropremark, String cerealsremark, String pulsesremark, String oilSeedremark,
 			String milletsremark, String othersremark, String horticultureremark, String netSownremark,
-			String cropIntensityremark, Date createdOn, String createdBy, Date updatedOn, String requestIp) {
+			String cropIntensityremark, String othercrop, Date createdOn, String createdBy, Date updatedOn, String requestIp) {
 		super();
 		this.croppedDetails1Id = croppedDetails1Id;
 		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
@@ -157,6 +157,7 @@ public class WdcpmksyCroppedDetails1 implements java.io.Serializable{
 		this.horticultureremark = horticultureremark;
 		this.netSownremark = netSownremark;
 		this.cropIntensityremark = cropIntensityremark;
+		this.othercrop = othercrop;
 		this.createdOn = createdOn;
 		this.createdBy = createdBy;
 		this.updatedOn = updatedOn;
@@ -617,6 +618,15 @@ public class WdcpmksyCroppedDetails1 implements java.io.Serializable{
 
 	public void setCropIntensityremark(String cropIntensityremark) {
 		this.cropIntensityremark = cropIntensityremark;
+	}
+
+	public String getOthercrop() {
+		return othercrop;
+	}
+
+
+	public void setOthercrop(String othercrop) {
+		this.othercrop = othercrop;
 	}
 
 	
