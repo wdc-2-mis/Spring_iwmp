@@ -135,10 +135,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 			BigDecimal preothers, BigDecimal prehorticulture,BigDecimal prenetSown, BigDecimal precropIntensity, BigDecimal midkharifCrop, BigDecimal midrabiCrop, BigDecimal midthirdCrop, BigDecimal midcereals,BigDecimal midpulses, BigDecimal midoilSeed, BigDecimal midmillets,
 			BigDecimal midothers, BigDecimal midhorticulture,BigDecimal midnetSown, BigDecimal midcropIntensity, BigDecimal ckharifCrop, BigDecimal crabiCrop, BigDecimal cthirdCrop, BigDecimal ccereals, BigDecimal cpulses, BigDecimal coilSeed, BigDecimal cmillets, BigDecimal cothers, 
 			BigDecimal chorticulture, BigDecimal cnetSown, BigDecimal ccropIntensity, String kharifCropremark, String rabiCropremark, String thirdCropremark, String cerealsremark, String pulsesremark, String oilSeedremark, String milletsremark, String othersremark, String horticultureremark, 
-			String netSownremark, String cropIntensityremark) {
+			String netSownremark, String cropIntensityremark, String othercrop) {
 		return PEDAO.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
 				midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
-				cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark);
+				cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark, othercrop);
 	}
 
 	@Override

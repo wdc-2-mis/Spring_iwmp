@@ -57,6 +57,7 @@ public class WdcpmksyCroppedDetails3 implements java.io.Serializable {
 	private BigDecimal midProtectiveIrrigation;			// mid_protective_irrigation
 	private BigDecimal controlProtectiveIrrigation;		// control_protective_irrigation
 	private String remarkProtectiveIrrigation;			// remark_protective_irrigation
+	private String othercrop;
 	private Date createdOn;          	          		//created_on
 	private String createdBy;         					//created_by
 	private Date updatedOn;                 			//updated_on
@@ -78,7 +79,7 @@ public class WdcpmksyCroppedDetails3 implements java.io.Serializable {
 			String remarkOilSeed, BigDecimal preMillets, BigDecimal midMillets, BigDecimal controlMillets, String remarkMillets, BigDecimal preOther,
 			BigDecimal midOther, BigDecimal controlOther, String remarkOther, BigDecimal preCulturableWasteland, BigDecimal midCulturableWasteland, 
 			BigDecimal controlCulturableWasteland, String remarkCulturableWasteland, BigDecimal preProtectiveIrrigation, BigDecimal midProtectiveIrrigation,
-			BigDecimal controlProtectiveIrrigation, String remarkProtectiveIrrigation, Date createdOn, String createdBy, Date updatedOn, String requestIp) {
+			BigDecimal controlProtectiveIrrigation, String remarkProtectiveIrrigation, String othercrop, Date createdOn, String createdBy, Date updatedOn, String requestIp) {
 		
 		this.croppedDetails3Id = croppedDetails3Id;
 		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
@@ -118,6 +119,7 @@ public class WdcpmksyCroppedDetails3 implements java.io.Serializable {
 		this.midProtectiveIrrigation = midProtectiveIrrigation;
 		this.controlProtectiveIrrigation = controlProtectiveIrrigation;
 		this.remarkProtectiveIrrigation = remarkProtectiveIrrigation;
+		this.othercrop = othercrop;
 		this.createdOn = createdOn;
 		this.createdBy = createdBy;
 		this.updatedOn = updatedOn;
@@ -507,8 +509,15 @@ public class WdcpmksyCroppedDetails3 implements java.io.Serializable {
 	public void setRemarkProtectiveIrrigation(String remarkProtectiveIrrigation) {
 		this.remarkProtectiveIrrigation = remarkProtectiveIrrigation;
 	}
-
 	
+	public String getOthercrop() {
+		return othercrop;
+	}
+
+	public void setOthercrop(String othercrop) {
+		this.othercrop = othercrop;
+	}
+
 	@Temporal(TemporalType.DATE)
     @Column(name="created_on")
 	public Date getCreatedOn() {

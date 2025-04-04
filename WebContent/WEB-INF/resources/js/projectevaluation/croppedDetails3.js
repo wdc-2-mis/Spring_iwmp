@@ -64,6 +64,8 @@ $(document).on('click', '#view', function(e){
 	$controlOther = $('#controlOther').val();
 	$controlCulturableWasteland = $('#controlCulturableWasteland').val();
 	$controlProtectiveIrrigation = $('#controlProtectiveIrrigation').val();
+	
+	$othercrop = $('#othercrop').val();
 
 	if ($prePlantationCover == '' || $prePlantationCover == undefined || $prePlantationCover == null) {
 		alert('Please Enter the Pre Area under plantation cover.');
@@ -173,22 +175,24 @@ $(document).on('click', '#view', function(e){
 		return false;
 	}
 	
-	if ($preOther == '' || $preOther == undefined || $preOther == null) {
-		alert('Please Enter Pre Others Crops Area.');
-		$('#preOther').focus();
-		return false;
-	}
-	
-	if ($midOther == '' || $midOther == undefined || $midOther == null) {
-		alert('Please Enter Mid Others Crops Area.');
-		$('#midOther').focus();
-		return false;
-	}
-	
-	if ($controlOther == '' || $controlOther == undefined || $controlOther == null) {
-		alert('Please Enter Others Crop Controlled Area.');
-		$('#controlOther').focus();
-		return false;
+	if ($othercrop != '') {
+		if ($preOther == '' || $preOther == undefined || $preOther == null) {
+			alert('Please Enter Pre Others Crops Area.');
+			$('#preOther').focus();
+			return false;
+		}
+
+		if ($midOther == '' || $midOther == undefined || $midOther == null) {
+			alert('Please Enter Mid Others Crops Area.');
+			$('#midOther').focus();
+			return false;
+		}
+
+		if ($controlOther == '' || $controlOther == undefined || $controlOther == null) {
+			alert('Please Enter Others Crop Controlled Area.');
+			$('#controlOther').focus();
+			return false;
+		}
 	}
 	
 	if ($preCulturableWasteland == '' || $preCulturableWasteland == undefined || $preCulturableWasteland == null) {

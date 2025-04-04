@@ -204,20 +204,23 @@
 
 						<tr>
 							<td style="text-align: right;"><b><c:out value="e." /></b></td>
-							<td><b> <c:out value="Other Crops" /></b></td>
+							<td><b> <c:out value="Other Crop Name" /></b>
+								<input type="text" id="othercrop" name="othercrop"
+								 class="" value="${list.othercrop}"	 placeholder="Only Text" autocomplete="off"/>
+							</td>
 							<td><input type="text" id="preOther" name="preOther"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.preOther}"/>						  
+								value="${list.preOther}"						  
 								placeholder="Only Decimal" autocomplete="off" onchange="calSum()" maxlength="15"/><span
 								class="preOtherError"></span></td>
 							<td><input type="text" id="midOther" name="midOther"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.midOther}"/>
+								value="${list.midOther}"
 								placeholder="Only Decimal" autocomplete="off" onchange="calSum()" maxlength="15"/><span
 								class="midOtherError"></span></td>
 							<td><input type="text" id="controlOther" name="controlOther"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.controlOther}"/>	
+								value="${list.controlOther}"	
 								placeholder="Only Decimal" autocomplete="off" onchange="calSum()" maxlength="15"/><span
 								class="controlOtherError"></span></td>
 							<td><textArea id="remarkOther" name="remarkOther" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.remarkOther}"/></textArea>
@@ -402,8 +405,11 @@
 						</tr>
 
 						<tr>
-							<td style="text-align: right;"><b><c:out value="f." /></b></td>
-							<td><b> <c:out value="Other Crops" /></b></td>
+							<td style="text-align: right;"><b><c:out value="e." /></b></td>
+							<td><b> <c:out value="Other Crop Name" /></b>
+								<input type="text" id="othercrop" name="othercrop"
+								 class="" placeholder="Only Text" autocomplete="off"/>
+							</td>
 							<td><input type="text" id="preOther" name="preOther"
 								onfocusin="decimalToFourPlace(event)" class=""
 								placeholder="Only Decimal" autocomplete="off" onchange="calSum()" maxlength="15"/><span

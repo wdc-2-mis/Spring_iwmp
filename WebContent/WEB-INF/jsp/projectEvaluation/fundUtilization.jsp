@@ -201,7 +201,7 @@ function calSum(){
 				<b><c:out value="Amount of sanctioned Central share received (Rs. Crores)"/></b>
 			</td>
 			<td>
-     			<input type="text" id="centralShare" name="centralShare" value="${centralShare}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class="" onchange="calSum()" />
+     			<input type="text" id="centralShare" name="centralShare" value="${centralShare}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class="" oninput="calSum()" />
 			</td>
 			<td>
 <%--      			<input type="text" id="rmkCentralShare" name="rmkCentralShare" value="${rmkCentralShare}" autocomplete = "off" /> --%>
@@ -216,7 +216,7 @@ function calSum(){
 				<b><c:out value="Amount of sanctioned State share received (Rs. Crores)"/></b>
 			</td>
 			<td>
-     			<input type="text" id="stateShare" name="stateShare" value="${stateShare}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class="" onchange="calSum()" />
+     			<input type="text" id="stateShare" name="stateShare" value="${stateShare}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class="" oninput="calSum()" />
 			</td>
 			<td>
 <%--      			<input type="text" id="rmkStatelShare" name="rmkStateShare" value="${rmkStateShare}" autocomplete = "off" /> --%>

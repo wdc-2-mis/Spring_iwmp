@@ -247,20 +247,23 @@
 
 						<tr>
 							<td style="text-align: right;"><b><c:out value="e." /></b></td>
-							<td><b> <c:out value="Other Crops" /></b></td>
+							<td><b> <c:out value="Other Crop Name" /></b>
+								<input type="text" id="othercrop" name="othercrop"
+								 class="" value="${list.othercrop}"	 placeholder="Only Text" autocomplete="off"/>
+							</td>
 							<td><input type="text" id="preothers" name="preothers"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.predifferentCropOther}"/>						  
+								value="${list.predifferentCropOther}"						  
 								placeholder="Only Decimal" autocomplete="off" onchange="diffcalSum()" maxlength="15"/><span
 								class="preothersError"></span></td>
 							<td><input type="text" id="midothers" name="midothers"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.middifferentCropOther}"/>
+								value="${list.middifferentCropOther}"
 								placeholder="Only Decimal" autocomplete="off" onchange="diffcalSum()" maxlength="15"/><span
 								class="midothersError"></span></td>
 							<td><input type="text" id="cothers" name="cothers"
 								onfocusin="decimalToFourPlace(event)" class=""
-								value=<c:out value="${list.control_different_crop_other}"/>	
+								value="${list.control_different_crop_other}"	
 								placeholder="Only Decimal" autocomplete="off" onchange="diffcalSum()" maxlength="15"/><span
 								class="cothersError"></span></td>
 							<td><textArea id="othersremark" name="othersremark" autocomplete = "off" rows="2" cols="22" maxlength="200"><c:out value="${list.othersremark}"/></textArea>
@@ -505,7 +508,9 @@
 
 						<tr>
 							<td style="text-align: right;"><b><c:out value="e." /></b></td>
-							<td><b> <c:out value="Other Crops" /></b>
+							<td><b> <c:out value="Other Crop Name" /></b>
+								<input type="text" id="othercrop" name="othercrop"
+								 class="" placeholder="Only Text" autocomplete="off"/>
 							</td>
 							<td><input type="text" id="preothers" name="preothers"
 								onfocusin="decimalToFourPlace(event)" class=""

@@ -2597,7 +2597,7 @@ public class ProjectEvaluationController {
 			BigDecimal preoilSeed = new BigDecimal(request.getParameter("preoilSeed"));
 			BigDecimal premillets = new BigDecimal(request.getParameter("premillets"));
 			
-			BigDecimal preothers = new BigDecimal(request.getParameter("preothers"));
+			BigDecimal preothers = request.getParameter("preothers")==""?null:new BigDecimal(request.getParameter("preothers"));
 			BigDecimal prehorticulture = new BigDecimal(request.getParameter("prehorticulture"));
 			
 			BigDecimal prenetSown = new BigDecimal(request.getParameter("prenetSown"));
@@ -2614,7 +2614,7 @@ public class ProjectEvaluationController {
 			BigDecimal midoilSeed = new BigDecimal(request.getParameter("midoilSeed"));
 			BigDecimal midmillets = new BigDecimal(request.getParameter("midmillets"));
 			
-			BigDecimal midothers = new BigDecimal(request.getParameter("midothers"));
+			BigDecimal midothers = request.getParameter("midothers")==""?null:new BigDecimal(request.getParameter("midothers"));
 			BigDecimal midhorticulture = new BigDecimal(request.getParameter("midhorticulture"));
 			
 			BigDecimal midnetSown = new BigDecimal(request.getParameter("midnetSown"));
@@ -2633,7 +2633,7 @@ public class ProjectEvaluationController {
 			BigDecimal coilSeed = new BigDecimal(request.getParameter("coilSeed"));
 			BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
 			
-			BigDecimal cothers = new BigDecimal(request.getParameter("cothers"));
+			BigDecimal cothers = request.getParameter("cothers")==""?null:new BigDecimal(request.getParameter("cothers"));
 			BigDecimal chorticulture = new BigDecimal(request.getParameter("chorticulture"));
 			
 			BigDecimal cnetSown = new BigDecimal(request.getParameter("cnetSown"));
@@ -2656,7 +2656,7 @@ public class ProjectEvaluationController {
 			String netSownremark = request.getParameter("netSownremark");
 			String cropIntensityremark = request.getParameter("cropIntensityremark");
 			
-//			BigDecimal cdiversifiedCrop = new BigDecimal(request.getParameter("cdiversifiedCrop"));
+			String othercrop = request.getParameter("othercrop");
 			
 			
 						
@@ -2783,7 +2783,7 @@ public class ProjectEvaluationController {
 				}
 			String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
 					midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
-					cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark);
+					cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark, othercrop);
 			
 			if ("success".equals(result)) {
 	            request.setAttribute("croppedDetails1Confirmed", "true");
@@ -4810,7 +4810,7 @@ public class ProjectEvaluationController {
 			BigDecimal prePulses = new BigDecimal(request.getParameter("prePulses"));
 			BigDecimal preOilSeed = new BigDecimal(request.getParameter("preOilSeed"));
 			BigDecimal preMillets = new BigDecimal(request.getParameter("preMillets"));
-			BigDecimal preOther = new BigDecimal(request.getParameter("preOther"));
+			BigDecimal preOther = request.getParameter("preOther")==""?null:new BigDecimal(request.getParameter("preOther"));
 			BigDecimal preCulturableWasteland = new BigDecimal(request.getParameter("preCulturableWasteland"));
 			BigDecimal preProtectiveIrrigation = new BigDecimal(request.getParameter("preProtectiveIrrigation"));
 			
@@ -4820,7 +4820,7 @@ public class ProjectEvaluationController {
 			BigDecimal midPulses = new BigDecimal(request.getParameter("midPulses"));
 			BigDecimal midOilSeed = new BigDecimal(request.getParameter("midOilSeed"));
 			BigDecimal midMillets = new BigDecimal(request.getParameter("midMillets"));
-			BigDecimal midOther = new BigDecimal(request.getParameter("midOther"));
+			BigDecimal midOther = request.getParameter("midOther")==""?null:new BigDecimal(request.getParameter("midOther"));
 			BigDecimal midCulturableWasteland = new BigDecimal(request.getParameter("midCulturableWasteland"));
 			BigDecimal midProtectiveIrrigation = new BigDecimal(request.getParameter("midProtectiveIrrigation"));
 			
@@ -4830,7 +4830,7 @@ public class ProjectEvaluationController {
 			BigDecimal controlPulses = new BigDecimal(request.getParameter("controlPulses"));
 			BigDecimal controlOilSeed = new BigDecimal(request.getParameter("controlOilSeed"));
 			BigDecimal controlMillets = new BigDecimal(request.getParameter("controlMillets"));
-			BigDecimal controlOther = new BigDecimal(request.getParameter("controlOther"));
+			BigDecimal controlOther = request.getParameter("controlOther")==""?null:new BigDecimal(request.getParameter("controlOther"));
 			BigDecimal controlCulturableWasteland = new BigDecimal(request.getParameter("controlCulturableWasteland"));
 			BigDecimal controlProtectiveIrrigation = new BigDecimal(request.getParameter("controlProtectiveIrrigation"));
 			
@@ -4844,6 +4844,7 @@ public class ProjectEvaluationController {
 			String remarkCulturableWasteland = request.getParameter("remarkCulturableWasteland");
 			String remarkProtectiveIrrigation = request.getParameter("remarkProtectiveIrrigation");
 			
+			String othercrop = request.getParameter("othercrop");
 			
 			WdcpmksyCroppedDetails3 crpDtl = new WdcpmksyCroppedDetails3();
 			
@@ -4887,7 +4888,7 @@ public class ProjectEvaluationController {
 			crpDtl.setRemarkOther(remarkOther);
 			crpDtl.setRemarkCulturableWasteland(remarkCulturableWasteland);
 			crpDtl.setRemarkProtectiveIrrigation(remarkProtectiveIrrigation);
-			
+			crpDtl.setOthercrop(othercrop);
 						
 			mav.setViewName("projectEvaluation/projectProfileMain");
 			String projProfilestatus = PEService.checkProjectProfileStatus(project);
