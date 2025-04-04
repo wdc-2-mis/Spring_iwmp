@@ -325,8 +325,8 @@ function pcalSum(){
 	var cFpo =  parseInt(document.getElementById('cFpo').value);
 	var cUg =  parseInt(document.getElementById('cUg').value);
 	
-	var psum = shg + fpo + ug;
-	var csum = cShg + cFpo + cUg;
+	var psum = (isNaN(shg)?0.0:shg) + (isNaN(fpo)?0.0:fpo) + (isNaN(ug)?0.0:ug);
+	var csum = (isNaN(cShg)?0.0:cShg) + (isNaN(cFpo)?0.0:cFpo) + (isNaN(cUg)?0.0:cUg);
 	document.getElementById('noOfCom').value = psum;
 	document.getElementById('cnoOfCom').value = csum;
 }
@@ -341,8 +341,8 @@ function mpcalSum(){
 	var cMfpo =  parseInt(document.getElementById('cMfpo').value);
 	var cMug =  parseInt(document.getElementById('cMug').value);
 	
-	var psum = mShg + mFpo + mUg;
-	var csum = cMshg + cMfpo + cMug;
+	var psum = (isNaN(mShg)?0.0:mShg) + (isNaN(mFpo)?0.0:mFpo) + (isNaN(mUg)?0.0:mUg);
+	var csum = (isNaN(cMshg)?0.0:cMshg) + (isNaN(cMfpo)?0.0:cMfpo) + (isNaN(cMug)?0.0:cMug);
 	document.getElementById('mnoOfCom').value = psum;
 	document.getElementById('cmnoOfCom').value = csum;
 }

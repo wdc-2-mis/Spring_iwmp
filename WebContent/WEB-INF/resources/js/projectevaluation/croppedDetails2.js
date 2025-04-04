@@ -5,8 +5,8 @@ function calSum(){
 	var sdcrop = parseFloat(document.getElementById('sdcrop').value);
 	var cniltosingle = parseFloat(document.getElementById('cniltosingle').value);
 	var csdcrop = parseFloat(document.getElementById('csdcrop').value);
-	var psum = niltosingle + sdcrop;
-	var csum = cniltosingle + csdcrop;
+	var psum = (isNaN(niltosingle)?0.0:niltosingle) + (isNaN(sdcrop)?0.0:sdcrop);
+	var csum = (isNaN(cniltosingle)?0.0:cniltosingle) + (isNaN(csdcrop)?0.0:csdcrop);
 	document.getElementById('totalArea').value = psum.toFixed(4);
 	document.getElementById('ctotalArea').value = csum.toFixed(4);
 }
