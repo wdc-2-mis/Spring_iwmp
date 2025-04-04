@@ -20,7 +20,7 @@ $(document).ready(function() {
 						if (response.status === "D") {
 	                        baseUrl = "getProjectProfile?";
 	                    } else if (response.status === "C") {
-	                        baseUrl = "getfinalProjectProfile";
+	                        baseUrl = "getviewcomplete?";
 	                    } else {
 	                        return; // Do nothing if status is not D or C
 	                    }
