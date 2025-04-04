@@ -55,6 +55,8 @@ public interface ProjectEvaluationService {
 	
 	List<ProjectEvaluationBean> getFundUtilization(Integer profileid);
 	
+	List<ProjectEvaluationBean> getFundDetails(Integer pcode);
+	
 	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
 			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon, 
 			HttpSession session, Integer fromno);

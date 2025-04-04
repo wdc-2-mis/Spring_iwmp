@@ -98,7 +98,8 @@ function calSum(){
 	
 	var pc = parseFloat(document.getElementById('centralShare').value);
 	var ps = parseFloat(document.getElementById('stateShare').value);
-	var psum = pc + ps;
+// 	var psum = pc + ps;
+	var psum = (isNaN(pc)?0.0:pc) + (isNaN(ps)?0.0:ps);
 	document.getElementById('totalFund').value = psum.toFixed(4);
 }
 

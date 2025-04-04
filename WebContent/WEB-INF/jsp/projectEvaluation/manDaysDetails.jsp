@@ -128,7 +128,7 @@ function savedata(event){
     	<img src="<c:url value='/resources/images/backbutton_PE.png'/>" alt="Back" style="height: 40px; width: 40px;">
 	</a>
 	<h4 style="margin: 0;">
-		<span style="text-decoration:underline;">Mid Term Project Evaluation - No. of Man-days, Farmer and Water table Details</span>
+		<span style="text-decoration:underline;">Mid Term Project Evaluation - No. of Man-days, Farmer and Water Table Details</span>
 	</h4>
 </div>
 

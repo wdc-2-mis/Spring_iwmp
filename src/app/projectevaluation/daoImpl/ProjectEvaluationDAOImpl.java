@@ -540,6 +540,36 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		}
 		return result;
 	}	
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public List<ProjectEvaluationBean> getFundDetails(Integer pcode) {
+	    List<ProjectEvaluationBean> fundDetails = new ArrayList<>();
+	    Session session = sessionFactory.openSession();
+
+	    try {
+	        Transaction tx = session.beginTransaction();
+
+	        String sql = "select central_share_amt as central, state_share_amt as state from iwmp_m_project where status='C' and proj_id=:pcode";
+
+	        SQLQuery query = session.createSQLQuery(sql);
+	        query.setInteger("pcode", pcode);
+	        query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+
+	        fundDetails = query.list();
+
+	        tx.commit();
+	    } catch (HibernateException e) {
+	        System.err.println("Hibernate error");
+	        e.printStackTrace();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	    } finally {
+	        session.close();
+	    }
+
+	    return fundDetails;
+	}
 		
 	@SuppressWarnings("deprecation")
 	@Override

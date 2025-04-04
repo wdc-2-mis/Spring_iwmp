@@ -653,6 +653,7 @@ public class ProjectEvaluationController {
 		try {
 			
 			List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+			List<ProjectEvaluationBean> fundData = new ArrayList<ProjectEvaluationBean>();
 			
 			if(session != null && session.getAttribute("loginID") != null) 
 			{	
@@ -663,18 +664,32 @@ public class ProjectEvaluationController {
 				
 				list=PEService.getFundUtilization(projectProfileId);
 				
-				 for(ProjectEvaluationBean bean : list) {
-					 centralShare = bean.getCentral_share().toString();
-					 rmkCentralShare = bean.getCentral_share_remark();
-					 stateShare = bean.getState_share().toString();
-					 rmkStateShare = bean.getState_share_remark();
-					 totalFund = bean.getTotal_fund().toString();
-					 rmkTotalFund = bean.getTotal_fund_remark();
-					 conPlannedFund = bean.getTotal_fund_planned().toString();
-					 rmkConPlannedFund = bean.getTotal_fund_planned_remark();
-					 exCon = bean.getTotal_expenditure().toString();
-					 rmkExCon = bean.getTotal_expenditure_remark();
-				 }
+				
+				if (list == null || list.isEmpty()) 
+				{
+					fundData=PEService.getFundDetails(pcode);
+					
+					for (ProjectEvaluationBean bean : fundData) 
+					{
+						centralShare = bean.getCentral().toString();
+						stateShare = bean.getState().toString();
+						totalFund =  (bean.getCentral().add(bean.getState())).toString();
+			        }
+			    } else {
+			    	for(ProjectEvaluationBean bean : list) 
+			    	{
+			    		centralShare = bean.getCentral_share().toString();
+			    		rmkCentralShare = bean.getCentral_share_remark();
+			    		stateShare = bean.getState_share().toString();
+			    		rmkStateShare = bean.getState_share_remark();
+			    		totalFund = bean.getTotal_fund().toString();
+			    		rmkTotalFund = bean.getTotal_fund_remark();
+			    		conPlannedFund = bean.getTotal_fund_planned().toString();
+			    		rmkConPlannedFund = bean.getTotal_fund_planned_remark();
+			    		exCon = bean.getTotal_expenditure().toString();
+			    		rmkExCon = bean.getTotal_expenditure_remark();
+			    	}
+			    }
 				
 				mav.addObject("stName",stName); 
 				mav.addObject("dcode",dcode);

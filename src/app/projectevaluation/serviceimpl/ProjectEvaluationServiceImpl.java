@@ -54,6 +54,11 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public List<ProjectEvaluationBean> getFundUtilization(Integer profileid) {
 		return PEDAO.getFundUtilization(profileid);
 	}
+	
+	@Override
+	public List<ProjectEvaluationBean> getFundDetails(Integer pcode) {
+		return PEDAO.getFundDetails(pcode);
+	}
 		
 	@Override
 	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
