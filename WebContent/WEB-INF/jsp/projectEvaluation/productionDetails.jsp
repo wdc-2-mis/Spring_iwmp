@@ -174,11 +174,11 @@
 								
 								<td colspan="2"><input type="text" id="shg" name="shg"
 									value=<c:out value="${list.communityBasedShg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="shgError"></span></td>
 								<td><input type="text" id="cShg" name="cShg"
 									value=<c:out value="${list.controlCommunityBasedShg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="cShgError"></span></td>
 								<td>
      								<textarea id="rmkShg" name="rmkShg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkCommunityBasedShg}</textarea> 
@@ -190,11 +190,11 @@
 								<td><b> <c:out value="FPO" /></b></td>
 								<td colspan="2"><input type="text" id="fpo" name="fpo"
 									value=<c:out value="${list.communityBasedFpo}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="fpoError"></span></td>
 								<td><input type="text" id="cFpo" name="cFpo"
 									value=<c:out value="${list.controlCommunityBasedFpo}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="cFpoError"></span></td>
 								<td>
      								<textarea id="rmkFpo" name="rmkFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkCommunityBasedFpo}</textarea> 
@@ -206,11 +206,11 @@
 								<td><b> <c:out value="UG" /></b></td>
 								<td colspan="2"><input type="text" id="ug" name="ug"
 									value=<c:out value="${list.communityBasedUg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="ugError"></span></td>
 								<td><input type="text" id="cUg" name="cUg"
 									value=<c:out value="${list.controlCommunityBasedUg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()"/><span
 									class="cUgError"></span></td>
 								<td>
      								<textarea id="rmkUg" name="rmkUg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkCommunityBasedUg}</textarea> 
@@ -245,11 +245,11 @@
 								
 								<td colspan="2"><input type="text" id="mShg" name="mShg"
 									value=<c:out value="${list.memberBasedShg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="mShgError"></span></td>
 								<td><input type="text" id="cMshg" name="cMshg"
 									value=<c:out value="${list.controlMemberBasedShg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="cMshgError"></span></td>
 								<td>
      								<textarea id="rmkMshg" name="rmkMshg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkMemberBasedShg}</textarea> 
@@ -261,11 +261,11 @@
 								<td><b> <c:out value="FPO" /></b></td>
 								<td colspan="2"><input type="text" id="mFpo" name="mFpo"
 									value=<c:out value="${list.memberBasedFpo}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="mFpoError"></span></td>
 								<td><input type="text" id="cMfpo" name="cMfpo"
 									value=<c:out value="${list.controlMemberBasedFpo}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="cMfpoError"></span></td>
 								<td>
      								<textarea id="rmkMfpo" name="rmkMfpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkMemberBasedFpo}</textarea> 
@@ -277,11 +277,11 @@
 								<td><b> <c:out value="UG" /></b></td>
 								<td colspan="2"><input type="text" id="mUg" name="mUg"
 									value=<c:out value="${list.memberBasedUg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="mUgError"></span></td>
 								<td><input type="text" id="cMug" name="cMug"
 									value=<c:out value="${list.controlMemberBasedUg}"/>
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()"/><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()"/><span
 									class="cMugError"></span></td>
 								<td>
      								<textarea id="rmkMug" name="rmkMug" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkMemberBasedUg}</textarea> 
@@ -469,10 +469,10 @@
 								<td><b> <c:out value="SHG" /></b></td>
 								
 								<td colspan="2"><input type="text" id="shg" name="shg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="shgError"></span></td>
 								<td><input type="text" id="cShg" name="cShg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="cShgError"></span></td>
 								<td>
      								<textarea id="rmkShg" name="rmkShg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
@@ -483,10 +483,10 @@
 								<td style="text-align: right;"><b><c:out value="b." /></b></td>
 								<td><b> <c:out value="FPO" /></b></td>
 								<td colspan="2"><input type="text" id="fpo" name="fpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="fpoError"></span></td>
 								<td><input type="text" id="cFpo" name="cFpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="cFpoError"></span></td>
 								<td>
      								<textarea id="rmkFpo" name="rmkFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
@@ -497,10 +497,10 @@
 								<td style="text-align: right;"><b><c:out value="c." /></b></td>
 								<td><b> <c:out value="UG" /></b></td>
 								<td colspan="2"><input type="text" id="ug" name="ug"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="ugError"></span></td>
 								<td><input type="text" id="cUg" name="cUg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="pcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
 									class="cUgError"></span></td>
 								<td>
      								<textarea id="rmkUg" name="rmkUg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
@@ -530,10 +530,10 @@
 								<td><b> <c:out value="SHG" /></b></td>
 								
 								<td colspan="2"><input type="text" id="mShg" name="mShg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="mShgError"></span></td>
 								<td><input type="text" id="cMshg" name="cMshg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="cMshgError"></span></td>
 								<td>
      								<textarea id="rmkMshg" name="rmkMshg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
@@ -544,10 +544,10 @@
 								<td style="text-align: right;"><b><c:out value="b." /></b></td>
 								<td><b> <c:out value="FPO" /></b></td>
 								<td colspan="2"><input type="text" id="mFpo" name="mFpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="mFpoError"></span></td>
 								<td><input type="text" id="cMfpo" name="cMfpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="cMfpoError"></span></td>
 								<td>
      								<textarea id="rmkMfpo" name="rmkMfpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
@@ -558,10 +558,10 @@
 								<td style="text-align: right;"><b><c:out value="c." /></b></td>
 								<td><b> <c:out value="UG" /></b></td>
 								<td colspan="2"><input type="text" id="mUg" name="mUg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="mUgError"></span></td>
 								<td><input type="text" id="cMug" name="cMug"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" onchange="mpcalSum()" /><span
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
 									class="cMugError"></span></td>
 								<td>
      								<textarea id="rmkMug" name="rmkMug" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
