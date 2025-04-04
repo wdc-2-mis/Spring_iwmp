@@ -1,6 +1,7 @@
 package app.projectevaluation.bean;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class ProjectEvaluationBean {
 
@@ -114,7 +115,37 @@ public class ProjectEvaluationBean {
     private String summary;
     private Character grade;
     
+	private BigInteger workcompleted;
+    private BigInteger workongoing;
+    private BigInteger createdwork;
+    private BigInteger geotag;
     
+    
+    
+	public BigInteger getWorkcompleted() {
+		return workcompleted;
+	}
+	public void setWorkcompleted(BigInteger workcompleted) {
+		this.workcompleted = workcompleted;
+	}
+	public BigInteger getWorkongoing() {
+		return workongoing;
+	}
+	public void setWorkongoing(BigInteger workongoing) {
+		this.workongoing = workongoing;
+	}
+	public BigInteger getCreatedwork() {
+		return createdwork;
+	}
+	public void setCreatedwork(BigInteger createdwork) {
+		this.createdwork = createdwork;
+	}
+	public BigInteger getGeotag() {
+		return geotag;
+	}
+	public void setGeotag(BigInteger geotag) {
+		this.geotag = geotag;
+	}
 	public BigDecimal getPre_farmer_income() {
 		return pre_farmer_income;
 	}

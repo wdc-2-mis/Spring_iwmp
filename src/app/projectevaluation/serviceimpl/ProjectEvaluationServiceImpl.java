@@ -294,4 +294,15 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.fetchcompleteProjProfileData(pcode);
 	}
+	
+	@Override
+	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getPlanWorkData(Integer pcode) {
+		
+		return PEDAO.getPlanWorkData(pcode);
+	}
+
+	@Override
+	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getGeoTaggingWorks(Integer pcode) {
+		return PEDAO.getGeoTaggingWorks(pcode);
+	}
 }

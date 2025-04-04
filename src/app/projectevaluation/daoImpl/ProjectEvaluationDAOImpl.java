@@ -61,6 +61,11 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	
 	@Value("${getPEData}")
 	String getPEData;
+	@Value("${getPlanWorkData}")
+	String getPlanWorkData;
+	
+	@Value("${getGeoTaggingWorks}")
+	String getGeoTaggingWorks;
 	
 	@Value("${getMandayDeatails}")
 	String getMandayDeatails;
@@ -2071,6 +2076,87 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			
 		}
 
+		@Override
+		public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getPlanWorkData(Integer pcode) {
+			
+			LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
+			String getRecort=getPlanWorkData;
+			Session session = sessionFactory.getCurrentSession();
+			List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+			try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getRecort);
+//				query.setInteger("dcode",dcode); 
+				query.setInteger("pcode", pcode);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				list = query.list();
+				List<ProjectEvaluationBean> sublist = new ArrayList<ProjectEvaluationBean>();
+				if ((list != null) && (list.size() > 0)) {
+					for (ProjectEvaluationBean row : list){
+						if (!map.containsKey(row.getSt_code())) {
+							sublist = new ArrayList<ProjectEvaluationBean>();
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						} else {
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						}
+					}
+				}
+				session.getTransaction().commit();
+			 } 
+			catch (HibernateException e) {
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex){
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return map;
+
+}
+
+		@Override
+		public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getGeoTaggingWorks(Integer pcode) {
+			LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
+			String getRecort=getGeoTaggingWorks;
+			Session session = sessionFactory.getCurrentSession();
+			List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+			try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getRecort);
+//				query.setInteger("dcode",dcode); 
+				query.setInteger("pcode", pcode);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				list = query.list();
+				List<ProjectEvaluationBean> sublist = new ArrayList<ProjectEvaluationBean>();
+				if ((list != null) && (list.size() > 0)) {
+					for (ProjectEvaluationBean row : list){
+						if (!map.containsKey(row.getSt_code())) {
+							sublist = new ArrayList<ProjectEvaluationBean>();
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						} else {
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						}
+					}
+				}
+				session.getTransaction().commit();
+			 } 
+			catch (HibernateException e) {
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex){
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return map;
+}
 
 }
 

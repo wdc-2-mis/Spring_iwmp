@@ -1724,78 +1724,70 @@ public class ProjectEvaluationController {
 	}
 	
 	@RequestMapping(value="getExecutionPlanWork", method=RequestMethod.GET)
-	public ModelAndView getExecutionPlanWork(HttpServletRequest request, HttpServletResponse response)
-	{
-			session = request.getSession(true);
-		
-			String stName = (String) session.getAttribute("stName");
-			Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
-			Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
-			String dname = request.getParameter("dname"); 
-			String pname = request.getParameter("pname");
-			Integer mcode = Integer.parseInt(request.getParameter("mcode")); 
-			Integer fcode = Integer.parseInt(request.getParameter("fcode")); 
-			String mname =request.getParameter("mname"); 
-			String fname = request.getParameter("fname");
-			String created_work=null;
-			String created_work_remark=null;
-			String completed_work=null;
-			String completed_work_remark=null;
-			String ongoing_work=null;
-			String ongoing_work_remark=null;
-			Integer profile_id=0;
-			ModelAndView mav = new ModelAndView();
-			
-			
-		
-			try {
-		
-			Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
-			if(session!=null && session.getAttribute("loginID")!=null) {
-				mav = new ModelAndView("projectEvaluation/executionPlanWork");
-				List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
-				profile_id=PEService.getProjectProfileId( pcode, fcode, mcode);
-				list=PEService.getExecutionPlanWork(profile_id);
-				for(ProjectEvaluationBean bean : list) {
-					
-					created_work=bean.getCreated_work().toString();
-					created_work_remark=bean.getCreated_work_remark().toString();
-					completed_work=bean.getCompleted_work().toString();
-					completed_work_remark=bean.getCompleted_work_remark().toString();
-					ongoing_work=bean.getOngoing_work().toString();
-					ongoing_work_remark=bean.getOngoing_work_remark().toString();
-					
-				 }
-				 
-				 mav.addObject("crw",created_work); 
-				 mav.addObject("crwre",created_work_remark); 
-				 mav.addObject("comw",completed_work); 
-				 mav.addObject("comwre",completed_work_remark); 
-				 mav.addObject("ongw",ongoing_work); 
-				 mav.addObject("ongwre",ongoing_work_remark); 
-				
-			}
-			
-			else {
-				mav = new ModelAndView("login");
-				mav.addObject("login", new Login());
-			}
-			 
-			 mav.addObject("stName",stName);
-			 mav.addObject("dcode",dcode); 
-			 mav.addObject("pcode",pcode);
-			 mav.addObject("distName",dname); 
-			 mav.addObject("projName",pname);
-			 mav.addObject("mcode", mcode); 
-			 mav.addObject("month", mname);
-			 mav.addObject("fcode", fcode); 
-			 mav.addObject("finyear", fname);
-			}
-			catch (Exception e) {
-			}
-			
-			return mav;
+	public ModelAndView getExecutionPlanWork(HttpServletRequest request, HttpServletResponse response) {
+	    session = request.getSession(true);
+
+	    Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+	    Integer pcode = Integer.parseInt(request.getParameter("pcode"));
+	    String dname = request.getParameter("dname");
+	    String pname = request.getParameter("pname");
+	    Integer mcode = Integer.parseInt(request.getParameter("mcode"));
+	    Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	    String mname = request.getParameter("mname");
+	    String fname = request.getParameter("fname");
+
+	    ModelAndView mav = new ModelAndView();
+
+	    try {
+	        Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
+
+	        if (session != null && session.getAttribute("loginID") != null) {
+	            mav = new ModelAndView("projectEvaluation/executionPlanWork");
+
+	            Integer profile_id = PEService.getProjectProfileId(pcode, fcode, mcode);
+	            List<ProjectEvaluationBean> list = PEService.getExecutionPlanWork(profile_id);
+
+	            if (list == null || list.isEmpty()) {
+	                LinkedHashMap<Integer, List<ProjectEvaluationBean>> planWorkData = PEService.getPlanWorkData(pcode);
+	                
+	                if (!planWorkData.isEmpty()) {
+	                    List<ProjectEvaluationBean> firstEntry = planWorkData.values().iterator().next();
+	                    if (!firstEntry.isEmpty()) {
+	                        ProjectEvaluationBean bean = firstEntry.get(0);
+	                        mav.addObject("crw", bean.getCreatedwork());
+	                        mav.addObject("comw", bean.getWorkcompleted());
+	                        mav.addObject("ongw", bean.getWorkongoing());
+	                    }
+	                }
+	            } else {
+	                ProjectEvaluationBean bean = list.get(0);
+	                mav.addObject("crw", bean.getCreated_work());
+	                mav.addObject("crwre", bean.getCreated_work_remark());
+	                mav.addObject("comw", bean.getCompleted_work());
+	                mav.addObject("comwre", bean.getCompleted_work_remark());
+	                mav.addObject("ongw", bean.getOngoing_work());
+	                mav.addObject("ongwre", bean.getOngoing_work_remark());
+	            }
+	        } else {
+	            mav = new ModelAndView("login");
+	            mav.addObject("login", new Login());
+	        }
+
+	        mav.addObject("dcode", dcode);
+	        mav.addObject("pcode", pcode);
+	        mav.addObject("distName", dname);
+	        mav.addObject("projName", pname);
+	        mav.addObject("mcode", mcode);
+	        mav.addObject("month", mname);
+	        mav.addObject("fcode", fcode);
+	        mav.addObject("finyear", fname);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return mav;
 	}
+
 	
 	@RequestMapping(value = "saveExecutionPlanWork", method = RequestMethod.POST)
 	public ModelAndView saveExecutionPlanWork(Model model, HttpServletRequest request) {
@@ -2246,65 +2238,66 @@ public class ProjectEvaluationController {
 	
 	
 	@RequestMapping(value="getStatusGeotagWork", method=RequestMethod.GET)
-	public ModelAndView getstatusGeotagWork(HttpServletRequest request, HttpServletResponse response)
-	{
-		session = request.getSession(true);
-		Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
-		ModelAndView mav = new ModelAndView();
-		
-		String stName = (String) session.getAttribute("stName");
-		Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
-		Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
-		String dname = request.getParameter("dname"); 
-		String pname = request.getParameter("pname");
-		Integer mcode = Integer.parseInt(request.getParameter("mcode")); 
-		Integer fcode = Integer.parseInt(request.getParameter("fcode")); 
-		String mname =request.getParameter("mname"); 
-		String fname = request.getParameter("fname");
-		
-		String twork=null;
-		String tworkre=null;
-		
-		
-		Integer profile_id=0;
-		if(session!=null && session.getAttribute("loginID")!=null) {
-			mav = new ModelAndView("projectEvaluation/statusGeotagWork");
-			
+	public ModelAndView getStatusGeotagWork(HttpServletRequest request, HttpServletResponse response) {
+	    session = request.getSession(true);
 
-			List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
-			profile_id=PEService.getProjectProfileId( pcode, fcode, mcode);
-			list=PEService.getStatusGeotagWork(profile_id);
-			for(ProjectEvaluationBean bean : list) {
-				
-				twork=bean.getGeo_tagg_work().toString();
-				tworkre=bean.getGeo_tagg_work_remark().toString();
-				
-			 }
-			 
-			 mav.addObject("twork",twork); 
-			 mav.addObject("tworkre",tworkre); 
-			
-			 
-			
-		}
-		else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
-		
-		 mav.addObject("stName",stName);
-		 mav.addObject("dcode",dcode); 
-		 mav.addObject("pcode",pcode);
-		 mav.addObject("distName",dname); 
-		 mav.addObject("projName",pname);
-		 mav.addObject("mcode", mcode); 
-		 mav.addObject("month", mname);
-		 mav.addObject("fcode", fcode); 
-		 mav.addObject("finyear", fname);
-		
-		return mav;
+	    Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+	    Integer pcode = Integer.parseInt(request.getParameter("pcode"));
+	    String dname = request.getParameter("dname");
+	    String pname = request.getParameter("pname");
+	    Integer mcode = Integer.parseInt(request.getParameter("mcode"));
+	    Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	    String mname = request.getParameter("mname");
+	    String fname = request.getParameter("fname");
+	    String twork=null;
+	    //Integer profile_id=0;
+
+	    ModelAndView mav = new ModelAndView();
+
+	    try {
+	        Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
+
+	        if (session != null && session.getAttribute("loginID") != null) {
+	            mav = new ModelAndView("projectEvaluation/statusGeotagWork");
+
+	            Integer profile_id = PEService.getProjectProfileId(pcode, fcode, mcode);
+	            List<ProjectEvaluationBean> list = PEService.getStatusGeotagWork(profile_id);
+
+	            if (list == null || list.isEmpty()) {
+	                LinkedHashMap<Integer, List<ProjectEvaluationBean>> geoTagData = PEService.getGeoTaggingWorks(pcode);
+	                
+	                if (!geoTagData.isEmpty()) {
+	                    List<ProjectEvaluationBean> firstEntry = geoTagData.values().iterator().next();
+	                    if (!firstEntry.isEmpty()) {
+	                        ProjectEvaluationBean bean = firstEntry.get(0);
+	                        mav.addObject("twork",bean.getGeotag()); 
+	                    }
+	                }
+	            } else {
+	                ProjectEvaluationBean bean = list.get(0);
+	                mav.addObject("twork", bean.getGeo_tagg_work());
+	                mav.addObject("tworkre",bean.getGeo_tagg_work_remark());
+	            }
+	        } else {
+	            mav = new ModelAndView("login");
+	            mav.addObject("login", new Login());
+	        }
+
+	        mav.addObject("dcode", dcode);
+	        mav.addObject("pcode", pcode);
+	        mav.addObject("distName", dname);
+	        mav.addObject("projName", pname);
+	        mav.addObject("mcode", mcode);
+	        mav.addObject("month", mname);
+	        mav.addObject("fcode", fcode);
+	        mav.addObject("finyear", fname);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return mav;
 	}
-	
+
 	@RequestMapping(value = "saveGeoTagDetails", method = RequestMethod.POST)
 	public ModelAndView saveGeoTagDetails(Model model, HttpServletRequest request) {
 	    HttpSession session = request.getSession(true); 

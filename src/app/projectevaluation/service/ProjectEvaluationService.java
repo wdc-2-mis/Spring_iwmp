@@ -134,4 +134,7 @@ public interface ProjectEvaluationService {
 	String saveOrUpdateCroppedDetails3(HttpServletRequest request, HttpSession session, Integer projProfId, WdcpmksyCroppedDetails3 cropDetail3);
 	LinkedHashMap<Integer, List<ProjectEvaluationBean>> fetchcompleteProjProfileData(Integer pcode);
 
+	LinkedHashMap<Integer, List<ProjectEvaluationBean>> getPlanWorkData(Integer pcode);
+	
+	LinkedHashMap<Integer, List<ProjectEvaluationBean>> getGeoTaggingWorks(Integer pcode);
 }
