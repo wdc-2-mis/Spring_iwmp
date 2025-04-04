@@ -111,7 +111,7 @@ public interface ProjectEvaluationService {
 
 	List<WdcpmksyCroppedDetails2> getCroppedDetails2(Integer projProfId);
 
-	String completeprojEvaldata(Integer projProfId);
+	String completeprojEvaldata(Integer projProfId, String summary, Character grade);
 
 	LinkedHashMap<Integer, String> getProjByDCode(Integer dCode);
 
@@ -132,4 +132,6 @@ public interface ProjectEvaluationService {
 	List<WdcpmksyCroppedDetails3> getCroppedDetails3(Integer projProfId);
 	
 	String saveOrUpdateCroppedDetails3(HttpServletRequest request, HttpSession session, Integer projProfId, WdcpmksyCroppedDetails3 cropDetail3);
+	LinkedHashMap<Integer, List<ProjectEvaluationBean>> fetchcompleteProjProfileData(Integer pcode);
+
 }

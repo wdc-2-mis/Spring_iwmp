@@ -111,7 +111,8 @@ public class ProjectEvaluationBean {
     private BigDecimal pre_tube_well;
     private BigDecimal mid_tube_well;
     private String remark_tube_well;
-    
+    private String summary;
+    private Character grade;
     
     
 	public BigDecimal getPre_farmer_income() {
@@ -695,6 +696,18 @@ public class ProjectEvaluationBean {
 	}
 	public void setStatus(Character status) {
 		this.status = status;
+	}
+	public String getSummary() {
+		return summary;
+	}
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+	public Character getGrade() {
+		return grade;
+	}
+	public void setGrade(Character grade) {
+		this.grade = grade;
 	}
 	
 

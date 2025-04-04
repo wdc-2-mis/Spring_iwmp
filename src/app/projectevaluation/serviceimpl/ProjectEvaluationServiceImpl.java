@@ -231,10 +231,11 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 
 	@Override
-	public String completeprojEvaldata(Integer projProfId) {
+	public String completeprojEvaldata(Integer projProfId, String summary, Character grade) {
 		// TODO Auto-generated method stub
-		return PEDAO.completeprojEvaldata(projProfId);
+		return PEDAO.completeprojEvaldata(projProfId, summary, grade);
 	}
+
 
 	@Override
 	public LinkedHashMap<Integer, String> getProjByDCode(Integer dCode) {
@@ -287,5 +288,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 			WdcpmksyCroppedDetails3 cropDetail3) {
 		// TODO Auto-generated method stub
 		return PEDAO.saveOrUpdateCroppedDetails3(request, session, projProfId, cropDetail3);
+	}
+	@Override
+	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> fetchcompleteProjProfileData(Integer pcode) {
+		// TODO Auto-generated method stub
+		return PEDAO.fetchcompleteProjProfileData(pcode);
 	}
 }

@@ -346,9 +346,8 @@ $(document).ready(function () {
    <%
    if ("true".equals(request.getAttribute("geoTagDetailsConfirmed"))) {
    %>
-   <a href="getviewcomplete?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>">
-   <center><input type="button" name="view"  id = "view" value="View & Complete" class="btn btn-info"/></center>
-   </a>
+   <a href="getviewcomplete?district=<c:out value="${dcode}"/>&project=<c:out value="${projid}"/>&distName=<c:out value="${distName}"/>&projName=<c:out value="${projName}"/>&month=<c:out value="${monthid}"/>&monthName=<c:out value="${monthname}"/>&finyear=<c:out value="${fincd}"/>&finName=<c:out value="${finyr}"/>">
+ </a>
    <% } %>
    
     

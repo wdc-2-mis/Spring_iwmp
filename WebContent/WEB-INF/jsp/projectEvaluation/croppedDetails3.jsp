@@ -402,7 +402,7 @@
 						</tr>
 
 						<tr>
-							<td style="text-align: right;"><b><c:out value="e." /></b></td>
+							<td style="text-align: right;"><b><c:out value="f." /></b></td>
 							<td><b> <c:out value="Other Crops" /></b></td>
 							<td><input type="text" id="preOther" name="preOther"
 								onfocusin="decimalToFourPlace(event)" class=""

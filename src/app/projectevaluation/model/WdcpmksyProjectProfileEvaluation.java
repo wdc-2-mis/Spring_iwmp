@@ -47,6 +47,8 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	private String createdBy ;         //created_by ;
 	private Date updatedOn ;                 //updated_on ; 
 	private String requestIp; 
+	private String summary;
+	private Character grade;
 	private Set<IndicatorEvaluation> indicatorEvaluation = new HashSet<IndicatorEvaluation>(0);
 	private Set<FundUtilization> fundUtilization = new HashSet<FundUtilization>(0);
 	private Set<WdcpmksyMandaysDetails> wdcpmksyMandaysDetails = new HashSet<WdcpmksyMandaysDetails>(0);
@@ -67,7 +69,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	    public WdcpmksyProjectProfileEvaluation(int projectProfileId) {
 	        this.projectProfileId = projectProfileId;
 	    }
-	    public WdcpmksyProjectProfileEvaluation(int projectProfileId, IwmpMProject iwmpMProject, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, MEvaluationIndicator mEvaluationIndicator, BigDecimal projectCost, BigDecimal centralShare, BigDecimal stateShare, BigDecimal projectArea, int villageCovered, int watershedCommittee, int memberWatershedCommittee, int household, Character status, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
+	    public WdcpmksyProjectProfileEvaluation(int projectProfileId, IwmpMProject iwmpMProject, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, MEvaluationIndicator mEvaluationIndicator, BigDecimal projectCost, BigDecimal centralShare, BigDecimal stateShare, BigDecimal projectArea, int villageCovered, int watershedCommittee, int memberWatershedCommittee, int household, Character status, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp, String summary, Character grade) {
 	       this.projectProfileId = projectProfileId;
 	       this.iwmpMProject = iwmpMProject;
 	       this.iwmpMFinYear = iwmpMFinYear;
@@ -86,6 +88,8 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	       this.createdBy=CreatedBy;
 	       this.updatedOn=UpdatedOn;
 	       this.requestIp=RequestIp;
+	       this.summary = summary;
+	       this.grade = grade;
 	    }
 
 
@@ -276,6 +280,27 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 		public void setRequestIp(String requestIp) {
 			this.requestIp = requestIp;
 		}
+       
+		@Column(name="summary", length=500)
+		public String getSummary() {
+			return summary;
+		}
+
+
+		public void setSummary(String summary) {
+			this.summary = summary;
+		}
+
+		@Column(name="grade", length=1)
+		public Character getGrade() {
+			return grade;
+		}
+
+
+		public void setGrade(Character grade) {
+			this.grade = grade;
+		}
+
 
 		@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksyProjectProfileEvaluation", cascade=CascadeType.ALL)
 		public Set<IndicatorEvaluation> getIndicatorEvaluation() {

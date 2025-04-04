@@ -111,7 +111,9 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getProjDetailsData}")
 	String getProjDetailsData;
 	
-	
+	@Value("${fetchCompProjProfileData}")
+	String fetchCompProjProfileData;
+
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -1792,8 +1794,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			return res;
 		}
 
-		@Override
-		public String completeprojEvaldata(Integer projProfId) {
+		public String completeprojEvaldata(Integer projProfId, String summary, Character grade) {
 			try {
 				Session session = sessionFactory.getCurrentSession();
 				session.beginTransaction();
@@ -1801,6 +1802,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				if (null != menu) {
 					menu.setStatus('C');
 					menu.setUpdatedOn(new Date());
+					menu.setSummary(summary);
+					menu.setGrade(grade);
 					session.update(menu);
 				}
 				session.getTransaction().commit();
@@ -1811,6 +1814,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				return "fail";
 			}
 		}
+
+
 
 		@Override
 		public LinkedHashMap<Integer, String> getProjByDCode(Integer dCode) {
@@ -2021,6 +2026,46 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				res = "fail";
 			}
 			return res;
+		}
+
+		@Override
+		public LinkedHashMap<Integer, List<ProjectEvaluationBean>> fetchcompleteProjProfileData(Integer pcode) {
+			LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
+			String getRecort=fetchCompProjProfileData;
+			Session session = sessionFactory.getCurrentSession();
+			List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+			try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getRecort);
+				query.setInteger("pcode", pcode);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				list = query.list();
+				List<ProjectEvaluationBean> sublist = new ArrayList<ProjectEvaluationBean>();
+				if ((list != null) && (list.size() > 0)) {
+					for (ProjectEvaluationBean row : list){
+						if (!map.containsKey(row.getSt_code())) {
+							sublist = new ArrayList<ProjectEvaluationBean>();
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						} else {
+							sublist.add(row);
+							map.put(row.getSt_code(), sublist);
+						}
+					}
+				}
+				session.getTransaction().commit();
+			 } 
+			catch (HibernateException e) {
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex){
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return map;
+			
 		}
 
 

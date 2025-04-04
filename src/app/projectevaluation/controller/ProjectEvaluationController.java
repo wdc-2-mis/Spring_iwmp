@@ -3624,20 +3624,20 @@ public class ProjectEvaluationController {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		
-		Integer dcode = Integer.parseInt(request.getParameter("dcode")); 
-		Integer pcode = Integer.parseInt(request.getParameter("pcode")); 
-		String dname = request.getParameter("dname"); 
-		String pname = request.getParameter("pname");
-		Integer mcode = Integer.parseInt(request.getParameter("mcode")); 
-		Integer fcode = Integer.parseInt(request.getParameter("fcode")); 
-		String mname =request.getParameter("mname"); 
-		String fname = request.getParameter("fname");
+		Integer dcode = Integer.parseInt(request.getParameter("district")); 
+		Integer pcode = Integer.parseInt(request.getParameter("project")); 
+		String dname = request.getParameter("distName"); 
+		String pname = request.getParameter("projName");
+		Integer mcode = Integer.parseInt(request.getParameter("month")); 
+		Integer fcode = Integer.parseInt(request.getParameter("finyear")); 
+		String mname =request.getParameter("monthName"); 
+		String fname = request.getParameter("finName");
 		Integer profile_id=0;
 		String admiMechanism=null;
 		String admiMechanismRemark=null;
-		Boolean dprSlna=null;
+		Character dprSlna=null;
 		String dprSlnaRemark=null;
-		Boolean allManpower=null;
+		Character allManpower=null;
 		String allManpowerRemark=null;
 		Integer wcdc=null;
 		String wcdcRemark=null;
@@ -3645,44 +3645,35 @@ public class ProjectEvaluationController {
 		String piaRemark=null;
 		Integer wc=null;
 		String wcRemark=null;
-		String preCentralShare = null;
-		String midCentralShare = null;
+		String centralShare = null;
 		String rmkCentralShare = null;
-		String preStateShare = null;
-		String midStateShare = null;
+		String stateShare = null;
 		String rmkStateShare = null;
-		String preTotalFund = null;
-		String midTotalFund = null;
+		String totalFund = null;
 		String rmkTotalFund = null;
-		String preConPlannedFund = null;
-		String midConPlannedFund = null;
+		String conPlannedFund = null;
 		String rmkConPlannedFund = null;
-		String preExCon = null;
-		String midExCon = null;
+		String exCon = null;
 		String rmkExCon = null;
-		String pcradio=null;
-		String culturablew=null;
-		String whs=null;
-		String soil=null;
-		String protective=null;
-		String degraded=null;
-		String income=null;
-		String benefited=null;
-		String mandays=null;
-		String dug=null;
-		String tube=null;
-		 
-		String conculturablew=null;
-		String conwhs=null;
-		String consoil=null;
-		String conprotective=null;
-		String condegraded=null;
-		String conincome=null;
-		String conbenefited=null;
-		String conmandays=null;
-		String condug=null;
-		String contube=null;
-		
+		String areaType = null;
+		String pre_farmer_income=null;
+		String mid_farmer_income=null;
+		String control_farmer_income=null;
+		String remark_farmer_income=null;
+		String farmer_benefited=null;
+		String control_farmer_benefited=null;
+		String remark_farmer_benefited=null;
+		String mandays_generated=null;
+		String control_mandays_generated=null;
+		String remark_mandays_generated=null;
+		String pre_dug_well=null;
+		String mid_dug_well=null;
+		String control_dug_well=null;
+		String remark_dug_well=null;
+		String pre_tube_well=null;
+		String mid_tube_well=null;
+		String control_tube_well=null;
+		String remark_tube_well=null;
 		Boolean naturalresource = null;
         String naturalresourceRemark= null;
         Boolean norm=null;
@@ -3692,21 +3683,19 @@ public class ProjectEvaluationController {
         Boolean controlntlresource=null;
         Boolean controlnorm=null;
         Boolean controlantrlasset=null;
-		
         String created_work=null;
 		String created_work_remark=null;
 		String completed_work=null;
 		String completed_work_remark=null;
 		String ongoing_work=null;
 		String ongoing_work_remark=null;
-		
 		String shape_file_area=null;
 		String shape_file_area_remark=null;
 		String variation_area=null;
 		String variation_area_remark=null;
 		String twork=null;
 		String tworkre=null;
-		
+		Character status = null;	
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
 		List<ProjectEvaluationBean> indicatorslist = new ArrayList<ProjectEvaluationBean>();  
 		List<ProjectEvaluationBean> utilizationlist = new ArrayList<ProjectEvaluationBean>();
@@ -3714,7 +3703,17 @@ public class ProjectEvaluationController {
 		List<ProjectEvaluationBean> ecoperlist = new ArrayList<ProjectEvaluationBean>();
 		Integer projProfId = PEService.getProjectProfileId(pcode, fcode, mcode);
 		if(session!=null && session.getAttribute("loginID")!=null) {
-			getprojectProfileData = PEService.fetchprojProfileData(pcode);
+			
+			
+			 ProjectEvaluationBean projData = PEService.getProjectDetails(pcode);
+			 status = projData.getStatus();
+			 if(status == 'D') {
+			 getprojectProfileData = PEService.fetchprojProfileData(pcode);
+			 }
+			 else if(status == 'C')
+			 {
+				 getprojectProfileData = PEService.fetchcompleteProjProfileData(pcode);
+			 }
 			 profile_id=PEService.getProjectProfileId( pcode, fcode, mcode);
 			 indicatorslist =PEService.getIndicatorEvaluation(profile_id);
 			 utilizationlist=PEService.getFundUtilization(profile_id);
@@ -3722,6 +3721,7 @@ public class ProjectEvaluationController {
 			 wdcCrpDtlList = PEService.getCroppedDetails(profile_id);
 			 List<WdcpmksyCroppedDetails2> wdcCrpDtlList2 = new ArrayList<>();
 			 wdcCrpDtlList2 = PEService.getCroppedDetails2(profile_id);
+			 List<WdcpmksyCroppedDetails3> wdcCrpDtlList3 = PEService.getCroppedDetails3(profile_id);
 			 mandayslist=PEService.getMandayDeatails(profile_id);
 			 List<WdcpmksyProductionDetails> wdcPrdDtlList = new ArrayList<>();
 			 wdcPrdDtlList = PEService.getProductionDetails(profile_id);
@@ -3735,11 +3735,12 @@ public class ProjectEvaluationController {
 			 targetlist=PEService.getExecutionPlanWork(profile_id);
 			 for(ProjectEvaluationBean bean : indicatorslist) {
 					
+					
 				 admiMechanism=bean.getAdmin_mechanism().toString();
 				 admiMechanismRemark=bean.getAdmin_mechanism_remark().toString();
-				 //dprSlna=bean.getDpr_slna();
+				 dprSlna=bean.getDpr_slna();
 				 dprSlnaRemark=bean.getDpr_slna_remark().toString();
-				 //allManpower=bean.getAll_manpower();
+				 allManpower=bean.getAll_manpower();
 				 allManpowerRemark=bean.getAll_manpower_remark().toString();
 				 wcdc=bean.getWcdc();
 				 wcdcRemark=bean.getWcdc_remark().toString();
@@ -3747,83 +3748,95 @@ public class ProjectEvaluationController {
 				 piaRemark=bean.getPia_remark().toString();
 				 wc=bean.getWc();
 				 wcRemark=bean.getWc_remark().toString();
+
+					 
 			}
 			 for(ProjectEvaluationBean bean : utilizationlist) {
-				 preCentralShare = bean.getCentral_share().toString();
+				 centralShare = bean.getCentral_share().toString();
 				 rmkCentralShare = bean.getCentral_share_remark();
-				 preStateShare = bean.getState_share().toString();
+				 stateShare = bean.getState_share().toString();
 				 rmkStateShare = bean.getState_share_remark();
-				 preTotalFund = bean.getTotal_fund().toString();
+				 totalFund = bean.getTotal_fund().toString();
 				 rmkTotalFund = bean.getTotal_fund_remark();
-				 preConPlannedFund = bean.getTotal_fund_planned().toString();
+				 conPlannedFund = bean.getTotal_fund_planned().toString();
 				 rmkConPlannedFund = bean.getTotal_fund_planned_remark();
-				 preExCon = bean.getTotal_expenditure().toString();
+				 exCon = bean.getTotal_expenditure().toString();
 				 rmkExCon = bean.getTotal_expenditure_remark();
+
 			 }
 			 
 			 for(ProjectEvaluationBean bean : mandayslist) 
 			 {
-				
-				 culturablew=bean.getCulturable_wasteland().toString();
-				 whs=bean.getWhs_constructed_rejuvenated().toString();
-				 soil=bean.getSoil_moisture().toString();
-				 protective=bean.getProtective_irrigation().toString();
-				 degraded=bean.getDegraded_rainfed().toString();
-				 income=bean.getFarmer_income().toString();
-				 benefited=bean.getFarmer_benefited().toString();
-				 mandays=bean.getMandays_generated().toString();
-				 dug=bean.getDug_well().toString();
-				 tube=bean.getTube_well().toString();
+				 pre_farmer_income=bean.getPre_farmer_income().toString();
+				 mid_farmer_income=bean.getMid_farmer_income().toString();
+				 control_farmer_income=bean.getControl_farmer_income().toString();
+				 remark_farmer_income=bean.getRemark_farmer_income();
 				 
-				 conculturablew=bean.getControl_culturable_wasteland().toString();
-				 conwhs=bean.getControl_whs_constructed_rejuvenated().toString();
-				 consoil=bean.getControl_soil_moisture().toString();
-				 conprotective=bean.getControl_protective_irrigation().toString();
-				 condegraded=bean.getControl_degraded_rainfed().toString();
-				 conincome=bean.getControl_farmer_income().toString();
-				 conbenefited=bean.getControl_farmer_benefited().toString();
-				 conmandays=bean.getControl_mandays_generated().toString();
-				 condug=bean.getControl_dug_well().toString();
-				 contube=bean.getControl_tube_well().toString();
+				 farmer_benefited=bean.getFarmer_benefited().toString();
+				 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
+				 remark_farmer_benefited=bean.getRemark_farmer_benefited();
+				
+				 mandays_generated=bean.getMandays_generated().toString();
+				 control_mandays_generated=bean.getControl_mandays_generated().toString();
+				 remark_mandays_generated=bean.getRemark_mandays_generated();
+				
+				 pre_dug_well=bean.getPre_dug_well().toString();
+				 mid_dug_well=bean.getMid_dug_well().toString();
+				 control_dug_well=bean.getControl_dug_well().toString();
+				 remark_dug_well=bean.getRemark_dug_well().toString();
+				 
+				 pre_tube_well=bean.getPre_tube_well().toString();
+				 mid_tube_well=bean.getMid_tube_well().toString();
+				 control_tube_well=bean.getControl_tube_well().toString();
+				 remark_tube_well=bean.getRemark_tube_well().toString();
+
 				 
 			 }
 			 ecoperlist=PEService.getEcoPerspective(profile_id);
 			 for(ProjectEvaluationBean bean : ecoperlist) {
 				 
-				 naturalresource=bean.getNatural_resource();
-				 naturalresourceRemark=bean.getNatural_resource_remark().toString();
-				 norm=bean.getNorms_relating();
-				 normRemark=bean.getNorms_relating_remark().toString();
-				 antrlasset=bean.getAntural_asset();
-				 antrlassetRemark=bean.getAntural_asset_remark().toString();
-				 controlntlresource=bean.getControl_natural_resource();
-				 controlnorm=bean.getControl_norms_relating();
-				 controlantrlasset=bean.getControl_antural_asset();
+					
+					  naturalresource=bean.getNatural_resource();
+					  naturalresourceRemark=bean.getNatural_resource_remark().toString();
+					  norm=bean.getNorms_relating();
+					  normRemark=bean.getNorms_relating_remark().toString();
+					  antrlasset=bean.getAntural_asset();
+					  antrlassetRemark=bean.getAntural_asset_remark().toString();
+					  controlntlresource=bean.getControl_natural_resource();
+					  controlnorm=bean.getControl_norms_relating();
+					  controlantrlasset=bean.getControl_antural_asset();
+					 
 				 
 			 }
 			 for(ProjectEvaluationBean bean : targetlist) {
 					
-					created_work=bean.getCreated_work().toString();
-					created_work_remark=bean.getCreated_work_remark().toString();
-					completed_work=bean.getCompleted_work().toString();
-					completed_work_remark=bean.getCompleted_work_remark().toString();
-					ongoing_work=bean.getOngoing_work().toString();
-					ongoing_work_remark=bean.getOngoing_work_remark().toString();
+					
+					  created_work=bean.getCreated_work().toString();
+					  created_work_remark=bean.getCreated_work_remark().toString();
+					  completed_work=bean.getCompleted_work().toString();
+					  completed_work_remark=bean.getCompleted_work_remark().toString();
+					  ongoing_work=bean.getOngoing_work().toString();
+					  ongoing_work_remark=bean.getOngoing_work_remark().toString();
+					 
 					
 				 }
 			 for(ProjectEvaluationBean bean : projshapelist) {
 					
-					shape_file_area=bean.getShape_file_area().toString();
-					shape_file_area_remark=bean.getShape_file_area_remark().toString();
-					variation_area=bean.getVariation_area().toString();
-					variation_area_remark=bean.getVariation_area_remark().toString();
+					
+					  shape_file_area=bean.getShape_file_area().toString();
+					  shape_file_area_remark=bean.getShape_file_area_remark().toString();
+					  variation_area=bean.getVariation_area().toString();
+					  variation_area_remark=bean.getVariation_area_remark().toString();
+					 
 					
 					
 				 }
 			 for(ProjectEvaluationBean bean : geotagginglist) {
 					
-					twork=bean.getGeo_tagg_work().toString();
-					tworkre=bean.getGeo_tagg_work_remark().toString();
+					
+					  twork=bean.getGeo_tagg_work().toString();
+					  tworkre=bean.getGeo_tagg_work_remark().toString();
+					 
 					
 				 }
 		        WdcpmksyEquityAspect es = equityAspectList.get(0);
@@ -3852,46 +3865,40 @@ public class ProjectEvaluationController {
 			 mav.addObject("pcode",pcode);
 			 mav.addObject("mcode",mcode);
 			 mav.addObject("fcode",fcode);
-			 
-			 mav.addObject("preCentralShare",preCentralShare);
-			 mav.addObject("midCentralShare",midCentralShare);
+			 mav.addObject("status", status);
+			 mav.addObject("centralShare",centralShare);
 			 mav.addObject("rmkCentralShare",rmkCentralShare);
-			 mav.addObject("preStateShare",preStateShare);
-			 mav.addObject("midStateShare", midStateShare);
+			 mav.addObject("stateShare",stateShare);
 			 mav.addObject("rmkStateShare", rmkStateShare);
-			 mav.addObject("preTotalFund", preTotalFund);
-			 mav.addObject("midTotalFund", midTotalFund);				
+			 mav.addObject("totalFund", totalFund);
 			 mav.addObject("rmkTotalFund",rmkTotalFund);
-			 mav.addObject("preConPlannedFund",preConPlannedFund);
-			 mav.addObject("midConPlannedFund",midConPlannedFund);
+			 mav.addObject("conPlannedFund",conPlannedFund);
 			 mav.addObject("rmkConPlannedFund",rmkConPlannedFund);
-			 mav.addObject("preExCon", preExCon);
-			 mav.addObject("midExCon", midExCon);
+			 mav.addObject("exCon", exCon);
 			 mav.addObject("rmkExCon", rmkExCon);
 			 mav.addObject("wdcCrpDtlList", wdcCrpDtlList);
-			 mav.addObject("wdcCrpDtlList2", wdcCrpDtlList2);
+			 mav.addObject("areaType", areaType);
+             mav.addObject("wdcCrpDtlList2", wdcCrpDtlList2);
+             mav.addObject("wdcCrpDtlList3", wdcCrpDtlList3);
+             mav.addObject("pre_farmer_income",pre_farmer_income); 
+			 mav.addObject("mid_farmer_income",mid_farmer_income); 
+			 mav.addObject("control_farmer_income",control_farmer_income); 
+			 mav.addObject("remark_farmer_income",remark_farmer_income); 
+			 mav.addObject("farmer_benefited",farmer_benefited); 
+			 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
+			 mav.addObject("remark_farmer_benefited",remark_farmer_benefited); 
+			 mav.addObject("mandays_generated",mandays_generated); 
+			 mav.addObject("control_mandays_generated",control_mandays_generated); 
+			 mav.addObject("remark_mandays_generated",remark_mandays_generated);
 			 
-			 mav.addObject("areaType",pcradio); 
-			 mav.addObject("culturablew",culturablew); 
-			 mav.addObject("whs",whs); 
-			 mav.addObject("soil",soil); 
-			 mav.addObject("protective",protective); 
-			 mav.addObject("degraded",degraded); 
-			 mav.addObject("income",income); 
-			 mav.addObject("benefited",benefited); 
-			 mav.addObject("mandays",mandays); 
-			 mav.addObject("dug",dug); 
-			 mav.addObject("tube",tube); 
-			 mav.addObject("conculturablew",conculturablew); 
-			 mav.addObject("conwhs",conwhs); 
-			 mav.addObject("consoil",consoil); 
-			 mav.addObject("conprotective",conprotective); 
-			 mav.addObject("condegraded",condegraded); 
-			 mav.addObject("conincome",conincome); 
-			 mav.addObject("conbenefited",conbenefited); 
-			 mav.addObject("conmandays",conmandays); 
-			 mav.addObject("condug",condug); 
-			 mav.addObject("contube",contube);
+			 mav.addObject("pre_dug_well",pre_dug_well); 
+			 mav.addObject("mid_dug_well",mid_dug_well); 
+			 mav.addObject("control_dug_well",control_dug_well); 
+			 mav.addObject("remark_dug_well",remark_dug_well); 
+			 mav.addObject("pre_tube_well",pre_tube_well); 
+			 mav.addObject("mid_tube_well",mid_tube_well); 
+			 mav.addObject("control_tube_well",control_tube_well); 
+			 mav.addObject("remark_tube_well",remark_tube_well);
 			 mav.addObject("wdcPrdDtlList", wdcPrdDtlList);
 			 
 			 mav.addObject("ntrlresource",naturalresource);
@@ -3933,15 +3940,17 @@ public class ProjectEvaluationController {
 		return mav;
 	}
 
+
 	@RequestMapping(value="/completeprojEvaldata", method = RequestMethod.POST)
 	@ResponseBody
-	public String completeprojEvaldata(HttpServletRequest request, HttpServletResponse response,@RequestParam(value ="projProfId") Integer projProfId)
+	public String completeprojEvaldata(HttpServletRequest request, HttpServletResponse response,@RequestParam(value ="projProfId") Integer projProfId,
+			@RequestParam(value = "summary") String summary, @RequestParam(value = "grade") Character grade)
 	{
 		ModelAndView mav = new ModelAndView();
 		String res = new String("fail");
 		session = request.getSession(true);
 		if(session!=null && session.getAttribute("loginID")!=null) {
-			res=PEService.completeprojEvaldata(projProfId);
+			res=PEService.completeprojEvaldata(projProfId, summary, grade);
 		}else {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
