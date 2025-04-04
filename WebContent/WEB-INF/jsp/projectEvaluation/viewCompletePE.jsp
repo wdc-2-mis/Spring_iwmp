@@ -421,7 +421,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 					</tr>
 					<tr>
 								<td style="text-align: right;"><b><c:out value="e" /></b></td>
-								<td><b> <c:out value="Others" /></b></td>
+								<td><b> <c:out value="Others" />&nbsp (${list.othercrop})</b></td>
 								<td>${list.predifferentCropOther}</td>
 								<td>${list.middifferentCropOther}</td>
 								<td>${list.control_different_crop_other}</td>
@@ -619,7 +619,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 					
 					<tr>
 								<td style="text-align: right;"><b><c:out value="f" /></b></td>
-								<td><b> <c:out value="Other Crops" /></b></td>
+								<td><b> <c:out value="Other Crops" />&nbsp (${list.othercrop})</b></td>
 								<td>${list.preOther}</td>
 								<td>${list.midOther}</td>
 								<td>${list.controlOther}</td>
