@@ -119,6 +119,9 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${fetchCompProjProfileData}")
 	String fetchCompProjProfileData;
 
+	@Value("${getProjectBlock}")
+	String getProjectBlock;
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -2157,6 +2160,34 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 			return map;
 }
+
+		@Override
+		public LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode) {
+			String getProject=getProjectBlock;
+			Session session = sessionFactory.getCurrentSession();
+			LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+			try {
+				session.beginTransaction();
+				SQLQuery query= session.createSQLQuery(getProject);
+				query.setInteger("pcode",pcode);
+				
+				List<Object[]> rows = query.list();
+				  for(Object[] row : rows){
+					  map.put(Integer.parseInt(row[0].toString()),row[1].toString());
+				  }
+				session.getTransaction().commit();
+				} 
+			catch (HibernateException e) {
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex){
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return map;
+		}
 
 }
 

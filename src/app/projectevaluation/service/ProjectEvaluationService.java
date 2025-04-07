@@ -137,4 +137,6 @@ public interface ProjectEvaluationService {
 	LinkedHashMap<Integer, List<ProjectEvaluationBean>> getPlanWorkData(Integer pcode);
 	
 	LinkedHashMap<Integer, List<ProjectEvaluationBean>> getGeoTaggingWorks(Integer pcode);
+
+	LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode);
 }

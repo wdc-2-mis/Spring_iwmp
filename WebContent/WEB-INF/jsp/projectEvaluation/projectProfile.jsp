@@ -1,7 +1,71 @@
 <%@include file="/WEB-INF/jspf/header2.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <head>
+<style>
+ .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+        }
+
+        /* Modal content styling */
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Modal width */
+            height: 30%; /* Modal height */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            position: relative; /* Relative positioning for the close button */
+        }
+
+        /* Close button styling */
+        .close {
+            color: #aaa;
+            position: absolute; /* Position it absolutely */
+            top: 10px; /* Position from the top */
+            right: 10px; /* Position from the right */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Header styling */
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        /* Body styling for blocks */
+        .modal-body {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: left; /* Align to the left */
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+
+</style>
 <script type="text/javascript">
 let formSubmitted = false;  
 
@@ -77,6 +141,30 @@ function updateTotal() {
     document.getElementById('sanctionedC').value = totalSanctioned.toFixed(4);    
 }
 
+function openModal() {
+    document.getElementById("myModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+}
+
+let hasError = false; 
+function validateInput(event) {
+    const value = event.target.value.trim();
+    const numericValue = parseFloat(value);
+
+     if (!hasError && (isNaN(numericValue) || numericValue <= 0)) {
+        alert("Error: Please enter a value greater than 0!");
+        hasError = true; 
+        event.target.value = ""; 
+        event.target.focus(); 
+    } else {
+        hasError = false; 
+    }
+}
+
+
 </script>
 
 
@@ -110,7 +198,8 @@ function updateTotal() {
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${fname}' /> />
 		
 		<div class="form-group">
-			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp; <b><c:out value='${mname}' /></b>
+			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose>  <c:when test="${fn:length(blockList) == 1}"><b>${blockList.values().toArray()[0]}</b></c:when> <c:otherwise><b>${blockList.values().toArray()[0]}</b>     <a href="#" onclick="openModal()"><b>....more</b></a></c:otherwise></c:choose>
+			 ,&nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp; <b><c:out value='${mname}' /></b>
 			</div>
 			<hr />
 		
@@ -137,7 +226,7 @@ function updateTotal() {
   <td width="40%">
    <b><c:out	value="Total Sanctioned Project Area (in ha.)"></c:out></b>
   </td><td>
-     <input type="text" id="sancitonedP" name="sancitonedP" value="${listUser.sanctioned_area}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="15" placeholder="Only Decimal" />
+     <input type="text" id="sancitonedP" name="sancitonedP" value="${listUser.sanctioned_area}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" onblur="validateInput(event)" class="" maxlength="15" placeholder="Only Decimal" />
  </td>
 </tr>
 
@@ -148,7 +237,7 @@ function updateTotal() {
      <td width="40%">
       <b><c:out	value="Total Sanctioned Cost of the Project (Rs. Crore)"></c:out></b>
      </td><td>
-     <input type="text" id="sanctionedC" name="sanctionedC" value="${listUser.sanctioned_cost}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" />
+     <input type="text" id="sanctionedC" name="sanctionedC" value="${listUser.sanctioned_cost}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" readonly/>
      </td>
 </tr> 
 
@@ -159,7 +248,7 @@ function updateTotal() {
   <td width="40%">
    <b><c:out	value="Central Share (Rs. Crore)"></c:out></b>
   </td><td>
-     <input type="text" id="cShare" name="cShare" value="${listUser.central}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
+     <input type="text" id="cShare" name="cShare" value="${listUser.central}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" onblur="validateInput(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
  </td>
 </tr> 
 
@@ -170,7 +259,7 @@ function updateTotal() {
   <td width="40%">
    <b><c:out	value="State Share (Rs. Crore)"></c:out></b>
   </td><td>
-     <input type="text" id="sShare" name="sShare" value="${listUser.state}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
+     <input type="text" id="sShare" name="sShare" value="${listUser.state}" autocomplete = "off" onfocusin="decimalToFourPlace(event)" onblur="validateInput(event)" class="" maxlength="11" placeholder="Only Decimal" oninput="updateTotal()"/>
  </td>
 </tr> 
 
@@ -183,7 +272,7 @@ function updateTotal() {
   <td width="40%">
    <b><c:out	value="Number of Village Covered"></c:out></b>
   </td><td>
-     <input type="text" id="villageC" name="villageC" value="${listUser.no_vc}" autocomplete = "off" onfocusin="numericOnly(event)" class="" maxlength="5" placeholder="Only Number" />
+     <input type="text" id="villageC" name="villageC" value="${listUser.no_vc}" autocomplete = "off" onfocusin="numericOnly(event)" onblur="validateInput(event)" class="" maxlength="5" placeholder="Only Number" />
  </td>
 </tr>
  
@@ -194,7 +283,7 @@ function updateTotal() {
   <td width="40%">
    <b><c:out	value="Number of Watershed Committees"></c:out></b>
   </td><td>
-     <input type="text" id="waterC" name="waterC" value="${listUser.no_wc}" autocomplete = "off" onfocusin="numericOnly(event)" class="" maxlength="5" placeholder="Only Number" />
+     <input type="text" id="waterC" name="waterC" value="${listUser.no_wc}" autocomplete = "off" onfocusin="numericOnly(event)" onblur="validateInput(event)" class="" maxlength="5" placeholder="Only Number" />
  </td>
 </tr>
 
@@ -207,10 +296,10 @@ function updateTotal() {
   </td><td>
     <c:choose>
     <c:when test="${listUser.member_wc eq null}">
-        <input type="text" id="membersWC" name="membersWC" autocomplete="off" onfocusin="numericOnly(event)" class="" placeholder="Only Number"/>
+        <input type="text" id="membersWC" name="membersWC" autocomplete="off" onfocusin="numericOnly(event)" onblur="validateInput(event)" class="" placeholder="Only Number"/>
     </c:when>
     <c:otherwise>
-        <input type="text" id="membersWC" name="membersWC" value="${listUser.member_wc}" autocomplete="off" onfocusin="numericOnly(event)" class="" maxlength="5" placeholder="Only Number"/>
+        <input type="text" id="membersWC" name="membersWC" value="${listUser.member_wc}" autocomplete="off" onfocusin="numericOnly(event)" onblur="validateInput(event)" class="" maxlength="5" placeholder="Only Number"/>
     </c:otherwise>
 </c:choose>
 
@@ -248,8 +337,27 @@ function updateTotal() {
 
 
 </table>
+
+<div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">All Blocks</div>
+            <div class="modal-body">
+                <!-- Display comma-separated blocks -->
+                <c:forEach var="block" items="${blockList.values()}" varStatus="status">
+                    <span>${block}</span>
+                    <c:if test="${!status.last}">, </c:if> <!-- Add comma if not the last block -->
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+
 </form:form>
+
 </div>
+
+
+
     <footer class="text-center mt-4">
         <%@include file="/WEB-INF/jspf/footer2.jspf"%>
     </footer>

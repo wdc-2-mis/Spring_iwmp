@@ -1211,6 +1211,7 @@ public class ProjectEvaluationController {
 			mav.addObject("mname", mname);
 			mav.addObject("fcode", fcode);
 			mav.addObject("fname", fname);
+			mav.addObject("blockList", PEService.getProjProfileBlock(pcode));
 		}
 		else {
 			mav = new ModelAndView("login");										

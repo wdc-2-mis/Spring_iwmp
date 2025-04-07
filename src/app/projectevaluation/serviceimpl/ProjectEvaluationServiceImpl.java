@@ -305,4 +305,9 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getGeoTaggingWorks(Integer pcode) {
 		return PEDAO.getGeoTaggingWorks(pcode);
 	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode) {
+		return PEDAO.getProjProfileBlock(pcode);
+	}
 }
