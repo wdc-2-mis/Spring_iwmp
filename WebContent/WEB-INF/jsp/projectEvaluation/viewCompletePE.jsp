@@ -98,7 +98,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 	<div class="col-10"  id="exportHtmlToPdf">
 	<p align="right"> </p>
 <!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
-<%-- 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${projProfId}','${dname}','${mname}','${fname}','${pname}','${dcode}','${fcode}','${pcode}','${mcode}')" class="btn btn-info">PDF</button> --%>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${projProfId}','${dname}','${mname}','${fname}','${pname}','${dcode}','${fcode}','${pcode}','${mcode}')" class="btn btn-info">PDF</button>
 <p align="right"> </p>
 	
 	<thead>
@@ -158,7 +158,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
   ${listUser.member_wc}
 	</td>
 	<td width="40%">
-   <b><c:out	value="Number of Households Covered in the Project area"></c:out></b>
+   <b><c:out value="Number of Households Covered in the Project area"></c:out></b>
   </td><td>
   ${listUser.household}
   </td>
@@ -675,7 +675,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 	 
 	 <tr>
         	<td><b><c:out value="2." /></b></td>
-			<td><b> <c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)" /></b></td>
+			<td><b> <c:out value="No. of Farmers Benefited" /></b></td>
 			<td colspan="2">${farmer_benefited}</td>
 			<td>${control_farmer_benefited}</td>
 			<td>${remark_farmer_benefited}</td>
