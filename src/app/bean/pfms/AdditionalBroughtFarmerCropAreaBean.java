@@ -24,7 +24,8 @@ public class AdditionalBroughtFarmerCropAreaBean {
 	private BigInteger half_yearly;
 	private BigInteger not_yearly;
 	private BigInteger not_half_yearly;
-	
+	private BigDecimal pulses;
+	private BigDecimal oilseeds;
 	
 	public int getAdditional_brought_id() {
 		return additional_brought_id;
@@ -133,6 +134,18 @@ public class AdditionalBroughtFarmerCropAreaBean {
 	}
 	public void setNot_half_yearly(BigInteger not_half_yearly) {
 		this.not_half_yearly = not_half_yearly;
+	}
+	public BigDecimal getPulses() {
+		return pulses;
+	}
+	public void setPulses(BigDecimal pulses) {
+		this.pulses = pulses;
+	}
+	public BigDecimal getOilseeds() {
+		return oilseeds;
+	}
+	public void setOilseeds(BigDecimal oilseeds) {
+		this.oilseeds = oilseeds;
 	}
 	
 	
