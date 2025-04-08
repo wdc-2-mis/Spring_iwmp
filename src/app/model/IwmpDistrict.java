@@ -21,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogita;
 import app.model.master.IwmpBlock;
 import app.model.master.PfmsEatmisdataDetail;
 import app.watershedyatra.model.NodalOfficer;
@@ -82,6 +83,7 @@ public class IwmpDistrict  implements java.io.Serializable {
      private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
      private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
      private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
+     private Set<JanbhagidariPratiyogita> janbhagidariPratiyogita = new HashSet<JanbhagidariPratiyogita>(0);
 
     public IwmpDistrict() {
     }
@@ -99,7 +101,8 @@ public class IwmpDistrict  implements java.io.Serializable {
     		String stateCode2001, Boolean distproj, String stateCode2011, String districtCode2001, String districtCode2011, String censusCodePortedData, 
     		String stateCodelgd, Integer districtCodelgd, String lgdCodePortedData, BigDecimal jalShakati, Set<IwmpMProject> iwmpMProjects, 
     		Set<IwmpBlock> iwmpBlocks, Set<IwmpActPlan> iwmpActPlans, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer, 
-    		Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel) {
+    		Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel,
+    		Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
        this.dcode = dcode;
        this.iwmpState = iwmpState;
        this.distCode = distCode;
@@ -138,6 +141,7 @@ public class IwmpDistrict  implements java.io.Serializable {
        this.watershedYatVill=watershedYatVill;
        this.routePlanVanTravel=routePlanVanTravel;
        this.preYatraPreparation=preYatraPreparation;
+       this.janbhagidariPratiyogita=janbhagidariPratiyogita;
     }
    
     @Id 
@@ -551,6 +555,16 @@ public class IwmpDistrict  implements java.io.Serializable {
 
 	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
 		this.preYatraPreparation = preYatraPreparation;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpDistrict")
+	public Set<JanbhagidariPratiyogita> getJanbhagidariPratiyogita() {
+		return janbhagidariPratiyogita;
+	}
+
+
+	public void setJanbhagidariPratiyogita(Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
+		this.janbhagidariPratiyogita = janbhagidariPratiyogita;
 	}
     
     

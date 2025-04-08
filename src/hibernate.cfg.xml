@@ -96,7 +96,9 @@
         <mapping class="app.watershedyatra.model.PreYatraGramsabha" />
         <mapping class="app.watershedyatra.model.PreYatraPrabhatpheri" />
         <mapping class="app.watershedyatra.model.WatershedYatVillDuplicate" />
-        
+        <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogita" />
+        <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgoname" />
+        <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgovillage" />
         
         
         

@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgovillage;
 import app.model.BlsOutMain;
 import app.model.BlsOutMainAchiev;
 import app.model.BlsOutMainHis;
@@ -75,6 +76,7 @@ public class IwmpVillage implements java.io.Serializable {
     private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
     private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
     private Set<WatershedYatVillDuplicate> watershedYatVillDuplicate = new HashSet<WatershedYatVillDuplicate>(0);
+    private Set<JanbhagidariPratiyogitaNgovillage> janbhagidariPratiyogitaNgovillage = new HashSet<JanbhagidariPratiyogitaNgovillage>(0);
     
 	@Transient
 	private boolean updatestatus;
@@ -444,6 +446,16 @@ public class IwmpVillage implements java.io.Serializable {
 
 	public void setWatershedYatVillDuplicate(Set<WatershedYatVillDuplicate> watershedYatVillDuplicate) {
 		this.watershedYatVillDuplicate = watershedYatVillDuplicate;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpVillage")
+	public Set<JanbhagidariPratiyogitaNgovillage> getJanbhagidariPratiyogitaNgovillage() {
+		return janbhagidariPratiyogitaNgovillage;
+	}
+
+	public void setJanbhagidariPratiyogitaNgovillage(
+			Set<JanbhagidariPratiyogitaNgovillage> janbhagidariPratiyogitaNgovillage) {
+		this.janbhagidariPratiyogitaNgovillage = janbhagidariPratiyogitaNgovillage;
 	}
 
 
