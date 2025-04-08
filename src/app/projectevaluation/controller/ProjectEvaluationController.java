@@ -3980,6 +3980,7 @@ public class ProjectEvaluationController {
 		String stateName = "";
 		int stCode = 0;
 		int distCode = 0;
+		Character status = null;
 		for(ProfileBean bean : listm) {
 			distName =bean.getDistrictname();
 			distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
@@ -3987,11 +3988,21 @@ public class ProjectEvaluationController {
 			stCode = bean.getStatecode()==null?0:bean.getStatecode();
 		}
 		String projProfilestatus = PEService.checkProjectProfileStatus(pcode.toString());
-		LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
-		getprojectProfileData = PEService.fetchprojProfileData(pcode);
-		
-		
-//		projProfId=PEService.getProjectProfileId( pcode, fcode, mcode);
+			LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
+			
+			getprojectProfileData = PEService.fetchprojProfileData(pcode);
+			
+			ProjectEvaluationBean projData = PEService.getProjectDetails(pcode);
+			 status = projData.getStatus();
+			 if(status == 'D') {
+			 getprojectProfileData = PEService.fetchprojProfileData(pcode);
+			 }
+			 else if(status == 'C')
+			 {
+				 getprojectProfileData = PEService.fetchcompleteProjProfileData(pcode);
+			 }
+			projProfId=PEService.getProjectProfileId( pcode, fcode, mcode);
+			
 			List<ProjectEvaluationBean> indicatorslist = new ArrayList<ProjectEvaluationBean>();
 			indicatorslist =PEService.getIndicatorEvaluation(projProfId);
 			List<ProjectEvaluationBean> utilizationlist = new ArrayList<ProjectEvaluationBean>();
@@ -4000,6 +4011,8 @@ public class ProjectEvaluationController {
 			 wdcCrpDtlList = PEService.getCroppedDetails(projProfId);
 			 List<WdcpmksyCroppedDetails2> wdcCrpDtlList2 = new ArrayList<>();
 			 wdcCrpDtlList2 = PEService.getCroppedDetails2(projProfId);
+			 List<WdcpmksyCroppedDetails3> wdcCrpDtlList3 = new ArrayList<>();
+			 wdcCrpDtlList3 = PEService.getCroppedDetails3(projProfId);
 			List<ProjectEvaluationBean> mandayslist = new ArrayList<ProjectEvaluationBean>();
 			mandayslist=PEService.getMandayDeatails(projProfId);
 			 List<WdcpmksyProductionDetails> wdcPrdDtlList = new ArrayList<>();
@@ -4041,7 +4054,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph("Project Evaluation - View & Complete ", f3);
-			paragraph4 = new Paragraph("District Name : "  + dname + ", Project Name : "+   pname+     ", Month Name : "  + mname+  ",  Financial Year : " +  fname, bf9);
+			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+     ", Month Name : "  + mname+  ",  Financial Year : " +  fname, bf9);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
 			paragraph4.setAlignment(Element.ALIGN_CENTER);
@@ -4052,461 +4065,517 @@ public class ProjectEvaluationController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			document.add(paragraph4);
-			table = new PdfPTable(5);
-			table.setWidths(new int[] { 2, 8, 5, 5, 5});
+			table = new PdfPTable(6);
+			table.setWidths(new int[] { 2, 8, 5, 5, 5, 5});
 			table.setWidthPercentage(85);
 			table.setSpacingBefore(0f);
 			table.setSpacingAfter(0f);
 			
-//			if(indicatorslist.size()!=0)
-			CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 5, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Project Profile", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project Profile", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			
 			for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
-//				   System.out.println("Key: " + bean.getKey() + ", Value: " + bean.getValue());
+				System.out.println("Key: " + bean.getKey() + ", Value: " + bean.getValue());
 				if(bean.getKey().equals(stCode)) {
 					for (ProjectEvaluationBean obj : bean.getValue()) {
-						CommonFunctions.insertCell(table, "Total Sanctioned Cost of the Project (Rs. Crore)",Element.ALIGN_LEFT, 2, 1, bf8);
+						CommonFunctions.insertCell(table, "Total Sanctioned Project Area (in ha.)",Element.ALIGN_LEFT, 2, 1, bf8);
+						CommonFunctions.insertCell(table, obj.getSanctioned_area().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "Total Sanctioned Cost of the Project (Rs. Crore)", Element.ALIGN_LEFT,2, 1, bf8);
 						CommonFunctions.insertCell(table, obj.getSanctioned_cost().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, "Central Share (Rs. Crore)", Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "Central Share (Rs. Crore)", Element.ALIGN_LEFT, 2, 1, bf8);
 						CommonFunctions.insertCell(table, obj.getCentral().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "State Share (Rs. Crore)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, obj.getState().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total Sanctioned Project Area (in ha.)", Element.ALIGN_LEFT,1, 1, bf8);
-					CommonFunctions.insertCell(table, obj.getSanctioned_area().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "Number of Village Covered", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, obj.getNo_vc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Number of Watershed Committees", Element.ALIGN_LEFT, 1, 1,bf8);
-					CommonFunctions.insertCell(table, obj.getNo_wc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "Number of Members in Watershed Committees",Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, obj.getMember_wc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Number of Households Covered in the Project area",Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, obj.getHousehold().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    CommonFunctions.insertCell(table, "State Share (Rs. Crore)", Element.ALIGN_LEFT, 2, 1, bf8);
+					    CommonFunctions.insertCell(table, obj.getState().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    CommonFunctions.insertCell(table, "Number of Village Covered", Element.ALIGN_LEFT, 2, 1, bf8);
+					    CommonFunctions.insertCell(table, obj.getNo_vc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    CommonFunctions.insertCell(table, "Number of Watershed Committees", Element.ALIGN_LEFT, 2, 1,bf8);
+					    CommonFunctions.insertCell(table, obj.getNo_wc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    CommonFunctions.insertCell(table, "Number of Members in Watershed Committees",Element.ALIGN_LEFT, 2, 1, bf8);
+					    CommonFunctions.insertCell(table, obj.getMember_wc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    CommonFunctions.insertCell(table, "Number of Households Covered in the Project area",Element.ALIGN_LEFT, 2, 1, bf8);
+					    CommonFunctions.insertCell(table, obj.getHousehold().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					}
 				}
 			}
 			
-			CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 5, 1, bf8);
+			CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 6, 1, bf8);
 			
-			CommonFunctions.insertCellHeader(table, "Indicators for Evaluation", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Indicators for Evaluation", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
-
-			
-//			
-			if(indicatorslist.get(0).getAll_manpower().equals(true)){
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Administrative Mechanism", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Administrative Mechanism", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism_remark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether DPR approved by SLNA", Element.ALIGN_LEFT, 2, 1, bf8);
-					if(indicatorslist.get(0).getDpr_slna().equals(true)){
-					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether DPR approved by SLNA", Element.ALIGN_LEFT, 3, 1, bf8);
+					if(indicatorslist.get(0).getDpr_slna().equals('F')){
+					CommonFunctions.insertCell(table, "Fully", Element.ALIGN_CENTER, 1, 1, bf8);
 					
 					}
 					else {
-						CommonFunctions.insertCell(table, "No", Element.ALIGN_CENTER, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "Partially", Element.ALIGN_CENTER, 1, 1, bf8);
 					}
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getDpr_slna_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether all manpower positions in place at", Element.ALIGN_LEFT, 2, 1, bf8);
-					if(indicatorslist.get(0).getAll_manpower().equals(true)){
-					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether all manpower positions in place at", Element.ALIGN_LEFT, 3, 1, bf8);
+					if(indicatorslist.get(0).getAll_manpower().equals('F')){
+					CommonFunctions.insertCell(table, "Fully", Element.ALIGN_CENTER, 1, 1, bf8);
 					}
 					else {
-						CommonFunctions.insertCell(table, "No", Element.ALIGN_CENTER, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "Partially", Element.ALIGN_CENTER, 1, 1, bf8);
 					}
 					
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getAll_manpower_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "I", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "WCDC Level", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "WCDC Level", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWcdc()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWcdc_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "II", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "PIA Level", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "PIA Level", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getPia()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getPia_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "III", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "WC Level", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "WC Level", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWc()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWc_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-			}
-			
-			if(indicatorslist.get(0).getAll_manpower().equals(false)){
-				CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, "Administrative Mechanism", Element.ALIGN_LEFT, 2, 1, bf8);
-				CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism_remark(), Element.ALIGN_LEFT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, "Whether DPR approved by SLNA", Element.ALIGN_LEFT, 2, 1, bf8);
-				if(indicatorslist.get(0).getDpr_slna().equals(true)){
-				CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
+					 
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 				
-				}
-				else {
-					CommonFunctions.insertCell(table, "No", Element.ALIGN_CENTER, 1, 1, bf8);
-				}
-				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getDpr_slna_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-				CommonFunctions.insertCell(table, "Whether all manpower positions in place at", Element.ALIGN_LEFT, 2, 1, bf8);
-				if(indicatorslist.get(0).getAll_manpower().equals(true)){
-				CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
-				}
-				else {
-					CommonFunctions.insertCell(table, "No", Element.ALIGN_CENTER, 1, 1, bf8);
-				}
-				
-				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getAll_manpower_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "I", Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "WCDC Level", Element.ALIGN_LEFT, 2, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWcdc()), Element.ALIGN_RIGHT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWcdc_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "II", Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "PIA Level", Element.ALIGN_LEFT, 2, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getPia()), Element.ALIGN_RIGHT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getPia_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "III", Element.ALIGN_LEFT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, "WC Level", Element.ALIGN_LEFT, 2, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWc()), Element.ALIGN_RIGHT, 1, 1, bf8);
-//				CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getWc_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
-		}
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
-				
-					CommonFunctions.insertCellHeader(table, "Fund Utilization", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Fund Utilization", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Pre-Project Status", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Mid-Project Status Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Fund Utilization", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "Fund Utilization", Element.ALIGN_LEFT, 5, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Amount of sanctioned Central share received (Rs. Crores)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Amount of sanctioned Central share received (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getCentral_share().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getCentral_share_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Amount of sanctioned State share received (Rs. Crores)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Amount of sanctioned State share received (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getState_share().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getState_share_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Amount of Total funds (central + state share) Utilized (Rs. Crores)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Amount of Total funds (central + state share) Utilized (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, (utilizationlist.get(0).getTotal_fund().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_fund_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "d", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total funds planned through convergence in the project area (Rs. Crores)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Total funds planned through convergence in the project area (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_fund_planned().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_fund_planned_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total expenditure incurred through convergence (Rs. Crores)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Total expenditure incurred through convergence (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_expenditure().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_expenditure_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Cropped Details-1", Element.ALIGN_CENTER, 5, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Crop Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Cropped Details-1", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Crop Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Gross Cropped Area(ha)", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "Gross Cropped Area(ha)", Element.ALIGN_LEFT, 5, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area under kharif crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under kharif crop(ha)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPregrossKharifCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidgrossKharifCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_gross_kharif_crop_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getKharifCropremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area under rabi crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under rabi crop(ha)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPregrossRabiCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidgrossRabiCropArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_gross_rabi_crop_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getRabiCropremark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area under Third crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under Third crop(ha)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getPregrossThirdCropArea().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getMidgrossThirdCropArea().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getControl_gross_third_crop_area().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, (wdcCrpDtlList.get(0).getThirdCropremark()), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area under different Crops(ha)", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under different Crops(ha)", Element.ALIGN_LEFT, 5, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Cereals", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Cereals", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropCereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropCereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_cereals().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getCerealsremark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Pulses", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Pulses", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_pulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPulsesremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Oil seed", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Oil seed", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_oil_seed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getOilSeedremark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "d", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Millets", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Millets", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_millets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMilletsremark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Others", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Others", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_other().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getOthersremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area of horticulture crop(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Area of horticulture crop(ha)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrehorticultureArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidhorticultureArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_horticulture_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getHorticultureremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Net Sown Area(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Net Sown Area(ha)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrenetsownArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidnetsownArea().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_netsown_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getNetSownremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Cropping Intensity", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Cropping Intensity", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrecroppingIntensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidcroppingIntensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_cropping_intensity().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getCropIntensityremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-//					CommonFunctions.insertCell(table, "6", Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, "Area covered under diversified crops/change in cropping systems(ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getDiversifiedChange().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_diversified_change().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Cropped Details-2", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Cropped Details-2", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Crop Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Gross Cropped Area(ha)", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "Area covered under diversified crops/ change in cropping system (Ha.)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getProjectDiversifiedChange().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControlDiversifiedChange().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkDiversifiedChange(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					
+					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area brought from Nil/Single crop to double or more crop(ha.)", Element.ALIGN_LEFT, 5, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Nil to single crop(ha.)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getNillSingle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_nill_single().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getProjectNillSingle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControlNillSingle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkNillSingle(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Single to double or more crop(ha.)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, (wdcCrpDtlList2.get(0).getSingelDoublemore().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, (wdcCrpDtlList2.get(0).getControl_singel_doublemore().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area under plantation cover", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getPlantationCover().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_plantation_cover().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList2.get(0).getProjectSingleDoublemore().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList2.get(0).getControlSingleDoublemore().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkSingleDoublemore(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Yeild per hectare of major crops(Qtl./ha.)", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "No. of Water Harvesting Structure (WHS) constructed /rejuvenated", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getProjectWhsConstructedRejuvenated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControlWhsConstructedRejuvenated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkWhsConstructedRejuvenated(), Element.ALIGN_LEFT, 1, 1, bf8);
 
+					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area Covered with soil and Moisture (Ha.)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getProjectSoilMoisture().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControlSoilMoisture().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkSoilMoisture(), Element.ALIGN_LEFT, 1, 1, bf8);
+
+
+					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area of degraded land covered /rainfed area developed (Ha.)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getProjectDegradedRainfed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControlDegradedRainfed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRemarkDegradedRainfed(), Element.ALIGN_LEFT, 1, 1, bf8);
+
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
+					
+					CommonFunctions.insertCellHeader(table, "Cropped Details-3", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Crop Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under plantation cover(Ha.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPrePlantationCover().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidPlantationCover().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlPlantationCover().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkPlantationCover(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "	Yield per hectare of major crops(Qt./Ha.)", Element.ALIGN_LEFT, 5, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Rice", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getRice().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_rice().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "	Rice", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreRice().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidRice().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlRice().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkRice(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Wheat", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getWheat().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_wheat().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Wheat", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList3.get(0).getPreWheat().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList3.get(0).getMidWheat().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcCrpDtlList3.get(0).getControlWheat().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkWheat(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Pulses", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_pulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Pulses", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPrePulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlPulses().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkPulses(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "d", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Millets", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_millets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Millets", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlMillets().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkMillets(), Element.ALIGN_LEFT, 1, 1, bf8);
+
 
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Oil Seed", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getOil_seed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_oil_seed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, "	Oil seeds", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlOilSeed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkOilSeed(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "f", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Others", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList2.get(0).getControl_other().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "Other Crops", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlOther().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkOther(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
+					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area of culturable wasteland(Ha.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreCulturableWasteland().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidCulturableWasteland().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlCulturableWasteland().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkCulturableWasteland(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Area under protective irrigation(Ha.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreProtectiveIrrigation().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidProtectiveIrrigation().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlProtectiveIrrigation().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkProtectiveIrrigation(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 
-					CommonFunctions.insertCellHeader(table, "No. of Man-days Details", Element.ALIGN_CENTER, 5, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "No. of Man-days, Farmer and Water Table Details", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Indicators", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)	", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)	", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Area of Culturable Wasteland (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getCulturable_wasteland().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_culturable_wasteland().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Farmer`s Average Household Income per Annum (Rs. in Lakhs)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getPre_farmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getMid_farmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_farmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getRemark_farmer_income(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Number of Water Harvesting Structures(WHS) constructed/rejuvenated", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, (mandayslist.get(0).getWhs_constructed_rejuvenated().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (mandayslist.get(0).getControl_whs_constructed_rejuvenated().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "No. of Farmers Benefited", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (mandayslist.get(0).getFarmer_benefited().toString()), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, (mandayslist.get(0).getControl_farmer_benefited().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (mandayslist.get(0).getRemark_farmer_benefited()), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area Covered with Soil and Moisture Conservation Activities (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getSoil_moisture().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_soil_moisture().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Area under Protective Irrigation (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getProtective_irrigation().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_protective_irrigation().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area of degraded land covered/ rainfed area development (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getDegraded_rainfed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_degraded_rainfed().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "6", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Farmer`s Average Household Income per Annum (Rs. in Lakhs)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getFarmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_farmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "7", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "No. of Farmers Benefited", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getFarmer_benefited().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_farmer_income().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
-					CommonFunctions.insertCell(table, "8", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "No. of Persondays Generated (man-days)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getMandays_generated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "No. of Persondays Generated (man-days)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getMandays_generated().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_mandays_generated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (mandayslist.get(0).getRemark_mandays_generated()), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "9", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average depth of Water table in dug wells (mts.)- Summer Season", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getDug_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Average depth of Water table in dug wells (mts.)- Summer Season", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getPre_dug_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getMid_dug_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_dug_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getRemark_dug_well(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "10", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average depth of Water table in tube wells (mts.)- Summer Season", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getTube_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Average depth of Water table in tube wells (mts.)- Summer Season", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getPre_tube_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, mandayslist.get(0).getMid_tube_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_tube_well().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, mandayslist.get(0).getRemark_tube_well(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 
 
-					CommonFunctions.insertCellHeader(table, "Production Details", Element.ALIGN_CENTER, 5, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Production Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Production Details", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Production Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Milk Production of Milch Cattle(Kl/Yr.)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMilchCattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_milch_cattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Milk Production of Milch Cattle(Kl/Yr.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreMilchCattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidMilchCattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMilchCattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMilchCattle().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Fodder Production(Qt./Yr.)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, (wdcPrdDtlList.get(0).getFodderProduction().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, (wdcPrdDtlList.get(0).getControl_fodder_production().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, "Fodder Production(Qt./Yr.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcPrdDtlList.get(0).getPreFodderProduction().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (wdcPrdDtlList.get(0).getMidFodderProduction().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlFodderProduction().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkFodderProduction(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Annual Migration from rural to urban area in project area(Nos.)", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRuralUrban().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_rural_urban().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "	Annual Migration from rural to urban area in project area(Nos.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreRuralUrban().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidRuralUrban().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlRuralUrban().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkRuralUrban(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "No. of springs rejuvenated(if applicable)", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getSpringRejuvenated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_spring_rejuvenated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "No. of springs rejuvenated(if applicable)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getSpringRejuvenated().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlSpringRejuvenated().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkSpringRejuvenated(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "No. of persons benefitted due to rejuvenation of springs", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPersonBenefitte().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_person_benefitte().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "No. of persons benefitted due to rejuvenation of springs", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPersonBenefitte().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlPersonBenefitte().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkPersonBenefitte(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "6", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	No. of Community Based Organization", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, " No. of Community Based Organization", Element.ALIGN_LEFT, 5, 1, bf8);
 
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_community_based_shg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedShg().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_community_based_fpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedFpo().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedUg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_community_based_ug().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedUg().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedUg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedUg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "7", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average depth of Water table in tube wells (mts.)- Summer Season", Element.ALIGN_LEFT, 4, 1, bf8);
+					CommonFunctions.insertCell(table, "	No. of Members in Community Based Organization", Element.ALIGN_LEFT, 5, 1, bf8);
 
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_member_based_shg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedShg().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_member_based_fpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-
+					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedFpo().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedUg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_member_based_ug().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedUg().toString(), Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedUg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedUg(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "8", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Avergage Annual Turnover of FPOs", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getTrunoverFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_trunover_fpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, " Avergage Annual Turnover of FPOs(Rs.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreTrunoverFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidTrunoverFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlTrunoverFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkTrunoverFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "9", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average annual net income of an FPO Member", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getIncomeFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_income_fpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, " Average annual net income of an FPO Member(Rs.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreIncomeFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidIncomeFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlIncomeFpo().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkIncomeFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "10", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average annual net income of an SHG Member", Element.ALIGN_LEFT, 2, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getAnnualIncomeShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControl_annual_income_shg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, " Average annual net income of an SHG Member(Rs.)", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreAnnualIncomeShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidAnnualIncomeShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlAnnualIncomeShg().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkAnnualIncomeShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Ecological Perspective", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Ecological Perspective", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Perspective Description", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Perspective Description", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Is there a system of auditing of status of natural resources intervals", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "	Is there a system of auditing of status of natural resources intervals", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(ecoperlist.get(0).getNatural_resource()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4523,7 +4592,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, ecoperlist.get(0).getNatural_resource_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether Gram Panchayats (GPs) and UGs enforcing the norms relating to sharing of usufructs rights", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether Gram Panchayats (GPs) and UGs enforcing the norms relating to sharing of usufructs rights", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(ecoperlist.get(0).getNorms_relating()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4540,7 +4609,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, ecoperlist.get(0).getNorms_relating_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether all members of GPs and UGs trained to maintain and monitor all the natural resources and assets created", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether all members of GPs and UGs trained to maintain and monitor all the natural resources and assets created", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(ecoperlist.get(0).getAntural_asset()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4556,17 +4625,17 @@ public class ProjectEvaluationController {
 					}
 					CommonFunctions.insertCell(table, ecoperlist.get(0).getAntural_asset_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Equity Aspect", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Equity Aspect", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Aspect Description", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Aspect Description", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether landless poor and women find a place in watershed units like watershed committee", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether landless poor and women find a place in watershed units like watershed committee", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(equityAspectList.get(0).getWaterCommittee()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4583,7 +4652,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, equityAspectList.get(0).getWaterCommitteeRemark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether landless poor and women are active member of FPO, SHG, Village level Institutions (VLIs) and various UGs", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether landless poor and women are active member of FPO, SHG, Village level Institutions (VLIs) and various UGs", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(equityAspectList.get(0).getFpoShgVli()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4600,7 +4669,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, equityAspectList.get(0).getFpoShgVliRemark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether landless and asset-less poor benefited from activities that promote alternate livelihood options", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether landless and asset-less poor benefited from activities that promote alternate livelihood options", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(equityAspectList.get(0).getLivelihoodOption()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4616,66 +4685,85 @@ public class ProjectEvaluationController {
 					}
 					CommonFunctions.insertCell(table, equityAspectList.get(0).getLivelihoodOptionRemark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Execution of Planned Works against Targets", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Execution of Planned Works against Targets", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total No. of Work IDs Created", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Total No. of Work IDs Created", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, targetlist.get(0).getCreated_work().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, targetlist.get(0).getCreated_work_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Total No. of Works Completed", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "	Total No. of Works Completed", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, (targetlist.get(0).getCompleted_work().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (targetlist.get(0).getCompleted_work_remark().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total No. of Works Ongoing", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Total No. of Works Ongoing", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, targetlist.get(0).getOngoing_work().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, targetlist.get(0).getOngoing_work_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Quality of Project Shape Files", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Quality of Project Shape Files", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Area of Shape File (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Area of Shape File (ha)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, projshapelist.get(0).getShape_file_area().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, projshapelist.get(0).getShape_file_area_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Variation of area under shape file as compared to sanctioned project area (ha)", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "	Variation of area under shape file as compared to sanctioned project area (ha)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, (projshapelist.get(0).getVariation_area().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (projshapelist.get(0).getVariation_area_remark().toString()), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 5, 1, bf8);
+					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Status of Geo-tagging of Works", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Status of Geo-tagging of Works", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Total No. of Works Geo-Tagged", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "Total No. of Works Geo-Tagged", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, geotagginglist.get(0).getGeo_tagg_work().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, geotagginglist.get(0).getGeo_tagg_work_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Summary of Evaluation:", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
+						if(bean.getKey().equals(stCode)) {
+							for (ProjectEvaluationBean obj : bean.getValue()) {
+								CommonFunctions.insertCell(table, obj.getSummary(), Element.ALIGN_LEFT, 6, 1, bf8);
+							}
+						}
+					}
+					
+					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Based on your Summary Project Grades:", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+					for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
+						if(bean.getKey().equals(stCode)) {
+							for (ProjectEvaluationBean obj : bean.getValue()) {
+								CommonFunctions.insertCell(table, obj.getGrade() != null ? obj.getGrade().toString() : "",Element.ALIGN_LEFT, 6, 1, bf8);
+							}
+						}
+					}
 
 
 			if(indicatorslist.size()==0) 
-				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 5, 1, bf8);
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 6, 1, bf8);
 
 
 			document.add(table);
@@ -4706,7 +4794,6 @@ public class ProjectEvaluationController {
 
 		return null;
 	}
-	
 	@RequestMapping(value = "/updateMonth", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> updateMonth(@RequestParam("projid") Integer projid, @RequestParam("monthid") Integer monthid) {
