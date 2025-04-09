@@ -13,8 +13,10 @@ $(function() {
 			success: function(data) {
 				
 				$('#listvillageGPWiseTbody').empty();
-				$('#listvillageGPWiseTbody').append('<tr id="tr"><td>Name of NGO &nbsp; <input type="text" class="name_ngo form-control" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp; <select id="ddlvill" name="ddlvill" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td> </tr>');
-								
+				
+				$('#listvillageGPWiseTbody').append('<tr id="tr"><td>Name of NGO &nbsp; <input type="text" class="name_ngo form-control" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp; <select id="ddlvill" name="ddlvill" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td> <td style="vertical-align: bottom;"> <button type="button" class="btn btn-success btnAddRow">+</button></td></tr>');
+					
+				
 				$selectedDist = $('#district').val();
 				$ddlDistrict = $('#projid');
 				$ddlDistrict.empty();
@@ -67,7 +69,7 @@ $(function() {
 					console.log(data);
 
 					$('#listvillageGPWiseTbody').empty();
-					$('#listvillageGPWiseTbody').append('<tr id="tr"><td>Name of NGO &nbsp; <input type="text" class="name_ngo form-control" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp; <select id="ddlvill" name="ddlvill" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td> </tr>');
+					$('#listvillageGPWiseTbody').append('<tr id="tr"><td>Name of NGO &nbsp; <input type="text" class="name_ngo form-control" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp; <select id="ddlvill" name="ddlvill" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td> <td style="vertical-align: bottom;"> <button type="button" class="btn btn-success btnAddRow">+</button></td></tr>');
 								
 				
 					if(Object.keys(data).length>0)
@@ -96,42 +98,31 @@ $(function() {
 				            console.log(er);
 				        },
 				        success: function(data) {
-				//console.log(data);
-				$('#loading').hide();
-				var i = $('#listvillageGPWiseTbody tr').length ;
-				if(i>1)
-				for(var x=0;x<parseInt(i);x++){
-					if(x==0){
-						var $head = $('#ddlgp');
-						$head.empty();
-				    	$head.append('<option value="">--Select Gram Panchayat--</option>');
-						for ( var key in data) {
-							if (data.hasOwnProperty(key)) {
-								$head.append('<option value='+key+'>' +data[key] + '</option>');
-							}
-						}
-					}else{
-						var $head = $('#ddlgp'+x);
-						$head.empty();
-				    	$head.append('<option value="">--Select Gram Panchayat--</option>');
-						for ( var key in data) {
-							if (data.hasOwnProperty(key)) {
-								$head.append('<option value='+key+'>' +data[key] + '</option>');
-							}
-						}
-					}
-				}else{
-				var $head = $('#ddlgp');
-						$head.empty();
-				    	$head.append('<option value="">--Select Gram Panchayat--</option>');
-						for ( var key in data) {
-							if (data.hasOwnProperty(key)) {
-								$head.append('<option value='+key+'>' +data[key] + '</option>');
-							}
-						}	
-				}
+    $('#loading').hide();
+    var i = $('#listvillageGPWiseTbody tr').length;
 
-				}
+    // Populate ddlgp in each row
+    for (var x = 0; x < i; x++) {
+        var $head = (x === 0) ? $('#ddlgp') : $('#ddlgp' + x);
+        $head.empty();
+        $head.append('<option value="">--Select Gram Panchayat--</option>');
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                $head.append('<option value="'+key+'">'+data[key]+'</option>');
+            }
+        }
+    }
+
+    // Also populate swckgp
+    var $swckgp = $('#swckgp');
+    $swckgp.empty();
+    $swckgp.append('<option value="">--Select Gram Panchayat--</option>');
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            $swckgp.append('<option value="'+key+'">'+data[key]+'</option>');
+        }
+    }
+}
 				});
 	});			
 				
@@ -139,10 +130,32 @@ $(function() {
 		$("#listvillageGPWiseTbody").on('click','.ddlgp',function () { 
 				//$('#loading').show();
 				$projectId = $('#projid option:selected').val();
+				var $this = $(this);
 				var gCode=[];
+				
+				var selectedOptions = $this.find("option:selected");
+
+                gCode = selectedOptions.map(function () {
+                 return $(this).val();
+                }).get();
+
+                var gpNames = selectedOptions.map(function () {
+                 return $(this).text();
+                 }).get().join(", ");
+
+                var $td = $this.closest('td');
+
+                $td.find('.selected-gp-list').remove();
+
+                $td.append(
+                     '<div class="selected-gp-list" style="margin-top: 5px; font-size: 14px; color: #333;">' +
+                     '<strong>Selected Gram Panchayat:</strong> ' + gpNames +
+                     '</div>'
+                        );
+    
 				var id = $(this).attr('id'); 
 				id=id.substring(id.lastIndexOf("p")+1,id.length);
-				gCode.push($(this).val());
+				//gCode.push($(this).val());
 			//	$('#name_ngo'+id).val("");
 			//	alert(id);
 				
@@ -169,52 +182,72 @@ $(function() {
 				});
 				});			
 				
-				
-				var scntDiv = $('#listvillageGPWiseTbody');
-				var i=0;
-				i = $('#listvillageGPWiseTbody tr').length ;
-				var j = 1;
-				var arr = [];
+	$("#listvillageGPWiseTbody").on('change', '.ddlvill', function () {
+    var $this = $(this);
+    var selectedOptions = $this.find("option:selected");
 
-				$('#btnAdd').click(function(e) {
-					$projectId = $('#projid option:selected').val();
-					arr[0] ='';
-					arr[j] =i;
-					j++;
-				    scntDiv.append('<tr id="tr'+i+'"><td>Name of NGO &nbsp; <input type="text" class="name_ngo form-control" name="name_ngo'+i+'" id="name_ngo'+i+'" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp; <select id="ddlgp'+i+'" name="ddlgp'+i+'" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp; <select id="ddlvill'+i+'" name="ddlvill'+i+'" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td> </tr>');   
-				
-				if($('#projid option:selected').val()!==''){
-				$.ajax({  
-				            url:"getGPofJanbhagidariPratiyogita",
-				            type: "post",  
-				            data: {project:$projectId},
-				            error:function(xhr,status,er){
-				                console.log(er);
-				            },
-				            success: function(data) {
-					console.log(data);
-					var $head = $('#ddlgp'+i);
-										$head.empty();
-				        				$head.append('<option value="">--Select Gram Panchayat--</option>');
-										 for ( var key in data) {
-										                    if (data.hasOwnProperty(key)) {
-										                       $head.append('<option value='+key+'>' +data[key] + '</option>');
-										                    }
-										                }
-				i=i+1;
-					}
-					});	
-				}
-				else{
-					i=1;
-				}
+    var villageNames = selectedOptions.map(function () {
+        return $(this).text();
+    }).get().join(", ");
 
-					
-				e.preventDefault();
-				    return false;
-				});			
-				
-				
+     var $td = $this.closest('td');
+    $td.find('.selected-village-list').remove();
+
+    $td.append(
+        '<div class="selected-village-list" style="margin-top: 5px; font-size: 14px; color: #333;">' +
+        '<strong>Selected Villages:</strong> ' + villageNames +
+        '</div>'
+    );
+});
+
+var scntDiv = $('#listvillageGPWiseTbody');
+var i = $('#listvillageGPWiseTbody tr').length;
+var j = 1;
+var arr = [];
+
+$(document).on('click', '.btnAddRow', function(e) {
+  e.preventDefault();
+  var $projectId = $('#projid').val();
+  arr[0] = '';
+  arr[j] = i;
+  j++;
+
+  let newRow = `<tr id="tr${i}"><td>Name of NGO &nbsp;<input type="text" class="name_ngo form-control" name="name_ngo${i}" id="name_ngo${i}" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp;<select id="ddlgp${i}" name="ddlgp${i}" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp;<select id="ddlvill${i}" name="ddlvill${i}" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td><td style="vertical-align: bottom;"><button type="button" class="btn btn-danger btn-sm btnRemoveRow">−</button></td></tr>`;
+
+  scntDiv.append(newRow);
+
+  // Load Gram Panchayat options for new row
+  if ($projectId !== '') {
+    $.ajax({
+      url: "getGPofJanbhagidariPratiyogita",
+      type: "post",
+      data: { project: $projectId },
+      error: function (xhr, status, er) {
+        console.log(er);
+      },
+      success: function (data) {
+        var $head = $('#ddlgp' + i);
+        $head.empty();
+        $head.append('<option value="">--Select Gram Panchayat--</option>');
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            $head.append('<option value=' + key + '>' + data[key] + '</option>');
+          }
+        }
+        i++;
+      }
+    });
+  } else {
+    i++;
+  }
+  
+});
+
+// Remove Row
+$(document).on('click', '.btnRemoveRow', function () {
+  $(this).closest('tr').remove();
+  updateSummaryStats();
+});
 				
 			
 			
@@ -222,8 +255,8 @@ $(function() {
 				e.preventDefault();
 				$dcode = $('#district option:selected').val();
 				$projectId = $('#projid option:selected').val();
-				$datein = $('#datein').val();
-				$datecom = $('#datecom').val();
+				/*$datein = $('#datein').val();
+				$datecom = $('#datecom').val();*/
 				$nogp = $('#nogp').val();
 				$novillage = $('#novillage').val();
 				$projarea = $('#projarea').val();
@@ -238,7 +271,7 @@ $(function() {
 				var vill = [];
 
 				
-				if ($datein === '' || typeof $datein === 'undefined') {
+				/*if ($datein === '' || typeof $datein === 'undefined') {
 						alert('Please select project inception date');
 						$('#datein').focus();
 						allValid = false;
@@ -249,7 +282,7 @@ $(function() {
 						$('#datecom').focus();
 						allValid = false;
 						return false;
-				}
+				}*/
 					
 				if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
 						alert('Please select District');
@@ -386,7 +419,7 @@ $(function() {
 				$.ajax({  
 			            url:"saveJanbhagidariPratiyogita",
 			            type: "post",  
-			            data: {vill:vill.toString(), ngoname:ngoname.toString(), dcode:$dcode, proj:$projectId, datein:$datein, datecom:$datecom, nogp:$nogp, novillage:$novillage, projarea:$projarea, projoutlay:$projoutlay, funoutlay:$funoutlay, projexp:$projexp, expper:$expper, bank:$bank},
+			            data: {vill:vill.toString(), ngoname:ngoname.toString(), dcode:$dcode, proj:$projectId, nogp:$nogp, novillage:$novillage, projarea:$projarea, projoutlay:$projoutlay, funoutlay:$funoutlay, projexp:$projexp, expper:$expper, bank:$bank},
 			            error:function(xhr,status,er){
 			                console.log(er);
 			            },
@@ -398,7 +431,7 @@ $(function() {
 						}
 						else if(data==='duplicate'){
 							
-							alert('You have Enter Duplicate NGO Name, NGO Alredy Exist for This Project');
+							alert('You have Alredy Entered NGO Name for This Project');
 							window.location.href='janbhagidariPratiyogita';
 						}
 						else{
@@ -413,15 +446,7 @@ $(function() {
 				});
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-
+	
 			$('#chkSelectAllkd').on('click',function(){
 					$chkValue=0;
 					if(this.checked)
@@ -556,5 +581,42 @@ $(function() {
 					}*/
 					
 				});			
-	
+	$("#listvillageGPWiseTbody").on('input', '.name_ngo', function () {
+    updateSummaryStats();
+});
+
+$("#listvillageGPWiseTbody").on('change', '.ddlgp', function () {
+    updateSummaryStats();
+});
+
+$("#listvillageGPWiseTbody").on('change', '.ddlvill', function () {
+    updateSummaryStats();
+});
 });	
+
+function updateSummaryStats() {
+    // 1. Count NGOs
+    var ngoCount = 0;
+    $('.name_ngo').each(function() {
+        if ($(this).val().trim() !== '') {
+            ngoCount++;
+        }
+    });
+
+    // 2. Count Gram Panchayats
+    var gpCount = 0;
+    $('.ddlgp').each(function() {
+        gpCount += $(this).find('option:selected').length;
+    });
+
+    // 3. Count Villages
+    var villCount = 0;
+    $('.ddlvill').each(function() {
+        villCount += $(this).find('option:selected').length;
+    });
+
+    // Set the values in summary fields
+    $('#ngoCount').val(ngoCount);
+    $('#gpCount').val(gpCount);
+    $('#villCount').val(villCount);
+}

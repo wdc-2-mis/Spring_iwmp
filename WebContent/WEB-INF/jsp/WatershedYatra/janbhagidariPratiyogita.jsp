@@ -277,7 +277,7 @@ display: none; /* Hidden by default */
     			
     		</div>
     		
-    		<div class="form-group col-3">
+    		<!-- <div class="form-group col-3">
     			
       		  <label for="date">Project Inception Date: </label>
       		  <input type="date" name="datein" id="datein" class="form-control activity" style="width: 100%;" />
@@ -289,7 +289,8 @@ display: none; /* Hidden by default */
       		  <label for="date">Proposed Project Completion Date: </label>
       		  <input type="date" name="datecom" id="datecom" class="form-control activity" style="width: 100%;" />
        		 
-    		</div>
+    		</div> -->
+    		
     		
     		</div>
      		<div class="form-row">
@@ -325,11 +326,13 @@ display: none; /* Hidden by default */
      	</table>
      	<table id = "tblReport" class = "table">
      	<tr>
-     		<th colspan=3 class="text-left">B. Preparatory Work</th>
+     		<th colspan=4 class="text-left">B. Preparatory Work</th>
+     		
      	</tr>
      	
      	<tr>
      		<td colspan=3>1. Identification & Engagement of NGOs:</td>
+     		<td>Action</td>
      	</tr>
      	<!-- <tr>
      		<td>1.1 Name of NGOs</td>
@@ -370,31 +373,49 @@ display: none; /* Hidden by default */
      		<td>Name of NGO &nbsp; <input type="text" class="form-control activity" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td>
      		<td>
      			Name of Gram Panchyat to be Covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select>
+			<div class="selected-gp-list" style="margin-top: 5px; font-size: 14px; color: #333;"></div>
 			</td>
 			
 			<td>
 				Name of Villages to be Covered by NGO &nbsp; <select id="ddlvill" name="ddlvill" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select>
+			<div class="selected-village-list" style="margin-top: 5px; font-size: 14px; color: #333;"></div>
 			</td>
+			
+			 <td style="vertical-align: bottom;">
+                <button type="button" class="btn btn-success btnAddRow">+</button>
+            </td>
      	</tr>
      	</tbody>
      	<tr>
-     		<td colspan=3 align="left"><button id="btnAdd" name="btnAdd" class="btnAdd btn btn-info">Add New Row</button></td>
+    <td colspan="4">
+        <div style="margin-top: 10px;">
+            <label>No of NGOs: </label>
+            <input type="text" id="ngoCount" readonly style="width: 50px; margin-right: 20px;" />
+
+            <label>No of Gram Panchayats: </label>
+            <input type="text" id="gpCount" readonly style="width: 50px; margin-right: 20px;" />
+
+            <label>No of Villages: </label>
+            <input type="text" id="villCount" readonly style="width: 50px;" />
+        </div>
+    </td>
+</tr>
+
+     	<tr>
+     		<td colspan=4></td>
      	</tr>
      	
      	<tr>
-     		<td colspan=3></td>
-     	</tr>
-     	
-     	<tr>
-     		<td colspan=3>2. Opening of SWC Kosh Bank Account at Gram Panchayat Level:</td>
+     		<td colspan=4>2. Opening of SWCK Account at Gram Panchayat /Watershed Committee Level in Nationalized Bank:</td>
+     		
      	</tr>
      	
      	
      	
      	<tr>
-     		<td>2.1 Account is Opened in a Nationalized Bank</td>
-     		<td><input type="radio" id="bankYes" name="bank" value="true" autocomplete="off"  />Yes <br/>
-     		<input type="radio" id="bankNo" name="bank" value="false" autocomplete="off" />No </td>
+     		<td>2.1 Selection of Gram Panchayat where SWCK Account Opened</td>
+     		<td><select id="swckgp" name="swckgp" class="swckgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td>
+     		<td colspan=2> </td>
      		
      	</tr>
      </table>
@@ -403,12 +424,12 @@ display: none; /* Hidden by default */
      		<th colspan=2 class="text-left">C. Fund Utilization under WDC-PMKSY2.0</th>
      	</tr>
      	<tr>
-     		<td>Total Project Outlay</td>
+     		<td>Total Project Outlay of WDC-PMKSY 2.0</td>
      		<td><input type="text" id="funoutlay" name="funoutlay" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td>Total Project Expenditure</td>
+     		<td>Total Project Expenditure of WDC-PMKSY 2.0</td>
      		<td><input type="text" id="projexp" name="projexp" autocomplete="off"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
      	</tr>

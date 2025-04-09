@@ -9,8 +9,9 @@ public class JanbhagidariPratiyogitaBean {
 	
 	private int district;
 	private int projid;
-	private String datein;
-	private String datecom;
+	/*
+	 * private String datein; private String datecom;
+	 */
 	private int nogp;
 	private int novillage;
 	private String projarea;
@@ -73,18 +74,12 @@ public class JanbhagidariPratiyogitaBean {
 	public void setProjid(int projid) {
 		this.projid = projid;
 	}
-	public String getDatein() {
-		return datein;
-	}
-	public void setDatein(String datein) {
-		this.datein = datein;
-	}
-	public String getDatecom() {
-		return datecom;
-	}
-	public void setDatecom(String datecom) {
-		this.datecom = datecom;
-	}
+
+	/*
+	 * public String getDatein() { return datein; } public void setDatein(String
+	 * datein) { this.datein = datein; } public String getDatecom() { return
+	 * datecom; } public void setDatecom(String datecom) { this.datecom = datecom; }
+	 */
 	public int getNogp() {
 		return nogp;
 	}
