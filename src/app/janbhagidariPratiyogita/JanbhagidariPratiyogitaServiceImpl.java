@@ -107,4 +107,22 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		return dao.getExistingProjectCodes(pCode);
 	}
 
+
+
+
+	@Override
+	public Integer getTotalNoofGP(Integer dCode) {
+		// TODO Auto-generated method stub
+		return dao.getTotalNoofGP(dCode);
+	}
+
+
+
+
+	@Override
+	public Integer getTotalNoofVill(Integer dCode) {
+		// TODO Auto-generated method stub
+		return dao.getTotalNoofVill(dCode);
+	}
+
 }

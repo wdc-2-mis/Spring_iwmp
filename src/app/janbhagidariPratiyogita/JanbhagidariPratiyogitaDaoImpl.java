@@ -477,4 +477,56 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		  return data;
 	}
 
+	@Override
+	public Integer getTotalNoofGP(Integer dCode) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		Integer data=0;
+		try {
+			session.beginTransaction();
+			List<Integer> list = session.createSQLQuery("select cast(count(distinct gcode) as integer) from iwmp_gram_panchayat where bcode in(select bcode from iwmp_block where dcode=:distcode)").setInteger("distcode", dCode).list();
+			data=Integer.parseInt(list.get(0).toString());
+		} 
+		catch (HibernateException e) {
+		    System.err.print("Hibernate error");
+		    e.printStackTrace();
+		    session.getTransaction().rollback();
+		} 
+		catch (Exception ex) {
+	    session.getTransaction().rollback();
+	    ex.printStackTrace();
+	  }
+	  finally {
+		  session.getTransaction().commit();
+	  }
+	  return data;
+	}
+
+	@Override
+	public Integer getTotalNoofVill(Integer dCode) {
+		
+		Session session = sessionFactory.getCurrentSession();
+			
+			Integer data=0;
+			try {
+				session.beginTransaction();
+				List<Integer> list = session.createSQLQuery("select cast(count(distinct vcode) as integer) from iwmp_village where gcode in (select gcode  from iwmp_gram_panchayat where bcode in(select bcode from iwmp_block where dcode=:distcode))").setInteger("distcode", dCode).list();
+				data=Integer.parseInt(list.get(0).toString());
+			} 
+			catch (HibernateException e) {
+			    System.err.print("Hibernate error");
+			    e.printStackTrace();
+			    session.getTransaction().rollback();
+			} 
+			catch (Exception ex) {
+		    session.getTransaction().rollback();
+		    ex.printStackTrace();
+		  }
+		  finally {
+			  session.getTransaction().commit();
+		  }
+		  return data;
+	}
+
 }

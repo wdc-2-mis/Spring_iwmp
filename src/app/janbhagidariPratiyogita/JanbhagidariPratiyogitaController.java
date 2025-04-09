@@ -279,5 +279,19 @@ public class JanbhagidariPratiyogitaController {
 	public String getExistingProjectCodes( HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="pCode") Integer pCode ) {
 	  return serk.getExistingProjectCodes(pCode);
 	}
+	
+	@RequestMapping(value = "/getTotalNoofGP", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer getTotalNoofGP( HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(value ="dCode") Integer dCode) {
+	  return serk.getTotalNoofGP(dCode);
+	}
+	
+	@RequestMapping(value = "/getTotalNoofVill", method = RequestMethod.POST)
+	@ResponseBody
+	public Integer getTotalNoofVill( HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(value ="dCode") Integer dCode) {
+	  return serk.getTotalNoofVill(dCode);
+	}
 
 }

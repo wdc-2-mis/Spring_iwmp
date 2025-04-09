@@ -27,5 +27,9 @@ public interface JanbhagidariPratiyogitaDao {
 	LinkedHashMap<Integer, String> getVILLofJanbhagidariPratiyogita(List<Integer> gcode, Integer projectid);
 	
 	String getExistingProjectCodes(Integer pCode);
+	
+	Integer getTotalNoofGP(Integer dCode);
+	
+	Integer getTotalNoofVill(Integer dCode);
 
 }

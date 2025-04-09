@@ -34,9 +34,9 @@ $(function() {
 	
 	$(document).on( 'change', '#projid', function (e) {
 			e.preventDefault();
-			$projectId = $('#projid').val();
+			$projectId = $('#projid option:selected').val();
 			
-					$.ajax({
+				/*	$.ajax({
 						    url: "getExistingProjectCodes",
 						    type: "post",
 						    data: {pCode: $projectId},
@@ -53,7 +53,7 @@ $(function() {
 								}
 											
 						    }
-						  });
+						  });   */
 
 			
 				$.ajax({  
@@ -138,7 +138,7 @@ $(function() {
 				
 		$("#listvillageGPWiseTbody").on('click','.ddlgp',function () { 
 				//$('#loading').show();
-				$projectId = $('#projid').val();
+				$projectId = $('#projid option:selected').val();
 				var gCode=[];
 				var id = $(this).attr('id'); 
 				id=id.substring(id.lastIndexOf("p")+1,id.length);
@@ -177,7 +177,7 @@ $(function() {
 				var arr = [];
 
 				$('#btnAdd').click(function(e) {
-					$projectId = $('#projid').val();
+					$projectId = $('#projid option:selected').val();
 					arr[0] ='';
 					arr[j] =i;
 					j++;
@@ -221,7 +221,7 @@ $(function() {
 			$(document).on('click', '#saveAsDraft', function(e){
 				e.preventDefault();
 				$dcode = $('#district option:selected').val();
-				$projectId = $('#projid').val();
+				$projectId = $('#projid option:selected').val();
 				$datein = $('#datein').val();
 				$datecom = $('#datecom').val();
 				$nogp = $('#nogp').val();

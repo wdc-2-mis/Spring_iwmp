@@ -30,6 +30,51 @@ function getMultipleSelectedValue()
   document.getElementById("projectselect").innerHTML=selectedText;
  
 }
+
+function myOverNoGP(e) { 
+	
+	$dCode = $('#district option:selected').val();
+	$nogp = $('#nogp').val();
+		$.ajax({
+			url: "getTotalNoofGP",
+			type: "post",
+			data: {dCode: $dCode },
+			error: function(xhr, status, er) {
+					   console.log(er);
+			},
+			success: function(data) 
+			{
+					if(data < $nogp)
+					{
+								alert('Total No. of Gram Panchayat is more then You have Enter');
+								$('#nogp').val('');
+					}
+			}
+	});
+}
+
+function myOverNoVill(e) { 
+	
+	$dCode = $('#district option:selected').val();
+	$novillage = $('#novillage').val();
+		$.ajax({
+			url: "getTotalNoofVill",
+			type: "post",
+			data: {dCode: $dCode },
+			error: function(xhr, status, er) {
+					   console.log(er);
+			},
+			success: function(data) 
+			{
+					if(data < $novillage)
+					{
+								alert('Total No. of Village is more then You have Enter');
+								$('#novillage').val('');
+					}
+			}
+	});
+}
+
 	
 </script>
 
@@ -256,12 +301,12 @@ display: none; /* Hidden by default */
      	</tr>
      	<tr>
      		<td>Total No. of Gram Panchayat</td>
-     		<td><input type="text" id="nogp" name="nogp" autocomplete="off"
+     		<td><input type="text" id="nogp" name="nogp" autocomplete="off"  onblur="myOverNoGP(this)"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Total No. of Villages</td>
-     		<td><input type="text" id="novillage" name="novillage" autocomplete="off"
+     		<td><input type="text" id="novillage" name="novillage" autocomplete="off" onblur="myOverNoVill(this)"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
