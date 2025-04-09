@@ -45,6 +45,7 @@ import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.service.DistrictMasterService;
 import app.service.PhysicalActionPlanService;
 import app.service.ProfileService;
+import app.watershedyatra.service.WatershedYatraService;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
 import app.projectevaluation.model.WdcpmksyCroppedDetails3;
@@ -69,6 +70,9 @@ public class ProjectEvaluationController {
 	@Autowired
 	ProfileService profileService;
 	
+	@Autowired
+	WatershedYatraService ser;
+	
 	private Map<Integer, String> projectList;
 	private Map<Integer, String> monthList;
 
@@ -86,7 +90,7 @@ public class ProjectEvaluationController {
 		if(session!=null && session.getAttribute("loginID")!=null) {
 			Integer stcode = Integer.parseInt(session.getAttribute("stateCode").toString());
 			mav = new ModelAndView("projectEvaluation/profilestart");
-			mav.addObject("districtList", districtMasterService.getDistrictByStateCodeWithDcode(stcode));
+			mav.addObject("districtList", ser.getDistrictList(stcode));
 			mav.addObject("finYear", PEService.getCurrentFinYear());
 			monthList = PEService.getmonthforproject();
 			mav.addObject("monthList", monthList);

@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaSWCKAccount;
 import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.RoutePlanVanTravel;
 import app.watershedyatra.model.WatershedYatVill;
@@ -50,6 +51,8 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 	private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
 	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
+	private Set<JanbhagidariPratiyogitaSWCKAccount> janbhagidariPratiyogitaSWCKAccount = new HashSet<JanbhagidariPratiyogitaSWCKAccount>(0);
+	
 	
 	@Transient
 	private boolean updatestatus;
@@ -249,6 +252,16 @@ public class IwmpGramPanchayat implements java.io.Serializable {
 
 	public void setPreYatraPreparation(Set<PreYatraPreparation> preYatraPreparation) {
 		this.preYatraPreparation = preYatraPreparation;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpGramPanchayat")
+	public Set<JanbhagidariPratiyogitaSWCKAccount> getJanbhagidariPratiyogitaSWCKAccount() {
+		return janbhagidariPratiyogitaSWCKAccount;
+	}
+
+	public void setJanbhagidariPratiyogitaSWCKAccount(
+			Set<JanbhagidariPratiyogitaSWCKAccount> janbhagidariPratiyogitaSWCKAccount) {
+		this.janbhagidariPratiyogitaSWCKAccount = janbhagidariPratiyogitaSWCKAccount;
 	}
     
     

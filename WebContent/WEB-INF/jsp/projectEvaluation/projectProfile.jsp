@@ -162,6 +162,26 @@ function validateInput(event) {
     } else {
         hasError = false; 
     }
+     
+     
+    var dCode = document.getElementById('dcode').value;
+ 	$novillage = $('#villageC').val();
+ 		$.ajax({
+ 			url: "getTotalNoofVill",
+ 			type: "post",
+ 			data: {dCode: dCode },
+ 			error: function(xhr, status, er) {
+ 					   console.log(er);
+ 			},
+ 			success: function(data) 
+ 			{
+ 					if(data < $novillage)
+ 					{
+ 								alert('Total No. of Village is more then You have Enter');
+ 								$('#villageC').val('');
+ 					}
+ 			}
+ 	});
 }
 
 
