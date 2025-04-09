@@ -366,7 +366,22 @@ $(function() {
 								vill.push(selectedVillages.join("#"));
 						}
 					}
+					
+				//	const lowerCaseNames = ngoname.map(item => item.toLowerCase());
+				//	const duplicates = ngoname.filter((item, index) => lowerCaseNames.indexOf(item.toLowerCase()) !== index);
+				//	console.log(duplicates); // ["apple"]
+					
+					const duplicateCheck = ngoname.reduce((acc, item) => {
+					    const lowerItem = item.toLowerCase();
+					    acc[lowerItem] = (acc[lowerItem] || 0) + 1;
+					    return acc;
+					}, {});
 
+					const duplicates = Object.keys(duplicateCheck).filter(key => duplicateCheck[key] > 1);
+					if (duplicates.length >0){
+						alert('You have Enter Duplicate NGO Name');
+					return false;
+					}
 			
 				$.ajax({  
 			            url:"saveJanbhagidariPratiyogita",
@@ -377,14 +392,19 @@ $(function() {
 			            },
 				success: function(data) {
 					$('#loading').hide();
-					if(data==='success'){
-						alert('Saved As Draft Successfully');
-						window.location.href='janbhagidariPratiyogita';
+						if(data==='success'){
+							alert('Saved As Draft Successfully');
+							window.location.href='janbhagidariPratiyogita';
 						}
-					else{
-						alert('There is some Problem while Saving Data..');
-						window.location.href='janbhagidariPratiyogita';
-					}
+						else if(data==='duplicate'){
+							
+							alert('You have Enter Duplicate NGO Name, NGO Alredy Exist for This Project');
+							window.location.href='janbhagidariPratiyogita';
+						}
+						else{
+							alert('Data Not Saved');
+							window.location.href='janbhagidariPratiyogita';
+						}
 					}
 				});
 				

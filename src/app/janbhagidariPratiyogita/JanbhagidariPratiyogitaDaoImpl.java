@@ -124,7 +124,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String bank, HttpSession session) {
 		
 		Session sess = sessionFactory.getCurrentSession();
-		
+		String datach="fail";
 		String res = "fail";
 		try {
 			sess.beginTransaction();
@@ -139,8 +139,22 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			JanbhagidariPratiyogitaNgoname ngon= new JanbhagidariPratiyogitaNgoname();
 			JanbhagidariPratiyogitaNgovillage ngovill= new JanbhagidariPratiyogitaNgovillage();
 			IwmpVillage v=new IwmpVillage();
-			
 			IwmpState s= new IwmpState();
+			
+			List<String> list = sess.createQuery("SELECT UPPER(ngo_name) FROM JanbhagidariPratiyogitaNgoname where janbhagidariPratiyogita.iwmpMProject.projectId=:prCode").setInteger("prCode", proj).list();
+			for (String ngosn : list) {
+				for (int i = 0; i < ngoname.size(); i++) 
+				{
+					if(ngosn.equalsIgnoreCase(ngoname.get(i).toUpperCase())) {
+						
+						datach="success";
+					}
+				}
+			}
+			
+			
+			
+			
 			s.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
 			IwmpDistrict d= new IwmpDistrict();
 			d.setDcode(dcode);
@@ -166,6 +180,8 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			data.setUpdatedDate(new Timestamp(new java.util.Date().getTime()));
 			data.setRequestedIp(ipAddr);
 			data.setStatus('D');
+			
+			if(datach.equals("fail")) {
 			
 			sess.save(data);
 			
@@ -206,7 +222,10 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			
 			res = "success";
 			sess.getTransaction().commit();
-			
+			}
+			else {
+				res = "duplicate";
+			}
 		}
 		catch (Exception ex) {
 			res = "fail";

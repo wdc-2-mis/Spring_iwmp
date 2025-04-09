@@ -135,7 +135,7 @@ public class WatershedYatraController {
 	}
 
 
-@RequestMapping(value = "/getImageWatershedYatraId", method = RequestMethod.POST)
+	@RequestMapping(value = "/getImageWatershedYatraId", method = RequestMethod.POST)
 	@ResponseBody
 	public List<String> getImageWatershedYatraId(HttpServletRequest request, HttpServletResponse response, 
 			@RequestParam("watershedYatraId") Integer watershedYatraId){

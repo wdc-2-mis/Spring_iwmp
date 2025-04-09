@@ -195,9 +195,9 @@ public class UploadDetailsforSLNA {
 			// MultipartFile mf=userfileup.getTheFile();
 			fname = "WDC-PMKSY_file_" + "00" + max_id;
 
-		//	String filePath = "E:\\CircularMessageAlert\\";
+			String filePath = "E:\\CircularMessageAlert\\";
 
-			String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/";
+		//	String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/CircularMessageAlert/";
 			//String filePath = "/usr/local/tomcat9/webapps/TESTING/CircularMessageAlert/";
 
 		//String filePath = "/usr/local/tomcat9/webapps/PRD/CircularMessageAlert/";

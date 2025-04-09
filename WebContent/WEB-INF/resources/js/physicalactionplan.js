@@ -407,6 +407,7 @@ $('.error').html("Physical Annual Action Plan has been completed. For project "+
 	$('#txtTarget'+id).val("");
 	var $unit = $('#ddlUnit'+id);
 	$unit.val('');
+	alert('kdy');
 		//$unit.empty();
        // $unit.append('<option value="">--Select Unit--</option>');
 		$.ajax({  
