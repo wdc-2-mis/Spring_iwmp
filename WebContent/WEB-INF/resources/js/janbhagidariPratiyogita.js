@@ -432,16 +432,18 @@ $(document).on('click', '.btnRemoveRow', function () {
 				//	console.log(duplicates); // ["apple"]
 					
 					const duplicateCheck = ngoname.reduce((acc, item) => {
-					    const lowerItem = item.toLowerCase();
-					    acc[lowerItem] = (acc[lowerItem] || 0) + 1;
-					    return acc;
-					}, {});
+                     if (typeof item === 'string' && item.trim() !== '') {
+                   const lowerItem = item.toLowerCase();
+                    acc[lowerItem] = (acc[lowerItem] || 0) + 1;
+                     }
+                    return acc;
+                     }, {});
 
-					const duplicates = Object.keys(duplicateCheck).filter(key => duplicateCheck[key] > 1);
-					if (duplicates.length >0){
-						alert('You have Enter Duplicate NGO Name');
-					return false;
-					}
+                    const duplicates = Object.keys(duplicateCheck).filter(key => duplicateCheck[key] > 1);
+                    if (duplicates.length > 0) {
+                        alert('You have entered duplicate NGO name(s): ' + duplicates.join(', '));
+                     return false;
+                         }
 			
 				$.ajax({  
 			            url:"saveJanbhagidariPratiyogita",
