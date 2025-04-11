@@ -200,6 +200,23 @@ $(function() {
     );
 });
 
+
+$(document).on('change', '#swckgp', function () {
+	var selected = [];
+    $('#swckgp option:selected').each(function () {
+        if ($(this).val() !== '') {
+            selected.push($(this).text());
+        }
+    });
+
+    $('.selected-swckgp-list').html(
+        selected.length > 0
+            ? '<strong>Selected GP(s):</strong> ' + selected.join(', ')
+            : ''
+    );
+	});
+	
+	
 var scntDiv = $('#listvillageGPWiseTbody');
 var i = $('#listvillageGPWiseTbody tr').length;
 var j = 1;
@@ -269,7 +286,7 @@ $(document).on('click', '.btnRemoveRow', function () {
 				
 				var ngoname = [];
 				var vill = [];
-
+                var swckgp = null;
 				
 				/*if ($datein === '' || typeof $datein === 'undefined') {
 						alert('Please select project inception date');
@@ -322,7 +339,12 @@ $(document).on('click', '.btnRemoveRow', function () {
 						allValid = false;
 						return false;
 					}
-					
+					if($('#swckgp').val()==""){
+								alert('Please select SWCK Account at Gram Panchayat /Watershed Committee Level in Nationalized Bank');
+								$('#swckgp').focus();
+								return false;
+							}
+							
 					if ($funoutlay === '' || typeof $funoutlay === 'undefined') {
 						alert('Please Enter Total Project Outlay');
 						$('#funoutlay').focus();
@@ -341,12 +363,12 @@ $(document).on('click', '.btnRemoveRow', function () {
 						allValid = false;
 						return false;
 					}	
-					if ($bank === '' || typeof $bank === 'undefined') {
+					/*if ($bank === '' || typeof $bank === 'undefined') {
 						alert('Please select account is opened in a nationalized bank');
 						$('input[name="bank"]').first().focus();
 						allValid = false;
 						return false;
-					}
+					}*/
 					var i = $('#listvillageGPWiseTbody tr').length;
 					for (var j = 0; j < i; j++) {
 						if (j == 0) {
@@ -379,6 +401,8 @@ $(document).on('click', '.btnRemoveRow', function () {
 						}
 					}
 					
+					
+							
 					for (var j = 0; j < i; j++) {
 						if (j == 0) {
 								ngoname.push($('#name_ngo').val());
@@ -400,6 +424,9 @@ $(document).on('click', '.btnRemoveRow', function () {
 						}
 					}
 					
+					 swckgp = $('#swckgp').val().join(',');
+					
+					
 				//	const lowerCaseNames = ngoname.map(item => item.toLowerCase());
 				//	const duplicates = ngoname.filter((item, index) => lowerCaseNames.indexOf(item.toLowerCase()) !== index);
 				//	console.log(duplicates); // ["apple"]
@@ -419,7 +446,7 @@ $(document).on('click', '.btnRemoveRow', function () {
 				$.ajax({  
 			            url:"saveJanbhagidariPratiyogita",
 			            type: "post",  
-			            data: {vill:vill.toString(), ngoname:ngoname.toString(), dcode:$dcode, proj:$projectId, nogp:$nogp, novillage:$novillage, projarea:$projarea, projoutlay:$projoutlay, funoutlay:$funoutlay, projexp:$projexp, expper:$expper, bank:$bank},
+			            data: {vill:vill.toString(), ngoname:ngoname.toString(), dcode:$dcode, proj:$projectId, nogp:$nogp, novillage:$novillage, projarea:$projarea, projoutlay:$projoutlay, funoutlay:$funoutlay, projexp:$projexp, expper:$expper, swckgp:swckgp},
 			            error:function(xhr,status,er){
 			                console.log(er);
 			            },
@@ -432,7 +459,7 @@ $(document).on('click', '.btnRemoveRow', function () {
 						else if(data==='duplicate'){
 							
 							alert('You have Alredy Entered NGO Name for This Project');
-							window.location.href='janbhagidariPratiyogita';
+							//window.location.href='janbhagidariPratiyogita';
 						}
 						else{
 							alert('Data Not Saved');

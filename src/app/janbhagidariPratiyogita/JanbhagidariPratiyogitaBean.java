@@ -19,7 +19,7 @@ public class JanbhagidariPratiyogitaBean {
 	private String ngo_name;
 	private int no_gp_ngo;
 	private int no_vill_ngo;
-	private String bank;
+	/* private String bank; */
 	private int funoutlay;
 	private String projexp;
 	private String expper;
@@ -34,7 +34,11 @@ public class JanbhagidariPratiyogitaBean {
 	private String gpname;
 	private int vcode;
 	private String villname;
-	
+	private String swckgp;
+	private String swck_gp_names;
+	private String ngo_names;
+	private String gpnames;
+	private String villnames;
 	
 	public String getProject() {
 		return project;
@@ -136,12 +140,11 @@ public class JanbhagidariPratiyogitaBean {
 	public void setExpper(String expper) {
 		this.expper = expper;
 	}
-	public String getBank() {
-		return bank;
-	}
-	public void setBank(String bank) {
-		this.bank = bank;
-	}
+
+	/*
+	 * public String getBank() { return bank; } public void setBank(String bank) {
+	 * this.bank = bank; }
+	 */
 	public int getPratiyogita_id() {
 		return pratiyogita_id;
 	}
@@ -208,10 +211,36 @@ public class JanbhagidariPratiyogitaBean {
 	public void setVillname(String villname) {
 		this.villname = villname;
 	}
-	
-	
-	
-	
+	public String getSwckgp() {
+		return swckgp;
+	}
+	public void setSwckgp(String swckgp) {
+		this.swckgp = swckgp;
+	}
+	public String getSwck_gp_names() {
+		return swck_gp_names;
+	}
+	public void setSwck_gp_names(String swck_gp_names) {
+		this.swck_gp_names = swck_gp_names;
+	}
+	public String getNgo_names() {
+		return ngo_names;
+	}
+	public void setNgo_names(String ngo_names) {
+		this.ngo_names = ngo_names;
+	}
+	public String getGpnames() {
+		return gpnames;
+	}
+	public void setGpnames(String gpnames) {
+		this.gpnames = gpnames;
+	}
+	public String getVillnames() {
+		return villnames;
+	}
+	public void setVillnames(String villnames) {
+		this.villnames = villnames;
+	}
 	
 
 }

@@ -415,7 +415,7 @@ display: none; /* Hidden by default */
      	<tr>
      		<td>2.1 Selection of Gram Panchayat where SWCK Account Opened</td>
      		<td><select id="swckgp" name="swckgp" class="swckgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td>
-     		<td colspan=2> </td>
+     		<td colspan=2> <div class="selected-swckgp-list" style="margin-top: 5px; font-size: 14px; color: #333;"></div></td>
      		
      	</tr>
      </table>
@@ -473,8 +473,6 @@ display: none; /* Hidden by default */
  								<th rowspan="2">State Name</th> 
 								<th rowspan="2">District Name</th>
 								<th rowspan="2">Project Name</th>
-								<th rowspan="2">Project Inception Date</th>
-								<th rowspan="2">Proposed Project Completion Date</th>
 								<th colspan="4">Basic Information about Porject</th>
 								<th colspan="4">Preparatory Work</th>
 								<th colspan="3">Fund Utilization under WDC-PMKSY2.0</th>
@@ -483,129 +481,46 @@ display: none; /* Hidden by default */
 							<tr>
 								<th>Total No. of Gram Panchayat</th>
 								<th>Total No. of Villages</th>
-								<th>Total area allocated for project (ha.)</th>
+								<th>Total area Allocated for Project (ha.)</th>
 								<th>Total Project Outlay (Rs. In Lakh)</th>
 								
 								<th>Name of NGOs</th>
 								<th>Gram Panchayat to be covered by NGO</th>
 								<th>Villages to be covered by NGO</th>
-								<th>Account is opened in a nationalized bank</th>
+								<th>Selected Gram Panchayat where SWCK Account Opened</th>
 								
-								<th>Total Project Outlay</th>
-								<th>Total Project Expenditure</th>
+								<th>Total Project Outlay of WDC-PMKSY 2.0</th>
+								<th>Total Project Expenditure of WDC-PMKSY 2.0</th>
 								<th>Percentage of Expenditure (%)</th>
 								
 								
 							</tr>
 						</thead>
-						<c:set var="id2" value="" />
-						<c:set var="id1" value="" />
-						<c:set var="id" value="" />
- 						<c:set var="st" value="" />
- 						<c:set var="incr" value="0" />
- 						<c:set var="dist" value="" />
- 						<c:set var="proj" value="" />
- 						<c:set var="datein" value="" />
- 						<c:set var="datecom" value="" />
- 						<c:set var="datein" value="" />
- 						
+							
  						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
 								
-								
- 								<c:choose>
- 									<c:when test="${id ne data.pratiyogita_id}">
- 										<c:set var="incr" value="${incr+1}" />
- 										<c:set var="id" value="${data.pratiyogita_id}" />
- 										<td><c:out value="${incr}" /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.pratiyogita_id}"  name="${data.pratiyogita_id}" value="${data.pratiyogita_id}"/></td>
- 											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
+								<td>
+ 								<input type="checkbox" class="chkIndividualkd" id="${data.pratiyogita_id}"  name="${data.pratiyogita_id}" value="${data.pratiyogita_id}"/>
+ 								<c:out value='${count.count}' />
+ 								</td>
  								
- 								<c:choose>
- 									<c:when test="${st ne data.stname}">
- 										<c:set var="st" value="${data.stname}" />
- 										<td> <c:out value="${data.stname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${dist ne data.districtname}">
- 										<c:set var="dist" value="${data.districtname}" />
- 										<td> <c:out value="${data.districtname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${proj ne data.projname}">
- 										<c:set var="proj" value="${data.projname}" />
- 										<td> <c:out value="${data.projname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${id1 ne data.pratiyogita_id}">
- 										
- 										<c:set var="id1" value="${data.pratiyogita_id}" />
- 										<td class="text-left"> <c:out value="${data.datein}" /></td>
-										<td class="text-left"> <c:out value="${data.datecom}" /></td>
-		 								<td class="text-right"> <c:out value="${data.nogp}" /></td>
-										<td class="text-right"> <c:out value="${data.novillage}" /></td>
-		 								<td class="text-right"> <c:out value="${data.projarea}" /></td>
-										<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
- 											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
-								
-								
-								
- 								<td class="text-right"> <c:out value="${data.ngo_name}" /></td>
- 								<td class="text-right"> <c:out value="${data.gpname}" /></td>
- 								<td class="text-right"> <c:out value="${data.villname}" /></td>
- 								
- 								<c:choose>
- 									<c:when test="${id2 ne data.pratiyogita_id}">
- 										
- 										<c:set var="id2" value="${data.pratiyogita_id}" />
- 										<td class="text-right"> <c:out value="${data.bank}" /></td>
-								
+ 								<td class="text-right"> <c:out value="${data.stname}" /></td>	
+ 								<td class="text-right"> <c:out value="${data.districtname}" /></td>
+ 								<td class="text-right"> <c:out value="${data.projname}" /></td>
+ 								<td class="text-right"> <c:out value="${data.nogp}" /></td>
+								<td class="text-right"> <c:out value="${data.novillage}" /></td>
+		 						<td class="text-right"> <c:out value="${data.projarea}" /></td>
+								<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
+								<td class="text-right"> <c:out value="${data.ngo_names}" /></td>
+								<td class="text-right"> <c:out value="${data.gpnames}" /></td>
+								<td class="text-right"> <c:out value="${data.villnames}" /></td>
+								<td class="text-right"> <c:out value="${data.swck_gp_names}" /></td>
  								<td class="text-right"> <c:out value="${data.funoutlay}" /></td>
 								<td class="text-right"> <c:out value="${data.projexp}" /></td>
  								<td class="text-right"> <c:out value="${data.expper}" /></td>
  											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								
- 								
-								
+ 									
  								
 					</tr>
 							
@@ -638,11 +553,9 @@ display: none; /* Hidden by default */
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
 								<th rowspan="2">S.No. </th> 
-								<th rowspan="2">State Name</th>
+								<th rowspan="2">State Name</th> 
 								<th rowspan="2">District Name</th>
 								<th rowspan="2">Project Name</th>
-								<th rowspan="2">Project Inception Date</th>
-								<th rowspan="2">Proposed Project Completion Date</th>
 								<th colspan="4">Basic Information about Porject</th>
 								<th colspan="4">Preparatory Work</th>
 								<th colspan="3">Fund Utilization under WDC-PMKSY2.0</th>
@@ -651,132 +564,46 @@ display: none; /* Hidden by default */
 							<tr>
 								<th>Total No. of Gram Panchayat</th>
 								<th>Total No. of Villages</th>
-								<th>Total area allocated for project (ha.)</th>
+								<th>Total area Allocated for Project (ha.)</th>
 								<th>Total Project Outlay (Rs. In Lakh)</th>
 								
 								<th>Name of NGOs</th>
 								<th>Gram Panchayat to be covered by NGO</th>
 								<th>Villages to be covered by NGO</th>
-								<th>Account is opened in a nationalized bank</th>
+								<th>Selected Gram Panchayat where SWCK Account Opened</th>
 								
-								<th>Total Project Outlay</th>
-								<th>Total Project Expenditure</th>
+								<th>Total Project Outlay of WDC-PMKSY 2.0</th>
+								<th>Total Project Expenditure of WDC-PMKSY 2.0</th>
 								<th>Percentage of Expenditure (%)</th>
+								
 								
 								
 							</tr>
 						</thead>
 						
- 						<c:set var="cid2" value="" />
-						<c:set var="cid1" value="" />
-						<c:set var="cid" value="" />
- 						<c:set var="cst" value="" />
- 						<c:set var="cincr" value="0" />
- 						<c:set var="cdist" value="" />
- 						<c:set var="cproj" value="" />
- 						<c:set var="cdatein" value="" />
- 						<c:set var="cdatecom" value="" />
- 						<c:set var="cdatein" value="" />
- 						
+ 							
  						<c:forEach items="${compdataList}" var="data" varStatus="count">
  							<tr>
 								
-								
- 								<c:choose>
- 									<c:when test="${cid ne data.pratiyogita_id}">
- 										<c:set var="cincr" value="${cincr+1}" />
- 										<c:set var="cid" value="${data.pratiyogita_id}" />
- 										<td><c:out value="${cincr}" /> </td>
- 											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${cst ne data.stname}">
- 										<c:set var="cst" value="${data.stname}" />
- 										<td> <c:out value="${data.stname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${cdist ne data.districtname}">
- 										<c:set var="cdist" value="${data.districtname}" />
- 										<td> <c:out value="${data.districtname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${cproj ne data.projname}">
- 										<c:set var="cproj" value="${data.projname}" />
- 										<td> <c:out value="${data.projname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								<c:choose>
- 									<c:when test="${cid1 ne data.pratiyogita_id}">
- 										
- 										<c:set var="cid1" value="${data.pratiyogita_id}" />
- 										<td class="text-left"> <c:out value="${data.datein}" /></td>
-										<td class="text-left"> <c:out value="${data.datecom}" /></td>
-		 								<td class="text-right"> <c:out value="${data.nogp}" /></td>
-										<td class="text-right"> <c:out value="${data.novillage}" /></td>
-		 								<td class="text-right"> <c:out value="${data.projarea}" /></td>
-										<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
- 											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
- 								</c:otherwise>
- 								</c:choose>
-								
-								
-								
- 								<td class="text-right"> <c:out value="${data.ngo_name}" /></td>
- 								<td class="text-right"> <c:out value="${data.gpname}" /></td>
- 								<td class="text-right"> <c:out value="${data.villname}" /></td>
- 								
- 								<c:choose>
- 									<c:when test="${cid2 ne data.pratiyogita_id}">
- 										
- 										<c:set var="cid2" value="${data.pratiyogita_id}" />
- 										<td class="text-right"> <c:out value="${data.bank}" /></td>
-								
+								<td>
+ 								<c:out value='${count.count}' />
+ 								</td>
+ 								<td class="text-right"> <c:out value="${data.stname}" /></td>	
+ 								<td class="text-right"> <c:out value="${data.districtname}" /></td>
+ 								<td class="text-right"> <c:out value="${data.projname}" /></td>
+ 								<td class="text-right"> <c:out value="${data.nogp}" /></td>
+								<td class="text-right"> <c:out value="${data.novillage}" /></td>
+		 						<td class="text-right"> <c:out value="${data.projarea}" /></td>
+								<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
+								<td class="text-right"> <c:out value="${data.ngo_names}" /></td>
+								<td class="text-right"> <c:out value="${data.gpnames}" /></td>
+								<td class="text-right"> <c:out value="${data.villnames}" /></td>
+								<td class="text-right"> <c:out value="${data.swck_gp_names}" /></td>
  								<td class="text-right"> <c:out value="${data.funoutlay}" /></td>
 								<td class="text-right"> <c:out value="${data.projexp}" /></td>
  								<td class="text-right"> <c:out value="${data.expper}" /></td>
  											
- 									</c:when>
- 								<c:otherwise>
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										<td></td> 
-  										
- 								</c:otherwise>
- 								</c:choose>
- 								
- 								
- 								
-								
- 								
-					</tr>
+ 					</tr>
 							
 					
  						</c:forEach>

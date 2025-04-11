@@ -17,8 +17,8 @@ public interface JanbhagidariPratiyogitaService {
 	
 	List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectData(Integer project);
 	
-	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj, String datein, String datecom, int nogp, 
-			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String bank, HttpSession session);
+	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj,  int nogp, 
+			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String swckgp, HttpSession session);
 	
 	List<JanbhagidariPratiyogitaBean> getDraftListDetails(Integer stcd);
 	
@@ -37,6 +37,7 @@ public interface JanbhagidariPratiyogitaService {
 	Integer getTotalNoofGP(Integer dCode);
 	
 	Integer getTotalNoofVill(Integer dCode);
+
 	
 	
 	

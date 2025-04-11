@@ -183,7 +183,7 @@ public class JanbhagidariPratiyogitaController {
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 
-			//	result = serk.saveJanbhagidariPratiyogita(userfileup, session);
+				//result = serk.saveJanbhagidariPratiyogita(userfileup, session);
 
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
@@ -248,10 +248,9 @@ public class JanbhagidariPratiyogitaController {
 	@RequestMapping(value = "/saveJanbhagidariPratiyogita", method = RequestMethod.POST)
 	@ResponseBody
 	public String saveJanbhagidariPratiyogita(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="vill") List<String> vill, 
-			@RequestParam(value ="ngoname") List<String> ngoname, @RequestParam(value ="dcode") int dcode, @RequestParam(value ="proj") int proj, @RequestParam(value ="datein") String datein
-			, @RequestParam(value ="datecom") String datecom, @RequestParam(value ="nogp") int nogp, @RequestParam(value ="novillage") int novillage,  @RequestParam(value ="projarea") String projarea,
+			@RequestParam(value ="ngoname") List<String> ngoname, @RequestParam(value ="dcode") int dcode, @RequestParam(value ="proj") int proj,  @RequestParam(value ="nogp") int nogp, @RequestParam(value ="novillage") int novillage,  @RequestParam(value ="projarea") String projarea,
 			@RequestParam(value ="projoutlay") String projoutlay, @RequestParam(value ="funoutlay") int funoutlay, @RequestParam(value ="projexp") String projexp, @RequestParam(value ="expper") String expper, 
-			@RequestParam(value ="bank") String bank){
+			@RequestParam(value ="swckgp") String swckgp){
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		
@@ -260,8 +259,8 @@ public class JanbhagidariPratiyogitaController {
 		try {	
 			if (session != null && session.getAttribute("loginID") != null) {
 				String createdby = session.getAttribute("loginID").toString();
-				res = serk.saveJanbhagidariPratiyogita(vill, ngoname, dcode, proj, datein, datecom, nogp, 
-						novillage, projarea, projoutlay, funoutlay, projexp, expper, bank, session); 
+				res = serk.saveJanbhagidariPratiyogita(vill, ngoname, dcode, proj,  nogp, 
+						novillage, projarea, projoutlay, funoutlay, projexp, expper, swckgp, session); 
 			}else {
 				mav = new ModelAndView("login");
 				mav.addObject("login", new Login());

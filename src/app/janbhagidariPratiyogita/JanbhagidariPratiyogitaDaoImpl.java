@@ -120,8 +120,8 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	}
 
 	@Override
-	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj, String datein, String datecom, int nogp, 
-			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String bank, HttpSession session) {
+	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj,  int nogp, 
+			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String swckgp, HttpSession session) {
 		
 		Session sess = sessionFactory.getCurrentSession();
 		String datach="fail";
@@ -130,16 +130,16 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			sess.beginTransaction();
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-			Date inDate = formatter.parse(datein);
-			Date comDate = formatter.parse(datecom);
 			
 			InetAddress inet=InetAddress.getLocalHost();
 			String ipAddr=inet.getHostAddress();
 			JanbhagidariPratiyogita data = new JanbhagidariPratiyogita();
 			JanbhagidariPratiyogitaNgoname ngon= new JanbhagidariPratiyogitaNgoname();
 			JanbhagidariPratiyogitaNgovillage ngovill= new JanbhagidariPratiyogitaNgovillage();
+			JanbhagidariPratiyogitaSWCKAccount swckagp = new JanbhagidariPratiyogitaSWCKAccount();
 			IwmpVillage v=new IwmpVillage();
 			IwmpState s= new IwmpState();
+			IwmpGramPanchayat g = new IwmpGramPanchayat();
 			
 			List<String> list = sess.createQuery("SELECT UPPER(ngo_name) FROM JanbhagidariPratiyogitaNgoname where janbhagidariPratiyogita.iwmpMProject.projectId=:prCode").setInteger("prCode", proj).list();
 			for (String ngosn : list) {
@@ -153,8 +153,6 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			}
 			
 			
-			
-			
 			s.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
 			IwmpDistrict d= new IwmpDistrict();
 			d.setDcode(dcode);
@@ -163,13 +161,11 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			data.setIwmpState(s);
 			data.setIwmpDistrict(d);
 			data.setIwmpMProject(b);
-			data.setProj_inception(inDate);
-			data.setProj_completion(comDate);
 			data.setNo_gp(nogp);
 			data.setNo_village(novillage);
 			data.setProj_area(new BigDecimal(projarea));
 			data.setProj_outlay(new BigDecimal(projoutlay));
-			data.setNational_bank(Boolean.valueOf(bank));
+			/* data.setNational_bank(Boolean.valueOf(bank)); */
 			data.setFund_outlay(funoutlay);
 			data.setFund_expenditure(new BigDecimal(projexp));
 			data.setFund_per_exp(new BigDecimal(expper));
@@ -185,7 +181,21 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			
 			sess.save(data);
 			
+			String swckGP[] = swckgp.split(",");
 			
+			for(int k = 0; k < swckGP.length; k++)
+			{
+				g.setGcode(Integer.parseInt(swckGP[k]));
+				swckagp.setJanbhagidariPratiyogita(data);
+				swckagp.setIwmpGramPanchayat(g);
+				swckagp.setCreatedBy(session.getAttribute("loginID").toString());
+				swckagp.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+				swckagp.setUpdatedBy(session.getAttribute("loginID").toString());
+				swckagp.setUpdatedDate(new Timestamp(new java.util.Date().getTime()));
+				swckagp.setRequestedIp(ipAddr);
+				sess.save(swckagp);
+				sess.evict(swckagp);
+			}
 			for (int i = 0; i < ngoname.size(); i++) {
 			
 				ngon.setJanbhagidariPratiyogita(data);
@@ -325,6 +335,12 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			 {
 				 query2.setInteger("nrmpkid", assetid.get(i));
 				 query2.executeUpdate();
+			 }
+			 SQLQuery query3 = session.createSQLQuery("delete from janbhagidari_pratiyogita_swck_account where pratiyogita_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query3.setInteger("nrmpkid", assetid.get(i));
+				 query3.executeUpdate();
 			 }
 			 SQLQuery query = session.createSQLQuery("delete from janbhagidari_pratiyogita where pratiyogita_id=:nrmpkid");
 			 for(int i=0;i<assetid.size(); i++)
