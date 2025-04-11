@@ -459,7 +459,60 @@ $(document).on('click', '#viewProd', function(e){
 		$('#cRuralUrban').focus();
 		return false;
 	}
+	if ($preTrunOverFpo == '' || $preTrunOverFpo == undefined || $preTrunOverFpo == null) {
+			alert('Please Enter Pre-Project Turnovers Status of FPOs Details for Project Area.');
+			$('#preTrunOverFpo').focus();
+			return false;
+		}
+		
+		if ($midTrunOverFpo == '' || $midTrunOverFpo == undefined || $midTrunOverFpo == null) {
+			alert('Please Enter Mid-Project Turnovers Status of FPOs Details for Project Area.');
+			$('#midTrunOverFpo').focus();
+			return false;
+		}
+		
+		if ($cTrunOverFpo == '' || $cTrunOverFpo == undefined || $cTrunOverFpo == null) {
+			alert('Please Enter Turnovers of FPOs Details for Controlled Area.');
+			$('#cTrunOverFpo').focus();
+			return false;
+		}
+		if ($preIncomeFpo == '' || $preIncomeFpo == undefined || $preIncomeFpo == null) {
+				alert('Please Enter Pre-Project Income Status of FPO Member Details for Project Area.');
+				$('#preIncomeFpo').focus();
+				return false;
+			}
+			
+			if ($midIncomeFpo == '' || $midIncomeFpo == undefined || $midIncomeFpo == null) {
+				alert('Please Enter Mid-Project Income Status of FPO Member Details for Project Area.');
+				$('#midIncomeFpo').focus();
+				return false;
+			}
+			
+			if ($cIncomeFpo == '' || $cIncomeFpo == undefined || $cIncomeFpo == null) {
+				alert('Please Enter Income of FPO Member Details for Controlled Area.');
+				$('#cIncomeFpo').focus();
+				return false;
+			}
 
+
+			if ($preAnnualIncomeShg == '' || $preAnnualIncomeShg == undefined || $preAnnualIncomeShg == null) {
+				alert('Please Enter Pre-Project Income Status of SHG Member Details for Project Area.');
+				$('#preAnnualIncomeShg').focus();
+				return false;
+			}
+			
+			if ($midAnnualIncomeShg == '' || $midAnnualIncomeShg == undefined || $midAnnualIncomeShg == null) {
+				alert('Please Enter Mid-Project Income Status of SHG Member Details for Project Area.');
+				$('#midAnnualIncomeShg').focus();
+				return false;
+			}
+			
+			if ($cAnnualIncomeShg == '' || $cAnnualIncomeShg == undefined || $cAnnualIncomeShg == null) {
+				alert('Please Enter Income of SHG Member Details for Controlled Area.');
+				$('#cAnnualIncomeShg').focus();
+				return false;
+			}
+			
 
 	if ($spring == '' || $spring == undefined || $spring == null) {
 		alert('Please Enter No. of Springs Details for Project Area.');
@@ -565,63 +618,7 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($preTrunOverFpo == '' || $preTrunOverFpo == undefined || $preTrunOverFpo == null) {
-		alert('Please Enter Pre-Project Turnovers Status of FPOs Details for Project Area.');
-		$('#preTrunOverFpo').focus();
-		return false;
-	}
-	
-	if ($midTrunOverFpo == '' || $midTrunOverFpo == undefined || $midTrunOverFpo == null) {
-		alert('Please Enter Mid-Project Turnovers Status of FPOs Details for Project Area.');
-		$('#midTrunOverFpo').focus();
-		return false;
-	}
-	
-	if ($cTrunOverFpo == '' || $cTrunOverFpo == undefined || $cTrunOverFpo == null) {
-		alert('Please Enter Turnovers of FPOs Details for Controlled Area.');
-		$('#cTrunOverFpo').focus();
-		return false;
-	}
-
-
-	if ($preIncomeFpo == '' || $preIncomeFpo == undefined || $preIncomeFpo == null) {
-		alert('Please Enter Pre-Project Income Status of FPO Member Details for Project Area.');
-		$('#preIncomeFpo').focus();
-		return false;
-	}
-	
-	if ($midIncomeFpo == '' || $midIncomeFpo == undefined || $midIncomeFpo == null) {
-		alert('Please Enter Mid-Project Income Status of FPO Member Details for Project Area.');
-		$('#midIncomeFpo').focus();
-		return false;
-	}
-	
-	if ($cIncomeFpo == '' || $cIncomeFpo == undefined || $cIncomeFpo == null) {
-		alert('Please Enter Income of FPO Member Details for Controlled Area.');
-		$('#cIncomeFpo').focus();
-		return false;
-	}
-
-
-	if ($preAnnualIncomeShg == '' || $preAnnualIncomeShg == undefined || $preAnnualIncomeShg == null) {
-		alert('Please Enter Pre-Project Income Status of SHG Member Details for Project Area.');
-		$('#preAnnualIncomeShg').focus();
-		return false;
-	}
-	
-	if ($midAnnualIncomeShg == '' || $midAnnualIncomeShg == undefined || $midAnnualIncomeShg == null) {
-		alert('Please Enter Mid-Project Income Status of SHG Member Details for Project Area.');
-		$('#midAnnualIncomeShg').focus();
-		return false;
-	}
-	
-	if ($cAnnualIncomeShg == '' || $cAnnualIncomeShg == undefined || $cAnnualIncomeShg == null) {
-		alert('Please Enter Income of SHG Member Details for Controlled Area.');
-		$('#cAnnualIncomeShg').focus();
-		return false;
-	}
-	
-	if (confirm("Do You Want to Save Production Details ?")) {
+		if (confirm("Do You Want to Save Production Details ?")) {
 		formSubmitted = true;    ////    saveprojectProfile
 		document.getElementById('productionDetails').action = "saveOrUpdateProductionDetails";
 		document.getElementById('productionDetails').method = "post";

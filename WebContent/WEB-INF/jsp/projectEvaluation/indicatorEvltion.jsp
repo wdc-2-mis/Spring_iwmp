@@ -44,7 +44,7 @@ function savedata(){
 	if(wc==='')
 		wc=0;
 
-	if (allManpower === 'F') {
+	if (allManpower === 'Y') {
     if (wcdc === '' || wcdc === undefined || wcdc === null || wcdc===0) {
         alert('Please fill WCDC Level Details');
         $('#wdc').focus();
@@ -157,17 +157,17 @@ function savedata(){
                         <td>
                         
                         <c:if test="${dpr eq null}">
-                            <input type="radio" id="dpryes" name="dpr" value="F" value="${dpr}" /> Fully
-                            <input type="radio" id="dprno" name="dpr" value="P"  value="${dpr}"/> Partially
+                            <input type="radio" id="dpryes" name="dpr" value="Y" value="${dpr}" /> Yes
+                            <input type="radio" id="dprno" name="dpr" value="N"  value="${dpr}"/> No
                             
                            </c:if>
-                           <c:if test="${dpr == 'P'.charAt(0)}">
-                            <input type="radio" id="dpryes" name="dpr" value="F" value="${dpr}" /> Fully
-                            <input type="radio" id="dprno" name="dpr" value="P" checked="checked"  value="${dpr}"/> Partially
+                           <c:if test="${dpr == 'N'.charAt(0)}">
+                            <input type="radio" id="dpryes" name="dpr" value="Y" value="${dpr}" /> Yes
+                            <input type="radio" id="dprno" name="dpr" value="N" checked="checked"  value="${dpr}"/> No
                            </c:if>
-                            <c:if test="${dpr == 'F'.charAt(0)}">
-                            <input type="radio" id="dpryes" name="dpr" value="F" checked="checked" value="${dpr}" /> Fully
-                            <input type="radio" id="dprno" name="dpr" value="P" value="${dpr}"/> Partially
+                            <c:if test="${dpr == 'Y'.charAt(0)}">
+                            <input type="radio" id="dpryes" name="dpr" value="Y" checked="checked" value="${dpr}" /> Yes
+                            <input type="radio" id="dprno" name="dpr" value="N" value="${dpr}"/> No
                             
                            </c:if>
                            
@@ -181,16 +181,16 @@ function savedata(){
                         <td><b><c:out value="Whether all manpower positions in place at"/></b></td>
                         <td>
                         <c:if test="${mp eq null }">
-                            <input type="radio" id="mpyes" name="mp" value="F" value="${mp}" /> Fully
-                            <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially
+                            <input type="radio" id="mpyes" name="mp" value="Y" value="${mp}" /> Yes
+                            <input type="radio" id="mpno" name="mp" value="N" value="${mp}" /> No
                             </c:if>
-                             <c:if test="${mp == 'F'.charAt(0)}"> 
-                            <input type="radio" id="mpyes" name="mp" value="F" checked="checked" value="${mp}" /> Fully
-                            <input type="radio" id="mpno" name="mp" value="P" value="${mp}" /> Partially
+                             <c:if test="${mp == 'Y'.charAt(0)}"> 
+                            <input type="radio" id="mpyes" name="mp" value="Y" checked="checked" value="${mp}" /> Yes
+                            <input type="radio" id="mpno" name="mp" value="N" value="${mp}" /> No
                             </c:if>
-                            <c:if test="${mp == 'P'.charAt(0)}">
-                            <input type="radio" id="mpyes" name="mp" value="F"  value="${mp}" /> Fully
-                            <input type="radio" id="mpno" name="mp" value="P" checked="checked" value="${mp}" /> Partially
+                            <c:if test="${mp == 'N'.charAt(0)}">
+                            <input type="radio" id="mpyes" name="mp" value="Y"  value="${mp}" /> Yes
+                            <input type="radio" id="mpno" name="mp" value="N" checked="checked" value="${mp}" /> No
                             </c:if>
                             
                         </td>

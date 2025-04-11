@@ -27,24 +27,61 @@ function savedata(event){
 	
 	if($('#pre_farmer_income').val()==='')
 	{
-		alert('Please enter pre farmer income for Project Area.');
+		alert('Please enter pre Farmer`s Average Household Income  for Project Area.');
 		$('#pre_farmer_income').focus();
 		return false;
 	}
 	if($('#mid_farmer_income').val()==='')
 	{
-		alert('Please enter mid farmer income for Project Area.');
+		alert('Please enter mid Farmer`s Average Household Income  for Project Area.');
 		$('#mid_farmer_income').focus();
 		return false;
 	}
 	
 	if($('#control_farmer_income').val()==='')
 	{
-		alert('Please enter farmer income for Controlled Area.');
+		alert('Please enter Farmer`s Average Household Income  for Controlled Area.');
 		$('#control_farmer_income').focus();
 		return false;
 	}
 	
+	if($('#pre_dug_well').val()==='')
+	{
+		alert('Please enter pre depth of Water table in dug wells for Project Area.');
+		$('#pre_dug_well').focus();
+		return false;
+	}
+	if($('#mid_dug_well').val()==='')
+	{
+		alert('Please enter mid depth of Water table in dug wells for Project Area.');
+		$('#mid_dug_well').focus();
+		return false;
+	}
+	if($('#control_dug_well').val()==='')
+	{
+		alert('Please enter depth of Water table in dug wells for Controlled Area.');
+		$('#control_dug_well').focus();
+		return false;
+	}
+	
+	if($('#pre_tube_well').val()==='')
+	{
+		alert('Please pre enter depth of Water table in tube wells for Project Area.');
+		$('#pre_tube_well').focus();
+		return false;
+	}
+	if($('#mid_tube_well').val()==='')
+	{
+		alert('Please mid enter depth of Water table in tube wells for Project Area.');
+		$('#mid_tube_well').focus();
+		return false;
+	}
+	if($('#control_tube_well').val()==='')
+	{
+		alert('Please enter depth of Water table in tube wells for Controlled Area.');
+		$('#control_tube_well').focus();
+		return false;
+	}	
 	if($('#farmer_benefited').val()==='')
 	{
 		alert('Please enter farmer benefited for Project Area.');
@@ -70,44 +107,6 @@ function savedata(event){
 		$('#control_mandays_generated').focus();
 		return false;
 	}
-	
-	if($('#pre_dug_well').val()==='')
-	{
-		alert('Please enter pre dug well for Project Area.');
-		$('#pre_dug_well').focus();
-		return false;
-	}
-	if($('#mid_dug_well').val()==='')
-	{
-		alert('Please enter mid dug well for Project Area.');
-		$('#mid_dug_well').focus();
-		return false;
-	}
-	if($('#control_dug_well').val()==='')
-	{
-		alert('Please enter dug well for Controlled Area.');
-		$('#control_dug_well').focus();
-		return false;
-	}
-	
-	if($('#pre_tube_well').val()==='')
-	{
-		alert('Please pre enter tube well for Project Area.');
-		$('#pre_tube_well').focus();
-		return false;
-	}
-	if($('#mid_tube_well').val()==='')
-	{
-		alert('Please mid enter tube well for Project Area.');
-		$('#mid_tube_well').focus();
-		return false;
-	}
-	if($('#control_tube_well').val()==='')
-	{
-		alert('Please enter tube well for Controlled Area.');
-		$('#control_tube_well').focus();
-		return false;
-	}	
 	
     if(confirm("Do You Want to save No. of Man-days Details?")) {
         formSubmitted = true;    ////    saveprojectProfile
@@ -184,34 +183,34 @@ function savedata(event){
                  <textarea id="remark_farmer_income" name="remark_farmer_income" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_income}</textarea>
              </td>
 		</tr>
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="2."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="No. of Farmers Benefited"></c:out></b></td> --%>
+<!--   			<td colspan="2"> -->
+<%--      			<input type="text" id="farmer_benefited" name="farmer_benefited" maxlength="5" value="${farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="control_farmer_benefited" name="control_farmer_benefited" maxlength="5" value="${control_farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  /> --%>
+<!--  			</td> -->
+<!--  			 <td>  -->
+<%--                        <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea> --%>
+<!--                        </td> -->
+<!-- 		</tr> -->
+<!-- 		<tr> -->
+<%--  			<td width="4%"><b><c:out value="3."></c:out></b></td> --%>
+<%--   			<td width="40%"><b><c:out value="No. of Persondays Generated (man-days)"></c:out></b></td> --%>
+<!--   			<td colspan="2"> -->
+<%--      			<input type="text" id="mandays_generated" name="mandays_generated" maxlength="5" value="${mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  /> --%>
+<!--  			</td> -->
+<!--  			<td> -->
+<%--      			<input type="text" id="control_mandays_generated" name="control_mandays_generated" maxlength="5" value="${control_mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  /> --%>
+<!--  			</td> -->
+<!--  			 <td>  -->
+<%--                        <textarea id="remark_mandays_generated" name="remark_mandays_generated" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_mandays_generated}</textarea> --%>
+<!--                        </td> -->
+<!-- 		</tr> -->
 		<tr>
  			<td width="4%"><b><c:out value="2."></c:out></b></td>
-  			<td width="40%"><b><c:out value="No. of Farmers Benefited"></c:out></b></td>
-  			<td colspan="2">
-     			<input type="text" id="farmer_benefited" name="farmer_benefited" maxlength="5" value="${farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			<td>
-     			<input type="text" id="control_farmer_benefited" name="control_farmer_benefited" maxlength="5" value="${control_farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			 <td> 
-                       <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea>
-                       </td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="3."></c:out></b></td>
-  			<td width="40%"><b><c:out value="No. of Persondays Generated (man-days)"></c:out></b></td>
-  			<td colspan="2">
-     			<input type="text" id="mandays_generated" name="mandays_generated" maxlength="5" value="${mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			<td>
-     			<input type="text" id="control_mandays_generated" name="control_mandays_generated" maxlength="5" value="${control_mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
- 			</td>
- 			 <td> 
-                       <textarea id="remark_mandays_generated" name="remark_mandays_generated" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_mandays_generated}</textarea>
-                       </td>
-		</tr>
-		<tr>
- 			<td width="4%"><b><c:out value="4."></c:out></b></td>
   			<td width="40%"><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season"></c:out></b></td>
   			<td>
      			<input type="text" id="pre_dug_well" name="pre_dug_well" value="${pre_dug_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"   />
@@ -227,7 +226,7 @@ function savedata(event){
                        </td>
 		</tr>
 		<tr>
- 			<td width="4%"><b><c:out value="5."></c:out></b></td>
+ 			<td width="4%"><b><c:out value="3."></c:out></b></td>
   			<td width="40%"><b><c:out value="Average depth of Water table in tube wells (mts.)- Summer Season"></c:out></b></td>
   			<td>
      			<input type="text" id="pre_tube_well" name="pre_tube_well" value="${pre_tube_well}" maxlength="15" autocomplete = "off" onfocusin="decimalToFourPlace(event)" placeholder="Only decimal"  />
@@ -242,7 +241,45 @@ function savedata(event){
                        <textarea id="remark_tube_well" name="remark_tube_well" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_tube_well}</textarea>
                        </td>
 		</tr>
-
+<thead>
+    <tr>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
+        <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th>
+        <th colspan="2" style="text-align:center; vertical-align: middle;">Project Area</th>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
+        <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
+    </tr>
+    <tr>
+<!--         <th style="text-align:center; vertical-align: middle;">Pre Project Status(Aggregate)</th> -->
+<!--         <th style="text-align:center; vertical-align: middle;">Mid Project Status(Aggregate)</th> -->
+    </tr>
+</thead>
+<tr>
+ 			<td width="4%"><b><c:out value="4."></c:out></b></td>
+  			<td width="40%"><b><c:out value="No. of Farmers Benefited"></c:out></b></td>
+  			<td colspan="2" style="text-align: center;">
+     			<input type="text" id="farmer_benefited" name="farmer_benefited" maxlength="5" value="${farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
+ 			</td>
+ 			<td>
+     			<input type="text" id="control_farmer_benefited" name="control_farmer_benefited" maxlength="5" value="${control_farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
+ 			</td>
+ 			 <td> 
+                       <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea>
+                       </td>
+		</tr>
+		<tr>
+ 			<td width="4%"><b><c:out value="5."></c:out></b></td>
+  			<td width="40%"><b><c:out value="No. of Persondays Generated (man-days)"></c:out></b></td>
+  			<td colspan="2" style="text-align: center;">
+     			<input type="text" id="mandays_generated" name="mandays_generated" maxlength="5" value="${mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
+ 			</td>
+ 			<td>
+     			<input type="text" id="control_mandays_generated" name="control_mandays_generated" maxlength="5" value="${control_mandays_generated}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
+ 			</td>
+ 			 <td> 
+                       <textarea id="remark_mandays_generated" name="remark_mandays_generated" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_mandays_generated}</textarea>
+                       </td>
+		</tr>
 		<tr>
 			<td  colspan="6"   align="center" >
 			 	<input type="button" name="view"  id = "view" value="Confirm" class="btn btn-info" onclick="savedata(event);"/>

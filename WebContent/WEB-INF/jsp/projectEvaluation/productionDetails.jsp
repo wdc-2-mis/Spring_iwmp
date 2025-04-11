@@ -132,6 +132,84 @@
 
 							<tr>
 								<td><b><c:out value="4." /></b></td>
+								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td>
+								<td><input type="text"
+									id="preTrunOverFpo" name="preTrunOverFpo"
+									onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.preTrunoverFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preTrunOverFpoError"></span></td>
+								<td><input type="text"
+									id="midTrunOverFpo" name="midTrunOverFpo"
+									onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.midTrunoverFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midTrunOverFpoError"></span></td>
+								<td><input type="text"
+									id="cTrunOverFpo" name="cTrunOverFpo"
+									onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.controlTrunoverFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cTrunOverFpoError"></span></td>
+								<td>
+     								<textarea id="rmkTrunOverFpo" name="rmkTrunOverFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkTrunoverFpo}</textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td><b><c:out value="5." /></b></td>
+								<td><b> <c:out value="Average annual net income of an FPO Member(Rs.)" /></b></td>
+								<td><input type="text" id="preIncomeFpo"
+									name="preIncomeFpo" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.preIncomeFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preIncomeFpoError"></span></td>
+								<td><input type="text" id="midIncomeFpo"
+									name="midIncomeFpo" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.midIncomeFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midIncomeFpoError"></span></td>
+								<td><input type="text" id="cIncomeFpo"
+									name="cIncomeFpo" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.controlIncomeFpo}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cIncomeFpoError"></span></td>
+								<td>
+     								<textarea id="rmkIncomeFpo" name="rmkIncomeFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkIncomeFpo}</textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td><b><c:out value="6." /></b></td>
+								<td><b><c:out
+											value="Average annual net income of an SHG Member(Rs.)" /></b>
+								</td>
+								<td><input type="text" id="preAnnualIncomeShg"
+									name="preAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.preAnnualIncomeShg}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
+									class="preAnnualIncomeShgError"></span></td>
+								<td><input type="text" id="midAnnualIncomeShg"
+									name="midAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.midAnnualIncomeShg}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
+									class="midAnnualIncomeShgError"></span></td>
+								<td><input type="text" id="cAnnualIncomeShg"
+									name="cAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
+									value=<c:out value="${list.controlAnnualIncomeShg}"/>
+									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
+									class="cAnnualIncomeShgError"></span></td>
+								<td>
+     								<textarea id="rmkAnnualIncomeShg" name="rmkAnnualIncomeShg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkAnnualIncomeShg}</textarea> 
+								</td>
+							</tr>
+							<tr>
+					<th rowspan="2" class="text-center"><b>Sl.No.</b></th>
+					<th rowspan="2" class="text-center"><b>Production Details</b></th>
+					<th colspan="2" class="text-center"><b>Project Area Details</b></th>
+					<th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+					<th rowspan="2" class="text-center"><b>Remarks</b></th>
+				</tr>
+				<tr>	
+<!-- 					<th class="text-center"><b>Pre-Project Status (Aggregate)</b></th> -->
+<!-- 					<th class="text-center"><b>Mid-Project Status (Aggregate)</b></th> -->
+				</tr>	
+							<tr>
+								<td><b><c:out value="7." /></b></td>
 								<td><b> <c:out value="No. of springs rejuvenated(if applicable)" /></b></td>
 								<td colspan="2"><input type="text" id="spring" name="spring"
 									value=<c:out value="${list.springRejuvenated}"/>
@@ -148,7 +226,7 @@
 
 
 							<tr>
-								<td><b><c:out value="5." /></b></td>
+								<td><b><c:out value="8." /></b></td>
 								<td><b><c:out value="No. of persons benefitted due to rejuvenation of springs" /></b></td>
 								<td colspan="2"><input type="text" id="benefit" name="benefit"
 									value=<c:out value="${list.personBenefitte}"/>
@@ -163,7 +241,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td><b><c:out value="6." /></b></td>
+								<td><b><c:out value="9." /></b></td>
 								<td><b> <c:out value="No. of Community Based Organization" /></b></td>
 								<td colspan="4"></td>
 							</tr>
@@ -233,7 +311,7 @@
 							</tr>
 							
 							<tr>
-								<td><b><c:out value="7." /></b></td>
+								<td><b><c:out value="10." /></b></td>
 								<td><b> <c:out value="No. of Memebers in Community Based Organization" /></b></td>
 								<td colspan="4"></td>
 							</tr>
@@ -303,73 +381,73 @@
 								<td></td>
 							</tr>
 
-							<tr>
-								<td><b><c:out value="8." /></b></td>
-								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td>
-								<td><input type="text"
-									id="preTrunOverFpo" name="preTrunOverFpo"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.preTrunoverFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preTrunOverFpoError"></span></td>
-								<td><input type="text"
-									id="midTrunOverFpo" name="midTrunOverFpo"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.midTrunoverFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midTrunOverFpoError"></span></td>
-								<td><input type="text"
-									id="cTrunOverFpo" name="cTrunOverFpo"
-									onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.controlTrunoverFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cTrunOverFpoError"></span></td>
-								<td>
-     								<textarea id="rmkTrunOverFpo" name="rmkTrunOverFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkTrunoverFpo}</textarea> 
-								</td>
-							</tr>
+<!-- 							<tr> -->
+<%-- 								<td><b><c:out value="8." /></b></td> --%>
+<%-- 								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td> --%>
+<!-- 								<td><input type="text" -->
+<!-- 									id="preTrunOverFpo" name="preTrunOverFpo" -->
+<!-- 									onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.preTrunoverFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preTrunOverFpoError"></span></td> -->
+<!-- 								<td><input type="text" -->
+<!-- 									id="midTrunOverFpo" name="midTrunOverFpo" -->
+<!-- 									onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.midTrunoverFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midTrunOverFpoError"></span></td> -->
+<!-- 								<td><input type="text" -->
+<!-- 									id="cTrunOverFpo" name="cTrunOverFpo" -->
+<!-- 									onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.controlTrunoverFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cTrunOverFpoError"></span></td> -->
+<!-- 								<td> -->
+<%--      								<textarea id="rmkTrunOverFpo" name="rmkTrunOverFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkTrunoverFpo}</textarea>  --%>
+<!-- 								</td> -->
+<!-- 							</tr> -->
 
-							<tr>
-								<td><b><c:out value="9." /></b></td>
-								<td><b> <c:out value="Average annual net income of an FPO Member(Rs.)" /></b></td>
-								<td><input type="text" id="preIncomeFpo"
-									name="preIncomeFpo" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.preIncomeFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preIncomeFpoError"></span></td>
-								<td><input type="text" id="midIncomeFpo"
-									name="midIncomeFpo" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.midIncomeFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midIncomeFpoError"></span></td>
-								<td><input type="text" id="cIncomeFpo"
-									name="cIncomeFpo" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.controlIncomeFpo}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cIncomeFpoError"></span></td>
-								<td>
-     								<textarea id="rmkIncomeFpo" name="rmkIncomeFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkIncomeFpo}</textarea> 
-								</td>
-							</tr>
+<!-- 							<tr> -->
+<%-- 								<td><b><c:out value="9." /></b></td> --%>
+<%-- 								<td><b> <c:out value="Average annual net income of an FPO Member(Rs.)" /></b></td> --%>
+<!-- 								<td><input type="text" id="preIncomeFpo" -->
+<!-- 									name="preIncomeFpo" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.preIncomeFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="preIncomeFpoError"></span></td> -->
+<!-- 								<td><input type="text" id="midIncomeFpo" -->
+<!-- 									name="midIncomeFpo" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.midIncomeFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="midIncomeFpoError"></span></td> -->
+<!-- 								<td><input type="text" id="cIncomeFpo" -->
+<!-- 									name="cIncomeFpo" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.controlIncomeFpo}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span class="cIncomeFpoError"></span></td> -->
+<!-- 								<td> -->
+<%--      								<textarea id="rmkIncomeFpo" name="rmkIncomeFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkIncomeFpo}</textarea>  --%>
+<!-- 								</td> -->
+<!-- 							</tr> -->
 
-							<tr>
-								<td><b><c:out value="10." /></b></td>
-								<td><b><c:out
-											value="Average annual net income of an SHG Member(Rs.)" /></b>
-								</td>
-								<td><input type="text" id="preAnnualIncomeShg"
-									name="preAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.preAnnualIncomeShg}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
-									class="preAnnualIncomeShgError"></span></td>
-								<td><input type="text" id="midAnnualIncomeShg"
-									name="midAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.midAnnualIncomeShg}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
-									class="midAnnualIncomeShgError"></span></td>
-								<td><input type="text" id="cAnnualIncomeShg"
-									name="cAnnualIncomeShg" onfocusin="decimalToFourPlace(event)"
-									value=<c:out value="${list.controlAnnualIncomeShg}"/>
-									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span
-									class="cAnnualIncomeShgError"></span></td>
-								<td>
-     								<textarea id="rmkAnnualIncomeShg" name="rmkAnnualIncomeShg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkAnnualIncomeShg}</textarea> 
-								</td>
-							</tr>
+<!-- 							<tr> -->
+<%-- 								<td><b><c:out value="10." /></b></td> --%>
+<%-- 								<td><b><c:out --%>
+<%-- 											value="Average annual net income of an SHG Member(Rs.)" /></b> --%>
+<!-- 								</td> -->
+<!-- 								<td><input type="text" id="preAnnualIncomeShg" -->
+<!-- 									name="preAnnualIncomeShg" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.preAnnualIncomeShg}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span -->
+<!-- 									class="preAnnualIncomeShgError"></span></td> -->
+<!-- 								<td><input type="text" id="midAnnualIncomeShg" -->
+<!-- 									name="midAnnualIncomeShg" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.midAnnualIncomeShg}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span -->
+<!-- 									class="midAnnualIncomeShgError"></span></td> -->
+<!-- 								<td><input type="text" id="cAnnualIncomeShg" -->
+<!-- 									name="cAnnualIncomeShg" onfocusin="decimalToFourPlace(event)" -->
+<%-- 									value=<c:out value="${list.controlAnnualIncomeShg}"/> --%>
+<!-- 									placeholder="Only Decimal" autocomplete="off" maxlength="15"/><span -->
+<!-- 									class="cAnnualIncomeShgError"></span></td> -->
+<!-- 								<td> -->
+<%--      								<textarea id="rmkAnnualIncomeShg" name="rmkAnnualIncomeShg" autocomplete = "off" rows="2" cols="22" maxlength="200" >${list.remarkAnnualIncomeShg}</textarea>  --%>
+<!-- 								</td> -->
+<!-- 							</tr> -->
 						</c:forEach>
 					</c:if>
 
@@ -429,158 +507,8 @@
      								<textarea id="rmkRuralUrban" name="rmkRuralUrban" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
 								</td>
 							</tr>
-
-							<tr>
+								<tr>
 								<td><b><c:out value="4." /></b></td>
-								<td><b> <c:out value="No. of springs rejuvenated(if applicable)" /></b></td>
-								<td colspan="2"><input type="text" id="spring" name="spring"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
-									class="springError"></span></td>
-								<td><input type="text" id="cSpring" name="cSpring"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
-									class="cSpringError"></span></td>
-								<td>
-     								<textarea id="rmkSpring" name="rmkSpring" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-
-							<tr>
-								<td><b><c:out value="5." /></b></td>
-								<td><b><c:out value="No. of persons benefitted due to rejuvenation of springs" /></b></td>
-								<td colspan="2"><input type="text" id="benefit" name="benefit"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
-									class="benefitError"></span></td>
-								<td><input type="text" id="cBenefit" name="cBenefit"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
-									class="cBenefitError"></span></td>
-								<td>
-     								<textarea id="rmkBenefit" name="rmkBenefit" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-							<tr>
-								<td><b><c:out value="6." /></b></td>
-								<td><b> <c:out value="No. of Community Based Organization" /></b></td>
-								<td colspan="4"></td>
-							</tr>
-							
-							<tr>
-								<td style="text-align: right;"><b><c:out value="a." /></b></td>
-								<td><b> <c:out value="SHG" /></b></td>
-								
-								<td colspan="2"><input type="text" id="shg" name="shg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="shgError"></span></td>
-								<td><input type="text" id="cShg" name="cShg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="cShgError"></span></td>
-								<td>
-     								<textarea id="rmkShg" name="rmkShg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="b." /></b></td>
-								<td><b> <c:out value="FPO" /></b></td>
-								<td colspan="2"><input type="text" id="fpo" name="fpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="fpoError"></span></td>
-								<td><input type="text" id="cFpo" name="cFpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="cFpoError"></span></td>
-								<td>
-     								<textarea id="rmkFpo" name="rmkFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="c." /></b></td>
-								<td><b> <c:out value="UG" /></b></td>
-								<td colspan="2"><input type="text" id="ug" name="ug"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="ugError"></span></td>
-								<td><input type="text" id="cUg" name="cUg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
-									class="cUgError"></span></td>
-								<td>
-     								<textarea id="rmkUg" name="rmkUg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-						<tr>
-							<td></td>
-							<td><b><c:out
-										value="Total No. of Community Based Organization" /></b></td>
-							<td colspan="2"><input type="number" id="noOfCom" name="noOfCom"
-								class="" readonly="readonly" /></td>
-							<td><input type="number" id="cnoOfCom" name="cnoOfCom"
-								class="" readonly="readonly" /></td>
-							<td></td>
-						</tr>
-
-						<tr>
-								<td><b><c:out value="7." /></b></td>
-								<td><b> <c:out value="No. of Memebers in Community Based Organization" /></b></td>
-								<td colspan="4"></td>
-							</tr>
-							
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="a." /></b></td>
-								<td><b> <c:out value="SHG" /></b></td>
-								
-								<td colspan="2"><input type="text" id="mShg" name="mShg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="mShgError"></span></td>
-								<td><input type="text" id="cMshg" name="cMshg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="cMshgError"></span></td>
-								<td>
-     								<textarea id="rmkMshg" name="rmkMshg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="b." /></b></td>
-								<td><b> <c:out value="FPO" /></b></td>
-								<td colspan="2"><input type="text" id="mFpo" name="mFpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="mFpoError"></span></td>
-								<td><input type="text" id="cMfpo" name="cMfpo"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="cMfpoError"></span></td>
-								<td>
-     								<textarea id="rmkMfpo" name="rmkMfpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-							<tr>
-								<td style="text-align: right;"><b><c:out value="c." /></b></td>
-								<td><b> <c:out value="UG" /></b></td>
-								<td colspan="2"><input type="text" id="mUg" name="mUg"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="mUgError"></span></td>
-								<td><input type="text" id="cMug" name="cMug"
-									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
-									class="cMugError"></span></td>
-								<td>
-     								<textarea id="rmkMug" name="rmkMug" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
-								</td>
-							</tr>
-
-						<tr>
-							<td></td>
-							<td><b><c:out
-										value="Total No. of Members Community Based Organization" /></b></td>
-							<td colspan="2"><input type="number" id="mnoOfCom" name="mnoOfCom"
-								class="" readonly="readonly" /></td>
-							<td><input type="number" id="cmnoOfCom" name="cmnoOfCom"
-								class="" readonly="readonly" /></td>
-							<td></td>
-						</tr>
-
-						<tr>
-								<td><b><c:out value="8." /></b></td>
 								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td>
 								<td><input type="text"
 									id="preTrunOverFpo" name="preTrunOverFpo"
@@ -600,7 +528,7 @@
 							</tr>
 
 							<tr>
-								<td><b><c:out value="9." /></b></td>
+								<td><b><c:out value="5." /></b></td>
 								<td><b> <c:out value="Average annual net income of an FPO Member(Rs.)" /></b></td>
 								<td><input type="text" id="preIncomeFpo"
 									name="preIncomeFpo" onfocusin="decimalToFourPlace(event)"
@@ -617,7 +545,7 @@
 							</tr>
 
 							<tr>
-								<td><b><c:out value="10." /></b></td>
+								<td><b><c:out value="6." /></b></td>
 								<td><b><c:out
 											value="Average annual net income of an SHG Member(Rs.)" /></b>
 								</td>
@@ -637,6 +565,166 @@
      								<textarea id="rmkAnnualIncomeShg" name="rmkAnnualIncomeShg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
 								</td>
 							</tr>
+				<tr>
+					<th rowspan="2" class="text-center"><b>Sl.No.</b></th>
+					<th rowspan="2" class="text-center"><b>Production Details</b></th>
+					<th colspan="2" class="text-center"><b>Project Area Details</b></th>
+					<th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+					<th rowspan="2" class="text-center"><b>Remarks</b></th>
+				</tr>
+				<tr>	
+<!-- 					<th class="text-center"><b>Pre-Project Status (Aggregate)</b></th> -->
+<!-- 					<th class="text-center"><b>Mid-Project Status (Aggregate)</b></th> -->
+				</tr>	
+							<tr>
+								<td><b><c:out value="7." /></b></td>
+								<td><b> <c:out value="No. of springs rejuvenated(if applicable)" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="spring" name="spring"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
+									class="springError"></span></td>
+								<td><input type="text" id="cSpring" name="cSpring"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
+									class="cSpringError"></span></td>
+								<td>
+     								<textarea id="rmkSpring" name="rmkSpring" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+
+							<tr>
+								<td><b><c:out value="8." /></b></td>
+								<td><b><c:out value="No. of persons benefitted due to rejuvenation of springs" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="benefit" name="benefit"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
+									class="benefitError"></span></td>
+								<td><input type="text" id="cBenefit" name="cBenefit"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
+									class="cBenefitError"></span></td>
+								<td>
+     								<textarea id="rmkBenefit" name="rmkBenefit" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+							<tr>
+								<td><b><c:out value="9." /></b></td>
+								<td><b> <c:out value="No. of Community Based Organization" /></b></td>
+								<td colspan="4" style="text-align: center;"></td>
+							</tr>
+							
+							<tr>
+								<td style="text-align: right;"><b><c:out value="a." /></b></td>
+								<td><b> <c:out value="SHG" /></b></td>
+								
+								<td colspan="2" style="text-align: center;"><input type="text" id="shg" name="shg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="shgError"></span></td>
+								<td><input type="text" id="cShg" name="cShg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="cShgError"></span></td>
+								<td>
+     								<textarea id="rmkShg" name="rmkShg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;"><b><c:out value="b." /></b></td>
+								<td><b> <c:out value="FPO" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="fpo" name="fpo"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="fpoError"></span></td>
+								<td><input type="text" id="cFpo" name="cFpo"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="cFpoError"></span></td>
+								<td>
+     								<textarea id="rmkFpo" name="rmkFpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;"><b><c:out value="c." /></b></td>
+								<td><b> <c:out value="UG" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="ug" name="ug"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="ugError"></span></td>
+								<td><input type="text" id="cUg" name="cUg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="pcalSum()" /><span
+									class="cUgError"></span></td>
+								<td>
+     								<textarea id="rmkUg" name="rmkUg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+						<tr>
+							<td></td>
+							<td><b><c:out
+										value="Total No. of Community Based Organization" /></b></td>
+							<td colspan="2" style="text-align: center;"><input type="number" id="noOfCom" name="noOfCom"
+								class="" readonly="readonly" /></td>
+							<td><input type="number" id="cnoOfCom" name="cnoOfCom"
+								class="" readonly="readonly" /></td>
+							<td></td>
+						</tr>
+
+						<tr>
+								<td><b><c:out value="10." /></b></td>
+								<td><b> <c:out value="No. of Memebers in Community Based Organization" /></b></td>
+								<td colspan="4" style="text-align: center;"></td>
+							</tr>
+							
+
+							<tr>
+								<td style="text-align: right;"><b><c:out value="a." /></b></td>
+								<td><b> <c:out value="SHG" /></b></td>
+								
+								<td colspan="2" style="text-align: center;"><input type="text" id="mShg" name="mShg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="mShgError"></span></td>
+								<td><input type="text" id="cMshg" name="cMshg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="cMshgError"></span></td>
+								<td>
+     								<textarea id="rmkMshg" name="rmkMshg" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;"><b><c:out value="b." /></b></td>
+								<td><b> <c:out value="FPO" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="mFpo" name="mFpo"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="mFpoError"></span></td>
+								<td><input type="text" id="cMfpo" name="cMfpo"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="cMfpoError"></span></td>
+								<td>
+     								<textarea id="rmkMfpo" name="rmkMfpo" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+							<tr>
+								<td style="text-align: right;"><b><c:out value="c." /></b></td>
+								<td><b> <c:out value="UG" /></b></td>
+								<td colspan="2" style="text-align: center;"><input type="text" id="mUg" name="mUg"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="mUgError"></span></td>
+								<td><input type="text" id="cMug" name="cMug"
+									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5" oninput="mpcalSum()" /><span
+									class="cMugError"></span></td>
+								<td>
+     								<textarea id="rmkMug" name="rmkMug" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
+								</td>
+							</tr>
+
+						<tr>
+							<td></td>
+							<td><b><c:out
+										value="Total No. of Members Community Based Organization" /></b></td>
+							<td colspan="2" style="text-align: center;"><input type="number" id="mnoOfCom" name="mnoOfCom"
+								class="" readonly="readonly" /></td>
+							<td><input type="number" id="cmnoOfCom" name="cmnoOfCom"
+								class="" readonly="readonly" /></td>
+							<td></td>
+						</tr>
+
 					</c:if>
 				<tr>
 					<th colspan="6" style="align-content: center;">
