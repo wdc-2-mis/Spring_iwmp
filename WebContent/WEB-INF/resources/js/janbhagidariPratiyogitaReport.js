@@ -20,15 +20,20 @@ $( document ).ready(function(){
 						$('#popupreport').modal('show');
 						$('#popupreport #popupreporttitle').html('List of NGO');
 						var i=1;
-						
+						var name="";
 						if(Object.keys(data).length>0)
 						{
 							for ( var key in data) 
 							{
 								if (data.hasOwnProperty(key)) 
 								{
+									if(name!=data[key].ngo_name)
 										tblData+="<tr><td>"+data[key].ngo_name+"</td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
-								}		
+									else
+										tblData+="<tr><td></td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
+								
+										name=data[key].ngo_name;
+								}
 							}
 						}
 						
