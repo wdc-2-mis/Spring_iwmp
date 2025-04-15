@@ -519,6 +519,9 @@ display: none; /* Hidden by default */
 							
  		<c:set var="previousPratiyogitaId" value="" />
 <c:set var="serialNumber" value="1" />
+<c:set var="st" value="" />
+               <c:set var="proj" value="" />
+               <c:set var="dist" value="" />
 <c:forEach items="${dataList}" var="data" varStatus="count">
     <tr>
         <td>
@@ -533,13 +536,37 @@ display: none; /* Hidden by default */
             <c:set var="previousPratiyogitaId" value="${data.pratiyogita_id}" />
         </td>
 
-        <%-- <c:if test="${data.pratiyogita_id == previousPratiyogitaId}">
-            <td class="text-right"></td>
-        </c:if> --%>
-
-        <td class="text-right"><c:out value="${data.stname}" /></td>
-        <td class="text-right"><c:out value="${data.districtname}" /></td>
-        <td class="text-right"><c:out value="${data.projname}" /></td>
+<c:choose>
+									<c:when test="${st ne data.stname}">
+										<c:set var="st" value="${data.stname}" />
+										<td> <c:out value="${data.stname}" /></td>
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+								
+								<c:choose>
+									<c:when test="${dist ne data.districtname}">
+										<c:set var="dist" value="${data.districtname}" />
+										<td> <c:out value="${data.districtname}" /></td>
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>
+							<c:choose>
+									<c:when test="${proj ne data.projname}">
+										<c:set var="proj" value="${data.projname}" />
+										<td> <c:out value="${data.projname}" /></td>
+									</c:when>	
+								<c:otherwise>
+										<td></td>
+								</c:otherwise>
+								</c:choose>	
+        <%-- <td class="text-right"><c:out value="${data.stname}" /></td>
+        <td class="text-right"><c:out value="${data.districtname}" /></td> 
+        <td class="text-right"><c:out value="${data.projname}" /></td>--%>
         <td class="text-right"><c:out value="${data.nogp}" /></td>
         <td class="text-right"><c:out value="${data.novillage}" /></td>
         <td class="text-right"><c:out value="${data.projarea}" /></td>
