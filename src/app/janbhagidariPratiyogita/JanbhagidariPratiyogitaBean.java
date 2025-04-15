@@ -37,6 +37,25 @@ public class JanbhagidariPratiyogitaBean {
 	private String swckgp;
 	private String swck_gp_names;
 	private String ngo_names;
+	private String gpnames;
+	private String villnames;
+	
+	private int stcode;
+	private String distname;
+	private String proj_name;
+	private int no_swck_gp;
+	private int no_ngo_name;
+	private int no_ngo_gp;
+	private int no_ngo_vill;
+	private int no_gp;
+	private int no_village;
+	private String proj_outlay;
+	private String proj_area;
+	private int fund_outlay;
+	private String fund_expenditure;
+	private String fund_per_exp;
+	
+	
 	
 	public int getStcode() {
 		return stcode;
@@ -122,24 +141,6 @@ public class JanbhagidariPratiyogitaBean {
 	public void setFund_per_exp(String fund_per_exp) {
 		this.fund_per_exp = fund_per_exp;
 	}
-	private String gpnames;
-	private String villnames;
-	
-	private int stcode;
-	private String distname;
-	private String proj_name;
-	private int no_swck_gp;
-	private int no_ngo_name;
-	private int no_ngo_gp;
-	private int no_ngo_vill;
-	private int no_gp;
-	private int no_village;
-	private String proj_outlay;
-	private String proj_area;
-	private int fund_outlay;
-	private String fund_expenditure;
-	private String fund_per_exp;
-	
 	
 	
 	public String getProject() {
