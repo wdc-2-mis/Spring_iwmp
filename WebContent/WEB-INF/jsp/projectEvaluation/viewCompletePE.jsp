@@ -192,12 +192,12 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
                         <td class="text-right"><b><c:out value="a"/></b></td>
                         <td><b><c:out value="Whether DPR approved by SLNA"/></b></td>
                         <td>
-                             <c:if test="${dpr == 'P'.charAt(0)}">
-                             Partially
+                             <c:if test="${dpr == 'N'.charAt(0)}">
+                             No
                             
                            </c:if>
-                            <c:if test="${dpr == 'F'.charAt(0)}">
-                             Fully
+                            <c:if test="${dpr == 'Y'.charAt(0)}">
+                             Yes
                            </c:if>
                         </td>
                         <td>${dprremark}</td>
@@ -206,11 +206,11 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
                         <td class="text-right"><b><c:out value="b"/></b></td>
                         <td><b><c:out value="Whether all manpower positions in place at"/></b></td>
                         <td>
-                         <c:if test="${mp == 'F'.charAt(0)}">
-                             Fully
+                         <c:if test="${mp == 'Y'.charAt(0)}">
+                             Yes
                             </c:if>
-                            <c:if test="${mp == 'P'.charAt(0)}">
-                             Partially
+                            <c:if test="${mp == 'N'.charAt(0)}">
+                             No
                             </c:if>
                             
                         </td>
@@ -645,232 +645,275 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 					</c:forEach>
 	</table>
 	
-			<table cellspacing="0" class="table"   width="auto">
-	<thead>
-	<tr>
-	<th colspan="24" ><center><h4><u>No. of Man-days, Farmer and Water Table Details</u></h4></center></th>
-	</tr>
-	</thead>
-	<thead>
-		<tr>
-	    <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
-        <th rowspan="5" style="text-align:left; vertical-align: middle;">Indicators</th>
-        <th colspan="2" style="text-align:center; vertical-align: middle;">Project Area</th>
-        <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
-        <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
-      	</tr>
-      	<tr>
-        <th style="text-align:center; vertical-align: middle;">Pre Project Status(Aggregate)</th>
-        <th style="text-align:center; vertical-align: middle;">Mid Project Status(Aggregate)</th>
-        </tr>
-      </thead>
-       <tr>
-        	<td><b><c:out value="1." /></b></td>
-			<td><b> <c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)" /></b></td>
-			<td>${pre_farmer_income}</td>
-			<td>${mid_farmer_income}</td>
-			<td>${control_farmer_income}</td>
-			<td>${remark_farmer_income}</td>
-	 </tr> 
-	 
-	 <tr>
-        	<td><b><c:out value="2." /></b></td>
-			<td><b> <c:out value="No. of Farmers Benefited" /></b></td>
-			<td colspan="2">${farmer_benefited}</td>
-			<td>${control_farmer_benefited}</td>
-			<td>${remark_farmer_benefited}</td>
-	 </tr> 
-	  	
-	 <tr>
-        	<td><b><c:out value="3." /></b></td>
-			<td><b> <c:out value="No. of Persondays Generated (man-days)" /></b></td>
-			<td colspan="2">${mandays_generated}</td>
-			<td>${control_mandays_generated}</td>
-			<td>${remark_mandays_generated}</td>
-	 </tr>
-	 
-	 <tr>
-        	<td><b><c:out value="4." /></b></td>
-			<td><b> <c:out value="Average depth of Water table in dug wells (mts.)- Summer Season" /></b></td>
-			<td>${pre_dug_well}</td>
-			<td>${mid_dug_well}</td>
-			<td>${control_dug_well}</td>
-			<td>${remark_dug_well}</td>
-	 </tr> 
-	 
-	 <tr>
-        	<td><b><c:out value="5." /></b></td>
-			<td><b> <c:out value="Average depth of Water table in tube wells (mts.)- Summer Season" /></b></td>
-			<td>${pre_tube_well}</td>
-			<td>${mid_tube_well}</td>
-			<td>${control_tube_well}</td>
-			<td>${remark_tube_well}</td>
-	 </tr> 
-	   	
-	</table>	
+	<table cellspacing="0" class="table" width="auto" border="1">
+  <thead>
+    <tr>
+      <th colspan="6" style="text-align: center;">
+        <h4><u>No. of Man-days, Farmer and Water Table Details</u></h4>
+      </th>
+    </tr>
+    <tr>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Indicators</th>
+      <th colspan="2" style="text-align:center; vertical-align: middle;">Project Area</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
+    </tr>
+    <tr>
+      <th style="text-align:center; vertical-align: middle;">Pre Project Status (Aggregate)</th>
+      <th style="text-align:center; vertical-align: middle;">Mid Project Status (Aggregate)</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td><b><c:out value="1." /></b></td>
+      <td><b><c:out value="Farmer`s Average Household Income per Annum (Rs. in Lakhs)" /></b></td>
+      <td>${pre_farmer_income}</td>
+      <td>${mid_farmer_income}</td>
+      <td>${control_farmer_income}</td>
+      <td>${remark_farmer_income}</td>
+    </tr>
+
+    <tr>
+      <td><b><c:out value="2." /></b></td>
+      <td><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season" /></b></td>
+      <td>${pre_dug_well}</td>
+      <td>${mid_dug_well}</td>
+      <td>${control_dug_well}</td>
+      <td>${remark_dug_well}</td>
+    </tr>
+
+    <tr>
+      <td><b><c:out value="3." /></b></td>
+      <td><b><c:out value="Average depth of Water table in tube wells (mts.)- Summer Season" /></b></td>
+      <td>${pre_tube_well}</td>
+      <td>${mid_tube_well}</td>
+      <td>${control_tube_well}</td>
+      <td>${remark_tube_well}</td>
+    </tr>
+    
+     <tr>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">S.No.</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Indicators</th>
+      <th colspan="2" style="text-align:center; vertical-align: middle;">Project Area</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Controlled Area</th>
+      <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
+    </tr>
+    <tr>
+<!--       <th style="text-align:center; vertical-align: middle;">Pre Project Status (Aggregate)</th> -->
+<!--       <th style="text-align:center; vertical-align: middle;">Mid Project Status (Aggregate)</th> -->
+    </tr>
+    
+     <tr>
+      <td><b><c:out value="4." /></b></td>
+      <td><b><c:out value="No. of Farmers Benefited" /></b></td>
+      <td colspan="2">${farmer_benefited}</td>
+      <td>${control_farmer_benefited}</td>
+      <td>${remark_farmer_benefited}</td>
+    </tr>
+
+    <tr>
+      <td><b><c:out value="5." /></b></td>
+      <td><b><c:out value="No. of Persondays Generated (man-days)" /></b></td>
+      <td colspan="2">${mandays_generated}</td>
+      <td>${control_mandays_generated}</td>
+      <td>${remark_mandays_generated}</td>
+    </tr>
+  </tbody>
+</table>
 	
-	 	<table cellspacing="0" class="table"   width="auto">
-	<thead>
-	<tr>
-	<th colspan="24" ><center><h4><u>Production Details</u></h4></center></th>
-	</tr>
-	</thead>
 	
-	<thead>
-		<tr>
-	      <th rowspan="2" class="text-center"><b>Sl.No.</b></th>
-		  <th rowspan="2" class="text-center"><b>Production Details</b></th>
-		  <th colspan="2" class="text-center"><b>Project Area Details</b></th>
-		  <th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
-		  <th rowspan="2" class="text-center"><b>Remarks</b></th>
-      	</tr>
-      	<tr>	
-			<th class="text-center"><b>Pre-Project Status (Aggregate)</b></th>
-			<th class="text-center"><b>Mid-Project Status (Aggregate)</b></th>
-		</tr>
-      </thead>
-				<c:forEach items="${wdcPrdDtlList}" var="list">
-							<tr>
-								<td><b><c:out value="1." /></b></td>
-								<td><b><c:out value="Milk Production of Milch Cattle(Kl/Yr.)" /></b></td>
-								<td>${list.preMilchCattle}</td>
-								<td>${list.midMilchCattle}</td>
-								<td>${list.controlMilchCattle}</td>
-								<td>${list.remarkMilchCattle}</td>
-							</tr>
-							<tr>
-								<td><b><c:out value="2." /></b></td>
-								<td><b> <c:out value="Fodder Production(Qt./Yr.)" /></b></td>
-								<td>${list.preFodderProduction}</td>
-								<td>${list.midFodderProduction}</td>
-								<td>${list.controlFodderProduction}</td>
-								<td>${list.remarkFodderProduction}</td>
-							</tr>
+	 <table cellspacing="0" class="table" width="auto" border="1">
+  <thead>
+    <tr>
+      <th colspan="6" style="text-align: center;">
+        <h4><u>Production Details</u></h4>
+      </th>
+    </tr>
+    <tr>
+      <th rowspan="2" class="text-center"><b>Sl. No.</b></th>
+      <th rowspan="2" class="text-center"><b>Production Details</b></th>
+      <th colspan="2" class="text-center"><b>Project Area Details</b></th>
+      <th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+      <th rowspan="2" class="text-center"><b>Remarks</b></th>
+    </tr>
+    <tr>
+      <th class="text-center"><b>Pre-Project Status (Aggregate)</b></th>
+      <th class="text-center"><b>Mid-Project Status (Aggregate)</b></th>
+    </tr>
+  </thead>
 
-							<tr>
-								<td><b><c:out value="3." /></b></td>
-								<td><b> <c:out value="Annual Migration from rural to urban area in project area(Nos.)" /></b></td>
-								<td>${list.preRuralUrban}</td>
-								<td>${list.midRuralUrban}</td>
-								<td>${list.controlRuralUrban}</td>
-								<td>${list.remarkRuralUrban}</td>
-							</tr>
+  <tbody>
+    <c:forEach items="${wdcPrdDtlList}" var="list">
+      <tr>
+        <td><b>1.</b></td>
+        <td><b>Milk Production of Milch Cattle (Kl/Yr.)</b></td>
+        <td>${list.preMilchCattle}</td>
+        <td>${list.midMilchCattle}</td>
+        <td>${list.controlMilchCattle}</td>
+        <td>${list.remarkMilchCattle}</td>
+      </tr>
 
-							<tr>
-								<td><b><c:out value="4." /></b></td>
-								<td><b> <c:out value="No. of springs rejuvenated(if applicable)" /></b></td>
-								<td colspan="2">${list.springRejuvenated}</td>
-								<td>${list.controlSpringRejuvenated}</td>
-								<td>${list.remarkSpringRejuvenated}</td>
-							</tr>
+      <tr>
+        <td><b>2.</b></td>
+        <td><b>Fodder Production (Qt./Yr.)</b></td>
+        <td>${list.preFodderProduction}</td>
+        <td>${list.midFodderProduction}</td>
+        <td>${list.controlFodderProduction}</td>
+        <td>${list.remarkFodderProduction}</td>
+      </tr>
 
+      <tr>
+        <td><b>3.</b></td>
+        <td><b>Annual Migration from rural to urban area in project area (Nos.)</b></td>
+        <td>${list.preRuralUrban}</td>
+        <td>${list.midRuralUrban}</td>
+        <td>${list.controlRuralUrban}</td>
+        <td>${list.remarkRuralUrban}</td>
+      </tr>
+ <tr>
+        <td><b>4.</b></td>
+        <td><b>Average Annual Turnover of FPOs (Rs.)</b></td>
+        <td>${list.preTrunoverFpo}</td>
+        <td>${list.midTrunoverFpo}</td>
+        <td>${list.controlTrunoverFpo}</td>
+        <td>${list.remarkTrunoverFpo}</td>
+      </tr>
 
-							<tr>
-								<td><b><c:out value="5." /></b></td>
-								<td><b><c:out value="No. of persons benefitted due to rejuvenation of springs" /></b></td>
-								<td colspan="2">${list.personBenefitte}</td>
-								<td>${list.controlPersonBenefitte}</td>
-								<td>${list.remarkPersonBenefitte}</td>
-							</tr>
-							<tr>
-								<td><b><c:out value="6." /></b></td>
-								<td><b> <c:out value="No. of Community Based Organization" /></b></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							
-							<tr>
-								<td style="text-align: right;"><b><c:out value="a." /></b></td>
-								<td><b> <c:out value="SHG" /></b></td>
-								
-								<td colspan="2">${list.communityBasedShg}</td>
-								<td>${list.controlCommunityBasedShg}</td>
-								<td>${list.remarkCommunityBasedShg}</td>
-							</tr>
+      <tr>
+        <td><b>5.</b></td>
+        <td><b>Average Annual Net Income of an FPO Member (Rs.)</b></td>
+        <td>${list.preIncomeFpo}</td>
+        <td>${list.midIncomeFpo}</td>
+        <td>${list.controlIncomeFpo}</td>
+        <td>${list.remarkIncomeFpo}</td>
+      </tr>
 
-							<tr>
-								<td style="text-align: right;"><b><c:out value="b." /></b></td>
-								<td><b> <c:out value="FPO" /></b></td>
-								<td colspan="2">${list.communityBasedFpo}</td>
-								<td>${list.controlCommunityBasedFpo}</td>
-								<td>${list.remarkCommunityBasedFpo}</td>
-							</tr>
+      <tr>
+        <td><b>6.</b></td>
+        <td><b>Average Annual Net Income of an SHG Member (Rs.)</b></td>
+        <td>${list.preAnnualIncomeShg}</td>
+        <td>${list.midAnnualIncomeShg}</td>
+        <td>${list.controlAnnualIncomeShg}</td>
+        <td>${list.remarkAnnualIncomeShg}</td>
+      </tr>
+      
 
-							<tr>
-								<td style="text-align: right;"><b><c:out value="c." /></b></td>
-								<td><b> <c:out value="UG" /></b></td>
-								<td colspan="2">${list.communityBasedUg}</td>
-								<td>${list.controlCommunityBasedUg}</td>
-								<td>${list.remarkCommunityBasedUg}</td>
-							</tr>
-							
-							<tr>
-								<td><b><c:out value="7." /></b></td>
-								<td><b> <c:out value="No. of Members in Community Based Organization" /></b></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-							
+      
+        <tr>
+      <th rowspan="2" class="text-center"><b>Sl. No.</b></th>
+      <th rowspan="2" class="text-center"><b>Production Details</b></th>
+      <th colspan="2" class="text-center"><b>Project Area Details</b></th>
+      <th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+      <th rowspan="2" class="text-center"><b>Remarks</b></th>
+    </tr>
+    <tr>
+<!--       <th class="text-center"><b>Pre-Project Status (Aggregate)</b></th> -->
+<!--       <th class="text-center"><b>Mid-Project Status (Aggregate)</b></th> -->
+    </tr>
+    
+    <tr>
+        <td><b>7.</b></td>
+        <td><b>No. of springs rejuvenated (if applicable)</b></td>
+        <td colspan="2">${list.springRejuvenated}</td>
+        <td>${list.controlSpringRejuvenated}</td>
+        <td>${list.remarkSpringRejuvenated}</td>
+      </tr>
 
-							<tr>
-								<td style="text-align: right;"><b><c:out value="a." /></b></td>
-								<td><b> <c:out value="SHG" /></b></td>
-								
-								<td colspan="2">${list.memberBasedShg}</td>
-								<td>${list.controlMemberBasedShg}</td>
-								<td>${list.remarkMemberBasedShg}</td>
-							</tr>
+      <tr>
+        <td><b>8.</b></td>
+        <td><b>No. of persons benefitted due to rejuvenation of springs</b></td>
+        <td colspan="2">${list.personBenefitte}</td>
+        <td>${list.controlPersonBenefitte}</td>
+        <td>${list.remarkPersonBenefitte}</td>
+      </tr>
 
-							<tr>
-								<td style="text-align: right;"><b><c:out value="b." /></b></td>
-								<td><b> <c:out value="FPO" /></b></td>
-								<td colspan="2">${list.memberBasedFpo}</td>
-								<td>${list.controlMemberBasedFpo}</td>
-								<td>${list.remarkMemberBasedFpo}</td>
-							</tr>
+      <!-- Community Based Organization -->
+      <tr>
+        <td><b>9.</b></td>
+        <td><b>No. of Community Based Organizations</b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
 
-							<tr>
-								<td style="text-align: right;"><b><c:out value="c." /></b></td>
-								<td><b> <c:out value="UG" /></b></td>
-								<td colspan="2">${list.memberBasedUg}</td>
-								<td>${list.controlMemberBasedUg}</td>
-								<td>${list.remarkMemberBasedUg}</td>
-							</tr>
-							
-						<tr>
-								<td><b><c:out value="8." /></b></td>
-								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td>
-								<td>${list.preTrunoverFpo}</td>
-								<td>${list.midTrunoverFpo}</td>
-								<td>${list.controlTrunoverFpo}</td>
-								<td>${list.remarkTrunoverFpo}</td>
-							</tr>
+      <tr>
+        <td style="text-align: right;"><b>a.</b></td>
+        <td><b>SHG</b></td>
+        <td colspan="2">${list.communityBasedShg}</td>
+        <td>${list.controlCommunityBasedShg}</td>
+        <td>${list.remarkCommunityBasedShg}</td>
+      </tr>
 
-							<tr>
-								<td><b><c:out value="9." /></b></td>
-								<td><b> <c:out value="Average annual net income of an FPO Member(Rs.)" /></b></td>
-								<td>${list.preIncomeFpo}</td>
-								<td>${list.midIncomeFpo}</td>
-								<td>${list.controlIncomeFpo}</td>
-								<td>${list.remarkIncomeFpo}</td>
-							</tr>
+      <tr>
+        <td style="text-align: right;"><b>b.</b></td>
+        <td><b>FPO</b></td>
+        <td colspan="2">${list.communityBasedFpo}</td>
+        <td>${list.controlCommunityBasedFpo}</td>
+        <td>${list.remarkCommunityBasedFpo}</td>
+      </tr>
 
-							<tr>
-								<td><b><c:out value="10." /></b></td>
-								<td><b><c:out
-											value="Average annual net income of an SHG Member(Rs.)" /></b>
-								</td>
-								<td>${list.preAnnualIncomeShg}</td>
-								<td>${list.midAnnualIncomeShg}</td>
-								<td>${list.controlAnnualIncomeShg}</td>
-								<td>${list.remarkAnnualIncomeShg}</td>
-							</tr>
-						</c:forEach>
-	</table>
+      <tr>
+        <td style="text-align: right;"><b>c.</b></td>
+        <td><b>UG</b></td>
+        <td colspan="2">${list.communityBasedUg}</td>
+        <td>${list.controlCommunityBasedUg}</td>
+        <td>${list.remarkCommunityBasedUg}</td>
+      </tr>
+  <tr>
+        <td style="text-align: right;"><b></b></td>
+        <td><b>	Total No. of Community Based Organization</b></td>
+        <td colspan="2">${list.communityBasedUg+ list.communityBasedFpo+ list.communityBasedShg}</td>
+        <td>${list.controlCommunityBasedUg + list.controlCommunityBasedFpo + list.controlCommunityBasedShg}</td>
+        <td></td>
+      </tr>
+      <!-- Members in Community Based Organization -->
+      <tr>
+        <td><b>10.</b></td>
+        <td><b>No. of Members in Community Based Organizations</b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;"><b>a.</b></td>
+        <td><b>SHG</b></td>
+        <td colspan="2">${list.memberBasedShg}</td>
+        <td>${list.controlMemberBasedShg}</td>
+        <td>${list.remarkMemberBasedShg}</td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;"><b>b.</b></td>
+        <td><b>FPO</b></td>
+        <td colspan="2">${list.memberBasedFpo}</td>
+        <td>${list.controlMemberBasedFpo}</td>
+        <td>${list.remarkMemberBasedFpo}</td>
+      </tr>
+
+      <tr>
+        <td style="text-align: right;"><b>c.</b></td>
+        <td><b>UG</b></td>
+        <td colspan="2">${list.memberBasedUg}</td>
+        <td>${list.controlMemberBasedUg}</td>
+        <td>${list.remarkMemberBasedUg}</td>
+      </tr>
+ <tr>
+        <td style="text-align: right;"><b></b></td>
+        <td><b>	Total No. of Members Community Based Organization</b></td>
+        <td colspan="2">${list.memberBasedUg+ list.memberBasedFpo+ list.memberBasedShg}</td>
+        <td>${list.controlMemberBasedUg + list.controlMemberBasedFpo + list.controlMemberBasedShg}</td>
+        <td></td>
+      </tr>
+     
+    </c:forEach>
+  </tbody>
+</table>
+
 	
 	<table cellspacing="0" class="table"   width="auto">
 	<thead>
