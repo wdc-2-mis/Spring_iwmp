@@ -37,8 +37,110 @@ public class JanbhagidariPratiyogitaBean {
 	private String swckgp;
 	private String swck_gp_names;
 	private String ngo_names;
+	
+	public int getStcode() {
+		return stcode;
+	}
+	public void setStcode(int stcode) {
+		this.stcode = stcode;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
+	}
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
+	}
+	public int getNo_swck_gp() {
+		return no_swck_gp;
+	}
+	public void setNo_swck_gp(int no_swck_gp) {
+		this.no_swck_gp = no_swck_gp;
+	}
+	public int getNo_ngo_name() {
+		return no_ngo_name;
+	}
+	public void setNo_ngo_name(int no_ngo_name) {
+		this.no_ngo_name = no_ngo_name;
+	}
+	public int getNo_ngo_gp() {
+		return no_ngo_gp;
+	}
+	public void setNo_ngo_gp(int no_ngo_gp) {
+		this.no_ngo_gp = no_ngo_gp;
+	}
+	public int getNo_ngo_vill() {
+		return no_ngo_vill;
+	}
+	public void setNo_ngo_vill(int no_ngo_vill) {
+		this.no_ngo_vill = no_ngo_vill;
+	}
+	public int getNo_gp() {
+		return no_gp;
+	}
+	public void setNo_gp(int no_gp) {
+		this.no_gp = no_gp;
+	}
+	public int getNo_village() {
+		return no_village;
+	}
+	public void setNo_village(int no_village) {
+		this.no_village = no_village;
+	}
+	public String getProj_outlay() {
+		return proj_outlay;
+	}
+	public void setProj_outlay(String proj_outlay) {
+		this.proj_outlay = proj_outlay;
+	}
+	public String getProj_area() {
+		return proj_area;
+	}
+	public void setProj_area(String proj_area) {
+		this.proj_area = proj_area;
+	}
+	public int getFund_outlay() {
+		return fund_outlay;
+	}
+	public void setFund_outlay(int fund_outlay) {
+		this.fund_outlay = fund_outlay;
+	}
+	public String getFund_expenditure() {
+		return fund_expenditure;
+	}
+	public void setFund_expenditure(String fund_expenditure) {
+		this.fund_expenditure = fund_expenditure;
+	}
+	public String getFund_per_exp() {
+		return fund_per_exp;
+	}
+	public void setFund_per_exp(String fund_per_exp) {
+		this.fund_per_exp = fund_per_exp;
+	}
 	private String gpnames;
 	private String villnames;
+	
+	private int stcode;
+	private String distname;
+	private String proj_name;
+	private int no_swck_gp;
+	private int no_ngo_name;
+	private int no_ngo_gp;
+	private int no_ngo_vill;
+	private int no_gp;
+	private int no_village;
+	private String proj_outlay;
+	private String proj_area;
+	private int fund_outlay;
+	private String fund_expenditure;
+	private String fund_per_exp;
+	
+	
 	
 	public String getProject() {
 		return project;
