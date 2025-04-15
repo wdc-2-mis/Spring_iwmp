@@ -10,6 +10,15 @@ public class ProjectEvaluationBean {
 	private Integer st_code;
 	private Integer district;
 	private Integer project;
+	private Integer block;
+	private Integer gp;
+	private Integer village;
+	private Integer completed;
+	private Integer process;
+	private Integer not_entered;
+	private Integer total_dist;
+	private Integer total_project;
+	
 	private BigDecimal sanctioned_cost;
 	private BigDecimal central;
 	private BigDecimal state;
@@ -237,6 +246,55 @@ public class ProjectEvaluationBean {
 	public void setProject(Integer project) {
 		this.project = project;
 	}
+	public Integer getBlock() {
+		return block;
+	}
+	public void setBlock(Integer block) {
+		this.block = block;
+	}
+	public Integer getGp() {
+		return gp;
+	}
+	public void setGp(Integer gp) {
+		this.gp = gp;
+	}
+	public Integer getVillage() {
+		return village;
+	}
+	public void setVillage(Integer village) {
+		this.village = village;
+	}
+	public Integer getCompleted() {
+		return completed;
+	}
+	public void setCompleted(Integer completed) {
+		this.completed = completed;
+	}
+	public Integer getProcess() {
+		return process;
+	}
+	public void setProcess(Integer process) {
+		this.process = process;
+	}
+	public Integer getNot_entered() {
+		return not_entered;
+	}
+	public void setNot_entered(Integer not_entered) {
+		this.not_entered = not_entered;
+	}
+	public Integer getTotal_dist() {
+		return total_dist;
+	}
+	public void setTotal_dist(Integer total_dist) {
+		this.total_dist = total_dist;
+	}
+	public Integer getTotal_project() {
+		return total_project;
+	}
+	public void setTotal_project(Integer total_project) {
+		this.total_project = total_project;
+	}
+	
 	public BigDecimal getSanctioned_cost() {
 		return sanctioned_cost;
 	}

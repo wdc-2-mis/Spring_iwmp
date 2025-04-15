@@ -136,4 +136,6 @@ public interface ProjectEvaluationDAO {
 
 	LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode);
 	
+	List<ProjectEvaluationBean> getStateMidProjEvoluation();
+	
 }

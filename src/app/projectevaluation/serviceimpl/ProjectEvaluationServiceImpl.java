@@ -310,4 +310,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode) {
 		return PEDAO.getProjProfileBlock(pcode);
 	}
+	
+	@Override
+	public List<ProjectEvaluationBean> getStateMidProjEvoluation() {
+		return PEDAO.getStateMidProjEvoluation();
+	}
+	
 }
