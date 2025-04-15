@@ -4057,7 +4057,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph4 = null; 
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-			paragraph3 = new Paragraph("Project Evaluation - View & Complete ", f3);
+			paragraph3 = new Paragraph("Mid Term Project Evaluation - View & Complete ", f3);
 			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+     ", Month Name : "  + mname+  ",  Financial Year : " +  fname, bf9);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -4253,7 +4253,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMilletsremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Others", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Others  " +"("+ wdcCrpDtlList.get(0).getOthercrop()+")", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_other().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -4274,7 +4274,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getNetSownremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Cropping Intensity", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Cropping Intensity (%)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPrecroppingIntensity().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMidcroppingIntensity().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_cropping_intensity().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -4393,7 +4393,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkOilSeed(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "f", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Other Crops", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Other Crops "+"(" +wdcCrpDtlList3.get(0).getOthercrop()+")" , Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -4627,7 +4627,7 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "	Is there a system of auditing of status of natural resources intervals", Element.ALIGN_LEFT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, "	Is there a system of auditing of status of natural resources at intervals", Element.ALIGN_LEFT, 2, 1, bf8);
 					
 					if(ecoperlist.get(0).getNatural_resource()==true) {
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4681,7 +4681,7 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCellHeader(table, "Equity Aspect", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Aspect Description", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Equity Aspect Description", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
