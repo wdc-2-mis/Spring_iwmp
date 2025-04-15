@@ -40,7 +40,14 @@ public interface JanbhagidariPratiyogitaService {
 
 	boolean isNGONameExists(String ngoName, int projectId);
 
+	List<JanbhagidariPratiyogitaBean> getListJanbhagidariPratiyogitaDetails();
 	
+	List<JanbhagidariPratiyogitaBean> janbhagidariPratiyogitaALLReport(String State, String district, String project);
+	
+	List<JanbhagidariPratiyogitaBean> getListofNGONameWithGPandVillage(Integer project);
+	
+	List<JanbhagidariPratiyogitaBean> getListofswckGPand(Integer projid);
+
 	
 	
 	

@@ -51,6 +51,19 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${getJanbhagidariPratiyogitaCompleteList}")
 	String getJanbhagidariPratiyogitaCompleteList;
 	
+	@Value("${getJanbhagidariPratiyogitaReport}")
+	String getJanbhagidariPratiyogitaReport;
+	
+	@Value("${janbhagidariPratiyogitaALLReport}")
+	String janbhagidariPratiyogitaALLReport;
+	
+	@Value("${janbhagidariPratiyogitaPopupNGO}")
+	String janbhagidariPratiyogitaPopupNGO;
+	
+	@Value("${janbhagidariPratiyogitaPopupNGOGP}")
+	String janbhagidariPratiyogitaPopupNGOGP;
+
+	
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
 		
@@ -574,6 +587,148 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 
 	    return ngoNames.stream().anyMatch(existingName -> existingName.equalsIgnoreCase(ngoName));
 	}
+	
+	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListJanbhagidariPratiyogitaDetails() {
+		
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariPratiyogitaReport;
+				query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override   
+	public List<JanbhagidariPratiyogitaBean> janbhagidariPratiyogitaALLReport(String State, String district,
+			String project) {
+		
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=janbhagidariPratiyogitaALLReport;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcd", Integer.parseInt( State));
+				query.setInteger("distcd", Integer.parseInt(district));
+				query.setInteger("projcd", Integer.parseInt(project));
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListofNGONameWithGPandVillage(Integer project) {
+
+
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+			 // query = session.createSQLQuery(hql);    getGroundWaterTable
+				hql=janbhagidariPratiyogitaPopupNGO;
+				query = session.createSQLQuery(hql);
+				query.setInteger("projectId", project);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListofswckGPand(Integer projid) {
+		
+
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+			 // query = session.createSQLQuery(hql);    getGroundWaterTable
+				hql=janbhagidariPratiyogitaPopupNGOGP;
+				query = session.createSQLQuery(hql);
+				query.setInteger("projectId", projid);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	
+	
 
 
 }

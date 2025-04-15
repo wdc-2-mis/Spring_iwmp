@@ -133,5 +133,40 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		// TODO Auto-generated method stub
 		return dao.isNGONameExists(ngoName, projectId);
 	}
+	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListJanbhagidariPratiyogitaDetails() {
+		// TODO Auto-generated method stub
+		return dao.getListJanbhagidariPratiyogitaDetails();
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> janbhagidariPratiyogitaALLReport(String State, String district,
+			String project) {
+		// TODO Auto-generated method stub
+		return dao.janbhagidariPratiyogitaALLReport(State, district, project);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListofNGONameWithGPandVillage(Integer project) {
+		// TODO Auto-generated method stub
+		return dao.getListofNGONameWithGPandVillage(project);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getListofswckGPand(Integer projid) {
+		// TODO Auto-generated method stub
+		return dao.getListofswckGPand(projid);
+	}
+
 
 }
