@@ -145,7 +145,11 @@ public class JanbhagidariPratiyogitaController {
 		return map; 
 	}
 	
-
+	@RequestMapping(value = "/checkNGOName", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkNGOName(@RequestParam("ngoName") String ngoName, @RequestParam("projectId") int projectId) {
+        return serk.isNGONameExists(ngoName, projectId);
+    }
 	
 	@RequestMapping(value = "/saveJanbhagidariPratiyogita1", method = RequestMethod.POST)
 	public ModelAndView saveJanbhagidariPratiyogita(HttpServletRequest request, HttpServletResponse response,

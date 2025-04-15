@@ -125,4 +125,13 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		return dao.getTotalNoofVill(dCode);
 	}
 
+
+
+
+	@Override
+	public boolean isNGONameExists(String ngoName, int projectId) {
+		// TODO Auto-generated method stub
+		return dao.isNGONameExists(ngoName, projectId);
+	}
+
 }

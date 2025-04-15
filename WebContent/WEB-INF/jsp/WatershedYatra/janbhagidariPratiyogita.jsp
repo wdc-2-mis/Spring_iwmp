@@ -14,6 +14,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 <script type="text/javascript">
 
+function validatePercentage(input) {
+    let val = input.value.trim();
+
+    // Allow only numbers and decimal point
+    if (!/^\d*\.?\d{0,4}$/.test(val)) {
+        input.value = val.slice(0, -1);  // Remove last character if invalid
+        return;
+    }
+
+    let num = parseFloat(val);
+
+    if (val !== "" && (isNaN(num) || num < 0 || num > 100)) {
+        alert("Percentage must be between 0 and 100.");
+        input.value = "";
+    }
+}
+
 function getMultipleSelectedValue()
 {
   var x = document.getElementById("projectselect");	
@@ -216,6 +233,9 @@ display: none; /* Hidden by default */
   right: 20px;
 }
 
+.is-invalid {
+    border: 2px solid red !important;
+}
 </style>
 
 </head>
@@ -437,7 +457,7 @@ display: none; /* Hidden by default */
      	<tr>
      		<td>Percentage of Expenditure (%)</td>
      		<td><input type="text" id="expper" name="expper" autocomplete="off"
-								onfocusin="decimalToFourPlace(event)" maxlength="5" required /></td>
+								onfocusin="decimalToFourPlace(event)" oninput="validatePercentage(this)" maxlength="5" required /></td>
      	</tr>
      	
      	
@@ -497,35 +517,47 @@ display: none; /* Hidden by default */
 							</tr>
 						</thead>
 							
- 						<c:forEach items="${dataList}" var="data" varStatus="count">
- 							<tr>
-								
-								<td>
- 								<input type="checkbox" class="chkIndividualkd" id="${data.pratiyogita_id}"  name="${data.pratiyogita_id}" value="${data.pratiyogita_id}"/>
- 								<c:out value='${count.count}' />
- 								</td>
- 								
- 								<td class="text-right"> <c:out value="${data.stname}" /></td>	
- 								<td class="text-right"> <c:out value="${data.districtname}" /></td>
- 								<td class="text-right"> <c:out value="${data.projname}" /></td>
- 								<td class="text-right"> <c:out value="${data.nogp}" /></td>
-								<td class="text-right"> <c:out value="${data.novillage}" /></td>
-		 						<td class="text-right"> <c:out value="${data.projarea}" /></td>
-								<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
-								<td class="text-right"> <c:out value="${data.ngo_names}" /></td>
-								<td class="text-right"> <c:out value="${data.gpnames}" /></td>
-								<td class="text-right"> <c:out value="${data.villnames}" /></td>
-								<td class="text-right"> <c:out value="${data.swck_gp_names}" /></td>
- 								<td class="text-right"> <c:out value="${data.funoutlay}" /></td>
-								<td class="text-right"> <c:out value="${data.projexp}" /></td>
- 								<td class="text-right"> <c:out value="${data.expper}" /></td>
- 											
- 									
- 								
-					</tr>
-							
-					
- 						</c:forEach>
+ 		<c:set var="previousPratiyogitaId" value="" />
+<c:set var="serialNumber" value="1" />
+<c:forEach items="${dataList}" var="data" varStatus="count">
+    <tr>
+        <td>
+            <!-- Display checkbox only for the first occurrence of a unique pratiyogita_id -->
+            <c:if test="${data.pratiyogita_id != previousPratiyogitaId}">
+                <input type="checkbox" class="chkIndividualkd" id="${data.pratiyogita_id}" name="${data.pratiyogita_id}" value="${data.pratiyogita_id}"/>
+                <!-- Show serial number for first occurrence of each unique pratiyogita_id -->
+                <c:out value="${serialNumber}" />
+                <!-- Increment the serial number -->
+                <c:set var="serialNumber" value="${serialNumber + 1}" />
+            </c:if>
+            <c:set var="previousPratiyogitaId" value="${data.pratiyogita_id}" />
+        </td>
+
+        <%-- <c:if test="${data.pratiyogita_id == previousPratiyogitaId}">
+            <td class="text-right"></td>
+        </c:if> --%>
+
+        <td class="text-right"><c:out value="${data.stname}" /></td>
+        <td class="text-right"><c:out value="${data.districtname}" /></td>
+        <td class="text-right"><c:out value="${data.projname}" /></td>
+        <td class="text-right"><c:out value="${data.nogp}" /></td>
+        <td class="text-right"><c:out value="${data.novillage}" /></td>
+        <td class="text-right"><c:out value="${data.projarea}" /></td>
+        <td class="text-right"><c:out value="${data.projoutlay}" /></td>
+        <td class="text-right"><c:out value="${data.ngo_name}" /></td>
+        <td class="text-right"><c:out value="${data.gpnames}" /></td>
+        <td class="text-right"><c:out value="${data.villnames}" /></td>
+        <td class="text-right"><c:out value="${data.swck_gp_names}" /></td>
+        <td class="text-right"><c:out value="${data.funoutlay}" /></td>
+        <td class="text-right"><c:out value="${data.projexp}" /></td>
+        <td class="text-right"><c:out value="${data.expper}" /></td>
+    </tr>
+</c:forEach>
+ 		
+
+ 		
+ 		
+ 		
  						
  						<tr>
 								
@@ -595,7 +627,7 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.novillage}" /></td>
 		 						<td class="text-right"> <c:out value="${data.projarea}" /></td>
 								<td class="text-right"> <c:out value="${data.projoutlay}" /></td>
-								<td class="text-right"> <c:out value="${data.ngo_names}" /></td>
+								<td class="text-right"> <c:out value="${data.ngo_name}" /></td>
 								<td class="text-right"> <c:out value="${data.gpnames}" /></td>
 								<td class="text-right"> <c:out value="${data.villnames}" /></td>
 								<td class="text-right"> <c:out value="${data.swck_gp_names}" /></td>

@@ -32,4 +32,6 @@ public interface JanbhagidariPratiyogitaDao {
 	
 	Integer getTotalNoofVill(Integer dCode);
 
+	boolean isNGONameExists(String ngoName, int projectId);
+
 }

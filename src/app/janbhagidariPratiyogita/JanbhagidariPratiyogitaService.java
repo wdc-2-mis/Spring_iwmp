@@ -38,6 +38,8 @@ public interface JanbhagidariPratiyogitaService {
 	
 	Integer getTotalNoofVill(Integer dCode);
 
+	boolean isNGONameExists(String ngoName, int projectId);
+
 	
 	
 	

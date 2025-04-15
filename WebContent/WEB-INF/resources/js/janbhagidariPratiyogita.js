@@ -126,63 +126,251 @@ $(function() {
 				});
 	});			
 				
+	
+$(document).on('blur', '.name_ngo', function () {
+    var $input = $(this); // 👈 Save the reference to the input element
+    var ngoName = $input.val().trim();
+    var projectId = $('#projid').val();
+
+    if (!ngoName) return;
+
+    $.ajax({
+        url: "checkNGOName",
+        type: "POST",
+        data: {
+            ngoName: ngoName,
+            projectId: projectId
+        },
+        success: function (data) {
+            if (data) {
+                alert("This NGO name already exists. Please choose a different name.");
+                $input.val("");  // 👈 Clear the input field
+                $input.addClass('is-invalid');  // Add red border
+                $input.attr('title', 'Duplicate NGO name in database!');
+                toggleActionButtons(true);  // Disable buttons
+            } else {
+                $input.removeClass('is-invalid');
+                $input.removeAttr('title');
+                toggleActionButtons(false);  // Enable buttons
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
+
 				
-		$("#listvillageGPWiseTbody").on('click','.ddlgp',function () { 
-				//$('#loading').show();
-				$projectId = $('#projid option:selected').val();
-				var $this = $(this);
-				var gCode=[];
-				
-				var selectedOptions = $this.find("option:selected");
+	var scntDiv = $('#listvillageGPWiseTbody');
+var i = $('#listvillageGPWiseTbody tr').length;
+var j = 1;
+var arr = [];
 
-                gCode = selectedOptions.map(function () {
-                 return $(this).val();
-                }).get();
+// Function to check for duplicate NGO names and return the duplicates
+function getDuplicateNGONames() {
+    const ngoNames = [];
 
-                var gpNames = selectedOptions.map(function () {
-                 return $(this).text();
-                 }).get().join(", ");
+    $('#listvillageGPWiseTbody input[name^="name_ngo"]').each(function () {
+        let val = $(this).val().trim().toLowerCase();
+        if (val !== "") {
+            ngoNames.push(val);
+        }
+    });
 
-                var $td = $this.closest('td');
+    const nameCount = ngoNames.reduce((acc, name) => {
+        acc[name] = (acc[name] || 0) + 1;
+        return acc;
+    }, {});
 
-                $td.find('.selected-gp-list').remove();
+    // Get all duplicates by filtering out those with count greater than 1
+    const duplicates = Object.keys(nameCount).filter(name => nameCount[name] > 1);
 
-                $td.append(
-                     '<div class="selected-gp-list" style="margin-top: 5px; font-size: 14px; color: #333;">' +
-                     '<strong>Selected Gram Panchayat:</strong> ' + gpNames +
-                     '</div>'
-                        );
-    
-				var id = $(this).attr('id'); 
-				id=id.substring(id.lastIndexOf("p")+1,id.length);
-				//gCode.push($(this).val());
-			//	$('#name_ngo'+id).val("");
-			//	alert(id);
-				
-					$.ajax({  
-				        url:"getVILLofJanbhagidariPratiyogita",
-				        type: "post",  
-				        data: {gpid:gCode.toString(), project:$projectId},
-				        error:function(xhr,status,er){
-				            console.log(er);
-				        },
-				        success: function(data) {
-				console.log(data);
-				$('#loading').hide();
-				var $activity = $('#ddlvill'+id);
-						$activity.empty();
-				    	$activity.append('<option value="">--Select Village--</option>');
-						for ( var key in data) {
-							if (data.hasOwnProperty(key)) {
-									$activity.append('<option value='+key+'>' +data[key] + '</option>');
-							}
-						}
+    return duplicates.length > 0 ? duplicates : false;
+}
 
-				}
-				});
-				});			
-				
-	$("#listvillageGPWiseTbody").on('change', '.ddlvill', function () {
+// Function to disable or enable buttons
+function toggleActionButtons(disable) {
+    $('.btnAddRow').prop('disabled', disable);
+    $('.btnRemoveRow').prop('disabled', disable);
+}
+
+// Live duplicate check for red border without alert (for typing)
+$(document).on('input', '.name_ngo', function () {
+    let currentVal = $(this).val().trim().toLowerCase();
+    let count = 0;
+
+    $('.name_ngo').each(function () {
+        let val = $(this).val().trim().toLowerCase();
+        if (val === currentVal && val !== "") {
+            count++;
+        }
+    });
+
+    if (count > 1) {
+        $(this).addClass('is-invalid');
+        $(this).attr('title', 'Duplicate NGO name entered!');
+    } else {
+        $(this).removeClass('is-invalid');
+        $(this).removeAttr('title');
+    }
+
+    // Check for duplicates after typing
+    let duplicates = getDuplicateNGONames();
+    if (duplicates) {
+        alert("Duplicate NGO names found: " + duplicates.join(", "));
+        toggleActionButtons(true);  // Disable buttons
+
+        // Remove the last duplicate NGO name
+        $('.name_ngo').each(function () {
+            let val = $(this).val().trim().toLowerCase();
+            if (duplicates.includes(val)) {
+                // Check if the value is the last duplicate and clear it
+                if ($('.name_ngo').filter(function () { return $(this).val().trim().toLowerCase() === val; }).last()[0] === this) {
+                    $(this).val("");  // Clear the duplicate NGO name
+                }
+            }
+        });
+    } else {
+        toggleActionButtons(false); // Enable buttons if no duplicates
+    }
+});
+
+// Add Row
+$(document).on('click', '.btnAddRow', function(e) {
+    e.preventDefault();
+
+    // Check for duplicates before adding a row
+    let duplicates = getDuplicateNGONames();
+    if (duplicates) {
+        alert("Duplicate NGO names found: " + duplicates.join(", "));
+        return false;
+    }
+
+    var $projectId = $('#projid').val();
+    arr[0] = '';
+    arr[j] = i;
+    j++;
+
+    let newRow = `<tr id="tr${i}">
+        <td>Name of NGO &nbsp;
+            <input type="text" class="name_ngo form-control" name="name_ngo${i}" id="name_ngo${i}" autocomplete="off" style="width: 100%; max-width: 400px;" required />
+        </td>
+        <td>Name of Gram Panchyat to be covered by NGO &nbsp;
+            <select id="ddlgp${i}" name="ddlgp${i}" class="ddlgp form-control" multiple="multiple">
+                <option value="">--Select Gram Panchayat--</option>
+            </select>
+        </td>
+        <td>Name of Villages to be covered by NGO &nbsp;
+            <select id="ddlvill${i}" name="ddlvill${i}" class="ddlvill form-control" multiple="multiple">
+                <option value="">--Select Village--</option>
+            </select>
+        </td>
+        <td style="vertical-align: bottom;">
+            <button type="button" class="btn btn-danger btn-sm btnRemoveRow">−</button>
+        </td>
+    </tr>`;
+
+    scntDiv.append(newRow);
+
+    // Disable buttons if there are duplicates
+    duplicates = getDuplicateNGONames();
+    if (duplicates) {
+        alert("Duplicate NGO names found: " + duplicates.join(", "));
+        toggleActionButtons(true);  // Disable buttons
+        return false;
+    }
+
+    if ($projectId !== '') {
+        $.ajax({
+            url: "getGPofJanbhagidariPratiyogita",
+            type: "post",
+            data: { project: $projectId },
+            error: function (xhr, status, er) {
+                console.log(er);
+            },
+            success: function (data) {
+                var $head = $('#ddlgp' + i);
+                $head.empty();
+                $head.append('<option value="">--Select Gram Panchayat--</option>');
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        $head.append('<option value=' + key + '>' + data[key] + '</option>');
+                    }
+                }
+                i++;
+            }
+        });
+    } else {
+        i++;
+    }
+});
+
+// Remove Row
+$(document).on('click', '.btnRemoveRow', function () {
+    $(this).closest('tr').remove();
+
+    // Check for duplicates after removal
+    let duplicates = getDuplicateNGONames();
+    if (duplicates) {
+        alert("Duplicate NGO names found: " + duplicates.join(", "));
+        toggleActionButtons(true);  // Disable buttons
+    } else {
+        toggleActionButtons(false); // Enable buttons
+    }
+
+    updateSummaryStats();
+});
+
+// Gram Panchayat change event
+$("#listvillageGPWiseTbody").on('click', '.ddlgp', function () {
+    var $projectId = $('#projid option:selected').val();
+    var $this = $(this);
+    var gCode = [];
+
+    var selectedOptions = $this.find("option:selected");
+    gCode = selectedOptions.map(function () {
+        return $(this).val();
+    }).get();
+
+    var gpNames = selectedOptions.map(function () {
+        return $(this).text();
+    }).get().join(", ");
+
+    var $td = $this.closest('td');
+    $td.find('.selected-gp-list').remove();
+
+    $td.append(
+        '<div class="selected-gp-list" style="margin-top: 5px; font-size: 14px; color: #333;">' +
+        '<strong>Selected Gram Panchayat:</strong> ' + gpNames +
+        '</div>'
+    );
+
+    var id = $(this).attr('id');
+    id = id.substring(id.lastIndexOf("p") + 1, id.length);
+
+    $.ajax({
+        url: "getVILLofJanbhagidariPratiyogita",
+        type: "post",
+        data: { gpid: gCode.toString(), project: $projectId },
+        error: function (xhr, status, er) {
+            console.log(er);
+        },
+        success: function (data) {
+            $('#loading').hide();
+            var $activity = $('#ddlvill' + id);
+            $activity.empty();
+            $activity.append('<option value="">--Select Village--</option>');
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    $activity.append('<option value=' + key + '>' + data[key] + '</option>');
+                }
+            }
+        }
+    });
+});
+
+// Village change event
+$("#listvillageGPWiseTbody").on('change', '.ddlvill', function () {
     var $this = $(this);
     var selectedOptions = $this.find("option:selected");
 
@@ -190,7 +378,7 @@ $(function() {
         return $(this).text();
     }).get().join(", ");
 
-     var $td = $this.closest('td');
+    var $td = $this.closest('td');
     $td.find('.selected-village-list').remove();
 
     $td.append(
@@ -200,9 +388,9 @@ $(function() {
     );
 });
 
-
+// SWCKGP change event
 $(document).on('change', '#swckgp', function () {
-	var selected = [];
+    var selected = [];
     $('#swckgp option:selected').each(function () {
         if ($(this).val() !== '') {
             selected.push($(this).text());
@@ -214,265 +402,133 @@ $(document).on('change', '#swckgp', function () {
             ? '<strong>Selected GP(s):</strong> ' + selected.join(', ')
             : ''
     );
-	});
-	
-	
-var scntDiv = $('#listvillageGPWiseTbody');
-var i = $('#listvillageGPWiseTbody tr').length;
-var j = 1;
-var arr = [];
+});
 
-$(document).on('click', '.btnAddRow', function(e) {
-  e.preventDefault();
-  var $projectId = $('#projid').val();
-  arr[0] = '';
-  arr[j] = i;
-  j++;
+		
+			
+			
+			$(document).on('click', '#saveAsDraft', function(e) {
+    e.preventDefault();
 
-  let newRow = `<tr id="tr${i}"><td>Name of NGO &nbsp;<input type="text" class="name_ngo form-control" name="name_ngo${i}" id="name_ngo${i}" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td><td> Name of Gram Panchyat to be covered by NGO &nbsp;<select id="ddlgp${i}" name="ddlgp${i}" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select></td><td>Name of Villages to be covered by NGO &nbsp;<select id="ddlvill${i}" name="ddlvill${i}" class="ddlvill form-control" multiple="multiple"><option value="">--Select Village--</option></select></td><td style="vertical-align: bottom;"><button type="button" class="btn btn-danger btn-sm btnRemoveRow">−</button></td></tr>`;
+    let allValid = true;
 
-  scntDiv.append(newRow);
+    const $dcode = $('#district').val();
+    const $projectId = $('#projid').val();
+    const $nogp = $('#nogp').val();
+    const $novillage = $('#novillage').val();
+    const $projarea = $('#projarea').val();
+    const $projoutlay = $('#projoutlay').val();
+    const $funoutlay = $('#funoutlay').val();
+    const $projexp = $('#projexp').val();
+    const $expper = $('#expper').val();
+    const $swckgp = $('#swckgp').val();
 
-  // Load Gram Panchayat options for new row
-  if ($projectId !== '') {
-    $.ajax({
-      url: "getGPofJanbhagidariPratiyogita",
-      type: "post",
-      data: { project: $projectId },
-      error: function (xhr, status, er) {
-        console.log(er);
-      },
-      success: function (data) {
-        var $head = $('#ddlgp' + i);
-        $head.empty();
-        $head.append('<option value="">--Select Gram Panchayat--</option>');
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            $head.append('<option value=' + key + '>' + data[key] + '</option>');
-          }
+    if (!$dcode) { alert('Please select District'); $('#district').focus(); return false; }
+    if (!$projectId) { alert('Please select project'); $('#projid').focus(); return false; }
+    if (!$nogp) { alert('Please enter Total No. of Gram Panchayat'); $('#nogp').focus(); return false; }
+    if (!$novillage) { alert('Please enter Total No. of Villages'); $('#novillage').focus(); return false; }
+    if (!$projarea) { alert('Please enter Total area allocated for project (ha.)'); $('#projarea').focus(); return false; }
+    if (!$projoutlay) { alert('Please enter Total Project Outlay (Rs. In Lakh)'); $('#projoutlay').focus(); return false; }
+
+    let ngoname = [];
+    let vill = [];
+
+    $('#listvillageGPWiseTbody tr').each(function(index) {
+        const $row = $(this);
+        const $ngoName = $row.find('.name_ngo').val()?.trim();
+        const $selectedGPs = $row.find('.ddlgp').val(); // multiple
+        const $selectedVillages = $row.find('.ddlvill').val(); // multiple
+
+        if (!$ngoName) {
+            alert('Please fill NGO Name in row ' + (index + 1));
+            $row.find('.name_ngo').focus();
+            allValid = false;
+            return false;
         }
-        i++;
-      }
+
+        if (!$selectedGPs || $selectedGPs.length === 0) {
+            alert('Please select at least one Gram Panchayat in row ' + (index + 1));
+            $row.find('.ddlgp').focus();
+            allValid = false;
+            return false;
+        }
+
+        if (!$selectedVillages || $selectedVillages.length === 0) {
+            alert('Please select at least one Village in row ' + (index + 1));
+            $row.find('.ddlvill').focus();
+            allValid = false;
+            return false;
+        }
+
+        ngoname.push($ngoName);
+        vill.push($selectedVillages.join("#"));
     });
-  } else {
-    i++;
-  }
-  
+
+    if (!allValid) return false;
+
+    if (!$swckgp || $swckgp.length === 0) {
+        alert('Please select SWCK Account at Gram Panchayat / Watershed Committee Level in Nationalized Bank');
+        $('#swckgp').focus();
+        return false;
+    }
+
+    if (!$funoutlay) { alert('Please enter Total Project Outlay'); $('#funoutlay').focus(); return false; }
+    if (!$projexp) { alert('Please enter Total Project Expenditure'); $('#projexp').focus(); return false; }
+    if (!$expper) { alert('Please enter Percentage of Expenditure (%)'); $('#expper').focus(); return false; }
+
+    // ✅ Duplicate NGO name check (case insensitive)
+    const lowerCaseMap = {};
+    const duplicates = [];
+
+    ngoname.forEach(function(name) {
+        const lower = name.toLowerCase();
+        lowerCaseMap[lower] = (lowerCaseMap[lower] || 0) + 1;
+        if (lowerCaseMap[lower] === 2) {
+            duplicates.push(name);
+        }
+    });
+
+    if (duplicates.length > 0) {
+        alert('You have entered duplicate NGO name(s): ' + duplicates.join(', '));
+        return false;
+    }
+
+    // ✅ Proceed with AJAX
+    $.ajax({
+        url: "saveJanbhagidariPratiyogita",
+        type: "post",
+        data: {
+            vill: vill.toString(),
+            ngoname: ngoname.toString(),
+            dcode: $dcode,
+            proj: $projectId,
+            nogp: $nogp,
+            novillage: $novillage,
+            projarea: $projarea,
+            projoutlay: $projoutlay,
+            funoutlay: $funoutlay,
+            projexp: $projexp,
+            expper: $expper,
+            swckgp: $swckgp.join(',')
+        },
+        error: function(xhr, status, er) {
+            console.log(er);
+        },
+        success: function(data) {
+            $('#loading').hide();
+            if (data === 'success') {
+                alert('Saved As Draft Successfully');
+                window.location.href = 'janbhagidariPratiyogita';
+            } else if (data === 'duplicate') {
+                alert('You have already entered NGO Name for this project');
+            } else {
+                alert('Data Not Saved');
+                window.location.href = 'janbhagidariPratiyogita';
+            }
+        }
+    });
 });
 
-// Remove Row
-$(document).on('click', '.btnRemoveRow', function () {
-  $(this).closest('tr').remove();
-  updateSummaryStats();
-});
-				
-			
-			
-			$(document).on('click', '#saveAsDraft', function(e){
-				e.preventDefault();
-				$dcode = $('#district option:selected').val();
-				$projectId = $('#projid option:selected').val();
-				/*$datein = $('#datein').val();
-				$datecom = $('#datecom').val();*/
-				$nogp = $('#nogp').val();
-				$novillage = $('#novillage').val();
-				$projarea = $('#projarea').val();
-				$projoutlay = $('#projoutlay').val();
-				
-				$funoutlay = $('#funoutlay').val();
-				$projexp = $('#projexp').val();
-				$expper = $('#expper').val();
-				$bank = $('input[name="bank"]:checked').val();
-				
-				var ngoname = [];
-				var vill = [];
-                var swckgp = null;
-				
-				/*if ($datein === '' || typeof $datein === 'undefined') {
-						alert('Please select project inception date');
-						$('#datein').focus();
-						allValid = false;
-						return false;
-				}
-				if ($datecom === '' || typeof $datecom === 'undefined') {
-						alert('Please select proposed project completion date');
-						$('#datecom').focus();
-						allValid = false;
-						return false;
-				}*/
-					
-				if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
-						alert('Please select District');
-						$('#district').focus();
-						allValid = false;
-						return false;
-				}
-				if ($projectId === '' || typeof $projectId === 'undefined') {
-						alert('Please select project');
-						$('#projid').focus();
-						allValid = false;
-						return false;
-				}
-					if ($nogp === '' || typeof $nogp === 'undefined') {
-						alert('Please Enter Total No. of Gram Panchayat');
-						$('#nogp').focus();
-						allValid = false;
-						return false;
-					}
-						
-					if ($novillage === '' || typeof $novillage === 'undefined') {
-						alert('Please Enter Total No. of Villages');
-						$('#novillage').focus();
-						allValid = false;
-						return false;
-					}
-					
-					if ($projarea === '' || typeof $projarea === 'undefined') {
-						alert('Please Enter Total area allocated for project (ha.)');
-						$('#projarea').focus();
-						allValid = false;
-						return false;
-					}
-					if ($projoutlay === '' || typeof $projoutlay === 'undefined') {
-						alert('Please Enter Total Project Outlay (Rs. In Lakh)');
-						$('#projoutlay').focus();
-						allValid = false;
-						return false;
-					}
-					if($('#swckgp').val()==""){
-								alert('Please select SWCK Account at Gram Panchayat /Watershed Committee Level in Nationalized Bank');
-								$('#swckgp').focus();
-								return false;
-							}
-							
-					if ($funoutlay === '' || typeof $funoutlay === 'undefined') {
-						alert('Please Enter Total Project Outlay');
-						$('#funoutlay').focus();
-						allValid = false;
-						return false;
-					}
-					if ($projexp === '' || typeof $projexp === 'undefined') {
-						alert('Please Enter Total Project Expenditure');
-						$('#projexp').focus();
-						allValid = false;
-						return false;
-					}
-					if ($expper === '' || typeof $expper === 'undefined') {
-						alert('Please Enter Percentage of Expenditure (%)');
-						$('#expper').focus();
-						allValid = false;
-						return false;
-					}	
-					/*if ($bank === '' || typeof $bank === 'undefined') {
-						alert('Please select account is opened in a nationalized bank');
-						$('input[name="bank"]').first().focus();
-						allValid = false;
-						return false;
-					}*/
-					var i = $('#listvillageGPWiseTbody tr').length;
-					for (var j = 0; j < i; j++) {
-						if (j == 0) {
-							if($('#name_ngo').val()==""){
-								alert('Please fill Ngo Name');
-								$('#name_ngo').focus();
-									return false;
-							}
-							if($('#ddlvill option:selected').val()==='' || typeof $('#ddlvill option:selected').val() === 'undefined'){
-								
-								alert('Please Select  Village');
-								$('#ddlvill').focus();
-								return false;
-							}	
-								
-						}
-						else{
-							
-							if($('#name_ngo'+j).val()==""){
-								alert('Please fill Ngo Name');
-								$('#name_ngo'+j).focus();
-								return false;
-							}
-							if($('#ddlvill' + j + ' option:selected').val()==='' || $('#ddlvill' + j + ' option:selected').val()==='undefined'){
-															
-								alert('Please Select  Village');
-								$('#ddlvill'+j).focus();
-								return false;
-							}	
-						}
-					}
-					
-					
-							
-					for (var j = 0; j < i; j++) {
-						if (j == 0) {
-								ngoname.push($('#name_ngo').val());
-
-								var selectedVillages = $('#ddlvill option:selected').map(function() {
-									        return $(this).val();
-								}).get();
-
-								vill.push(selectedVillages.join("#"));
-						} 
-						else {
-								ngoname.push($('#name_ngo' + j).val());
-
-								var selectedVillages = $('#ddlvill' + j + ' option:selected').map(function() {
-									     return $(this).val();
-								}).get();
-
-								vill.push(selectedVillages.join("#"));
-						}
-					}
-					
-					 swckgp = $('#swckgp').val().join(',');
-					
-					
-				//	const lowerCaseNames = ngoname.map(item => item.toLowerCase());
-				//	const duplicates = ngoname.filter((item, index) => lowerCaseNames.indexOf(item.toLowerCase()) !== index);
-				//	console.log(duplicates); // ["apple"]
-					
-					const duplicateCheck = ngoname.reduce((acc, item) => {
-                     if (typeof item === 'string' && item.trim() !== '') {
-                   const lowerItem = item.toLowerCase();
-                    acc[lowerItem] = (acc[lowerItem] || 0) + 1;
-                     }
-                    return acc;
-                     }, {});
-
-                    const duplicates = Object.keys(duplicateCheck).filter(key => duplicateCheck[key] > 1);
-                    if (duplicates.length > 0) {
-                        alert('You have entered duplicate NGO name(s): ' + duplicates.join(', '));
-                     return false;
-                         }
-			
-				$.ajax({  
-			            url:"saveJanbhagidariPratiyogita",
-			            type: "post",  
-			            data: {vill:vill.toString(), ngoname:ngoname.toString(), dcode:$dcode, proj:$projectId, nogp:$nogp, novillage:$novillage, projarea:$projarea, projoutlay:$projoutlay, funoutlay:$funoutlay, projexp:$projexp, expper:$expper, swckgp:swckgp},
-			            error:function(xhr,status,er){
-			                console.log(er);
-			            },
-				success: function(data) {
-					$('#loading').hide();
-						if(data==='success'){
-							alert('Saved As Draft Successfully');
-							window.location.href='janbhagidariPratiyogita';
-						}
-						else if(data==='duplicate'){
-							
-							alert('You have Alredy Entered NGO Name for This Project');
-							//window.location.href='janbhagidariPratiyogita';
-						}
-						else{
-							alert('Data Not Saved');
-							window.location.href='janbhagidariPratiyogita';
-						}
-					}
-				});
-				
-			
-				
-				});
 			
 			
 	
