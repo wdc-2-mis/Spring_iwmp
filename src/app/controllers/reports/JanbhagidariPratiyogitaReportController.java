@@ -1,5 +1,6 @@
 package app.controllers.reports;
 
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.TargetAchievementQuarterBean;
 import app.bean.AssetIdBean;
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaBean;
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaService;
@@ -66,10 +68,48 @@ public class JanbhagidariPratiyogitaReportController {
 			mav.addObject("district", district);
 			mav.addObject("project", project);
 			
+			if(userState==null) {
 			data=serk.getListJanbhagidariPratiyogitaDetails();
 			mav.addObject("dataList",data);
 			mav.addObject("dataListSize",data.size());
 			
+			int totno_gp=0;
+			int totno_village=0;
+			BigDecimal totproj_area = BigDecimal.valueOf(0);
+			BigDecimal totproj_outlay = BigDecimal.valueOf(0);
+			int totno_ngo_name=0;
+			int totno_ngo_gp=0;
+			int totno_ngo_vill=0;
+			int totno_swck_gp=0;
+			BigDecimal totfund_expenditure = BigDecimal.valueOf(0);
+			
+			if(data != null) 
+			{
+				for(JanbhagidariPratiyogitaBean bean : data) 
+				{
+					totno_gp=totno_gp+bean.getNo_gp();
+					totno_village=totno_village+bean.getNo_village();
+					totproj_area=totproj_area.add(new BigDecimal(bean.getProj_area()));
+					totproj_outlay=totproj_outlay.add(new BigDecimal(bean.getProj_outlay()));
+					totno_ngo_name=totno_ngo_name+bean.getNo_ngo_name();
+					totno_ngo_gp=totno_ngo_gp+bean.getNo_ngo_gp();
+					totno_ngo_vill=totno_ngo_vill+bean.getNo_ngo_vill();
+					totno_swck_gp=totno_swck_gp+bean.getNo_swck_gp();
+					totfund_expenditure=totfund_expenditure.add(new BigDecimal(bean.getFund_expenditure()));
+					
+				}
+			}	
+			
+			mav.addObject("totno_gp",totno_gp);
+			mav.addObject("totno_village",totno_village);
+			mav.addObject("totproj_area",totproj_area);
+			mav.addObject("totproj_outlay",totproj_outlay);
+			mav.addObject("totno_ngo_name",totno_ngo_name);
+			mav.addObject("totno_ngo_gp",totno_ngo_gp);
+			mav.addObject("totno_ngo_vill",totno_ngo_vill);
+			mav.addObject("totno_swck_gp",totno_swck_gp);
+			mav.addObject("totfund_expenditure",totfund_expenditure);
+			}
 			
 		}
 		catch (Exception e) 
@@ -110,6 +150,42 @@ public class JanbhagidariPratiyogitaReportController {
 			mav.addObject("dataList",data);
 			mav.addObject("dataListSize",data.size());
 			
+			int totno_gp=0;
+			int totno_village=0;
+			BigDecimal totproj_area = BigDecimal.valueOf(0);
+			BigDecimal totproj_outlay = BigDecimal.valueOf(0);
+			int totno_ngo_name=0;
+			int totno_ngo_gp=0;
+			int totno_ngo_vill=0;
+			int totno_swck_gp=0;
+			BigDecimal totfund_expenditure = BigDecimal.valueOf(0);
+			
+			if(data != null) 
+			{
+				for(JanbhagidariPratiyogitaBean bean : data) 
+				{
+					totno_gp=totno_gp+bean.getNo_gp();
+					totno_village=totno_village+bean.getNo_village();
+					totproj_area=totproj_area.add(new BigDecimal(bean.getProj_area()));
+					totproj_outlay=totproj_outlay.add(new BigDecimal(bean.getProj_outlay()));
+					totno_ngo_name=totno_ngo_name+bean.getNo_ngo_name();
+					totno_ngo_gp=totno_ngo_gp+bean.getNo_ngo_gp();
+					totno_ngo_vill=totno_ngo_vill+bean.getNo_ngo_vill();
+					totno_swck_gp=totno_swck_gp+bean.getNo_swck_gp();
+					totfund_expenditure=totfund_expenditure.add(new BigDecimal(bean.getFund_expenditure()));
+					
+				}
+			}	
+			
+			mav.addObject("totno_gp",totno_gp);
+			mav.addObject("totno_village",totno_village);
+			mav.addObject("totproj_area",totproj_area);
+			mav.addObject("totproj_outlay",totproj_outlay);
+			mav.addObject("totno_ngo_name",totno_ngo_name);
+			mav.addObject("totno_ngo_gp",totno_ngo_gp);
+			mav.addObject("totno_ngo_vill",totno_ngo_vill);
+			mav.addObject("totno_swck_gp",totno_swck_gp);
+			mav.addObject("totfund_expenditure",totfund_expenditure);
 			
 		}
 		catch (Exception e) 

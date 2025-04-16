@@ -2,6 +2,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="/WEB-INF/jspf/header.jspf"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <html>
 <head>
@@ -67,7 +69,7 @@ function getjanbhagidariPratiyogitaRpt(){
           <td class="label">State <span style="color: red;">*</span></td>
           <td>
               <select name="state" id="state" onchange="this.form.submit();">
-              		<option value="0">--SelectAll--</option>
+              		<option value="0" style="text-align:center;">--Select All--</option>
                   	<c:if test="${not empty stateList}">
                			<c:forEach items="${stateList}" var="lists">
                				<c:if test="${lists.key eq state}">
@@ -84,7 +86,7 @@ function getjanbhagidariPratiyogitaRpt(){
           <td class="label">District <span style="color: red;">*</span></td>
           <td>
               <select name="district" id="district" onchange="this.form.submit();">
-              		<option value="0">--SelectAll--</option>
+              		<option value="0" style="text-align:center;">--Select All--</option>
                   	<c:if test="${not empty districtList}">
                			<c:forEach items="${districtList}" var="lists">
                				<c:if test="${lists.key eq district}">
@@ -101,7 +103,7 @@ function getjanbhagidariPratiyogitaRpt(){
           <td class="label">Project <span style="color: red;">*</span></td>
           <td align="center">
               <select name="project" id="project" >
-              		<option value="0" style="text-align:center;">--All--</option>
+              		<option value="0" style="text-align:center;">--Select All--</option>
                   	<c:if test="${not empty projectList}">
                			<c:forEach items="${projectList}" var="lists">
                				<c:if test="${lists.key eq project}">
@@ -156,17 +158,52 @@ function getjanbhagidariPratiyogitaRpt(){
                	</thead>
                	<tbody id="janbhagidariPratiyogitaReport">	
                	<c:set var="st" value="" />
-               <c:set var="proj" value="" />
-               <c:set var="dist" value="" />
+               	<c:set var="proj" value="" />
+               	<c:set var="dist" value="" />
                		<c:if test="${dataListSize>0}">
 						<c:forEach items="${dataList}" var="data" varStatus="count">
+						
+								<c:if test ="${st ne data.stname && count.count ne 1}">
+									<td align="right" class="table-primary" colspan="4"><b>State Total </b></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_gp}' /> </b></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_village}' /> </b></td>
+									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></td>
+									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_name}' /> </b></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_gp}' /> </b></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_vill}' /> </b></td>
+									<td align="right" class="table-primary" ><b><c:out value='${tno_swck_gp}' /> </b></td>
+									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></td>
+									<td align="right" class="table-primary" ></td>
+									
+									<c:set var="tno_gp" value="0" />
+									<c:set var="tno_gp" value="${tno_gp + data.no_gp}" />
+									<c:set var="tno_village" value="0" />
+									<c:set var="tno_village" value="${tno_village + data.no_village}" />
+									<c:set var="tproj_area" value="0" />
+									<c:set var="tproj_area" value="${tproj_area + data.proj_area}" />
+									<c:set var="tproj_outlay" value="0" />
+									<c:set var="tproj_outlay" value="${tproj_outlay + data.proj_outlay}" />
+									
+									<c:set var="tno_ngo_name" value="0" />
+									<c:set var="tno_ngo_name" value="${tno_ngo_name + data.no_ngo_name}" />
+									<c:set var="tno_ngo_gp" value="0" />
+									<c:set var="tno_ngo_gp" value="${tno_ngo_gp + data.no_ngo_gp}" />
+									<c:set var="tno_ngo_vill" value="0" />
+									<c:set var="tno_ngo_vill" value="${tno_ngo_vill + data.no_ngo_vill}" />
+									<c:set var="tno_swck_gp" value="0" />
+									<c:set var="tno_swck_gp" value="${tno_swck_gp + data.no_swck_gp}" />
+									<c:set var="tfund_expenditure" value="0" />
+									<c:set var="tfund_expenditure" value="${tfund_expenditure + data.fund_expenditure}" />
+							</c:if>
+						
 							<tr>
 								<td>
  								<c:out value='${count.count}' />
  								</td>
  								<c:choose>
 									<c:when test="${st ne data.stname}">
-										<c:set var="st" value="${data.stname}" />
+										
 										<td> <c:out value="${data.stname}" /></td>
 									</c:when>	
 								<c:otherwise>
@@ -205,21 +242,53 @@ function getjanbhagidariPratiyogitaRpt(){
 								<td class="text-right"> <c:out value="${data.no_ngo_vill}" /></td>
 								<td class="text-right"><a href="#" data-id="${data.proj_id}" class='swck' data-toggle="modal" style ="color: blue;"> <c:out value="${data.no_swck_gp}" /></a></td>
  								<td class="text-right"> <c:out value="${data.fund_expenditure}" /></td>
-								<td class="text-right"> <c:out value="${data.fund_per_exp}" /></td>
- 								
+								<td class="text-right"> <c:out value="${data.fund_per_exp}" /> <b>%</b></td>
  							</tr>
+ 							
+ 							<c:if test = "${st eq data.stname || count.count eq 1}">
+									
+									<c:set var="tno_gp" value="${tno_gp + data.no_gp}" />
+									<c:set var="tno_village" value="${tno_village + data.no_village}" />
+									<c:set var="tproj_area" value="${tproj_area + data.proj_area}" />
+									<c:set var="tproj_outlay" value="${tproj_outlay + data.proj_outlay}" />
+									<c:set var="tno_ngo_name" value="${tno_ngo_name + data.no_ngo_name}" />
+									<c:set var="tno_ngo_gp" value="${tno_ngo_gp + data.no_ngo_gp}" />
+									<c:set var="tno_ngo_vill" value="${tno_ngo_vill + data.no_ngo_vill}" />
+									<c:set var="tno_swck_gp" value="${tno_swck_gp + data.no_swck_gp}" />
+									<c:set var="tfund_expenditure" value="${tfund_expenditure + data.fund_expenditure}" />
+							</c:if>
+									<c:if test = "${ count.count eq fn:length(dataList)}">
+									<tr>
+										<td align="right" class="table-primary" colspan="4"><b>State Total </b></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_gp}' /> </b></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_village}' /> </b></td>
+										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></td>
+										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_name}' /> </b></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_gp}' /> </b></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_vill}' /> </b></td>
+										<td align="right" class="table-primary" ><b><c:out value='${tno_swck_gp}' /> </b></td>
+										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></td>
+										<td align="right" class="table-primary" ></td>
+									</tr>
+									
+									</c:if>
+									<c:set var="st" value="${data.stname}" />
 						</c:forEach>
 						
-			<%-- 			<tr>
-			
-				<td align="right" class="table-primary" colspan="3"><b> Total </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${projSize}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${blkSize}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${gpSize}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${wcSize}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${villSize}' /> </b></td>
-							
-			</tr> --%>
+						<tr>
+							<td align="right" class="table-primary" colspan="4"><b>Grand Total </b></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_gp}' /> </b></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_village}' /> </b></td>
+							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totproj_area}' /></fmt:formatNumber></td>
+							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${totproj_outlay}' /></fmt:formatNumber></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_name}' /> </b></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_gp}' /> </b></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_vill}' /> </b></td>
+							<td align="right" class="table-primary" ><b><c:out value='${totno_swck_gp}' /> </b></td>
+							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totfund_expenditure}' /></fmt:formatNumber></td>
+							<td align="right" class="table-primary" ></td>
+						</tr> 
 						
 					</c:if>
               </tbody>

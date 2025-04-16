@@ -1,6 +1,13 @@
 $( document ).ready(function(){
 	
+	$(document).on('change', '#state', function(e) {
 	
+			e.preventDefault();
+			
+			$("select#district")[0].selectedIndex = 0;
+			$("select#project")[0].selectedIndex = 0;
+			
+			});
 
 		$('#janbhagidariPratiyogitaReport').on( 'click', 'a.activity', function (e) 
 		{
@@ -28,17 +35,18 @@ $( document ).ready(function(){
 								if (data.hasOwnProperty(key)) 
 								{
 									if(name!=data[key].ngo_name)
-										tblData+="<tr><td>"+data[key].ngo_name+"</td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
+										tblData+="<tr><td>"+i+"</td><td>"+data[key].ngo_name+"</td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
 									else
-										tblData+="<tr><td></td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
+										tblData+="<tr><td>"+i+"</td><td></td><td>"+data[key].gpname+"</td><td>"+data[key].villname+"</td></tr>";
 								
 										name=data[key].ngo_name;
+										i=i+1;
 								}
 							}
 						}
 						
 						$('#popupreport .modal-body').html('<form id="frmjanbhagidariPratiyogitaReport" ><center><table  style="width:100%">'+
-							'<thead><tr><th>NGO Name</th><th>NGO Gram Panchayat</th><th>NGO Village</th>'+
+							'<thead><tr><th>Sl. No.</th><th>NGO Name</th><th>NGO Gram Panchayat</th><th>NGO Village</th>'+
 							'</tr></thead><tbody>'+tblData+'</tbody></table></center>');
 							
 						$('#popupreport .modal-footer').html('<button type="button" id="cancel" name="cancel" class="btn btn-danger" data-dismiss="modal">Close</button></form>');			
@@ -73,13 +81,14 @@ $( document ).ready(function(){
 									{
 										if (data.hasOwnProperty(key)) 
 										{
-												tblData+="<tr><td>"+data[key].gpname+"</td></tr>";
+												tblData+="<tr><td>"+i+"</td><td>"+data[key].gpname+"</td></tr>";
+												i=i+1;
 										}		
 									}
 								}
 								
 								$('#popupreport .modal-body').html('<form id="frmjanbhagidariPratiyogitaReport" ><center><table  style="width:100%">'+
-									'<thead><tr><th>Gram Panchayat Name</th>'+
+									'<thead><tr><th>Sl. No.</th><th>Gram Panchayat Name</th>'+
 									'</tr></thead><tbody>'+tblData+'</tbody></table></center>');
 									
 								$('#popupreport .modal-footer').html('<button type="button" id="cancel" name="cancel" class="btn btn-danger" data-dismiss="modal">Close</button></form>');			
