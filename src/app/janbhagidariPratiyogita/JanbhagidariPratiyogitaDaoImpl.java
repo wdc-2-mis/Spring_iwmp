@@ -63,7 +63,12 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${janbhagidariPratiyogitaPopupNGOGP}")
 	String janbhagidariPratiyogitaPopupNGOGP;
 
+	@Value("${getJanbhagidariPratiyogitaPIADraftList}")
+	String getJanbhagidariPratiyogitaPIADraftList;
 	
+	@Value("${getJanbhagidariPratiyogitaPIACompleteList}")
+	String getJanbhagidariPratiyogitaPIACompleteList;
+
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
 		
@@ -727,7 +732,72 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		return result;
 	}
 
-	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getDraftListPIADetails(Integer stcd, String username) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariPratiyogitaPIADraftList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setString("loginId", username);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariPratiyogitaPIACompleteList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setString("loginId", username);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
 	
 
 

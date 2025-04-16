@@ -422,7 +422,8 @@ $(document).on('change', '#swckgp', function () {
     const $projexp = $('#projexp').val();
     const $expper = $('#expper').val();
     const $swckgp = $('#swckgp').val();
-
+    
+     
     if (!$dcode) { alert('Please select District'); $('#district').focus(); return false; }
     if (!$projectId) { alert('Please select project'); $('#projid').focus(); return false; }
     if (!$nogp) { alert('Please enter Total No. of Gram Panchayat'); $('#nogp').focus(); return false; }

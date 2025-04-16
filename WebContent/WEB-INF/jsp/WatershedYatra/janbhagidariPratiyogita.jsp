@@ -271,28 +271,52 @@ display: none; /* Hidden by default */
 			 
 			<div class="row">
 			<div class="form-group col-3">
-			<c:if test="${userType== 'SL' }">
-				 State Name: <br/><br/>
-				<c:out value="${stateName}"></c:out>
-			</c:if>
-			</div>
-    		<div class="form-group col-3">
-      			<label for="district">District Name: </label>
-      			<select class="form-control district" id="district" name="district" >
-    				<option value="">--Select--</option>
-    				<c:forEach items="${distList}" var="dist"> 
-					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
-					</c:forEach>
-    			</select>
-    		</div>
-    		<div class="form-group col-3">
-    			<label for="block">Project Name: </label>
-      			<span class="activityError"></span>
-      			<select class="form-control activity" id="projid" name="projid" >
-    				<option value="">--Select Project--</option>
-    			</select>
-    		</div>
-    		
+    <label for="state"><b>State Name:</b></label><br/>
+    <c:out value="${stateName}" /><br/>
+</div>
+
+<div class="form-group col-3">
+    <label for="district"><b>District Name:</b></label><br/>
+
+    <c:if test="${userType == 'SL'}">
+        <span class="projectError"></span>
+        <select class="form-control district" id="district" name="district" required>
+            <option value="">--Select District--</option>
+            <c:forEach items="${distList}" var="dist"> 
+                <option value="${dist.key}"><c:out value="${dist.value}" /></option>
+            </c:forEach>
+        </select>
+    </c:if>
+
+    <c:if test="${userType == 'PI'}">
+        <c:out value="${distName}" /><br/>
+        <input type="hidden" id="district" name="district" value="${distCode}">
+    </c:if>
+</div>
+
+<div class="form-group col-3">
+    <label for="projid"><b>Project Name:</b></label><br/>
+
+    <c:if test="${userType == 'SL'}">
+        <span class="activityError"></span>
+        <select class="form-control activity" id="projid" name="projid">
+            <option value="">--Select Project--</option>
+            
+        </select>
+    </c:if>
+
+    <c:if test="${userType == 'PI'}">
+        <span class="activityError"></span>
+        <select class="form-control activity" id="projid" name="projid" required>
+            <option value="">--Select Project--</option>
+            <c:forEach items="${projList}" var="proj"> 
+                <option value="${proj.key}"><c:out value="${proj.value}" /></option>
+            </c:forEach>
+        </select>
+    </c:if>
+</div>
+			
+	    		
     		<div class="form-group col-3">
     			
     		</div>

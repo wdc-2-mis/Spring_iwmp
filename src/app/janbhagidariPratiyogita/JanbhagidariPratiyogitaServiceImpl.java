@@ -168,5 +168,18 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		return dao.getListofswckGPand(projid);
 	}
 
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getDraftListPIADetails(Integer stcd, String username) {
+		// TODO Auto-generated method stub
+		return dao.getDraftListPIADetails(stcd, username);
+	}
 
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username) {
+		// TODO Auto-generated method stub
+		return dao.getCompleteListPIADetails(stcd, username);
+	}
 }

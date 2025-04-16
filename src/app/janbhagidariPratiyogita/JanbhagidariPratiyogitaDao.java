@@ -42,6 +42,9 @@ public interface JanbhagidariPratiyogitaDao {
 	
 	List<JanbhagidariPratiyogitaBean> getListofswckGPand(Integer projid);
 
+	List<JanbhagidariPratiyogitaBean> getDraftListPIADetails(Integer stcd, String username);
+
+	List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username);
 
 
 
