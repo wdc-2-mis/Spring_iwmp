@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<title>Report - Mid Term Project Evaluation</title>
+<title>Report PE1 - State-wise Mid Term Project Evaluation</title>
 
 <html>
 <script type="text/javascript">
