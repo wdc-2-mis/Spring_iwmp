@@ -47,7 +47,9 @@ public interface JanbhagidariPratiyogitaService {
 	List<JanbhagidariPratiyogitaBean> getListofNGONameWithGPandVillage(Integer project);
 	
 	List<JanbhagidariPratiyogitaBean> getListofswckGPand(Integer projid);
+	List<JanbhagidariPratiyogitaBean> getDraftListPIADetails(Integer stcd, String username);
 
+	List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username);
 	
 	
 	

@@ -22,6 +22,7 @@ import app.bean.Login;
 import app.bean.ProfileBean;
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
 import app.service.ProfileService;
+import app.service.WSCommiteeService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.service.WatershedYatraService;
 
@@ -39,6 +40,8 @@ public class JanbhagidariPratiyogitaController {
 	@Autowired
 	JanbhagidariPratiyogitaService serk;
 	
+	@Autowired(required = true)
+	public WSCommiteeService wscommitteeser;
 	
 	@RequestMapping(value = "/janbhagidariPratiyogita", method = RequestMethod.GET)
 	public ModelAndView janbhagidariPratiyogita(HttpServletRequest request, HttpServletResponse response) {
@@ -52,6 +55,7 @@ public class JanbhagidariPratiyogitaController {
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 				String userType = session.getAttribute("userType").toString();
+				String username = session.getAttribute("loginID").toString();
 				List<ProfileBean> listm = new ArrayList<ProfileBean>();
 				listm = profileService.getMapstate(regId, userType);
 				String distName = "";
@@ -60,25 +64,37 @@ public class JanbhagidariPratiyogitaController {
 				int distCode = 0;
 				List<JanbhagidariPratiyogitaBean> data = new ArrayList<JanbhagidariPratiyogitaBean>();
 				List<JanbhagidariPratiyogitaBean> compdata = new ArrayList<JanbhagidariPratiyogitaBean>();
-
+				String regid=session.getAttribute("regId").toString();
 				for (ProfileBean bean : listm) {
 					distName = bean.getDistrictname();
 					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
 				}
-
 				mav.addObject("userType", userType);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
+				mav.addObject("projList", wscommitteeser.getUserProjectList(Integer.parseInt(regid)));
 				
+				mav.addObject("distName", distName);
 				
+				if(userType.equals("SL")){
 				data=serk.getDraftListDetails(stcd);
+				}
+				else if(userType.equals("PI")){
+				data=serk.getDraftListPIADetails(stcd, username);
+				}
+				
 				mav.addObject("dataList",data);
 				mav.addObject("dataListSize",data.size());
+				mav.addObject("distCode",distCode);
 				
-				
+				if(userType.equals("SL")){
 				compdata=serk.getCompleteListDetails(stcd);
+				}
+				else if(userType.equals("PI")){
+					compdata=serk.getCompleteListPIADetails(stcd, username);
+				}
 				mav.addObject("compdataList",compdata);
 				mav.addObject("compdataListSize",compdata.size());
 
