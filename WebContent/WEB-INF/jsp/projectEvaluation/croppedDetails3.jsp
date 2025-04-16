@@ -230,7 +230,7 @@
 						<tr>
 							<td></td>
 							<td><b><c:out
-										value="Total Area under different Crops(ha)" /></b></td>
+										value="Total Yield under different Crops(Qt./Ha.)" /></b></td>
 							<td><input type="number" id="prediffCrop" name="prediffCrop"
 								class="" value=<c:out value="${list.preRice + list.preWheat + list.prePulses + list.preMillets + list.preOilSeed + list.preOther}"/>
 								readonly="readonly" /></td>
