@@ -36,8 +36,10 @@ function exportExcel(){
     <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
         
         <form action="downloadExcelStMidProjEvoluation" name="getPEDetails" id="getPEDetails" method="post">
-        <div class="form-row">
-            <div class="form-group col-12">
+
+		<div class="row">
+			<div class="col-2" ></div>
+			<div class="col-8">
                 <table class="table" id="stMidPE">
                     <thead>
                         <tr>
