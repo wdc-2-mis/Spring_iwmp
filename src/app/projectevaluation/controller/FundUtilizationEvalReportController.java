@@ -9,10 +9,24 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellUtil;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.BaseColor;
@@ -102,19 +116,19 @@ public class FundUtilizationEvalReportController {
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "Total No. of Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
-		    CommonFunctions.insertCellHeader(table, "Sanctioned Project Area", Element.ALIGN_CENTER, 1, 3, bf8Bold);
-		    CommonFunctions.insertCellHeader(table, "Sanctioned Cost of", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "Sanctioned Project Area (in ha.)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "Sanctioned Cost", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "Fund Utilization", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 
-		    CommonFunctions.insertCellHeader(table, "Central Share", Element.ALIGN_CENTER, 1, 2, bf8Bold); // SC
-		    CommonFunctions.insertCellHeader(table, "State Share", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // SS
-		    CommonFunctions.insertCellHeader(table, "Total Share", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // TS
-		    CommonFunctions.insertCellHeader(table, "Fund Received", Element.ALIGN_CENTER, 3, 1, bf8Bold); // FR
-		    CommonFunctions.insertCellHeader(table, "Total Expenditure", Element.ALIGN_CENTER, 1, 2, bf8Bold); // TE
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // SC
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // SS
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // TS
+		    CommonFunctions.insertCellHeader(table, "Fund Received (Rs. Crores)", Element.ALIGN_CENTER, 3, 1, bf8Bold); // FR
+		    CommonFunctions.insertCellHeader(table, "Total Expenditure (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // TE
 
-		    CommonFunctions.insertCellHeader(table, "Central Share", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
-		    CommonFunctions.insertCellHeader(table, "State Share", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-SS
-		    CommonFunctions.insertCellHeader(table, "Total Share", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-TS
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-SS
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-TS
 
 		    CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -220,6 +234,283 @@ public class FundUtilizationEvalReportController {
 		} 
 		
 		return null;
+	}
+	
+
+	@RequestMapping(value = "/downloadExcelFundUtilizationEvalReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelFundUtilizationEvalReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
+
+		list = fundService.getFundUtilizationEvalReport();
+			
+		Workbook workbook = new XSSFWorkbook();  
+		//invoking creatSheet() method and passing the name of the sheet to be created   
+		Sheet sheet = workbook.createSheet("Report PE2-  State-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization");   
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE2-  State-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 10, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,0,0); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,1,1); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,2,2); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,3,3); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,4,6); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,7,10); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,4,4); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,5,5); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,6,6); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,7,9); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,10,10); 
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowhead = sheet.createRow(5);
+		
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("State Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Total No. of Project");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Sanctioned Project Area (in ha.)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(4);
+		cell.setCellValue("Sanctioned Cost");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(5);
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellStyle(style);
+		
+
+		cell = rowhead.createCell(7);
+		cell.setCellValue("Fund Utilization");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=8;i<11;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(6);
+		
+		for(int i=0;i<4;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Central Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("State Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("Total Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellValue("Fund Received");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(8);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(9);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Total Expenditure (Rs. Crores)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		Row rowhead2 = sheet.createRow(7);
+		
+		for(int i=0;i<7;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+
+		cell = rowhead2.createCell(7);
+		cell.setCellValue("Central Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("State Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(9);
+		cell.setCellValue("Total Share (Rs. Crores)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(10);
+		cell.setCellStyle(style);
+		
+		
+		Row rowhead3 = sheet.createRow(8);
+		
+		for(int i=0;i<11;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 8;
+		int totproj = 0;
+		BigDecimal projArea = BigDecimal.ZERO;
+		BigDecimal evCentralShare = BigDecimal.ZERO;
+		BigDecimal evStateShare = BigDecimal.ZERO;
+		BigDecimal evTotalshare = BigDecimal.ZERO;
+		
+		BigDecimal fundCentralshare = BigDecimal.ZERO;
+		BigDecimal fundStateshare = BigDecimal.ZERO;
+		BigDecimal fundTotalshare = BigDecimal.ZERO;
+		BigDecimal projExpenditure = BigDecimal.ZERO;
+		
+		
+	    for(FundUtilizationEvalReportBean bean: list) 
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno); 
+	    	row.createCell(1).setCellValue(bean.getSt_name());
+	    	row.createCell(2).setCellValue(bean.getTotal_project());
+	    	row.createCell(3).setCellValue(bean.getTotal_project_area().doubleValue());
+	    	row.createCell(4).setCellValue(bean.getTotal_evaluation_central_share().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getTotal_evaluation_state_share().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getTotal_share_evaluation().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getTotal_fund_central_share().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getTotal_fund_state_share().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getTotal_fund().doubleValue());
+	    	row.createCell(10).setCellValue(bean.getTotal_expenditure().doubleValue());
+	    	
+	    	    totproj = totproj + bean.getTotal_project();
+			    projArea = projArea.add(bean.getTotal_project_area());
+			    evCentralShare = evCentralShare.add(bean.getTotal_evaluation_central_share());
+			    evStateShare = evStateShare.add(bean.getTotal_evaluation_state_share());
+			    evTotalshare = evTotalshare.add(bean.getTotal_share_evaluation());
+			    
+			    fundCentralshare = fundCentralshare.add(bean.getTotal_fund_central_share());
+			    fundStateshare = fundStateshare.add(bean.getTotal_fund_state_share());
+			    fundTotalshare = fundTotalshare.add(bean.getTotal_fund());
+			    
+			    projExpenditure = projExpenditure.add(bean.getTotal_expenditure());
+
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+
+		Row row = sheet.createRow(list.size()+8);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totproj);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(projArea.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(evCentralShare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(evStateShare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(evTotalshare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(fundCentralshare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(fundStateshare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(fundTotalshare.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(projExpenditure.doubleValue());
+		cell.setCellStyle(style1);
+
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 10);
+	    String fileName = "attachment; filename=Report PE2- State.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+
+	    return "reports/FundEvalReport";
 	}
 	
 }

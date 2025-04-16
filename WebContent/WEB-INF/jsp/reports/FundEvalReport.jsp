@@ -19,7 +19,7 @@ function downloadPDF(){
 }
 
 function exportExcel(){
-		document.getfundutl.action="downloadExcelEnteredConWorks";
+		document.getfundutl.action="downloadExcelFundUtilizationEvalReport";
 		document.getfundutl.method="post";
 		document.getfundutl.submit();
 }
@@ -47,7 +47,7 @@ function exportExcel(){
  
 <br>
 	<c:if test="${not empty fundList}">
-<!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
@@ -56,7 +56,7 @@ function exportExcel(){
 			   <tr>
             <th rowspan="4">S.No.</th>
             <th rowspan="4">State Name</th>
-            <th rowspan="4">Total No. of Projects</th>
+            <th rowspan="4">Total No. of Project</th>
             <th rowspan="4">Sanctioned Project Area  (in ha.)</th>
             <th colspan="3" style="text-align: center">Sanctioned Cost</th>
             <th colspan="4" style="text-align: center">Fund Utilization</th>
