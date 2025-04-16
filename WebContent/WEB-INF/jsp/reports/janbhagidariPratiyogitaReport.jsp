@@ -176,13 +176,13 @@ function getjanbhagidariPratiyogitaRpt(){
 									<td align="right" class="table-primary" colspan="4"><b>State Total </b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_gp}' /> </b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_village}' /> </b></td>
-									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></td>
-									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></td>
+									<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></b></td>
+									<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_name}' /> </b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_gp}' /> </b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_vill}' /> </b></td>
 									<td align="right" class="table-primary" ><b><c:out value='${tno_swck_gp}' /> </b></td>
-									<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></td>
+									<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></b></td>
 									<td align="right" class="table-primary" ></td>
 									
 									<c:set var="tno_gp" value="0" />
@@ -271,13 +271,13 @@ function getjanbhagidariPratiyogitaRpt(){
 										<td align="right" class="table-primary" colspan="4"><b>State Total </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_gp}' /> </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_village}' /> </b></td>
-										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></td>
-										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></td>
+										<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></b></td>
+										<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${tproj_outlay}' /></fmt:formatNumber></b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_name}' /> </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_gp}' /> </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_ngo_vill}' /> </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_swck_gp}' /> </b></td>
-										<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></td>
+										<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tfund_expenditure}' /></fmt:formatNumber></b></td>
 										<td align="right" class="table-primary" ></td>
 									</tr>
 									
@@ -289,13 +289,13 @@ function getjanbhagidariPratiyogitaRpt(){
 							<td align="right" class="table-primary" colspan="4"><b>Grand Total </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_gp}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_village}' /> </b></td>
-							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totproj_area}' /></fmt:formatNumber></td>
-							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${totproj_outlay}' /></fmt:formatNumber></td>
+							<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totproj_area}' /></fmt:formatNumber></b></td>
+							<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${totproj_outlay}' /></fmt:formatNumber></b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_name}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_gp}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_ngo_vill}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_swck_gp}' /> </b></td>
-							<td align="right" class="table-primary"><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totfund_expenditure}' /></fmt:formatNumber></td>
+							<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totfund_expenditure}' /></fmt:formatNumber></b></td>
 							<td align="right" class="table-primary" ></td>
 						</tr> 
 						
