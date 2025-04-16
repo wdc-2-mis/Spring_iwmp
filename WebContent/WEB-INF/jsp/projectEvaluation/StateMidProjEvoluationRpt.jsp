@@ -28,7 +28,12 @@ function exportExcel(){
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
         <h4 style="text-decoration:underline;">Report PE1 - State-wise Mid Term Project Evaluation Entry Status</h4>
     </div>
-    
+    <br>
+    <div class ="card">
+		<div class="row">
+			<div class="col-2" ></div>
+			<div class="col-8">
+			<br>
     <c:if test="${not empty stateMidPrjEvlList}">
 		<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 		<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
@@ -36,11 +41,8 @@ function exportExcel(){
     <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
         
         <form action="downloadExcelStMidProjEvoluation" name="getPEDetails" id="getPEDetails" method="post">
-
-		<div class="row">
-			<div class="col-2" ></div>
-			<div class="col-8">
-                <table class="table" id="stMidPE">
+        
+                <table class="table" id="stMidPE" >
                     <thead>
                         <tr>
                             <th rowspan="2" class="text-center">S.No.</th>
@@ -115,9 +117,11 @@ function exportExcel(){
 						</c:if>
 					</tbody>
                 </table>
-            </div>
-        </div>
+            
     </form>
+    </div>
+    </div>
+    </div>
 </div>
 
 <footer class="text-center">
