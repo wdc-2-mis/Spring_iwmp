@@ -1,13 +1,6 @@
 $( document ).ready(function(){
 	
-	$(document).on('change', '#state', function(e) {
 	
-			e.preventDefault();
-			
-			$("select#district")[0].selectedIndex = 0;
-			$("select#project")[0].selectedIndex = 0;
-			
-			});
 
 		$('#janbhagidariPratiyogitaReport').on( 'click', 'a.activity', function (e) 
 		{

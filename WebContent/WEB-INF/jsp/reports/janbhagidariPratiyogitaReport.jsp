@@ -11,6 +11,15 @@
 
 <script type="text/javascript">
 
+$(document).on('change', '#state', function(e) {
+
+	e.preventDefault();
+	
+	$("select#district")[0].selectedIndex = 0;
+	$("select#project")[0].selectedIndex = 0;
+	
+	});
+
 function getjanbhagidariPratiyogitaRpt(){
 	
 		
