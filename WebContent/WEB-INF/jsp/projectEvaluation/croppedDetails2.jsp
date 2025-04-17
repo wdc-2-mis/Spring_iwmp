@@ -109,7 +109,7 @@
 							        <span class="sdcropremarkError"></span></td>
 							</tr>
 							
-							<tr>
+							<%-- <tr>
 								<td></td>
 								<td><b><c:out value="Total Gross Cropped Area(ha)" /></b></td>
 								<td><input type="text" id="totalArea" name="totalArea"
@@ -120,7 +120,7 @@
 									autocomplete="off" maxlength="15"
 									value=<c:out value="${list.controlNillSingle + list.controlSingleDoublemore}"/> readonly="readonly"/>
 								</td>
-							</tr>
+							</tr> --%>
 
 							 <tr>
 							<td><b><c:out value="3." /></b></td>
@@ -217,7 +217,7 @@
 							<span class="sdcropremarkError"></span></td>
 						</tr>
 
-						<tr>
+						<%-- <tr>
 							<td></td>
 							<td><b><c:out value="Total Nil to Single / Single to double Area (Ha)" /></b></td>
 							<td><input type="number" id="totalArea" name="totalArea"
@@ -225,7 +225,7 @@
 							<td><input type="number" id="ctotalArea" name="ctotalArea"
 								autocomplete="off" maxlength="15" readonly="readonly" /></td>
 						</tr>
-
+ --%>
 
                         <tr>
 							<td><b><c:out value="3." /></b></td>
