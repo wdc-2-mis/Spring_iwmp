@@ -26,7 +26,11 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	@Value("${getMidTermFundUtilEvalReport}")
 	String getMidTermFundUtilEvalReport;
 	
-
+	@Value("${getDistFundUtilizationEvalReport}")
+	String getDistFundUtilizationEvalReport;
+	
+	@Value("${getMandaysDetailsReport}")
+	String getMandaysDetailsReport;
 
 	@Override
 	public List<FundUtilizationEvalReportBean> getFundUtilizationEvalReport() {
@@ -47,5 +51,42 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	}
 
 
+	@Override
+	public List<FundUtilizationEvalReportBean> getDistFundUtilizationEvalReport(Integer stcd) {
+		List<FundUtilizationEvalReportBean> listD = new ArrayList<>();
+		String hql = getDistFundUtilizationEvalReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			listD = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return listD;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getMandaysDetailsReport() {
+		List<FundUtilizationEvalReportBean> mList = new ArrayList<>();
+		String hql = getMandaysDetailsReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			mList = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return mList;
+	}
 
 }

@@ -21,6 +21,16 @@ public class FundUtilizationEvalReportServiceImpl implements FundUtilizationEval
 	public List<FundUtilizationEvalReportBean> getFundUtilizationEvalReport() {
 		return fundEvalDao.getFundUtilizationEvalReport();
 	}
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getDistFundUtilizationEvalReport(Integer stcd) {
+		return fundEvalDao.getDistFundUtilizationEvalReport(stcd);
+	}
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getMandaysDetailsReport() {
+		return fundEvalDao.getMandaysDetailsReport();
+	}
 	
 	
 }

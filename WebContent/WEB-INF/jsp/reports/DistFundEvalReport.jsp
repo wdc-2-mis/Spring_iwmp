@@ -8,30 +8,33 @@
 <html>
 <head>
 
-<title>Report PE2-  State-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</title>
+<title>Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</title>
 
 <script type="text/javascript">
 
-function downloadPDF(){
-		document.getfundutl.action="downloadFundUtilizationEvalReportPdf";
+function downloadPDF(stcd, stName){
+	    document.getElementById("stcd").value=stcd;
+	    document.getElementById("stName").value=stName;
+		document.getfundutl.action="downloadDistFundUtilizationEvalReportPdf";
 		document.getfundutl.method="post";
 		document.getfundutl.submit();
 }
 
-function exportExcel(){
-		document.getfundutl.action="downloadExcelFundUtilizationEvalReport";
+function exportExcel(stcd, stName){
+	   document.getElementById("stcd").value=stcd;
+	    document.getElementById("stName").value=stName;
+		document.getfundutl.action="downloadExcelDistFundUtilizationEvalReport";
 		document.getfundutl.method="post";
 		document.getfundutl.submit();
 }
 	
 </script>
 
-
 <body>
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE2-  State-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</label>
+			<label id="head">Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</label>
 		</h5>
 	</div>
 <br>
@@ -41,21 +44,22 @@ function exportExcel(){
 			<div class="col-8">
 
 	<form:form action="getConWorksDetails" name="getfundutl" id="getfundutl" method="get">
-
+          <input type="hidden" name="stcd" id="stcd" value="" />
+	      <input type="hidden" name="stName" id="stName" value="" />
 		
  	</form:form>
  
 <br>
-	<c:if test="${not empty fundList}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
+	<c:if test="${not empty fundDList}">
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}','${stName}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}','${stName}')" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table">
 		<thead>
 			   <tr>
             <th rowspan="4">S.No.</th>
-            <th rowspan="4">State Name</th>
+            <th rowspan="4">District Name</th>
             <th rowspan="4">Total No. of Project</th>
             <th rowspan="4">Sanctioned Project Area  (in ha.)</th>
             <th colspan="3" style="text-align: center">Sanctioned Cost</th>
@@ -88,10 +92,10 @@ function exportExcel(){
 				<th class="text-center">10</th>
 				<th class="text-center">11</th>
 			</tr>
-			<c:forEach items="${fundList}" var="dt" varStatus="sno">
+			<c:forEach items="${fundDList}" var="dt" varStatus="sno">
 				<tr>
 					<td class="text-left"><c:out value="${sno.count}" /></td>
-					<td><a href = "getDistFundUtilizationEvalReport?stcd=${dt.st_code}&stName=${dt.st_name}"><c:out value='${dt.st_name}'/></a></td>
+					<td class="text-left"><c:out value="${dt.dist_name}" /></td>
 					<td class="text-right"><c:out value="${dt.total_project}" /></td>
 					<td class="text-right"><c:out value="${dt.total_project_area}" /></td>
 					<td class="text-right"><c:out value="${dt.total_evaluation_central_share}" /></td>
@@ -124,7 +128,7 @@ function exportExcel(){
  				value = "${totExp + dt.total_expenditure}" />
 
 			</c:forEach>
-			<c:if test="${fundListSize>0}">
+			<c:if test="${fundListDSize>0}">
 				<tr>
 					<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
 					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td>
@@ -139,7 +143,7 @@ function exportExcel(){
 					
 				</tr>
 			</c:if>
-			<c:if test="${fundListSize==0}">
+			<c:if test="${fundListDSize==0}">
 				<tr>
 					<td align="center" colspan="7" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>
