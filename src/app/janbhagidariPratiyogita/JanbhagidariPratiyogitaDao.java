@@ -12,7 +12,7 @@ public interface JanbhagidariPratiyogitaDao {
 	List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectData(Integer project);
 	
 	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj,  int nogp, 
-			int novillage, String projarea, String projoutlay, int funoutlay, String projexp, String expper, String bank, HttpSession session);
+			int novillage, String projarea, String projoutlay, String funoutlay, String projexp, String expper, String bank, HttpSession session);
 	
 	List<JanbhagidariPratiyogitaBean> getDraftListDetails(Integer stcd);
 	

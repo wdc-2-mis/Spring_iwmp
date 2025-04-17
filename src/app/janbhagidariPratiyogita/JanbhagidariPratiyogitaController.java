@@ -269,7 +269,7 @@ public class JanbhagidariPratiyogitaController {
 	@ResponseBody
 	public String saveJanbhagidariPratiyogita(HttpServletRequest request, HttpServletResponse response, @RequestParam(value="vill") List<String> vill, 
 			@RequestParam(value ="ngoname") List<String> ngoname, @RequestParam(value ="dcode") int dcode, @RequestParam(value ="proj") int proj,  @RequestParam(value ="nogp") int nogp, @RequestParam(value ="novillage") int novillage,  @RequestParam(value ="projarea") String projarea,
-			@RequestParam(value ="projoutlay") String projoutlay, @RequestParam(value ="funoutlay") int funoutlay, @RequestParam(value ="projexp") String projexp, @RequestParam(value ="expper") String expper, 
+			@RequestParam(value ="projoutlay") String projoutlay, @RequestParam(value ="funoutlay") String funoutlay, @RequestParam(value ="projexp") String projexp, @RequestParam(value ="expper") String expper, 
 			@RequestParam(value ="swckgp") String swckgp){
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();

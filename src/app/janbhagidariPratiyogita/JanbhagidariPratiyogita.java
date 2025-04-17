@@ -37,7 +37,7 @@ public class JanbhagidariPratiyogita {
 	private BigDecimal proj_area;
 	private BigDecimal proj_outlay;
 	private Boolean national_bank;
-	private Integer fund_outlay;
+	private BigDecimal fund_outlay;
 	private BigDecimal fund_expenditure;
 	private BigDecimal fund_per_exp;
 	private Character status;
@@ -59,7 +59,7 @@ public class JanbhagidariPratiyogita {
 	}
 	
 	public JanbhagidariPratiyogita(Integer pratiyogita_id, IwmpState iwmpState, IwmpDistrict iwmpDistrict, IwmpMProject iwmpMProject, Date proj_inception, 
-			Date proj_completion, Integer no_gp, Integer no_village, BigDecimal proj_area, BigDecimal proj_outlay, Boolean national_bank, Integer fund_outlay, 
+			Date proj_completion, Integer no_gp, Integer no_village, BigDecimal proj_area, BigDecimal proj_outlay, Boolean national_bank, BigDecimal fund_outlay, 
 			BigDecimal fund_expenditure, BigDecimal fund_per_exp, Character status, String requestedIp, String updatedBy,
 			Date updatedDate, String createdBy, Date createdDate, Set<JanbhagidariPratiyogitaNgoname> janbhagidariPratiyogitaNgoname) {
 		
@@ -193,11 +193,11 @@ public class JanbhagidariPratiyogita {
 	}
 
 	@Column(name = "fund_outlay")
-	public Integer getFund_outlay() {
+	public BigDecimal getFund_outlay() {
 		return fund_outlay;
 	}
 
-	public void setFund_outlay(Integer fund_outlay) {
+	public void setFund_outlay(BigDecimal fund_outlay) {
 		this.fund_outlay = fund_outlay;
 	}
 	@Column(name = "fund_expenditure")

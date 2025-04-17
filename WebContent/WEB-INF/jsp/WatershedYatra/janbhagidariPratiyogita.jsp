@@ -470,7 +470,7 @@ display: none; /* Hidden by default */
      	<tr>
      		<td>Total Project Outlay of WDC-PMKSY 2.0</td>
      		<td><input type="text" id="funoutlay" name="funoutlay" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
      	</tr>
      	<tr>
      		<td>Total Project Expenditure of WDC-PMKSY 2.0</td>

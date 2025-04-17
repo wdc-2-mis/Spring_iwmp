@@ -1,5 +1,7 @@
 package app.janbhagidariPratiyogita;
 
+import java.math.BigDecimal;
+
 public class JanbhagidariPratiyogitaBean {
 	
 	private String project;
@@ -20,7 +22,7 @@ public class JanbhagidariPratiyogitaBean {
 	private int no_gp_ngo;
 	private int no_vill_ngo;
 	/* private String bank; */
-	private int funoutlay;
+	private BigDecimal funoutlay;
 	private String projexp;
 	private String expper;
 	
@@ -51,7 +53,7 @@ public class JanbhagidariPratiyogitaBean {
 	private int no_village;
 	private String proj_outlay;
 	private String proj_area;
-	private int fund_outlay;
+	private BigDecimal fund_outlay;
 	private String fund_expenditure;
 	private String fund_per_exp;
 	
@@ -123,10 +125,10 @@ public class JanbhagidariPratiyogitaBean {
 	public void setProj_area(String proj_area) {
 		this.proj_area = proj_area;
 	}
-	public int getFund_outlay() {
+	public BigDecimal getFund_outlay() {
 		return fund_outlay;
 	}
-	public void setFund_outlay(int fund_outlay) {
+	public void setFund_outlay(BigDecimal fund_outlay) {
 		this.fund_outlay = fund_outlay;
 	}
 	public String getFund_expenditure() {
@@ -225,10 +227,11 @@ public class JanbhagidariPratiyogitaBean {
 		this.no_vill_ngo = no_vill_ngo;
 	}
 	
-	public int getFunoutlay() {
+	
+	public BigDecimal getFunoutlay() {
 		return funoutlay;
 	}
-	public void setFunoutlay(int funoutlay) {
+	public void setFunoutlay(BigDecimal funoutlay) {
 		this.funoutlay = funoutlay;
 	}
 	public String getProjexp() {

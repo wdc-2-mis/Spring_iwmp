@@ -139,7 +139,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 
 	@Override
 	public String saveJanbhagidariPratiyogita(List<String> vill, List<String> ngoname, int dcode, int proj,
-	        int nogp, int novillage, String projarea, String projoutlay, int funoutlay,
+	        int nogp, int novillage, String projarea, String projoutlay, String funoutlay,
 	        String projexp, String expper, String swckgp, HttpSession session) {
 
 	    Session sess = sessionFactory.getCurrentSession();
@@ -177,7 +177,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	        data.setNo_village(novillage);
 	        data.setProj_area(new BigDecimal(projarea));
 	        data.setProj_outlay(new BigDecimal(projoutlay));
-	        data.setFund_outlay(funoutlay);
+	        data.setFund_outlay(new BigDecimal(funoutlay));
 	        data.setFund_expenditure(new BigDecimal(projexp));
 	        data.setFund_per_exp(new BigDecimal(expper));
 	        data.setCreatedBy(session.getAttribute("loginID").toString());
