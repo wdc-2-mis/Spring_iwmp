@@ -222,13 +222,12 @@ public class ChangePassAtSlna {
 		    
 		    String password = (String) session.getAttribute("changepassword");
 		  
-		    if(!adminType.equalsIgnoreCase("ADMIN") && !roleName.equalsIgnoreCase("SLNA Admin Role")) {
-		    flag = loginService.checkoldpassword(loginId, encryptedoldpwd);
-		    if(!flag ==true)
-		    {
-		    	return "oldpassworderror";
-		    }
-		    }
+			/*
+			 * if(!adminType.equalsIgnoreCase("ADMIN") &&
+			 * !roleName.equalsIgnoreCase("SLNA Admin Role")) { flag =
+			 * loginService.checkoldpassword(loginId, encryptedoldpwd); if(!flag ==true) {
+			 * return "oldpassworderror"; } }
+			 */
 		    
 		    check = loginService.checkpasshistory(loginId, encryptednewpwd);
 			if(check > 0)

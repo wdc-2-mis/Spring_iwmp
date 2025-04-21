@@ -178,7 +178,7 @@ $('#ok').click(function()
 {
 //alert(roleName);
 if(userType!=='ADMIN' && roleName!=='SLNA Admin Role'){  
-var plainPwd=$('#oldpwd').val();
+var plainPwd=$('#oldpwd').val() || '';
 var encryptedPwd=sha512(plainPwd); 
 $('#oldpwd').val(encryptedPwd);
 }
@@ -201,14 +201,15 @@ $.ajax({
 	            
             	console.log('Data: '+data);  
 
-                if(data.indexOf("oldpassworderror")>=0){
+                /*if(data.indexOf("oldpassworderror")>=0){
 	             successAlert('Incorrect Old Password... !');
 				$("#successok").click(function(){
 						$('#popup').modal('hide');
 						window.location.href='editprofile';
 				});
 		}
-            	else if(data.indexOf("checkpasshistory")>=0){
+            	else*/ 
+            	if(data.indexOf("checkpasshistory")>=0){
 	             successAlert('You cannot use your last 3 password. !');
 				$("#successok").click(function(){
 						$('#popup').modal('hide');
