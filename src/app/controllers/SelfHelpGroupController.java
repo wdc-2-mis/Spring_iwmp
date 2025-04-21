@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,14 @@ import org.springframework.web.servlet.ModelAndView;
 import app.bean.AssetIdBean;
 import app.bean.Login;
 import app.bean.SelfHelpGroupBean;
+import app.bean.reports.SelfHelpGroupReportBean;
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaBean;
 import app.model.outcome.ShgCoreactivityDetail;
 import app.service.ProjectMasterService;
 import app.service.SelfHelpGroupService;
+import app.service.StateMasterService;
+import app.service.UserService;
+import app.service.unfreeze.UnfreezeBaselineServices;
 
 @Controller("SelfHelpGroupController")
 public class SelfHelpGroupController {
@@ -36,6 +42,24 @@ public class SelfHelpGroupController {
 	SelfHelpGroupService selfHelpGroupService;
 	
 	HttpSession session;
+	
+	@Autowired(required = true)
+	MenuController menuController;
+	
+	@Autowired
+	StateMasterService stateMasterService;
+	
+	@Autowired(required = true)
+	public UserService userService;
+	
+	@Autowired(required = true)
+	public UnfreezeBaselineServices ser;
+	
+	
+	private Map<Integer, String> stateList;
+	private Map<String, String> districtList;
+	private Map<String, String> ProjectList;
+	private Map<String, String> shgType;
 
 	@RequestMapping(value = "/newshg", method = RequestMethod.GET)
 	public ModelAndView getNewSHG(HttpServletRequest request) {
@@ -199,5 +223,101 @@ public class SelfHelpGroupController {
 		}
 		
 		return res;
+	}
+	
+	@RequestMapping(value="/selfHelpGroupNameAccountReport", method = RequestMethod.GET)
+	public ModelAndView selfHelpGroupNameAccountReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		//session = request.getSession(true);
+	//	String st_code=session.getAttribute("stateCode").toString();
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String project= request.getParameter("project");
+		List<SelfHelpGroupReportBean> data =new ArrayList<SelfHelpGroupReportBean>();
+				
+		/* if(session!=null && session.getAttribute("loginID")!=null) { */
+			
+			mav = new ModelAndView("reports/selfHelpGroupNameAccount");
+			
+			shgType= new HashMap<String, String>();
+			shgType.put("newSHG", "Newly Created SHG");
+			shgType.put("oldSHG", "Existing Created SHG");
+			shgType.put("both", "Both");
+			mav.addObject("shgType", shgType);
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+			districtList = userService.getDistrictList(Integer.parseInt(userState));
+			mav.addObject("districtList", districtList);}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				ProjectList = userService.getProjectList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("ProjectList", ProjectList);}
+				mav.addObject("project", project);
+				
+				if(userState==null) {
+					data=selfHelpGroupService.getselfHelpGroupNameAccountReport();
+					mav.addObject("dataList",data);
+					mav.addObject("dataListSize",data.size());	
+				}
+		/*}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}*/
+		return mav; 
+	}
+	
+	@RequestMapping(value="/selfHelpGroupNameAccountReport", method = RequestMethod.POST)
+	public ModelAndView selfHelpGroupNameAccountReport1(HttpServletRequest request, HttpServletResponse response)
+	{
+		//session = request.getSession(true);
+	//	String st_code=session.getAttribute("stateCode").toString();
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String project= request.getParameter("project");
+		String shgty=request.getParameter("shg");
+		List<SelfHelpGroupReportBean> data =new ArrayList<SelfHelpGroupReportBean>();
+				
+		/* if(session!=null && session.getAttribute("loginID")!=null) { */
+			
+			mav = new ModelAndView("reports/selfHelpGroupNameAccount");
+			
+			shgType= new HashMap<String, String>();
+			shgType.put("newSHG", "Newly Created SHG");
+			shgType.put("oldSHG", "Existing Created SHG");
+			shgType.put("both", "Both");
+			mav.addObject("shgType", shgType);
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+			districtList = userService.getDistrictList(Integer.parseInt(userState));
+			mav.addObject("districtList", districtList);}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				ProjectList = userService.getProjectList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("ProjectList", ProjectList);}
+				mav.addObject("project", project);
+				
+				
+					data=selfHelpGroupService.getselfHelpGroupNameAccountReportshg(userState, district, project, shgty);
+					mav.addObject("dataList",data);
+					mav.addObject("dataListSize",data.size());	
+					
+					mav.addObject("shg", shgty);
+		/*}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}*/
+		return mav; 
 	}
 }

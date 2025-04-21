@@ -57,7 +57,11 @@ public class JanbhagidariPratiyogitaBean {
 	private String fund_expenditure;
 	private String fund_per_exp;
 	
-	
+	private String st_name;
+	private int total_project;
+	private int proj_repoted;
+	private int proj_notrepoted;
+	private String fund_outlayex;
 	
 	public int getStcode() {
 		return stcode;
@@ -347,6 +351,37 @@ public class JanbhagidariPratiyogitaBean {
 	public void setVillnames(String villnames) {
 		this.villnames = villnames;
 	}
+	public String getSt_name() {
+		return st_name;
+	}
+	public void setSt_name(String st_name) {
+		this.st_name = st_name;
+	}
+	public int getTotal_project() {
+		return total_project;
+	}
+	public void setTotal_project(int total_project) {
+		this.total_project = total_project;
+	}
+	public int getProj_repoted() {
+		return proj_repoted;
+	}
+	public void setProj_repoted(int proj_repoted) {
+		this.proj_repoted = proj_repoted;
+	}
+	public int getProj_notrepoted() {
+		return proj_notrepoted;
+	}
+	public void setProj_notrepoted(int proj_notrepoted) {
+		this.proj_notrepoted = proj_notrepoted;
+	}
+	public String getFund_outlayex() {
+		return fund_outlayex;
+	}
+	public void setFund_outlayex(String fund_outlayex) {
+		this.fund_outlayex = fund_outlayex;
+	}
+	
 	
 
 }

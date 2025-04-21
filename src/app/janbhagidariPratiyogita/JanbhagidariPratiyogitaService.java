@@ -51,7 +51,7 @@ public interface JanbhagidariPratiyogitaService {
 
 	List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username);
 	
-	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport();
 	
 
 }

@@ -26,5 +26,8 @@ public interface SelfHelpGroupDao {
 	List<SelfHelpGroupReportBean> getSHGExistedProjectDetail(Integer projectid);
 	List<SelfHelpGroupReportBean> getSHGUserGroupProjectDetail(Integer projectid);
 	LinkedHashMap<Integer,String> getSHGDepartment(Integer stCode);
+	
+	List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReport();
+	List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReportshg(String State, String district, String project, String shgty);
 
 }

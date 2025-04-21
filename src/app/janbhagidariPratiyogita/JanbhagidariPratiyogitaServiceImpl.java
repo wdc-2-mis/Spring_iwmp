@@ -182,4 +182,13 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		// TODO Auto-generated method stub
 		return dao.getCompleteListPIADetails(stcd, username);
 	}
+	
+	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport() {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPratiyogitaStatusReport();
+	}
+	
+	
 }

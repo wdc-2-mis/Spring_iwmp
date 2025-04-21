@@ -68,6 +68,10 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	
 	@Value("${getJanbhagidariPratiyogitaPIACompleteList}")
 	String getJanbhagidariPratiyogitaPIACompleteList;
+	
+	@Value("${janbhagidariPratiyogitaStatus}")
+	String janbhagidariPratiyogitaStatus;
+	
 
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
@@ -779,6 +783,39 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				query = session.createSQLQuery(hql);
 				query.setInteger("stcode", stcd);
 				query.setString("loginId", username);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport() {
+		
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+			 // query = session.createSQLQuery(hql);    getGroundWaterTable
+				hql=janbhagidariPratiyogitaStatus;
+				query = session.createSQLQuery(hql);
 				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
 				result = query.list();
 		} 

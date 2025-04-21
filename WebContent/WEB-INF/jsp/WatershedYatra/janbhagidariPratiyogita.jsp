@@ -342,7 +342,7 @@ display: none; /* Hidden by default */
      
      <table id = "tblReport" class = "table">
      	<tr>
-     		<th colspan=2 class="text-left">A. Basic Information about Porject</th>
+     		<th colspan=2 class="text-left">A. Basic Information about Project</th>
      	</tr>
      	<tr>
      		<td>Total No. of Gram Panchayat</td>
@@ -416,7 +416,7 @@ display: none; /* Hidden by default */
      	<tr>
      		<td>Name of NGO &nbsp; <input type="text" class="form-control activity" name="name_ngo" id="name_ngo" class="name_ngo form-control" autocomplete="off" style="width: 100%; max-width: 400px;" required /></td>
      		<td>
-     			Name of Gram Panchyat to be Covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select>
+     			Name of Gram Panchayat to be Covered by NGO &nbsp; <select id="ddlgp" name="ddlgp" class="ddlgp form-control" multiple="multiple"><option value="">--Select Gram Panchayat--</option></select>
 			<div class="selected-gp-list" style="margin-top: 5px; font-size: 14px; color: #333;"></div>
 			</td>
 			

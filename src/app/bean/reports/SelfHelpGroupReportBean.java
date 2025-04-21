@@ -63,6 +63,9 @@ public class SelfHelpGroupReportBean {
 	private String reg_date;
 	private String thrift;
 	
+	private String account_detail;
+	private String ifsc_code;
+	
 	
 	public Integer getDcode() {
 		return dcode;
@@ -393,6 +396,18 @@ public class SelfHelpGroupReportBean {
 	}
 	public void setThrift(String thrift) {
 		this.thrift = thrift;
+	}
+	public String getAccount_detail() {
+		return account_detail;
+	}
+	public void setAccount_detail(String account_detail) {
+		this.account_detail = account_detail;
+	}
+	public String getIfsc_code() {
+		return ifsc_code;
+	}
+	public void setIfsc_code(String ifsc_code) {
+		this.ifsc_code = ifsc_code;
 	}
 	
 	

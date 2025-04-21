@@ -76,6 +76,15 @@ public class SelfHelpGroupDaoImpl implements SelfHelpGroupDao{
 	
 	@Value("${getSHGDepartment}")
 	String getSHGDepartment;
+	
+	@Value("${getSelfHelpCreatedExistListofAccount}")
+	String getSelfHelpCreatedExistListofAccount;
+	
+	@Value("${getselfHelpGroupNameAccountReportshg}")
+	String getselfHelpGroupNameAccountReportshg;
+	
+	@Value("${getselfHelpGroupNameAccountReportshgBoth}")
+	String getselfHelpGroupNameAccountReportshgBoth;
 
 	@Override
 	public LinkedHashMap<Integer, String> getSHGCoreActivity() {
@@ -703,6 +712,76 @@ public class SelfHelpGroupDaoImpl implements SelfHelpGroupDao{
 			ex.printStackTrace();
 		}
 		return map;
+	}
+
+	@Override
+	public List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReport() {
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<SelfHelpGroupReportBean> list = new ArrayList<SelfHelpGroupReportBean>();
+		try {
+			String hql=null;
+			SQLQuery query = null;
+			session.beginTransaction();
+			hql=getSelfHelpCreatedExistListofAccount;
+			query = session.createSQLQuery(hql);
+			//query.setInteger("stcd", state);
+			query.setResultTransformer(Transformers.aliasToBean(SelfHelpGroupReportBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReportshg(String State, String district,
+			String project, String shgty) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<SelfHelpGroupReportBean> list = new ArrayList<SelfHelpGroupReportBean>();
+		try {
+			String hql=null;
+			SQLQuery query = null;
+			session.beginTransaction();
+			
+			if(shgty.equals("both")) {
+				hql=getselfHelpGroupNameAccountReportshgBoth;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcd", Integer.parseInt(State));
+				query.setInteger("distcd", Integer.parseInt(district));
+				query.setInteger("projcd", Integer.parseInt(project));
+			}
+			else {
+				hql=getselfHelpGroupNameAccountReportshg;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcd", Integer.parseInt(State));
+				query.setInteger("distcd", Integer.parseInt(district));
+				query.setInteger("projcd", Integer.parseInt(project));
+				query.setString("shgtype", shgty);
+			}
+			query.setResultTransformer(Transformers.aliasToBean(SelfHelpGroupReportBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }

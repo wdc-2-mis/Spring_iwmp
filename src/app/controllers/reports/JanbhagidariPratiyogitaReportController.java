@@ -222,5 +222,79 @@ public class JanbhagidariPratiyogitaReportController {
 		
 		return sublist;
 	}
+	
+	@RequestMapping(value="/janbhagidariPratiyogitaStatusReport", method = RequestMethod.GET)
+	public ModelAndView janbhagidariPratiyogitaStatusReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView();
+		
+		List<JanbhagidariPratiyogitaBean> data = new ArrayList<JanbhagidariPratiyogitaBean>();
+		try {
+			
+			mav = new ModelAndView("reports/janbhagidariPratiyogitaStatus");
+			
+			
+			data=serk.getjanbhagidariPratiyogitaStatusReport();
+			mav.addObject("dataList",data);
+			mav.addObject("dataListSize",data.size());
+			
+			int total_projectt=0, proj_repotedt=0, proj_notrepotedt=0;
+			
+			int totno_gp=0;
+			int totno_village=0;
+			BigDecimal totproj_area = BigDecimal.valueOf(0);
+			BigDecimal totproj_outlay = BigDecimal.valueOf(0);
+			int totno_ngo_name=0;
+			int totno_ngo_gp=0;
+			int totno_ngo_vill=0;
+			int totno_swck_gp=0;
+			BigDecimal fund_outlayex = BigDecimal.valueOf(0);
+			BigDecimal totfund_expenditure = BigDecimal.valueOf(0);
+			
+			if(data != null) 
+			{
+				for(JanbhagidariPratiyogitaBean bean : data) 
+				{
+					total_projectt=total_projectt+bean.getTotal_project();
+					proj_repotedt=proj_repotedt+bean.getProj_repoted();
+					proj_notrepotedt=proj_notrepotedt+bean.getProj_notrepoted();
+					
+					totno_gp=totno_gp+bean.getNo_gp();
+					totno_village=totno_village+bean.getNo_village();
+					totproj_area=totproj_area.add(new BigDecimal(bean.getProj_area()));
+					totproj_outlay=totproj_outlay.add(new BigDecimal(bean.getProj_outlay()));
+					totno_ngo_name=totno_ngo_name+bean.getNo_ngo_name();
+					totno_ngo_gp=totno_ngo_gp+bean.getNo_ngo_gp();
+					totno_ngo_vill=totno_ngo_vill+bean.getNo_ngo_vill();
+					totno_swck_gp=totno_swck_gp+bean.getNo_swck_gp();
+					fund_outlayex=fund_outlayex.add(new BigDecimal(bean.getFund_outlayex()));
+					totfund_expenditure=totfund_expenditure.add(new BigDecimal(bean.getFund_expenditure()));
+					
+				}
+			}	
+			
+			mav.addObject("total_projectt",total_projectt);
+			mav.addObject("proj_repotedt",proj_repotedt);
+			mav.addObject("proj_notrepotedt",proj_notrepotedt);
+			
+			mav.addObject("totno_gp",totno_gp);
+			mav.addObject("totno_village",totno_village);
+			mav.addObject("totproj_area",totproj_area);
+			mav.addObject("totproj_outlay",totproj_outlay);
+			mav.addObject("totno_ngo_name",totno_ngo_name);
+			mav.addObject("totno_ngo_gp",totno_ngo_gp);
+			mav.addObject("totno_ngo_vill",totno_ngo_vill);
+			mav.addObject("totno_swck_gp",totno_swck_gp);
+			mav.addObject("fund_outlayex",fund_outlayex);
+			mav.addObject("totfund_expenditure",totfund_expenditure);
+			
+			
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return mav; 
+	}
 
 }

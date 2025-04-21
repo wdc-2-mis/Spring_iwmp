@@ -133,5 +133,26 @@ public class SelfHelpGroupServiceImpl implements SelfHelpGroupService{
 		return selfHelpGroupDao.saveDraftSHGData(projectCd, group, shgno, name, sc, st, others, women, activity, turnover, income, pmbima, fedrated, updatedby, department, regdate, revolve_amount, threft_credit);
 	}
 
+
+
+
+
+	@Override
+	public List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReport() {
+		// TODO Auto-generated method stub
+		return selfHelpGroupDao.getselfHelpGroupNameAccountReport();
+	}
+
+
+
+
+
+	@Override
+	public List<SelfHelpGroupReportBean> getselfHelpGroupNameAccountReportshg(String State, String district,
+			String project, String shgty) {
+		// TODO Auto-generated method stub
+		return selfHelpGroupDao.getselfHelpGroupNameAccountReportshg(State, district, project, shgty);
+	}
+
 	
 }
