@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import app.model.IwmpMMonth;
 import app.model.IwmpMProject;
 import app.model.outcome.FpoMain;
 import app.model.project.WdcpmksyBaselineupdateAchievementDetail;
+import app.projectevaluation.bean.CroppedDetailsReportBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.dao.ProjectEvaluationDAO;
 
@@ -124,6 +126,15 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	
 	@Value("${getStateMidProjEvlData}")
 	String getStateMidProjEvlDetails;
+	
+	@Value("${getPreCropDetails}")
+	String getPreCropDetails;
+	
+	@Value("${getMidCropDetails}")
+	String getMidCropDetails;
+	
+	@Value("${getControlCropDetails}")
+	String getControlCropDetails;
 	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
@@ -2211,6 +2222,42 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 				
 			return getStateMidProjEvoluation;
+		}
+
+		@Override
+		public Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData() {
+			Map<String, List<CroppedDetailsReportBean>> map = new LinkedHashMap<>();
+			String prehql = getPreCropDetails;
+			String midhql = getMidCropDetails;
+			String controlhql = getControlCropDetails;
+			List<CroppedDetailsReportBean> list = new ArrayList<>();
+			
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(prehql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				list = query.list();
+				map.put("pre", list);
+				
+				list = new ArrayList<>();
+				query = session.createSQLQuery(midhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				list = query.list();
+				map.put("mid", list);
+				
+				list = new ArrayList<>();
+				query = session.createSQLQuery(controlhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				list = query.list();
+				map.put("control", list);
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return map;
 		}
 
 }

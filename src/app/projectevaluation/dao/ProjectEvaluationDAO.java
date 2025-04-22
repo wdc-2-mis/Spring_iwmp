@@ -3,7 +3,11 @@ import java.math.BigDecimal;
 import javax.servlet.http.HttpSession;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import app.projectevaluation.bean.CroppedDetailsReportBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
@@ -137,5 +141,7 @@ public interface ProjectEvaluationDAO {
 	LinkedHashMap<Integer, String> getProjProfileBlock(Integer pcode);
 	
 	List<ProjectEvaluationBean> getStateMidProjEvoluation();
+	
+	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
 }

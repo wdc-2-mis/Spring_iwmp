@@ -41,6 +41,7 @@ import app.bean.Login;
 import app.bean.ProfileBean;
 import app.common.CommonFunctions;
 import app.projectevaluation.service.ProjectEvaluationService;
+import app.projectevaluation.bean.CroppedDetailsReportBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.service.DistrictMasterService;
 import app.service.PhysicalActionPlanService;
@@ -5180,5 +5181,19 @@ public class ProjectEvaluationController {
 	
 	return mav;
 }
+	
+	@RequestMapping(value="/getCroppedDetailsReportData", method = RequestMethod.GET)
+	public ModelAndView getCroppedDetailsReportData(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("reports/croppredDetailsReport");
+		Map<String, List<CroppedDetailsReportBean>> map = PEService.getCroppedDetailsReportData();
+		mav.addObject("map",map);
+		
+		return mav;
+		
+	}
+	
 }
 

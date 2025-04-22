@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import app.projectevaluation.bean.CroppedDetailsReportBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.dao.ProjectEvaluationDAO;
 
@@ -315,5 +316,13 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public List<ProjectEvaluationBean> getStateMidProjEvoluation() {
 		return PEDAO.getStateMidProjEvoluation();
 	}
+
+	@Override
+	public Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData() {
+		// TODO Auto-generated method stub
+		return PEDAO.getCroppedDetailsReportData();
+	}
+	
+	
 	
 }
