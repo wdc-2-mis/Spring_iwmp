@@ -1173,8 +1173,8 @@ public class StateWiseCurrentStatusController {
 		mav = new ModelAndView("reports/stateWiseCurrentStatusPlanAchieve");
 		
 		mav.addObject("netTreatledata",curntst.getStateWiseCurrentStatusPlanAchieve());
-		dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "" };
-		dataArrNetTotal = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "", "", ""};
+		dataArrNetTotal = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		for (List<StateWiseCurrentStatusBean> l : curntst.getStateWiseCurrentStatusPlanAchieve().values())
             //System.out.println("value: " + l);
     
@@ -1187,6 +1187,8 @@ public class StateWiseCurrentStatusController {
 			dataArrNetTotal[4] = dataArrNetTotal[4] + bean.getTotal_project_achievement2023();
 			dataArrNetTotal[5] = dataArrNetTotal[5] + bean.getTotal_project_plan2024();
 			dataArrNetTotal[6] = dataArrNetTotal[6] + bean.getTotal_project_achievement2024();
+			dataArrNetTotal[7] = dataArrNetTotal[7] + bean.getTotal_project_plan2025();
+			dataArrNetTotal[8] = dataArrNetTotal[8] + bean.getTotal_project_achievement2025();
 			
 		}
 		dataListNetTotal = new ArrayList();
@@ -1197,6 +1199,8 @@ public class StateWiseCurrentStatusController {
 		dataArrNetTotalStr[4] = dataArrNetTotal[4].toString();
 		dataArrNetTotalStr[5] = dataArrNetTotal[5].toString();
 		dataArrNetTotalStr[6] = dataArrNetTotal[6].toString();
+		dataArrNetTotalStr[7] = dataArrNetTotal[7].toString();
+		dataArrNetTotalStr[8] = dataArrNetTotal[8].toString();
 		dataListNetTotal.add(dataArrNetTotalStr);
 		mav.addObject("dataListNetTotal", dataListNetTotal);
 		mav.addObject("stname", stname);
@@ -1220,8 +1224,8 @@ public class StateWiseCurrentStatusController {
 		try {
 			mav = new ModelAndView("reports/districtWiseCurrentStatusPlanAchieve");
 			mav.addObject("netTreatledata",curntst.getdistrictWiseCurrentStatusPlanAchieve(id));
-			dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "" };
-			dataArrNetTotal = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+			dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "", "", "" };
+			dataArrNetTotal = new Integer[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 			for (List<StateWiseCurrentStatusBean> l : curntst.getdistrictWiseCurrentStatusPlanAchieve(id).values())
 				for(StateWiseCurrentStatusBean bean : l){
 					dataArrNetTotal[0] = dataArrNetTotal[0] + bean.getTotal_project();
@@ -1231,6 +1235,8 @@ public class StateWiseCurrentStatusController {
 					dataArrNetTotal[4] = dataArrNetTotal[4] + bean.getTotal_project_achievement2023();
 					dataArrNetTotal[5] = dataArrNetTotal[5] + bean.getTotal_project_plan2024();
 					dataArrNetTotal[6] = dataArrNetTotal[6] + bean.getTotal_project_achievement2024();
+					dataArrNetTotal[5] = dataArrNetTotal[5] + bean.getTotal_project_plan2025();
+					dataArrNetTotal[6] = dataArrNetTotal[6] + bean.getTotal_project_achievement2025();
 				}
 			dataListNetTotal = new ArrayList();
 			dataArrNetTotalStr[0] = dataArrNetTotal[0].toString();
@@ -1240,6 +1246,8 @@ public class StateWiseCurrentStatusController {
 			dataArrNetTotalStr[4] = dataArrNetTotal[4].toString();
 			dataArrNetTotalStr[5] = dataArrNetTotal[5].toString();
 			dataArrNetTotalStr[6] = dataArrNetTotal[6].toString();
+			dataArrNetTotalStr[7] = dataArrNetTotal[7].toString();
+			dataArrNetTotalStr[8] = dataArrNetTotal[8].toString();
 			
 			dataListNetTotal.add(dataArrNetTotalStr);
 			mav.addObject("dataListNetTotal", dataListNetTotal);
@@ -1769,8 +1777,8 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.addHeader(document);
 	        document.add(paragraph2);
 	        document.add(paragraph3);
-	        table = new PdfPTable(9);
-	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+	        table = new PdfPTable(11);
+	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 	        table.setWidthPercentage(90);
 	        table.setSpacingBefore(0f);
 	        table.setSpacingAfter(0f);
@@ -1783,6 +1791,8 @@ public class StateWiseCurrentStatusController {
 	        int total_project_achievement2023 = 0;
 	        int total_project_plan2024 = 0;
 	        int total_project_achievement2024 = 0;
+	        int total_project_plan2025 = 0;
+	        int total_project_achievement2025 = 0;
 
 	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "State ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -1791,6 +1801,7 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2022-23)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2023-24)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2024-25)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Financial Year(2025-26)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1798,6 +1809,9 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
 
 	        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1808,6 +1822,9 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        
 	        for (List<StateWiseCurrentStatusBean> l : curntst.getStateWiseCurrentStatusPlanAchieve().values())
 			for(StateWiseCurrentStatusBean bean : l){
 				 list.add(bean);	
@@ -1824,6 +1841,8 @@ public class StateWiseCurrentStatusController {
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2023()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2024()), Element.ALIGN_RIGHT, 1,1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2024()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2025()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2025()), Element.ALIGN_RIGHT, 1,1, bf8);
 	               
 	                k = k + 1;
 	                
@@ -1834,6 +1853,8 @@ public class StateWiseCurrentStatusController {
 	    	        total_project_achievement2023=total_project_achievement2023+list.get(i).getTotal_project_achievement2023();
 	    	        total_project_plan2024 = total_project_plan2024+list.get(i).getTotal_project_plan2024();
 	    	        total_project_achievement2024=total_project_achievement2024+list.get(i).getTotal_project_achievement2024();
+	    	        total_project_plan2025 = total_project_plan2025+list.get(i).getTotal_project_plan2025();
+	    	        total_project_achievement2025=total_project_achievement2025+list.get(i).getTotal_project_achievement2025();
 	               
 	            }
 
@@ -1845,6 +1866,8 @@ public class StateWiseCurrentStatusController {
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2023), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 
 	            document.add(table);
 	            table = new PdfPTable(1);
@@ -4071,8 +4094,8 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.addHeader(document);
 	        document.add(paragraph2);
 	        document.add(paragraph3);
-	        table = new PdfPTable(9);
-	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+	        table = new PdfPTable(11);
+	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 	        table.setWidthPercentage(90);
 	        table.setSpacingBefore(0f);
 	        table.setSpacingAfter(0f);
@@ -4085,6 +4108,8 @@ public class StateWiseCurrentStatusController {
 	        int total_project_achievement2023 = 0;
 	        int total_project_plan2024 = 0;
 	        int total_project_achievement2024 = 0;
+	        int total_project_plan2025 = 0;
+	        int total_project_achievement2025 = 0;
 
 	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "District Name ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -4093,6 +4118,7 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2022-23)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2023-24)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2024-25)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Financial Year(2025-26)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -4100,6 +4126,9 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
 
 	        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -4110,6 +4139,8 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        for (List<StateWiseCurrentStatusBean> l : curntst.getdistrictWiseCurrentStatusPlanAchieve(Integer.parseInt(id)).values())
 			for(StateWiseCurrentStatusBean bean : l){
 				 list.add(bean);	
@@ -4126,6 +4157,8 @@ public class StateWiseCurrentStatusController {
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2023()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2024()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2024()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2025()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2025()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	               
 	                k = k + 1;
 	                
@@ -4136,6 +4169,8 @@ public class StateWiseCurrentStatusController {
 	    	        total_project_achievement2023=total_project_achievement2023+list.get(i).getTotal_project_achievement2023();
 	    	        total_project_plan2024 = total_project_plan2024+list.get(i).getTotal_project_plan2024();
 	    	        total_project_achievement2024=total_project_achievement2024+list.get(i).getTotal_project_achievement2024();
+	    	        total_project_plan2025 = total_project_plan2025+list.get(i).getTotal_project_plan2025();
+	    	        total_project_achievement2025=total_project_achievement2025+list.get(i).getTotal_project_achievement2025();
 	               
 	            }
 
@@ -4147,6 +4182,9 @@ public class StateWiseCurrentStatusController {
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2023), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
 
 	            document.add(table);
 	            table = new PdfPTable(1);
@@ -4220,8 +4258,8 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.addHeader(document);
 	        document.add(paragraph2);
 	        document.add(paragraph3);
-	        table = new PdfPTable(8);
-	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5});
+	        table = new PdfPTable(10);
+	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
 	        table.setWidthPercentage(90);
 	        table.setSpacingBefore(0f);
 	        table.setSpacingAfter(0f);
@@ -4233,6 +4271,8 @@ public class StateWiseCurrentStatusController {
 	        int total_project_achievement2023 = 0;
 	        int total_project_plan2024 = 0;
 	        int total_project_achievement2024 = 0;
+	        int total_project_plan2025 = 0;
+	        int total_project_achievement2025 = 0;
 
 	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Project Name ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -4240,7 +4280,10 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2022-23)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2023-24)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Financial Year(2024-25)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Financial Year(2025-26)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
 
+	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Achievement Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "No. of Project Plan Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -4256,6 +4299,8 @@ public class StateWiseCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	       
 	        int k = 1;
 	        if (list.size() != 0) {
@@ -4268,6 +4313,8 @@ public class StateWiseCurrentStatusController {
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2023()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2024()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2024()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_plan2025()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project_achievement2025()), Element.ALIGN_RIGHT, 1, 1, bf8);
 	               
 	                k = k + 1;
 	                
@@ -4277,6 +4324,8 @@ public class StateWiseCurrentStatusController {
 	    	        total_project_achievement2023=total_project_achievement2023+list.get(i).getTotal_project_achievement2023();
 	    	        total_project_plan2024 = total_project_plan2024+list.get(i).getTotal_project_plan2024();
 	    	        total_project_achievement2024=total_project_achievement2024+list.get(i).getTotal_project_achievement2024();
+	    	        total_project_plan2025 = total_project_plan2025+list.get(i).getTotal_project_plan2025();
+	    	        total_project_achievement2025=total_project_achievement2025+list.get(i).getTotal_project_achievement2025();
 	               
 	            }
 
@@ -4287,6 +4336,8 @@ public class StateWiseCurrentStatusController {
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2023), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2024), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_plan2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(total_project_achievement2025), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 
 	            document.add(table);
 	            table = new PdfPTable(1);

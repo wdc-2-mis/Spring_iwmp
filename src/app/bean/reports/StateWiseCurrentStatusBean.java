@@ -48,6 +48,8 @@ public class StateWiseCurrentStatusBean {
 	private int total_project_achievement2023;
 	private int total_project_plan2024;
 	private int total_project_achievement2024;
+	private int total_project_plan2025;
+	private int total_project_achievement2025;
 	
 	private String proj_name;
 	private int proj_id;
@@ -59,6 +61,18 @@ public class StateWiseCurrentStatusBean {
 	private int covered_village;
 	
 	
+	public int getTotal_project_plan2025() {
+		return total_project_plan2025;
+	}
+	public void setTotal_project_plan2025(int total_project_plan2025) {
+		this.total_project_plan2025 = total_project_plan2025;
+	}
+	public int getTotal_project_achievement2025() {
+		return total_project_achievement2025;
+	}
+	public void setTotal_project_achievement2025(int total_project_achievement2025) {
+		this.total_project_achievement2025 = total_project_achievement2025;
+	}
 	public int getCovered_village() {
 		return covered_village;
 	}

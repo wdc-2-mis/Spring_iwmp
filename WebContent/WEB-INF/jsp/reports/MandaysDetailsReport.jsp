@@ -13,13 +13,13 @@
 <script type="text/javascript">
 
 function downloadPDF(){
-		document.getmandays.action="downloadFundUtilizationEvalReportPdf";
+		document.getmandays.action="downloadMandaysDetailsReportPdf";
 		document.getmandays.method="post";
 		document.getmandays.submit();
 }
 
 function exportExcel(){
-		document.getmandays.action="downloadExcelFundUtilizationEvalReport";
+		document.getmandays.action="downloadExcelMandaysDetailsReport";
 		document.getmandays.method="post";
 		document.getmandays.submit();
 }
@@ -48,7 +48,7 @@ function exportExcel(){
 <br>
 	<c:if test="${not empty mList}">
 <!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
-<!-- 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>  -->
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table">
@@ -109,12 +109,10 @@ function exportExcel(){
   				value = "${midfarmerincome + dt.mid_farmer_income}" />  
   				<c:set var = "controlfarmerincome"  
   				value = "${controlfarmerincome + dt.control_farmer_income}" /> 
-  				 
   				<c:set var = "farmerbenefited"  
  				value = "${farmerbenefited + dt.farmer_benefited}" />
  				<c:set var = "controlfarmerbenefited"  
  				value = "${controlfarmerbenefited + dt.control_farmer_benefited}" />
- 				
  				<c:set var = "mandaysgenerated"  
  				value = "${mandaysgenerated + dt.mandays_generated}" />
  				<c:set var = "controlmandaysgenerated"  
@@ -137,7 +135,7 @@ function exportExcel(){
 			</c:if>
 			<c:if test="${mListSize==0}">
 				<tr>
-					<td align="center" colspan="7" class="required" style="color:red;"><b>Data Not Found</b></td>
+					<td align="center" colspan="10" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>
 			</c:if>
 		</tbody>

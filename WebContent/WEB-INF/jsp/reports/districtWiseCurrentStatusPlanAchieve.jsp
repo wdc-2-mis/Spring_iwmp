@@ -54,9 +54,12 @@
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2022-23)</th>
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2023-24)</th>
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2024-25)</th>
+      		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2025-26)</th>
       	</tr>	
       	<tr>	
       		<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
@@ -76,10 +79,8 @@
 			<th class="text-center">7</th>
 			<th class="text-center">8</th>
 			<th class="text-center">9</th>
-			
-		<!--	<th class="text-center">10</th>-->
-			<!--  <th class="text-center">11</th>
-			<th class="text-center">12</th>-->
+			<th class="text-center">10</th>
+  			<th class="text-center">11</th> 
 		</tr>
 		<c:set var="count" value="1" />
 		<c:forEach var="list" items="${netTreatledata}">
@@ -96,6 +97,8 @@
 					<td align="right"><c:out value='${listUser.total_project_achievement2023}' /></td>
 					<td align="right"><c:out value='${listUser.total_project_plan2024}' /></td>
 					<td align="right"><c:out value='${listUser.total_project_achievement2024}' /></td>
+					<td align="right"><c:out value='${listUser.total_project_plan2025}' /></td>
+					<td align="right"><c:out value='${listUser.total_project_achievement2025}' /></td>
 					<c:set var="count" value="${count+1}" />
 				</tr>
 			</c:forEach>
@@ -104,16 +107,15 @@
 			<tr>
 			<td class="table-primary"></td>
 				<td align="right" class="table-primary"><b>Grand Total </b></td> 
-		<!--		<td align="right" class="table-primary" ><b><c:out value='${netTotal[0]}' /> </b></td> -->
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[0]}' /> </b></td>
-			<!--	<td align="right" class="table-primary" ><b><c:out value='${netTotal[2]}' /> </b></td> -->
-			<!--	<td align="right" class="table-primary" ><b><c:out value='${netTotal[3]}' /> </b></td>-->
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[1]}' /> </b></td>
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[2]}' /> </b></td>
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[3]}' /> </b></td>
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[4]}' /> </b></td>
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[5]}' /> </b></td>
 				<td align="right" class="table-primary" ><b><c:out value='${netTotal[6]}' /> </b></td>
+				<td align="right" class="table-primary" ><b><c:out value='${netTotal[7]}' /> </b></td>
+				<td align="right" class="table-primary" ><b><c:out value='${netTotal[8]}' /> </b></td>
 				
 			</tr>
 		</c:forEach> 

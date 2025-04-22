@@ -59,9 +59,12 @@
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2022-23)</th>
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2023-24)</th>
       		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2024-25)</th>
+      		<th colspan="2" style="text-align:center; vertical-align: middle; width: 14%;">Financial Year(2025-26)</th>
       	</tr>	
       	<tr>	
       		<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Plan Created</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">No. of Project Achievement Created</th>
@@ -80,6 +83,8 @@
 			<th class="text-center">6</th>
 			<th class="text-center">7</th>
 			<th class="text-center">8</th>
+			<th class="text-center">9</th>
+			<th class="text-center">10</th>
 		</tr>
                                 <c:set var="count" value="1" />
                                 <c:forEach items="${listt}" var="bls" varStatus="sno">
@@ -92,6 +97,8 @@
 					<td align="right"><c:out value='${bls.total_project_achievement2023}' /></td>
 					<td align="right"><c:out value='${bls.total_project_plan2024}' /></td>
 					<td align="right"><c:out value='${bls.total_project_achievement2024}' /></td>
+					<td align="right"><c:out value='${bls.total_project_plan2025}' /></td>
+					<td align="right"><c:out value='${bls.total_project_achievement2025}' /></td>
 
 					
 					
@@ -101,6 +108,8 @@
                                         <c:set var="totalachievement2023" value="${totalachievement2023 + bls.total_project_achievement2023}" />
                                         <c:set var="totalplan2024" value="${totalplan2024 + bls.total_project_plan2024}" />
                                         <c:set var="totalachievement2024" value="${totalachievement2024 + bls.total_project_achievement2024}" />
+                                        <c:set var="totalplan2025" value="${totalplan2025 + bls.total_project_plan2025}" />
+                                        <c:set var="totalachievement2025" value="${totalachievement2025 + bls.total_project_achievement2025}" />
                                     </tr>
                                 </c:forEach>
                                 <tr>
@@ -111,6 +120,8 @@
                                     <td align="right" class="table-primary"><b> <c:out value="${totalachievement2023}" /></b></td>
                                     <td align="right" class="table-primary"><b> <c:out value="${totalplan2024}" /></b></td>
                                     <td align="right" class="table-primary"><b> <c:out value="${totalachievement2024}" /></b></td>
+                                    <td align="right" class="table-primary"><b> <c:out value="${totalplan2025}" /></b></td>
+                                    <td align="right" class="table-primary"><b> <c:out value="${totalachievement2025}" /></b></td>
 										
                                 
                                 </tr>

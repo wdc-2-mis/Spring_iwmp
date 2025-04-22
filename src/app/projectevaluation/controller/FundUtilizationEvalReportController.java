@@ -3,6 +3,7 @@ package app.projectevaluation.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +103,156 @@ public class FundUtilizationEvalReportController {
 			return mav;
 		}
 	 
+		@RequestMapping(value = "/downloadMandaysDetailsReportPdf", method = RequestMethod.POST)
+		public ModelAndView downloadMandaysDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
+		{
+			
+			List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
+
+			list = fundService.getMandaysDetailsReport();
+			
+			try {
+				
+				Rectangle layout = new Rectangle(PageSize.A4.rotate());
+				layout.setBackgroundColor(new BaseColor(255, 255, 255));
+				Document document = new Document(layout, 25, 10, 10, 0);
+				document.addTitle("MandaysReport");
+				document.addCreationDate();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				PdfWriter writer=PdfWriter.getInstance(document, baos);
+				document.open(); 
+		       
+				Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+				Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+				Font bf8 = new Font(FontFamily.HELVETICA, 8);
+				Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+				Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+				PdfPTable table = null;
+				document.newPage();
+				Paragraph paragraph3 = null; 
+				Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+				
+				paragraph3 = new Paragraph("Report PE6- State-wise Mid Term Evaluation of Mandays Details ", f3);
+					
+				paragraph2.setAlignment(Element.ALIGN_CENTER);
+			    paragraph3.setAlignment(Element.ALIGN_CENTER);
+			    paragraph2.setSpacingAfter(10);
+			    paragraph3.setSpacingAfter(10);
+			    CommonFunctions.addHeader(document);
+			    document.add(paragraph2);
+			    document.add(paragraph3);
+			    table = new PdfPTable(10);
+			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
+			    table.setWidthPercentage(90);
+			    table.setSpacingBefore(0f);
+			    table.setSpacingAfter(0f);
+			    table.setHeaderRows(5);
+
+			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Total No. of Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Farmer`s Average Household Income per Annum (Rs. in Lakhs)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Farmers Benefited", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Persondays Generated (man-days)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+
+			    CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // TS
+			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // TE
+			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
+
+			    CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					
+				int k = 1;
+				
+				int totproj = 0;
+				BigInteger farbenefited = BigInteger.ZERO;
+				BigInteger contrfarbenefited = BigInteger.ZERO;
+				BigInteger mandays = BigInteger.ZERO;
+				BigInteger conmandays = BigInteger.ZERO;
+				BigDecimal pref = BigDecimal.ZERO;
+				BigDecimal midf = BigDecimal.ZERO;
+				BigDecimal conf = BigDecimal.ZERO;
+				
+				
+				if(list.size()!=0)
+					for(int i=0;i<list.size();i++) 
+					{
+						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_project().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_mandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					    
+					    totproj = totproj + list.get(i).getTotal_project();
+					    pref = pref.add(list.get(i).getPre_farmer_income());
+					    midf = midf.add(list.get(i).getMid_farmer_income());
+					    conf = conf.add(list.get(i).getControl_farmer_income());
+					    farbenefited = farbenefited.add( list.get(i).getFarmer_benefited());
+					    contrfarbenefited = contrfarbenefited.add(list.get(i).getControl_farmer_benefited());
+					    mandays = mandays.add(list.get(i).getMandays_generated());
+					    conmandays = conmandays.add(list.get(i).getControl_mandays_generated());
+						k++;
+					}
+					
+					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(pref), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(midf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(conf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(farbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(contrfarbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(conmandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					
+					if(list.size()==0) 
+						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
+					
+					
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(90);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+			CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE6- State.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+			} 
+			catch (Exception ex) 
+			{
+				ex.printStackTrace();
+			} 
+			
+			return null;
+		}
 	@RequestMapping(value = "/downloadFundUtilizationEvalReportPdf", method = RequestMethod.POST)
 	public ModelAndView downloadFundUtilizationEvalReportPdf(HttpServletRequest request, HttpServletResponse response) 
 	{
@@ -155,15 +306,15 @@ public class FundUtilizationEvalReportController {
 		    CommonFunctions.insertCellHeader(table, "Sanctioned Cost", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "Fund Utilization", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 
-		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // SC
-		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // SS
-		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // TS
-		    CommonFunctions.insertCellHeader(table, "Fund Received (Rs. Crores)", Element.ALIGN_CENTER, 3, 1, bf8Bold); // FR
-		    CommonFunctions.insertCellHeader(table, "Total Expenditure (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // TE
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Fund Received (Rs. Crores)", Element.ALIGN_CENTER, 3, 1, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "Total Expenditure (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); 
 
-		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
-		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-SS
-		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-TS
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   
 
 		    CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -190,11 +341,6 @@ public class FundUtilizationEvalReportController {
 			BigDecimal fundTotalshare = BigDecimal.ZERO;
 			BigDecimal projExpenditure = BigDecimal.ZERO;
 			
-
-
-
-
-				
 			if(list.size()!=0)
 				for(int i=0;i<list.size();i++) 
 				{
@@ -209,21 +355,16 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell(table, list.get(i).getTotal_fund_state_share().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getTotal_fund().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getTotal_expenditure().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						
-				    	
 				    
 				    totproj = totproj + list.get(i).getTotal_project();
 				    projArea = projArea.add(list.get(i).getTotal_project_area());
 				    evCentralShare = evCentralShare.add(list.get(i).getTotal_evaluation_central_share());
 				    evStateShare = evStateShare.add(list.get(i).getTotal_evaluation_state_share());
 				    evTotalshare = evTotalshare.add(list.get(i).getTotal_share_evaluation());
-				    
 				    fundCentralshare = fundCentralshare.add( list.get(i).getTotal_fund_central_share());
 				    fundStateshare = fundStateshare.add(list.get(i).getTotal_fund_state_share());
 				    fundTotalshare = fundTotalshare.add(list.get(i).getTotal_fund());
-				    
 				    projExpenditure = projExpenditure.add(list.get(i).getTotal_expenditure());
-				   
 						
 					k++;
 				}
@@ -326,15 +467,15 @@ public class FundUtilizationEvalReportController {
 		    CommonFunctions.insertCellHeader(table, "Sanctioned Cost", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "Fund Utilization", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 
-		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // SC
-		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // SS
-		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   // TS
-		    CommonFunctions.insertCellHeader(table, "Fund Received (Rs. Crores)", Element.ALIGN_CENTER, 3, 1, bf8Bold); // FR
-		    CommonFunctions.insertCellHeader(table, "Total Expenditure (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); // TE
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Fund Received (Rs. Crores)", Element.ALIGN_CENTER, 3, 1, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "Total Expenditure (Rs. Crores)", Element.ALIGN_CENTER, 1, 2, bf8Bold); 
 
-		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
-		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-SS
-		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // FR-TS
+		    CommonFunctions.insertCellHeader(table, "Central Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold); 
+		    CommonFunctions.insertCellHeader(table, "State Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   
+		    CommonFunctions.insertCellHeader(table, "Total Share (Rs. Crores)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   
 
 		    CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -361,11 +502,6 @@ public class FundUtilizationEvalReportController {
 			BigDecimal fundTotalshare = BigDecimal.ZERO;
 			BigDecimal projExpenditure = BigDecimal.ZERO;
 			
-
-
-
-
-				
 			if(listD.size()!=0)
 				for(int i=0;i<listD.size();i++) 
 				{
@@ -994,5 +1130,265 @@ public class FundUtilizationEvalReportController {
 
 	    return "reports/DistFundEvalReport";
 	}
+	@RequestMapping(value = "/downloadExcelMandaysDetailsReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelMandaysDetailsReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
 
+		list = fundService.getMandaysDetailsReport();
+			
+		Workbook workbook = new XSSFWorkbook();  
+		//invoking creatSheet() method and passing the name of the sheet to be created   
+		Sheet sheet = workbook.createSheet("Report PE6-  State-wise Mid Term Evaluation of Mandays Details");   
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE6-  State-wise Mid Term Evaluation of Mandays Details";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 9, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,0,0); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,1,1); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,2,2); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,3,6); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,7,9); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,4,4); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,5,5); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,6,6); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,7,9); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,10,10); 
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowhead = sheet.createRow(5);
+		
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("State Name");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Total No. of Project");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Farmer`s Average Household Income per Annum (Rs. in Lakhs))");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(4);
+		cell.setCellValue("No. of Farmers Benefited");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(5);
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(6);
+		cell.setCellStyle(style);
+		
+
+		cell = rowhead.createCell(7);
+		cell.setCellValue("No. of Persondays Generated (man-days)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=8;i<11;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(6);
+		
+		for(int i=0;i<4;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Pre Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("Mid Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("Controlled Area");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellValue("Project Area");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(8);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(9);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Controlled Area");  
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		Row rowhead2 = sheet.createRow(7);
+		
+		for(int i=0;i<7;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+
+		cell = rowhead2.createCell(7);
+		cell.setCellValue("Project Area");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("Controlled Area");  
+		cell.setCellStyle(style);
+		
+		
+		cell = rowhead2.createCell(10);
+		cell.setCellStyle(style);
+		
+		
+		Row rowhead3 = sheet.createRow(8);
+		
+		for(int i=0;i<11;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 8;
+		int totproj = 0;
+		BigDecimal pref = BigDecimal.ZERO;
+		BigDecimal midf = BigDecimal.ZERO;
+		BigDecimal cf = BigDecimal.ZERO;
+		BigInteger fb = BigInteger.ZERO;
+		BigInteger fbc = BigInteger.ZERO;
+		BigInteger man = BigInteger.ZERO;
+		BigInteger cman = BigInteger.ZERO;
+		
+		
+	    for(FundUtilizationEvalReportBean bean: list) 
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno); 
+	    	row.createCell(1).setCellValue(bean.getSt_name());
+	    	row.createCell(2).setCellValue(bean.getTotal_project());
+	    	row.createCell(4).setCellValue(bean.getPre_farmer_income().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getMid_farmer_income().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getControl_farmer_income().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getFarmer_benefited().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getControl_farmer_benefited().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getMandays_generated().doubleValue());
+	    	row.createCell(10).setCellValue(bean.getControl_mandays_generated().doubleValue());
+	    	
+	    	    totproj = totproj + bean.getTotal_project();
+	    	    pref = pref.add(bean.getPre_farmer_income());
+	    	    midf = midf.add(bean.getMid_farmer_income());
+	    	    cf = cf.add(bean.getControl_farmer_income());
+			    fb = fb.add(bean.getFarmer_benefited());
+			    fbc = fbc.add(bean.getControl_farmer_benefited());
+			    man = man.add(bean.getMandays_generated());
+			    cman = cman.add(bean.getControl_mandays_generated());
+
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+
+		Row row = sheet.createRow(list.size()+8);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totproj);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(pref.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(midf.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(cf.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(fb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(fbc.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(man.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(cman.doubleValue());
+		cell.setCellStyle(style1);
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 9);
+	    String fileName = "attachment; filename=Report PE6- State.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+
+	    return "reports/MandaysDetailsReport";
+	}
+	
 }
