@@ -163,8 +163,8 @@ function savedata(event){
         <th rowspan="2" style="text-align:left; vertical-align: middle;">Remarks</th>
     </tr>
     <tr>
-        <th style="text-align:center; vertical-align: middle;">Pre Project Status(Aggregate)</th>
-        <th style="text-align:center; vertical-align: middle;">Mid Project Status(Aggregate)</th>
+        <th style="text-align:center; vertical-align: middle;">Pre - Project Status(Aggregate)</th>
+        <th style="text-align:center; vertical-align: middle;">Mid - Project Status(Aggregate)</th>
     </tr>
 </thead>
  		<tr>
@@ -264,7 +264,7 @@ function savedata(event){
      			<input type="text" id="control_farmer_benefited" name="control_farmer_benefited" maxlength="5" value="${control_farmer_benefited}" autocomplete = "off" onfocusin="numericOnly(event);" maxlength="5" placeholder="Only numeric"  />
  			</td>
  			 <td> 
-                       <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea>
+                 <textarea id="remark_farmer_benefited" name="remark_farmer_benefited" autocomplete="off" rows="2" cols="22" maxlength="200">${remark_farmer_benefited}</textarea>
                        </td>
 		</tr>
 		<tr>

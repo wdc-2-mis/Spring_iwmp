@@ -47,7 +47,7 @@ function exportExcel(){
  
 <br>
 	<c:if test="${not empty mList}">
-<!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
@@ -62,8 +62,8 @@ function exportExcel(){
             <th colspan="2" style="text-align: center">No. of Persondays Generated (man-days)</th>
         </tr>
         <tr>
-            <th rowspan="2">Pre Project Status(Aggregate)</th>
-            <th rowspan="2">Mid Project Status(Aggregate)</th>
+            <th rowspan="2">Pre - Project Status(Aggregate)</th>
+            <th rowspan="2">Mid - Project Status(Aggregate)</th>
             <th rowspan="2">Controlled Area</th>
             <th>Project Area</th>
             <th>Controlled Area</th>
