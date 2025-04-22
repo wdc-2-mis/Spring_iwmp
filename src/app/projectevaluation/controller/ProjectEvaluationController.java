@@ -5187,7 +5187,7 @@ public class ProjectEvaluationController {
 	{
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
-		mav = new ModelAndView("reports/croppredDetailsReport");
+		mav = new ModelAndView("reports/croppedDetailsReport");
 		Map<String, List<CroppedDetailsReportBean>> map = PEService.getCroppedDetailsReportData();
 		mav.addObject("map",map);
 		
