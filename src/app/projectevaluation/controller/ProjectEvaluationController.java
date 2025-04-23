@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -5189,7 +5190,10 @@ public class ProjectEvaluationController {
 		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("reports/croppedDetailsReport");
 		Map<String, List<CroppedDetailsReportBean>> map = PEService.getCroppedDetailsReportData();
-		mav.addObject("map",map);
+		Gson gson = new Gson(); // Convert to JSON
+		String jsonMap = gson.toJson(map);
+
+		mav.addObject("mapJson",jsonMap);
 		
 		return mav;
 		
