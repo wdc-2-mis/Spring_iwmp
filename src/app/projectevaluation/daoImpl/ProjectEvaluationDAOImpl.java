@@ -127,6 +127,12 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getStateMidProjEvlData}")
 	String getStateMidProjEvlDetails;
 	
+	@Value("${getDistMidProjEvlData}")
+	String getDistMidProjEvlDetails;
+	
+	@Value("${getStateMidProjEvlCropData}")
+	String getStateMidProjEvlCropData;
+	
 	@Value("${getPreCropDetails}")
 	String getPreCropDetails;
 	
@@ -2222,6 +2228,47 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 				
 			return getStateMidProjEvoluation;
+		}
+		
+		@Override
+		public List<ProjectEvaluationBean> getDistMidProjEvoluation(Integer stcd) {
+			
+			List<ProjectEvaluationBean> getDistMidProjEvoluation = new ArrayList<ProjectEvaluationBean>();
+			String hql = getDistMidProjEvlDetails;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("stcd", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getDistMidProjEvoluation = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getDistMidProjEvoluation;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getStateMidProjEvlCropDetails() {
+			
+			List<ProjectEvaluationBean> getStateMidProjEvlCropDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getStateMidProjEvlCropData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getStateMidProjEvlCropDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getStateMidProjEvlCropDetails;
 		}
 
 		@Override

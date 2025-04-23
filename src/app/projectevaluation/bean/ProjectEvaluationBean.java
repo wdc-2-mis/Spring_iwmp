@@ -8,6 +8,7 @@ public class ProjectEvaluationBean {
 	
 	private String st_name;
 	private Integer st_code;
+	private Integer dcode;
 	private Integer district;
 	private Integer project;
 	private Integer block;
@@ -129,7 +130,24 @@ public class ProjectEvaluationBean {
     private BigInteger createdwork;
     private BigInteger geotag;
     
-    
+    private BigDecimal pre_kharif;
+    private BigDecimal mid_kharif;
+    private BigDecimal ctl_kharif;
+    private BigDecimal pre_rabi;
+    private BigDecimal mid_rabi;
+    private BigDecimal ctl_rabi;
+    private BigDecimal pre_thrdcrp;
+    private BigDecimal mid_thrdcrp;
+    private BigDecimal ctl_thrdcrp;
+    private BigDecimal pre_total;
+    private BigDecimal mid_total;
+    private BigDecimal ctl_total;
+    private BigDecimal pre_plt;
+    private BigDecimal mid_plt;
+    private BigDecimal ctl_plt;
+    private BigDecimal pre_clt;
+    private BigDecimal mid_clt;
+    private BigDecimal ctl_clt;
     
 	public BigInteger getWorkcompleted() {
 		return workcompleted;
@@ -233,6 +251,12 @@ public class ProjectEvaluationBean {
 	}
 	public void setSt_code(Integer st_code) {
 		this.st_code = st_code;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
 	}
 	public Integer getDistrict() {
 		return district;
@@ -797,6 +821,114 @@ public class ProjectEvaluationBean {
 	}
 	public void setGrade(Character grade) {
 		this.grade = grade;
+	}
+	public BigDecimal getPre_kharif() {
+		return pre_kharif;
+	}
+	public void setPre_kharif(BigDecimal pre_kharif) {
+		this.pre_kharif = pre_kharif;
+	}
+	public BigDecimal getMid_kharif() {
+		return mid_kharif;
+	}
+	public void setMid_kharif(BigDecimal mid_kharif) {
+		this.mid_kharif = mid_kharif;
+	}
+	public BigDecimal getCtl_kharif() {
+		return ctl_kharif;
+	}
+	public void setCtl_kharif(BigDecimal ctl_kharif) {
+		this.ctl_kharif = ctl_kharif;
+	}
+	public BigDecimal getPre_rabi() {
+		return pre_rabi;
+	}
+	public void setPre_rabi(BigDecimal pre_rabi) {
+		this.pre_rabi = pre_rabi;
+	}
+	public BigDecimal getMid_rabi() {
+		return mid_rabi;
+	}
+	public void setMid_rabi(BigDecimal mid_rabi) {
+		this.mid_rabi = mid_rabi;
+	}
+	public BigDecimal getCtl_rabi() {
+		return ctl_rabi;
+	}
+	public void setCtl_rabi(BigDecimal ctl_rabi) {
+		this.ctl_rabi = ctl_rabi;
+	}
+	public BigDecimal getPre_thrdcrp() {
+		return pre_thrdcrp;
+	}
+	public void setPre_thrdcrp(BigDecimal pre_thrdcrp) {
+		this.pre_thrdcrp = pre_thrdcrp;
+	}
+	public BigDecimal getMid_thrdcrp() {
+		return mid_thrdcrp;
+	}
+	public void setMid_thrdcrp(BigDecimal mid_thrdcrp) {
+		this.mid_thrdcrp = mid_thrdcrp;
+	}
+	public BigDecimal getCtl_thrdcrp() {
+		return ctl_thrdcrp;
+	}
+	public void setCtl_thrdcrp(BigDecimal ctl_thrdcrp) {
+		this.ctl_thrdcrp = ctl_thrdcrp;
+	}
+	public BigDecimal getPre_total() {
+		return pre_total;
+	}
+	public void setPre_total(BigDecimal pre_total) {
+		this.pre_total = pre_total;
+	}
+	public BigDecimal getMid_total() {
+		return mid_total;
+	}
+	public void setMid_total(BigDecimal mid_total) {
+		this.mid_total = mid_total;
+	}
+	public BigDecimal getCtl_total() {
+		return ctl_total;
+	}
+	public void setCtl_total(BigDecimal ctl_total) {
+		this.ctl_total = ctl_total;
+	}
+	public BigDecimal getPre_plt() {
+		return pre_plt;
+	}
+	public void setPre_plt(BigDecimal pre_plt) {
+		this.pre_plt = pre_plt;
+	}
+	public BigDecimal getMid_plt() {
+		return mid_plt;
+	}
+	public void setMid_plt(BigDecimal mid_plt) {
+		this.mid_plt = mid_plt;
+	}
+	public BigDecimal getCtl_plt() {
+		return ctl_plt;
+	}
+	public void setCtl_plt(BigDecimal ctl_plt) {
+		this.ctl_plt = ctl_plt;
+	}
+	public BigDecimal getPre_clt() {
+		return pre_clt;
+	}
+	public void setPre_clt(BigDecimal pre_clt) {
+		this.pre_clt = pre_clt;
+	}
+	public BigDecimal getMid_clt() {
+		return mid_clt;
+	}
+	public void setMid_clt(BigDecimal mid_clt) {
+		this.mid_clt = mid_clt;
+	}
+	public BigDecimal getCtl_clt() {
+		return ctl_clt;
+	}
+	public void setCtl_clt(BigDecimal ctl_clt) {
+		this.ctl_clt = ctl_clt;
 	}
 	
 

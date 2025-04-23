@@ -142,6 +142,10 @@ public interface ProjectEvaluationDAO {
 	
 	List<ProjectEvaluationBean> getStateMidProjEvoluation();
 	
+	List<ProjectEvaluationBean> getDistMidProjEvoluation(Integer stcd);
+
+	List<ProjectEvaluationBean> getStateMidProjEvlCropDetails();
+	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
 }

@@ -145,6 +145,10 @@ public interface ProjectEvaluationService {
 	
 	List<ProjectEvaluationBean> getStateMidProjEvoluation();
 	
+	List<ProjectEvaluationBean> getDistMidProjEvoluation(Integer stcd);
+
+	List<ProjectEvaluationBean> getStateMidProjEvlCropDetails();
+	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
 }

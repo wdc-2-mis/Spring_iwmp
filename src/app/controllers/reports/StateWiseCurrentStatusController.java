@@ -3686,7 +3686,7 @@ public class StateWiseCurrentStatusController {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 10, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,6,0,0);
 	        sheet.addMergedRegion(mergedRegion);
@@ -3699,6 +3699,8 @@ public class StateWiseCurrentStatusController {
 	        mergedRegion = new CellRangeAddress(5,5,5,6); 
 	        sheet.addMergedRegion(mergedRegion);
 	        mergedRegion = new CellRangeAddress(5,5,7,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,9,10); 
 	        sheet.addMergedRegion(mergedRegion);
 	
         
@@ -3741,6 +3743,13 @@ public class StateWiseCurrentStatusController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			rowhead.createCell(8).setCellStyle(style);
 			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Financial Year(2025-26)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(10).setCellStyle(style);
+			
+			
 			Row rowhead1 = sheet.createRow(6);
 			for(int i =0; i<3;i++) {
 				rowhead1.createCell(i).setCellStyle(style);
@@ -3765,10 +3774,16 @@ public class StateWiseCurrentStatusController {
 			cell = rowhead1.createCell(8);
 			cell.setCellValue("No. of Project Achievement Created");  
 			cell.setCellStyle(style);
+			cell = rowhead1.createCell(9);
+			cell.setCellValue("No. of Project Plan Created");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(10);
+			cell.setCellValue("No. of Project Achievement Created");  
+			cell.setCellStyle(style);
 			
 			
 			Row rowhead2 = sheet.createRow(7);
-			for(int i=0;i<9;i++)
+			for(int i=0;i<11;i++)
 			{
 				cell =rowhead2.createCell(i);
 				cell.setCellValue(i+1);
@@ -3785,6 +3800,8 @@ public class StateWiseCurrentStatusController {
 	        int ProjAch23 = 0;
 	        int ProjPlan24 = 0;
 	        int ProjAch24 = 0;
+	        int ProjPlan25 = 0;
+	        int ProjAch25 = 0;
 	        
 	        
 	        for(StateWiseCurrentStatusBean bean: list) {
@@ -3798,6 +3815,8 @@ public class StateWiseCurrentStatusController {
 				row.createCell(6).setCellValue(bean.getTotal_project_achievement2023());
 				row.createCell(7).setCellValue(bean.getTotal_project_plan2024());  
 				row.createCell(8).setCellValue(bean.getTotal_project_achievement2024());
+				row.createCell(9).setCellValue(bean.getTotal_project_plan2025());  
+				row.createCell(10).setCellValue(bean.getTotal_project_achievement2025());
 	        	
 				ProjSan = ProjSan + bean.getTotal_project();
 				ProjPlan22 = ProjPlan22 + bean.getTotal_project_plan2022();
@@ -3806,6 +3825,8 @@ public class StateWiseCurrentStatusController {
 				ProjAch23 = ProjAch23 + bean.getTotal_project_achievement2023();
 				ProjPlan24 = ProjPlan24 + bean.getTotal_project_plan2024();
 				ProjAch24 = ProjAch24 + bean.getTotal_project_achievement2024();
+				ProjPlan25 = ProjPlan25 + bean.getTotal_project_plan2025();
+				ProjAch25 = ProjAch25 + bean.getTotal_project_achievement2025();
 				
 				
 	        	sno++;
@@ -3853,9 +3874,15 @@ public class StateWiseCurrentStatusController {
 	        cell = row.createCell(8);
 	        cell.setCellValue(ProjAch24);
 	        cell.setCellStyle(style1);
+	        cell = row.createCell(9);
+	        cell.setCellValue(ProjPlan25);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(10);
+	        cell.setCellValue(ProjAch25);
+	        cell.setCellStyle(style1);
 	       
 	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 6);
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 10);
 	        String fileName = "attachment; filename=Report ME5- District.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -3887,7 +3914,7 @@ public class StateWiseCurrentStatusController {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 7, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 9, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,6,0,0);
 	        sheet.addMergedRegion(mergedRegion);
@@ -3899,8 +3926,8 @@ public class StateWiseCurrentStatusController {
 	        sheet.addMergedRegion(mergedRegion);
 	        mergedRegion = new CellRangeAddress(5,5,6,7); 
 	        sheet.addMergedRegion(mergedRegion);
-//	        mergedRegion = new CellRangeAddress(5,5,7,8); 
-//	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,8,9); 
+	        sheet.addMergedRegion(mergedRegion);
 	
         
 	        mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
@@ -3938,6 +3965,13 @@ public class StateWiseCurrentStatusController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			rowhead.createCell(7).setCellStyle(style);
 			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("Financial Year(2025-26)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(9).setCellStyle(style);
+			
+			
 			Row rowhead1 = sheet.createRow(6);
 			for(int i =0; i<2;i++) {
 				rowhead1.createCell(i).setCellStyle(style);
@@ -3961,10 +3995,16 @@ public class StateWiseCurrentStatusController {
 			cell = rowhead1.createCell(7);
 			cell.setCellValue("No. of Project Achievement Created");  
 			cell.setCellStyle(style);
+			cell = rowhead1.createCell(8);
+			cell.setCellValue("No. of Project Plan Created");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(9);
+			cell.setCellValue("No. of Project Achievement Created");  
+			cell.setCellStyle(style);
 			
 			
 			Row rowhead2 = sheet.createRow(7);
-			for(int i=0;i<8;i++)
+			for(int i=0;i<10;i++)
 			{
 				cell =rowhead2.createCell(i);
 				cell.setCellValue(i+1);
@@ -3980,6 +4020,8 @@ public class StateWiseCurrentStatusController {
 	        int ProjAch23 = 0;
 	        int ProjPlan24 = 0;
 	        int ProjAch24 = 0;
+	        int ProjPlan25 = 0;
+	        int ProjAch25 = 0;
 	        
 	        
 	        for(StateWiseCurrentStatusBean bean: list) {
@@ -3992,6 +4034,8 @@ public class StateWiseCurrentStatusController {
 				row.createCell(5).setCellValue(bean.getTotal_project_achievement2023());
 				row.createCell(6).setCellValue(bean.getTotal_project_plan2024());  
 				row.createCell(7).setCellValue(bean.getTotal_project_achievement2024());
+				row.createCell(8).setCellValue(bean.getTotal_project_plan2025());  
+				row.createCell(9).setCellValue(bean.getTotal_project_achievement2025());
 	        	
 				ProjPlan22 = ProjPlan22 + bean.getTotal_project_plan2022();
 				ProjAch22 = ProjAch22 + bean.getTotal_project_achievement2022();
@@ -3999,6 +4043,8 @@ public class StateWiseCurrentStatusController {
 				ProjAch23 = ProjAch23 + bean.getTotal_project_achievement2023();
 				ProjPlan24 = ProjPlan24 + bean.getTotal_project_plan2024();
 				ProjAch24 = ProjAch24 + bean.getTotal_project_achievement2024();
+				ProjPlan25 = ProjPlan25 + bean.getTotal_project_plan2025();
+				ProjAch25 = ProjAch25 + bean.getTotal_project_achievement2025();
 				
 				
 	        	sno++;
@@ -4044,9 +4090,15 @@ public class StateWiseCurrentStatusController {
 	        cell = row.createCell(7);
 	        cell.setCellValue(ProjAch24);
 	        cell.setCellStyle(style1);
+	        cell = row.createCell(8);
+	        cell.setCellValue(ProjPlan25);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(9);
+	        cell.setCellValue(ProjAch25);
+	        cell.setCellStyle(style1);
 	       
 	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 9);
 	        String fileName = "attachment; filename=Report ME5- Project.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -5212,7 +5264,7 @@ public class StateWiseCurrentStatusController {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 10, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,6,0,0);
 	        sheet.addMergedRegion(mergedRegion);
@@ -5225,6 +5277,8 @@ public class StateWiseCurrentStatusController {
 	        mergedRegion = new CellRangeAddress(5,5,5,6); 
 	        sheet.addMergedRegion(mergedRegion);
 	        mergedRegion = new CellRangeAddress(5,5,7,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,9,10); 
 	        sheet.addMergedRegion(mergedRegion);
         
 	        mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
@@ -5266,6 +5320,12 @@ public class StateWiseCurrentStatusController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			rowhead.createCell(8).setCellStyle(style);
 			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Financial Year(2025-26)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(10).setCellStyle(style);
+			
 			Row rowhead1 = sheet.createRow(6);
 			for(int i =0; i<3;i++) {
 				rowhead1.createCell(i).setCellStyle(style);
@@ -5290,10 +5350,16 @@ public class StateWiseCurrentStatusController {
 			cell = rowhead1.createCell(8);
 			cell.setCellValue("No. of Project Achievement Created");  
 			cell.setCellStyle(style);
+			cell = rowhead1.createCell(9);
+			cell.setCellValue("No. of Project Plan Created");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(10);
+			cell.setCellValue("No. of Project Achievement Created");  
+			cell.setCellStyle(style);
 			
 			
 			Row rowhead2 = sheet.createRow(7);
-			for(int i=0;i<9;i++)
+			for(int i=0;i<11;i++)
 			{
 				cell =rowhead2.createCell(i);
 				cell.setCellValue(i+1);
@@ -5310,6 +5376,8 @@ public class StateWiseCurrentStatusController {
 	        int ProjAch23 = 0;
 	        int ProjPlan24 = 0;
 	        int ProjAch24 = 0;
+	        int ProjPlan25 = 0;
+	        int ProjAch25 = 0;
 	        
 	        
 	        for(StateWiseCurrentStatusBean bean: list) {
@@ -5323,6 +5391,8 @@ public class StateWiseCurrentStatusController {
 				row.createCell(6).setCellValue(bean.getTotal_project_achievement2023());
 				row.createCell(7).setCellValue(bean.getTotal_project_plan2024());
 				row.createCell(8).setCellValue(bean.getTotal_project_achievement2024());
+				row.createCell(9).setCellValue(bean.getTotal_project_plan2025());
+				row.createCell(10).setCellValue(bean.getTotal_project_achievement2025());
 	        	
 				ProjSan = ProjSan + bean.getTotal_project();
 				ProjPlan22 = ProjPlan22 + bean.getTotal_project_plan2022();
@@ -5331,6 +5401,8 @@ public class StateWiseCurrentStatusController {
 				ProjAch23 = ProjAch23 + bean.getTotal_project_achievement2023();
 				ProjPlan24 = ProjPlan24 + bean.getTotal_project_plan2024();
 				ProjAch24 = ProjAch24 + bean.getTotal_project_achievement2024();
+				ProjPlan25 = ProjPlan25 + bean.getTotal_project_plan2025();
+				ProjAch25 = ProjAch25 + bean.getTotal_project_achievement2025();
 				
 				
 	        	sno++;
@@ -5378,9 +5450,15 @@ public class StateWiseCurrentStatusController {
 	        cell = row.createCell(8);
 	        cell.setCellValue(ProjAch24);
 	        cell.setCellStyle(style1);
+	        cell = row.createCell(9);
+	        cell.setCellValue(ProjPlan25);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(10);
+	        cell.setCellValue(ProjAch25);
+	        cell.setCellStyle(style1);
 	       
 	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 6);
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 10);
 	        String fileName = "attachment; filename=Report ME5- State.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
