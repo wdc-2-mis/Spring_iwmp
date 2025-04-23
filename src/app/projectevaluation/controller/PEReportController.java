@@ -944,11 +944,11 @@ public class PEReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report PE3 - State-wise Mid Term Project Evaluation Cropped Details");
+		Sheet sheet = workbook.createSheet("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report PE3 - State-wise Mid Term Project Evaluation Cropped Details";
+		String rptName = "Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details";
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1416,7 +1416,7 @@ public class PEReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report PE3 - State-wise Mid Term Project Evaluation Cropped Details", f3);
+			paragraph3 = new Paragraph("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);

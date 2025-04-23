@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<title>Report PE3 - State-wise Mid Term Project Evaluation Cropped Details</title>
+<title>Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details</title>
 
 <html>
 <script type="text/javascript">
@@ -26,7 +26,7 @@ function exportExcel(){
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h4 style="text-decoration:underline;">Report PE3 - State-wise Mid Term Project Evaluation Cropped Details</h4>
+        <h4 style="text-decoration:underline;">Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details</h4>
     </div>
     <br>
     <div class="container-fluid">
