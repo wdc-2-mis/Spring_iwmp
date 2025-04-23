@@ -1123,9 +1123,10 @@ public class FundUtilizationEvalReportController {
 	    CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 9, areaAmtValDetail, workbook);
 
 	    // ========== HEADER MERGES ==========
-	    sheet.addMergedRegion(new CellRangeAddress(5, 7, 0, 0)); 
-	    sheet.addMergedRegion(new CellRangeAddress(5, 7, 1, 1)); 
-	    sheet.addMergedRegion(new CellRangeAddress(5, 7, 2, 2)); 
+	    sheet.addMergedRegion(new CellRangeAddress(list.size()+8,list.size()+8,0,1));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 6, 0, 0)); 
+	    sheet.addMergedRegion(new CellRangeAddress(5, 6, 1, 1)); 
+	    sheet.addMergedRegion(new CellRangeAddress(5, 6, 2, 2)); 
 	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 3, 5)); 
 	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 6, 7)); 
 	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 8, 9)); 
@@ -1162,18 +1163,16 @@ public class FundUtilizationEvalReportController {
 	    row6.getCell(8).setCellValue("Project Area");
 	    row6.getCell(9).setCellValue("Controlled Area");
 
-	    Row row7 = sheet.createRow(7);
-	    for (int i = 0; i <= 9; i++) row7.createCell(i).setCellStyle(style);
 
-	    Row row8 = sheet.createRow(8);
+	    Row row7 = sheet.createRow(7);
 	    for (int i = 0; i <= 9; i++) {
-	        Cell c = row8.createCell(i);
+	        Cell c = row7.createCell(i);
 	        c.setCellValue(i + 1);
 	        c.setCellStyle(style);
 	    }
 
 	    int sno = 1;
-	    int rowno = 9;
+	    int rowno = 8;
 
 	    int totproj = 0;
 	    BigDecimal pref = BigDecimal.ZERO;
@@ -1225,9 +1224,9 @@ public class FundUtilizationEvalReportController {
 
 	    Row row = sheet.createRow(rowno);
 	    cell = row.createCell(0); 
+	    cell.setCellValue("Grand Total");
 	    cell.setCellStyle(style1);
 	    cell = row.createCell(1); 
-	    cell.setCellValue("Grand Total"); 
 	    cell.setCellStyle(style1);
 	    row.createCell(2).setCellValue(totproj); 
 	    row.getCell(2).setCellStyle(style1);
