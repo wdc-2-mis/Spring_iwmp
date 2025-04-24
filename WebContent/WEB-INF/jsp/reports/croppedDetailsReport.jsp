@@ -13,6 +13,7 @@
 <script type="text/javascript">
 
 function filterData(selectedValue) {
+	document.getElementById("excelpdf").style.display = "block";
     // Parse JSON safely
     var croppedData = JSON.parse('${mapJson}'.replace(/&quot;/g, '"'));
     
@@ -78,12 +79,16 @@ function filterData(selectedValue) {
 }
 
 function downloadPDF(){
+		var radiobutton = document.querySelector('input[name="reportType"]:checked').value;
+		document.getElementById("radioBtn").value=radiobutton;
 		document.getCrpDtl.action="downloadCroppedDetailsReportPdf";
 		document.getCrpDtl.method="post";
 		document.getCrpDtl.submit();
 }
 
 function exportExcel(){
+		var radiobutton = document.querySelector('input[name="reportType"]:checked').value;
+		document.getElementById("radioBtn").value=radiobutton;
 		document.getCrpDtl.action="downloadExcelCroppedDetailsReport";
 		document.getCrpDtl.method="post";
 		document.getCrpDtl.submit();
@@ -109,13 +114,14 @@ function exportExcel(){
 		<input type="radio" name="reportType" value="pre" onclick="filterData('pre')"> Pre
     	<input type="radio" name="reportType" value="mid" onclick="filterData('mid')"> Mid
     	<input type="radio" name="reportType" value="control" onclick="filterData('control')"> Control
+    	<input type="hidden" name="radioBtn" id="radioBtn" value="" />
  	</form:form>
  
 <br>
-	<c:if test="${not empty fundList}">
+	<div id ="excelpdf" style="display: none;">
 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
-	</c:if>   
+	</div>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table">
 		<thead>
