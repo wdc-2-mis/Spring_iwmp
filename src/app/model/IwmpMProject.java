@@ -30,6 +30,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import app.bean.pfms.PfmsInvoiceProject;
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogita;
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
 import app.model.master.IwmpMWc;
 import app.model.master.PfmsEatmisdataDetail;
 import app.model.outcome.FpoMain;
@@ -187,7 +188,7 @@ public class IwmpMProject implements java.io.Serializable {
     private Set<WdcpmksyBaselineupdateAchievement> wdcpmksyBaselineupdateAchievements = new HashSet<WdcpmksyBaselineupdateAchievement>(0);
     private Set<WdcpmksyProjectProfileEvaluation> wdcpmksyProjectProfileEvaluation = new HashSet<WdcpmksyProjectProfileEvaluation>(0); 
     private Set<JanbhagidariPratiyogita> janbhagidariPratiyogita = new HashSet<JanbhagidariPratiyogita>(0);
-    
+    private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
     
     
 	@Transient
@@ -229,7 +230,7 @@ public class IwmpMProject implements java.io.Serializable {
 			Set<GroundwaterMain> groundwaterMains, Set<ShgMain> shgMains, Set<LivelihoodEpaProd> livelihoodEpaProds,
 			Set<FpoMain> fpoMains, Set<PfmsInvoiceProject> pfmsInvoiceProjects, Set<IwmpActPlan> iwmpActPlans, 
 			Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<WdcpmksyBaselineupdateAchievement> wdcpmksyBaselineupdateAchievements,
-			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
+			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
 	       this.projectId = projId;
 	       this.iwmpDistrict = iwmpDistrict;
 	       this.iwmpMAreaType = iwmpMAreaType;
@@ -295,6 +296,7 @@ public class IwmpMProject implements java.io.Serializable {
 	       this.pfmsEatmisdataDetails = pfmsEatmisdataDetails;
 	       this.wdcpmksyBaselineupdateAchievements=wdcpmksyBaselineupdateAchievements;
 	       this.janbhagidariPratiyogita=janbhagidariPratiyogita;
+	       this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
 	    }
 
 	@Id
@@ -1060,6 +1062,16 @@ public class IwmpMProject implements java.io.Serializable {
 
 	public void setJanbhagidariPratiyogita(Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
 		this.janbhagidariPratiyogita = janbhagidariPratiyogita;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpMProject")
+	public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
+		return janbhagidariPratiyogitaTypeofWork;
+	}
+
+	public void setJanbhagidariPratiyogitaTypeofWork(
+			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
 	}
     
     

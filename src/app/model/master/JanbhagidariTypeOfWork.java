@@ -1,7 +1,12 @@
 package app.model.master;
 
 import javax.persistence.*;
+
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
+
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "janbhagidari_m_typeofwork", schema = "public")
@@ -25,13 +30,17 @@ public class JanbhagidariTypeOfWork {
     @Column(name = "request_ip", length = 20)
     private String requestIp;
 
+    private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
+    
+    
     public JanbhagidariTypeOfWork() {}
     
-    public JanbhagidariTypeOfWork(String workDesc, String lastUpdatedBy, Date lastUpdatedDate, String requestIp) {
+    public JanbhagidariTypeOfWork(String workDesc, String lastUpdatedBy, Date lastUpdatedDate, String requestIp,  Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
         this.workDesc = workDesc;
         this.lastUpdatedBy = lastUpdatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.requestIp = requestIp;
+        this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
     }
 
     public Integer getWorkId() {
@@ -73,4 +82,19 @@ public class JanbhagidariTypeOfWork {
     public void setRequestIp(String requestIp) {
         this.requestIp = requestIp;
     }
+
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="janbhagidariTypeOfWork")
+	public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
+		return janbhagidariPratiyogitaTypeofWork;
+	}
+
+	public void setJanbhagidariPratiyogitaTypeofWork(
+			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
+	}
+    
+    
+    
+    
+    
 }

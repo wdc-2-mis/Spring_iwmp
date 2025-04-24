@@ -22,6 +22,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogita;
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
 import app.model.master.IwmpBlock;
 import app.model.master.PfmsEatmisdataDetail;
 import app.watershedyatra.model.NodalOfficer;
@@ -84,6 +85,7 @@ public class IwmpDistrict  implements java.io.Serializable {
      private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
      private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
      private Set<JanbhagidariPratiyogita> janbhagidariPratiyogita = new HashSet<JanbhagidariPratiyogita>(0);
+     private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
 
     public IwmpDistrict() {
     }
@@ -102,7 +104,7 @@ public class IwmpDistrict  implements java.io.Serializable {
     		String stateCodelgd, Integer districtCodelgd, String lgdCodePortedData, BigDecimal jalShakati, Set<IwmpMProject> iwmpMProjects, 
     		Set<IwmpBlock> iwmpBlocks, Set<IwmpActPlan> iwmpActPlans, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer, 
     		Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel,
-    		Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
+    		Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
        this.dcode = dcode;
        this.iwmpState = iwmpState;
        this.distCode = distCode;
@@ -142,6 +144,7 @@ public class IwmpDistrict  implements java.io.Serializable {
        this.routePlanVanTravel=routePlanVanTravel;
        this.preYatraPreparation=preYatraPreparation;
        this.janbhagidariPratiyogita=janbhagidariPratiyogita;
+       this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
     }
    
     @Id 
@@ -565,6 +568,17 @@ public class IwmpDistrict  implements java.io.Serializable {
 
 	public void setJanbhagidariPratiyogita(Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
 		this.janbhagidariPratiyogita = janbhagidariPratiyogita;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpDistrict")
+	public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
+		return janbhagidariPratiyogitaTypeofWork;
+	}
+
+
+	public void setJanbhagidariPratiyogitaTypeofWork(
+			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
 	}
     
     

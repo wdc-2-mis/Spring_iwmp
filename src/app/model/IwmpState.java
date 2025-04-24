@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogita;
+import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
 import app.model.PfmsCgireceiptDetaildata;
 import app.model.PfmsTreasuryreceiptDetaildata;
 import app.model.master.PfmsEatmisdataDetail;
@@ -86,6 +87,8 @@ public class IwmpState implements java.io.Serializable {
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
 	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
 	private Set<JanbhagidariPratiyogita> janbhagidariPratiyogita = new HashSet<JanbhagidariPratiyogita>(0);
+	private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
+	
      
 	public IwmpState() {
 	}
@@ -105,7 +108,7 @@ public class IwmpState implements java.io.Serializable {
 			Set<PfmsEatmisdataDetail> pfmsEatmisdataDetailsForStCode, Set<WdcpmksyMPhyOtherActivity> wdcpmksyMPhyOtherActivities,
 			Set<GetGoiReleaseToStateTreasury> getGoiReleaseToStateTreasury, Set<NodalOfficer> nodalOfficer, 
 			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation>preYatraPreparation,Set<RoutePlanVanTravel> routePlanVanTravel,
-			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
+			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
 		this.stCode = stCode;
 		this.iwmpApprovelLevels = iwmpApprovelLevels;
 		this.stName = stName;
@@ -145,6 +148,7 @@ public class IwmpState implements java.io.Serializable {
 	    this.routePlanVanTravel=routePlanVanTravel;
 	    this.preYatraPreparation=preYatraPreparation;
 	    this.janbhagidariPratiyogita=janbhagidariPratiyogita;
+	    this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
 	}
 
 	@Id
@@ -540,6 +544,16 @@ public class IwmpState implements java.io.Serializable {
 
 	public void setJanbhagidariPratiyogita(Set<JanbhagidariPratiyogita> janbhagidariPratiyogita) {
 		this.janbhagidariPratiyogita = janbhagidariPratiyogita;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpState")
+	public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
+		return janbhagidariPratiyogitaTypeofWork;
+	}
+
+	public void setJanbhagidariPratiyogitaTypeofWork(
+			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
 	}
 	
 	
