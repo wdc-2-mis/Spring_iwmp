@@ -63,6 +63,8 @@ public class JanbhagidariPratiyogitaBean {
 	private int proj_notrepoted;
 	private String fund_outlayex;
 	
+	private String dist_name;
+	
 	public int getStcode() {
 		return stcode;
 	}
@@ -380,6 +382,12 @@ public class JanbhagidariPratiyogitaBean {
 	}
 	public void setFund_outlayex(String fund_outlayex) {
 		this.fund_outlayex = fund_outlayex;
+	}
+	public String getDist_name() {
+		return dist_name;
+	}
+	public void setDist_name(String dist_name) {
+		this.dist_name = dist_name;
 	}
 	
 	

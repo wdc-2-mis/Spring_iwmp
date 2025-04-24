@@ -189,6 +189,15 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		// TODO Auto-generated method stub
 		return dao.getjanbhagidariPratiyogitaStatusReport();
 	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id) {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPratiyogitaDistStatusReport(id);
+	}
 	
 	
 }

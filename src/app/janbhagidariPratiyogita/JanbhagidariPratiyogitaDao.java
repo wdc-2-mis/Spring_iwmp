@@ -47,6 +47,8 @@ public interface JanbhagidariPratiyogitaDao {
 	List<JanbhagidariPratiyogitaBean> getCompleteListPIADetails(Integer stcd, String username);
 
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport();
+	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id);
 
 
 }

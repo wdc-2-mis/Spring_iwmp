@@ -30,22 +30,18 @@ function getjanbhagidariPratiyogitaRpt(){
 }
 
 	function downloadPDF(){
-		document.projLocDtlRpt.action="downloadprojectLocationDetailsPDF";
-		document.projLocDtlRpt.method="post";
-		document.projLocDtlRpt.submit();
+		document.janbhagidari.action="janbhagidariPratiyogitaPDF";
+		document.janbhagidari.method="post";
+		document.janbhagidari.submit();
 	}
 
 	function exportExcel(){
-		document.projLocDtlRpt.action="downloadExcelProjLocDtlRpt";
-		document.projLocDtlRpt.method="post";
-		document.projLocDtlRpt.submit();
+		document.janbhagidari.action="downloadExceljanbhagidariPratiyogita";
+		document.janbhagidari.method="post";
+		document.janbhagidari.submit();
 	}
 	
-	 function openPopup() {
-         window.open("janbhagidariPratiyogitaPopup.jsp", "PopupWindow", "width=600,height=400");
-     }
 
-	
 	
 </script>
 
@@ -138,10 +134,10 @@ function getjanbhagidariPratiyogitaRpt(){
 	
 	<div class="container-fluid">
 	
-<%-- 	<c:if test="${dataListSize>0}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
+ 	<c:if test="${dataListSize>0}">
+<%--	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>--%>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
-	</c:if> --%>
+	</c:if> 
         <table class="table">
           <tr>
             <td>
@@ -268,7 +264,7 @@ function getjanbhagidariPratiyogitaRpt(){
 							</c:if>
 									<c:if test = "${ count.count eq fn:length(dataList)}">
 									<tr>
-										<td align="right" class="table-primary" colspan="4"><b>State Total </b></td>
+										<td align="right" class="table-primary" colspan="4"><b>State Total</b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_gp}' /> </b></td>
 										<td align="right" class="table-primary" ><b><c:out value='${tno_village}' /> </b></td>
 										<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${tproj_area}' /></fmt:formatNumber></b></td>
@@ -283,10 +279,14 @@ function getjanbhagidariPratiyogitaRpt(){
 									
 									</c:if>
 									<c:set var="st" value="${data.stname}" />
+									
+									
+									
+									
 						</c:forEach>
 						
 						<tr>
-							<td align="right" class="table-primary" colspan="4"><b>Grand Total </b></td>
+							<td align="right" class="table-primary" colspan="4"><b>Grand Total  </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_gp}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${totno_village}' /> </b></td>
 							<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${totproj_area}' /></fmt:formatNumber></b></td>

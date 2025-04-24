@@ -72,6 +72,9 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${janbhagidariPratiyogitaStatus}")
 	String janbhagidariPratiyogitaStatus;
 	
+	@Value("${janbhagidariPratiyogitaDistrictStatus}")
+	String janbhagidariPratiyogitaDistrictStatus;
+	
 
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
@@ -833,6 +836,39 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			 // session.flush(); session.close();
 		}
 		return result;
+	}
+
+	@Override 
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id) {  
+		
+			List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+			Session session = sessionFactory.openSession();
+			try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=janbhagidariPratiyogitaDistrictStatus;
+				query = session.createSQLQuery(hql);
+				query.setInteger("statecd", id);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+			} 
+			catch (HibernateException e) 
+			{
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+			} 
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			finally {
+				session.getTransaction().commit();
+				 // session.flush(); session.close();
+			}
+			return result;
 	}
 
 	

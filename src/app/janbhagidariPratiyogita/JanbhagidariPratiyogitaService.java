@@ -53,5 +53,7 @@ public interface JanbhagidariPratiyogitaService {
 	
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport();
 	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id);
+	
 
 }
