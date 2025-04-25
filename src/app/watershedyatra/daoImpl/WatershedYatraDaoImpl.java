@@ -43,6 +43,7 @@ import app.model.IwmpState;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
 import app.model.master.IwmpVillage;
+import app.model.master.JanbhagidariTypeOfWork;
 import app.model.outcome.GroundwaterDetail;
 import app.model.outcome.GroundwaterMain;
 import app.projectevaluation.model.WdcpmksyProjectProfileEvaluation;
@@ -127,6 +128,8 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 	@Value("${getCompleteListofPIANodalOfficer}")
 	String getCompleteListofPIANodalOfficer;
 	
+	@Value("${getjanbhagWorkList}")
+	String getjanbhagWorkList;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getDistrictList(int stcode) {
@@ -2964,5 +2967,38 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 			  session.getTransaction().commit();
 		  }
 		  return data;
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getJanBWorkList() {
+		List<JanbhagidariTypeOfWork> workList=new ArrayList<JanbhagidariTypeOfWork>();
+		String hql=getjanbhagWorkList;
+		LinkedHashMap<Integer, String> workMap=new LinkedHashMap<Integer, String>();
+		
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+				session.beginTransaction();
+				Query query = session.createQuery(hql);
+				workList = query.list();
+				for (JanbhagidariTypeOfWork work : workList) 
+				{
+					workMap.put(work.getWorkId(), work.getWorkDesc());
+				}
+				//session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+        return workMap;
 	}
 }

@@ -83,5 +83,7 @@ public interface WatershedYatraService {
 	
 	String getExistingWatershedYatraVillageLoction(Integer villageCode, String loc);
 
+	LinkedHashMap<Integer,String> getJanBWorkList();
+
 	
 }

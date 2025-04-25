@@ -297,4 +297,12 @@ public class WatershedYatraServiceImpl implements WatershedYatraService{
 		// TODO Auto-generated method stub
 		return dao.getExistingWatershedYatraVillageLoction(villageCode, loc);
 	}
+
+
+
+	@Override
+	public LinkedHashMap<Integer, String> getJanBWorkList() {
+		// TODO Auto-generated method stub
+		return dao.getJanBWorkList();
+	}
 }

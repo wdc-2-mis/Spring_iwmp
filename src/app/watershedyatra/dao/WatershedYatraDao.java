@@ -67,5 +67,6 @@ public interface WatershedYatraDao {
 	List<NodalOfficerBean> getCompleteListofPIANodalOfficer(Integer stcd, String loginID);
 	
 	String getExistingWatershedYatraVillageLoction(Integer villageCode, String loc);
+	LinkedHashMap<Integer, String> getJanBWorkList();
 	
 }
