@@ -30,6 +30,7 @@ public class JanbhagidariTypeOfWork {
     @Column(name = "request_ip", length = 20)
     private String requestIp;
 
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="janbhagidariTypeOfWork")
     private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
     
     
@@ -82,16 +83,14 @@ public class JanbhagidariTypeOfWork {
     public void setRequestIp(String requestIp) {
         this.requestIp = requestIp;
     }
+    
+    public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
+        return janbhagidariPratiyogitaTypeofWork;
+    }
 
-    @OneToMany(fetch=FetchType.LAZY, mappedBy="janbhagidariTypeOfWork")
-	public Set<JanbhagidariPratiyogitaTypeofWork> getJanbhagidariPratiyogitaTypeofWork() {
-		return janbhagidariPratiyogitaTypeofWork;
-	}
-
-	public void setJanbhagidariPratiyogitaTypeofWork(
-			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
-		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
-	}
+    public void setJanbhagidariPratiyogitaTypeofWork(Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+        this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
+    }
     
     
     
