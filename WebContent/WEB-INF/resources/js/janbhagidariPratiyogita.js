@@ -38,7 +38,7 @@ $(function() {
 			e.preventDefault();
 			$projectId = $('#projid option:selected').val();
 			
-				/*	$.ajax({
+					$.ajax({
 						    url: "getExistingProjectCodes",
 						    type: "post",
 						    data: {pCode: $projectId},
@@ -55,7 +55,7 @@ $(function() {
 								}
 											
 						    }
-						  });   */
+						  });   
 
 			
 				$.ajax({  

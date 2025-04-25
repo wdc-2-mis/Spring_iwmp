@@ -43,7 +43,7 @@ public class JanbhagidariPratiyogitaTypeofWork {
     private Date updatedDate;
     private String createdBy;
     private Date createdDate;
-	
+	private Date workStatusDate;
 	
 	public JanbhagidariPratiyogitaTypeofWork() {}
 	
@@ -54,7 +54,7 @@ public class JanbhagidariPratiyogitaTypeofWork {
 	
 	public JanbhagidariPratiyogitaTypeofWork(Integer typeofwork_id,IwmpState iwmpState,IwmpDistrict iwmpDistrict,IwmpMProject iwmpMProject,IwmpVillage iwmpVillage,
 			JanbhagidariTypeOfWork janbhagidariTypeOfWork,BigDecimal es_work,BigDecimal village,BigDecimal ngo,BigDecimal corporate,Character work_status, 
-			Character status, String requestedIp, String updatedBy,Date updatedDate, String createdBy, Date createdDate) {
+			Character status, String requestedIp, String updatedBy,Date updatedDate, String createdBy, Date createdDate, Date workStatusDate) {
 		
 		this.typeofwork_id=typeofwork_id;
 		this.iwmpState=iwmpState;
@@ -72,6 +72,7 @@ public class JanbhagidariPratiyogitaTypeofWork {
 		this.updatedDate=updatedDate;
 		this.createdBy=createdBy;
 		this.createdDate=createdDate;
+		this.workStatusDate=workStatusDate;
 		
 	}
 
@@ -228,6 +229,16 @@ public class JanbhagidariPratiyogitaTypeofWork {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
+	}
+	
+	@Temporal(TemporalType.DATE)
+    @Column(name="workstatus_date", length=13)
+	public Date getWorkStatusDate() {
+		return workStatusDate;
+	}
+
+	public void setWorkStatusDate(Date workStatusDate) {
+		this.workStatusDate = workStatusDate;
 	}
 	
 	

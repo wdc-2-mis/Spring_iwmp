@@ -3,6 +3,7 @@ package app.janbhagidariPratiyogita;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,6 +198,78 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id) {
 		// TODO Auto-generated method stub
 		return dao.getjanbhagidariPratiyogitaDistStatusReport(id);
+	}
+
+
+
+
+	@Override
+	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
+			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
+			List<String> compWorkList,List<String> completedDateList, HttpSession session, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return dao.saveJanbhagidariPratiyogitaActivity(dcode, proj, vill, workList, estValueList, villagersList, ngosList, corporateList, compWorkList, completedDateList, session, request);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityDraftListDetails(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getActivityDraftListDetails(stcd);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityDraftListPIADetails(Integer stcd, String username) {
+		// TODO Auto-generated method stub
+		return dao.getActivityDraftListPIADetails(stcd, username);
+	}
+
+
+
+
+	@Override
+	public String deleteJanbhagidariActivity(List<Integer> assetid) {
+		// TODO Auto-generated method stub
+		return dao.deleteJanbhagidariActivity(assetid);
+	}
+
+
+
+
+	@Override
+	public String completeJanbhagidariActivity(List<Integer> assetid, String createdBy) {
+		// TODO Auto-generated method stub
+		return dao.completeJanbhagidariActivity(assetid, createdBy);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityCompleteListDetails(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getActivityCompleteListDetails(stcd);
+	}
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityCompleteListPIADetails(Integer stcd, String username) {
+		// TODO Auto-generated method stub
+		return dao.getActivityCompleteListPIADetails(stcd, username);
+	}
+
+
+
+
+	@Override
+	public String checkdupWorkEntry(Integer villageId, Integer workId) {
+		// TODO Auto-generated method stub
+		return dao.checkdupWorkEntry(villageId, workId);
 	}
 	
 	

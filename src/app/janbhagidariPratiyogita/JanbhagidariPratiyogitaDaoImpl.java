@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
@@ -30,6 +31,7 @@ import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
 import app.model.master.IwmpMPhyHeads;
 import app.model.master.IwmpVillage;
+import app.model.master.JanbhagidariTypeOfWork;
 import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
@@ -75,7 +77,21 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${janbhagidariPratiyogitaDistrictStatus}")
 	String janbhagidariPratiyogitaDistrictStatus;
 	
-
+	@Value("${getJanbhagidariActivityDraftList}")
+	String getJanbhagidariActivityDraftList;
+	
+	@Value("${getJanbhagidariPIAActivityDraftList}")
+	String getJanbhagidariPIAActivityDraftList;
+	
+	@Value("${getJanbhagidariActivityCompleteList}")
+	String getJanbhagidariActivityCompleteList;
+	
+	@Value("${getJanbhagidariActivityPIACompleteList}")
+	String getJanbhagidariActivityPIACompleteList;
+	
+	@Value("${checkduplicateworkEntry}")
+	String checkduplicateworkEntry;
+	
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
 		
@@ -83,8 +99,9 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		String hql=projlistListJanbhagidari;
 		LinkedHashMap<String, Integer> pjMap=new LinkedHashMap<String, Integer>();
 		Session session = sessionFactory.getCurrentSession();
+		Transaction tx = null;
 		try {
-			session.beginTransaction();
+			 tx = session.beginTransaction();
 			Query query = session.createQuery(hql);
 			query.setInteger("distcode", distcd);
 			pjList = query.list();
@@ -93,20 +110,19 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				pjMap.put( pj.getProjName(), pj.getProjectId());
 			//	System.out.println(district.getDcode()+" k "+district.getDistName());
 			}
-			//session.getTransaction().commit();
+			tx.commit();
 		} 
 		catch (HibernateException e) {
-			System.err.print("Hibernate error");
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		} 
-		catch(Exception ex){
-			session.getTransaction().rollback();
-			ex.printStackTrace();
-		}
-		finally {
-			session.getTransaction().commit();
-		}
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	    } catch (Exception ex) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        ex.printStackTrace();
+	    }
         return pjMap;
 	}
 
@@ -127,6 +143,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				query.setInteger("projectId", project);
 				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
 				result = query.list();
+				tx.commit();
 		} 
 		catch (HibernateException e) 
 		{
@@ -137,10 +154,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		{
 			ex.printStackTrace();
 		}
-		finally {
-			session.getTransaction().commit();
-			 // session.flush(); session.close();
-		}
+		
 		return result;
 	}
 
@@ -275,6 +289,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				query.setInteger("stcode", stcd);
 				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
 				result = query.list();
+				tx.commit();
 		} 
 		catch (HibernateException e) 
 		{
@@ -285,10 +300,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		{
 			ex.printStackTrace();
 		}
-		finally {
-			session.getTransaction().commit();
-			 // session.flush(); session.close();
-		}
+		
 		return result;
 	}
 
@@ -308,6 +320,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				query.setInteger("stcode", stcd);
 				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
 				result = query.list();
+				tx.commit();
 		} 
 		catch (HibernateException e) 
 		{
@@ -318,10 +331,7 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		{
 			ex.printStackTrace();
 		}
-		finally {
-			session.getTransaction().commit();
-			 // session.flush(); session.close();
-		}
+		
 		return result;
 	}
 
@@ -870,8 +880,312 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 			}
 			return result;
 	}
+	public static String getClientIpAddr(HttpServletRequest request) {  
+	    String ip = request.getHeader("X-Forwarded-For");  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("WL-Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_VIA");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("REMOTE_ADDR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getRemoteAddr();  
+	    }  
+	    return ip;  
+	}
+	@Override
+	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
+			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
+			List<String> compWorkList, List<String> completedDateList, HttpSession session, HttpServletRequest request) {
+		Session sess = sessionFactory.getCurrentSession();
+	    String res = "fail";
+	    try {
+	        sess.beginTransaction();
+            InetAddress inet = InetAddress.getLocalHost();
+	        String ipAddr = inet.getHostAddress();
+	        String createdBy = session.getAttribute("loginID").toString();
+	        Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        for (int i = 0; i < vill.size(); i++) {
+	            JanbhagidariPratiyogitaTypeofWork data = new JanbhagidariPratiyogitaTypeofWork();
 
+	            IwmpDistrict dist = sess.get(IwmpDistrict.class, dcode);
+	            IwmpState state = sess.get(IwmpState.class, stcd);
+	            IwmpMProject project = sess.get(IwmpMProject.class, proj);
+                IwmpVillage village = sess.get(IwmpVillage.class, Integer.parseInt(vill.get(i)));
+	            JanbhagidariTypeOfWork typeOfWork = sess.get(JanbhagidariTypeOfWork.class, Integer.parseInt(workList.get(i)));
+                
+	            data.setIwmpState(state);
+	            data.setIwmpDistrict(dist);
+	            data.setIwmpMProject(project);
+	            data.setIwmpVillage(village);
+	            data.setJanbhagidariTypeOfWork(typeOfWork);
+	            data.setEs_work(new BigDecimal(estValueList.get(i)));
+	            data.setVillage(new BigDecimal(villagersList.get(i)));
+	            data.setNgo(new BigDecimal(ngosList.get(i)));
+	            data.setCorporate(new BigDecimal(corporateList.get(i)));
+	            data.setWork_status(compWorkList.get(i).charAt(0)); 
+	            data.setStatus('D');
+	            data.setRequestedIp(getClientIpAddr(request));
+	            data.setCreatedBy(createdBy);
+	            data.setCreatedDate(new Date());
+	            String completedDateStr = completedDateList.get(i);
+	            if (completedDateStr != null && !completedDateStr.trim().isEmpty()) {
+	                Date completedDate = sdf.parse(completedDateStr);
+	                data.setWorkStatusDate(completedDate);
+	            } else {
+	                data.setWorkStatusDate(null);
+	            }
+	            sess.save(data);
+	        }
+
+	        sess.getTransaction().commit();
+	        res = "success"; 
+	        
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        if (sess.getTransaction().isActive()) {
+	            sess.getTransaction().rollback();
+	        }
+	        res = "fail";
+	    }
+		return res;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityDraftListDetails(Integer stcd) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariActivityDraftList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityDraftListPIADetails(Integer stcd, String username) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariPIAActivityDraftList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setString("username", username);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public String deleteJanbhagidariActivity(List<Integer> assetid) {
+		String str="fail";
+		Session session = sessionFactory.getCurrentSession();
+
+		try {
+			 
+			 session.beginTransaction();
+			 for (Integer id : assetid) {
+		            JanbhagidariPratiyogitaTypeofWork entity = session.get(JanbhagidariPratiyogitaTypeofWork.class, id);
+		            if (entity != null) {
+		                session.delete(entity);
+		            }
+		        } 
+			 str = "success";
+		}
+		catch (Exception ex) {
+	        ex.printStackTrace();
+	        if (session.getTransaction().isActive()) {
+	            session.getTransaction().rollback();
+	        }
+	        str = "fail";
+	    } finally {
+	        if (session.getTransaction().isActive()) {
+	            session.getTransaction().commit();
+	        }
+	    }
+
+	    return str;
+	}
+
+	@Override
+	public String completeJanbhagidariActivity(List<Integer> assetid, String createdBy) {
+		 String str = "fail";
+		 Session session = sessionFactory.getCurrentSession();
+		
+		 try {
+		        session.beginTransaction();
+		        for (Integer id : assetid) {
+		            JanbhagidariPratiyogitaTypeofWork entity = session.get(JanbhagidariPratiyogitaTypeofWork.class, id);
+		            if (entity != null) {
+		                entity.setStatus('C'); 
+		                entity.setUpdatedDate(new Date()); 
+		                entity.setUpdatedBy(createdBy);       
+		                session.update(entity);
+		            }
+		        }
+		        str = "success"; 
+		 }
+			catch (Exception ex) {
+		        ex.printStackTrace();
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().rollback();
+		        }
+		        str = "fail";
+		    } finally {
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().commit();
+		        }
+		    }
+
+		    return str;
+		 }
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityCompleteListDetails(Integer stcd) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariActivityCompleteList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getActivityCompleteListPIADetails(Integer stcd, String username) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=getJanbhagidariActivityPIACompleteList;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcode", stcd);
+				query.setString("username", username);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public String checkdupWorkEntry(Integer villageId, Integer workId) {
+		  Long count = null;
+		 Session session = sessionFactory.getCurrentSession();
+		 String hql = checkduplicateworkEntry;
+		 try {
+		      session.beginTransaction();
+		      count = (Long) session.createQuery(hql).setParameter("villageId", villageId).setParameter("workId", workId).uniqueResult();
+		      return (count != null && count > 0) ? "duplicate" : "ok";
+		        
+		 } 
+		 catch (Exception e) {
+		        e.printStackTrace();
+		        return "error";
+		    }
+	}
 	
-
-
 }

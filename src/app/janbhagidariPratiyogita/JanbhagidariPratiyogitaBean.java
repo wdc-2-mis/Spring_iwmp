@@ -1,6 +1,7 @@
 package app.janbhagidariPratiyogita;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class JanbhagidariPratiyogitaBean {
 	
@@ -62,9 +63,16 @@ public class JanbhagidariPratiyogitaBean {
 	private int proj_repoted;
 	private int proj_notrepoted;
 	private String fund_outlayex;
-	
 	private String dist_name;
 	
+	private Integer typeofwork_id;
+	private String work_desc;
+	private BigDecimal es_work;
+	private BigDecimal village;
+	private BigDecimal ngo;
+	private BigDecimal corporate;
+	private String work_status; 
+	private Date workstatus_date;
 	public int getStcode() {
 		return stcode;
 	}
@@ -388,6 +396,54 @@ public class JanbhagidariPratiyogitaBean {
 	}
 	public void setDist_name(String dist_name) {
 		this.dist_name = dist_name;
+	}
+	public String getWork_desc() {
+		return work_desc;
+	}
+	public void setWork_desc(String work_desc) {
+		this.work_desc = work_desc;
+	}
+	public BigDecimal getEs_work() {
+		return es_work;
+	}
+	public void setEs_work(BigDecimal es_work) {
+		this.es_work = es_work;
+	}
+	public BigDecimal getVillage() {
+		return village;
+	}
+	public void setVillage(BigDecimal village) {
+		this.village = village;
+	}
+	public BigDecimal getNgo() {
+		return ngo;
+	}
+	public void setNgo(BigDecimal ngo) {
+		this.ngo = ngo;
+	}
+	public BigDecimal getCorporate() {
+		return corporate;
+	}
+	public void setCorporate(BigDecimal corporate) {
+		this.corporate = corporate;
+	}
+	public String getWork_status() {
+		return work_status;
+	}
+	public void setWork_status(String work_status) {
+		this.work_status = work_status;
+	}
+	public Integer getTypeofwork_id() {
+		return typeofwork_id;
+	}
+	public void setTypeofwork_id(Integer typeofwork_id) {
+		this.typeofwork_id = typeofwork_id;
+	}
+	public Date getWorkstatus_date() {
+		return workstatus_date;
+	}
+	public void setWorkstatus_date(Date workstatus_date) {
+		this.workstatus_date = workstatus_date;
 	}
 	
 	

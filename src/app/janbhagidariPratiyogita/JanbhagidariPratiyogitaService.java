@@ -3,6 +3,7 @@ package app.janbhagidariPratiyogita;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
@@ -54,6 +55,24 @@ public interface JanbhagidariPratiyogitaService {
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaStatusReport();
 	
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id);
+
+	String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
+			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
+			List<String> compWorkList, List<String> completedDateList, HttpSession session, HttpServletRequest request);
+
+	List<JanbhagidariPratiyogitaBean> getActivityDraftListDetails(Integer stcd);
+
+	List<JanbhagidariPratiyogitaBean> getActivityDraftListPIADetails(Integer stcd, String username);
+
+	String deleteJanbhagidariActivity(List<Integer> assetid);
+
+	String completeJanbhagidariActivity(List<Integer> assetid, String createdBy);
+
+	List<JanbhagidariPratiyogitaBean> getActivityCompleteListDetails(Integer stcd);
+
+	List<JanbhagidariPratiyogitaBean> getActivityCompleteListPIADetails(Integer stcd, String username);
+
+	String checkdupWorkEntry(Integer villageId, Integer workId);
 	
 
 }
