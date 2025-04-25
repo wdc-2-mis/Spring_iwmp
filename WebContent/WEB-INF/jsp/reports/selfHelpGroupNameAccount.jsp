@@ -31,21 +31,18 @@ function getselfHelpGroupNameAccountRpt(){
 }
 
 	function downloadPDF(){
-		document.projLocDtlRpt.action="downloadprojectLocationDetailsPDF";
-		document.projLocDtlRpt.method="post";
-		document.projLocDtlRpt.submit();
+		document.selfHelpGroupNameAccount.action="selfHelpGroupNameAccountReportPDF";
+		document.selfHelpGroupNameAccount.method="post";
+		document.selfHelpGroupNameAccount.submit();
 	}
 
 	function exportExcel(){
-		document.projLocDtlRpt.action="downloadExcelProjLocDtlRpt";
-		document.projLocDtlRpt.method="post";
-		document.projLocDtlRpt.submit();
+		document.selfHelpGroupNameAccount.action="selfHelpGroupNameAccountReportExcel";
+		document.selfHelpGroupNameAccount.method="post";
+		document.selfHelpGroupNameAccount.submit();
 	}
 	
-	 function openPopup() {
-         window.open("janbhagidariPratiyogitaPopup.jsp", "PopupWindow", "width=600,height=400");
-     }
-
+	
 	
 	
 </script>
@@ -153,10 +150,10 @@ function getselfHelpGroupNameAccountRpt(){
 	
 	<div class="container-fluid">
 	
-<%-- 	<c:if test="${dataListSize>0}">
+ 	<c:if test="${dataListSize>0}">
 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
-	</c:if> --%>
+	</c:if> 
         <table class="table">
           <tr>
             <td>

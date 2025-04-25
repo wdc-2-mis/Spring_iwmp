@@ -100,8 +100,8 @@
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgoname" />
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgovillage" />
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaSWCKAccount" />
+        <mapping class="app.model.master.JanbhagidariTypeOfWork" />
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork" />
-        
         
         
         

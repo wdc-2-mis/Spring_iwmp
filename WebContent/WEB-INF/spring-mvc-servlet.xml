@@ -177,6 +177,9 @@ p:basename="classpath:messages/messages">
 	<bean name="JanbhagidariPratiyogitaNgovillage" class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgovillage" />
 	<bean name="JanbhagidariPratiyogitaSWCKAccount" class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaSWCKAccount" />
 	
+	<bean name="JanbhagidariTypeOfWork" class="app.model.master.JanbhagidariTypeOfWork" />
+	<bean name="JanbhagidariPratiyogitaTypeofWork" class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork" />
+	
 	
 	
 </beans>
