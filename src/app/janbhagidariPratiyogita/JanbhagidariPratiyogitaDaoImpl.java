@@ -917,65 +917,80 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	    }  
 	    return ip;  
 	}
+	
 	@Override
-	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
-			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
-			List<String> compWorkList, List<String> completedDateList, HttpSession session, HttpServletRequest request) {
-		Session sess = sessionFactory.getCurrentSession();
+	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, String vill, String workList,
+	        String estValueList, String villagersList, String ngosList, String corporateList,
+	        String compWorkList, String completedDateList, HttpSession session, HttpServletRequest request) {
+
+	    Session sess = sessionFactory.getCurrentSession();
 	    String res = "fail";
 	    try {
 	        sess.beginTransaction();
-            InetAddress inet = InetAddress.getLocalHost();
+	        InetAddress inet = InetAddress.getLocalHost();
 	        String ipAddr = inet.getHostAddress();
 	        String createdBy = session.getAttribute("loginID").toString();
 	        Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	        for (int i = 0; i < vill.size(); i++) {
+
+	        // Split comma-separated Strings into Arrays
+	        String[] villArray = vill.split(",");
+	        String[] workListArray = workList.split(",");
+	        String[] estValueListArray = estValueList.split(",");
+	        String[] villagersListArray = villagersList.split(",");
+	        String[] ngosListArray = ngosList.split(",");
+	        String[] corporateListArray = corporateList.split(",");
+	        String[] compWorkListArray = compWorkList.split(",");
+	        String[] completedDateListArray = completedDateList.split(",");
+
+	        for (int i = 0; i < villArray.length; i++) {
 	            JanbhagidariPratiyogitaTypeofWork data = new JanbhagidariPratiyogitaTypeofWork();
 
 	            IwmpDistrict dist = sess.get(IwmpDistrict.class, dcode);
 	            IwmpState state = sess.get(IwmpState.class, stcd);
 	            IwmpMProject project = sess.get(IwmpMProject.class, proj);
-                IwmpVillage village = sess.get(IwmpVillage.class, Integer.parseInt(vill.get(i)));
-	            JanbhagidariTypeOfWork typeOfWork = sess.get(JanbhagidariTypeOfWork.class, Integer.parseInt(workList.get(i)));
-                
+	            IwmpVillage village = sess.get(IwmpVillage.class, Integer.parseInt(villArray[i]));
+	            JanbhagidariTypeOfWork typeOfWork = sess.get(JanbhagidariTypeOfWork.class, Integer.parseInt(workListArray[i]));
+
 	            data.setIwmpState(state);
 	            data.setIwmpDistrict(dist);
 	            data.setIwmpMProject(project);
 	            data.setIwmpVillage(village);
 	            data.setJanbhagidariTypeOfWork(typeOfWork);
-	            data.setEs_work(new BigDecimal(estValueList.get(i)));
-	            data.setVillage(new BigDecimal(villagersList.get(i)));
-	            data.setNgo(new BigDecimal(ngosList.get(i)));
-	            data.setCorporate(new BigDecimal(corporateList.get(i)));
-	            data.setWork_status(compWorkList.get(i).charAt(0)); 
+	            data.setEs_work(new BigDecimal(estValueListArray[i]));
+	            data.setVillage(new BigDecimal(villagersListArray[i]));
+	            data.setNgo(new BigDecimal(ngosListArray[i]));
+	            data.setCorporate(new BigDecimal(corporateListArray[i]));
+	            data.setWork_status(compWorkListArray[i].charAt(0));
 	            data.setStatus('D');
 	            data.setRequestedIp(getClientIpAddr(request));
 	            data.setCreatedBy(createdBy);
 	            data.setCreatedDate(new Date());
-	            String completedDateStr = completedDateList.get(i);
-	            if (completedDateStr != null && !completedDateStr.trim().isEmpty()) {
-	                Date completedDate = sdf.parse(completedDateStr);
-	                data.setWorkStatusDate(completedDate);
+
+	            // Handling completed date carefully
+	            if (compWorkListArray[i].equalsIgnoreCase("Y") && completedDateListArray.length > i
+	                    && completedDateListArray[i] != null && !completedDateListArray[i].isEmpty()) {
+	                data.setWorkStatusDate(sdf.parse(completedDateListArray[i]));
 	            } else {
 	                data.setWorkStatusDate(null);
 	            }
+
 	            sess.save(data);
 	        }
 
 	        sess.getTransaction().commit();
-	        res = "success"; 
-	        
-	    }
-	    catch (Exception e) {
+	        res = "success";
+
+	    } catch (Exception e) {
 	        e.printStackTrace();
 	        if (sess.getTransaction().isActive()) {
 	            sess.getTransaction().rollback();
 	        }
 	        res = "fail";
 	    }
-		return res;
+	    return res;
 	}
+
 
 	@Override
 	public List<JanbhagidariPratiyogitaBean> getActivityDraftListDetails(Integer stcd) {
@@ -1186,6 +1201,10 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		        e.printStackTrace();
 		        return "error";
 		    }
+		 finally {
+				session.getTransaction().commit();
+				
+			}
 	}
 	
 }

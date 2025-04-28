@@ -204,9 +204,9 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 
 
 	@Override
-	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
-			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
-			List<String> compWorkList,List<String> completedDateList, HttpSession session, HttpServletRequest request) {
+	public String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, String vill, String workList,
+			String estValueList, String villagersList, String ngosList, String corporateList,
+			String compWorkList,String completedDateList, HttpSession session, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return dao.saveJanbhagidariPratiyogitaActivity(dcode, proj, vill, workList, estValueList, villagersList, ngosList, corporateList, compWorkList, completedDateList, session, request);
 	}

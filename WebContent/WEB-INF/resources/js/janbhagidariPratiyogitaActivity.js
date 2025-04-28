@@ -389,17 +389,17 @@ $(document).on('click', '#saveAsDraft', function (e) {
         url: "saveJanbhagidariPratiyogitaActivity",
         type: "post",
         data: {
-            dcode: $dcode,
-            proj: $projectId,
-            vill: vill.toString(),
-            workList: workList.toString(),
-            estValueList: estValueList.toString(),
-            villagersList: villagersList.toString(),
-            ngosList: ngosList.toString(),
-            corporateList: corporateList.toString(),
-            compWorkList: compWorkList.toString(),
-            completedDateList: completedDateList.toString()
-        },
+        dcode: $dcode,
+        proj: $projectId,
+        vill: vill.join(","),              // convert Array to comma-separated String
+        workList: workList.join(","),
+        estValueList: estValueList.join(","),
+        villagersList: villagersList.join(","),
+        ngosList: ngosList.join(","),
+        corporateList: corporateList.join(","),
+        compWorkList: compWorkList.join(","),
+        completedDateList: completedDateList.join(",")
+    },
         error: function (xhr, status, er) {
             console.log(er);
         },

@@ -51,9 +51,9 @@ public interface JanbhagidariPratiyogitaDao {
 	
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaDistStatusReport(int id);
 
-	String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, List<String> vill, List<String> workList,
-			List<String> estValueList, List<String> villagersList, List<String> ngosList, List<String> corporateList,
-			List<String> compWorkList, List<String> completedDateList, HttpSession session, HttpServletRequest request);
+	String saveJanbhagidariPratiyogitaActivity(int dcode, int proj, String vill, String workList,
+			String estValueList, String villagersList, String ngosList, String corporateList,
+			String compWorkList, String completedDateList, HttpSession session, HttpServletRequest request);
 
 	List<JanbhagidariPratiyogitaBean> getActivityDraftListDetails(Integer stcd);
 

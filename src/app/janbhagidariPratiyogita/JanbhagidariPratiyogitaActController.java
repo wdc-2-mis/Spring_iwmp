@@ -107,10 +107,10 @@ public class JanbhagidariPratiyogitaActController {
 	@RequestMapping(value = "/saveJanbhagidariPratiyogitaActivity", method = RequestMethod.POST)
 	@ResponseBody
 	public String saveJanbhagidariPratiyogitaActivity(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="dcode") int dcode, 
-			@RequestParam(value ="proj") int proj, @RequestParam(value="vill") List<String> vill, 
-			@RequestParam(value ="workList") List<String> workList, @RequestParam(value ="estValueList") List<String> estValueList,
-			@RequestParam(value ="villagersList") List<String> villagersList, @RequestParam(value ="ngosList") List<String> ngosList,
-			@RequestParam(value ="corporateList") List<String> corporateList, @RequestParam(value ="compWorkList") List<String> compWorkList, @RequestParam(value ="completedDateList") List<String> completedDateList){
+			@RequestParam(value ="proj") int proj, @RequestParam(value="vill") String vill, 
+			@RequestParam(value ="workList") String workList, @RequestParam(value ="estValueList") String estValueList,
+			@RequestParam(value ="villagersList") String villagersList, @RequestParam(value ="ngosList") String ngosList,
+			@RequestParam(value ="corporateList") String corporateList, @RequestParam(value ="compWorkList") String compWorkList, @RequestParam(value ="completedDateList") String completedDateList){
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		
