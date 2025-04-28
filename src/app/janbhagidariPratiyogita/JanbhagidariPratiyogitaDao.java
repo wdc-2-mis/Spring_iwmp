@@ -68,6 +68,9 @@ public interface JanbhagidariPratiyogitaDao {
 	List<JanbhagidariPratiyogitaBean> getActivityCompleteListPIADetails(Integer stcd, String username);
 
 	String checkdupWorkEntry(Integer villageId, Integer workId);
+	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesStatus();
+
 
 
 }

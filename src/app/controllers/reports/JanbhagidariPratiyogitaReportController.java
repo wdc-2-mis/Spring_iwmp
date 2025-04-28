@@ -1640,5 +1640,66 @@ public class JanbhagidariPratiyogitaReportController {
 		}
 		return mav; 
 	}
+	
+	@RequestMapping(value="/janbhagidariPratiyogitaActivitiesStatusReport", method = RequestMethod.GET)
+	public ModelAndView janbhagidariPratiyogitaActivitiesStatusReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView();
+		
+		List<JanbhagidariPratiyogitaBean> data = new ArrayList<JanbhagidariPratiyogitaBean>();
+		try {
+			
+			mav = new ModelAndView("reports/janbhagidariPratiyogitaActivitiesStatus");
+			
+			
+			data=serk.getjanbhagidariPratiyogitaActivitiesStatus();
+			mav.addObject("dataList",data);
+			mav.addObject("dataListSize",data.size());
+			
+			int proj_repotedt=0, no_work_creationt=0, no_work_repairt=0, no_work_plantt=0, no_work_productiont=0, no_work_compt=0;
+			
+			BigDecimal estimate_workt = BigDecimal.valueOf(0);
+			BigDecimal villaget = BigDecimal.valueOf(0);
+			BigDecimal ngot=BigDecimal.valueOf(0);
+			BigDecimal corporatet = BigDecimal.valueOf(0);
+			
+			
+			if(data != null) 
+			{
+				for(JanbhagidariPratiyogitaBean bean : data) 
+				{
+					proj_repotedt=proj_repotedt+bean.getProj_repoted();
+					no_work_creationt=no_work_creationt+bean.getNo_work_creation();
+					no_work_repairt=no_work_repairt+bean.getNo_work_repair();
+					no_work_plantt=no_work_plantt+bean.getNo_work_plant();
+					no_work_productiont=no_work_productiont+bean.getNo_work_production();
+					no_work_compt=no_work_compt+bean.getNo_work_comp();
+					
+					estimate_workt=estimate_workt.add(bean.getEstimate_work());
+					villaget=villaget.add(bean.getVillage());
+					ngot=ngot.add(bean.getNgo());
+					corporatet=corporatet.add(bean.getCorporate());
+					
+				}
+			}	
+			
+			mav.addObject("proj_repotedt",proj_repotedt);
+			mav.addObject("no_work_creationt",no_work_creationt);
+			mav.addObject("no_work_repairt",no_work_repairt);
+			mav.addObject("no_work_plantt",no_work_plantt);
+			mav.addObject("no_work_productiont",no_work_productiont);
+			mav.addObject("no_work_compt",no_work_compt);
+			mav.addObject("estimate_workt",estimate_workt);
+			mav.addObject("villaget",villaget);
+			mav.addObject("ngot",ngot);
+			mav.addObject("corporatet",corporatet);
+			
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return mav; 
+	}  
 
 }

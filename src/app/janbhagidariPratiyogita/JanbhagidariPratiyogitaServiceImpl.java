@@ -272,5 +272,11 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		return dao.checkdupWorkEntry(villageId, workId);
 	}
 	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesStatus() {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPratiyogitaActivitiesStatus();
+	}
+
 	
 }

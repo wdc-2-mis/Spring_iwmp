@@ -74,5 +74,8 @@ public interface JanbhagidariPratiyogitaService {
 
 	String checkdupWorkEntry(Integer villageId, Integer workId);
 	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesStatus();
+
+	
 
 }

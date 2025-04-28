@@ -73,6 +73,18 @@ public class JanbhagidariPratiyogitaBean {
 	private BigDecimal corporate;
 	private String work_status; 
 	private Date workstatus_date;
+	
+	private Integer no_work_creation;
+	private Integer no_work_repair;
+	private Integer no_work_plant;
+	private Integer no_work_production;
+	private Integer no_work_comp;
+	private BigDecimal estimate_work;
+	
+	
+	
+	
+	
 	public int getStcode() {
 		return stcode;
 	}
@@ -445,6 +457,47 @@ public class JanbhagidariPratiyogitaBean {
 	public void setWorkstatus_date(Date workstatus_date) {
 		this.workstatus_date = workstatus_date;
 	}
+	public Integer getNo_work_creation() {
+		return no_work_creation;
+	}
+	public void setNo_work_creation(Integer no_work_creation) {
+		this.no_work_creation = no_work_creation;
+	}
+	public Integer getNo_work_repair() {
+		return no_work_repair;
+	}
+	public void setNo_work_repair(Integer no_work_repair) {
+		this.no_work_repair = no_work_repair;
+	}
+	public Integer getNo_work_plant() {
+		return no_work_plant;
+	}
+	public void setNo_work_plant(Integer no_work_plant) {
+		this.no_work_plant = no_work_plant;
+	}
+	public Integer getNo_work_production() {
+		return no_work_production;
+	}
+	public void setNo_work_production(Integer no_work_production) {
+		this.no_work_production = no_work_production;
+	}
+	public Integer getNo_work_comp() {
+		return no_work_comp;
+	}
+	public void setNo_work_comp(Integer no_work_comp) {
+		this.no_work_comp = no_work_comp;
+	}
+	public BigDecimal getEstimate_work() {
+		return estimate_work;
+	}
+	public void setEstimate_work(BigDecimal estimate_work) {
+		this.estimate_work = estimate_work;
+	}
+	
+	
+	
+	
+	
 	
 	
 
