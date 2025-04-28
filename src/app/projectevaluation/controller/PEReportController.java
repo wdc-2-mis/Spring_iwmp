@@ -1503,7 +1503,6 @@ public class PEReportController {
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
-
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
