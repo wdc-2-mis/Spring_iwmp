@@ -16,7 +16,15 @@ function downloadPDF()
 		document.getcropdtlrpt.method="post";
 		document.getcropdtlrpt.submit();
 	
-} 
+}
+
+function exportExcel()
+{
+		document.getcropdtlrpt.action="downloadStWiseCropDtlAreaExcel";
+		document.getcropdtlrpt.method="post";
+		document.getcropdtlrpt.submit();
+	
+}
 </script>
 
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
