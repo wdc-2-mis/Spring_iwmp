@@ -449,7 +449,12 @@ public class SelfHelpGroupController {
 					 CommonFunctions.insertCell(table, data.get(i).getName(), Element.ALIGN_LEFT, 1, 1, bf8);
 					 CommonFunctions.insertCell(table, data.get(i).getAccount_detail(), Element.ALIGN_LEFT, 1, 1, bf8);
 					 CommonFunctions.insertCell(table, data.get(i).getIfsc_code(), Element.ALIGN_LEFT, 1, 1, bf8);
-					 CommonFunctions.insertCell(table, data.get(i).getGroup_type(), Element.ALIGN_LEFT, 1, 1, bf8);
+					 
+					 if(data.get(i).getGroup_type().equalsIgnoreCase("newSHG"))
+					 CommonFunctions.insertCell(table, "New SHG", Element.ALIGN_LEFT, 1, 1, bf8);
+					 
+					 if(data.get(i).getGroup_type().equalsIgnoreCase("oldSHG"))
+						 CommonFunctions.insertCell(table, "Old SHG", Element.ALIGN_LEFT, 1, 1, bf8);
 	               
 	                
 	                st=data.get(i).getSt_name();
@@ -586,7 +591,11 @@ public class SelfHelpGroupController {
 			row.createCell(5).setCellValue(bean.getName());  
 			row.createCell(6).setCellValue(bean.getAccount_detail()); 
 			row.createCell(7).setCellValue(bean.getIfsc_code()); 
-			row.createCell(8).setCellValue(bean.getGroup_type());  
+			if(bean.getGroup_type().equalsIgnoreCase("newSHG"))
+				 row.createCell(8).setCellValue("New SHG");
+				 
+			if(bean.getGroup_type().equalsIgnoreCase("oldSHG"))
+				row.createCell(8).setCellValue("Old SHG");  
 			
 			sno++;
 			rowno++;

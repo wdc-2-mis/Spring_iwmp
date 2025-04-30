@@ -218,7 +218,21 @@ function getselfHelpGroupNameAccountRpt(){
 								<td> <c:out value="${data.name}" /></td>
 		 						<td> <c:out value="${data.account_detail}" /></td>
 								<td> <c:out value="${data.ifsc_code}" /></td>
-								<td> <c:out value="${data.group_type}" /></td>
+								<td> 
+								
+								<c:if test="${data.group_type eq 'newSHG' }">
+									<c:out value="New SHG" />
+								</c:if>
+								
+								<c:if test="${data.group_type eq 'oldSHG' }">
+									<c:out value="Old SHG" />
+								</c:if>
+							<%-- 	<c:out value="${data.group_type}" /> --%>
+								
+								
+								
+								
+								</td>
 								
  							</tr>
 									
