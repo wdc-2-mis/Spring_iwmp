@@ -111,8 +111,8 @@ function getselfHelpGroupNameAccountRpt(){
           <td align="center">
               <select name="project" id="project" >
               		<option value="0" style="text-align:center;">--Select All--</option>
-                  	<c:if test="${not empty projectList}">
-               			<c:forEach items="${projectList}" var="lists">
+                  	<c:if test="${not empty ProjectList}">
+               			<c:forEach items="${ProjectList}" var="lists">
                				<c:if test="${lists.key eq project}">
        							<option value="<c:out value='${lists.key}'/>" selected="selected" ><c:out value="${lists.value}" /></option>
        						</c:if>	
