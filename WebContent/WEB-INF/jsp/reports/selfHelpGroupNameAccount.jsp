@@ -151,8 +151,8 @@ function getselfHelpGroupNameAccountRpt(){
 	<div class="container-fluid">
 	
  	<c:if test="${dataListSize>0}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
+	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> -->
 	</c:if> 
         <table class="table">
           <tr>
