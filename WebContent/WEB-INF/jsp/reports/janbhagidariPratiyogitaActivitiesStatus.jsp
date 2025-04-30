@@ -7,14 +7,14 @@
 <title>State wise Current Status of Watersheed Janbhagidari Activities</title>
 	<script type="text/javascript">
 	function exportExcel(){
-		document.getJanbhagidariActStatus.action="ExcelJanbhagidariStateWiseCurrentStatus";
+		document.getJanbhagidariActStatus.action="ExcelJanbhagidariStateWiseActivitiesStatus";
 		document.getJanbhagidariActStatus.method="post";
 		document.getJanbhagidariActStatus.submit();
 	}
 	
 	function downloadPDF()
 	{
-			document.getJanbhagidariActStatus.action="JanbhagidariStatewiseCurrentStatusPDF";
+			document.getJanbhagidariActStatus.action="JanbhagidariStatewiseActivitiesStatusPDF";
 			document.getJanbhagidariActStatus.method="post";
 			document.getJanbhagidariActStatus.submit();
 		
@@ -24,7 +24,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">State wise Current Status of Watersheed Janbhagidari Activities</label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">State wise Watersheed Janbhagidari Activities Details</label></h5></div>
 <br>
 <div class ="card">
 
@@ -37,8 +37,8 @@
 			</div>
 		</form>
 	
-	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>    -->  
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> 
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>    
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id="dtBasicExample" cellspacing="0" class="table" >
   	<thead>
@@ -47,7 +47,7 @@
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 20%;">State Name</th>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">No. of Projects where Watersheed Janbhagidari Organized</th>
       		
-      		<th colspan="4" style="text-align:center; vertical-align: middle; width: 35%;">No. of Work to be done through Janbhagidari</th>
+      		<th colspan="4" style="text-align:center; vertical-align: middle; width: 35%;">No. of Work to be done through Janbhagidari Activities</th>
       		<th colspan="3" style="text-align:center; vertical-align: middle; width: 28%;">Tentative Community Contribution Percentage (%)</th>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">Total Estimated Value of Work to be done through Janbhagidari (Rs. in Lakh)</th>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">Achievements made so for (No. of Work Completed)</th>

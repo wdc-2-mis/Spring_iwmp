@@ -3,6 +3,7 @@ package app.controllers.reports;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -1651,7 +1652,6 @@ public class JanbhagidariPratiyogitaReportController {
 			
 			mav = new ModelAndView("reports/janbhagidariPratiyogitaActivitiesStatus");
 			
-			
 			data=serk.getjanbhagidariPratiyogitaActivitiesStatus();
 			mav.addObject("dataList",data);
 			mav.addObject("dataListSize",data.size());
@@ -1701,5 +1701,397 @@ public class JanbhagidariPratiyogitaReportController {
 		}
 		return mav; 
 	}  
+	
+	@RequestMapping(value = "/JanbhagidariStatewiseActivitiesStatusPDF", method = RequestMethod.POST)
+	public ModelAndView JanbhagidariStatewiseActivitiesStatusPDF(HttpServletRequest request, HttpServletResponse response) {
+		
+	  
+	    try {
+	    	
+	        Rectangle layout = new Rectangle(PageSize.A4.rotate());
+	        layout.setBackgroundColor(new BaseColor(255, 255, 255));
+	        Document document = new Document(layout, 25, 10, 10, 0);
+	        document.addTitle("JP-3");
+	        document.addCreationDate();
+	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	        PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+	        document.open();
+
+	        Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+	        Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+	        Font bf8 = new Font(FontFamily.HELVETICA, 8);
+	        Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+	        Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+	        PdfPTable table = null;
+	        document.newPage();
+	        Paragraph paragraph3 = null;
+	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+	        paragraph3 = new Paragraph("State wise Watersheed Janbhagidari Activities Details", f3);
+
+	        paragraph2.setAlignment(Element.ALIGN_CENTER);
+	        paragraph3.setAlignment(Element.ALIGN_CENTER);
+	        paragraph2.setSpacingAfter(10);
+	        paragraph3.setSpacingAfter(10);
+	        CommonFunctions.addHeader(document);
+	        document.add(paragraph2);
+	        document.add(paragraph3);
+	        table = new PdfPTable(12);
+	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+	        table.setWidthPercentage(90);
+	        table.setSpacingBefore(0f);
+	        table.setSpacingAfter(0f);
+	      //  table.setHeaderRows(3);
+
+	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Projects where Watersheed Janbhagidari Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	       
+	        CommonFunctions.insertCellHeader(table, "No. of Work to be done through Janbhagidari Activities", Element.ALIGN_CENTER, 4, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Tentative Community Contribution Percentage (%)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Total Estimated Value of Work to be done through Janbhagidari (Rs. in Lakh)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Achievements made so for (No. of Work Completed)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	       
+
+	        CommonFunctions.insertCellHeader(table, "NRM/SWC Structure Creation", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "NRM/SWC Structure Repair /Rejuvenation", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Plantation Related Work", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Production System Related Work", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        
+	        CommonFunctions.insertCellHeader(table, "Villagers", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "NGOs", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Corporates", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        
+	        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	       
+	        List<JanbhagidariPratiyogitaBean> data = new ArrayList<JanbhagidariPratiyogitaBean>();
+	        
+	        data=serk.getjanbhagidariPratiyogitaActivitiesStatus();
+			
+			int proj_repotedt=0, no_work_creationt=0, no_work_repairt=0, no_work_plantt=0, no_work_productiont=0, no_work_compt=0;
+			
+			BigDecimal estimate_workt = BigDecimal.valueOf(0);
+			BigDecimal villaget = BigDecimal.valueOf(0);
+			BigDecimal ngot=BigDecimal.valueOf(0);
+			BigDecimal corporatet = BigDecimal.valueOf(0);
+			
+			int k = 1;
+			if(data != null) 
+			{
+				for(JanbhagidariPratiyogitaBean bean : data) 
+				{
+					
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, bean.getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getProj_repoted()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNo_work_creation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNo_work_repair()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNo_work_plant()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNo_work_production()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getVillage()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNgo()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getCorporate()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getEstimate_work()), Element.ALIGN_RIGHT, 1,1, bf8);
+	                
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getNo_work_comp()), Element.ALIGN_RIGHT, 1,1, bf8);
+					
+					proj_repotedt=proj_repotedt+bean.getProj_repoted();
+					no_work_creationt=no_work_creationt+bean.getNo_work_creation();
+					no_work_repairt=no_work_repairt+bean.getNo_work_repair();
+					no_work_plantt=no_work_plantt+bean.getNo_work_plant();
+					no_work_productiont=no_work_productiont+bean.getNo_work_production();
+					no_work_compt=no_work_compt+bean.getNo_work_comp();
+					
+					estimate_workt=estimate_workt.add(bean.getEstimate_work());
+					villaget=villaget.add(bean.getVillage());
+					ngot=ngot.add(bean.getNgo());
+					corporatet=corporatet.add(bean.getCorporate());
+					k = k + 1;
+					
+				}
+			}	
+			BigDecimal nostate = BigDecimal.valueOf(30);
+
+	            CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(proj_repotedt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(no_work_creationt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(no_work_repairt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(no_work_plantt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(no_work_productiont), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(villaget.divide(nostate, 2, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(ngot.divide(nostate, 2, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(corporatet.divide(nostate, 2, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(estimate_workt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.valueOf(no_work_compt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+
+	            document.add(table);
+	            table = new PdfPTable(1);
+				table.setWidthPercentage(70);
+				table.setSpacingBefore(15f);
+				table.setSpacingAfter(0f);
+				CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+				CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+				document.add(table);
+				response.setContentType("application/pdf");
+				response.setHeader("Expires", "0");
+				response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+	        
+
+	        document.close();
+
+	        response.setContentType("application/pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=JP-3.pdf");
+	        OutputStream outputStream = response.getOutputStream();
+	        baos.writeTo(outputStream);
+	        outputStream.flush();
+	        outputStream.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return null;
+	}
+	
+	@RequestMapping(value = "/ExcelJanbhagidariStateWiseActivitiesStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public String ExcelJanbhagidariStateWiseActivitiesStatus(HttpServletRequest request, HttpServletResponse response) 
+	{
+
+			List<JanbhagidariPratiyogitaBean> list = new ArrayList<JanbhagidariPratiyogitaBean>();
+	        
+			list=serk.getjanbhagidariPratiyogitaActivitiesStatus();
+			
+			int proj_repotedt=0, no_work_creationt=0, no_work_repairt=0, no_work_plantt=0, no_work_productiont=0, no_work_compt=0;
+			
+			BigDecimal estimate_workt = BigDecimal.valueOf(0);
+			BigDecimal villaget = BigDecimal.valueOf(0);
+			BigDecimal ngot=BigDecimal.valueOf(0);
+			BigDecimal corporatet = BigDecimal.valueOf(0);
+		
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("State wise Watersheed Janbhagidari Activities Details");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "State wise Watersheed Janbhagidari Activities Details";
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 11, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,6,0,0);
+	        sheet.addMergedRegion(mergedRegion);
+			mergedRegion = new CellRangeAddress(5,6,1,1);
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(5,5,3,6); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,7,9); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(5,6,10,10); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,11,11); 
+	        sheet.addMergedRegion(mergedRegion);
+        
+	        mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("No. of Projects where Watersheed Janbhagidari Organized");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			cell = rowhead.createCell(3);
+			cell.setCellValue("No. of Work to be done through Janbhagidari Activities");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			for(int i =4; i<7;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(7);
+			cell.setCellValue("Tentative Community Contribution Percentage (%)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			for(int i =8; i<=9;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Total Estimated Value of Work to be done through Janbhagidari (Rs. in Lakh)");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Achievements made so for (No. of Work Completed)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			
+			Row rowhead1 = sheet.createRow(6);
+			for(int i =0; i<3;i++) {
+				rowhead1.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead1.createCell(3);
+			cell.setCellValue("NRM/SWC Structure Creation");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(4);
+			cell.setCellValue("NRM/SWC Structure Repair /Rejuvenation");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(5);
+			cell.setCellValue("Plantation Related Work");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(6);
+			cell.setCellValue("Production System Related Work");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead1.createCell(7);
+			cell.setCellValue("Villagers");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(8);
+			cell.setCellValue("NGOs");  
+			cell.setCellStyle(style);
+			cell = rowhead1.createCell(9);
+			cell.setCellValue("Corporates");  
+			cell.setCellStyle(style);
+			for(int i =10; i<12;i++) {
+				rowhead1.createCell(i).setCellStyle(style);
+			}
+			
+			Row rowhead2 = sheet.createRow(7);
+			for(int i=0;i<12;i++)
+			{
+				cell =rowhead2.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+	        int sno = 1;
+	        int rowno  = 8;
+	        
+	        for(JanbhagidariPratiyogitaBean bean: list) 
+	        {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getSt_name());
+	        	row.createCell(2).setCellValue(bean.getProj_repoted());
+				row.createCell(3).setCellValue(bean.getNo_work_creation());  
+				row.createCell(4).setCellValue(bean.getNo_work_repair()); 
+				row.createCell(5).setCellValue(bean.getNo_work_plant());  
+				row.createCell(6).setCellValue(bean.getNo_work_production());
+				
+				row.createCell(7).setCellValue(bean.getVillage().doubleValue());
+				row.createCell(8).setCellValue(bean.getNgo().doubleValue());
+				row.createCell(9).setCellValue(bean.getCorporate().doubleValue());
+				row.createCell(10).setCellValue(bean.getEstimate_work().doubleValue());
+				row.createCell(11).setCellValue(bean.getNo_work_comp());
+				
+				proj_repotedt=proj_repotedt+bean.getProj_repoted();
+				no_work_creationt=no_work_creationt+bean.getNo_work_creation();
+				no_work_repairt=no_work_repairt+bean.getNo_work_repair();
+				no_work_plantt=no_work_plantt+bean.getNo_work_plant();
+				no_work_productiont=no_work_productiont+bean.getNo_work_production();
+				no_work_compt=no_work_compt+bean.getNo_work_comp();
+				estimate_workt=estimate_workt.add(bean.getEstimate_work());
+				villaget=villaget.add(bean.getVillage());
+				ngot=ngot.add(bean.getNgo());
+				corporatet=corporatet.add(bean.getCorporate());
+				
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        BigDecimal nostate = BigDecimal.valueOf(30);
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+			style1.setFont(font1);
+	        
+	        Row row = sheet.createRow(list.size()+8);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Grand Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(proj_repotedt);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(3);
+	        cell.setCellValue(no_work_creationt);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(4);
+	        cell.setCellValue(no_work_repairt);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(5);
+	        cell.setCellValue(no_work_plantt);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(6);
+	        cell.setCellValue(no_work_productiont);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(7);
+	        cell.setCellValue(villaget.divide(nostate, 2, RoundingMode.HALF_UP).doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(8);
+	        cell.setCellValue(ngot.divide(nostate, 2, RoundingMode.HALF_UP).doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(9);
+	        cell.setCellValue(corporatet.divide(nostate, 2, RoundingMode.HALF_UP).doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(10);
+	        cell.setCellValue(estimate_workt.doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(11);
+	        cell.setCellValue(no_work_compt);
+	        cell.setCellStyle(style1);
+	       
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
+	        String fileName = "attachment; filename=JP-3.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return null;
+		
+	}
 
 }
