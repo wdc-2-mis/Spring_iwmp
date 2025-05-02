@@ -67,17 +67,17 @@ var date = day+'-'+month+'-'+today.getFullYear();
 					} else {
 						confirmAssignee = false;
 						cnt = 1;
-						if (key < mnth || (key >3 && mnth <4)) {
+						if (Number(key) < Number(mnth) || (Number(key) >3 && Number(mnth) <4)) {
 							mnth = key;
 							yrdt = 20 + '' + data[key];
 						}
 					}
 				}
 			}
-//			alert('curntdate '+onGoingDate +' '+crntDate);
+//			alert('curntdate '+mnth +' '+yrdt);
 			if (confirmAssignee) {
 				yrdt1 = 01 + "-" + 12 + "-" + yrdt;
-			} else {
+			} else {	
 				if (mnth < 4 && yrdt < today.getFullYear()) {
 					yrdt = parseInt(yrdt) + 1;
 				}else if(mnth < 4){
@@ -94,7 +94,7 @@ var date = day+'-'+month+'-'+today.getFullYear();
 				yrdt1 = onGoingDate;
 			}
 //			alert('check03 '+yrdt1);
-			$('.cdatepicker').datepicker({
+			$('#cdatepicker'+id).datepicker({
 						changeMonth: true,
 						changeYear: true,
 						minDate: yrdt1,
