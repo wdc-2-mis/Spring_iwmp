@@ -566,8 +566,6 @@ public class SelfHelpGroupController {
 		cell.setCellValue("SHG Type");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-
-		
 		
 		Row rowhead1 = sheet.createRow(6); 
 		for(int i=0;i<9;i++)
