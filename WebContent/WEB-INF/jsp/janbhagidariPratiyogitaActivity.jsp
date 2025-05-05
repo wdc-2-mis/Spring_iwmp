@@ -52,7 +52,7 @@ function validatePercentage(input) {
     <c:if test="${userType == 'SL'}">
         <span class="projectError"></span>
         <select class="form-control district" id="district" name="district" required>
-            <option value="">--Select District--</option>
+            <option value="">--All District--</option>
             <c:forEach items="${distList}" var="dist"> 
                 <option value="${dist.key}"><c:out value="${dist.value}" /></option>
             </c:forEach>

@@ -95,6 +95,18 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${janbhagidariActivitiesDetails}")
 	String janbhagidariActivitiesDetails;
 
+	@Value("${getJanbhagidariNoStatus}")
+	String getJanbhagidariNoStatus;
+	
+	@Value("${getJanbhagidariNoStatusByProj}")
+	String getJanbhagidariNoStatusByProj;
+	
+	@Value("${getJanbhagidariPIANoStatusByProj}")
+	String getJanbhagidariPIANoStatusByProj;
+	
+	@Value("${getJanbhagidariPIANoStatusByReg}")
+	String getJanbhagidariPIANoStatusByReg;
+	
 	
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
@@ -1225,6 +1237,143 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 				hql=janbhagidariActivitiesDetails;
 				query = session.createSQLQuery(hql);
 				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariNoStatus(Integer stcd, Integer district, Integer projid) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				 if (projid != null ) {
+					 hql=getJanbhagidariNoStatusByProj;
+					 query = session.createSQLQuery(hql);
+					 query.setInteger("district", district);
+					 query.setInteger("projid", projid);
+				 }
+				 else {
+				  hql=getJanbhagidariNoStatus;
+				  query = session.createSQLQuery(hql);
+				  query.setInteger("stcode", stcd);
+				 }
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public String updateJanbhagidariCompDate(List<Integer> assetid, List<String> compworkval, List<String> completedDate, String createdBy) {
+		String str = "fail";
+		 Session session = sessionFactory.getCurrentSession();
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 try {
+		        session.beginTransaction();
+		        for (int i = 0; i < assetid.size(); i++) {
+		            JanbhagidariPratiyogitaTypeofWork entity = session.get(JanbhagidariPratiyogitaTypeofWork.class, assetid.get(i));
+		            
+		             entity.setWork_status(compworkval.get(i).charAt(0));
+		             entity.setWorkStatusDate(sdf.parse(completedDate.get(i)));
+		             entity.setUpdatedBy(createdBy);
+		             entity.setUpdatedDate(new Date());
+		            
+		        }
+		        str = "success"; 
+		 }
+			catch (Exception ex) {
+		        ex.printStackTrace();
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().rollback();
+		        }
+		        str = "fail";
+		    } finally {
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().commit();
+		        }
+		    }
+
+		    return str;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatusWithProj(String projid) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				 hql=getJanbhagidariPIANoStatusByProj;
+					 query = session.createSQLQuery(hql);
+					 query.setInteger("projId", Integer.parseInt(projid));
+				 query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatus(Integer regId) {
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				 hql=getJanbhagidariPIANoStatusByReg;
+					 query = session.createSQLQuery(hql);
+					 query.setInteger("regId", regId);
+				 query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
 				result = query.list();
 		} 
 		catch (HibernateException e) 

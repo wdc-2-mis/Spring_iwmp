@@ -71,6 +71,14 @@ public interface JanbhagidariPratiyogitaDao {
 	
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesStatus();
 
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariNoStatus(Integer stcd, Integer district, Integer projid);
+
+	String updateJanbhagidariCompDate(List<Integer> assetid, List<String> compworkval, List<String> completedDate, String createdBy);
+
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatusWithProj(String projid);
+
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatus(Integer regId);
+
 
 
 }

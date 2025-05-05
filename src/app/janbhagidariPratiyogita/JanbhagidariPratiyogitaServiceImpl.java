@@ -278,5 +278,40 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		return dao.getjanbhagidariPratiyogitaActivitiesStatus();
 	}
 
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariNoStatus(Integer stcd, Integer district, Integer projid) {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariNoStatus(stcd, district, projid);
+	}
+
+
+
+
+	@Override
+	public String updateJanbhagidariCompDate(List<Integer> assetid, List<String> compworkval, List<String> completedDate, String createdBy) {
+		return dao.updateJanbhagidariCompDate(assetid, compworkval, completedDate, createdBy);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatusWithProj(String projid) {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPIANoStatusWithProj(projid);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatus(Integer regId) {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPIANoStatus(regId);
+	}
+
 	
 }
