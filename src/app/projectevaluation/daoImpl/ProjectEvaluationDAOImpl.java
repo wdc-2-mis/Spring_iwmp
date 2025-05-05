@@ -134,6 +134,15 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getStateMidProjEvlCropData}")
 	String getStateMidProjEvlCropData;
 	
+	@Value("${getDistMidProjEvlCropData}")
+	String getDistMidProjEvlCropData;
+	
+	@Value("${getStateMidProjEvlWorkData}")
+	String getStateMidProjEvlWorkData;
+	
+	@Value("${getDistMidProjEvlWorkData}")
+	String getDistMidProjEvlWorkData;
+	
 	@Value("${getPreCropDetails}")
 	String getPreCropDetails;
 	
@@ -2276,6 +2285,68 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 				
 			return getStateMidProjEvlCropDetails;
+		}
+		
+		@Override
+		public List<ProjectEvaluationBean> getDistMidProjEvlCropDetails(Integer stcd) {
+			
+			List<ProjectEvaluationBean> getDistMidProjEvlCropDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getDistMidProjEvlCropData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("stcd", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getDistMidProjEvlCropDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getDistMidProjEvlCropDetails;
+		}
+		
+		@Override
+		public List<ProjectEvaluationBean> getStateMidProjEvlWorkDetails() {
+			
+			List<ProjectEvaluationBean> getStateMidProjEvlWorkDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getStateMidProjEvlWorkData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getStateMidProjEvlWorkDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getStateMidProjEvlWorkDetails;
+		}
+		
+		@Override
+		public List<ProjectEvaluationBean> getDistMidProjEvlWorkDetails(Integer stcd) {
+			
+			List<ProjectEvaluationBean> getDistMidProjEvlWorkDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getDistMidProjEvlWorkData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("stcd", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getDistMidProjEvlWorkDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getDistMidProjEvlWorkDetails;
 		}
 
 		@Override

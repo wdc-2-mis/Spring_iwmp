@@ -327,6 +327,21 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public List<ProjectEvaluationBean> getStateMidProjEvlCropDetails() {
 		return PEDAO.getStateMidProjEvlCropDetails();
 	}
+	
+	@Override
+	public List<ProjectEvaluationBean> getDistMidProjEvlCropDetails(Integer stcd) {
+		return PEDAO.getDistMidProjEvlCropDetails(stcd);
+	}
+	
+	@Override
+	public List<ProjectEvaluationBean> getStateMidProjEvlWorkDetails() {
+		return PEDAO.getStateMidProjEvlWorkDetails();
+	}
+	
+	@Override
+	public List<ProjectEvaluationBean> getDistMidProjEvlWorkDetails(Integer stcd) {
+		return PEDAO.getDistMidProjEvlWorkDetails(stcd);
+	}
 
 	@Override
 	public Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData() {

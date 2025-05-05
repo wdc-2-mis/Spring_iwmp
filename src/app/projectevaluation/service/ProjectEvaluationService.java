@@ -150,6 +150,12 @@ public interface ProjectEvaluationService {
 
 	List<ProjectEvaluationBean> getStateMidProjEvlCropDetails();
 	
+	List<ProjectEvaluationBean> getDistMidProjEvlCropDetails(Integer stcd);
+	
+	List<ProjectEvaluationBean> getStateMidProjEvlWorkDetails();
+	
+	List<ProjectEvaluationBean> getDistMidProjEvlWorkDetails(Integer stcd);
+	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
 	List<ProductionDetailsBean> getAverageAnnualIncome();

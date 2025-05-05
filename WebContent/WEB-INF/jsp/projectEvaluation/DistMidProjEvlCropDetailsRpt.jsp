@@ -5,48 +5,58 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<title>Report PE3 - State-wise Mid Term Project Evaluation of Cropped Area Details</title>
+<title>Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</title>
 
 <html>
 <script type="text/javascript">
 
-function downloadPDF(){
-		document.getPEDetails.action="downloadPDFStMidProjEvlCropDetails";
-		document.getPEDetails.method="post";
-		document.getPEDetails.submit();
+function downloadPDF(stcd, stName){
+	document.getElementById("stcd").value=stcd;
+	document.getElementById("stName").value=stName;
+	document.getPEDetails.action="downloadPDFDistMidProjEvlCropDetails";
+	document.getPEDetails.method="post";
+	document.getPEDetails.submit();
 }
 
-function exportExcel(){
-		document.getPEDetails.action="downloadExcelStMidProjEvlCropDetails";
-		document.getPEDetails.method="post";
-		document.getPEDetails.submit();
+function exportExcel(stcd, stName){
+	document.getElementById("stcd").value=stcd;
+	document.getElementById("stName").value=stName;
+	document.getPEDetails.action="downloadExcelDistMidProjEvlCropDetails";
+	document.getPEDetails.method="post";
+	document.getPEDetails.submit();
 }
 
 </script>
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h4 style="text-decoration:underline;">Report PE3 - State-wise Mid Term Project Evaluation of Cropped Area Details</h4>
+        <h4 style="text-decoration:underline;">Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</h4>
     </div>
     <br>
     <div class="container-fluid">
 	
-	<c:if test="${not empty stateMidPrjEvlCrpDetailsList}" >
-		<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-		<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
+	<c:if test="${not empty distMidPrjEvlCrpDetailsList1}" >
+		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>
+		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>
 	</c:if>
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	
 	<div class="row">
 	<div class="col text-center">
     
-        <form action="downloadExcelStMidProjEvlCrpDetails" name="getPEDetails" id="getPEDetails" method="post">
-        
-                <table class="table" id="stMidPECrpData" >
+        <form action="downloadExcelDistMidProjEvlCropDetails" name="getPEDetails" id="getPEDetails" method="post">
+        	
+        	<input type="hidden" name="stcd" id="stcd" value="" />
+			<input type="hidden" name="stName" id="stName" value="" />
+		
+                <table class="table" id="distMidPECrpData" >
                     <thead>
+                    	<tr>
+                    		<th colspan="21">State Name : ${stName}</th>
+                    	</tr>
                         <tr>
                             <th rowspan="3" class="text-center">S.No.</th>
-                            <th rowspan="3" class="text-center">State Name</th>
+                            <th rowspan="3" class="text-center">District Name</th>
                             <th rowspan="3" class="text-center">Project</th>
                             <th colspan="9" class="text-center">Gross Cropped Area (ha.)</th>
                             <th colspan="3" class="text-center">Total Gross Cropped Area (ha.)</th>
@@ -84,12 +94,11 @@ function exportExcel(){
                         	
                         </tr>
                     </thead>
-                      <tbody id="tbodyStMidProjEvolRpt">
-						<c:forEach items="${stateMidPrjEvlCrpDetailsList}" var="dt" varStatus="sno">
+                      <tbody id="tbodyDistMidProjEvolRpt">
+						<c:forEach items="${distMidPrjEvlCrpDetailsList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-<%-- 								<td class="text-left"><c:out value="${dt.st_name}" /></td> --%>
-								<td><a href = "distMidProjEvlCropDetailsRpt?stcd=${dt.st_code}&stName=${dt.st_name}"><c:out value='${dt.st_name}'/></a></td>
+								<td class="text-left"><c:out value="${dt.distname}" /></td>
 								<td class="text-right"><c:out value="${dt.total_project}" /></td> 
 								<td class="text-right"><c:out value="${dt.pre_kharif}" /></td>
 								<td class="text-right"><c:out value="${dt.mid_kharif}" /></td>
@@ -132,7 +141,7 @@ function exportExcel(){
 							<c:set var="totCtlClt" value="${totCtlClt + dt.ctl_clt}" />
 							
 						</c:forEach>
-						<c:if test="${stateMidPrjEvlCrpDetailsListSize>0}">
+						<c:if test="${distMidPrjEvlCrpDetailsListSize>0}">
 							<tr>
 								<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totProj}" /></b></td>
@@ -156,7 +165,7 @@ function exportExcel(){
 								<td align="right" class="table-primary"><b><c:out value="${totCtlClt}" /></b></td>
 							</tr> 
 						</c:if>
-						<c:if test="${stateMidPrjEvlCrpDetailsListSize==0}">
+						<c:if test="${distMidPrjEvlCrpDetailsListSize==0}">
 							<tr>
 								<td align="center" colspan="21" class="required" style="color: red;"><b>Data Not Found</b></td>
 							</tr>

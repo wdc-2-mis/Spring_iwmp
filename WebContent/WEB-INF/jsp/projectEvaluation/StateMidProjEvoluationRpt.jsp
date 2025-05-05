@@ -23,6 +23,12 @@ function exportExcel(){
 }
 
 </script>
+<head>
+<%
+    response.setHeader("Cache-Control", "public, max-age=600");
+    response.setHeader("Pragma", "public");
+%>
+</head>
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">

@@ -135,6 +135,9 @@ public class PEReportController {
 	@RequestMapping(value = "/stateMidProjEvoluationRpt", method = RequestMethod.GET)
 	public ModelAndView stateMidProjEvoluationRpt(HttpServletRequest request, HttpServletResponse response) {
 		
+		request.getSession().removeAttribute("stcd");
+	    request.getSession().removeAttribute("stName");
+
 		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
 		
 		ModelAndView mav = new ModelAndView("projectEvaluation/StateMidProjEvoluationRpt");
@@ -144,6 +147,8 @@ public class PEReportController {
 		mav.addObject("stateMidPrjEvlList",list);
 		mav.addObject("stateMidPrjEvlListSize",list.size());
 		
+		response.setHeader("Cache-Control", "public, max-age=600");
+
 		return mav;
 	}
 	
@@ -178,6 +183,61 @@ public class PEReportController {
 		
 		mav.addObject("stateMidPrjEvlCrpDetailsList",list);
 		mav.addObject("stateMidPrjEvlCrpDetailsListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/distMidProjEvlCropDetailsRpt", method = RequestMethod.GET)
+	public ModelAndView distMidProjEvlCropDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		ModelAndView mav = new ModelAndView("projectEvaluation/DistMidProjEvlCropDetailsRpt");
+		
+		list = PEService.getDistMidProjEvlCropDetails(Integer.parseInt(stcd));
+		
+		mav.addObject("stcd",stcd);
+		mav.addObject("stName",stName);
+		mav.addObject("distMidPrjEvlCrpDetailsList",list);
+		mav.addObject("distMidPrjEvlCrpDetailsListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/stateMidProjEvlWorkDetailsRpt", method = RequestMethod.GET)
+	public ModelAndView stateMidProjEvlWorkDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		ModelAndView mav = new ModelAndView("projectEvaluation/StateMidProjEvlWorkDetailsRpt");
+		
+		list = PEService.getStateMidProjEvlWorkDetails();
+		
+		mav.addObject("stateMidPrjEvlWrkDetailsList",list);
+		mav.addObject("stateMidPrjEvlWrkDetailsListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/distMidProjEvlWorkDetailsRpt", method = RequestMethod.GET)
+	public ModelAndView distMidProjEvlWorkDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		ModelAndView mav = new ModelAndView("projectEvaluation/DistMidProjEvlWorkDetailsRpt");
+		
+		list = PEService.getDistMidProjEvlWorkDetails(Integer.parseInt(stcd));
+		
+		mav.addObject("stcd",stcd);
+		mav.addObject("stName",stName);
+		mav.addObject("distMidPrjEvlWrkDetailsList",list);
+		mav.addObject("distMidPrjEvlWrkDetailsListSize",list.size());
 		
 		return mav;
 	}
@@ -944,11 +1004,11 @@ public class PEReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details");
+		Sheet sheet = workbook.createSheet("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Area Details");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details";
+		String rptName = "Report PE3 - State-wise Mid Term Project Evaluation of Cropped Area Details";
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -994,6 +1054,7 @@ public class PEReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,7,20,20);
 		sheet.addMergedRegion(mergedRegion);
+		
 		
 		
 		Row rowhead = sheet.createRow(5);
@@ -1061,6 +1122,7 @@ public class PEReportController {
 		}
 		
 		
+		
 		Row rowhead1 = sheet.createRow(6);
 		
 		for(int i=0;i<3;i++)
@@ -1102,60 +1164,25 @@ public class PEReportController {
 			cell.setCellStyle(style);
 		}
 		
-		cell = rowhead1.createCell(12);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead1.createCell(13);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		String[] headers = {
+		        "Pre Project Status (Aggregate)",
+		        "Mid Project Status (Aggregate)",
+		        "Controlled Area"
+		    };
 		
-		cell = rowhead1.createCell(14);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead1.createCell(15);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead1.createCell(16);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead1.createCell(17);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead1.createCell(18);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead1.createCell(19);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead1.createCell(20);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
+		for (int i = 0; i < 3; i++) {											// Repetition times(group)
+	        for (int j = 0; j < headers.length; j++) {							// values
+	            cell = rowhead1.createCell(12 + (i * headers.length) + j);		// = start index + repetition * header length + repeat values
+	            cell.setCellValue(headers[j]);
+	            cell.setCellStyle(style);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+	        }
+	    }
+
+
 		
 		Row rowhead2 = sheet.createRow(7);
 		
@@ -1165,56 +1192,23 @@ public class PEReportController {
 			cell.setCellStyle(style);
 		}
 		
-		cell = rowhead2.createCell(3);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead2.createCell(4);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(5);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(6);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(7);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(8);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(9);
-		cell.setCellValue("Pre Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(10);
-		cell.setCellValue("Mid Project Status (Aggregate)");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		
-		cell = rowhead2.createCell(11);
-		cell.setCellValue("Controlled Area");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		for (int i = 0; i < 3; i++) {											// Repetition times(group)
+	        for (int j = 0; j < headers.length; j++) {							// values
+	            cell = rowhead2.createCell(3 + (i * headers.length) + j);		// = start index + repetition * header length + repeat values
+	            cell.setCellValue(headers[j]);
+	            cell.setCellStyle(style);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+	        }
+	    }
+
 		
 		for(int i=12;i<21;i++)
 		{
 			cell =rowhead2.createCell(i);
 			cell.setCellStyle(style);
 		}
+		
 		
 		
 		Row rowhead3 = sheet.createRow(8);
@@ -1386,8 +1380,8 @@ public class PEReportController {
 	    return "projectEvaluation/StateMidProjEvlCropDetailsRpt";
 	}
 	
-	@RequestMapping(value = "/downloadPDFStMidProjCropDetails", method = RequestMethod.POST)
-	public ModelAndView downloadPDFStMidProjCropDetails(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/downloadPDFStMidProjEvlCropDetails", method = RequestMethod.POST)
+	public ModelAndView downloadPDFStMidProjEvlCropDetails(HttpServletRequest request, HttpServletResponse response)
 	{
 		
 		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
@@ -1416,7 +1410,7 @@ public class PEReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Details", f3);
+			paragraph3 = new Paragraph("Report PE3 - State-wise Mid Term Project Evaluation of Cropped Area Details", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -1443,25 +1437,18 @@ public class PEReportController {
 			CommonFunctions.insertCellHeader(table, "Kharif Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Rabi Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Third Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			for (int i = 1; i <= 3; i++) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			}
+			
+			for (int i = 1; i <= 3; i++) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
 			
 			
 			for (int i = 1; i <= 21; i++) {
@@ -1578,6 +1565,1306 @@ public class PEReportController {
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 		response.setHeader("Content-Disposition", "attachment;filename=Report PE3- State.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelDistMidProjEvlCropDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelDistMidProjEvlCropDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getDistMidProjEvlCropDetails(Integer.parseInt(stcd));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 20, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+10,list.size()+10,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,20);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,11);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,12,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,15,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,18,20);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,6,8);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,9,11);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,12,12);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,13,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,14,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,15,15);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,16,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,17,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,18,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,19,19);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,20,20);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<21;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Project");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Gross Cropped Area (ha.)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<12;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(12);
+		cell.setCellValue("Total Gross Cropped Area (ha.)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=13;i<15;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Area under Plantation Cover (ha.)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=16;i<18;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(18);
+		cell.setCellValue("Area of Culturable Wasteland (ha.)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=19;i<21;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(3);
+		cell.setCellValue("Kharif Crop");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("Rabi Crop");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=7;i<9;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(9);
+		cell.setCellValue("Third Crop");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=10;i<12;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		String[] headers = {
+		        "Pre Project Status (Aggregate)",
+		        "Mid Project Status (Aggregate)",
+		        "Controlled Area"
+		    };
+		
+		for (int i = 0; i < 3; i++) {											// Repetition times(group)
+	        for (int j = 0; j < headers.length; j++) {							// values
+	            cell = rowhead1.createCell(12 + (i * headers.length) + j);		// = start index + repetition * header length + repeat values
+	            cell.setCellValue(headers[j]);
+	            cell.setCellStyle(style);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+	        }
+	    }
+		
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		for (int i = 0; i < 3; i++) {											// Repetition times(group)
+	        for (int j = 0; j < headers.length; j++) {							// values
+	            cell = rowhead2.createCell(3 + (i * headers.length) + j);		// = start index + repetition * header length + repeat values
+	            cell.setCellValue(headers[j]);
+	            cell.setCellStyle(style);
+	            CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+	        }
+	    }
+		
+		
+		
+		for(int i=12;i<21;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead3 = sheet.createRow(9);
+		
+		for(int i=0;i<21;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 10;
+		int totProj = 0;
+		BigDecimal totPreKharif = BigDecimal.ZERO;
+		BigDecimal totMidKharif = BigDecimal.ZERO;
+		BigDecimal totCtlKharif = BigDecimal.ZERO;
+		BigDecimal totPreRabi = BigDecimal.ZERO;
+		BigDecimal totMidRabi = BigDecimal.ZERO;
+		BigDecimal totCtlRabi = BigDecimal.ZERO;
+		BigDecimal totPreThrdCrp = BigDecimal.ZERO;
+		BigDecimal totMidThrdCrp = BigDecimal.ZERO;
+		BigDecimal totCtlThrdCrp = BigDecimal.ZERO;
+		BigDecimal totPreTotal = BigDecimal.ZERO;
+		BigDecimal totMidTotal = BigDecimal.ZERO;
+		BigDecimal totCtlTotal = BigDecimal.ZERO;
+		BigDecimal totPrePlt = BigDecimal.ZERO;
+		BigDecimal totMidPlt = BigDecimal.ZERO;
+		BigDecimal totCtlPlt = BigDecimal.ZERO;
+		BigDecimal totPreClt = BigDecimal.ZERO;
+		BigDecimal totMidClt = BigDecimal.ZERO;
+		BigDecimal totCtlClt = BigDecimal.ZERO;
+		
+		
+	    for(ProjectEvaluationBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getDistname());
+	    	row.createCell(2).setCellValue(bean.getTotal_project());
+	    	row.createCell(3).setCellValue(bean.getPre_kharif().doubleValue());
+	    	row.createCell(4).setCellValue(bean.getMid_kharif().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getCtl_kharif().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getPre_rabi().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getMid_rabi().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getCtl_rabi().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getPre_thrdcrp().doubleValue());
+	    	row.createCell(10).setCellValue(bean.getMid_thrdcrp().doubleValue());
+	    	row.createCell(11).setCellValue(bean.getCtl_thrdcrp().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getPre_total().doubleValue());
+	    	row.createCell(13).setCellValue(bean.getMid_total().doubleValue());
+	    	row.createCell(14).setCellValue(bean.getCtl_total().doubleValue());
+	    	row.createCell(15).setCellValue(bean.getPre_plt().doubleValue());
+	    	row.createCell(16).setCellValue(bean.getMid_plt().doubleValue());
+	    	row.createCell(17).setCellValue(bean.getCtl_plt().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getPre_clt().doubleValue());
+	    	row.createCell(19).setCellValue(bean.getMid_clt().doubleValue());
+	    	row.createCell(20).setCellValue(bean.getCtl_clt().doubleValue());
+	    	
+	    	totProj = totProj + bean.getTotal_project();
+	    	totPreKharif = totPreKharif.add(bean.getPre_kharif());
+	    	totMidKharif = totMidKharif.add(bean.getMid_kharif());
+			totCtlKharif = totCtlKharif.add(bean.getCtl_kharif());
+			totPreRabi = totPreRabi.add(bean.getPre_rabi());
+			totMidRabi = totMidRabi.add(bean.getMid_rabi());
+			totCtlRabi = totCtlRabi.add(bean.getCtl_rabi());
+			totPreThrdCrp = totPreThrdCrp.add(bean.getPre_thrdcrp());
+			totMidThrdCrp = totMidThrdCrp.add(bean.getMid_thrdcrp());
+			totCtlThrdCrp = totCtlThrdCrp.add(bean.getCtl_thrdcrp());
+			totPreTotal = totPreTotal.add(bean.getPre_total());
+			totMidTotal = totMidTotal.add(bean.getMid_total());
+			totCtlTotal = totCtlTotal.add(bean.getCtl_total());
+			totPrePlt = totPrePlt.add(bean.getPre_plt());
+			totMidPlt = totMidPlt.add(bean.getMid_plt());
+			totCtlPlt = totCtlPlt.add(bean.getCtl_plt());
+			totPreClt = totPreClt.add(bean.getPre_clt());
+			totMidClt = totMidClt.add(bean.getMid_clt());
+			totCtlClt = totCtlClt.add(bean.getCtl_clt());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+10);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totProj);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totPreKharif.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totMidKharif.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totCtlKharif.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totPreRabi.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totMidRabi.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(totCtlRabi.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totPreThrdCrp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totMidThrdCrp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totCtlThrdCrp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totPreTotal.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totMidTotal.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(totCtlTotal.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(totPrePlt.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(totMidPlt.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue(totCtlPlt.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(18);
+		cell.setCellValue(totPreClt.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(19);
+		cell.setCellValue(totMidClt.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(20);
+		cell.setCellValue(totCtlClt.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 20);
+	    String fileName = "attachment; filename=Report PE3- Dist.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "projectEvaluation/DistMidProjEvlCropDetailsRpt";
+	}
+	
+	@RequestMapping(value = "/downloadPDFDistMidProjEvlCropDetails", method = RequestMethod.POST)
+	public ModelAndView downloadPDFDistMidProjEvlCropDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getDistMidProjEvlCropDetails(Integer.parseInt(stcd));
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("MidTermProjEvlCrpReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(21);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(5);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName, Element.ALIGN_LEFT, 21, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Gross Cropped Area (ha.)", Element.ALIGN_CENTER, 9, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Gross Cropped Area (ha.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Area under Plantation Cover (ha.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Area of Culturable Wasteland (ha.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Kharif Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Rabi Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Third Crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			
+			for (int i = 1; i <= 3; i++) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			}
+			
+			for (int i = 1; i <= 3; i++) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Mid Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			for (int i = 1; i <= 21; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+		    
+			
+			int k = 1;
+			int totProj = 0;
+			BigDecimal totPreKharif = BigDecimal.ZERO;
+			BigDecimal totMidKharif = BigDecimal.ZERO;
+			BigDecimal totCtlKharif = BigDecimal.ZERO;
+			BigDecimal totPreRabi = BigDecimal.ZERO;
+			BigDecimal totMidRabi = BigDecimal.ZERO;
+			BigDecimal totCtlRabi = BigDecimal.ZERO;
+			BigDecimal totPreThrdCrp = BigDecimal.ZERO;
+			BigDecimal totMidThrdCrp = BigDecimal.ZERO;
+			BigDecimal totCtlThrdCrp = BigDecimal.ZERO;
+			BigDecimal totPreTotal = BigDecimal.ZERO;
+			BigDecimal totMidTotal = BigDecimal.ZERO;
+			BigDecimal totCtlTotal = BigDecimal.ZERO;
+			BigDecimal totPrePlt = BigDecimal.ZERO;
+			BigDecimal totMidPlt = BigDecimal.ZERO;
+			BigDecimal totCtlPlt = BigDecimal.ZERO;
+			BigDecimal totPreClt = BigDecimal.ZERO;
+			BigDecimal totMidClt = BigDecimal.ZERO;
+			BigDecimal totCtlClt = BigDecimal.ZERO;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_kharif()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_kharif()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_kharif()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_rabi()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_thrdcrp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_total()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_total()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_total()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_plt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_plt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_plt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getPre_clt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMid_clt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCtl_clt()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					totProj = totProj + list.get(i).getTotal_project();
+					totPreKharif = totPreKharif.add(list.get(i).getPre_kharif());
+					totMidKharif = totMidKharif.add(list.get(i).getMid_kharif());
+					totCtlKharif = totCtlKharif.add(list.get(i).getCtl_kharif());
+					totPreRabi = totPreRabi.add(list.get(i).getPre_rabi());
+					totMidRabi = totMidRabi.add(list.get(i).getMid_rabi());
+					totCtlRabi = totCtlRabi.add(list.get(i).getCtl_rabi());
+					totPreThrdCrp = totPreThrdCrp.add(list.get(i).getPre_thrdcrp());
+					totMidThrdCrp = totMidThrdCrp.add(list.get(i).getMid_thrdcrp());
+					totCtlThrdCrp = totCtlThrdCrp.add(list.get(i).getCtl_thrdcrp());
+					totPreTotal = totPreTotal.add(list.get(i).getPre_total());
+					totMidTotal = totMidTotal.add(list.get(i).getMid_total());
+					totCtlTotal = totCtlTotal.add(list.get(i).getCtl_total());
+					totPrePlt = totPrePlt.add(list.get(i).getPre_plt());
+					totMidPlt = totMidPlt.add(list.get(i).getMid_plt());
+					totCtlPlt = totCtlPlt.add(list.get(i).getCtl_plt());
+					totPreClt = totPreClt.add(list.get(i).getPre_clt());
+					totMidClt = totMidClt.add(list.get(i).getMid_clt());
+					totCtlClt = totCtlClt.add(list.get(i).getCtl_clt());
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totProj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPreKharif), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidKharif), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlKharif), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPreRabi), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidRabi), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlRabi), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPreThrdCrp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidThrdCrp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlThrdCrp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPreTotal), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidTotal), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlTotal), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPrePlt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidPlt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlPlt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPreClt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totMidClt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCtlClt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 21, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE3- District.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelStMidProjEvlWorkDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelStMidProjEvlWorkDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getStateMidProjEvlWorkDetails();
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 7, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,6,6);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,7,7);
+		sheet.addMergedRegion(mergedRegion);
+		
+		Row rowhead = sheet.createRow(5);
+		
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("State Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Total Projects");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Total Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Total Area of Shape Files");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(7);
+		cell.setCellValue("Total No. of Geotagged Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(6);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(3);
+		cell.setCellValue("Created");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Ongoing");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("Completed");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=6;i<8;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(7);
+		
+		for(int i=0;i<8;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 8;
+		int totProj = 0;
+		int totCreated = 0;
+		int totOngoing = 0;
+		int totCompleted = 0;
+		BigDecimal totShape = BigDecimal.ZERO;
+		int totGeotag = 0;
+		
+		
+	    for(ProjectEvaluationBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getSt_name());
+	    	row.createCell(2).setCellValue(bean.getTotal_project());
+	    	row.createCell(3).setCellValue(bean.getCreated_work());
+	    	row.createCell(4).setCellValue(bean.getOngoing_work());
+	    	row.createCell(5).setCellValue(bean.getCompleted_work());
+	    	row.createCell(6).setCellValue(bean.getShape_file_area().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getGeo_tagg_work());
+	    	
+	    	totProj = totProj + bean.getTotal_project();
+	    	totCreated = totCreated + bean.getCreated_work();
+	    	totOngoing = totOngoing + bean.getOngoing_work();
+	    	totCompleted = totCompleted + bean.getCompleted_work();
+	    	totShape = totShape.add(bean.getShape_file_area());
+	    	totGeotag = totGeotag + bean.getGeo_tagg_work();
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+8);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totProj);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totCreated);
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totOngoing);
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totCompleted);
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totShape.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totGeotag);
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+	    String fileName = "attachment; filename=Report PE9- State.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "projectEvaluation/StateMidProjEvlWorkDetailsRpt";
+	}
+	
+	@RequestMapping(value = "/downloadPDFStMidProjEvlWorkDetails", method = RequestMethod.POST)
+	public ModelAndView downloadPDFStMidProjEvlWorkDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getStateMidProjEvlWorkDetails();
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("MidTermProjEvlReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(8);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(60);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(3);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Works", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Area of Shape Files", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Geotagged Works", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			
+			CommonFunctions.insertCellHeader(table, "Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Ongoing", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Completed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+		    
+			for (int i = 1; i <= 8; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			int totProj = 0;
+			int totCreated = 0;
+			int totOngoing = 0;
+			int totCompleted = 0;
+			BigDecimal totShape = BigDecimal.ZERO;
+			int totGeotag = 0;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCreated_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getOngoing_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCompleted_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getShape_file_area()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGeo_tagg_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					
+					totProj = totProj + list.get(i).getTotal_project();
+					totCreated = totCreated + list.get(i).getCreated_work();
+			    	totOngoing = totOngoing + list.get(i).getOngoing_work();
+			    	totCompleted = totCompleted + list.get(i).getCompleted_work();
+			    	totShape = totShape.add(list.get(i).getShape_file_area());
+			    	totGeotag = totGeotag + list.get(i).getGeo_tagg_work();
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totProj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCreated), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totOngoing), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCompleted), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totShape), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGeotag), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE9- State.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelDistMidProjEvlWorkDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelDistMidProjEvlWorkDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getDistMidProjEvlWorkDetails(Integer.parseInt(stcd));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 7, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,6,6);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,7,7);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<8;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Total Projects");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Total Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Total Area of Shape Files");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(7);
+		cell.setCellValue("Total No. of Geotagged Works");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(3);
+		cell.setCellValue("Created");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Ongoing");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("Completed");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=6;i<8;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<8;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 9;
+		int totProj = 0;
+		int totCreated = 0;
+		int totOngoing = 0;
+		int totCompleted = 0;
+		BigDecimal totShape = BigDecimal.ZERO;
+		int totGeotag = 0;
+		
+		
+	    for(ProjectEvaluationBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getDistname());
+	    	row.createCell(2).setCellValue(bean.getTotal_project());
+	    	row.createCell(3).setCellValue(bean.getCreated_work());
+	    	row.createCell(4).setCellValue(bean.getOngoing_work());
+	    	row.createCell(5).setCellValue(bean.getCompleted_work());
+	    	row.createCell(6).setCellValue(bean.getShape_file_area().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getGeo_tagg_work());
+	    	
+	    	totProj = totProj + bean.getTotal_project();
+	    	totCreated = totCreated + bean.getCreated_work();
+	    	totOngoing = totOngoing + bean.getOngoing_work();
+	    	totCompleted = totCompleted + bean.getCompleted_work();
+	    	totShape = totShape.add(bean.getShape_file_area());
+	    	totGeotag = totGeotag + bean.getGeo_tagg_work();
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totProj);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totCreated);
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totOngoing);
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totCompleted);
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totShape.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totGeotag);
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+	    String fileName = "attachment; filename=Report PE9- District.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "projectEvaluation/DistMidProjEvlWorkDetailsRpt";
+	}
+	
+	@RequestMapping(value = "/downloadPDFDistMidProjEvlWorkDetails", method = RequestMethod.POST)
+	public ModelAndView downloadPDFDistMidProjEvlWorkDetails(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getDistMidProjEvlWorkDetails(Integer.parseInt(stcd));
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("MidTermProjEvlReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(8);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(60);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName, Element.ALIGN_LEFT, 8, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Works", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Area of Shape Files", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Geotagged Works", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			
+			CommonFunctions.insertCellHeader(table, "Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Ongoing", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Completed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+		    
+			for (int i = 1; i <= 8; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			int totProj = 0;
+			int totCreated = 0;
+			int totOngoing = 0;
+			int totCompleted = 0;
+			BigDecimal totShape = BigDecimal.ZERO;
+			int totGeotag = 0;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_project()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCreated_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getOngoing_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCompleted_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getShape_file_area()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGeo_tagg_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					
+					totProj = totProj + list.get(i).getTotal_project();
+					totCreated = totCreated + list.get(i).getCreated_work();
+			    	totOngoing = totOngoing + list.get(i).getOngoing_work();
+			    	totCompleted = totCompleted + list.get(i).getCompleted_work();
+			    	totShape = totShape.add(list.get(i).getShape_file_area());
+			    	totGeotag = totGeotag + list.get(i).getGeo_tagg_work();
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totProj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCreated), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totOngoing), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCompleted), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totShape), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGeotag), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE9- District.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
