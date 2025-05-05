@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
@@ -148,4 +149,8 @@ public interface ProjectEvaluationDAO {
 	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
+	List<ProductionDetailsBean> getAverageAnnualIncome();
+	
+	List<ProductionDetailsBean> getCommunityBasedData();
 }
+ 

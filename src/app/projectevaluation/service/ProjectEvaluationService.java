@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.model.WdcpmksyCroppedDetails1;
 import app.projectevaluation.model.WdcpmksyCroppedDetails2;
@@ -150,5 +151,9 @@ public interface ProjectEvaluationService {
 	List<ProjectEvaluationBean> getStateMidProjEvlCropDetails();
 	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
+	
+	List<ProductionDetailsBean> getAverageAnnualIncome();
+	
+	List<ProductionDetailsBean> getCommunityBasedData();
 	
 }

@@ -33,6 +33,7 @@ import app.model.IwmpMProject;
 import app.model.outcome.FpoMain;
 import app.model.project.WdcpmksyBaselineupdateAchievementDetail;
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.dao.ProjectEvaluationDAO;
 
@@ -141,6 +142,12 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	
 	@Value("${getControlCropDetails}")
 	String getControlCropDetails;
+	
+	@Value("${getAverageAnnualIncome}")
+	String getAverageAnnualIncome;
+	
+	@Value("${getCommunityBasedData}")
+	String getCommunityBasedData;
 	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
@@ -2305,6 +2312,48 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				session.getTransaction().rollback();
 			}
 			return map;
+		}
+
+		@Override
+		public List<ProductionDetailsBean> getAverageAnnualIncome() {
+			List<ProductionDetailsBean> list = new ArrayList<>();
+			String hql = getAverageAnnualIncome;
+			Session session = sessionFactory.getCurrentSession();
+			
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
+				list = query.list();
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			
+			return list;
+		}
+
+		@Override
+		public List<ProductionDetailsBean> getCommunityBasedData() {
+			List<ProductionDetailsBean> list = new ArrayList<>();
+			String hql = getCommunityBasedData;
+			Session session = sessionFactory.getCurrentSession();
+			
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
+				list = query.list();
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			
+			return list;
 		}
 
 }

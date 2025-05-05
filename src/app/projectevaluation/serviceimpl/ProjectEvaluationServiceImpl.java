@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.dao.ProjectEvaluationDAO;
 
@@ -331,6 +332,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData() {
 		// TODO Auto-generated method stub
 		return PEDAO.getCroppedDetailsReportData();
+	}
+
+	@Override
+	public List<ProductionDetailsBean> getAverageAnnualIncome() {
+		// TODO Auto-generated method stub
+		return PEDAO.getAverageAnnualIncome();
+	}
+
+	@Override
+	public List<ProductionDetailsBean> getCommunityBasedData() {
+		// TODO Auto-generated method stub
+		return PEDAO.getCommunityBasedData();
 	}
 	
 	

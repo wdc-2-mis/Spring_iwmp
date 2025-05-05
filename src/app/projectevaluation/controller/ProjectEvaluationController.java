@@ -57,6 +57,7 @@ import app.bean.ProfileBean;
 import app.common.CommonFunctions;
 import app.projectevaluation.service.ProjectEvaluationService;
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.service.DistrictMasterService;
 import app.service.PhysicalActionPlanService;
@@ -5654,6 +5655,34 @@ public class ProjectEvaluationController {
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
 		return "reports/croppedDetailsReport";
+		
+	}
+	
+	@RequestMapping(value="/getAverageAnnualIncome", method = RequestMethod.GET)
+	public ModelAndView getAverageAnnualIncome(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("reports/avrgAnnualIncmOfFpoShgRpt");
+		List<ProductionDetailsBean> list = PEService.getAverageAnnualIncome();
+
+		mav.addObject("list",list);
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value="/getCommunityBasedData", method = RequestMethod.GET)
+	public ModelAndView getCommunityBasedData(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("reports/communityBasedShgFpoUgDataRpt");
+		List<ProductionDetailsBean> list = PEService.getCommunityBasedData();
+
+		mav.addObject("list",list);
+		
+		return mav;
 		
 	}
 	
