@@ -1,4 +1,4 @@
-$('#district').on('change', function(e) {
+/*$('#district').on('change', function(e) {
 		e.preventDefault();
 		
 		$dCode=$('#district option:selected').val();
@@ -45,7 +45,7 @@ $('#district').on('change', function(e) {
         $('#project').css('border', '4px solid green');  
     }
 	
-	});
+	});*/
 			
 $(document).ready(function() {
     $('#view').on('click', function(e) {
@@ -99,5 +99,51 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $("#project").change(function() {
+        var selectedProject = $(this).val();
+        alert(selectedProject);
+         if (selectedProject) {
+			 $.ajax({
+                url: "checkProjIdExists",  // URL mapped to Spring Controller
+                type: "POST",
+                data: { projectId: selectedProject },
+                success: function(response) {
+                    if (response.exists) { 
+						var baseUrl = "";
+						if (response.status === "D") {
+                            baseUrl = "getProjectProfile";
+                        } else if (response.status === "C") {
+                            baseUrl = "getfinalProjectProfile";
+                        } else {
+                            return; // Do nothing if status is not D or C
+                        }
+                        
+                        var url = baseUrl
+                                + "projId=" + response.projId
+                                + "&distCode=" + response.distCode
+                                + "&distName=" + encodeURIComponent(response.distName)
+                                + "&projName=" + encodeURIComponent(response.projName)
+                                + "&finYearCode=" + response.finYearCode
+                                + "&finYearDesc=" + encodeURIComponent(response.finYearDesc)
+                                + "&monthId=" + response.monthId
+                                + "&monthName=" + encodeURIComponent(response.monthName);
+                        
+                        window.location.href = url;
+                    }
+                },
+                error: function() {
+                    console.log("Error checking project existence.");
+                }
+            });
+        }
+    });
+
+    
 });
+
+
+
+
+
 		
