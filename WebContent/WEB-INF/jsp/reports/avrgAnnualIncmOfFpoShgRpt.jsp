@@ -108,7 +108,7 @@ function exportExcel(){
 			<c:forEach items="${list}" var="list" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
-					<td>${list.stname}</td>
+					<td><a href="getDistwiseAverageAnnualIncome?stcode=${list.stcode}&&stname=${list.stname}">${list.stname}</a></td>
 					<td>${list.totproj}</td>
 					<td>${list.prefpoturnover}</td>
 					<td>${list.midfpoturnover}</td>

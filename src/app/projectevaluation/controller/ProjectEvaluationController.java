@@ -5686,5 +5686,41 @@ public class ProjectEvaluationController {
 		
 	}
 	
+	@RequestMapping(value = "/getDistwiseAverageAnnualIncome", method = RequestMethod.GET)
+	public String getDistwiseAverageAnnualIncome(HttpServletRequest request, Model model) {
+		session = request.getSession(true);
+		
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =PEService.getDistwiseAverageAnnualIncome(stCode);
+		
+		model.addAttribute("distList", list);
+		model.addAttribute("stname", state);
+		model.addAttribute("stcode", stCode);
+		
+		return "reports/avrgAnnualIncmOfFpoShgRpt";
+		
+	}
+	
+	@RequestMapping(value = "/getDistwiseCommunityBasedData", method = RequestMethod.GET)
+	public String getDistwiseCommunityBasedData(HttpServletRequest request, Model model) {
+		session = request.getSession(true);
+		
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =PEService.getDistwiseCommunityBasedData(stCode);
+		
+		model.addAttribute("distList", list);
+		model.addAttribute("stname", state);
+		model.addAttribute("stcode", stCode);
+		
+		return "reports/communityBasedShgFpoUgDataRpt";
+		
+	}
+	
 }
 
