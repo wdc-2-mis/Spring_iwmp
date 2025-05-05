@@ -25,16 +25,38 @@
 <link rel="stylesheet" href="resources/css/font/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js"></script>
 <title>DOLR DashBoard</title>
 <script>
  $(document).ready(function(){
 	 $('#loading').hide();
  });
  </script>
+ 
+ <style type="text/css">\
+ #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .MultiCarousel {
+            position: relative;
+        }
+     .modal-dialog {
+    max-height: 90vh;
+    overflow-y: auto;
+}   
+ 
+ </style>
 </head>
 <body>
 
 	<section class="orange-fade p-5 margin-top-xl pos-r">
+	<input type="hidden" id="data" />
 		<!--  <div class="container"> -->
 		<div class="row">
 			<div class="col-sm-12">
@@ -57,7 +79,7 @@
 								</div>
 
 								<div class="message text-center text-gray">Area Covered with Soil and Moisture conservation activities</div>
-								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="" class="soilmoisture" name="soilmoisture" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="soilmoisture" id="soilmoisture" value="${area_soilmoisture_activities_achie}" /><c:out	value="${area_soilmoisture_activities_achie}"></c:out></a></p></div>
+								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="javascript:void(0);" class="soilmoisture" name="soilmoisture"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="soilmoisture" id="soilmoisture" value="${area_soilmoisture_activities_achie}" /><c:out	value="${area_soilmoisture_activities_achie}"></c:out></a></p></div>
              
 							</div>
 						</div>
@@ -85,7 +107,7 @@
 								</div>
 
 								<div class="message text-center text-gray">Area brought under Plantation (Horticulture and Afforestation)</div>
-								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="" class="afforestation" name="afforestation" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="afforestation" id="afforestation" value="${area_afforestation_horticulture_achie}" /><c:out	value="${area_afforestation_horticulture_achie}"></c:out></a></p></div>
+								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="javascript:void(0);" class="afforestation" name="afforestation"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="afforestation" id="afforestation" value="${area_afforestation_horticulture_achie}" /><c:out	value="${area_afforestation_horticulture_achie}"></c:out></a></p></div>
 
 							</div>
 						</div>
@@ -99,7 +121,7 @@
 								<div class="message text-center text-gray">Water Harvesting Structure newly created and rejuvenated
 									<input type="hidden" id="id" value="whsrenovate">
 									</div>
-								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="" class="waterreno" name="waterreno" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="waterreno" id="waterreno" value="${water_created_renovated_achie}" /><c:out value="${water_created_renovated_achie}" /></a></p></div>
+								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="javascript:void(0);" class="waterreno" name="waterreno"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="waterreno" id="waterreno" value="${water_created_renovated_achie}" /><c:out value="${water_created_renovated_achie}" /></a></p></div>
 
 
 
@@ -115,7 +137,7 @@
 
 								<div class="message text-center text-gray">
 									Employment Generated (in mandays)
-									<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="" class="mandays" name="mandays" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="mandays" id="mandays" value="${man_days_gen}" /><c:out	value="${man_days_gen}"></c:out></a> </p></div>
+									<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="javascript:void(0);" class="mandays" name="mandays"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="mandays" id="mandays" value="${man_days_gen}" /><c:out	value="${man_days_gen}"></c:out></a> </p></div>
 									
 								</div>
 							</div>
@@ -131,7 +153,7 @@
 								<div class="message text-center text-gray"
 									class="img-responsive">
 									Farmers Benefitted (in No.)
-									<div class="separator"><p style="font-size:.8vw;margin-bottom:0;" id="afforestation"><a href="" class="farmerbenef" name="farmerbenef" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="farmerbenef" id="farmerbenef" value="${farmer_benefitted_achie}" /><c:out	value="${farmer_benefitted_achie}"></c:out> </a><%-- <input type="hidden" id="afforestationhidden"  value="${afforestation}" /> --%>  </p></div>
+									<div class="separator"><p style="font-size:.8vw;margin-bottom:0;" id="afforestation"><a href="javascript:void(0);" class="farmerbenef" name="farmerbenef"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="farmerbenef" id="farmerbenef" value="${farmer_benefitted_achie}" /><c:out	value="${farmer_benefitted_achie}"></c:out> </a><%-- <input type="hidden" id="afforestationhidden"  value="${afforestation}" /> --%>  </p></div>
 									
 								</div>
 							</div>
@@ -147,7 +169,7 @@
 								<div class="message text-center text-gray">Area of Degraded Land covered and Rainfed area developed</a>
 									<input type="hidden" id="id" value="whsnew">
 									</div>
-								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="" class="degradedr" name="degradedr" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="degradedr" id="degradedr" value="${degraded_rainfed}" /><c:out	value="${degraded_rainfed}"></c:out></a></p></div>
+								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;"><a href="javascript:void(0);" class="degradedr" name="degradedr"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="degradedr" id="degradedr" value="${degraded_rainfed}" /><c:out	value="${degraded_rainfed}"></c:out></a></p></div>
 
 							</div>
 						</div>
@@ -173,7 +195,7 @@
 								</div>
 
 								<div class="message text-center text-gray">Additional Area brought under Protective Irrigation</div>
-								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="" class="protectiveirr" name="protectiveirr" data-toggle="modal" onclick="showdata(this.name);"><input type="hidden" name="protectiveirr" id="protectiveirr" value="${protective_irrigation_achie}" /><c:out	value="${protective_irrigation_achie}"></c:out></a> </p></div>
+								<div class="separator"><p style="font-size:.8vw;margin-bottom:0;">	<a href="javascript:void(0);" class="protectiveirr" name="protectiveirr"  onclick="$('#data').val(this.name); showdata(this.name);"><input type="hidden" name="protectiveirr" id="protectiveirr" value="${protective_irrigation_achie}" /><c:out	value="${protective_irrigation_achie}"></c:out></a> </p></div>
 
 							</div>
 						</div>
