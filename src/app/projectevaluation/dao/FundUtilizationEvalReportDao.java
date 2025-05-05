@@ -12,4 +12,9 @@ public interface FundUtilizationEvalReportDao {
 	
 	List<FundUtilizationEvalReportBean> getMandaysDetailsReport();
 
+	List<FundUtilizationEvalReportBean> getProdDetailsReport();
+	
+	List<FundUtilizationEvalReportBean> getDistProdDetailsReport(Integer stcd);
+	
+	List<FundUtilizationEvalReportBean> getDistMandaysDetailsReport(Integer stcd);
 }

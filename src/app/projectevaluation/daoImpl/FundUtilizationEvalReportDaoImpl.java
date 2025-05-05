@@ -31,6 +31,15 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	
 	@Value("${getMandaysDetailsReport}")
 	String getMandaysDetailsReport;
+	
+	@Value("${getDistMandaysReport}")
+	String getDistMandaysReport;
+	
+	@Value("${getProdDetailsReport}")
+	String getProdDetailsReport;
+	
+	@Value("${getDistProdDetailsReport}")
+	String getDistProdDetailsReport;
 
 	@Override
 	public List<FundUtilizationEvalReportBean> getFundUtilizationEvalReport() {
@@ -87,6 +96,66 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 			session.getTransaction().rollback();
 		}
 		return mList;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getProdDetailsReport() {
+		
+		List<FundUtilizationEvalReportBean> pList = new ArrayList<>();
+		String hql = getProdDetailsReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			pList = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return pList;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getDistProdDetailsReport(Integer stcd) {
+		List<FundUtilizationEvalReportBean> listPD = new ArrayList<>();
+		String hql = getDistProdDetailsReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			listPD = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return listPD;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getDistMandaysDetailsReport(Integer stcd) {
+		List<FundUtilizationEvalReportBean> listmD = new ArrayList<>();
+		String hql = getDistMandaysReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			listmD = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return listmD;
 	}
 
 }

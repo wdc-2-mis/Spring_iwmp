@@ -29,6 +29,99 @@ public class FundUtilizationEvalReportBean {
 	private BigInteger mandays_generated;
 	private BigInteger control_mandays_generated;
 	
+	private BigDecimal pre_milch_cattle;
+	private BigDecimal mid_milch_cattle;
+	private BigDecimal control_milch_cattle;
+	private BigDecimal pre_fodder_production;
+	private BigDecimal mid_fodder_production;
+	private BigDecimal control_fodder_production;
+	
+	private BigInteger pre_rural_urban;
+	private BigInteger mid_rural_urban;
+	private BigInteger control_rural_urban;
+	private BigInteger spring_rejuvenated;
+	private BigInteger control_spring_rejuvenated;
+	private BigInteger person_benefitte;
+	private BigInteger control_person_benefitte;
+	
+	public BigDecimal getPre_milch_cattle() {
+		return pre_milch_cattle;
+	}
+	public void setPre_milch_cattle(BigDecimal pre_milch_cattle) {
+		this.pre_milch_cattle = pre_milch_cattle;
+	}
+	public BigDecimal getMid_milch_cattle() {
+		return mid_milch_cattle;
+	}
+	public void setMid_milch_cattle(BigDecimal mid_milch_cattle) {
+		this.mid_milch_cattle = mid_milch_cattle;
+	}
+	public BigDecimal getControl_milch_cattle() {
+		return control_milch_cattle;
+	}
+	public void setControl_milch_cattle(BigDecimal control_milch_cattle) {
+		this.control_milch_cattle = control_milch_cattle;
+	}
+	public BigDecimal getPre_fodder_production() {
+		return pre_fodder_production;
+	}
+	public void setPre_fodder_production(BigDecimal pre_fodder_production) {
+		this.pre_fodder_production = pre_fodder_production;
+	}
+	public BigDecimal getMid_fodder_production() {
+		return mid_fodder_production;
+	}
+	public void setMid_fodder_production(BigDecimal mid_fodder_production) {
+		this.mid_fodder_production = mid_fodder_production;
+	}
+	public BigDecimal getControl_fodder_production() {
+		return control_fodder_production;
+	}
+	public void setControl_fodder_production(BigDecimal control_fodder_production) {
+		this.control_fodder_production = control_fodder_production;
+	}
+	public BigInteger getPre_rural_urban() {
+		return pre_rural_urban;
+	}
+	public void setPre_rural_urban(BigInteger pre_rural_urban) {
+		this.pre_rural_urban = pre_rural_urban;
+	}
+	public BigInteger getMid_rural_urban() {
+		return mid_rural_urban;
+	}
+	public void setMid_rural_urban(BigInteger mid_rural_urban) {
+		this.mid_rural_urban = mid_rural_urban;
+	}
+	public BigInteger getControl_rural_urban() {
+		return control_rural_urban;
+	}
+	public void setControl_rural_urban(BigInteger control_rural_urban) {
+		this.control_rural_urban = control_rural_urban;
+	}
+	public BigInteger getSpring_rejuvenated() {
+		return spring_rejuvenated;
+	}
+	public void setSpring_rejuvenated(BigInteger spring_rejuvenated) {
+		this.spring_rejuvenated = spring_rejuvenated;
+	}
+	public BigInteger getControl_spring_rejuvenated() {
+		return control_spring_rejuvenated;
+	}
+	public void setControl_spring_rejuvenated(BigInteger control_spring_rejuvenated) {
+		this.control_spring_rejuvenated = control_spring_rejuvenated;
+	}
+	public BigInteger getPerson_benefitte() {
+		return person_benefitte;
+	}
+	public void setPerson_benefitte(BigInteger person_benefitte) {
+		this.person_benefitte = person_benefitte;
+	}
+	public BigInteger getControl_person_benefitte() {
+		return control_person_benefitte;
+	}
+	public void setControl_person_benefitte(BigInteger control_person_benefitte) {
+		this.control_person_benefitte = control_person_benefitte;
+	}
 	
 	public BigDecimal getPre_farmer_income() {
 		return pre_farmer_income;

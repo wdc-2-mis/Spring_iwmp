@@ -34,7 +34,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</label>
+			<label id="head">Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization for State  '<c:out value="${stName}"/>'</label>
 		</h5>
 	</div>
 <br>
