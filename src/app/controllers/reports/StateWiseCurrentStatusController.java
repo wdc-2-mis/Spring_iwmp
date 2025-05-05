@@ -1235,8 +1235,8 @@ public class StateWiseCurrentStatusController {
 					dataArrNetTotal[4] = dataArrNetTotal[4] + bean.getTotal_project_achievement2023();
 					dataArrNetTotal[5] = dataArrNetTotal[5] + bean.getTotal_project_plan2024();
 					dataArrNetTotal[6] = dataArrNetTotal[6] + bean.getTotal_project_achievement2024();
-					dataArrNetTotal[5] = dataArrNetTotal[5] + bean.getTotal_project_plan2025();
-					dataArrNetTotal[6] = dataArrNetTotal[6] + bean.getTotal_project_achievement2025();
+					dataArrNetTotal[7] = dataArrNetTotal[7] + bean.getTotal_project_plan2025();
+					dataArrNetTotal[8] = dataArrNetTotal[8] + bean.getTotal_project_achievement2025();
 				}
 			dataListNetTotal = new ArrayList();
 			dataArrNetTotalStr[0] = dataArrNetTotal[0].toString();
