@@ -168,7 +168,6 @@ public class FundUtilizationEvalReportController {
 			list = fundService.getDistProdDetailsReport(Integer.parseInt(stcd));
 
 			try {
-				
 				Rectangle layout = new Rectangle(PageSize.A4.rotate());
 				layout.setBackgroundColor(new BaseColor(255, 255, 255));
 				Document document = new Document(layout, 25, 10, 10, 0);
@@ -203,8 +202,7 @@ public class FundUtilizationEvalReportController {
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
-			    table.setHeaderRows(5);
-
+			    table.setHeaderRows(4);
 			    CommonFunctions.insertCellHeader(table,"State Name : "+ stName, Element.ALIGN_LEFT, 16, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
@@ -235,10 +233,7 @@ public class FundUtilizationEvalReportController {
 			    for (int i = 1; i <= 16; i++) {
 			    	CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_LEFT, 1, 1, bf8Bold);
 			    }
-
-					
 				int k = 1;
-				
 				int totproj = 0;
 				BigDecimal premilk = BigDecimal.ZERO;
 				BigDecimal midmilk = BigDecimal.ZERO;
@@ -273,8 +268,6 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getControl_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getPerson_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-
-						
 						totproj = totproj + list.get(i).getTotal_project();
 						premilk = premilk.add(list.get(i).getPre_milch_cattle());
 					    midmilk = midmilk.add(list.get(i).getMid_milch_cattle());
@@ -289,8 +282,6 @@ public class FundUtilizationEvalReportController {
 					    controlspring = controlspring.add(list.get(i).getControl_spring_rejuvenated());
 					    personb = personb.add(list.get(i).getPerson_benefitte());
 					    controlpersonb = controlpersonb.add(list.get(i).getControl_person_benefitte());
-					    
-					    
 						k++;
 					}
 					
@@ -309,11 +300,8 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(controlspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(personb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(controlpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					
 					if(list.size()==0) 
 						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 16, 1, bf8);
-					
-					
 			document.add(table);
 			table = new PdfPTable(1);
 			table.setWidthPercentage(90);
@@ -386,8 +374,7 @@ public class FundUtilizationEvalReportController {
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
-			    table.setHeaderRows(5);
-
+			    table.setHeaderRows(4);
 			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Total No. of Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
@@ -417,10 +404,7 @@ public class FundUtilizationEvalReportController {
 			    for (int i = 1; i <= 16; i++) {
 			    	CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_LEFT, 1, 1, bf8Bold);
 			    }
-
-					
 				int k = 1;
-				
 				int totproj = 0;
 				BigDecimal premilk = BigDecimal.ZERO;
 				BigDecimal midmilk = BigDecimal.ZERO;
@@ -435,8 +419,6 @@ public class FundUtilizationEvalReportController {
 				BigInteger controlspring = BigInteger.ZERO;
 				BigInteger personb = BigInteger.ZERO;
 				BigInteger controlpersonb = BigInteger.ZERO;
-				
-				
 				if(list.size()!=0)
 					for(int i=0;i<list.size();i++) 
 					{
@@ -456,8 +438,6 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getControl_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getPerson_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-
-						
 						totproj = totproj + list.get(i).getTotal_project();
 						premilk = premilk.add(list.get(i).getPre_milch_cattle());
 					    midmilk = midmilk.add(list.get(i).getMid_milch_cattle());
@@ -472,11 +452,8 @@ public class FundUtilizationEvalReportController {
 					    controlspring = controlspring.add(list.get(i).getControl_spring_rejuvenated());
 					    personb = personb.add(list.get(i).getPerson_benefitte());
 					    controlpersonb = controlpersonb.add(list.get(i).getControl_person_benefitte());
-					    
-					    
 						k++;
 					}
-					
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(premilk), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -492,11 +469,8 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(controlspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(personb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(controlpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					
 					if(list.size()==0) 
 						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 16, 1, bf8);
-					
-					
 			document.add(table);
 			table = new PdfPTable(1);
 			table.setWidthPercentage(90);
@@ -535,7 +509,6 @@ public class FundUtilizationEvalReportController {
 			list = fundService.getDistMandaysDetailsReport(Integer.parseInt(stcd));
 			
 			try {
-				
 				Rectangle layout = new Rectangle(PageSize.A4.rotate());
 				layout.setBackgroundColor(new BaseColor(255, 255, 255));
 				Document document = new Document(layout, 25, 10, 10, 0);
@@ -555,9 +528,7 @@ public class FundUtilizationEvalReportController {
 				document.newPage();
 				Paragraph paragraph3 = null; 
 				Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-				
 				paragraph3 = new Paragraph("Report PE6- District-wise Mid Term Evaluation of Mandays Details ", f3);
-					
 				paragraph2.setAlignment(Element.ALIGN_CENTER);
 			    paragraph3.setAlignment(Element.ALIGN_CENTER);
 			    paragraph2.setSpacingAfter(10);
@@ -570,7 +541,7 @@ public class FundUtilizationEvalReportController {
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
-			    table.setHeaderRows(5);
+			    table.setHeaderRows(3);
 
 			    CommonFunctions.insertCellHeader(table, "State Name:  "+ stName, Element.ALIGN_LEFT, 10, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -598,9 +569,7 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "10",Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					
 				int k = 1;
-				
 				int totproj = 0;
 				BigInteger farbenefited = BigInteger.ZERO;
 				BigInteger contrfarbenefited = BigInteger.ZERO;
@@ -609,8 +578,6 @@ public class FundUtilizationEvalReportController {
 				BigDecimal pref = BigDecimal.ZERO;
 				BigDecimal midf = BigDecimal.ZERO;
 				BigDecimal conf = BigDecimal.ZERO;
-				
-				
 				if(list.size()!=0)
 					for(int i=0;i<list.size();i++) 
 					{
@@ -634,7 +601,6 @@ public class FundUtilizationEvalReportController {
 					    conmandays = conmandays.add(list.get(i).getControl_mandays_generated());
 						k++;
 					}
-					
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(pref), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -721,7 +687,7 @@ public class FundUtilizationEvalReportController {
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
-			    table.setHeaderRows(5);
+			    table.setHeaderRows(3);
 
 			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -748,9 +714,7 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "10",Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					
 				int k = 1;
-				
 				int totproj = 0;
 				BigInteger farbenefited = BigInteger.ZERO;
 				BigInteger contrfarbenefited = BigInteger.ZERO;
@@ -759,8 +723,6 @@ public class FundUtilizationEvalReportController {
 				BigDecimal pref = BigDecimal.ZERO;
 				BigDecimal midf = BigDecimal.ZERO;
 				BigDecimal conf = BigDecimal.ZERO;
-				
-				
 				if(list.size()!=0)
 					for(int i=0;i<list.size();i++) 
 					{
@@ -794,11 +756,8 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(contrfarbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(mandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(conmandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					
 					if(list.size()==0) 
 						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
-					
-					
 			document.add(table);
 			table = new PdfPTable(1);
 			table.setWidthPercentage(90);
@@ -836,7 +795,6 @@ public class FundUtilizationEvalReportController {
 		list = fundService.getFundUtilizationEvalReport();
 		
 		try {
-			
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
 			Document document = new Document(layout, 25, 10, 10, 0);
@@ -871,7 +829,7 @@ public class FundUtilizationEvalReportController {
 		    table.setWidthPercentage(90);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
-		    table.setHeaderRows(5);
+		    table.setHeaderRows(3);
 
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
@@ -901,9 +859,7 @@ public class FundUtilizationEvalReportController {
 		    CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				
 			int k = 1;
-			
 			int totproj = 0;
 			BigDecimal projArea = BigDecimal.ZERO;
 			BigDecimal evCentralShare = BigDecimal.ZERO;
@@ -913,7 +869,6 @@ public class FundUtilizationEvalReportController {
 			BigDecimal fundStateshare = BigDecimal.ZERO;
 			BigDecimal fundTotalshare = BigDecimal.ZERO;
 			BigDecimal projExpenditure = BigDecimal.ZERO;
-			
 			if(list.size()!=0)
 				for(int i=0;i<list.size();i++) 
 				{
@@ -939,7 +894,6 @@ public class FundUtilizationEvalReportController {
 				    projExpenditure = projExpenditure.add(list.get(i).getTotal_expenditure());
 					k++;
 				}
-				
 				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(projArea), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -953,8 +907,6 @@ public class FundUtilizationEvalReportController {
 				
 				if(list.size()==0) 
 					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
-				
-				
 		document.add(table);
 		table = new PdfPTable(1);
 		table.setWidthPercentage(90);
@@ -1028,7 +980,7 @@ public class FundUtilizationEvalReportController {
 		    table.setWidthPercentage(90);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
-		    table.setHeaderRows(5);
+		    table.setHeaderRows(3);
 		    
 		    CommonFunctions.insertCellHeader(table,"State Name : "+ stName, Element.ALIGN_LEFT, 11, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
@@ -1096,7 +1048,6 @@ public class FundUtilizationEvalReportController {
 				    projExpenditure = projExpenditure.add(listD.get(i).getTotal_expenditure());
 					k++;
 				}
-				
 				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(projArea), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -1107,11 +1058,8 @@ public class FundUtilizationEvalReportController {
 				CommonFunctions.insertCell3(table, String.valueOf(fundStateshare), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(fundTotalshare), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(projExpenditure), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-				
 				if(listD.size()==0) 
 					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
-				
-				
 		document.add(table);
 		table = new PdfPTable(1);
 		table.setWidthPercentage(90);
@@ -1183,9 +1131,7 @@ public class FundUtilizationEvalReportController {
 		mergedRegion = new CellRangeAddress(6,6,6,8); 
 		sheet.addMergedRegion(mergedRegion);
 
-		
 		Row rowhead = sheet.createRow(5);
-		
 		Cell cell = rowhead.createCell(0);
 		cell.setCellValue("S.No.");  
 		cell.setCellStyle(style);
@@ -1226,14 +1172,12 @@ public class FundUtilizationEvalReportController {
 			cell =rowhead.createCell(i);
 			cell.setCellStyle(style);
 		}
-
 		cell = rowhead.createCell(12);
 		cell.setCellValue("No. of Springs Rejuvenated");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		rowhead.createCell(13).setCellStyle(style);
-		
 		cell = rowhead.createCell(14);
 		cell.setCellValue("No. of Persons Benefitted due to Rejuvenation of Springs");  
 		cell.setCellStyle(style);
@@ -1241,9 +1185,7 @@ public class FundUtilizationEvalReportController {
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		rowhead.createCell(15).setCellStyle(style);
 		
-		
 		Row rowhead1 = sheet.createRow(6);
-		
 		for(int i=0;i<3;i++)
 		{
 			cell =rowhead1.createCell(i);
@@ -1333,16 +1275,13 @@ public class FundUtilizationEvalReportController {
 		cell.setCellValue("Controlled Area");  
 		cell.setCellStyle(style);
 		
-		
 		Row rowhead3 = sheet.createRow(8);
-		
 		for(int i=0;i<16;i++)
 		{
 			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
-		
 		int sno = 1;
 		int rowno  = 9;
 		int totproj = 0;
@@ -1359,8 +1298,6 @@ public class FundUtilizationEvalReportController {
 		BigInteger conspring = BigInteger.ZERO;
 		BigInteger personb = BigInteger.ZERO;
 		BigInteger conpersonb = BigInteger.ZERO;
-		
-		
 	    for(FundUtilizationEvalReportBean bean: list) 
 	    {
 	    	Row row = sheet.createRow(rowno);
@@ -1380,7 +1317,6 @@ public class FundUtilizationEvalReportController {
 	    	row.createCell(13).setCellValue(bean.getControl_spring_rejuvenated().doubleValue());
 	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
 	    	row.createCell(15).setCellValue(bean.getControl_person_benefitte().doubleValue());
-	    	
 	    	totproj = totproj + bean.getTotal_project();
 			premilk = premilk.add(bean.getPre_milch_cattle());
 			midmilk = midmilk.add(bean.getMid_milch_cattle());
@@ -1395,11 +1331,9 @@ public class FundUtilizationEvalReportController {
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
 			personb = personb.add(bean.getPerson_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
-	    	
 			sno++;
 	    	rowno++;
 	    }
-	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
 		style1.setBorderBottom(BorderStyle.THIN);
@@ -1512,10 +1446,8 @@ public class FundUtilizationEvalReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,6,6,8); 
 		sheet.addMergedRegion(mergedRegion);
-
 		
 		Row rowhead = sheet.createRow(5);
-		
 		Cell cell = rowhead.createCell(0);
 		cell.setCellValue("S.No.");  
 		cell.setCellStyle(style);
@@ -1571,9 +1503,7 @@ public class FundUtilizationEvalReportController {
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		rowhead.createCell(15).setCellStyle(style);
 		
-		
 		Row rowhead1 = sheet.createRow(6);
-		
 		for(int i=0;i<3;i++)
 		{
 			cell =rowhead1.createCell(i);
@@ -1590,7 +1520,6 @@ public class FundUtilizationEvalReportController {
 			cell =rowhead1.createCell(i);
 			cell.setCellStyle(style);
 		}
-		
 		cell = rowhead1.createCell(6);
 		cell.setCellValue("Fodder Production (Qt./Yr.)");  
 		cell.setCellStyle(style);
@@ -1601,7 +1530,6 @@ public class FundUtilizationEvalReportController {
 			cell =rowhead1.createCell(i);
 			cell.setCellStyle(style);
 		}
-		
 		
 		Row rowhead2 = sheet.createRow(7);
 		
@@ -1663,16 +1591,13 @@ public class FundUtilizationEvalReportController {
 		cell.setCellValue("Controlled Area");  
 		cell.setCellStyle(style);
 		
-		
 		Row rowhead3 = sheet.createRow(8);
-		
 		for(int i=0;i<16;i++)
 		{
 			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
-		
 		int sno = 1;
 		int rowno  = 9;
 		int totproj = 0;
@@ -1689,7 +1614,6 @@ public class FundUtilizationEvalReportController {
 		BigInteger conspring = BigInteger.ZERO;
 		BigInteger personb = BigInteger.ZERO;
 		BigInteger conpersonb = BigInteger.ZERO;
-		
 		
 	    for(FundUtilizationEvalReportBean bean: list) 
 	    {
@@ -1725,11 +1649,9 @@ public class FundUtilizationEvalReportController {
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
 			personb = personb.add(bean.getPerson_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
-	    	
 			sno++;
 	    	rowno++;
 	    }
-	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
 		style1.setBorderBottom(BorderStyle.THIN);
@@ -1847,9 +1769,7 @@ public class FundUtilizationEvalReportController {
 		mergedRegion = new CellRangeAddress(6,7,10,10); 
 		sheet.addMergedRegion(mergedRegion);
 		
-		
 		Row rowhead = sheet.createRow(5);
-		
 		Cell cell = rowhead.createCell(0);
 		cell.setCellValue("S.No.");  
 		cell.setCellStyle(style);
@@ -1895,7 +1815,6 @@ public class FundUtilizationEvalReportController {
 			cell =rowhead.createCell(i);
 			cell.setCellStyle(style);
 		}
-		
 		Row rowhead1 = sheet.createRow(6);
 		
 		for(int i=0;i<4;i++)
@@ -2230,16 +2149,13 @@ public class FundUtilizationEvalReportController {
 		cell = rowhead2.createCell(10);
 		cell.setCellStyle(style);
 		
-		
 		Row rowhead3 = sheet.createRow(8);
-		
 		for(int i=0;i<11;i++)
 		{
 			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
-		
 		int sno = 1;
 		int rowno  = 8;
 		int totproj = 0;
@@ -2247,13 +2163,10 @@ public class FundUtilizationEvalReportController {
 		BigDecimal evCentralShare = BigDecimal.ZERO;
 		BigDecimal evStateShare = BigDecimal.ZERO;
 		BigDecimal evTotalshare = BigDecimal.ZERO;
-		
 		BigDecimal fundCentralshare = BigDecimal.ZERO;
 		BigDecimal fundStateshare = BigDecimal.ZERO;
 		BigDecimal fundTotalshare = BigDecimal.ZERO;
 		BigDecimal projExpenditure = BigDecimal.ZERO;
-		
-		
 	    for(FundUtilizationEvalReportBean bean: listD) 
 	    {
 	    	Row row = sheet.createRow(rowno);
@@ -2278,7 +2191,6 @@ public class FundUtilizationEvalReportController {
 			    fundStateshare = fundStateshare.add(bean.getTotal_fund_state_share());
 			    fundTotalshare = fundTotalshare.add(bean.getTotal_fund());
 			    projExpenditure = projExpenditure.add(bean.getTotal_expenditure());
-
 	    	sno++;
 	    	rowno++;
 	    }
@@ -2410,7 +2322,6 @@ public class FundUtilizationEvalReportController {
 
 	    int sno = 1;
 	    int rowno = 8;
-
 	    int totproj = 0;
 	    BigDecimal pref = BigDecimal.ZERO;
 	    BigDecimal midf = BigDecimal.ZERO;
@@ -2441,7 +2352,6 @@ public class FundUtilizationEvalReportController {
 	        fbc = fbc.add(bean.getControl_farmer_benefited());
 	        man = man.add(bean.getMandays_generated());
 	        cman = cman.add(bean.getControl_mandays_generated());
-
 	        sno++;
 	        rowno++;
 	    }
@@ -2560,7 +2470,6 @@ public class FundUtilizationEvalReportController {
 
 	    int sno = 1;
 	    int rowno = 8;
-
 	    int totproj = 0;
 	    BigDecimal pref = BigDecimal.ZERO;
 	    BigDecimal midf = BigDecimal.ZERO;
@@ -2569,7 +2478,6 @@ public class FundUtilizationEvalReportController {
 	    BigInteger fbc = BigInteger.ZERO;
 	    BigInteger man = BigInteger.ZERO;
 	    BigInteger cman = BigInteger.ZERO;
-
 	    for (FundUtilizationEvalReportBean bean : list) {
 	        Row row = sheet.createRow(rowno);
 	        row.createCell(0).setCellValue(sno);
@@ -2591,7 +2499,6 @@ public class FundUtilizationEvalReportController {
 	        fbc = fbc.add(bean.getControl_farmer_benefited());
 	        man = man.add(bean.getMandays_generated());
 	        cman = cman.add(bean.getControl_mandays_generated());
-
 	        sno++;
 	        rowno++;
 	    }
