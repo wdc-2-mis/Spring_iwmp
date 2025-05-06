@@ -185,7 +185,7 @@ function validatePercentage(input) {
 								<th rowspan="2">Gram Panchayat</th>
 								<th rowspan="2">Village</th>
 								<th rowspan="2">Type of Work</th>
-								<th rowspan="2">Estimated Value of Work</th>
+								<th rowspan="2">Estimated Value of Work (Rs. in Lakh)</th>
 								<th colspan="3">Tentative Contribution Percentage (%)</th>
 								<th rowspan="2">Work Completed</th>
 								<th rowspan="2">Work Completed Date</th>
@@ -252,7 +252,7 @@ function validatePercentage(input) {
 								<th rowspan="2">Gram Panchayat</th>
 								<th rowspan="2">Village</th>
 								<th rowspan="2">Type of Work</th>
-								<th rowspan="2">Estimated Value of Work</th>
+								<th rowspan="2">Estimated Value of Work (Rs. in Lakh)</th>
 								<th colspan="3">Tentative Contribution Percentage (%)</th>
 								<th rowspan="2">Work Completed</th>
 								<th rowspan="2">Work Completed Date</th>
