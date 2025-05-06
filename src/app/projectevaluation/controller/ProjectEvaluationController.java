@@ -5667,6 +5667,7 @@ public class ProjectEvaluationController {
 		List<ProductionDetailsBean> list = PEService.getAverageAnnualIncome();
 
 		mav.addObject("list",list);
+		mav.addObject("listsize",list.size());
 		
 		return mav;
 		
@@ -5681,6 +5682,7 @@ public class ProjectEvaluationController {
 		List<ProductionDetailsBean> list = PEService.getCommunityBasedData();
 
 		mav.addObject("list",list);
+		mav.addObject("listsize",list.size());
 		
 		return mav;
 		
@@ -5697,6 +5699,7 @@ public class ProjectEvaluationController {
 		list =PEService.getDistwiseAverageAnnualIncome(stCode);
 		
 		model.addAttribute("distList", list);
+		model.addAttribute("distListSize", list.size());
 		model.addAttribute("stname", state);
 		model.addAttribute("stcode", stCode);
 		
@@ -5715,11 +5718,401 @@ public class ProjectEvaluationController {
 		list =PEService.getDistwiseCommunityBasedData(stCode);
 		
 		model.addAttribute("distList", list);
+		model.addAttribute("distListSize", list.size());
 		model.addAttribute("stname", state);
 		model.addAttribute("stcode", stCode);
 		
 		return "reports/communityBasedShgFpoUgDataRpt";
 		
+	}
+	
+	@RequestMapping(value = "/downloadExcelAvrgAnnualIncomeReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelAvrgAnnualIncomeReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<ProductionDetailsBean> list = PEService.getAverageAnnualIncome();
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report PE3");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report PE3- State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members";
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 11, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,6,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,3,5); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,6,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,9,11); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+			mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total No. of Project");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Average Annual Income of FPOs");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(4).setCellStyle(style);
+			rowhead.createCell(5).setCellStyle(style);
+			
+			
+			cell = rowhead.createCell(6);
+			cell.setCellValue("Average Annual Net Income of FPO Members");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(7).setCellStyle(style);
+			rowhead.createCell(8).setCellStyle(style);
+			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Average Annual Net Income of SHG Members");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(10).setCellStyle(style);
+			rowhead.createCell(11).setCellStyle(style);
+			
+			rowhead = sheet.createRow(6);
+			
+			for(int i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			String head[] = {"Pre Project Status(Aggregate)","Mid Project Status(Aggregate)","Controlled Area"};
+			int i = 3;
+			while(i<=11) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[0]);  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[1]);  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[2]);  
+				cell.setCellStyle(style);
+				i++;
+				
+			}
+			
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int j=0;j<12;j++)
+			{
+				cell =rowhead1.createCell(j);
+				cell.setCellValue(j+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        Integer totproj = 0;
+			BigDecimal totprefpoturnover = BigDecimal.ZERO;
+			BigDecimal totmidfpoturnover = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoturnover = BigDecimal.ZERO;
+			BigDecimal totprefpoincome = BigDecimal.ZERO;
+			BigDecimal totmidfpoincome = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoincome = BigDecimal.ZERO;
+			BigDecimal totpreannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totmidannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totcontrolannualincomeshg = BigDecimal.ZERO;
+	        
+	        for(ProductionDetailsBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getStname());
+	        	row.createCell(2).setCellValue(bean.getTotproj());
+	        	row.createCell(3).setCellValue(bean.getPrefpoturnover().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getMidfpoturnover().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getControlfpoturnover().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getPrefpoincome().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidfpoincome().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlfpoincome().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPreannualincomeshg().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getMidannualincomeshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getControlannualincomeshg().doubleValue());
+	        	
+	        	totproj = totproj + bean.getTotproj();
+	        	totprefpoturnover = totprefpoturnover.add(bean.getPrefpoturnover());
+	        	totmidfpoturnover = totmidfpoturnover.add(bean.getMidfpoturnover());
+	        	totcontrolfpoturnover = totcontrolfpoturnover.add(bean.getControlfpoturnover());
+	        	totprefpoincome = totprefpoincome.add(bean.getPrefpoincome());
+	        	totmidfpoincome = totmidfpoincome.add(bean.getMidfpoincome());
+	        	totcontrolfpoincome = totcontrolfpoincome.add(bean.getControlfpoincome());
+	        	totpreannualincomeshg = totpreannualincomeshg.add(bean.getPreannualincomeshg());
+	        	totmidannualincomeshg = totmidannualincomeshg.add(bean.getMidannualincomeshg());
+	        	totcontrolannualincomeshg = totcontrolannualincomeshg.add(bean.getControlannualincomeshg());
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(totproj);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totprefpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totmidfpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue(totcontrolfpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue(totprefpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue(totmidfpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue(totcontrolfpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totpreannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(10);
+	        cell.setCellValue(totmidannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totcontrolannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
+	        String fileName = "attachment; filename=Report PE3.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/avrgAnnualIncmOfFpoShgRpt";
+		
+	}
+	
+	
+	@RequestMapping(value = "/downloadAvrgAnnualIncomeReportPdf", method = RequestMethod.POST)
+	public ModelAndView downloadAvrgAnnualIncomeReportPdf(HttpServletRequest request, HttpServletResponse response) 
+	{
+		List<ProductionDetailsBean> list = PEService.getAverageAnnualIncome();
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Avrage Annual Income of FPO and SHG");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph(
+					"Report PE3- State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members",f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(12);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(3);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Income of FPOs", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Net Income of FPO Members", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Net Income of SHG Members", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			Integer totproj = 0;
+			BigDecimal totprefpoturnover = BigDecimal.ZERO;
+			BigDecimal totmidfpoturnover = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoturnover = BigDecimal.ZERO;
+			BigDecimal totprefpoincome = BigDecimal.ZERO;
+			BigDecimal totmidfpoincome = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoincome = BigDecimal.ZERO;
+			BigDecimal totpreannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totmidannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totcontrolannualincomeshg = BigDecimal.ZERO;
+			if (list.size() != 0)
+				for (int i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(i + 1), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotproj().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					
+					
+					CommonFunctions.insertCell(table, list.get(i).getPrefpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidfpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlfpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrefpoincome().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidfpoincome().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlfpoincome().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPreannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+
+					totproj = totproj + list.get(i).getTotproj();
+		        	totprefpoturnover = totprefpoturnover.add(list.get(i).getPrefpoturnover());
+		        	totmidfpoturnover = totmidfpoturnover.add(list.get(i).getMidfpoturnover());
+		        	totcontrolfpoturnover = totcontrolfpoturnover.add(list.get(i).getControlfpoturnover());
+		        	totprefpoincome = totprefpoincome.add(list.get(i).getPrefpoincome());
+		        	totmidfpoincome = totmidfpoincome.add(list.get(i).getMidfpoincome());
+		        	totcontrolfpoincome = totcontrolfpoincome.add(list.get(i).getControlfpoincome());
+		        	totpreannualincomeshg = totpreannualincomeshg.add(list.get(i).getPreannualincomeshg());
+		        	totmidannualincomeshg = totmidannualincomeshg.add(list.get(i).getMidannualincomeshg());
+		        	totcontrolannualincomeshg = totcontrolannualincomeshg.add(list.get(i).getControlannualincomeshg());
+
+				}
+			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprefpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidfpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolfpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprefpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidfpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolfpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totpreannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 12, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(70);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,
+					"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+							+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+					Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
 	}
 	
 }
