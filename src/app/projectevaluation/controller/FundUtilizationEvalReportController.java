@@ -980,7 +980,7 @@ public class FundUtilizationEvalReportController {
 		    table.setWidthPercentage(90);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
-		    table.setHeaderRows(3);
+		    table.setHeaderRows(4);
 		    
 		    CommonFunctions.insertCellHeader(table,"State Name : "+ stName, Element.ALIGN_LEFT, 11, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
