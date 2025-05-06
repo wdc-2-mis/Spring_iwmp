@@ -158,6 +158,12 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getCommunityBasedData}")
 	String getCommunityBasedData;
 	
+	@Value("${getDistwiseAverageAnnualIncome}")
+	String getDistwiseAverageAnnualIncome;
+	
+	@Value("${getDistwiseCommunityBasedData}")
+	String getDistwiseCommunityBasedData;
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -2416,6 +2422,50 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				session.beginTransaction();
 				SQLQuery query = session.createSQLQuery(hql);
 				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
+				list = query.list();
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			
+			return list;
+		}
+
+		@Override
+		public List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode) {
+			List<ProductionDetailsBean> list = new ArrayList<>();
+			String hql = getDistwiseAverageAnnualIncome;
+			Session session = sessionFactory.getCurrentSession();
+			
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
+				query.setInteger("stcode", stcode);
+				list = query.list();
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			
+			return list;
+		}
+
+		@Override
+		public List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode) {
+			List<ProductionDetailsBean> list = new ArrayList<>();
+			String hql = getDistwiseCommunityBasedData;
+			Session session = sessionFactory.getCurrentSession();
+			
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
+				query.setInteger("stcode", stcode);
 				list = query.list();
 				
 				session.getTransaction().commit();

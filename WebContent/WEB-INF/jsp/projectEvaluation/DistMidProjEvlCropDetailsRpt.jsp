@@ -30,12 +30,12 @@ function exportExcel(stcd, stName){
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h4 style="text-decoration:underline;">Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</h4>
+        <h5>Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</h5>
     </div>
     <br>
     <div class="container-fluid">
 	
-	<c:if test="${not empty distMidPrjEvlCrpDetailsList1}" >
+	<c:if test="${not empty distMidPrjEvlCrpDetailsList}" >
 		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>
 		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>
 	</c:if>

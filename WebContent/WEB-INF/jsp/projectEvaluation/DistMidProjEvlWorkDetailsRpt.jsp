@@ -30,7 +30,7 @@ function exportExcel(stcd, stName){
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h4 style="text-decoration:underline;">Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details</h4>
+        <h5>Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details</h5>
     </div>
     <br>
     <div class ="card">

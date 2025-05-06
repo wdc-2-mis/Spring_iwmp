@@ -360,6 +360,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getCommunityBasedData();
 	}
+
+	@Override
+	public List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode) {
+		// TODO Auto-generated method stub
+		return PEDAO.getDistwiseAverageAnnualIncome(stcode);
+	}
+
+	@Override
+	public List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode) {
+		// TODO Auto-generated method stub
+		return PEDAO.getDistwiseCommunityBasedData(stcode);
+	}
 	
 	
 	

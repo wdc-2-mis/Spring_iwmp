@@ -162,4 +162,8 @@ public interface ProjectEvaluationService {
 	
 	List<ProductionDetailsBean> getCommunityBasedData();
 	
+	List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode);
+	
+	List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode);
+	
 }

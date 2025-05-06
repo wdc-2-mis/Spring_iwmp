@@ -1789,7 +1789,7 @@ public class PEReportController {
 		for(int i=0;i<3;i++)
 		{
 			cell =rowhead2.createCell(i);
-			cell.setCellStyle(style);
+			cell.setCellStyle(style);	
 		}
 		
 		
@@ -1973,7 +1973,7 @@ public class PEReportController {
 		
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 20);
-	    String fileName = "attachment; filename=Report PE3- Dist.xlsx";
+	    String fileName = "attachment; filename=Report PE3- District.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    

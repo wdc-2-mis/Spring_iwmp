@@ -158,5 +158,9 @@ public interface ProjectEvaluationDAO {
 	List<ProductionDetailsBean> getAverageAnnualIncome();
 	
 	List<ProductionDetailsBean> getCommunityBasedData();
+	
+	List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode);
+	
+	List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode);
 }
  

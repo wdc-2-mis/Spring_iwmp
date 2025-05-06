@@ -1224,116 +1224,165 @@ var myBarChart = new Chart(ctx, {
 
 
 
+let isStatePopupVisible = false;
+
+$(document).ready(function () {
+    // Track when state popup is shown/hidden
+    $('#popupreport').on('show.bs.modal', function () {
+        isStatePopupVisible = true;
+    });
+
+    $('#popupreport').on('hide.bs.modal', function () {
+        isStatePopupVisible = false;
+    });
+
+    // When district popup is closed, reopen state popup if it was previously shown
+    $('#popupDreport').on('hidden.bs.modal', function () {
+        if (isStatePopupVisible) {
+            $('#popupreport').modal('show');
+        }
+    });
+
+    // Optional cleanup for body class and backdrop
+    $('#popupDreport').on('hidden.bs.modal', function () {
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    });
+
+    // Spinner and carousel logic (your existing one)
+    $(document).ajaxStart(function () {
+        $("#loading").show();
+    }).ajaxStop(function () {
+        $("#loading").hide();
+    });
+
+    $(".leftLst").click(function () {
+        $(".MultiCarousel-inner").animate({ scrollLeft: "-=200" }, 600);
+    });
+
+    $(".rightLst").click(function () {
+        $(".MultiCarousel-inner").animate({ scrollLeft: "+=200" }, 600);
+    });
+});
+
 function showdata(name) {
-	var totaldata = null;
+    const totaldata = $(`input[name=${name}]`).val() || "0";
+    
+    // Show popupreport modal only (do not hide all modals)
+    $('#popupreport').modal('show');
 
-	if(name == 'soilmoisture'){
-	totaldata =  $("input[name=soilmoisture]").val();
-	}
-	if(name == 'afforestation'){
-	totaldata =  $("input[name=afforestation]").val();
-	}
-	if(name == 'waterreno'){
-	totaldata =  $("input[name=waterreno]").val();
-	}
-	if(name == 'protectiveirr'){
-	totaldata =  $("input[name=protectiveirr]").val();
-	}
-	if(name == 'mandays'){
-	totaldata =  $("input[name=mandays]").val();
-	}
-	if(name == 'farmerbenef'){
-	totaldata =  $("input[name=farmerbenef]").val();
-	}
-	if(name == 'degradedr'){
-	totaldata =  $("input[name=degradedr]").val();
-	}
+    $.ajax({
+        url: "getwhshomedata",
+        type: "POST",
+        data: { id: name },
+        error: function (xhr, status, er) {
+            console.error(er);
+            $(".error").append(" There is some error, please try again!");
+        },
+        success: function (DolrDashboardBean) {
+            let tblData = "";
+            let headdesc = "";
+            $("#popupreport #popupreporttitle").text("STATE WISE DATA");
+
+            if (Object.keys(DolrDashboardBean).length > 0) {
+                const firstKey = Object.keys(DolrDashboardBean)[0];
+                headdesc = DolrDashboardBean[firstKey].headdesc || "Achievement";
+
+                $.each(DolrDashboardBean, function (key, val) {
+                    tblData += `
+                        <tr>
+                            <td class='text-primary text-center'>
+                                <u><a href='#' class='nav-link'  name='${val.headerdesc}' onclick='showDistrict(${val.st_code}, "${val.headerdesc}")'>${val.stname}</a></u>
+                            </td>
+                            <td class='text-center'>${val.headerdesc}</td>
+                        </tr>`;
+                });
+            } else {
+                tblData = "<tr><td colspan='2' class='text-center text-danger'>Data not found!</td></tr>";
+            }
+
+            $("#popupreport .modal-body").html(`
+                <table class='table table-bordered table-striped'>
+                    <thead>
+                        <tr>
+                            <th class='text-center' style='width:50%'>State Name</th>
+                            <th class='text-center'>${headdesc}</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tblData}</tbody>
+                    <tfoot>
+                        <tr>
+                            <th class='text-center'>Total</th>
+                            <th class='text-center'>${totaldata}</th>
+                        </tr>
+                    </tfoot>
+                </table>`);
+        }
+    });
+}
 
 
-	$('#loading').show();
-	$.ajax({  
-	            url:"getwhshomedata",
-	            type: "post",  
-	            data: {id:name},
-	            error:function(xhr,status,er){
-	                console.log(er);
-					$('.error').append(' There is some error please try again !');
-	            },
-	            
-	          success: function(DolrDashboardBean) {
-	           $('#loading').hide();
-		console.log(DolrDashboardBean);
-							var tblData="";
-							$('#popupreport').modal('toggle');
-							$('#popupreport').modal('show');
-							$('#popupreport #popupreporttitle').html('STATE WISE DATA');
-							var i=1;
-							if(Object.keys(DolrDashboardBean).length>0){
-								
-		for ( var key in DolrDashboardBean) {
-			if (DolrDashboardBean.hasOwnProperty(key)) {
-				if(parseInt(i)===1){
-				i=0;
-				$('#popupreport #popupreporttitle').append();
-				}
-				tblData+="<tr><td style='color:blue;'><u><a class='nav-link' name = "+DolrDashboardBean[key].headerdesc+"  onclick='showDistrict(this.id, this.name);' id="+DolrDashboardBean[key].st_code+"><input type='hidden' name='data' id='data' value="+name+">"+DolrDashboardBean[key].stname+"</a></u></td><td>"+DolrDashboardBean[key].headerdesc+"</td></tr>";
-			}		
-				}
-		}else{
-			tblData="<tr><td>Data not found !</td></tr>";
-		}
-		$('#popupreport .modal-body').html('<table class="" >'+
-							'<thead><tr><th style="width:40%"><center>State Name</center></th><th>'+DolrDashboardBean[key].headdesc+'</th></tr></thead><tbody>'+tblData+'</tbody><tr><th><center>Total</center></th><th><center>'+totaldata+'</center></th></tr></table>');
-							
-							}  
-	            
-	            
-	  });          
-	}	
-	
-function showDistrict(id,name) {
-	var activity = $('#data').val();
-	var totaldata = name;
-	$('#loading').show();
-	$.ajax({  
-	            url:"getcircledisrictdata",
-	            type: "post",  
-	            data: {id:id, activity:activity},
-	            error:function(xhr,status,er){
-	                console.log(er);
-					$('.error').append(' There is some error please try again !');
-	            },
-	            
-	          success: function(DolrDashboardBean) {
-	           $('#loading').hide();
-		console.log(DolrDashboardBean);
-							var tblData="";
-							$('#popupreport').modal('toggle');
-							$('#popupreport').modal('show');
-							$('#popupreport #popupreporttitle').html('DISTRICT WISE DATA');
-							var i=1;
-							if(Object.keys(DolrDashboardBean).length>0){
-								
-		for ( var key in DolrDashboardBean) {
-			if (DolrDashboardBean.hasOwnProperty(key)) {
-				if(parseInt(i)===1){
-				i=0;
-				$('#popupreport #popupreporttitle').append();
-				}
-				tblData+="<tr><td>"+DolrDashboardBean[key].dist_name+"</a></td><td>"+DolrDashboardBean[key].headerdesc+"</td></tr>";
-			}		
-				}
-		}else{
-			tblData="<tr><td>Data not found !</td></tr>";
-		}
-		$('#popupreport .modal-body').html('<table class="" >'+
-							'<thead><tr><th style="width:40%"><center>District Name</center></th><th>'+DolrDashboardBean[key].headdesc+'</th></tr></thead><tbody>'+tblData+'</tbody><tr><th><center>Total</center></th><th><center>'+totaldata+'</center></th></tr></table>');
-							
-							}  
-	            
-	            
-	  });
-	}	
+// Show district-wise data popup
+function showDistrict(id, name) {
+    const activity = $("#data").val();
+    const totaldata = name;
 
+    // Only hide popupreport modal, not all
+    $('#popupreport').modal('hide');
+
+    $('#popupDreport').modal('show');
+
+    if (!activity) {
+        console.error("Missing activity value!");
+        return;
+    }
+
+    $.ajax({
+        url: "getcircledisrictdata",
+        type: "POST",
+        data: { id: id, activity: activity },
+        error: function (xhr, status, er) {
+            console.error(er);
+            $(".error").append(" There is some error, please try again!");
+        },
+        success: function (DolrDashboardBean) {
+            let tblData = "";
+            let headdesc = "";
+            $("#popupDreport #popupDreporttitle").text("DISTRICT WISE DATA");
+
+            if (Object.keys(DolrDashboardBean).length > 0) {
+                const firstKey = Object.keys(DolrDashboardBean)[0];
+                headdesc = DolrDashboardBean[firstKey].headdesc || "Achievement";
+
+                $.each(DolrDashboardBean, function (key, val) {
+                    tblData += `
+                        <tr>
+                            <td class='text-center'>${val.dist_name}</td>
+                            <td class='text-center'>${val.headerdesc}</td>
+                        </tr>`;
+                });
+            } else {
+                tblData = "<tr><td colspan='2' class='text-center text-danger'>Data not found!</td></tr>";
+            }
+
+            $("#popupDreport .modal-body").html(`
+                <table class='table table-bordered table-striped'>
+                    <thead>
+                        <tr>
+                            <th class='text-center' style='width:50%'>District Name</th>
+                            <th class='text-center'>${headdesc}</th>
+                        </tr>
+                    </thead>
+                    <tbody>${tblData}</tbody>
+                    <tfoot>
+                        <tr>
+                            <th class='text-center'>Total</th>
+                            <th class='text-center'>${totaldata}</th>
+                        </tr>
+                    </tfoot>
+                </table>`);
+        }
+    });
+}
 
 
