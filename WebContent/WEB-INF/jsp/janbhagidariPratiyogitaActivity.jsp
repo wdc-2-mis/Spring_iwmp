@@ -101,7 +101,7 @@ function validatePercentage(input) {
 				<th rowspan="2" class="text-center" style="width:18%">Gram Panchayat</th>
 				<th rowspan="2" class="text-center" style="width:18%">Village</th>
 				<th rowspan="2" class="text-center" style="width:10%">Type of Work</th>
-				<th rowspan="2" class="text-center" style="width:09%">Estimated Value of Work</th>
+				<th rowspan="2" class="text-center" style="width:09%">Estimated Value of Work (Rs. in Lakh)</th>
 				<th colspan="3" class="text-center">Tentative Contribution Percentage (%)</th>
 				<th rowspan="2" class="text-center">Work Completed</th>
 				<th rowspan="2" class="text-center">Work Completed Date</th>
