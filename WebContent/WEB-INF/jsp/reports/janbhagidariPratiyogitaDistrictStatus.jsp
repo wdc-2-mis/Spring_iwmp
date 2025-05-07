@@ -29,7 +29,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">District wise Current Status of Watersheed Janbhagidari</label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report JP2- District wise Current Status of Watershed Janbhagidari</label></h5></div>
 <br>
 <div class ="card">
 

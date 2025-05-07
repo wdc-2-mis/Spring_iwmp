@@ -312,6 +312,22 @@ public class JanbhagidariPratiyogitaServiceImpl implements JanbhagidariPratiyogi
 		// TODO Auto-generated method stub
 		return dao.getjanbhagidariPIANoStatus(regId);
 	}
+	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesDistrict(int id) {
+		// TODO Auto-generated method stub
+		return dao.getjanbhagidariPratiyogitaActivitiesDistrict(id);
+	}
+
+
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectExist(Integer project) {
+		// TODO Auto-generated method stub
+		return dao.getJanbhagidariPratiyogitaProjectExist(project);
+	}
+
 
 	
 }

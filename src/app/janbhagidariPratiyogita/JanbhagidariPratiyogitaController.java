@@ -132,6 +132,23 @@ public class JanbhagidariPratiyogitaController {
 		return list; 
 	}
 	
+	@RequestMapping(value="/getJanbhagidariPratiyogitaProjectExist", method = RequestMethod.POST)
+	@ResponseBody
+	public List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectExist(HttpServletRequest request, HttpServletResponse response, 
+			 @RequestParam(value ="project") Integer project)
+	{
+		session = request.getSession(true);
+		String userType = session.getAttribute("userType").toString();
+		String state=session.getAttribute("stateCode").toString();
+		List<JanbhagidariPratiyogitaBean> list=new  ArrayList<JanbhagidariPratiyogitaBean>();
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer regid = Integer.parseInt(session.getAttribute("regId").toString());
+			list=serk.getJanbhagidariPratiyogitaProjectExist(project);
+		}
+		return list; 
+	}
+	
 	@RequestMapping(value="/getGPofJanbhagidariPratiyogita", method = RequestMethod.POST)
 	@ResponseBody
 	public LinkedHashMap<Integer, String> getGPofJanbhagidariPratiyogita(HttpServletRequest request, HttpServletResponse response,

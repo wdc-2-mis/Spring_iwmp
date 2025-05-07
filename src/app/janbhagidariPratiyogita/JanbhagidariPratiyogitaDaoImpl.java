@@ -107,6 +107,8 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 	@Value("${getJanbhagidariPIANoStatusByReg}")
 	String getJanbhagidariPIANoStatusByReg;
 	
+	@Value("${janbhagidariDistWiseActivitiesDetails}")
+	String janbhagidariDistWiseActivitiesDetails;
 	
 	@Override
 	public LinkedHashMap<String, Integer> getJanbhagidariPratiyogitaProject(Integer distcd) {
@@ -181,100 +183,168 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 
 	    Session sess = sessionFactory.getCurrentSession();
 	    String res = "fail";
+	    int tabid=0;
 	    try {
 	        sess.beginTransaction();
 
 	        InetAddress inet = InetAddress.getLocalHost();
 	        String ipAddr = inet.getHostAddress();
-
+	        
+	        List list = sess.createQuery("SELECT pratiyogita_id FROM JanbhagidariPratiyogita where iwmpMProject.projectId=:pCode").setInteger("pCode", proj).list();
+			
+			if(!list.isEmpty()) {
+				
+				List<String> existingNGOs = sess.createQuery("SELECT UPPER(TRIM(ngo_name)) FROM JanbhagidariPratiyogitaNgoname WHERE janbhagidariPratiyogita.iwmpMProject.projectId = :prCode").setInteger("prCode", proj).list();
+				
+		        for (String existingNgo : existingNGOs) {
+		            for (String inputNgo : ngoname) {
+		                if (existingNgo.equalsIgnoreCase(inputNgo.trim())) {
+		                    return "duplicate";
+		                }
+		            }
+		        }
+				
+				tabid=Integer.parseInt(list.get(0).toString());
+				JanbhagidariPratiyogita jp=(JanbhagidariPratiyogita) sess.get(JanbhagidariPratiyogita.class, tabid);
+				
+				 for (String gcode : swckgp.split(",")) {
+			            IwmpGramPanchayat gp = new IwmpGramPanchayat();
+			            gp.setGcode(Integer.parseInt(gcode.trim()));
+		
+			            JanbhagidariPratiyogitaSWCKAccount swck = new JanbhagidariPratiyogitaSWCKAccount();
+			            swck.setJanbhagidariPratiyogita(jp);
+			            swck.setIwmpGramPanchayat(gp);
+			            swck.setCreatedBy(session.getAttribute("loginID").toString());
+			            swck.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+			            swck.setUpdatedBy(session.getAttribute("loginID").toString());
+			            swck.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+			            swck.setRequestedIp(ipAddr);
+		
+			            sess.save(swck);
+			        }
+		
+			        for (int i = 0; i < ngoname.size(); i++) {
+			            JanbhagidariPratiyogitaNgoname ngon = new JanbhagidariPratiyogitaNgoname();
+			            ngon.setJanbhagidariPratiyogita(jp);
+			            ngon.setNgo_name(ngoname.get(i).trim());
+			            ngon.setCreatedBy(session.getAttribute("loginID").toString());
+			            ngon.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+			            ngon.setUpdatedBy(session.getAttribute("loginID").toString());
+			            ngon.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+			            ngon.setRequestedIp(ipAddr);
+		
+			            sess.save(ngon);
+		
+			            String[] villages = vill.get(i).split("#");
+			            for (String vcode : villages) {
+			                JanbhagidariPratiyogitaNgovillage ngovill = new JanbhagidariPratiyogitaNgovillage();
+			                ngovill.setJanbhagidariPratiyogitaNgoname(ngon);
+		
+			                IwmpVillage village = new IwmpVillage();
+			                village.setVcode(Integer.parseInt(vcode.trim()));
+			                ngovill.setIwmpVillage(village);
+		
+			                ngovill.setCreatedBy(session.getAttribute("loginID").toString());
+			                ngovill.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+			                ngovill.setUpdatedBy(session.getAttribute("loginID").toString());
+			                ngovill.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+			                ngovill.setRequestedIp(ipAddr);
+		
+			                sess.save(ngovill);
+			            }
+			        }
+				
+			}
+			else {
+	        
 	        // Duplicate NGO Check
-	        List<String> existingNGOs = sess.createQuery("SELECT UPPER(TRIM(ngo_name)) FROM JanbhagidariPratiyogitaNgoname WHERE janbhagidariPratiyogita.iwmpMProject.projectId = :prCode").setInteger("prCode", proj).list();
-
-	        for (String existingNgo : existingNGOs) {
-	            for (String inputNgo : ngoname) {
-	                if (existingNgo.equalsIgnoreCase(inputNgo.trim())) {
-	                    return "duplicate";
-	                }
-	            }
-	        }
-
-	        // Build main object
-	        JanbhagidariPratiyogita data = new JanbhagidariPratiyogita();
-	        IwmpState state = new IwmpState();
-	        state.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
-	        IwmpDistrict district = new IwmpDistrict();
-	        district.setDcode(dcode);
-	        IwmpMProject project = new IwmpMProject();
-	        project.setProjectId(proj);
-
-	        data.setIwmpState(state);
-	        data.setIwmpDistrict(district);
-	        data.setIwmpMProject(project);
-	        data.setNo_gp(nogp);
-	        data.setNo_village(novillage);
-	        data.setProj_area(new BigDecimal(projarea));
-	        data.setProj_outlay(new BigDecimal(projoutlay));
-	        data.setFund_outlay(new BigDecimal(funoutlay));
-	        data.setFund_expenditure(new BigDecimal(projexp));
-	        data.setFund_per_exp(new BigDecimal(expper));
-	        data.setCreatedBy(session.getAttribute("loginID").toString());
-	        data.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-	        data.setUpdatedBy(session.getAttribute("loginID").toString());
-	        data.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-	        data.setRequestedIp(ipAddr);
-	        data.setStatus('D');
-
-	        sess.save(data);
-
-	        // Save SWCK GP Accounts
-	        for (String gcode : swckgp.split(",")) {
-	            IwmpGramPanchayat gp = new IwmpGramPanchayat();
-	            gp.setGcode(Integer.parseInt(gcode.trim()));
-
-	            JanbhagidariPratiyogitaSWCKAccount swck = new JanbhagidariPratiyogitaSWCKAccount();
-	            swck.setJanbhagidariPratiyogita(data);
-	            swck.setIwmpGramPanchayat(gp);
-	            swck.setCreatedBy(session.getAttribute("loginID").toString());
-	            swck.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-	            swck.setUpdatedBy(session.getAttribute("loginID").toString());
-	            swck.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-	            swck.setRequestedIp(ipAddr);
-
-	            sess.save(swck);
-	        }
-
-	        // Save NGO names and their villages
-	        for (int i = 0; i < ngoname.size(); i++) {
-	            JanbhagidariPratiyogitaNgoname ngon = new JanbhagidariPratiyogitaNgoname();
-	            ngon.setJanbhagidariPratiyogita(data);
-	            ngon.setNgo_name(ngoname.get(i).trim());
-	            ngon.setCreatedBy(session.getAttribute("loginID").toString());
-	            ngon.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-	            ngon.setUpdatedBy(session.getAttribute("loginID").toString());
-	            ngon.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-	            ngon.setRequestedIp(ipAddr);
-
-	            sess.save(ngon);
-
-	            String[] villages = vill.get(i).split("#");
-	            for (String vcode : villages) {
-	                JanbhagidariPratiyogitaNgovillage ngovill = new JanbhagidariPratiyogitaNgovillage();
-	                ngovill.setJanbhagidariPratiyogitaNgoname(ngon);
-
-	                IwmpVillage village = new IwmpVillage();
-	                village.setVcode(Integer.parseInt(vcode.trim()));
-	                ngovill.setIwmpVillage(village);
-
-	                ngovill.setCreatedBy(session.getAttribute("loginID").toString());
-	                ngovill.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-	                ngovill.setUpdatedBy(session.getAttribute("loginID").toString());
-	                ngovill.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-	                ngovill.setRequestedIp(ipAddr);
-
-	                sess.save(ngovill);
-	            }
-	        }
-
+		        List<String> existingNGOs = sess.createQuery("SELECT UPPER(TRIM(ngo_name)) FROM JanbhagidariPratiyogitaNgoname WHERE janbhagidariPratiyogita.iwmpMProject.projectId = :prCode").setInteger("prCode", proj).list();
+	
+		        for (String existingNgo : existingNGOs) {
+		            for (String inputNgo : ngoname) {
+		                if (existingNgo.equalsIgnoreCase(inputNgo.trim())) {
+		                    return "duplicate";
+		                }
+		            }
+		        }
+	
+		        // Build main object
+		        JanbhagidariPratiyogita data = new JanbhagidariPratiyogita();
+		        IwmpState state = new IwmpState();
+		        state.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
+		        IwmpDistrict district = new IwmpDistrict();
+		        district.setDcode(dcode);
+		        IwmpMProject project = new IwmpMProject();
+		        project.setProjectId(proj);
+	
+		        data.setIwmpState(state);
+		        data.setIwmpDistrict(district);
+		        data.setIwmpMProject(project);
+		        data.setNo_gp(nogp);
+		        data.setNo_village(novillage);
+		        data.setProj_area(new BigDecimal(projarea));
+		        data.setProj_outlay(new BigDecimal(projoutlay));
+		        data.setFund_outlay(new BigDecimal(funoutlay));
+		        data.setFund_expenditure(new BigDecimal(projexp));
+		        data.setFund_per_exp(new BigDecimal(expper));
+		        data.setCreatedBy(session.getAttribute("loginID").toString());
+		        data.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		        data.setUpdatedBy(session.getAttribute("loginID").toString());
+		        data.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+		        data.setRequestedIp(ipAddr);
+		        data.setStatus('D');
+	
+		        sess.save(data);
+	
+		        // Save SWCK GP Accounts
+		        for (String gcode : swckgp.split(",")) {
+		            IwmpGramPanchayat gp = new IwmpGramPanchayat();
+		            gp.setGcode(Integer.parseInt(gcode.trim()));
+	
+		            JanbhagidariPratiyogitaSWCKAccount swck = new JanbhagidariPratiyogitaSWCKAccount();
+		            swck.setJanbhagidariPratiyogita(data);
+		            swck.setIwmpGramPanchayat(gp);
+		            swck.setCreatedBy(session.getAttribute("loginID").toString());
+		            swck.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		            swck.setUpdatedBy(session.getAttribute("loginID").toString());
+		            swck.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+		            swck.setRequestedIp(ipAddr);
+	
+		            sess.save(swck);
+		        }
+	
+		        // Save NGO names and their villages
+		        for (int i = 0; i < ngoname.size(); i++) {
+		            JanbhagidariPratiyogitaNgoname ngon = new JanbhagidariPratiyogitaNgoname();
+		            ngon.setJanbhagidariPratiyogita(data);
+		            ngon.setNgo_name(ngoname.get(i).trim());
+		            ngon.setCreatedBy(session.getAttribute("loginID").toString());
+		            ngon.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		            ngon.setUpdatedBy(session.getAttribute("loginID").toString());
+		            ngon.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+		            ngon.setRequestedIp(ipAddr);
+	
+		            sess.save(ngon);
+	
+		            String[] villages = vill.get(i).split("#");
+		            for (String vcode : villages) {
+		                JanbhagidariPratiyogitaNgovillage ngovill = new JanbhagidariPratiyogitaNgovillage();
+		                ngovill.setJanbhagidariPratiyogitaNgoname(ngon);
+	
+		                IwmpVillage village = new IwmpVillage();
+		                village.setVcode(Integer.parseInt(vcode.trim()));
+		                ngovill.setIwmpVillage(village);
+	
+		                ngovill.setCreatedBy(session.getAttribute("loginID").toString());
+		                ngovill.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+		                ngovill.setUpdatedBy(session.getAttribute("loginID").toString());
+		                ngovill.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
+		                ngovill.setRequestedIp(ipAddr);
+	
+		                sess.save(ngovill);
+		            }
+		        }
+			}
 	        sess.getTransaction().commit();
 	        res = "success";
 
@@ -1391,6 +1461,70 @@ public class JanbhagidariPratiyogitaDaoImpl implements JanbhagidariPratiyogitaDa
 		}
 		return result;
 	}
-
 	
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectExist(Integer project) {
+		// TODO Auto-generated method stub
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+			
+				query = session.createSQLQuery("select pratiyogita_id from janbhagidari_pratiyogita where proj_id=:projectId");
+				query.setInteger("projectId", project);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+				tx.commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesDistrict(int id) {
+		
+		List<JanbhagidariPratiyogitaBean> result=new ArrayList<JanbhagidariPratiyogitaBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				String hql=null;
+				SQLQuery query = null;
+			
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				hql=janbhagidariDistWiseActivitiesDetails;
+				query = session.createSQLQuery(hql);
+				query.setInteger("stcd", id);
+				query.setResultTransformer(Transformers.aliasToBean(JanbhagidariPratiyogitaBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
 }

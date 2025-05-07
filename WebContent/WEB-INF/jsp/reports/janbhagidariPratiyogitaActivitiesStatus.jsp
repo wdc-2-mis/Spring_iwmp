@@ -24,7 +24,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">State wise Watersheed Janbhagidari Activities Details</label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report JP3- State wise Watershed Janbhagidari Activities Details</label></h5></div>
 <br>
 <div class ="card">
 
@@ -88,8 +88,8 @@
 								<td>
  								<c:out value='${count.count}' />
  								</td>
- 							<%-- 	<td><a href="getdistrictWiseCurrentStatusJanbhagidari?id=<c:out value='${data.st_code}' />&stname=${data.st_name}" > <c:out value="${data.st_name}" /></a></td> --%>
- 								 <td> <c:out value="${data.st_name}" /></td>
+ 								<td><a href="getdistrictWiseJanbhagidariActivitiesReport?id=<c:out value='${data.st_code}' />&stname=${data.st_name}" > <c:out value="${data.st_name}" /></a></td>
+ 								<%--  <td> <c:out value="${data.st_name}" /></td> --%>
  								<td class="text-right"> <c:out value="${data.proj_repoted}" /></td>
  								<td class="text-right"> <c:out value="${data.no_work_creation}" /></td>
  								<td class="text-right"> <c:out value="${data.no_work_repair}" /></td>

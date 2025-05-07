@@ -84,6 +84,9 @@ public interface JanbhagidariPratiyogitaService {
 
 	List<JanbhagidariPratiyogitaBean> getjanbhagidariPIANoStatus(Integer regId);
 
+	List<JanbhagidariPratiyogitaBean> getJanbhagidariPratiyogitaProjectExist(Integer project);
+	
+	List<JanbhagidariPratiyogitaBean> getjanbhagidariPratiyogitaActivitiesDistrict(int id);
 	
 
 }

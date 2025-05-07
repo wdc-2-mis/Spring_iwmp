@@ -55,7 +55,7 @@ function getjanbhagidariPratiyogitaRpt(){
 
 
 <div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>
-<label id="head"> State, District and Project-wise Janbhagidari Cup under WDC-PMKSY2.0 Report</label></h5></div>
+<label id="head">Report JP1- State, District and Project-wise Janbhagidari Cup under WDC-PMKSY2.0</label></h5></div>
 
 
 <br>

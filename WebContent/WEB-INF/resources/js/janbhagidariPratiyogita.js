@@ -49,11 +49,9 @@ $(function() {
 						    {
 								if(data==='success')
 								{
-									alert('Data Already Exists. Please Select a Different Project !');
-									$("select#projid")[0].selectedIndex = 0;
-												
+									alert('Data Already Exists. Now You want to add NGO Details Only !');
+									//$("select#projid")[0].selectedIndex = 0;
 								}
-											
 						    }
 						  });   
 
@@ -82,6 +80,12 @@ $(function() {
 								$('#nogp').val(data[key].gpcount); 
 								$('#novillage').val(data[key].villagecount); 
 								$('#projarea').val(data[key].projectarea); 
+								$('#projoutlay').val(data[key].proj_outlay); 
+								$('#funoutlay').val(data[key].fund_outlay); 
+								$('#projexp').val(data[key].fund_expenditure); 
+								$('#expper').val(data[key].fund_per_exp); 
+								
+								
 							}
 						}
 					}
@@ -98,32 +102,71 @@ $(function() {
 				            console.log(er);
 				        },
 				        success: function(data) {
-    $('#loading').hide();
-    var i = $('#listvillageGPWiseTbody tr').length;
+   							 	$('#loading').hide();
+    							var i = $('#listvillageGPWiseTbody tr').length;
 
-    // Populate ddlgp in each row
-    for (var x = 0; x < i; x++) {
-        var $head = (x === 0) ? $('#ddlgp') : $('#ddlgp' + x);
-        $head.empty();
-        $head.append('<option value="">--Select Gram Panchayat--</option>');
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                $head.append('<option value="'+key+'">'+data[key]+'</option>');
-            }
-        }
-    }
+							    // Populate ddlgp in each row
+							    for (var x = 0; x < i; x++) {
+							        var $head = (x === 0) ? $('#ddlgp') : $('#ddlgp' + x);
+							        $head.empty();
+							        $head.append('<option value="">--Select Gram Panchayat--</option>');
+							        for (var key in data) {
+							            if (data.hasOwnProperty(key)) {
+							                $head.append('<option value="'+key+'">'+data[key]+'</option>');
+							            }
+							        }
+							    }
 
-    // Also populate swckgp
-    var $swckgp = $('#swckgp');
-    $swckgp.empty();
-    $swckgp.append('<option value="">--Select Gram Panchayat--</option>');
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            $swckgp.append('<option value="'+key+'">'+data[key]+'</option>');
-        }
-    }
-}
+						    // Also populate swckgp
+						    var $swckgp = $('#swckgp');
+						    $swckgp.empty();
+						    $swckgp.append('<option value="">--Select Gram Panchayat--</option>');
+						    for (var key in data) {
+						        if (data.hasOwnProperty(key)) {
+						            $swckgp.append('<option value="'+key+'">'+data[key]+'</option>');
+						        }
+						    }
+						}
+					});
+					
+					
+					
+					$.ajax({  
+						url:"getJanbhagidariPratiyogitaProjectExist",
+						type: "post", 
+						data:{project:$projectId}, 
+						error:function(xhr,status,er){
+							    console.log(er);
+						},
+						success:function(data) {
+							console.log(data);
+
+							if(Object.keys(data).length>0)
+							{
+								$('#nogp').prop('readonly', true);
+								$('#novillage').prop('readonly', true);
+								$('#projarea').prop('readonly', true); 
+								$('#projoutlay').prop('readonly', true); 
+								$('#funoutlay').prop('readonly', true); 
+								$('#projexp').prop('readonly', true);
+								$('#expper').prop('readonly', true);
+							}
+							else{
+								$('#nogp').prop('readonly', false);
+								$('#novillage').prop('readonly', false); 
+								$('#projarea').prop('readonly', false); 
+								$('#projoutlay').prop('readonly', false); 
+								$('#funoutlay').prop('readonly', false); 
+								$('#projexp').prop('readonly', false);
+								$('#expper').prop('readonly', false);
+							}
+						}
 				});
+					
+					
+					
+					
+					
 	});			
 				
 	
@@ -143,7 +186,7 @@ $(document).on('blur', '.name_ngo', function () {
         },
         success: function (data) {
             if (data) {
-                alert("This NGO name already exists. Please choose a different name.");
+                alert("This NGO Name already exists. Please Enter a Different NGO Name.");
                 $input.val("");  // 👈 Clear the input field
                 $input.addClass('is-invalid');  // Add red border
                 $input.attr('title', 'Duplicate NGO name in database!');
