@@ -8,18 +8,18 @@
 <html>
 <head>
 
-<title>Report PE2-  State-wise Mid Term Evaluation of State-wise Mid Term Evaluation of Community Based SHG, FPO and UG</title>
+<title>Report PE2-  State-wise Mid Term Evaluation of State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</title>
 
 <script type="text/javascript">
 
 function exportExcel() {
-	document.getComBasedShgFpoUgData.action = "downloadExcelCroppedDetailsReport";
+	document.getComBasedShgFpoUgData.action = "downloadExcelComBasedShgFpoUgReport";
 	document.getComBasedShgFpoUgData.method = "post";
 	document.getComBasedShgFpoUgData.submit();
 }
 
 function downloadPDF() {
-	document.getComBasedShgFpoUgData.action = "downloadCroppedDetailsReportPdf";
+	document.getComBasedShgFpoUgData.action = "downloadComBasedShgFpoUgReportPdf";
 	document.getComBasedShgFpoUgData.method = "post";
 	document.getComBasedShgFpoUgData.submit();
 }
@@ -27,7 +27,7 @@ function downloadPDF() {
 function exportDExcel(stcode, stname) {
 	document.getElementById("stcode").value = stcode;
 	document.getElementById("stname").value = stname;
-	document.getComBasedShgFpoUgData.action = "downloadExcelCroppedDetailsReport";
+	document.getComBasedShgFpoUgData.action = "downloadExcelDistComBasedShgFpoUgReport";
 	document.getComBasedShgFpoUgData.method = "post";
 	document.getComBasedShgFpoUgData.submit();
 }
@@ -35,7 +35,7 @@ function exportDExcel(stcode, stname) {
 function downloadDPDF(stcode, stname) {
 	document.getElementById("stcode").value = stcode;
 	document.getElementById("stname").value = stname;
-	document.getComBasedShgFpoUgData.action = "downloadCroppedDetailsReportPdf";
+	document.getComBasedShgFpoUgData.action = "downloadDistComBasedShgFpoUgReportPdf";
 	document.getComBasedShgFpoUgData.method = "post";
 	document.getComBasedShgFpoUgData.submit();
 }
@@ -48,7 +48,7 @@ function downloadDPDF(stcode, stname) {
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE3- State-wise Mid Term Evaluation of Community Based SHG, FPO and UG</label>
+			<label id="head">Report PE3- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</label>
 		</h5>
 	</div>
 <br>
@@ -61,7 +61,7 @@ function downloadDPDF(stcode, stname) {
  	</form:form>
  
 <br>
-	<div id ="excelpdf" style="display: none;">
+	<div id ="excelpdf">
 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> 
 	</div>   
@@ -220,7 +220,7 @@ function downloadDPDF(stcode, stname) {
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE3- District-wise Mid Term Evaluation of Community Based SHG, FPO and UG for <c:out value ="${stname}"/></label>
+			<label id="head">Report PE3- District-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of <c:out value ="${stname}"/></label>
 		</h5>
 	</div>
 <br>
@@ -234,7 +234,7 @@ function downloadDPDF(stcode, stname) {
  	</form:form>
  
 <br>
-	<div id ="excelpdf" style="display: none;">
+	<div id ="excelpdf">
 	<button name="exportDExcel" id="exportDExcel" onclick="exportDExcel('${stcode}','${stname}')" class="btn btn-info">Excel</button>
 	<button name="exportDPDF" id="exportDPDF" onclick="downloadDPDF('${stcode}','${stname}')" class="btn btn-info">PDF</button>  
 	</div>   

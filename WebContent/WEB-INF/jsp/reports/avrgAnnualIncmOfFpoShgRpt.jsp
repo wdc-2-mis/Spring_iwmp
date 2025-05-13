@@ -185,7 +185,7 @@
  	</form:form>
  
 <br>
-	<div id ="excelpdf" style="display: none;">
+	<div id ="excelpdf">
 	<button name="exportDExcel" id="exportDExcel" onclick="exportDExcel('${stcode}','${stname}')" class="btn btn-info">Excel</button>
 	<button name="exportDPDF" id="exportDPDF" onclick="downloadDPDF('${stcode}','${stname}')" class="btn btn-info">PDF</button> 
 	</div>   

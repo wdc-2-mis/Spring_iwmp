@@ -4,7 +4,7 @@ package app.projectevaluation.controller;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-
+import java.math.BigInteger;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6100,6 +6100,1424 @@ public class ProjectEvaluationController {
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	@RequestMapping(value = "/downloadExcelDistAvrgAnnualIncomeReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelDistAvrgAnnualIncomeReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =PEService.getDistwiseAverageAnnualIncome(stCode);
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report PE3 - District");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report PE3- District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state;
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 11, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,6,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,3,5); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,6,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,9,11); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+			mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("District Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total No. of Project");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Average Annual Income of FPOs");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(4).setCellStyle(style);
+			rowhead.createCell(5).setCellStyle(style);
+			
+			
+			cell = rowhead.createCell(6);
+			cell.setCellValue("Average Annual Net Income of FPO Members");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(7).setCellStyle(style);
+			rowhead.createCell(8).setCellStyle(style);
+			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Average Annual Net Income of SHG Members");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			rowhead.createCell(10).setCellStyle(style);
+			rowhead.createCell(11).setCellStyle(style);
+			
+			rowhead = sheet.createRow(6);
+			
+			for(int i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			String head[] = {"Pre Project Status(Aggregate)","Mid Project Status(Aggregate)","Controlled Area"};
+			int i = 3;
+			while(i<=11) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[0]);  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[1]);  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue(head[2]);  
+				cell.setCellStyle(style);
+				i++;
+				
+			}
+			
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int j=0;j<12;j++)
+			{
+				cell =rowhead1.createCell(j);
+				cell.setCellValue(j+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        Integer totproj = 0;
+			BigDecimal totprefpoturnover = BigDecimal.ZERO;
+			BigDecimal totmidfpoturnover = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoturnover = BigDecimal.ZERO;
+			BigDecimal totprefpoincome = BigDecimal.ZERO;
+			BigDecimal totmidfpoincome = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoincome = BigDecimal.ZERO;
+			BigDecimal totpreannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totmidannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totcontrolannualincomeshg = BigDecimal.ZERO;
+	        
+	        for(ProductionDetailsBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getDistname());
+	        	row.createCell(2).setCellValue(bean.getTotproj());
+	        	row.createCell(3).setCellValue(bean.getPrefpoturnover().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getMidfpoturnover().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getControlfpoturnover().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getPrefpoincome().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidfpoincome().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlfpoincome().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPreannualincomeshg().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getMidannualincomeshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getControlannualincomeshg().doubleValue());
+	        	
+	        	totproj = totproj + bean.getTotproj();
+	        	totprefpoturnover = totprefpoturnover.add(bean.getPrefpoturnover());
+	        	totmidfpoturnover = totmidfpoturnover.add(bean.getMidfpoturnover());
+	        	totcontrolfpoturnover = totcontrolfpoturnover.add(bean.getControlfpoturnover());
+	        	totprefpoincome = totprefpoincome.add(bean.getPrefpoincome());
+	        	totmidfpoincome = totmidfpoincome.add(bean.getMidfpoincome());
+	        	totcontrolfpoincome = totcontrolfpoincome.add(bean.getControlfpoincome());
+	        	totpreannualincomeshg = totpreannualincomeshg.add(bean.getPreannualincomeshg());
+	        	totmidannualincomeshg = totmidannualincomeshg.add(bean.getMidannualincomeshg());
+	        	totcontrolannualincomeshg = totcontrolannualincomeshg.add(bean.getControlannualincomeshg());
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(totproj);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totprefpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totmidfpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue(totcontrolfpoturnover.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue(totprefpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue(totmidfpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue(totcontrolfpoincome.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totpreannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(10);
+	        cell.setCellValue(totmidannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totcontrolannualincomeshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
+	        String fileName = "attachment; filename=Report PE3 - District.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/avrgAnnualIncmOfFpoShgRpt";
+		
+	}
+	
+	
+	@RequestMapping(value = "/downloadDistAvrgAnnualIncomePdf", method = RequestMethod.POST)
+	public ModelAndView downloadDistAvrgAnnualIncomePdf(HttpServletRequest request, HttpServletResponse response) 
+	{
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =PEService.getDistwiseAverageAnnualIncome(stCode);
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Avrage Annual Income of FPO and SHG");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph(
+					"Report PE3- District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state,f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(12);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(3);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Income of FPOs", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Net Income of FPO Members", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average Annual Net Income of SHG Members", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			Integer totproj = 0;
+			BigDecimal totprefpoturnover = BigDecimal.ZERO;
+			BigDecimal totmidfpoturnover = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoturnover = BigDecimal.ZERO;
+			BigDecimal totprefpoincome = BigDecimal.ZERO;
+			BigDecimal totmidfpoincome = BigDecimal.ZERO;
+			BigDecimal totcontrolfpoincome = BigDecimal.ZERO;
+			BigDecimal totpreannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totmidannualincomeshg = BigDecimal.ZERO;
+			BigDecimal totcontrolannualincomeshg = BigDecimal.ZERO;
+			if (list.size() != 0)
+				for (int i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(i + 1), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotproj().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					
+					
+					CommonFunctions.insertCell(table, list.get(i).getPrefpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidfpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlfpoturnover().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrefpoincome().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidfpoincome().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlfpoincome().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPreannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlannualincomeshg().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+
+					totproj = totproj + list.get(i).getTotproj();
+		        	totprefpoturnover = totprefpoturnover.add(list.get(i).getPrefpoturnover());
+		        	totmidfpoturnover = totmidfpoturnover.add(list.get(i).getMidfpoturnover());
+		        	totcontrolfpoturnover = totcontrolfpoturnover.add(list.get(i).getControlfpoturnover());
+		        	totprefpoincome = totprefpoincome.add(list.get(i).getPrefpoincome());
+		        	totmidfpoincome = totmidfpoincome.add(list.get(i).getMidfpoincome());
+		        	totcontrolfpoincome = totcontrolfpoincome.add(list.get(i).getControlfpoincome());
+		        	totpreannualincomeshg = totpreannualincomeshg.add(list.get(i).getPreannualincomeshg());
+		        	totmidannualincomeshg = totmidannualincomeshg.add(list.get(i).getMidannualincomeshg());
+		        	totcontrolannualincomeshg = totcontrolannualincomeshg.add(list.get(i).getControlannualincomeshg());
+
+				}
+			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprefpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidfpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolfpoturnover.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprefpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidfpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolfpoincome.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totpreannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolannualincomeshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 12, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(70);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,
+					"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+							+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+					Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report District.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	@RequestMapping(value = "/downloadExcelComBasedShgFpoUgReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelComBasedShgFpoUgReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<ProductionDetailsBean> list = PEService.getCommunityBasedData();
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report PE3 - State");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report PE3- State-wise Mid Term Evaluation of Community Based SHG, FPO and UG";
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 18, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,7,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,7,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,7,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(5,5,3,10); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,11,18); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(6,6,3,4); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,5,6); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,7,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,9,10); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,11,12); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,13,14); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,15,16); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,17,18); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+			mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total No. of Project");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Number of Community Based Organization");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			for(int i =4;i<11;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Members in Community Based Organization");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			for(int i =12;i<19;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			rowhead = sheet.createRow(6);
+			for(int i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			int i = 3;
+			while(i<19) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue("SHG");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("FPO");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("UG");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Total");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+			}
+			
+			
+			rowhead = sheet.createRow(7);
+			
+			for(i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			i = 3;
+			while(i<19) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Project Area");  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Controlled Area");  
+				cell.setCellStyle(style);
+				i++;
+			}
+			
+			
+			Row rowhead1 = sheet.createRow(8);
+			for(int j=0;j<19;j++)
+			{
+				cell =rowhead1.createCell(j);
+				cell.setCellValue(j+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 9;
+	        Integer totproj = 0;
+	        BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
+			
+			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
+			
+			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
+			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
+			
+			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
+	        
+	        for(ProductionDetailsBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getStname());
+	        	row.createCell(2).setCellValue(bean.getTotproj());
+	        	row.createCell(3).setCellValue(bean.getCommunitybasedshg().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getCommunitybasedfpo().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
+	        	
+	        	row.createCell(9).setCellValue(bean.getCommunitybasedshg().doubleValue() + bean.getCommunitybasedfpo().doubleValue() + bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
+	        	
+	        	row.createCell(11).setCellValue(bean.getMemberbasedshg().doubleValue());
+	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMemberbasedfpo().doubleValue());
+	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getMemberbasedug().doubleValue());
+	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getMemberbasedshg().doubleValue() + bean.getMemberbasedfpo().doubleValue() + bean.getMemberbasedug().doubleValue());
+	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
+	        	
+	        	totproj = totproj + bean.getTotproj();
+	        	totcommunitybasedshg = totcommunitybasedshg.add(bean.getCommunitybasedshg());
+	        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(bean.getControlcommunitybasedshg());
+	        	totcommunitybasedfpo = totcommunitybasedfpo.add(bean.getCommunitybasedfpo());
+	        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(bean.getControlcommunitybasedfpo());
+	        	totcommunitybasedug = totcommunitybasedug.add(bean.getCommunitybasedug());
+	        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(bean.getControlcommunitybasedug());
+	        	totcommunitybasedtot = totcommunitybasedtot.add(bean.getCommunitybasedshg().add(bean.getCommunitybasedfpo()).add(bean.getCommunitybasedug()));
+	        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(bean.getControlcommunitybasedshg().add(bean.getControlcommunitybasedfpo()).add(bean.getControlcommunitybasedug()));
+	        	
+	        	totmemberbasedshg = totmemberbasedshg.add(bean.getMemberbasedshg());
+	        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(bean.getControlmemberbasedshg());
+	        	totmemberbasedfpo = totmemberbasedfpo.add(bean.getMemberbasedfpo());
+	        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(bean.getControlmemberbasedfpo());
+	        	totmemberbasedug = totmemberbasedug.add(bean.getMemberbasedug());
+	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getMemberbasedshg());
+	        	totcmemberbasedtot = totcmemberbasedtot.add(bean.getMemberbasedshg().add(bean.getMemberbasedfpo()).add(bean.getMemberbasedug()));
+	        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(bean.getControlmemberbasedshg().add(bean.getControlmemberbasedfpo()).add(bean.getControlmemberbasedug()));
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(totproj);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totcommunitybasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue(totcommunitybasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue(totcommunitybasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totcommunitybasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(10);
+	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totmemberbasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(12);
+	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(13);
+	        cell.setCellValue(totmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(14);
+	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(15);
+	        cell.setCellValue(totmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(16);
+	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(17);
+	        cell.setCellValue(totcmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(18);
+	        cell.setCellValue(totcontrolmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
+	        String fileName = "attachment; filename=Report PE3 - State.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/communityBasedShgFpoUgDataRpt";
+		
+	}
+	
+	
+	@RequestMapping(value = "/downloadComBasedShgFpoUgReportPdf", method = RequestMethod.POST)
+	public ModelAndView downloadComBasedShgFpoUgReportPdf(HttpServletRequest request, HttpServletResponse response) 
+	{
+		List<ProductionDetailsBean> list = PEService.getCommunityBasedData();
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Community Based Organization Details of FPO, SHG and UG");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph(
+					"Report PE3- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG",f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(19);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(4);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			int i = 3;
+			while(i<19) {
+				CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+			}
+			
+			for(int j=0;j<19;j++)
+			{
+				Integer count = j+1;
+				CommonFunctions.insertCellHeader(table, count.toString(), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+
+			Integer totproj = 0;
+			BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
+			
+			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
+			
+			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
+			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
+			
+			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
+			if (list.size() != 0)
+				for (i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(i + 1), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotproj().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					
+					
+					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+
+					totproj = totproj + list.get(i).getTotproj();
+					totcommunitybasedshg = totcommunitybasedshg.add(list.get(i).getCommunitybasedshg());
+		        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(list.get(i).getControlcommunitybasedshg());
+		        	totcommunitybasedfpo = totcommunitybasedfpo.add(list.get(i).getCommunitybasedfpo());
+		        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(list.get(i).getControlcommunitybasedfpo());
+		        	totcommunitybasedug = totcommunitybasedug.add(list.get(i).getCommunitybasedug());
+		        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(list.get(i).getControlcommunitybasedug());
+		        	totcommunitybasedtot = totcommunitybasedtot.add(list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getCommunitybasedug()));
+		        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug()));
+		        	
+		        	totmemberbasedshg = totmemberbasedshg.add(list.get(i).getMemberbasedshg());
+		        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(list.get(i).getControlmemberbasedshg());
+		        	totmemberbasedfpo = totmemberbasedfpo.add(list.get(i).getMemberbasedfpo());
+		        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(list.get(i).getControlmemberbasedfpo());
+		        	totmemberbasedug = totmemberbasedug.add(list.get(i).getMemberbasedug());
+		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getMemberbasedshg());
+		        	totcmemberbasedtot = totcmemberbasedtot.add(list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug()));
+		        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug()));
+
+				}
+			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 19, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(70);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,
+					"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+							+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+					Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report- PE3 State.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	
+	@RequestMapping(value = "/downloadExcelDistComBasedShgFpoUgReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelDistComBasedShgFpoUgReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		list =PEService.getDistwiseCommunityBasedData(stCode);
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report PE3 - District");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report PE3- District-wise Mid Term Evaluation of Community Based SHG, FPO and UG of "+state;
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 18, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,7,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,7,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,7,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(5,5,3,10); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,11,18); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        mergedRegion = new CellRangeAddress(6,6,3,4); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,5,6); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,7,8); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,9,10); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,11,12); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,13,14); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,15,16); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,6,17,18); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+			mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("District Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total No. of Project");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Number of Community Based Organization");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			for(int i =4;i<11;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Members in Community Based Organization");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			for(int i =12;i<19;i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			rowhead = sheet.createRow(6);
+			for(int i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			int i = 3;
+			while(i<19) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue("SHG");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("FPO");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("UG");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Total");  
+				cell.setCellStyle(style);
+				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				i++;
+				rowhead.createCell(i).setCellStyle(style);
+				i++;
+			}
+			
+			
+			rowhead = sheet.createRow(7);
+			
+			for(i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			i = 3;
+			while(i<19) {
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Project Area");  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Controlled Area");  
+				cell.setCellStyle(style);
+				i++;
+			}
+			
+			
+			Row rowhead1 = sheet.createRow(8);
+			for(int j=0;j<19;j++)
+			{
+				cell =rowhead1.createCell(j);
+				cell.setCellValue(j+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 9;
+	        Integer totproj = 0;
+	        BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
+			
+			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
+			
+			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
+			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
+			
+			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
+	        
+	        for(ProductionDetailsBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getDistname());
+	        	row.createCell(2).setCellValue(bean.getTotproj());
+	        	row.createCell(3).setCellValue(bean.getCommunitybasedshg().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getCommunitybasedfpo().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
+	        	
+	        	row.createCell(9).setCellValue(bean.getCommunitybasedshg().doubleValue() + bean.getCommunitybasedfpo().doubleValue() + bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
+	        	
+	        	row.createCell(11).setCellValue(bean.getMemberbasedshg().doubleValue());
+	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMemberbasedfpo().doubleValue());
+	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getMemberbasedug().doubleValue());
+	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getMemberbasedshg().doubleValue() + bean.getMemberbasedfpo().doubleValue() + bean.getMemberbasedug().doubleValue());
+	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
+	        	
+	        	totproj = totproj + bean.getTotproj();
+	        	totcommunitybasedshg = totcommunitybasedshg.add(bean.getCommunitybasedshg());
+	        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(bean.getControlcommunitybasedshg());
+	        	totcommunitybasedfpo = totcommunitybasedfpo.add(bean.getCommunitybasedfpo());
+	        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(bean.getControlcommunitybasedfpo());
+	        	totcommunitybasedug = totcommunitybasedug.add(bean.getCommunitybasedug());
+	        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(bean.getControlcommunitybasedug());
+	        	totcommunitybasedtot = totcommunitybasedtot.add(bean.getCommunitybasedshg().add(bean.getCommunitybasedfpo()).add(bean.getCommunitybasedug()));
+	        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(bean.getControlcommunitybasedshg().add(bean.getControlcommunitybasedfpo()).add(bean.getControlcommunitybasedug()));
+	        	
+	        	totmemberbasedshg = totmemberbasedshg.add(bean.getMemberbasedshg());
+	        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(bean.getControlmemberbasedshg());
+	        	totmemberbasedfpo = totmemberbasedfpo.add(bean.getMemberbasedfpo());
+	        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(bean.getControlmemberbasedfpo());
+	        	totmemberbasedug = totmemberbasedug.add(bean.getMemberbasedug());
+	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getMemberbasedshg());
+	        	totcmemberbasedtot = totcmemberbasedtot.add(bean.getMemberbasedshg().add(bean.getMemberbasedfpo()).add(bean.getMemberbasedug()));
+	        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(bean.getControlmemberbasedshg().add(bean.getControlmemberbasedfpo()).add(bean.getControlmemberbasedug()));
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(totproj);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totcommunitybasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue(totcommunitybasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue(totcommunitybasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totcommunitybasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(10);
+	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totmemberbasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(12);
+	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(13);
+	        cell.setCellValue(totmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(14);
+	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(15);
+	        cell.setCellValue(totmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(16);
+	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(17);
+	        cell.setCellValue(totcmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(18);
+	        cell.setCellValue(totcontrolmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
+	        String fileName = "attachment; filename=Report PE3 - District.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/communityBasedShgFpoUgDataRpt";
+		
+	}
+	
+	
+	@RequestMapping(value = "/downloadDistComBasedShgFpoUgReportPdf", method = RequestMethod.POST)
+	public ModelAndView downloadDistComBasedShgFpoUgReportPdf(HttpServletRequest request, HttpServletResponse response) 
+	{
+		List<ProductionDetailsBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		list =PEService.getDistwiseCommunityBasedData(stCode);
+
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Community Based Organization Details of FPO, SHG and UG");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph(
+					"Report PE3- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of "+state,f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(19);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(4);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			int i = 3;
+			while(i<19) {
+				CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+			}
+			
+			for(int j=0;j<19;j++)
+			{
+				Integer count = j+1;
+				CommonFunctions.insertCellHeader(table, count.toString(), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+
+			Integer totproj = 0;
+			BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
+			
+			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
+			
+			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
+			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
+			
+			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
+			if (list.size() != 0)
+				for (i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(i + 1), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotproj().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					
+					
+					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+
+					totproj = totproj + list.get(i).getTotproj();
+					totcommunitybasedshg = totcommunitybasedshg.add(list.get(i).getCommunitybasedshg());
+		        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(list.get(i).getControlcommunitybasedshg());
+		        	totcommunitybasedfpo = totcommunitybasedfpo.add(list.get(i).getCommunitybasedfpo());
+		        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(list.get(i).getControlcommunitybasedfpo());
+		        	totcommunitybasedug = totcommunitybasedug.add(list.get(i).getCommunitybasedug());
+		        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(list.get(i).getControlcommunitybasedug());
+		        	totcommunitybasedtot = totcommunitybasedtot.add(list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getCommunitybasedug()));
+		        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug()));
+		        	
+		        	totmemberbasedshg = totmemberbasedshg.add(list.get(i).getMemberbasedshg());
+		        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(list.get(i).getControlmemberbasedshg());
+		        	totmemberbasedfpo = totmemberbasedfpo.add(list.get(i).getMemberbasedfpo());
+		        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(list.get(i).getControlmemberbasedfpo());
+		        	totmemberbasedug = totmemberbasedug.add(list.get(i).getMemberbasedug());
+		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getMemberbasedshg());
+		        	totcmemberbasedtot = totcmemberbasedtot.add(list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug()));
+		        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug()));
+
+				}
+			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totcontrolmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 19, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(70);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,
+					"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+							+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+					Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report- PE3 District.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
