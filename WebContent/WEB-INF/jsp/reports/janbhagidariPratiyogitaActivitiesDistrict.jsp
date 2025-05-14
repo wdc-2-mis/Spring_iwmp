@@ -55,7 +55,7 @@
     	<tr>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 2%;">S.No.</th>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 20%;">District Name</th>
-      		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">No. of Projects where Watersheed Janbhagidari Organized</th>
+      		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">No. of Projects where Watershed Janbhagidari Organized</th>
       		
       		<th colspan="4" style="text-align:center; vertical-align: middle; width: 35%;">No. of Work to be done through Janbhagidari Activities</th>
       		<th colspan="3" style="text-align:center; vertical-align: middle; width: 28%;">Tentative Community Contribution Percentage (%)</th>

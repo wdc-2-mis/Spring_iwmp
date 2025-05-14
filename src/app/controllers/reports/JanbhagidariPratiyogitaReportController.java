@@ -605,7 +605,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        Paragraph paragraph3 = null;
 	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-	        paragraph3 = new Paragraph("State wise Current Status of Watersheed Janbhagidari", f3);
+	        paragraph3 = new Paragraph("State wise Current Status of Watershed Janbhagidari", f3);
 
 	        paragraph2.setAlignment(Element.ALIGN_CENTER);
 	        paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -750,7 +750,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        document.close();
 
 	        response.setContentType("application/pdf");
-	        response.setHeader("Content-Disposition", "attachment; filename=State wise Current Status of Watersheed Janbhagidari.pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=State wise Current Status of Watershed Janbhagidari.pdf");
 	        OutputStream outputStream = response.getOutputStream();
 	        baos.writeTo(outputStream);
 	        outputStream.flush();
@@ -786,12 +786,12 @@ public class JanbhagidariPratiyogitaReportController {
 		BigDecimal totfund_expenditure = BigDecimal.valueOf(0);
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("State wise Current Status of Watersheed Janbhagidari");   
+			Sheet sheet = workbook.createSheet("State wise Current Status of Watershed Janbhagidari");   
 			
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "State wise Current Status of Watersheed Janbhagidari";
+			String rptName = "State wise Current Status of Watershed Janbhagidari";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1021,7 +1021,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        cell.setCellStyle(style1);
 	       
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 14);
-	        String fileName = "attachment; filename=State wise Current Status of Watersheed Janbhagidari.xlsx";
+	        String fileName = "attachment; filename=State wise Current Status of Watershed Janbhagidari.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -1131,7 +1131,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        Paragraph paragraph3 = null;
 	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-	        paragraph3 = new Paragraph("District wise Current Status of Watersheed Janbhagidari", f3);
+	        paragraph3 = new Paragraph("District wise Current Status of Watershed Janbhagidari", f3);
 
 	        paragraph2.setAlignment(Element.ALIGN_CENTER);
 	        paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -1273,7 +1273,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        document.close();
 
 	        response.setContentType("application/pdf");
-	        response.setHeader("Content-Disposition", "attachment; filename=District wise Current Status of Watersheed Janbhagidari.pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=District wise Current Status of Watershed Janbhagidari.pdf");
 	        OutputStream outputStream = response.getOutputStream();
 	        baos.writeTo(outputStream);
 	        outputStream.flush();
@@ -1310,12 +1310,12 @@ public class JanbhagidariPratiyogitaReportController {
 		BigDecimal totfund_expenditure = BigDecimal.valueOf(0);
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("District wise Current Status of Watersheed Janbhagidari");   
+			Sheet sheet = workbook.createSheet("District wise Current Status of Watershed Janbhagidari");   
 			
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "District wise Current Status of Watersheed Janbhagidari";
+			String rptName = "District wise Current Status of Watershed Janbhagidari";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1556,7 +1556,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        cell.setCellStyle(style1);
 	       
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 14);
-	        String fileName = "attachment; filename=District wise Current Status of Watersheed Janbhagidari.xlsx";
+	        String fileName = "attachment; filename=District wise Current Status of Watershed Janbhagidari.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -1746,7 +1746,7 @@ public class JanbhagidariPratiyogitaReportController {
 
 	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-	        CommonFunctions.insertCellHeader(table, "No. of Projects where Watersheed Janbhagidari Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Projects where Watershed Janbhagidari Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	       
 	        CommonFunctions.insertCellHeader(table, "No. of Work to be done through Janbhagidari Activities", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Tentative Community Contribution Percentage (%)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
@@ -1927,7 +1927,7 @@ public class JanbhagidariPratiyogitaReportController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 				
 			cell = rowhead.createCell(2);
-			cell.setCellValue("No. of Projects where Watersheed Janbhagidari Organized");  
+			cell.setCellValue("No. of Projects where Watershed Janbhagidari Organized");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 			
@@ -2202,7 +2202,7 @@ public class JanbhagidariPratiyogitaReportController {
 	        CommonFunctions.insertCellHeader(table, "State Name "+stname, Element.ALIGN_LEFT, 15, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-	        CommonFunctions.insertCellHeader(table, "No. of Projects where Watersheed Janbhagidari Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "No. of Projects where Watershed Janbhagidari Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 	       
 	        CommonFunctions.insertCellHeader(table, "No. of Work to be done through Janbhagidari Activities", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Tentative Community Contribution Percentage (%)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
@@ -2394,7 +2394,7 @@ public class JanbhagidariPratiyogitaReportController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 				
 			cell = rowhead.createCell(2);
-			cell.setCellValue("No. of Projects where Watersheed Janbhagidari Organized");  
+			cell.setCellValue("No. of Projects where Watershed Janbhagidari Organized");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 			

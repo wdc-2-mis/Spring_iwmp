@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<title>Project wise Current Status of Watersheed Janbhagidari</title>
+<title>Project wise Current Status of Watershed Janbhagidari</title>
 	<script type="text/javascript">
 	function exportExcel(){
 		document.rptStateWiseCurrentStatus.action="downloadExcelStateWiseCurrentStatus";

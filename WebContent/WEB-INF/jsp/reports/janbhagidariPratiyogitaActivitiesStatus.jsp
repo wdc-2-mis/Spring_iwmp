@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<title>State wise Current Status of Watersheed Janbhagidari Activities</title>
+<title>State wise Current Status of Watershed Janbhagidari Activities</title>
 	<script type="text/javascript">
 	function exportExcel(){
 		document.getJanbhagidariActStatus.action="ExcelJanbhagidariStateWiseActivitiesStatus";
@@ -45,7 +45,7 @@
     	<tr>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 2%;">S.No.</th>
       		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 20%;">State Name</th>
-      		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">No. of Projects where Watersheed Janbhagidari Organized</th>
+      		<th rowspan="2" style="text-align:center; vertical-align: middle; width: 7%;">No. of Projects where Watershed Janbhagidari Organized</th>
       		
       		<th colspan="4" style="text-align:center; vertical-align: middle; width: 35%;">No. of Work to be done through Janbhagidari Activities</th>
       		<th colspan="3" style="text-align:center; vertical-align: middle; width: 28%;">Tentative Community Contribution Percentage (%)</th>
