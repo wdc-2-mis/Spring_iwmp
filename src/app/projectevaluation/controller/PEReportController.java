@@ -2195,11 +2195,11 @@ public class PEReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details");
+		Sheet sheet = workbook.createSheet("Report PE11 - State-wise Mid Term Project Evaluation of Geotagged Work Details");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details";
+		String rptName = "Report PE11 - State-wise Mid Term Project Evaluation of Geotagged Work Details";
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -2378,7 +2378,7 @@ public class PEReportController {
 		
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
-	    String fileName = "attachment; filename=Report PE9- State.xlsx";
+	    String fileName = "attachment; filename=Report PE11- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    
@@ -2415,7 +2415,7 @@ public class PEReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report PE9 - State-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
+			paragraph3 = new Paragraph("Report PE11 - State-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -2505,7 +2505,7 @@ public class PEReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report PE9- State.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE11- State.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
@@ -2534,11 +2534,11 @@ public class PEReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details");
+		Sheet sheet = workbook.createSheet("Report PE11 - District-wise Mid Term Project Evaluation of Geotagged Work Details");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details";
+		String rptName = "Report PE11 - District-wise Mid Term Project Evaluation of Geotagged Work Details";
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -2733,7 +2733,7 @@ public class PEReportController {
 		
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
-	    String fileName = "attachment; filename=Report PE9- District.xlsx";
+	    String fileName = "attachment; filename=Report PE11- District.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    
@@ -2772,7 +2772,7 @@ public class PEReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report PE9 - District-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
+			paragraph3 = new Paragraph("Report PE11 - District-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -2864,7 +2864,7 @@ public class PEReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report PE9- District.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE11- District.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
