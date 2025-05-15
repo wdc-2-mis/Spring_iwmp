@@ -143,15 +143,6 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getDistMidProjEvlWorkData}")
 	String getDistMidProjEvlWorkData;
 	
-	@Value("${getPreCropDetails}")
-	String getPreCropDetails;
-	
-	@Value("${getMidCropDetails}")
-	String getMidCropDetails;
-	
-	@Value("${getControlCropDetails}")
-	String getControlCropDetails;
-	
 	@Value("${getAverageAnnualIncome}")
 	String getAverageAnnualIncome;
 	
@@ -163,6 +154,24 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	
 	@Value("${getDistwiseCommunityBasedData}")
 	String getDistwiseCommunityBasedData;
+	
+	@Value("${getPreCropDetails}")
+	String getPreCropDetails;
+	
+	@Value("${getMidCropDetails}")
+	String getMidCropDetails;
+	
+	@Value("${getControlCropDetails}")
+	String getControlCropDetails;
+	
+	@Value("${getDistWisePreCropDetails}")
+	String getDistWisePreCropDetails;
+	
+	@Value("${getDistWiseMidCropDetails}")
+	String getDistWiseMidCropDetails;
+	
+	@Value("${getDistWiseControlCropDetails}")
+	String getDistWiseControlCropDetails;
 	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
@@ -2474,6 +2483,45 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				session.getTransaction().rollback();
 			}
 			
+			return list;
+		}
+
+		@Override
+		public List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type) {
+			String prehql = getDistWisePreCropDetails;
+			String midhql = getDistWiseMidCropDetails;
+			String controlhql = getDistWiseControlCropDetails;
+			List<CroppedDetailsReportBean> list = new ArrayList<>();
+			
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query;
+				if(type.equals("pre")){
+					query = session.createSQLQuery(prehql);
+					query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+					query.setInteger("stcode", stcode);
+					list = query.list();
+				}
+				
+				else if(type.equals("mid")) {
+				query = session.createSQLQuery(midhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				query.setInteger("stcode", stcode);
+				list = query.list();
+				}
+				else if(type.equals("control")){
+				query = session.createSQLQuery(controlhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				query.setInteger("stcode", stcode);
+				list = query.list();
+				}
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
 			return list;
 		}
 

@@ -5209,13 +5209,38 @@ public class ProjectEvaluationController {
 		String jsonMap = gson.toJson(map);
 
 		mav.addObject("mapJson",jsonMap);
+		mav.addObject("mapJsonSize",jsonMap.length());
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping(value="/getDistwiseCroppedDetailsReportData", method = RequestMethod.POST)
+	public ModelAndView getDistwiseCroppedDetailsReportData(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		String radioBtn = request.getParameter("radioBtn");
+		String status = radioBtn.equals("pre")?"Pre Project Status(Aggregate)":radioBtn.equals("mid")?"Mid Project Status(Aggregate)":"Controlled Area";
+		mav = new ModelAndView("reports/croppedDetailsReport");
+		List<CroppedDetailsReportBean> distList = PEService.getDistwiseCropDetailsReportData(stCode,radioBtn);
+		
+
+		mav.addObject("distList",distList);
+		mav.addObject("distListSize",distList.size());
+		mav.addObject("stcode",stCode);
+		mav.addObject("stname",state);
+		mav.addObject("radioBtn",radioBtn);
+		mav.addObject("status",status);
 		
 		return mav;
 		
 	}
 	
 	@RequestMapping(value = "/downloadCroppedDetailsReportPdf", method = RequestMethod.POST)
-	public ModelAndView downloadAssetReportPDF(HttpServletRequest request, HttpServletResponse response) 
+	public ModelAndView downloadCroppedDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
 	{
 		String radioBtn = request.getParameter("radioBtn");
 		Map<String, List<CroppedDetailsReportBean>> map = PEService.getCroppedDetailsReportData();
@@ -5246,7 +5271,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE3- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status,
+					"Report PE4- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status,
 					f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
@@ -5386,7 +5411,7 @@ public class ProjectEvaluationController {
 			response.setContentType("application/pdf");
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report.pdf");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE4 - State.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
@@ -5416,11 +5441,11 @@ public class ProjectEvaluationController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report PE3- "+status);   
+			Sheet sheet = workbook.createSheet("Report PE4- State");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE3- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status;
+			String rptName = "Report PE4- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status;
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -5650,7 +5675,7 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 13);
-	        String fileName = "attachment; filename=Report PE3.xlsx";
+	        String fileName = "attachment; filename=Report PE4 - State.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -5735,11 +5760,11 @@ public class ProjectEvaluationController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report PE3");   
+			Sheet sheet = workbook.createSheet("Report PE9 - State");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE3- State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members";
+			String rptName = "Report PE9 - State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -5936,7 +5961,7 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
-	        String fileName = "attachment; filename=Report PE3.xlsx";
+	        String fileName = "attachment; filename=Report PE9 - State.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -5974,7 +5999,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE3- State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members",f3);
+					"Report PE9 - State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members",f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -6099,7 +6124,7 @@ public class ProjectEvaluationController {
 			response.setContentType("application/pdf");
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report.pdf");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE9 - State.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
@@ -6128,11 +6153,11 @@ public class ProjectEvaluationController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report PE3 - District");   
+			Sheet sheet = workbook.createSheet("Report PE9 - District");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE3- District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state;
+			String rptName = "Report PE9 - District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state;
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -6329,7 +6354,7 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 11);
-	        String fileName = "attachment; filename=Report PE3 - District.xlsx";
+	        String fileName = "attachment; filename=Report PE9 - District.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -6371,7 +6396,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE3- District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state,f3);
+					"Report PE9 - District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state,f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -6496,7 +6521,7 @@ public class ProjectEvaluationController {
 			response.setContentType("application/pdf");
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-			response.setHeader("Content-Disposition", "attachment;filename=PE3-Report District.pdf");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE9 - District.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
@@ -6521,11 +6546,11 @@ public class ProjectEvaluationController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report PE3 - State");   
+			Sheet sheet = workbook.createSheet("Report PE10 - State");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE3- State-wise Mid Term Evaluation of Community Based SHG, FPO and UG";
+			String rptName = "Report PE10 - State-wise Mid Term Evaluation of Community Based SHG, FPO and UG";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -6818,7 +6843,7 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
-	        String fileName = "attachment; filename=Report PE3 - State.xlsx";
+	        String fileName = "attachment; filename=Report PE10 - State.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -6856,7 +6881,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE3- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG",f3);
+					"Report PE10- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG",f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -7003,7 +7028,7 @@ public class ProjectEvaluationController {
 			response.setContentType("application/pdf");
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-			response.setHeader("Content-Disposition", "attachment;filename=Report- PE3 State.pdf");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE10 -  State.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
@@ -7032,11 +7057,11 @@ public class ProjectEvaluationController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report PE3 - District");   
+			Sheet sheet = workbook.createSheet("Report PE10 - District");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE3- District-wise Mid Term Evaluation of Community Based SHG, FPO and UG of "+state;
+			String rptName = "Report PE10 - District-wise Mid Term Evaluation of Community Based SHG, FPO and UG of "+state;
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -7329,7 +7354,7 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
-	        String fileName = "attachment; filename=Report PE3 - District.xlsx";
+	        String fileName = "attachment; filename=Report PE10 - District.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
@@ -7370,7 +7395,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE3- State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of "+state,f3);
+					"Report PE10 - State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of "+state,f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -7517,7 +7542,7 @@ public class ProjectEvaluationController {
 			response.setContentType("application/pdf");
 			response.setHeader("Expires", "0");
 			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-			response.setHeader("Content-Disposition", "attachment;filename=Report- PE3 District.pdf");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE10 -  District.pdf");
 			response.setHeader("Pragma", "public");
 			response.setContentLength(baos.size());
 			OutputStream os = response.getOutputStream();
@@ -7531,6 +7556,451 @@ public class ProjectEvaluationController {
 
 		return null;
 
+	}
+	
+	
+	@RequestMapping(value = "/downloadDistwiseCroppedDetailsReportPdf", method = RequestMethod.POST)
+	public ModelAndView downloadDistwiseCroppedDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
+	{
+		String radioBtn = request.getParameter("radioBtn");
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		List<CroppedDetailsReportBean> list = PEService.getDistwiseCropDetailsReportData(stCode,radioBtn);
+		String status = radioBtn.equals("pre")?"Pre Project Status(Aggregate)":radioBtn.equals("mid")?"Mid Project Status(Aggregate)":"Controlled Area";
+		try {
+
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("Cropped Detail Report");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer = PdfWriter.getInstance(document, baos);
+
+			document.open();
+
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD);
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+
+			paragraph3 = new Paragraph(
+					"Report PE4 - District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status+" of "+state,
+					f3);
+
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+
+			table = new PdfPTable(14);
+			table.setWidths(new int[] { 3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 });
+			table.setWidthPercentage(70);
+
+			table.setWidthPercentage(100);
+			table.setSpacingBefore(0f);
+			table.setSpacingAfter(0f);
+			table.setHeaderRows(3);
+
+			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_RIGHT, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Area Under Different Crops(in ha.)", Element.ALIGN_CENTER, 5, 1,
+					bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Yield per Hectare of Major Crops", Element.ALIGN_CENTER, 6, 1,
+					bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cereals ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pulses", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Oil Seeds", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Millet", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Other", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Rice", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Wheat", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Pulses", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Millet", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Oil Seeds", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Other", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			Integer totproj = 0;
+			BigDecimal totCropCereal = BigDecimal.ZERO;
+			BigDecimal totCropPulses = BigDecimal.ZERO;
+			BigDecimal totCropOilSeed = BigDecimal.ZERO;
+			BigDecimal totCropMillet = BigDecimal.ZERO;
+			BigDecimal totCropOther = BigDecimal.ZERO;
+			BigDecimal totRice = BigDecimal.ZERO;
+			BigDecimal totWheat = BigDecimal.ZERO;
+			BigDecimal totPulses = BigDecimal.ZERO;
+			BigDecimal totMillet = BigDecimal.ZERO;
+			BigDecimal totOilSeed = BigDecimal.ZERO;
+			BigDecimal totOther = BigDecimal.ZERO;
+			if (list.size() != 0)
+				for (int i = 0; i < list.size(); i++) {
+					CommonFunctions.insertCell(table, String.valueOf(i + 1), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotproj().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCropcereals().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCroppulses().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCropoilseed().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCropmillets().toString(), Element.ALIGN_CENTER, 1,
+							1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getCropother().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getRice().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getWheat().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPulses().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMillets().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getOilseed().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+					CommonFunctions.insertCell(table, list.get(i).getOther().toString(), Element.ALIGN_CENTER, 1, 1,
+							bf8);
+
+					totproj = totproj + list.get(i).getTotproj();
+					totCropCereal = totCropCereal.add(list.get(i).getCropcereals());
+					totCropPulses = totCropPulses.add(list.get(i).getCroppulses());
+					totCropOilSeed = totCropOilSeed.add(list.get(i).getCropoilseed());
+					totCropMillet = totCropMillet.add(list.get(i).getCropmillets());
+					totCropOther = totCropOther.add(list.get(i).getCropother());
+					totRice = totRice.add(list.get(i).getRice());
+					totWheat = totWheat.add(list.get(i).getWheat());
+					totPulses = totPulses.add(list.get(i).getPulses());
+					totMillet = totMillet.add(list.get(i).getMillets());
+					totOilSeed = totOilSeed.add(list.get(i).getOilseed());
+					totOther = totOther.add(list.get(i).getOther());
+
+				}
+			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totCropCereal.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totCropPulses.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totCropOilSeed.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totCropMillet.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totCropOther.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totRice.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totWheat.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totPulses.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totMillet.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totOilSeed.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totOther.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+
+			if (list.size() == 0)
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 14, 1, bf8);
+
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(70);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,
+					"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+							+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+					Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report - PE4 District.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	
+	@RequestMapping(value = "/downloadDistwiseExcelCroppedDetailsReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadDistwiseExcelCroppedDetailsReport(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+		String radioBtn = request.getParameter("radioBtn");
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		List<CroppedDetailsReportBean> list = PEService.getDistwiseCropDetailsReportData(stCode,radioBtn);
+		String status = radioBtn.equals("pre")?"Pre Project Status(Aggregate)":radioBtn.equals("mid")?"Mid Project Status(Aggregate)":"Controlled Area";
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report PE4- District");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report PE4- District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops for "+status+" of "+state;
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 13, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,6,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,2,2); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,3,7); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,8,13); 
+	        sheet.addMergedRegion(mergedRegion);
+			mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("District Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total No. of Project");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Area Under Different Crops(in ha.)");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			for(int i = 4; i<8; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("Yield per Hectare of Major Crops");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			for(int i = 9; i<14; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			rowhead = sheet.createRow(6);
+			
+			for(int i = 0; i<3; i++) {
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Cereals");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(4);
+			cell.setCellValue("Pulses");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(5);
+			cell.setCellValue("Oil Seeds");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(6);
+			cell.setCellValue("Millet");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(7);
+			cell.setCellValue("Other");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("Rice");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Wheat");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Pulses");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Millet");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Oil Seeds");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(13);
+			cell.setCellValue("Other");  
+			cell.setCellStyle(style);
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int i=0;i<14;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        Integer totproj = 0;
+			BigDecimal totCropCereal = BigDecimal.ZERO;
+			BigDecimal totCropPulses = BigDecimal.ZERO;
+			BigDecimal totCropOilSeed = BigDecimal.ZERO;
+			BigDecimal totCropMillet = BigDecimal.ZERO;
+			BigDecimal totCropOther = BigDecimal.ZERO;
+			BigDecimal totRice = BigDecimal.ZERO;
+			BigDecimal totWheat = BigDecimal.ZERO;
+			BigDecimal totPulses = BigDecimal.ZERO;
+			BigDecimal totMillet = BigDecimal.ZERO;
+			BigDecimal totOilSeed = BigDecimal.ZERO;
+			BigDecimal totOther = BigDecimal.ZERO;
+	        
+	        for(CroppedDetailsReportBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getDistname());
+	        	row.createCell(2).setCellValue(bean.getTotproj());
+	        	row.createCell(3).setCellValue(bean.getCropcereals().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getCroppulses().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getCropoilseed().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getCropmillets().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getCropother().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getRice().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getWheat().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getPulses().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getMillets().doubleValue());
+	        	row.createCell(12).setCellValue(bean.getOilseed().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getOther().doubleValue());
+	        	
+	        	totproj = totproj + bean.getTotproj();
+				totCropCereal = totCropCereal.add(bean.getCropcereals());
+				totCropPulses = totCropPulses.add(bean.getCroppulses());
+				totCropOilSeed = totCropOilSeed.add(bean.getCropoilseed());
+				totCropMillet = totCropMillet.add(bean.getCropmillets());
+				totCropOther = totCropOther.add(bean.getCropother());
+				totRice = totRice.add(bean.getRice());
+				totWheat = totWheat.add(bean.getWheat());
+				totPulses = totPulses.add(bean.getPulses());
+				totMillet = totMillet.add(bean.getMillets());
+				totOilSeed = totOilSeed.add(bean.getOilseed());
+				totOther = totOther.add(bean.getOther());
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(2);
+	        cell.setCellValue(totproj);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totCropCereal.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totCropPulses.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(5);
+	        cell.setCellValue(totCropOilSeed.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(6);
+	        cell.setCellValue(totCropMillet.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(7);
+	        cell.setCellValue(totCropOther.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(8);
+	        cell.setCellValue(totRice.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totWheat.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(10);
+	        cell.setCellValue(totPulses.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totMillet.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(12);
+	        cell.setCellValue(totOilSeed.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(13);
+	        cell.setCellValue(totOther.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 13);
+	        String fileName = "attachment; filename=Report PE4- Disrict.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/croppedDetailsReport";
+		
 	}
 	
 }

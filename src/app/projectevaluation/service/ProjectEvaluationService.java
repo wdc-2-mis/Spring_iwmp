@@ -158,6 +158,8 @@ public interface ProjectEvaluationService {
 	
 	Map<String, List<CroppedDetailsReportBean>> getCroppedDetailsReportData();
 	
+	List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type);
+	
 	List<ProductionDetailsBean> getAverageAnnualIncome();
 	
 	List<ProductionDetailsBean> getCommunityBasedData();

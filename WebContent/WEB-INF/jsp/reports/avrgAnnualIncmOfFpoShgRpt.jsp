@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE2- State and District wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members</title>
+<title>Report PE9- State and District wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members</title>
 
 <script type="text/javascript">
 
@@ -48,7 +48,7 @@
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE3- State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members</label>
+			<label id="head">Report PE9 - State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members</label>
 		</h5>
 	</div>
 <br>
@@ -170,7 +170,7 @@
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE3- District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members for <c:out value ="${stname}"/></label>
+			<label id="head">Report PE9 - District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members for <c:out value ="${stname}"/></label>
 		</h5>
 	</div>
 <br>

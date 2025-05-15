@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 public class CroppedDetailsReportBean {
 	
 	private Integer stcode;	
-	private String stname;	
+	private String stname;
+	private Integer dcode;
+	private String distname;
 	private Integer totproj;	
 	private BigDecimal cropcereals;	
 	private BigDecimal croppulses;	
@@ -30,6 +32,18 @@ public class CroppedDetailsReportBean {
 	}
 	public void setStname(String stname) {
 		this.stname = stname;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
 	}
 	public Integer getTotproj() {
 		return totproj;

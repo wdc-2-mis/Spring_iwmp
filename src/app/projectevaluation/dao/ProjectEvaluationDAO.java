@@ -162,5 +162,7 @@ public interface ProjectEvaluationDAO {
 	List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode);
 	
 	List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode);
+	
+	List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type);
 }
  

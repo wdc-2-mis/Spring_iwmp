@@ -372,6 +372,12 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getDistwiseCommunityBasedData(stcode);
 	}
+
+	@Override
+	public List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type) {
+		// TODO Auto-generated method stub
+		return PEDAO.getDistwiseCropDetailsReportData(stcode, type);
+	}
 	
 	
 	
