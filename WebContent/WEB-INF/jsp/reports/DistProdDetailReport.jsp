@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE7-  District-wise Mid Term Evaluation of Production Details</title>
+<title>Report PE8-  District-wise Mid Term Evaluation of Production Details</title>
 
 <script type="text/javascript">
 
@@ -35,7 +35,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE7-  District-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted) for State  '<c:out value="${stName}"/>'</label>
+			<label id="head">Report PE8-  District-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted) for State  '<c:out value="${stName}"/>'</label>
 		</h5>
 	</div>
 <br>
