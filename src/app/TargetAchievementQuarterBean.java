@@ -39,6 +39,9 @@ public class TargetAchievementQuarterBean {
 	private Date quarter;
 	private Integer diversified_nilsingto_id;
 	
+	private Integer proj_id;
+	private String proj_name;
+	
 	
 	public Integer getDcode() {
 		return dcode;
@@ -238,6 +241,18 @@ public class TargetAchievementQuarterBean {
 	}
 	public void setDiversified_nilsingto_id(Integer diversified_nilsingto_id) {
 		this.diversified_nilsingto_id = diversified_nilsingto_id;
+	}
+	public Integer getProj_id() {
+		return proj_id;
+	}
+	public void setProj_id(Integer proj_id) {
+		this.proj_id = proj_id;
+	}
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
 	}
 	
 	

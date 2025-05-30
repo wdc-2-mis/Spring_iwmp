@@ -83,6 +83,18 @@ public class TargetAchievementQuarterServiceImpl implements TargetAchievementQua
 		return dao.fetchquartargetrpt(userState, year);
 	}
 
+	@Override
+	public List<TargetAchievementQuarterBean> getProjectWiseQuarterReport(Integer dist, Integer year, Integer qtr) {
+		// TODO Auto-generated method stub
+		return dao.getProjectWiseQuarterReport(dist, year, qtr);
+	}
+
+	@Override
+	public Integer getnoofDistrictProj(Integer dcode) {
+		// TODO Auto-generated method stub
+		return dao.getnoofDistrictProj(dcode);
+	}
+
 
 
 	

@@ -86,6 +86,21 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	@Value("${getquarttargetdata}") 
 	String getquarttargetdata;
 	
+	@Value("${firstQuarterProjectWiseStartingYear}") 
+	String firstQuarterProjectWiseStartingYear;
+	
+	@Value("${secondQuarterProjectWiseStartingYear}") 
+	String secondQuarterProjectWiseStartingYear;
+	
+	@Value("${thirdQuarterProjectWiseStartingYear}") 
+	String thirdQuarterProjectWiseStartingYear;
+	
+	@Value("${fourQuarterProjectWiseStartingYear}") 
+	String fourQuarterProjectWiseStartingYear;
+	
+	@Value("${allQuarterProjectWiseYearData}") 
+	String allQuarterProjectWiseYearData;
+	
 	@Override
 	public List<IwmpMFinYear> getFinancialYearonward21() {
 		
@@ -254,6 +269,7 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 			
 			  @SuppressWarnings("unused")
 			  Transaction tx = session.beginTransaction(); 
+			  String finyrpf="20"+year;
 			  String finyr="20"+(year+1);
 			  String financialyr="20"+year+"-"+finyr;
 				hql=statefinyrWiseExpenditure;
@@ -639,6 +655,183 @@ return result;
 	        ex.printStackTrace();
 	    }
 	    return result;
+	}
+
+	@Override
+	public List<TargetAchievementQuarterBean> getProjectWiseQuarterReport(Integer dist, Integer year, Integer qtr) {
+		
+		List<TargetAchievementQuarterBean> result=new ArrayList<TargetAchievementQuarterBean>();
+		Session session = sessionFactory.openSession();
+		try {
+			String hql=null;
+			SQLQuery query = null;
+			
+			  @SuppressWarnings("unused")
+			  Transaction tx = session.beginTransaction(); 
+			 
+			  	if(qtr==1) 
+			  	{   
+			  		int i=4, j=5, k=6;
+			  		String qtr1="20"+year+"-04-01";
+			  		String qtr2="20"+year+"-07-01";
+			  		Date date1=Date.valueOf(qtr1);
+			  		Date date2=Date.valueOf(qtr2);
+			  		hql=firstQuarterProjectWiseStartingYear;
+			  		query = session.createSQLQuery(hql);
+			  		query.setInteger("distcd", dist);
+			  		query.setInteger("finyr", year);
+			  	//	query.setDate("quarter1", date1);
+			  		query.setDate("quarter2", date2);
+			//		query.setInteger("im", i);
+			//		query.setInteger("jm", j);
+			//		query.setInteger("km", k);
+			  	}	
+				/*
+				 * if(qtr==1 && year > 22) {
+				 * 
+				 * int i=4, j=5, k=6; String qtr1= "20"+year+"-04-01"; String qtr2=
+				 * "20"+year+"-07-01"; Date date1=Date.valueOf(qtr1); Date
+				 * date2=Date.valueOf(qtr2); hql=firstQuarterStartingNextYear; query
+				 * =session.createSQLQuery(hql); // query.setInteger("stcd", state);
+				 * query.setInteger("finyr", year); query.setDate("quarter1", date1);
+				 * query.setDate("quarter2", date2); // query.setInteger("im", i); //
+				 * query.setInteger("jm", j); // query.setInteger("km", k);
+				 * 
+				 * }
+				 */
+				if(qtr==2) 
+				{
+					int i=7, j=8, k=9;
+					String qtr1= "20"+year+"-07-01";
+					String qtr2= "20"+year+"-10-01";
+					Date date1=Date.valueOf(qtr1);
+					Date date2=Date.valueOf(qtr2);
+					hql=secondQuarterProjectWiseStartingYear; 
+					query =session.createSQLQuery(hql); 
+					query.setInteger("distcd", dist);
+					query.setInteger("finyr", year);
+				//	query.setDate("quarter1", date1);
+					query.setDate("quarter2", date2);
+			//		query.setInteger("im", i);
+			//		query.setInteger("jm", j);
+			//		query.setInteger("km", k);
+				}
+
+				if(qtr==3) 
+				{
+					int i=10, j=11, k=12;
+					String qtr1= "20"+year+"-10-01";
+					String qtr2= "20"+(year+1)+"-01-01";
+					Date date1=Date.valueOf(qtr1);
+					Date date2=Date.valueOf(qtr2);
+					hql=thirdQuarterProjectWiseStartingYear; 
+					query =session.createSQLQuery(hql); 
+					query.setInteger("distcd", dist);
+					query.setInteger("finyr", year);
+				//	query.setDate("quarter1", date1);
+					query.setDate("quarter2", date2);
+			//		query.setInteger("im", i);
+			//		query.setInteger("jm", j);
+			//		query.setInteger("km", k);
+				}
+
+				if(qtr==4) 
+				{
+					int i=1, j=2, k=3;
+					String qtr1= "20"+(year+1)+"-01-01";
+					String qtr2= "20"+(year+1)+"-04-01";
+					Date date1=Date.valueOf(qtr1);
+					Date date2=Date.valueOf(qtr2);
+					hql=fourQuarterProjectWiseStartingYear; 
+					query =session.createSQLQuery(hql); 
+					query.setInteger("distcd", dist);
+					query.setInteger("finyr", year);
+				//	query.setDate("quarter1", date1);
+					query.setDate("quarter2", date2);
+			//		query.setInteger("im", i);
+			//		query.setInteger("jm", j);
+			//		query.setInteger("km", k);allQuarterDistWiseYearData
+				}
+				
+				if(year>0 && qtr==5) 
+				{
+					List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop_project where fin_yr_cd="+year).list();
+					list.get(0).toString();
+					
+					String qtr1= "20"+year+"-04-01";
+					//String qtr2= "20"+(year+1)+"-04-01";
+					Date date1=Date.valueOf(qtr1);
+					Date date2=Date.valueOf(list.get(0).toString());
+					hql=allQuarterProjectWiseYearData; 
+					query =session.createSQLQuery(hql); 
+					query.setInteger("distcd", dist);
+					query.setInteger("finyr", year);
+					//query.setDate("quarter1", date1);
+					//query.setDate("quarter2", date2);
+				}
+				
+				if(year==0 && qtr==5) 
+				{
+					List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop_project").list();
+					list.get(0).toString();
+					
+					String qtr1= "2022-04-01";
+					//String qtr2= "2024-01-01";
+					Date date1=Date.valueOf(qtr1);
+					Date date2=Date.valueOf(list.get(0).toString());
+					hql=allQuarterProjectWiseYearData; 
+					query =session.createSQLQuery(hql); 
+					query.setInteger("distcd", dist);
+					query.setInteger("finyr", year);
+					//query.setDate("quarter1", date1);
+					//query.setDate("quarter2", date2);
+				}
+				
+				query.setResultTransformer(Transformers.aliasToBean(TargetAchievementQuarterBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			//System.err.print("Error"+ex.getMessage()+ex.getCause());
+			ex.printStackTrace();
+		}finally {
+			session.getTransaction().commit();
+			
+		}
+		return result;
+	}
+
+	@Override
+	public Integer getnoofDistrictProj(Integer dcode) {
+		
+		Integer result=0;
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();
+			List list = ses.createSQLQuery("Select count(proj_id) from iwmp_m_project where dcode=:dcodec ").setInteger("dcodec", dcode).list();
+			System.out.println(list.get(0).toString());
+			result=Integer.parseInt(list.get(0).toString());
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
 	}
 	
 	

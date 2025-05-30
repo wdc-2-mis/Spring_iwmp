@@ -248,7 +248,8 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 		<tr>		
 			
 			<td><c:out value='${dataV[0]}' /></td>
-			<td><c:out value='${dataV[2]}' /></td>
+			<%-- <td><c:out value='${dataV[2]}' /></td> --%>
+			<td><a href="getProjectWiseQuarterReport?dcode=${dataV[1]}&year=${year}&quarter=${quarter}&stName=${stName}&distName=<c:out value='${dataV[2]}' />&finName=${finName}&quartename=${quartename}"><c:out value='${dataV[2]}' /></a></td>
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[16]}' /></fmt:formatNumber></td>
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[4]}' /></fmt:formatNumber></td>

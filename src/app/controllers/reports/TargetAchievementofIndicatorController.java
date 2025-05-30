@@ -2719,4 +2719,262 @@ public class TargetAchievementofIndicatorController {
 	return null;
 }
 	
+	@RequestMapping(value="/getProjectWiseQuarterReport", method = RequestMethod.GET)
+	public ModelAndView getProjectWiseQuarterReport(HttpServletRequest request, HttpServletResponse response)
+	{
+	
+		ModelAndView mav = new ModelAndView();
+		String dcode=request.getParameter("dcode");
+		String year= request.getParameter("year");
+		String quarter= request.getParameter("quarter");
+		String distName= request.getParameter("distName");
+		String stName= request.getParameter("stName");
+		String finName= request.getParameter("finName");
+		String quartename= request.getParameter("quartename");
+//		String proj="";
+//		String proj1=null;
+//		String stname="";
+//		String stname1=null;
+		String data[] = null;
+		int i=1;
+		List<String[]> dataList = new ArrayList<String[]>();
+		ArrayList dataListNetTotal = new ArrayList();
+		List<TargetAchievementQuarterBean> list=new  ArrayList<TargetAchievementQuarterBean>();
+			mav = new ModelAndView("reports/projetWiseTargetAchievementofIndicators");
+			String[] dataArrNetTotalStr = null;
+			Integer[] dataArrNetTotal = null;
+			BigDecimal [] dataArrNetTotalBD = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,BigDecimal.ZERO, BigDecimal.ZERO, 
+					BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+					BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+			list=ser.getProjectWiseQuarterReport(Integer.parseInt(dcode), Integer.parseInt(year),  Integer.parseInt(quarter));
+			dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+		//	dataArrNetTotal = new Integer[] { 0, 0, 0, 0};
+		if(list != null) 
+		{
+			for(TargetAchievementQuarterBean bean : list) 
+			{
+				  data = new String[25]; 
+				  if(bean.getProj_id()!=null) {
+						
+						data[0] = String.valueOf(i); // serial no
+				  		data[1] = bean.getProj_id().toString();
+						data[2] = bean.getProj_name();	// projName
+						
+						if(bean.getArea_soilmoisture_activities_tar()==null)
+							data[3]="0.00";
+						else
+							data[3]=bean.getArea_soilmoisture_activities_tar().toString();
+						if(bean.getArea_soilmoisture_activities_achie()==null)
+							data[4]="0.00";
+						else
+							data[4]=bean.getArea_soilmoisture_activities_achie().toString();
+						
+						if(bean.getArea_afforestation_horticulture_tar()==null)
+							data[5]="0.00";
+						else
+							data[5]=bean.getArea_afforestation_horticulture_tar().toString();
+						if(bean.getArea_afforestation_horticulture_achie()==null)
+							data[6]="0.00";
+						else
+							data[6]=bean.getArea_afforestation_horticulture_achie().toString();
+						
+						if(bean.getWater_created_renovated_tar()==null)	
+							data[7]="0";
+						else
+							data[7]=bean.getWater_created_renovated_tar().toString();
+						if(bean.getWater_created_renovated_achie()==null)
+							data[8]="0";
+						else
+							data[8]=bean.getWater_created_renovated_achie().toString();
+						
+						
+						 /* if(bean.getIncrease_croparea_tar()==null) data[15]="0.00"; else
+						 * data[15]=bean.getIncrease_croparea_tar().toString();
+						 * if(bean.getIncrease_croparea_achie()==null) data[16]="0.00"; else
+						 * data[16]=bean.getIncrease_croparea_achie().toString();
+						
+								
+						if(bean.getIncrease_farmerincome_tar()==null)
+							data[17]="0.00";
+						else
+							data[17]=bean.getIncrease_farmerincome_tar().toString();
+						if(bean.getIncrease_farmerincome_achie()==null)
+							data[18]="0.00";
+						else
+							data[18]=bean.getIncrease_farmerincome_achie().toString();  */
+								
+						if(bean.getFarmer_benefitte_tar()==null)
+							data[9]="0.00";
+						else
+							data[9]=bean.getFarmer_benefitte_tar().toString();
+						if(bean.getFarmer_benefitte_achie()==null)
+							data[10]="0.00";
+						else
+							data[10]=bean.getFarmer_benefitte_achie().toString();
+							
+						if(bean.getProtective_irrigation_tar()==null)
+							data[11]="0.00";
+						else
+							data[11]=bean.getProtective_irrigation_tar().toString();
+						if(bean.getProtective_irrigation_achie()==null)
+							data[12]="0.00";
+						else
+							data[12]=bean.getProtective_irrigation_achie().toString();
+						
+						if(bean.getMandays_generated_tar()==null)
+							data[13]="0.00";
+						else
+							data[13]=bean.getMandays_generated_tar().toString();
+						if(bean.getMandays_generated_achie()==null)
+							data[14]="0.00";
+						else
+							data[14]=bean.getMandays_generated_achie().toString();
+						
+						if(bean.getAreaof_degraded_land_tar()==null) 
+							data[15] ="0.00"; 
+						else 
+							data[15] =bean.getAreaof_degraded_land_tar().toString();
+						
+						if(bean.getAreaof_degraded_land_achie()==null) 
+							data[16] ="0.00"; 
+						else 
+							data[16] =bean.getAreaof_degraded_land_achie().toString();
+						 
+						if(bean.getArea_diversified_crops_tar()==null) 
+							data[17]="0.00"; 
+						else
+							data[17]=bean.getArea_diversified_crops_tar().toString();
+							  
+						if(bean.getArea_diversified_crops_achie()==null) 
+							data[18]="0.00"; 
+						else
+							data[18]=bean.getArea_diversified_crops_achie().toString();
+							  
+						if(bean.getArea_nilsingto_doubmulcrop_tar()==null) 
+							data[19]="0.00"; 
+						else
+							data[19]=bean.getArea_nilsingto_doubmulcrop_tar().toString();
+							  
+						if(bean.getArea_nilsingto_doubmulcrop_achie()==null) 
+							data[20]="0.00"; 
+						else
+							data[20]=bean.getArea_nilsingto_doubmulcrop_achie().toString();	
+						
+						 if(bean.getIncrease_croparea_tar()==null) 
+							  data[21]="0.00"; 
+						  else
+							  data[21]=bean.getIncrease_croparea_tar().toString();
+						
+						  if(bean.getIncrease_croparea_achie()==null) 
+							  data[22]="0.00"; 
+						  else
+							  data[22]=bean.getIncrease_croparea_achie().toString();
+						
+								
+						  if(bean.getIncrease_farmerincome_tar()==null)
+							  data[23]="0.00";
+						  else
+							  data[23]=bean.getIncrease_farmerincome_tar().toString();
+						  if(bean.getIncrease_farmerincome_achie()==null)
+							  data[24]="0.00";
+						  else
+							  data[24]=bean.getIncrease_farmerincome_achie().toString();  
+						
+							
+							i++;
+							
+							
+							
+							 
+							dataArrNetTotalBD[0] = dataArrNetTotalBD[0].add(BigDecimal.valueOf(Double.valueOf(data[3])));
+							dataArrNetTotalBD[1] = dataArrNetTotalBD[1].add(BigDecimal.valueOf(Double.valueOf(data[4])));
+							dataArrNetTotalBD[2] = dataArrNetTotalBD[2].add(BigDecimal.valueOf(Double.valueOf(data[5])));
+							dataArrNetTotalBD[3] = dataArrNetTotalBD[3].add(BigDecimal.valueOf(Double.valueOf(data[6])));
+							dataArrNetTotalBD[4] = dataArrNetTotalBD[4].add(BigDecimal.valueOf(Double.valueOf(data[7])));
+							dataArrNetTotalBD[5] = dataArrNetTotalBD[5].add(BigDecimal.valueOf(Double.valueOf(data[8])));
+							dataArrNetTotalBD[6] = dataArrNetTotalBD[6].add(BigDecimal.valueOf(Double.valueOf(data[9])));
+							dataArrNetTotalBD[7] = dataArrNetTotalBD[7].add(BigDecimal.valueOf(Double.valueOf(data[10])));
+							dataArrNetTotalBD[8] = dataArrNetTotalBD[8].add(BigDecimal.valueOf(Double.valueOf(data[11])));
+							dataArrNetTotalBD[9] = dataArrNetTotalBD[9].add(BigDecimal.valueOf(Double.valueOf(data[12])));
+							dataArrNetTotalBD[10] = dataArrNetTotalBD[10].add(BigDecimal.valueOf(Double.valueOf(data[13])));
+							dataArrNetTotalBD[11] = dataArrNetTotalBD[11].add(BigDecimal.valueOf(Double.valueOf(data[14])));
+							dataArrNetTotalBD[12] = dataArrNetTotalBD[12].add(BigDecimal.valueOf(Double.valueOf(data[15])));
+							dataArrNetTotalBD[13] = dataArrNetTotalBD[13].add(BigDecimal.valueOf(Double.valueOf(data[16])));
+							dataArrNetTotalBD[14] = dataArrNetTotalBD[14].add(BigDecimal.valueOf(Double.valueOf(data[17])));
+							dataArrNetTotalBD[15] = dataArrNetTotalBD[15].add(BigDecimal.valueOf(Double.valueOf(data[18])));
+							dataArrNetTotalBD[16] = dataArrNetTotalBD[16].add(BigDecimal.valueOf(Double.valueOf(data[19])));
+							dataArrNetTotalBD[17] = dataArrNetTotalBD[17].add(BigDecimal.valueOf(Double.valueOf(data[20])));
+							
+							dataArrNetTotalBD[18] = dataArrNetTotalBD[18].add(BigDecimal.valueOf(Double.valueOf(data[21])));
+							dataArrNetTotalBD[19] = dataArrNetTotalBD[19].add(BigDecimal.valueOf(Double.valueOf(data[22])));
+							dataArrNetTotalBD[20] = dataArrNetTotalBD[20].add(BigDecimal.valueOf(Double.valueOf(data[23])));
+							dataArrNetTotalBD[21] = dataArrNetTotalBD[21].add(BigDecimal.valueOf(Double.valueOf(data[24])));
+							
+							 /* dataArrNetTotalBD[18] =
+							 * dataArrNetTotalBD[18].add(BigDecimal.valueOf(Double.valueOf(data[9])));
+							 * dataArrNetTotalBD[19] =
+							 * dataArrNetTotalBD[19].add(BigDecimal.valueOf(Double.valueOf(data[10])));
+							 * dataArrNetTotalBD[20] =
+							 * dataArrNetTotalBD[20].add(BigDecimal.valueOf(Double.valueOf(data[23])));
+							 * dataArrNetTotalBD[21] =
+							 * dataArrNetTotalBD[21].add(BigDecimal.valueOf(Double.valueOf(data[24])));
+							 */
+							
+							
+					} 
+				  	dataList.add(data);
+				 
+			}
+			
+			dataListNetTotal = new ArrayList();
+			dataArrNetTotalStr[0] = dataArrNetTotalBD[0].toString();
+			dataArrNetTotalStr[1] = dataArrNetTotalBD[1].toString();
+			dataArrNetTotalStr[2] = dataArrNetTotalBD[2].toString();
+			dataArrNetTotalStr[3] = dataArrNetTotalBD[3].toString();
+			dataArrNetTotalStr[4] = dataArrNetTotalBD[4].toString();
+			dataArrNetTotalStr[5] = dataArrNetTotalBD[5].toString();
+			dataArrNetTotalStr[6] = dataArrNetTotalBD[6].toString();
+			dataArrNetTotalStr[7] = dataArrNetTotalBD[7].toString();
+			dataArrNetTotalStr[8] = dataArrNetTotalBD[8].toString();
+			dataArrNetTotalStr[9] = dataArrNetTotalBD[9].toString();
+			dataArrNetTotalStr[10] = dataArrNetTotalBD[10].toString();
+			dataArrNetTotalStr[11] = dataArrNetTotalBD[11].toString();
+			dataArrNetTotalStr[12] = dataArrNetTotalBD[12].toString();
+			dataArrNetTotalStr[13] = dataArrNetTotalBD[13].toString();
+			dataArrNetTotalStr[14] = dataArrNetTotalBD[14].toString();
+			dataArrNetTotalStr[15] = dataArrNetTotalBD[15].toString();
+			dataArrNetTotalStr[16] = dataArrNetTotalBD[16].toString();
+			dataArrNetTotalStr[17] = dataArrNetTotalBD[17].toString();
+			
+			dataArrNetTotalStr[18] = dataArrNetTotalBD[18].toString();
+			dataArrNetTotalStr[19] = dataArrNetTotalBD[19].toString();
+			dataArrNetTotalStr[20] = dataArrNetTotalBD[20].toString();
+			dataArrNetTotalStr[21] = dataArrNetTotalBD[21].toString();
+			
+			dataListNetTotal.add(dataArrNetTotalStr);
+			mav.addObject("distWiseDataListNetTotal", dataListNetTotal);
+			
+		}
+			
+			mav.addObject("distWiseDataList", dataList);
+			mav.addObject("distWiseDataListsize", dataList.size());
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("dcode", dcode);
+			mav.addObject("distName", distName);
+			mav.addObject("year", year);
+			mav.addObject("quarter", quarter);
+			mav.addObject("financialYear", ser.getFinancialYearonward21());
+			mav.addObject("quaterMaster", commonService.getQuaterMaster());
+			mav.addObject("stName", stName);
+			mav.addObject("finName", finName);
+			mav.addObject("quartename", quartename);
+			mav.addObject("noofdistrictproj", ser.getnoofDistrictProj(Integer.parseInt(dcode)));
+			
+		
+		return mav; 
+	}
+	
+	
 }
