@@ -95,6 +95,12 @@ public class TargetAchievementQuarterServiceImpl implements TargetAchievementQua
 		return dao.getnoofDistrictProj(dcode);
 	}
 
+	@Override
+	public List<PrayasAchievementBean> findprojWisemonthachdata(Integer dcode, Integer finCode, Integer month) {
+		// TODO Auto-generated method stub
+		return dao.findprojWisemonthachdata(dcode, finCode, month);
+	}
+
 
 
 	

@@ -23,6 +23,7 @@ public interface TargetAchievementQuarterService {
 	public List<PrayasAchievementBean> finddistmonthachdata(Integer stcode, Integer finCode, Integer month);
 	public List<IwmpMFinYear> getYearonward22();
 	public List<PrayasAchievementBean> finddistWisemonthachdata(Integer stCode, Integer finCode, Integer month);
+	public List<PrayasAchievementBean> findprojWisemonthachdata(Integer dcode, Integer finCode, Integer month);
 	Integer getnoofStateProj(Integer state);
 	Integer getnoofDistrictProj(Integer dcode);
 	public List<QuarterlyTargetBean> fetchquartargetrpt(Integer userState, Integer year);

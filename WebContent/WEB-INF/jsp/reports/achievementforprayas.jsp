@@ -106,6 +106,38 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 	document.achievementForPrayas.submit();
 	}
 	
+function exportProjExcel(year, monthdtl, stname, dcode, distname){
+	var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+    var monthname = document.getElementById("monthdtl").options[document.getElementById("monthdtl").selectedIndex].text;
+    document.getElementById("finName").value=finName;
+    document.getElementById("monthname").value=monthname;
+    document.getElementById("stname").value=stname;
+    document.getElementById("stCode").value=stCode;
+    document.getElementById("distname").value=distname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("year").value=year;
+    document.getElementById("monthdtl").value=monthdtl;
+     document.achievementForPrayas.action="downloadExcelProjAchievementofDisha";
+	document.achievementForPrayas.method="post";
+	document.achievementForPrayas.submit();
+}
+
+function exportProjPDF(year, monthdtl, stname, dcode, distname){
+	var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+    var monthname = document.getElementById("monthdtl").options[document.getElementById("monthdtl").selectedIndex].text;
+    document.getElementById("finName").value=finName;
+    document.getElementById("monthname").value=monthname;
+    document.getElementById("stname").value=stname;
+    document.getElementById("stCode").value=stCode;
+    document.getElementById("distname").value=distname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("year").value=year;
+    document.getElementById("monthdtl").value=monthdtl;
+    document.achievementForPrayas.action="downloadProjAchievementofDishaPDF";
+	document.achievementForPrayas.method="post";
+	document.achievementForPrayas.submit();
+	}
+	
 </script>
 
 <body>
@@ -141,6 +173,8 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 	 <input type="hidden" name="monthname" id="monthname" value="" />
 	 <input type="hidden" name="stname" id="stname" value="" />
 	<input type="hidden" name="stCode" id="stCode" value="" />
+	<input type="hidden" name="distname" id="distname" value="" />
+	<input type="hidden" name="dcode" id="dcode" value="" />
 			
 <table style="width:100%; align-content: center;" >
         <tr align="center" >
@@ -207,19 +241,25 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 	<div class="row">
 	<div class="col-1" ></div>
 	<div class="col-10"  id="exportHtmlToPdf">
-<c:if test="${dataList != null && showdist == null}">
+<c:if test="${dataList != null && showdist == null && showproj == null}">
 <button name="exportExcel" id="exportExcel" onclick="exportExcel('${year}','${monthdtl}')" class="btn btn-info">Excel</button>
 <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${year}','${monthdtl}')" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
 
-<c:if test="${dataList != null && showdist != null}">
+<c:if test="${dataList != null && showdist != null && showproj == null}">
 <button name="exportDistExcel" id="exportDistExcel" onclick="exportDistExcel('${year}','${monthdtl}','${stCode}','${stname}')" class="btn btn-info">Excel</button>
 <button name="exportDistPDF" id="exportDistPDF" onclick="exportDistPDF('${year}','${monthdtl}','${stCode}','${stname}')" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
 
-<c:if test="${showdist == null}">
+<c:if test="${dataPList != null && showproj != null}">
+<button name="exportProjExcel" id="exportProjExcel" onclick="exportProjExcel('${year}','${monthdtl}','${stname}','${dcode}','${distname}')" class="btn btn-info">Excel</button>
+<button name="exportProjPDF" id="exportProjPDF" onclick="exportProjPDF('${year}','${monthdtl}','${stname}','${dcode}','${distname}')" class="btn btn-info">PDF</button>
+<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+</c:if>
+
+<c:if test="${showdist == null && showproj == null}">
 <table id="tblReport" cellspacing="0" class="table" style="width:100%;">
   <thead>
 	 <tr>
@@ -292,7 +332,7 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 </table>
 </c:if>
 
-<c:if test="${showdist != null}">
+<c:if test="${showdist != null && showproj == null}">
 <table id="tblReport" cellspacing="0" class="table" style="width:100%;">
   <thead>
 	 <tr>
@@ -330,7 +370,7 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 		<c:forEach items="${dataList}" var="dataV" varStatus="status">
 		<tr>		
 			<td><c:out value='${dataV[0]}' /></td>
-			<td><c:out value='${dataV[4]}'/></td>
+			<td><a href="getProjWiseAchievementforPrayas?dcode=<c:out value="${dataV[3]}"/>&distname=<c:out value="${dataV[4]}"/>&stname=<c:out value="${stname}"/>&finCode=<c:out value="${year}"/>&month=<c:out value="${monthdtl}"/> "><c:out value='${dataV[4]}'/></a></td>
 			<td><c:out value='${dataV[11]}' /></td>
 			<td><c:out value='${dataV[5]}' /></td>
 			<td><c:out value='${dataV[6]}' /></td>
@@ -364,6 +404,79 @@ function exportDistPDF(year, monthdtl,stCode, stname){
 		</tbody>
 </table>
 </c:if>
+
+<c:if test="${showproj != null}">
+<table id="tblReport" cellspacing="0" class="table" style="width:100%;">
+  <thead>
+	 <tr>
+		<th colspan="9" class="text-left"> State Name : &nbsp; <c:out value='${stname}' /> &nbsp; District Name : &nbsp; <c:out value='${distname}' /></th>
+	</tr>
+    <tr>
+      <th rowspan="2" style="text-align:center; vertical-align: middle;">S.No.</th>
+      <th rowspan="2" style="text-align:center; vertical-align: middle;">Project Name</th> 
+      <th rowspan="2"  style="text-align:center" rowspan="2">Area of degraded land covered and Rainfed area developed (in ha.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Area covered with Soil and Moisture conservation activities (in ha.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Area brought under Plantation Horticulture and Afforestation (in ha.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Water Harvesting Structures newly created and rejuvenated (in no.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Farmers benefitted (in no.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Additional Area brought under Protective irrigation (in ha.)</th>
+      <th rowspan="2"  style="text-align:center" rowspan="2">Employment Generated (in mandays)</th>
+     </tr>
+
+</thead>
+<tbody>
+     <tr>
+		<th class="text-center">1</th>
+		<th class="text-center">2</th>
+		<th class="text-center">3</th>
+		<th class="text-center">4</th>
+		<th class="text-center">5</th>
+		<th class="text-center">6</th>
+		<th class="text-center">7</th>
+		<th class="text-center">8</th>
+		<th class="text-center">9</th>
+		
+		
+		</tr>
+		<c:if test="${dataPList != null}">
+		
+		<c:forEach items="${dataPList}" var="dataV" varStatus="status">
+		<tr>		
+			<td><c:out value='${dataV[0]}' /></td>
+			<td><c:out value='${dataV[4]}'/></td>
+			<td><c:out value='${dataV[11]}' /></td>
+			<td><c:out value='${dataV[5]}' /></td>
+			<td><c:out value='${dataV[6]}' /></td>
+			<td><c:out value='${dataV[7]}' /></td>
+			<td><c:out value='${dataV[10]}' /></td>
+			<td><c:out value='${dataV[8]}' /></td>
+			<td><c:out value='${dataV[9]}' /></td>
+		</tr>	
+		
+		</c:forEach>
+		<c:forEach items="${dataListNetTotal}" var="netTotal" varStatus="seqTotal">
+			<tr>
+				<td colspan ="2" align="right" class="table-primary" ><b>Grand Total </b></td>
+				
+			<%-- 	<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[4]}' /></fmt:formatNumber> </b></td> 
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[5]}' /></fmt:formatNumber> </b></td>--%>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${netTotal[0]}' /></fmt:formatNumber> </b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${netTotal[1]}' /></fmt:formatNumber> </b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${netTotal[2]}' /> </fmt:formatNumber></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${netTotal[3]}' /></fmt:formatNumber> </b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="2" value="${netTotal[4]}"/></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="2" value="${netTotal[5]}"/></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="2" value="${netTotal[6]}"/></b></td>
+				
+				
+				</tr>
+	</c:forEach> 
+		</c:if>
+		</tbody>
+</table>
+</c:if>
+
 
 </div>
 </div>

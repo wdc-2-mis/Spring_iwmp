@@ -20,6 +20,7 @@ public interface TargetAchievementQuarterDao {
 	public List<PrayasAchievementBean> finddistmonthachdata(Integer stcode, Integer finCode, Integer month);
 	public List<IwmpMFinYear> getYearonward22();
 	public List<PrayasAchievementBean> finddistWisemonthachdata(Integer stCode, Integer finCode, Integer month);
+	public List<PrayasAchievementBean> findprojWisemonthachdata(Integer dcode, Integer finCode, Integer month);
 	
 	Integer getnoofStateProj(Integer state);
 	Integer getnoofDistrictProj(Integer dcode);

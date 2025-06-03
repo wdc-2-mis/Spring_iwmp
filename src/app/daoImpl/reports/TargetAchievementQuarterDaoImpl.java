@@ -83,6 +83,9 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	@Value("${getdistmonthachdata}") 
 	String getdistmonthachdata;
 	
+	@Value("${getprojmonthachdata}") 
+	String getprojmonthachdata;
+	
 	@Value("${getquarttargetdata}") 
 	String getquarttargetdata;
 	
@@ -832,6 +835,34 @@ return result;
 			ses.getTransaction().commit();
 		}
         return result;
+	}
+
+	@Override
+	public List<PrayasAchievementBean> findprojWisemonthachdata(Integer dcode, Integer finCode, Integer month) {
+		List<PrayasAchievementBean> result = new ArrayList<PrayasAchievementBean>();
+		Session session = sessionFactory.openSession();
+		try {
+			String hql = null;
+			SQLQuery query = null;
+
+			@SuppressWarnings("unused")
+			Transaction tx = session.beginTransaction();
+			hql = getprojmonthachdata;
+			query = session.createSQLQuery(hql);
+			query.setInteger("dcode", dcode);
+			query.setInteger("finCode", finCode);
+			query.setInteger("month", month);
+			query.setResultTransformer(Transformers.aliasToBean(PrayasAchievementBean.class));
+			result = query.list();
+		} catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} finally {
+			session.getTransaction().commit();
+
+		}
+		return result;
+
 	}
 	
 	
