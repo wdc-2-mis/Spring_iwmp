@@ -2976,5 +2976,610 @@ public class TargetAchievementofIndicatorController {
 		return mav; 
 	}
 	
+	@RequestMapping(value = "/getProjectWiseQuarterReportPDF", method = RequestMethod.POST)
+	public ModelAndView getProjectWiseQuarterReportPDF(HttpServletRequest request, HttpServletResponse response) 
+	{
+		//WDC-PMKSY-0001113
+		String userState= request.getParameter("dcode");
+		String year= request.getParameter("year");
+		String quarter= request.getParameter("quarter");
+		
+		String stName= request.getParameter("stName");
+		String finName= request.getParameter("finName");
+		String quartename= request.getParameter("quartename");
+		String distname= request.getParameter("distname");
+		
+		int noofdist=ser.getnoofDistrictProj(Integer.parseInt(userState));
+		
+		List<TargetAchievementQuarterBean> list=new  ArrayList<TargetAchievementQuarterBean>();
+		
+		try {
+			
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("QuarterReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			 PdfWriter writer=PdfWriter.getInstance(document, baos);
+			
+			document.open(); 
+	       
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null; 
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			int m=Integer.parseInt(year);
+			
+			 if(Integer.parseInt(year)==0) {
+				paragraph3 = new Paragraph("Report O9- Project-wise, Year-wise and Quarter-wise Achievements on Output Outcome Monitoring Framework(OOMF) Indicators", f3);
+			 }
+			 else {
+				 paragraph3 = new Paragraph("Report O9- Project-wise, Year-wise and Quarter-wise Achievements on Output Outcome Monitoring Framework(OOMF) Indicators", f3);
+			 }
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+				//table = new PdfPTable(24);
+				//table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,5,5,5,5,5,5,5,5});
+				
+				table = new PdfPTable(13);
+				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+				
+				table.setWidthPercentage(100);
+				table.setSpacingBefore(0f);
+				table.setSpacingAfter(0f);
+				table.setHeaderRows(3);
+
+				
+				BigDecimal area_soilmoisture_activities_achie= BigDecimal.valueOf(0);
+				BigDecimal area_soilmoisture_activities_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal area_afforestation_horticulture_achie= BigDecimal.valueOf(0);
+				BigDecimal area_afforestation_horticulture_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal water_created_renovated_achie= BigDecimal.valueOf(0);
+				BigDecimal water_created_renovated_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal farmer_benefitte_achie= BigDecimal.valueOf(0);
+				BigDecimal farmer_benefitte_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal protective_irrigation_achie= BigDecimal.valueOf(0);
+				BigDecimal protective_irrigation_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal mandays_generated_achie= BigDecimal.valueOf(0);
+				BigDecimal mandays_generated_tar= BigDecimal.valueOf(0);
+				
+				BigDecimal areaof_degraded_land_tar= BigDecimal.valueOf(0);
+				BigDecimal areaof_degraded_land_achie= BigDecimal.valueOf(0);
+				
+				BigDecimal area_diversified_crops_tar= BigDecimal.valueOf(0);
+				BigDecimal area_diversified_crops_achie= BigDecimal.valueOf(0);
+				
+				BigDecimal area_nilsingto_doubmulcrop_tar= BigDecimal.valueOf(0);
+				BigDecimal area_nilsingto_doubmulcrop_achie= BigDecimal.valueOf(0);
+				
+				BigDecimal increase_croparea_tar= BigDecimal.valueOf(0);
+				BigDecimal increase_croparea_achie= BigDecimal.valueOf(0);
+			
+				BigDecimal increase_farmerincome_tar= BigDecimal.valueOf(0);
+				BigDecimal increase_farmerincome_achie= BigDecimal.valueOf(0);
+
+				
+				
+				list=ser.getProjectWiseQuarterReport(Integer.parseInt(userState), Integer.parseInt(year),  Integer.parseInt(quarter));
+				
+				CommonFunctions.insertCellHeader(table, "State: "+stName+", District : "+distname+ " Financial Year: "+finName+", Quarter: "+quartename, Element.ALIGN_LEFT, 7, 1, bf8Bold); 
+				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 6, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Project Name ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area of degraded land covered/Rainfed area developed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area covered with soil and moisture conservation activities ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought under plantation (Afforestation/Horticulture))", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of water harvesting structure created/renovated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of farmers benefitted", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought under protective irrigation", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of man-days generated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Additional area brought under diversified crops/change in cropping system", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Increase in cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Average Increase in farmers income (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				
+				
+				
+			/*	CommonFunctions.insertCellHeader(table, "State: "+stName+", Financial Year: "+finName+", Quarter: "+quartename, Element.ALIGN_LEFT, 10, 1, bf8Bold); 
+				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 14, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "District ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area of degraded land covered/Rainfed area developed", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area covered with soil and moisture conservation activities ", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought under plantation (Afforestation/Horticulture))", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of water harvesting structure created/renovated", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of farmers benefitted", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought under protective irrigation", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "No. of man-days generated", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Additional area brought under diversified crops/change in cropping system", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Increase in cropped area", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Average Increase in farmers income (%) ", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);   */
+
+				CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			/*	CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "17", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "18", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "19", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "20", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "21", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "22", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "23", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "24", Element.ALIGN_CENTER, 1, 1, bf8Bold);  */
+
+				int k=1;
+				if(list.size()!=0)
+					for(int i=0;i<list.size();i++) 
+					{
+						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getProj_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getAreaof_degraded_land_achie()==null?"0.00":  String.format(Locale.US, "%.4f",list.get(i).getAreaof_degraded_land_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_soilmoisture_activities_achie()==null?"0.00":  String.format(Locale.US, "%.4f",list.get(i).getArea_soilmoisture_activities_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_afforestation_horticulture_achie()==null?"0.00": String.format(Locale.US, "%.4f",list.get(i).getArea_afforestation_horticulture_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getWater_created_renovated_achie()==null?"0":list.get(i).getWater_created_renovated_achie().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefitte_achie()==null?"0":list.get(i).getFarmer_benefitte_achie() .toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getProtective_irrigation_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getProtective_irrigation_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMandays_generated_achie()==null?"0":list.get(i).getMandays_generated_achie().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getArea_diversified_crops_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getArea_diversified_crops_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_nilsingto_doubmulcrop_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getArea_nilsingto_doubmulcrop_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_croparea_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getIncrease_croparea_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_farmerincome_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getIncrease_farmerincome_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+
+						
+						
+						
+				/*		CommonFunctions.insertCell(table, list.get(i).getAreaof_degraded_land_tar()==null?"0.00": String.format(Locale.US, "%.4f",list.get(i).getAreaof_degraded_land_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getAreaof_degraded_land_achie()==null?"0.00":  String.format(Locale.US, "%.4f",list.get(i).getAreaof_degraded_land_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_soilmoisture_activities_tar()==null?"0.00": String.format(Locale.US, "%.4f",list.get(i).getArea_soilmoisture_activities_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_soilmoisture_activities_achie()==null?"0.00":  String.format(Locale.US, "%.4f",list.get(i).getArea_soilmoisture_activities_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_afforestation_horticulture_tar()==null?"0.00": String.format(Locale.US, "%.4f", list.get(i).getArea_afforestation_horticulture_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_afforestation_horticulture_achie()==null?"0.00": String.format(Locale.US, "%.4f",list.get(i).getArea_afforestation_horticulture_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getWater_created_renovated_tar()==null?"0":list.get(i).getWater_created_renovated_tar().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getWater_created_renovated_achie()==null?"0":list.get(i).getWater_created_renovated_achie().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefitte_tar()==null?"0":list.get(i).getFarmer_benefitte_tar().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefitte_achie()==null?"0":list.get(i).getFarmer_benefitte_achie() .toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getProtective_irrigation_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getProtective_irrigation_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getProtective_irrigation_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getProtective_irrigation_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMandays_generated_tar()==null?"0":list.get(i).getMandays_generated_tar().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMandays_generated_achie()==null?"0":list.get(i).getMandays_generated_achie().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getArea_diversified_crops_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getArea_diversified_crops_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_diversified_crops_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getArea_diversified_crops_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_nilsingto_doubmulcrop_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getArea_nilsingto_doubmulcrop_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getArea_nilsingto_doubmulcrop_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getArea_nilsingto_doubmulcrop_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_croparea_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getIncrease_croparea_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_croparea_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getIncrease_croparea_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_farmerincome_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getIncrease_farmerincome_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getIncrease_farmerincome_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getIncrease_farmerincome_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
+*/
+						k=k+1;
+						
+						areaof_degraded_land_tar=areaof_degraded_land_tar.add(list.get(i).getAreaof_degraded_land_tar()==null?BigDecimal.ZERO:list.get(i).getAreaof_degraded_land_tar());
+						areaof_degraded_land_achie=areaof_degraded_land_achie.add(list.get(i).getAreaof_degraded_land_achie()==null?BigDecimal.ZERO:list.get(i).getAreaof_degraded_land_achie());
+						
+						area_soilmoisture_activities_tar=area_soilmoisture_activities_tar.add(list.get(i).getArea_soilmoisture_activities_tar()==null?BigDecimal.ZERO:list.get(i).getArea_soilmoisture_activities_tar());
+						area_soilmoisture_activities_achie=area_soilmoisture_activities_achie.add(list.get(i).getArea_soilmoisture_activities_achie()==null?BigDecimal.ZERO:list.get(i).getArea_soilmoisture_activities_achie());
+						
+						area_afforestation_horticulture_tar=area_afforestation_horticulture_tar.add(list.get(i).getArea_afforestation_horticulture_tar()==null?BigDecimal.ZERO:list.get(i).getArea_afforestation_horticulture_tar());
+						area_afforestation_horticulture_achie=area_afforestation_horticulture_achie.add(list.get(i).getArea_afforestation_horticulture_achie()==null?BigDecimal.ZERO:list.get(i).getArea_afforestation_horticulture_achie());
+						
+						water_created_renovated_tar=water_created_renovated_tar.add(list.get(i).getWater_created_renovated_tar()==null?BigDecimal.ZERO:list.get(i).getWater_created_renovated_tar());
+						water_created_renovated_achie=water_created_renovated_achie.add(list.get(i).getWater_created_renovated_achie()==null?BigDecimal.ZERO:list.get(i).getWater_created_renovated_achie());
+						
+						farmer_benefitte_tar=farmer_benefitte_tar.add(list.get(i).getFarmer_benefitte_tar()==null?BigDecimal.ZERO:list.get(i).getFarmer_benefitte_tar());
+						farmer_benefitte_achie=farmer_benefitte_achie.add(list.get(i).getFarmer_benefitte_achie()==null?BigDecimal.ZERO:list.get(i).getFarmer_benefitte_achie());
+						
+						protective_irrigation_tar=protective_irrigation_tar.add(list.get(i).getProtective_irrigation_tar()==null?BigDecimal.ZERO:list.get(i).getProtective_irrigation_tar());
+						protective_irrigation_achie=protective_irrigation_achie.add(list.get(i).getProtective_irrigation_achie()==null?BigDecimal.ZERO:list.get(i).getProtective_irrigation_achie());
+						mandays_generated_tar=mandays_generated_tar.add(list.get(i).getMandays_generated_tar()==null?BigDecimal.ZERO:list.get(i).getMandays_generated_tar());
+						mandays_generated_achie=mandays_generated_achie.add(list.get(i).getMandays_generated_achie()==null?BigDecimal.ZERO:list.get(i).getMandays_generated_achie());
+						
+						area_diversified_crops_tar=area_diversified_crops_tar.add(list.get(i).getArea_diversified_crops_tar()==null?BigDecimal.ZERO:list.get(i).getArea_diversified_crops_tar());
+						area_diversified_crops_achie=area_diversified_crops_achie.add(list.get(i).getArea_diversified_crops_achie()==null?BigDecimal.ZERO:list.get(i).getArea_diversified_crops_achie());
+						area_nilsingto_doubmulcrop_tar=area_nilsingto_doubmulcrop_tar.add(list.get(i).getArea_nilsingto_doubmulcrop_tar()==null?BigDecimal.ZERO:list.get(i).getArea_nilsingto_doubmulcrop_tar());
+						area_nilsingto_doubmulcrop_achie=area_nilsingto_doubmulcrop_achie.add(list.get(i).getArea_nilsingto_doubmulcrop_achie()==null?BigDecimal.ZERO:list.get(i).getArea_nilsingto_doubmulcrop_achie());
+						
+						increase_croparea_tar=increase_croparea_tar.add(list.get(i).getIncrease_croparea_tar()==null?BigDecimal.ZERO:list.get(i).getIncrease_croparea_tar());
+						increase_croparea_achie=increase_croparea_achie.add(list.get(i).getIncrease_croparea_achie()==null?BigDecimal.ZERO:list.get(i).getIncrease_croparea_achie());
+						increase_farmerincome_tar=increase_farmerincome_tar.add(list.get(i).getIncrease_farmerincome_tar()==null?BigDecimal.ZERO:list.get(i).getIncrease_farmerincome_tar());
+						increase_farmerincome_achie=increase_farmerincome_achie.add(list.get(i).getIncrease_farmerincome_achie()==null?BigDecimal.ZERO:list.get(i).getIncrease_farmerincome_achie());
+
+					}
+				
+					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+					
+					CommonFunctions.insertCell3(table, String.valueOf(areaof_degraded_land_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(area_soilmoisture_activities_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(area_afforestation_horticulture_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(water_created_renovated_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(farmer_benefitte_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(protective_irrigation_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mandays_generated_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(area_diversified_crops_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(area_nilsingto_doubmulcrop_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					
+					CommonFunctions.insertCell3(table, String.valueOf(increase_croparea_achie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					//BigDecimal vart= new BigDecimal(noofdist);
+					BigDecimal vara= new BigDecimal(noofdist);
+					CommonFunctions.insertCell3(table, String.valueOf(increase_farmerincome_achie.divide(vara, 4, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		
+					
+					if(list.size()==0) 
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 13, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=O9 Report_project-wise.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+	
+	} 
+	catch (Exception ex) 
+	{
+		ex.printStackTrace();
+	} 
+	
+	return null;
+}
+	
+	@RequestMapping(value = "/getProjectWiseTargetAchievementExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String getProjectWiseTargetAchievementExcel(HttpServletRequest request, HttpServletResponse response) 
+	{
+
+		String userState= request.getParameter("dcode");
+		String year= request.getParameter("year");
+		String quarter= request.getParameter("quarter");
+		
+		String stName= request.getParameter("stName");
+		String finName= request.getParameter("finName");
+		String quartename= request.getParameter("quartename");
+		
+		String distname= request.getParameter("distname");
+		
+		int noofdist=ser.getnoofDistrictProj(Integer.parseInt(userState));
+		
+		List<TargetAchievementQuarterBean> list=new  ArrayList<TargetAchievementQuarterBean>();
+		
+		list=ser.getProjectWiseQuarterReport(Integer.parseInt(userState), Integer.parseInt(year),  Integer.parseInt(quarter));
+		
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report O9- Project-wise, Year-wise and Quarter-wise Achievements on Output Outcome Monitoring Framework(OOMF) Indicators");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			int y = Integer.parseInt(year);
+			
+			String rptName = "Report O9- Project-wise, Year-wise and Quarter-wise Achievements on Output Outcome Monitoring Framework(OOMF) Indicators ";
+			String areaAmtValDetail ="All Area in Ha.";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			
+			
+
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 12, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,5,0,12);
+	        sheet.addMergedRegion(mergedRegion);
+        
+	        mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        Row detail = sheet.createRow(5);
+	        
+	        Cell cell = detail.createCell(0);
+	        cell.setCellValue("State : "+stName +"  District: "+distname +"  Financial Year : "+finName +"   Quarter : "+quartename);  
+	        cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.LEFT);
+			for(int i =1; i<13;i++) {
+				detail.createCell(i).setCellStyle(style);
+			}
+			
+			Row rowhead = sheet.createRow(6); 
+			
+			cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("Project Name");  
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+			
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Area of degraded land covered/Rainfed area developed");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Area covered with soil and moisture conservation activities");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(4);
+			cell.setCellValue("Area brought under plantation (Afforestation/Horticulture)");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(5);
+			cell.setCellValue("No. of water harvesting structure created/renovated");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(6);
+			cell.setCellValue("No. of farmers benefitted");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(7);
+			cell.setCellValue("Area brought under protective irrigation");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("No. of man-days generated");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Additional area brought under diversified crops/change in cropping system");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Area brought from no crop/single crop to single/multiple crop");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Increase in cropped area");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Average Increase in farmers income (%) ");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int i=0;i<13;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        double totAreaCovSoilTar = 0;
+	        double totAreaCovSoilAch = 0;
+	        double totAreaCovPlantTar = 0;
+	        double totAreaCovPlantAch = 0;
+	        double totWaterHarvTar = 0;
+	        double totWaterHarvAch = 0;
+	        double totFarmerBenTar = 0;
+	        double totFarmerBenAch = 0;
+	        double totAreaCovIrrTar = 0;
+	        double totAreaCovIrrAch = 0;
+	        double totManDaysGenTar = 0;
+	        double totManDaysGenAch = 0;
+	        
+	        double totareaof_degraded_land_tar = 0;
+	        double totareaof_degraded_land_achie = 0;
+	        
+	        double totAreaCovDiversifiedCropTar = 0;
+	        double totAreaCovDiversifiedCropAch = 0;
+	        double totAreaNilSingtoDoubMulCropTar = 0;
+	        double totAreaNilSingtoDoubMulCropAch = 0;
+	        double totCroppedAreaTar = 0;
+	        double totCroppedAreaAch = 0;
+	        double totFarmerIncomeTar = 0;
+	        double totFarmerIncomeAch = 0;
+	        
+	        for(TargetAchievementQuarterBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getProj_name());
+	        	row.createCell(2).setCellValue(bean.getAreaof_degraded_land_achie()==null?0.0:bean.getAreaof_degraded_land_achie().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getArea_soilmoisture_activities_achie()==null?0.0:bean.getArea_soilmoisture_activities_achie().doubleValue()); 
+	        	row.createCell(4).setCellValue(bean.getArea_afforestation_horticulture_achie()==null?0.0:bean.getArea_afforestation_horticulture_achie().doubleValue()); 
+	        	row.createCell(5).setCellValue(bean.getWater_created_renovated_achie()==null?0.0:bean.getWater_created_renovated_achie().doubleValue()); 
+	        	row.createCell(6).setCellValue(bean.getFarmer_benefitte_achie()==null?0.0:bean.getFarmer_benefitte_achie().doubleValue()); 
+	        	row.createCell(7).setCellValue(bean.getProtective_irrigation_achie()==null?0.0:bean.getProtective_irrigation_achie().doubleValue()); 
+	        	row.createCell(8).setCellValue(bean.getMandays_generated_achie()==null?0.0:bean.getMandays_generated_achie().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getArea_diversified_crops_achie()==null?0.0:bean.getArea_diversified_crops_achie().doubleValue()); 
+	        	row.createCell(10).setCellValue(bean.getArea_nilsingto_doubmulcrop_achie()==null?0.0:bean.getArea_nilsingto_doubmulcrop_achie().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getIncrease_croparea_achie()==null?0.0:bean.getIncrease_croparea_achie().doubleValue()); 
+	        	row.createCell(12).setCellValue(bean.getIncrease_farmerincome_achie()==null?0.0:bean.getIncrease_farmerincome_achie().doubleValue());
+	        	
+	        	totAreaCovSoilTar = totAreaCovSoilTar + (bean.getArea_soilmoisture_activities_tar()==null?0.0:bean.getArea_soilmoisture_activities_tar().doubleValue());
+	        	totAreaCovSoilAch = totAreaCovSoilAch + (bean.getArea_soilmoisture_activities_achie()==null?0.0:bean.getArea_soilmoisture_activities_achie().doubleValue());
+	        	totAreaCovPlantTar = totAreaCovPlantTar + (bean.getArea_afforestation_horticulture_tar()==null?0.0:bean.getArea_afforestation_horticulture_tar().doubleValue());
+	        	totAreaCovPlantAch = totAreaCovPlantAch + (bean.getArea_afforestation_horticulture_achie()==null?0.0:bean.getArea_afforestation_horticulture_achie().doubleValue());
+	        	totWaterHarvTar = totWaterHarvTar + (bean.getWater_created_renovated_tar()==null?0.0:bean.getWater_created_renovated_tar().doubleValue());
+	        	totWaterHarvAch = totWaterHarvAch + (bean.getWater_created_renovated_achie()==null?0.0:bean.getWater_created_renovated_achie().doubleValue());
+	        	totFarmerBenTar = totFarmerBenTar + (bean.getFarmer_benefitte_tar()==null?0.0:bean.getFarmer_benefitte_tar().doubleValue());
+	        	totFarmerBenAch = totFarmerBenAch + (bean.getFarmer_benefitte_achie()==null?0.0:bean.getFarmer_benefitte_achie().doubleValue());
+	        	totAreaCovIrrTar = totAreaCovIrrTar + (bean.getProtective_irrigation_tar()==null?0.0:bean.getProtective_irrigation_tar().doubleValue());
+	        	totAreaCovIrrAch = totAreaCovIrrAch + (bean.getProtective_irrigation_achie()==null?0.0:bean.getProtective_irrigation_achie().doubleValue());
+	        	totManDaysGenTar = totManDaysGenTar + (bean.getMandays_generated_tar()==null?0.0:bean.getMandays_generated_tar().doubleValue());
+	        	totManDaysGenAch = totManDaysGenAch + (bean.getMandays_generated_achie()==null?0.0:bean.getMandays_generated_achie().doubleValue());
+				
+	        	totareaof_degraded_land_tar = totareaof_degraded_land_tar + (bean.getAreaof_degraded_land_tar()==null?0.0:bean.getAreaof_degraded_land_tar().doubleValue());
+	        	totareaof_degraded_land_achie = totareaof_degraded_land_achie + (bean.getAreaof_degraded_land_achie()==null?0.0:bean.getAreaof_degraded_land_achie().doubleValue());
+				
+	        	totAreaCovDiversifiedCropTar = totAreaCovDiversifiedCropTar + (bean.getArea_diversified_crops_tar()==null?0.0:bean.getArea_diversified_crops_tar().doubleValue());
+	        	totAreaCovDiversifiedCropAch = totAreaCovDiversifiedCropAch + (bean.getArea_diversified_crops_achie()==null?0.0:bean.getArea_diversified_crops_achie().doubleValue());
+	        	totAreaNilSingtoDoubMulCropTar = totAreaNilSingtoDoubMulCropTar + (bean.getArea_nilsingto_doubmulcrop_tar()==null?0.0:bean.getArea_nilsingto_doubmulcrop_tar().doubleValue());
+	        	totAreaNilSingtoDoubMulCropAch = totAreaNilSingtoDoubMulCropAch + (bean.getArea_nilsingto_doubmulcrop_achie()==null?0.0:bean.getArea_nilsingto_doubmulcrop_achie().doubleValue());
+	        	
+	        	totCroppedAreaTar = totCroppedAreaTar + (bean.getIncrease_croparea_tar()==null?0.0:bean.getIncrease_croparea_tar().doubleValue());
+	        	totCroppedAreaAch = totCroppedAreaAch + (bean.getIncrease_croparea_achie()==null?0.0:bean.getIncrease_croparea_achie().doubleValue());
+	        	totFarmerIncomeTar = totFarmerIncomeTar + (bean.getIncrease_farmerincome_tar()==null?0.0:bean.getIncrease_farmerincome_tar().doubleValue());
+	        	totFarmerIncomeAch = totFarmerIncomeAch + (bean.getIncrease_farmerincome_achie()==null?0.0:bean.getIncrease_farmerincome_achie().doubleValue());
+	        	
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+	        Row row = sheet.createRow(list.size()+8);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Grand Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        
+	       
+	        cell = row.createCell(2);
+	        cell.setCellValue(totareaof_degraded_land_achie);
+	        cell.setCellStyle(style1);
+	        
+	       
+	        cell = row.createCell(3);
+	        cell.setCellValue(totAreaCovSoilAch);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(4);
+	        cell.setCellValue(totAreaCovPlantAch);
+	        cell.setCellStyle(style1);
+	       
+	        cell = row.createCell(5);
+	        cell.setCellValue(totWaterHarvAch);
+	        cell.setCellStyle(style1);
+	       
+	        cell = row.createCell(6);
+	        cell.setCellValue(totFarmerBenAch);
+	        cell.setCellStyle(style1);
+	       
+	        cell = row.createCell(7);
+	        cell.setCellValue(totAreaCovIrrAch);
+	        cell.setCellStyle(style1);
+	       
+	        cell = row.createCell(8);
+	        cell.setCellValue(totManDaysGenAch);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(9);
+	        cell.setCellValue(totAreaCovDiversifiedCropAch);
+	        cell.setCellStyle(style1);
+	      
+	        cell = row.createCell(10);
+	        cell.setCellValue(totAreaNilSingtoDoubMulCropAch);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(11);
+	        cell.setCellValue(totCroppedAreaAch);
+	        cell.setCellStyle(style1);
+	       
+	        cell = row.createCell(12);  
+	        cell.setCellValue(String.format(Locale.US, "%.4f",totFarmerIncomeAch/noofdist));
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 12);
+
+	        String fileName = "attachment; filename=Report O9- Project-Wise.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return null;
+		
+	}
+	
+	
 	
 }

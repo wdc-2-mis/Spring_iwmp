@@ -15,65 +15,35 @@
 
 <script type="text/javascript">
 
-function downloadPDF(state, year, quarter,stName,finName,quartename)
+function downloadPDF(dcode, year, quarter, stName, finName, quartename, distname)
 {
-    document.getElementById("state").value=state;
+    document.getElementById("dcode").value=dcode;
     document.getElementById("year").value=year;
     document.getElementById("quarter").value=quarter;
     document.getElementById("stName").value=stName;
     document.getElementById("finName").value=finName;
     document.getElementById("quartename").value=quartename;
-    document.indicators.action="getDistWiseQuarterReportPDF";
+    document.getElementById("distname").value=distname;
+    
+    document.indicators.action="getProjectWiseQuarterReportPDF";
 	document.indicators.method="post";
 	document.indicators.submit();
 }
-function exportExcel(state, year, quarter,stName,finName,quartename)
+function exportExcel(dcode, year, quarter, stName, finName, quartename, distname)
 {
-    document.getElementById("state").value=state;
+	document.getElementById("dcode").value=dcode;
     document.getElementById("year").value=year;
     document.getElementById("quarter").value=quarter;
     document.getElementById("stName").value=stName;
     document.getElementById("finName").value=finName;
     document.getElementById("quartename").value=quartename;
-    document.indicators.action="getDistWiseTargetAchievementofIndicators";
+    document.getElementById("distname").value=distname;
+    
+    document.indicators.action="getProjectWiseTargetAchievementExcel";
 	document.indicators.method="post";
 	document.indicators.submit();
 }
-// function downloadPDF(state, year, quarter){
-	
-// 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-//     var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
-//     var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
-//     alert('jh');
-//     document.getElementById("stName").value=stName;
-//     document.getElementById("finName").value=finName;
-//     document.getElementById("quartename").value=quartename;
-	
-//     document.getElementById("state").value=state;
-//     document.getElementById("year").value=year;
-//     document.getElementById("quarter").value=quarter;
-//     document.indicators.action="getDistWiseQuarterReportPDF";
-// 	document.indicators.method="post";
-// 	document.indicators.submit();
-// 	}
 
-// function exportExcel(state, year, quarter){
-	
-// 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-//     var finName = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
-//     var quartename = document.getElementById("quarter").options[document.getElementById("quarter").selectedIndex].text;
-//   //  alert(stName+distName+projName+yearName);
-//     document.getElementById("stName").value=stName;
-//     document.getElementById("finName").value=finName;
-//     document.getElementById("quartename").value=quartename;
-	
-//     document.getElementById("state").value=state;
-//     document.getElementById("year").value=year;
-//     document.getElementById("quarter").value=quarter;
-//     document.indicators.action="getDistWiseTargetAchievementofIndicators";
-// 	document.indicators.method="post";
-// 	document.indicators.submit();
-// 	}
 
 </script>
 </head>
@@ -108,12 +78,13 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 			</table> 
 			</div>
 		
-    <input type="hidden" name="state" id="state" value="" />
+    <input type="hidden" name="dcode" id="dcode" value="" />
 	<input type="hidden" name="year" id="year" value="" />
 	<input type="hidden" name="quarter" id="quarter" value="" /> 
 	<input type="hidden" name="stName" id="stName" value="" />
 	<input type="hidden" name="finName" id="finName" value="" />
 	<input type="hidden" name="quartename" id="quartename" value="" /> 
+	<input type="hidden" name="distname" id="distname" value="" /> 
 
       <div id="previewDiv" class="hiddenDivStyle" align="center"
 			style="position: absolute; top: 100px; left: 25px; display: none; width: 300px; height: 50px; vertical-scrol: auto; background-color: gray;">
@@ -138,11 +109,11 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 	<div class="row">
 	<div class="col-1" ></div>
 	<div class="col-10"  id="exportHtmlToPdf">
-<%-- <c:if test="${distWiseDataList != null}">
-<button name="exportExcel" id="exportExcel" onclick="exportExcel('${state}','${year}','${quarter}', '${stName}','${finName}','${quartename}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${year}','${quarter}', '${stName}','${finName}','${quartename}')" class="btn btn-info">PDF</button>
-<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
-</c:if> --%>
+ <c:if test="${distWiseDataList != null}">
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}','${year}','${quarter}', '${stName}','${finName}','${quartename}','${distName}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}','${year}','${quarter}', '${stName}','${finName}','${quartename}','${distName}')" class="btn btn-info">PDF</button>
+	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+</c:if> 
 <table id="tblReport" cellspacing="0" class="table" width="auto">
   <thead>
 	 <tr>
@@ -166,10 +137,6 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
       <th style="text-align:center" >Increase in cropped area</th>
       <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
      </tr>
-  
-
-	
-	
 	
 <!--     <tr>
       <th rowspan="2" style="text-align:center; vertical-align: middle;">S.No.</th>
