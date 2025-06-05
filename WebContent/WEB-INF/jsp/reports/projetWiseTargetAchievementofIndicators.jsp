@@ -117,25 +117,25 @@ function exportExcel(dcode, year, quarter, stName, finName, quartename, distname
 <table id="tblReport" cellspacing="0" class="table" width="auto">
   <thead>
 	 <tr>
-	 	<th colspan="7" style="text-align:left; ">State : ${stName} &emsp; District : ${distName} &emsp; Financial Year : ${finName} &emsp; Quarter : ${quartename}  </th>
-		<th colspan="6" style="text-align:right; ">All Area in Ha.</th>
+	 	  <th colspan="7" style="text-align:left; ">State : ${stName} &emsp; District : ${distName} &emsp; Financial Year : ${finName} &emsp; Quarter : ${quartename}  </th>
+		  <th colspan="6" style="text-align:right; ">All Area in Ha.</th>
 	</tr>
 	
 	 <tr>
-      <th style="text-align:center; vertical-align: middle;">S.No.</th>
-      <th style="text-align:center; vertical-align: middle;">Project Name</th> 
-      <th style="text-align:center" >Area of degraded land covered/Rainfed area developed</th>
-      <th style="text-align:center" >Area covered with soil and moisture conservation activities</th>
-      <th style="text-align:center" >Area brought under plantation (Afforestation/Horticulture)</th>
-      <th style="text-align:center" >No. of water harvesting structure created/renovated</th>
-    
-      <th style="text-align:center" >No. of farmers benefitted</th>
-      <th style="text-align:center" >Area brought under protective irrigation</th>
-      <th style="text-align:center" >No. of man-days generated</th>
-      <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
-      <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
-      <th style="text-align:center" >Increase in cropped area</th>
-      <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
+	      <th style="text-align:center; vertical-align: middle;">S.No.</th>
+	      <th style="text-align:center; vertical-align: middle;">Project Name</th> 
+	      <th style="text-align:center" >Area of degraded land covered/Rainfed area developed</th>
+	      <th style="text-align:center" >Area covered with soil and moisture conservation activities</th>
+	      <th style="text-align:center" >Area brought under plantation (Afforestation/Horticulture)</th>
+	      <th style="text-align:center" >No. of water harvesting structure created/renovated</th>
+	    
+	      <th style="text-align:center" >No. of farmers benefitted</th>
+	      <th style="text-align:center" >Area brought under protective irrigation</th>
+	      <th style="text-align:center" >No. of man-days generated</th>
+	      <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
+	      <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
+	      <th style="text-align:center" >Increase in cropped area</th>
+	      <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
      </tr>
 	
 <!--     <tr>
