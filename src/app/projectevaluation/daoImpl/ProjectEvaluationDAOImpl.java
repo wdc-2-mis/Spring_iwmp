@@ -779,7 +779,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	        }
 						
 	        equityAspect.setWaterCommittee(pWatershedCom);
-	        equityAspect.setControlWaterCommittee(cWatershedCom);
+	        equityAspect.setControlWaterCommittee(null); // equityAspect.setControlWaterCommittee(cWatershedCom);
 	        equityAspect.setWaterCommitteeRemark(rmkWatershedCom);
 	        equityAspect.setFpoShgVli(pFpoShgVli);
 	        equityAspect.setControlFpoShgVli(cFpoShgVli);

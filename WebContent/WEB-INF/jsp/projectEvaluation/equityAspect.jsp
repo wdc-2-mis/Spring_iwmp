@@ -39,11 +39,11 @@ function savedata(){
     	return false;
     }
 			
-    var cwc = $("input[name='cWatershedCom']:checked").val();
+   /*  var cwc = $("input[name='cWatershedCom']:checked").val();
     if(cwc=== null || cwc===undefined){
       	alert('Please check whether landless poor and women have a place in watershed committee for the controlled area');
       	return false;
-    }
+    } */
     	
     var pfs = $("input[name='pFpoShgVli']:checked").val();
     if(pfs=== null || pfs===undefined){
@@ -178,9 +178,9 @@ function savedata(){
 				</c:if>
 			</td>
 			<td>
-				<c:if test="${cWatershedCom eq null }">
-					<input type="radio" id="cWatershedCom" name="cWatershedCom" value="true" /> Yes
-					<input type="radio" id="cWatershedCom1" name="cWatershedCom" value="false" /> No
+				<%-- <c:if test="${cWatershedCom eq null }">
+					<!-- <input type="radio" id="cWatershedCom" name="cWatershedCom" value="true" /> Yes
+					<input type="radio" id="cWatershedCom1" name="cWatershedCom" value="false" /> No -->
 				</c:if>
 				<c:if test="${cWatershedCom eq true }">
 					<input type="radio" id="cWatershedCom" name="cWatershedCom" value="true" checked="checked" /> Yes
@@ -189,7 +189,8 @@ function savedata(){
 				<c:if test="${cWatershedCom eq false }">
 					<input type="radio" id="cWatershedCom" name="cWatershedCom" value="true" /> Yes
 					<input type="radio" id="cWatershedCom1" name="cWatershedCom" value="false" checked="checked" /> No
-				</c:if>
+				</c:if> --%>
+				N/A
 			</td>
 			<td>
 <%-- 				<input type="text" id="rmkWatershedCom" name="rmkWatershedCom" value="${rmkWatershedCom}" autocomplete = "off"/> --%>

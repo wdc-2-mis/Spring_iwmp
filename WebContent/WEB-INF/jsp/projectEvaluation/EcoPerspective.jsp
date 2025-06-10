@@ -39,6 +39,15 @@ function savedata(){
         $flag = false; 
         return false;
     }
+    
+    if (controlntlresource === 'true') {
+    	if (naturalresourceRemark === '' ||naturalresourceRemark === undefined || naturalresourceRemark === null) {
+            alert('Please give the remarks Controlled Area');
+            $('#ntrlresourceremark').focus(); 
+            return false;
+        }
+    }
+    
     if (norm === '' ||norm === undefined || norm === null) {
         alert('Please check norms relating to sharing of usufructs rights for Project Area');
         $flag = false; 
@@ -48,7 +57,14 @@ function savedata(){
         alert('Please check norms relating to sharing of usufructs rights for Controlled Area');
        $flag = false; 
         return false;
-}
+	}
+    if (controlnorm === 'true') {
+    	if (normRemark === '' ||normRemark === undefined || normRemark === null) {
+            alert('Please give the remarks Controlled Area');
+            $('#normremark').focus(); 
+            return false;
+        }
+    }
     if (antrlasset === '' ||antrlasset === undefined || antrlasset === null) {
         alert('Please check natural resources and assets created for Project Area');
         $flag = false; 
@@ -59,7 +75,14 @@ function savedata(){
         alert('Please check natural resources and assets created for Controlled Area');
         $flag = false; 
         return false;
-}
+   }
+   if (controlantrlasset === 'true') {
+   	if (antrlassetRemark === '' ||antrlassetRemark === undefined || antrlassetRemark === null) {
+           alert('Please give the remarks Controlled Area');
+           $('#ntlassetremark').focus(); 
+           return false;
+       }
+   }
     
     
     if(confirm("Do You Want to Save Ecological Perspective?")) {
