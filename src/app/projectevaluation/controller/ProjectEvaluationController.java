@@ -2583,255 +2583,261 @@ public class ProjectEvaluationController {
 	
 	@RequestMapping(value = "/saveOrUpdateCroppedDetails", method = RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView saveOrUpdateCroppedDetails(HttpServletRequest request) {ModelAndView mav = new ModelAndView();
-	String res="";
-	session = request.getSession(true);
-	
-	try { 
-		if (session != null && session.getAttribute("loginID") != null) {
-			monthList = PEService.getmonthforproject();
-			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
-	        String distName = request.getParameter("dname");
-	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
-	        String project = request.getParameter("pcode");
-	        String projName = request.getParameter("pname");
-	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
-	        String mname = request.getParameter("mname");
-	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
-	        String fname = request.getParameter("fname");
-	        Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
-			
-			BigDecimal prekharifCrop = new BigDecimal(request.getParameter("prekharif"));
-			
-			BigDecimal prerabiCrop = new BigDecimal(request.getParameter("prerabi"));
-			BigDecimal prethirdCrop = new BigDecimal(request.getParameter("prethirdCrop"));
-			
-			BigDecimal precereals = new BigDecimal(request.getParameter("precereals"));
-			BigDecimal prepulses = new BigDecimal(request.getParameter("prepulses"));
-			
-			BigDecimal preoilSeed = new BigDecimal(request.getParameter("preoilSeed"));
-			BigDecimal premillets = new BigDecimal(request.getParameter("premillets"));
-			
-			BigDecimal preothers = request.getParameter("preothers")==""?null:new BigDecimal(request.getParameter("preothers"));
-			BigDecimal prehorticulture = new BigDecimal(request.getParameter("prehorticulture"));
-			
-			BigDecimal prenetSown = new BigDecimal(request.getParameter("prenetSown"));
-			BigDecimal precropIntensity = new BigDecimal(request.getParameter("precropIntensity"));
-			
-			BigDecimal midkharifCrop = new BigDecimal(request.getParameter("midkharif"));
-			
-			BigDecimal midrabiCrop = new BigDecimal(request.getParameter("midrabi"));
-			BigDecimal midthirdCrop = new BigDecimal(request.getParameter("midthirdCrop"));
-			
-			BigDecimal midcereals = new BigDecimal(request.getParameter("midcereals"));
-			BigDecimal midpulses = new BigDecimal(request.getParameter("midpulses"));
-			
-			BigDecimal midoilSeed = new BigDecimal(request.getParameter("midoilSeed"));
-			BigDecimal midmillets = new BigDecimal(request.getParameter("midmillets"));
-			
-			BigDecimal midothers = request.getParameter("midothers")==""?null:new BigDecimal(request.getParameter("midothers"));
-			BigDecimal midhorticulture = new BigDecimal(request.getParameter("midhorticulture"));
-			
-			BigDecimal midnetSown = new BigDecimal(request.getParameter("midnetSown"));
-			BigDecimal midcropIntensity = new BigDecimal(request.getParameter("midcropIntensity"));
-			
-//			BigDecimal diversifiedCrop = new BigDecimal(request.getParameter("diversifiedCrop"));
-			
-			BigDecimal ckharifCrop = new BigDecimal(request.getParameter("ckharif"));
-			
-			BigDecimal crabiCrop = new BigDecimal(request.getParameter("crabi"));
-			BigDecimal cthirdCrop = new BigDecimal(request.getParameter("cthirdCrop"));
-			
-			BigDecimal ccereals = new BigDecimal(request.getParameter("ccereals"));
-			BigDecimal cpulses = new BigDecimal(request.getParameter("cpulses"));
-			
-			BigDecimal coilSeed = new BigDecimal(request.getParameter("coilSeed"));
-			BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
-			
-			BigDecimal cothers = request.getParameter("cothers")==""?null:new BigDecimal(request.getParameter("cothers"));
-			BigDecimal chorticulture = new BigDecimal(request.getParameter("chorticulture"));
-			
-			BigDecimal cnetSown = new BigDecimal(request.getParameter("cnetSown"));
-			BigDecimal ccropIntensity = new BigDecimal(request.getParameter("ccropIntensity"));
-			
-			String kharifCropremark = request.getParameter("kharifremark");
-			
-			String rabiCropremark = request.getParameter("rabiremark");
-			String thirdCropremark = request.getParameter("thirdCropremark");
-			
-			String cerealsremark = request.getParameter("cerealsremark");
-			String pulsesremark = request.getParameter("pulsesremark");
-			
-			String oilSeedremark = request.getParameter("oilSeedremark");
-			String milletsremark = request.getParameter("milletsremark");
-			
-			String othersremark = request.getParameter("othersremark");
-			String horticultureremark = request.getParameter("horticultureremark");
-			
-			String netSownremark = request.getParameter("netSownremark");
-			String cropIntensityremark = request.getParameter("cropIntensityremark");
-			
-			String othercrop = request.getParameter("othercrop");
-			
-			
-						
-			mav.setViewName("projectEvaluation/projectProfileMain");
-			String projProfilestatus = PEService.checkProjectProfileStatus(project);
-			if(projProfilestatus != null) {
-				if ("1".equals(projProfilestatus)) {
-		            request.setAttribute("projectProfileConfirmed", "true");
-		        }
-				if ("2".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		        }
-				if ("3".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		        }
-				if ("4".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		        }
-				if ("5".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		        }
-				if ("6".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		        }
-				if ("7".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		        }
-				if ("8".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		        }
-				if ("9".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		        }
-				if ("10".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		        }
-				if ("11".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		        }
-				if ("12".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		        }
-				if ("13".equals(projProfilestatus)) {
-					request.setAttribute("projectProfileConfirmed", "true");
-					request.setAttribute("evaluationDetailConfirmed", "true");
-		            request.setAttribute("fundUtilizationConfirmed", "true");
-		            request.setAttribute("croppedDetails1Confirmed", "true");
-		            request.setAttribute("croppedDetails2Confirmed", "true");
-		            request.setAttribute("croppedDetails3Confirmed", "true");
-		            request.setAttribute("manDaysDetailConfirmed", "true");
-		            request.setAttribute("productionDetailsConfirmed", "true");
-		            request.setAttribute("ecoPerspectiveConfirmed", "true");
-		            request.setAttribute("equityAspectConfirmed", "true");
-		            request.setAttribute("executionOfPlannedWorkConfirmed", "true");
-		            request.setAttribute("qualityShapeFileConfirmed", "true");
-		            request.setAttribute("geoTagDetailsConfirmed", "true");
-		        }
-				}
-			String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop, prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers, prehorticulture, prenetSown, precropIntensity,
-					midkharifCrop, midrabiCrop, midthirdCrop, midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown, midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets, 
-					cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark, thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark, horticultureremark, netSownremark, cropIntensityremark, othercrop);
-			
-			if ("success".equals(result)) {
-	            request.setAttribute("croppedDetails1Confirmed", "true");
-	        }
-			
-			request.setAttribute("projectProfileConfirmed", "true");
-			request.setAttribute("evaluationDetailConfirmed", "true");
-			request.setAttribute("fundUtilizationConfirmed","true");
+	public ModelAndView saveOrUpdateCroppedDetails(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String res = "";
+		session = request.getSession(true);
 
-	        mav.addObject("distName", distName);
-	        mav.addObject("projName", projName);
-	        mav.addObject("monthList", monthList);
-	        mav.addObject("monthname", mname);
-	        mav.addObject("fincd", fcode);
-	        mav.addObject("dcode", dcode);
-	        mav.addObject("projid", projid);
-	        mav.addObject("monthid", mcode);
-	        mav.addObject("finyr", fname);
-    
-	    } else {
-	        if (session != null) {
-	            session.invalidate();
-	        }
-	        mav.setViewName("login");
-	        mav.addObject("login", new Login());
-	    }
-		}
-		catch (Exception e) {
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				monthList = PEService.getmonthforproject();
+				Integer dcode = Integer.parseInt(request.getParameter("dcode"));
+				String distName = request.getParameter("dname");
+				Integer projid = Integer.parseInt(request.getParameter("pcode"));
+				String project = request.getParameter("pcode");
+				String projName = request.getParameter("pname");
+				Integer mcode = Integer.parseInt(request.getParameter("mcode"));
+				String mname = request.getParameter("mname");
+				Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+				String fname = request.getParameter("fname");
+				Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
+
+				BigDecimal prekharifCrop = new BigDecimal(request.getParameter("prekharif"));
+
+				BigDecimal prerabiCrop = new BigDecimal(request.getParameter("prerabi"));
+				BigDecimal prethirdCrop = new BigDecimal(request.getParameter("prethirdCrop"));
+
+				BigDecimal precereals = new BigDecimal(request.getParameter("precereals"));
+				BigDecimal prepulses = new BigDecimal(request.getParameter("prepulses"));
+
+				BigDecimal preoilSeed = new BigDecimal(request.getParameter("preoilSeed"));
+				BigDecimal premillets = new BigDecimal(request.getParameter("premillets"));
+
+				BigDecimal preothers = request.getParameter("preothers") == "" ? null
+						: new BigDecimal(request.getParameter("preothers"));
+				BigDecimal prehorticulture = new BigDecimal(request.getParameter("prehorticulture"));
+
+				BigDecimal prenetSown = new BigDecimal(request.getParameter("prenetSown"));
+				BigDecimal precropIntensity = new BigDecimal(request.getParameter("precropIntensity"));
+
+				BigDecimal midkharifCrop = new BigDecimal(request.getParameter("midkharif"));
+
+				BigDecimal midrabiCrop = new BigDecimal(request.getParameter("midrabi"));
+				BigDecimal midthirdCrop = new BigDecimal(request.getParameter("midthirdCrop"));
+
+				BigDecimal midcereals = new BigDecimal(request.getParameter("midcereals"));
+				BigDecimal midpulses = new BigDecimal(request.getParameter("midpulses"));
+
+				BigDecimal midoilSeed = new BigDecimal(request.getParameter("midoilSeed"));
+				BigDecimal midmillets = new BigDecimal(request.getParameter("midmillets"));
+
+				BigDecimal midothers = request.getParameter("midothers") == "" ? null
+						: new BigDecimal(request.getParameter("midothers"));
+				BigDecimal midhorticulture = new BigDecimal(request.getParameter("midhorticulture"));
+
+				BigDecimal midnetSown = new BigDecimal(request.getParameter("midnetSown"));
+				BigDecimal midcropIntensity = new BigDecimal(request.getParameter("midcropIntensity"));
+
+//			BigDecimal diversifiedCrop = new BigDecimal(request.getParameter("diversifiedCrop"));
+
+				BigDecimal ckharifCrop = new BigDecimal(request.getParameter("ckharif"));
+
+				BigDecimal crabiCrop = new BigDecimal(request.getParameter("crabi"));
+				BigDecimal cthirdCrop = new BigDecimal(request.getParameter("cthirdCrop"));
+
+				BigDecimal ccereals = new BigDecimal(request.getParameter("ccereals"));
+				BigDecimal cpulses = new BigDecimal(request.getParameter("cpulses"));
+
+				BigDecimal coilSeed = new BigDecimal(request.getParameter("coilSeed"));
+				BigDecimal cmillets = new BigDecimal(request.getParameter("cmillets"));
+
+				BigDecimal cothers = request.getParameter("cothers") == "" ? null
+						: new BigDecimal(request.getParameter("cothers"));
+				BigDecimal chorticulture = new BigDecimal(request.getParameter("chorticulture"));
+
+				BigDecimal cnetSown = new BigDecimal(request.getParameter("cnetSown"));
+				BigDecimal ccropIntensity = new BigDecimal(request.getParameter("ccropIntensity"));
+
+				String kharifCropremark = request.getParameter("kharifremark");
+
+				String rabiCropremark = request.getParameter("rabiremark");
+				String thirdCropremark = request.getParameter("thirdCropremark");
+
+				String cerealsremark = request.getParameter("cerealsremark");
+				String pulsesremark = request.getParameter("pulsesremark");
+
+				String oilSeedremark = request.getParameter("oilSeedremark");
+				String milletsremark = request.getParameter("milletsremark");
+
+				String othersremark = request.getParameter("othersremark");
+				String horticultureremark = request.getParameter("horticultureremark");
+
+				String netSownremark = request.getParameter("netSownremark");
+				String cropIntensityremark = request.getParameter("cropIntensityremark");
+
+				String othercrop = request.getParameter("othercrop");
+
+				mav.setViewName("projectEvaluation/projectProfileMain");
+				String projProfilestatus = PEService.checkProjectProfileStatus(project);
+				if (projProfilestatus != null) {
+					if ("1".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+					}
+					if ("2".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+					}
+					if ("3".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+					}
+					if ("4".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+					}
+					if ("5".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+					}
+					if ("6".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+					}
+					if ("7".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+					}
+					if ("8".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+					}
+					if ("9".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+						request.setAttribute("ecoPerspectiveConfirmed", "true");
+					}
+					if ("10".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+						request.setAttribute("ecoPerspectiveConfirmed", "true");
+						request.setAttribute("equityAspectConfirmed", "true");
+					}
+					if ("11".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+						request.setAttribute("ecoPerspectiveConfirmed", "true");
+						request.setAttribute("equityAspectConfirmed", "true");
+						request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+					}
+					if ("12".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+						request.setAttribute("ecoPerspectiveConfirmed", "true");
+						request.setAttribute("equityAspectConfirmed", "true");
+						request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+						request.setAttribute("qualityShapeFileConfirmed", "true");
+					}
+					if ("13".equals(projProfilestatus)) {
+						request.setAttribute("projectProfileConfirmed", "true");
+						request.setAttribute("evaluationDetailConfirmed", "true");
+						request.setAttribute("fundUtilizationConfirmed", "true");
+						request.setAttribute("croppedDetails1Confirmed", "true");
+						request.setAttribute("croppedDetails2Confirmed", "true");
+						request.setAttribute("croppedDetails3Confirmed", "true");
+						request.setAttribute("manDaysDetailConfirmed", "true");
+						request.setAttribute("productionDetailsConfirmed", "true");
+						request.setAttribute("ecoPerspectiveConfirmed", "true");
+						request.setAttribute("equityAspectConfirmed", "true");
+						request.setAttribute("executionOfPlannedWorkConfirmed", "true");
+						request.setAttribute("qualityShapeFileConfirmed", "true");
+						request.setAttribute("geoTagDetailsConfirmed", "true");
+					}
+				}
+				String result = PEService.saveOrUpdateCroppedDetails(request, session, projProfId, prekharifCrop,
+						prerabiCrop, prethirdCrop, precereals, prepulses, preoilSeed, premillets, preothers,
+						prehorticulture, prenetSown, precropIntensity, midkharifCrop, midrabiCrop, midthirdCrop,
+						midcereals, midpulses, midoilSeed, midmillets, midothers, midhorticulture, midnetSown,
+						midcropIntensity, ckharifCrop, crabiCrop, cthirdCrop, ccereals, cpulses, coilSeed, cmillets,
+						cothers, chorticulture, cnetSown, ccropIntensity, kharifCropremark, rabiCropremark,
+						thirdCropremark, cerealsremark, pulsesremark, oilSeedremark, milletsremark, othersremark,
+						horticultureremark, netSownremark, cropIntensityremark, othercrop);
+
+				if ("success".equals(result)) {
+					request.setAttribute("croppedDetails1Confirmed", "true");
+				}
+
+				request.setAttribute("projectProfileConfirmed", "true");
+				request.setAttribute("evaluationDetailConfirmed", "true");
+				request.setAttribute("fundUtilizationConfirmed", "true");
+
+				mav.addObject("distName", distName);
+				mav.addObject("projName", projName);
+				mav.addObject("monthList", monthList);
+				mav.addObject("monthname", mname);
+				mav.addObject("fincd", fcode);
+				mav.addObject("dcode", dcode);
+				mav.addObject("projid", projid);
+				mav.addObject("monthid", mcode);
+				mav.addObject("finyr", fname);
+
+			} else {
+				if (session != null) {
+					session.invalidate();
+				}
+				mav.setViewName("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
-	return mav;
-}
+
+		return mav;
+	}
 	@RequestMapping(value="/ecologicalPerspective", method=RequestMethod.GET)
 	public ModelAndView ecologicalPerspective(HttpServletRequest request, HttpServletResponse response)
 	{
