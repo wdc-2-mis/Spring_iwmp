@@ -49,6 +49,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	private String requestIp; 
 	private String summary;
 	private Character grade;
+	private String pagency;
 	private Set<IndicatorEvaluation> indicatorEvaluation = new HashSet<IndicatorEvaluation>(0);
 	private Set<FundUtilization> fundUtilization = new HashSet<FundUtilization>(0);
 	private Set<WdcpmksyMandaysDetails> wdcpmksyMandaysDetails = new HashSet<WdcpmksyMandaysDetails>(0);
@@ -69,7 +70,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	    public WdcpmksyProjectProfileEvaluation(int projectProfileId) {
 	        this.projectProfileId = projectProfileId;
 	    }
-	    public WdcpmksyProjectProfileEvaluation(int projectProfileId, IwmpMProject iwmpMProject, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, MEvaluationIndicator mEvaluationIndicator, BigDecimal projectCost, BigDecimal centralShare, BigDecimal stateShare, BigDecimal projectArea, int villageCovered, int watershedCommittee, int memberWatershedCommittee, int household, Character status, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp, String summary, Character grade) {
+	    public WdcpmksyProjectProfileEvaluation(int projectProfileId, IwmpMProject iwmpMProject, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, MEvaluationIndicator mEvaluationIndicator, BigDecimal projectCost, BigDecimal centralShare, BigDecimal stateShare, BigDecimal projectArea, int villageCovered, int watershedCommittee, int memberWatershedCommittee, int household, Character status, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp, String summary, Character grade, String pagency) {
 	       this.projectProfileId = projectProfileId;
 	       this.iwmpMProject = iwmpMProject;
 	       this.iwmpMFinYear = iwmpMFinYear;
@@ -90,6 +91,7 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 	       this.requestIp=RequestIp;
 	       this.summary = summary;
 	       this.grade = grade;
+	       this.pagency = pagency;
 	    }
 
 
@@ -299,6 +301,17 @@ public class WdcpmksyProjectProfileEvaluation implements java.io.Serializable{
 
 		public void setGrade(Character grade) {
 			this.grade = grade;
+		}
+
+		
+		@Column(name="pagency", length=100)
+		public String getPagency() {
+			return pagency;
+		}
+
+
+		public void setPagency(String pagency) {
+			this.pagency = pagency;
 		}
 
 

@@ -52,6 +52,7 @@ $(document).ready(function() {
 	        var project = $("#project").val();
 	        var finyear = $("#finyear").val();
 	        var month = $("#month").val();
+	        var agency = $("#pagency").val().trim();
 
 	        if (!district) {
 	            alert("Please select district!");
@@ -74,6 +75,11 @@ $(document).ready(function() {
 	            return;
 	        }
 
+	        if(agency == ""){
+	        	alert("Please enter Name of Project Evaluation Agency!");
+	            $("#pagency").focus();
+	            return;
+	        }
 	        $("#distName").val($("#district option:selected").text());
 	        $("#projName").val($("#project option:selected").text());
 	        $("#finName").val($("#finyear option:selected").text());
@@ -180,6 +186,12 @@ $(document).ready(function() {
 					</c:if>
 					</select>
           </td>         
+  </tr>
+  
+  <tr>
+  <td colspan="2">&nbsp&nbsp&nbsp&nbsp<b><c:out value="Name of Project Evaluation Agency:"/><span style="color: red;">*</span></b></td>
+   <td colspan="6"><input type="text" id="pagency" name="pagency" autocomplete = "off"/></td>
+                       
   </tr>
   <td></td><td></td><td></td>
   <c:if test="${not empty error}">

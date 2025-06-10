@@ -112,9 +112,9 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	@Override
 	public String insertprojectProfile(Integer projid, Integer fcode, Integer mcode, Integer evaId,
 			BigDecimal sanctionedC, BigDecimal cShare, BigDecimal sShare, BigDecimal sancitonedP, Integer villageC,
-			Integer waterC, Integer membersWC, Integer householdsC, HttpSession session, HttpServletRequest request) {
+			Integer waterC, Integer membersWC, Integer householdsC, String pagency, HttpSession session, HttpServletRequest request) {
 		return PEDAO.insertprojectProfile(projid, fcode, mcode, evaId, sanctionedC, cShare, sShare, sancitonedP, villageC,
-					waterC, membersWC, householdsC, session, request);
+					waterC, membersWC, householdsC, pagency, session, request);
 	}
 	
 	@Override

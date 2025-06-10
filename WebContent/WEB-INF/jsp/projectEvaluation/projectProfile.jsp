@@ -216,6 +216,7 @@ function validateInput(event) {
 		<input type="hidden" id="mname" name="mname" value= <c:out value='${mname}' /> />
 		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
 		<input type="hidden" id="fname" name="fname" value= <c:out value='${fname}' /> />
+		<input type="hidden" id="pagency" name="pagency" value= "<c:out value='${pagency}' />" />
 		
 		<div class="form-group">
 			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose>  <c:when test="${fn:length(blockList) == 2}"><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b></c:when> <c:otherwise><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b>     <a href="#" onclick="openModal()"><b>....more</b></a></c:otherwise></c:choose>

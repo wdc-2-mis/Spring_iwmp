@@ -188,7 +188,8 @@ public class ProjectEvaluationController {
 		String monthName= request.getParameter("monthName");
 		String finid = request.getParameter("finyear");
 		String monthid = request.getParameter("month");
-		
+		String pagency = request.getParameter("pagency");
+
 		/*
 		 * List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
 		 * list = PEService.monthYear(); for(ProjectEvaluationBean bean : list) { data =
@@ -330,6 +331,7 @@ public class ProjectEvaluationController {
 			mav.addObject("monthname", monthName);
 			mav.addObject("fincd", finid);
 			mav.addObject("finyr", finName);
+			mav.addObject("pagency", pagency);
 		}
 		else {
 			mav = new ModelAndView("login");
@@ -1217,6 +1219,8 @@ public class ProjectEvaluationController {
 		Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 		String mname = request.getParameter("mname");
 		String fname = request.getParameter("fname");
+		String pagency = request.getParameter("pagency");
+
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
 		
 		ModelAndView mav = new ModelAndView();
@@ -1239,6 +1243,7 @@ public class ProjectEvaluationController {
 			mav.addObject("mname", mname);
 			mav.addObject("fcode", fcode);
 			mav.addObject("fname", fname);
+			mav.addObject("pagency", pagency);
 			mav.addObject("blockList", PEService.getProjProfileBlock(pcode));
 		}
 		else {
@@ -1274,7 +1279,7 @@ public class ProjectEvaluationController {
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 	        String fname = request.getParameter("fname");
-
+	        String pagency = request.getParameter("pagency");
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
@@ -1396,8 +1401,8 @@ public class ProjectEvaluationController {
 		            request.setAttribute("geoTagDetailsConfirmed", "true");
 		        }
 				}
-	        String result = PEService.insertprojectProfile(projid, fcode, mcode, evaId, sanctionedC, cShare, sShare, sancitonedP, villageC,
-	                waterC, membersWC, householdsC, session, request);
+			String result = PEService.insertprojectProfile(projid, fcode, mcode, evaId, sanctionedC, cShare, sShare, sancitonedP, villageC,
+	                waterC, membersWC, householdsC, pagency, session, request);
 
 	        if ("success".equals(result)) {
 	            request.setAttribute("projectProfileConfirmed", "true");

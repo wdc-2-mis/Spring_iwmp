@@ -154,9 +154,21 @@ $(document).ready(function () {
 </div>
 	 <hr/>
     <div class="tabs-container">  
-        <b> &nbsp;&nbsp;&nbsp; State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a> </b>
-<hr/>
-        <a href="projectProfile?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>" class="tab-link">Project Profile
+        <b> &nbsp;&nbsp;&nbsp; State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, </b>
+
+<b>
+    &nbsp;&nbsp;&nbsp; Name of Project Evaluation Agency: &nbsp; <c:out value='${pagency}' />
+    
+    <% if ("true".equals(request.getAttribute("evaluationDetailConfirmed"))) { %>
+    <a href="#" class="edit" data-toggle="modal" data-target="#editAgency" data-projid="${projid}" data-month="${monthid}">
+        <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+    </a>
+<% } %>
+
+</b>
+
+ 
+        <a href="projectProfile?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>&pagency=<c:out value="${pagency}"/>" class="tab-link">Project Profile
         <%
                 if ("true".equals(request.getAttribute("projectProfileConfirmed"))) {
             %>

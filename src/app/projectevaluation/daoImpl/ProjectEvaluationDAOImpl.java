@@ -868,7 +868,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Override
 	public String insertprojectProfile(Integer projid, Integer fcode, Integer mcode, Integer evaId,
 	        BigDecimal sanctionedC, BigDecimal cShare, BigDecimal sShare, BigDecimal sancitonedP, Integer villageC,
-	        Integer waterC, Integer membersWC, Integer householdsC, HttpSession session, HttpServletRequest request) {
+	        Integer waterC, Integer membersWC, Integer householdsC, String pagency, HttpSession session, HttpServletRequest request) {
 
 	    Session sess = sessionFactory.getCurrentSession();
 	    String res = "fail";
@@ -912,8 +912,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	            eva.setUpdatedOn(new java.util.Date());
 	            eva.setCreatedBy(session.getAttribute("loginID").toString());
 	            eva.setStatus('D');  // Set status as 'D'
-
-	            sess.saveOrUpdate(eva);  // Use saveOrUpdate to save the new entity
+	            eva.setPagency(pagency);
+                sess.saveOrUpdate(eva);  // Use saveOrUpdate to save the new entity
 	        } else {
 	            // Updating an existing project profile evaluation entry
 	            Integer projpid = Integer.parseInt(resultList.get(0).toString());
