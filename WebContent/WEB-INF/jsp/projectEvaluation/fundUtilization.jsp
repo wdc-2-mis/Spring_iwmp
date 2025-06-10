@@ -44,12 +44,14 @@ function savedata(){
   $totalFundPlannedRemark = $('#rmkConPlannedFund').val();
   $totalExpenditure = $('#exCon').val();
   $totalExpenditureRemark = $('#rmkExCon').val();
+  $totalWdc = $('#wdc').val();
+  $totalWdcRemark = $('#rmkWdc').val();
 	$fromno1 = $('#fromno').val();
  
   	
 
 	if ($centralShare === "" && $stateShare === "" && $totalFund === ""  
-		&& $totalFundPlanned === "" && $totalExpenditure === "") 
+		&& $totalFundPlanned === "" && $totalExpenditure === "" && $totalWdc === "") 
   	{
      	alert("Please fill all the details");
     	return; 
@@ -78,8 +80,15 @@ function savedata(){
 
 	if($totalExpenditure==='')
 	{
-		alert('Please enter the amount of expenditure incurred through convergence');
+		alert('Please enter the total amount of expenditure incurred through convergence');
 		$('#exCon').focus();
+		return false;
+	}
+	
+	if($totalWdc==='')
+	{
+		alert('Please enter the total amount of WDF collected so far');
+		$('#wdc').focus();
 		return false;
 	}
 
@@ -267,6 +276,21 @@ function calSum(){
 			<td>
 <%--      			<input type="text" id="rmkExCon" name="rmkExCon" value="${rmkExCon}" autocomplete = "off" /> --%>
      			<textarea id="rmkExCon" name="rmkExCon" autocomplete = "off" rows="2" cols="22" maxlength="200" >${rmkExCon}</textarea>
+			</td>
+		</tr>
+		<tr>
+			<td style="text-align:right;">
+				<b><c:out value="f"/></b>
+			</td>
+			<td>
+				<b><c:out value="Total WDC (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
+			</td>
+			<td>
+     			<input type="text" id="wdc" name="wdc" value="${wdc}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class=""  />
+			</td>
+			<td>
+<%--      			<input type="text" id="rmkWdc" name="rmkWdc" value="${rmkWdc}" autocomplete = "off" /> --%>
+     			<textarea id="rmkWdc" name="rmkWdc" autocomplete = "off" rows="2" cols="22" maxlength="200" >${rmkWdc}</textarea>
 			</td>
 		</tr>
 		<tr>

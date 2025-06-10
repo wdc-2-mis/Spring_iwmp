@@ -21,7 +21,7 @@ public class FundUtilization implements java.io.Serializable{
 	
 	
 	private int fundUtilizationId;						//   fund_utilization_id ;
-	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;   ///   project_profile_id
+	private WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation;   //   project_profile_id
 	private BigDecimal centralShare;				//   central_share
 	private String centralShareRemark; 						//central_share_remark
     private BigDecimal stateShare; 					// state_share
@@ -30,8 +30,10 @@ public class FundUtilization implements java.io.Serializable{
     private String totalFundRemark ;						//  total_fund_remark
     private BigDecimal totalFundPlanned;				//   total_fund_planned
     private String totalFundPlannedRemark; 					//   total_fund_planned_remark
-    private BigDecimal totalExpenditure;				///   total_expenditure
-    private String totalExpenditureRemark	;						//  total_expenditure_remark
+    private BigDecimal totalExpenditure;				//   total_expenditure
+    private String totalExpenditureRemark;						//  total_expenditure_remark
+    private BigDecimal totalWdc;				//   total_wdc
+    private String totalWdcRemark;						//  total_wdc_remark
     
     private Date createdOn ;                    //created_on ;
 	private String createdBy ;         //created_by ;
@@ -50,7 +52,7 @@ public class FundUtilization implements java.io.Serializable{
 	
     public FundUtilization(int fundUtilizationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, BigDecimal centralShare, String centralShareRemark,
     		BigDecimal stateShare, String stateShareRemark, BigDecimal totalFund, String totalFundRemark, BigDecimal totalFundPlanned, String totalFundPlannedRemark, 
-    		BigDecimal totalExpenditure, String totalExpenditureRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
+    		BigDecimal totalExpenditure, String totalExpenditureRemark, BigDecimal totalWdc, String totalWdcRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
     		
     	this.fundUtilizationId = fundUtilizationId;
         this.wdcpmksyProjectProfileEvaluation=wdcpmksyProjectProfileEvaluation;
@@ -64,6 +66,8 @@ public class FundUtilization implements java.io.Serializable{
         this.totalFundPlannedRemark=totalFundPlannedRemark;
         this.totalExpenditure=totalExpenditure;
         this.totalExpenditureRemark=totalExpenditureRemark;
+        this.totalWdc=totalWdc;
+        this.totalWdcRemark=totalWdcRemark;
         this.createdOn=CreatedOn;
 	    this.createdBy=CreatedBy;
 	    this.updatedOn=UpdatedOn;
@@ -179,6 +183,24 @@ public class FundUtilization implements java.io.Serializable{
 
 	public void setTotalExpenditureRemark(String totalExpenditureRemark) {
 		this.totalExpenditureRemark = totalExpenditureRemark;
+	}
+	
+	@Column(name="total_wdc", precision=20)
+	public BigDecimal getTotalWdc() {
+		return totalWdc;
+	}
+
+	public void setTotalWdc(BigDecimal totalWdc) {
+		this.totalWdc = totalWdc;
+	}
+
+	@Column(name="total_wdc_remark", length=200)
+	public String getTotalWdcRemark() {
+		return totalWdcRemark;
+	}
+
+	public void setTotalWdcRemark(String totalWdcRemark) {
+		this.totalWdcRemark = totalWdcRemark;
 	}
 
 	@Temporal(TemporalType.DATE)

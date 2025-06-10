@@ -63,7 +63,7 @@ public interface ProjectEvaluationService {
 	
 	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
 			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon, 
-			HttpSession session, Integer fromno);
+			BigDecimal wdc, String rmkWdc, HttpSession session, Integer fromno);
 	
 	List<WdcpmksyEquityAspect> getEquityAspect(Integer profileid);
 	

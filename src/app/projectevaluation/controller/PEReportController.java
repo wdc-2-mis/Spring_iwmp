@@ -1864,7 +1864,7 @@ public class PEReportController {
 	    	row.createCell(15).setCellValue(bean.getPre_plt().doubleValue());
 	    	row.createCell(16).setCellValue(bean.getMid_plt().doubleValue());
 	    	row.createCell(17).setCellValue(bean.getCtl_plt().doubleValue());
-	    	row.createCell(18).setCellValue(bean.getPre_clt().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getPre_clt().doubleValue()); 
 	    	row.createCell(19).setCellValue(bean.getMid_clt().doubleValue());
 	    	row.createCell(20).setCellValue(bean.getCtl_clt().doubleValue());
 	    	

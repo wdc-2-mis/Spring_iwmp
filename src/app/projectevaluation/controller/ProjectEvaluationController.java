@@ -669,7 +669,8 @@ public class ProjectEvaluationController {
 		String rmkConPlannedFund = null;
 		String exCon = null;
 		String rmkExCon = null;
-		
+		String wdc = null;
+		String rmkWdc = null;
 		
 		try {
 			
@@ -709,6 +710,8 @@ public class ProjectEvaluationController {
 			    		rmkConPlannedFund = bean.getTotal_fund_planned_remark();
 			    		exCon = bean.getTotal_expenditure().toString();
 			    		rmkExCon = bean.getTotal_expenditure_remark();
+			    		wdc = bean.getTotal_wdc().toString();
+			    		rmkWdc = bean.getTotal_wdc_remark();
 			    	}
 			    }
 				
@@ -732,6 +735,8 @@ public class ProjectEvaluationController {
 				mav.addObject("rmkConPlannedFund",rmkConPlannedFund);
 				mav.addObject("exCon", exCon);
 				mav.addObject("rmkExCon", rmkExCon);
+				mav.addObject("wdc", wdc);
+				mav.addObject("rmkWdc", rmkWdc);
 				
 			} else {
 				mav = new ModelAndView("login");
@@ -779,6 +784,8 @@ public class ProjectEvaluationController {
 			String rmkConPlannedFund = request.getParameter("rmkConPlannedFund");
 			BigDecimal exCon = new BigDecimal(request.getParameter("exCon"));
 			String rmkExCon = request.getParameter("rmkExCon");
+			BigDecimal wdc = new BigDecimal(request.getParameter("wdc"));
+			String rmkWdc = request.getParameter("rmkWdc");
 			
 						
 			mav.setViewName("projectEvaluation/projectProfileMain");
@@ -903,7 +910,7 @@ public class ProjectEvaluationController {
 		        }
 				}
 			String result = PEService.saveFundUtilization(projectProfileId, centralShare, rmkCentralShare, stateShare, rmkStateShare, totalFund, rmkTotalFund, 
-					conPlannedFund, rmkConPlannedFund, exCon, rmkExCon, session, fromno);
+					conPlannedFund, rmkConPlannedFund, exCon, rmkExCon, wdc, rmkWdc, session, fromno);
 			
 			if ("success".equals(result)) {
 	            request.setAttribute("fundUtilizationConfirmed", "true");
@@ -3677,6 +3684,8 @@ public class ProjectEvaluationController {
 		String rmkConPlannedFund = null;
 		String exCon = null;
 		String rmkExCon = null;
+		String wdc = null;
+		String rmkWdc = null;
 		String areaType = null;
 		String pre_farmer_income=null;
 		String mid_farmer_income=null;
@@ -3784,6 +3793,8 @@ public class ProjectEvaluationController {
 				 rmkConPlannedFund = bean.getTotal_fund_planned_remark();
 				 exCon = bean.getTotal_expenditure().toString();
 				 rmkExCon = bean.getTotal_expenditure_remark();
+				 wdc = bean.getTotal_wdc().toString();
+				 rmkWdc = bean.getTotal_wdc_remark();
 
 			 }
 			 
@@ -3898,6 +3909,8 @@ public class ProjectEvaluationController {
 			 mav.addObject("rmkConPlannedFund",rmkConPlannedFund);
 			 mav.addObject("exCon", exCon);
 			 mav.addObject("rmkExCon", rmkExCon);
+			 mav.addObject("wdc", wdc);
+			 mav.addObject("rmkWdc", rmkWdc);
 			 mav.addObject("wdcCrpDtlList", wdcCrpDtlList);
 			 mav.addObject("areaType", areaType);
              mav.addObject("wdcCrpDtlList2", wdcCrpDtlList2);
@@ -4207,6 +4220,11 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, "Total expenditure incurred through convergence (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_expenditure().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_expenditure_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table, "f", Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Total WDF (Watershed Development Fund) collected so far (Rs. Crores)", Element.ALIGN_LEFT, 3, 1, bf8);
+					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_wdc().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, utilizationlist.get(0).getTotal_wdc_remark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
 					

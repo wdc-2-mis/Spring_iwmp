@@ -327,6 +327,20 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
      			${rmkExCon}	
 			</td>
 		</tr>
+		<tr>
+			<td style="text-align:right;">
+				<b><c:out value="f"/></b>
+			</td>
+			<td>
+				<b><c:out value="Total WDC (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
+			</td>
+			<td>
+     			${wdc}
+			</td>
+			<td>
+     			${rmkWdc}
+			</td>
+		</tr>
 		</tbody>
 			
 	</table>
