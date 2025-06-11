@@ -327,7 +327,7 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	
 	@Column(name="mid_spring_rejuvenated", precision=20)
 	public Integer getMidSpringRejuvenated() {
-		return preSpringRejuvenated;
+		return midSpringRejuvenated;
 	}
 
 	public void setMidSpringRejuvenated(Integer midSpringRejuvenated) {

@@ -320,33 +320,45 @@ $(document).on('click', '#view', function(e){
 /******************************************Calculate Sum for Community Based Organization******************************/
 function pcalSum(){
 	
-	var shg =  parseInt(document.getElementById('shg').value);
-	var fpo =  parseInt(document.getElementById('fpo').value);
-	var ug =  parseInt(document.getElementById('ug').value);
+	var preshg =  parseInt(document.getElementById('preshg').value);
+	var prefpo =  parseInt(document.getElementById('prefpo').value);
+	var preug =  parseInt(document.getElementById('preug').value);
+	
+	var midshg =  parseInt(document.getElementById('midshg').value);
+	var midfpo =  parseInt(document.getElementById('midfpo').value);
+	var midug =  parseInt(document.getElementById('midug').value);
 	
 	var cShg =  parseInt(document.getElementById('cShg').value);
 	var cFpo =  parseInt(document.getElementById('cFpo').value);
 	var cUg =  parseInt(document.getElementById('cUg').value);
 	
-	var psum = (isNaN(shg)?0.0:shg) + (isNaN(fpo)?0.0:fpo) + (isNaN(ug)?0.0:ug);
+	var prePsum = (isNaN(preshg)?0.0:preshg) + (isNaN(prefpo)?0.0:prefpo) + (isNaN(preug)?0.0:preug);
+	var midPsum = (isNaN(midshg)?0.0:midshg) + (isNaN(midfpo)?0.0:midfpo) + (isNaN(midug)?0.0:midug);
 	var csum = (isNaN(cShg)?0.0:cShg) + (isNaN(cFpo)?0.0:cFpo) + (isNaN(cUg)?0.0:cUg);
-	document.getElementById('noOfCom').value = psum;
+	document.getElementById('prenoOfCom').value = prePsum;
+	document.getElementById('midnoOfCom').value = midPsum;
 	document.getElementById('cnoOfCom').value = csum;
 }
 
 function mpcalSum(){
 	
-	var mShg = parseInt(document.getElementById('mShg').value);
-	var mFpo =  parseInt(document.getElementById('mFpo').value);
-	var mUg =  parseInt(document.getElementById('mUg').value);
+	var preMShg = parseInt(document.getElementById('preMShg').value);
+	var preMFpo =  parseInt(document.getElementById('preMFpo').value);
+	var preMUg =  parseInt(document.getElementById('preMUg').value);
+	
+	var midMShg = parseInt(document.getElementById('midMShg').value);
+	var midMFpo =  parseInt(document.getElementById('midMFpo').value);
+	var midMUg =  parseInt(document.getElementById('midMUg').value);
 	
 	var cMshg =  parseInt(document.getElementById('cMshg').value);
 	var cMfpo =  parseInt(document.getElementById('cMfpo').value);
 	var cMug =  parseInt(document.getElementById('cMug').value);
 	
-	var psum = (isNaN(mShg)?0.0:mShg) + (isNaN(mFpo)?0.0:mFpo) + (isNaN(mUg)?0.0:mUg);
+	var preMpsum = (isNaN(preMShg)?0.0:preMShg) + (isNaN(preMFpo)?0.0:preMFpo) + (isNaN(preMUg)?0.0:preMUg);
+	var midMpsum = (isNaN(midMShg)?0.0:midMShg) + (isNaN(midMFpo)?0.0:midMFpo) + (isNaN(midMUg)?0.0:midMUg);
 	var csum = (isNaN(cMshg)?0.0:cMshg) + (isNaN(cMfpo)?0.0:cMfpo) + (isNaN(cMug)?0.0:cMug);
-	document.getElementById('mnoOfCom').value = psum;
+	document.getElementById('preMnoOfCom').value = preMpsum;
+	document.getElementById('midMnoOfCom').value = midMpsum;
 	document.getElementById('cmnoOfCom').value = csum;
 }
 
@@ -366,28 +378,36 @@ $(document).on('click', '#viewProd', function(e){
 	$midRuralUrban = $('#midRuralUrban').val();
 	$cRuralUrban = $('#cRuralUrban').val();
 	
-	$spring = $('#spring').val();
+	$prespring = $('#prespring').val();
+	$midspring = $('#midspring').val();
 	$cSpring = $('#cSpring').val();
 	
-	$benefit = $('#benefit').val();
+	$prebenefit = $('#prebenefit').val();
+	$midbenefit = $('#midbenefit').val();
 	$cBenefit = $('#cBenefit').val();
 	
-	$shg = $('#shg').val();
+	$preshg = $('#preshg').val();
+	$midshg = $('#midshg').val();
 	$cShg = $('#cShg').val();
 	
-	$fpo = $('#fpo').val();
+	$prefpo = $('#prefpo').val();
+	$midfpo = $('#midfpo').val();
 	$cFpo = $('#cFpo').val();
 	
-	$ug = $('#ug').val();
+	$preug = $('#preug').val();
+	$midug = $('#midug').val();
 	$cUg = $('#cUg').val();
 	
-	$mShg = $('#mShg').val();
+	$preMShg = $('#preMShg').val();
+	$midMShg = $('#midMShg').val();
 	$cMshg = $('#cMshg').val();
 	
-	$mFpo = $('#mFpo').val();
+	$preMFpo = $('#preMFpo').val();
+	$midMFpo = $('#midMFpo').val();
 	$cMfpo = $('#cMfpo').val();
 	
-	$mUg = $('#mUg').val();
+	$preMUg = $('#preMUg').val();
+	$midMUg = $('#midMUg').val();
 	$cMug = $('#cMug').val();
 	
 	$preTrunOverFpo = $('#preTrunOverFpo').val();
@@ -514,9 +534,15 @@ $(document).on('click', '#viewProd', function(e){
 			}
 			
 
-	if ($spring == '' || $spring == undefined || $spring == null) {
-		alert('Please Enter No. of Springs Details for Project Area.');
-		$('#spring').focus();
+	if ($prespring == '' || $prespring == undefined || $prespring == null) {
+		alert('Please Enter No. of Springs Details for Pre Project Area.');
+		$('#prespring').focus();
+		return false;
+	}
+	
+	if ($midspring == '' || $midspring == undefined || $midspring == null) {
+		alert('Please Enter No. of Springs Details for Mid Project Area.');
+		$('#midspring').focus();
 		return false;
 	}
 	
@@ -527,9 +553,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 	
 
-	if ($benefit == '' || $benefit == undefined || $benefit == null) {
-		alert('Please Enter No. of Person Benefitted Details for Project Area.');
-		$('#benefit').focus();
+	if ($prebenefit == '' || $prebenefit == undefined || $prebenefit == null) {
+		alert('Please Enter No. of Person Benefitted Details for Pre Project Area.');
+		$('#prebenefit').focus();
+		return false;
+	}
+	
+	if ($midbenefit == '' || $midbenefit == undefined || $midbenefit == null) {
+		alert('Please Enter No. of Person Benefitted Details for Mid Project Area.');
+		$('#midbenefit').focus();
 		return false;
 	}
 	
@@ -540,9 +572,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($shg == '' || $shg == undefined || $shg == null) {
-		alert('Please Enter SHG Details for Project Area.');
-		$('#shg').focus();
+	if ($preshg == '' || $preshg == undefined || $preshg == null) {
+		alert('Please Enter SHG Details for Pre Project Area.');
+		$('#preshg').focus();
+		return false;
+	}
+	
+	if ($midshg == '' || $midshg == undefined || $midshg == null) {
+		alert('Please Enter SHG Details for Mid Project Area.');
+		$('#midshg').focus();
 		return false;
 	}
 	
@@ -553,9 +591,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($fpo == '' || $fpo == undefined || $fpo == null) {
-		alert('Please Enter FPO Details for Project Area.');
-		$('#fpo').focus();
+	if ($prefpo == '' || $prefpo == undefined || $prefpo == null) {
+		alert('Please Enter FPO Details for Pre Project Area.');
+		$('#prefpo').focus();
+		return false;
+	}
+	
+	if ($midfpo == '' || $midfpo == undefined || $midfpo == null) {
+		alert('Please Enter FPO Details for Mid Project Area.');
+		$('#midfpo').focus();
 		return false;
 	}
 	
@@ -566,9 +610,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($ug == '' || $ug == undefined || $ug == null) {
-		alert('Please Enter UG Details for Project Area.');
-		$('#ug').focus();
+	if ($preug == '' || $preug == undefined || $preug == null) {
+		alert('Please Enter UG Details for Pre Project Area.');
+		$('#preug').focus();
+		return false;
+	}
+	
+	if ($midug == '' || $midug == undefined || $midug == null) {
+		alert('Please Enter UG Details for Mid Project Area.');
+		$('#midug').focus();
 		return false;
 	}
 	
@@ -579,9 +629,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($mShg == '' || $mShg == undefined || $mShg == null) {
-		alert('Please Enter No. of SHG Members Details for Project Area.');
-		$('#mShg').focus();
+	if ($preMShg == '' || $preMShg == undefined || $preMShg == null) {
+		alert('Please Enter No. of SHG Members Details for Pre Project Area.');
+		$('#preMShg').focus();
+		return false;
+	}
+	
+	if ($midMShg == '' || $midMShg == undefined || $midMShg == null) {
+		alert('Please Enter No. of SHG Members Details for Mid Project Area.');
+		$('#midMShg').focus();
 		return false;
 	}
 	
@@ -592,9 +648,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($mFpo == '' || $mFpo == undefined || $mFpo == null) {
-		alert('Please Enter No. of FPO Members Details for Project Area.');
-		$('#mFpo').focus();
+	if ($preMFpo == '' || $preMFpo == undefined || $preMFpo == null) {
+		alert('Please Enter No. of FPO Members Details for Pre Project Area.');
+		$('#preMFpo').focus();
+		return false;
+	}
+	
+	if ($midMFpo == '' || $midMFpo == undefined || $midMFpo == null) {
+		alert('Please Enter No. of FPO Members Details for Mid Project Area.');
+		$('#midMFpo').focus();
 		return false;
 	}
 	
@@ -605,9 +667,15 @@ $(document).on('click', '#viewProd', function(e){
 	}
 
 
-	if ($mUg == '' || $mUg == undefined || $mUg == null) {
-		alert('Please Enter No. of UG Members Details for Project Area.');
-		$('#mUg').focus();
+	if ($preMUg == '' || $preMUg == undefined || $preMUg == null) {
+		alert('Please Enter No. of UG Members Details for Pre Project Area.');
+		$('#preMUg').focus();
+		return false;
+	}
+	
+	if ($midMUg == '' || $midMUg == undefined || $midMUg == null) {
+		alert('Please Enter No. of UG Members Details for Mid Project Area.');
+		$('#midMUg').focus();
 		return false;
 	}
 	
