@@ -3242,35 +3242,45 @@ public class ProjectEvaluationController {
 				Integer cRuralUrban = Integer.parseInt(request.getParameter("cRuralUrban"));
 				String rmkRuralUrban = request.getParameter("rmkRuralUrban");
 				
-				Integer spring = Integer.parseInt(request.getParameter("spring"));
-				Integer cSpring = Integer.parseInt(request.getParameter("cSpring"));
+				Integer prespring = Integer.parseInt(request.getParameter("prespring"));
+				Integer midspring = Integer.parseInt(request.getParameter("midspring"));
+//				Integer cSpring = Integer.parseInt(request.getParameter("cSpring"));
+				Integer cSpring = null;
 				String rmkSpring = request.getParameter("rmkSpring");
 				
-				Integer benefit = Integer.parseInt(request.getParameter("benefit"));
-				Integer cBenefit = Integer.parseInt(request.getParameter("cBenefit"));
+				Integer prebenefit = Integer.parseInt(request.getParameter("prebenefit"));
+				Integer midbenefit = Integer.parseInt(request.getParameter("midbenefit"));
+//				Integer cBenefit = Integer.parseInt(request.getParameter("cBenefit"));
+				Integer cBenefit = null;
 				String rmkBenefit = request.getParameter("rmkBenefit");
 				
-				Integer shg = Integer.parseInt(request.getParameter("shg"));
+				Integer preshg = Integer.parseInt(request.getParameter("preshg"));
+				Integer midshg = Integer.parseInt(request.getParameter("midshg"));
 				Integer cShg = Integer.parseInt(request.getParameter("cShg"));
 				String rmkShg = request.getParameter("rmkShg");
 				
-				Integer fpo = Integer.parseInt(request.getParameter("fpo"));
+				Integer prefpo = Integer.parseInt(request.getParameter("prefpo"));
+				Integer midfpo = Integer.parseInt(request.getParameter("midfpo"));
 				Integer cFpo = Integer.parseInt(request.getParameter("cFpo"));
 				String rmkFpo = request.getParameter("rmkFpo");
 				
-				Integer ug = Integer.parseInt(request.getParameter("ug"));
+				Integer preug = Integer.parseInt(request.getParameter("preug"));
+				Integer midug = Integer.parseInt(request.getParameter("midug"));
 				Integer cUg = Integer.parseInt(request.getParameter("cUg"));
 				String rmkUg = request.getParameter("rmkUg");
 				
-				Integer mShg = Integer.parseInt(request.getParameter("mShg"));
+				Integer preMShg = Integer.parseInt(request.getParameter("preMShg"));
+				Integer midMShg = Integer.parseInt(request.getParameter("midMShg"));
 				Integer cMshg = Integer.parseInt(request.getParameter("cMshg"));
 				String rmkMshg = request.getParameter("rmkMshg");
 				
-				Integer mFpo = Integer.parseInt(request.getParameter("mFpo"));
+				Integer preMFpo = Integer.parseInt(request.getParameter("preMFpo"));
+				Integer midMFpo = Integer.parseInt(request.getParameter("midMFpo"));
 				Integer cMfpo = Integer.parseInt(request.getParameter("cMfpo"));
 				String rmkMfpo = request.getParameter("rmkMfpo");
 				
-				Integer mUg = Integer.parseInt(request.getParameter("mUg"));
+				Integer preMUg = Integer.parseInt(request.getParameter("preMUg"));
+				Integer midMUg = Integer.parseInt(request.getParameter("midMUg"));
 				Integer cMug = Integer.parseInt(request.getParameter("cMug"));
 				String rmkMug = request.getParameter("rmkMug");
 				
@@ -3416,8 +3426,8 @@ public class ProjectEvaluationController {
 					}
 				
 				String result = PEService.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, 
-						cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, spring, cSpring, rmkSpring, benefit, cBenefit, rmkBenefit, 
-						shg, cShg, rmkShg, fpo, cFpo, rmkFpo, ug, cUg, rmkUg, mShg, cMshg, rmkMshg, mFpo, cMfpo, rmkMfpo, mUg, cMug, rmkMug, preTrunOverFpo, 
+						cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, prespring, midspring, cSpring, rmkSpring, prebenefit, midbenefit, cBenefit, rmkBenefit, 
+						preshg, midshg, cShg, rmkShg, prefpo, midfpo, cFpo, rmkFpo, preug, midug, cUg, rmkUg, preMShg, midMShg, cMshg, rmkMshg, preMFpo, midMFpo, cMfpo, rmkMfpo, preMUg, midMUg, cMug, rmkMug, preTrunOverFpo, 
 						midTrunOverFpo, cTrunOverFpo, rmkTrunOverFpo, preIncomeFpo, midIncomeFpo, cIncomeFpo, rmkIncomeFpo, preAnnualIncomeShg, midAnnualIncomeShg, 
 						cAnnualIncomeShg, rmkAnnualIncomeShg);
 				
@@ -4576,49 +4586,71 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlAnnualIncomeShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkAnnualIncomeShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
-					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Production Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Spring Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 					
 					CommonFunctions.insertCell(table, "7", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "No. of springs rejuvenated(if applicable)", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkSpringRejuvenated(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "8", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "No. of persons benefitted due to rejuvenation of springs", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPersonBenefitte().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPrePersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidPersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlPersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkPersonBenefitte(), Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Community Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+					
+					CommonFunctions.insertCellHeader(table, "Pre-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					CommonFunctions.insertCellHeader(table, "Mid-Project Status (Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					CommonFunctions.insertCell(table, "9", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, " No. of Community Based Organization", Element.ALIGN_LEFT, 5, 1, bf8);
 
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedShg().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreCommunityBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidCommunityBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedFpo().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreCommunityBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidCommunityBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getCommunityBasedUg().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreCommunityBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidCommunityBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlCommunityBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkCommunityBasedUg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
-					Integer shg= wdcPrdDtlList.get(0).getCommunityBasedShg();
-					Integer ug= wdcPrdDtlList.get(0).getCommunityBasedUg();
-					Integer fpo= wdcPrdDtlList.get(0).getCommunityBasedFpo();
-					Integer totalcommunity= shg+ug+fpo;
+					Integer preshg= wdcPrdDtlList.get(0).getPreCommunityBasedShg();
+					Integer preug= wdcPrdDtlList.get(0).getPreCommunityBasedUg();
+					Integer prefpo= wdcPrdDtlList.get(0).getPreCommunityBasedFpo();
+					Integer totalprecommunity= preshg+preug+prefpo;
+					
+					Integer midshg= wdcPrdDtlList.get(0).getMidCommunityBasedShg();
+					Integer midug= wdcPrdDtlList.get(0).getMidCommunityBasedUg();
+					Integer midfpo= wdcPrdDtlList.get(0).getMidCommunityBasedFpo();
+					Integer totalmidcommunity= midshg+midug+midfpo;
 					
 					Integer shg1= wdcPrdDtlList.get(0).getControlCommunityBasedShg();
 					Integer ug1= wdcPrdDtlList.get(0).getControlCommunityBasedUg();
@@ -4627,7 +4659,8 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Total No. of Community Based Organization", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (totalcommunity).toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, (totalprecommunity).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (totalmidcommunity).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (totalcommunity1).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 
@@ -4637,26 +4670,34 @@ public class ProjectEvaluationController {
 
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "SHG", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedShg().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreMemberBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidMemberBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedShg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedShg(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "FPO", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedFpo().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreMemberBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidMemberBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedFpo().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedFpo(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "c", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "UG", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMemberBasedUg().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreMemberBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidMemberBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlMemberBasedUg().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkMemberBasedUg(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
-					Integer shgm= wdcPrdDtlList.get(0).getMemberBasedShg();
-					Integer ugm= wdcPrdDtlList.get(0).getMemberBasedUg();
-					Integer fpom= wdcPrdDtlList.get(0).getMemberBasedFpo();
-					Integer totalcommunitymember= shgm+ugm+fpom;
+					Integer preshgm= wdcPrdDtlList.get(0).getPreMemberBasedShg();
+					Integer preugm= wdcPrdDtlList.get(0).getPreMemberBasedUg();
+					Integer prefpom= wdcPrdDtlList.get(0).getPreMemberBasedFpo();
+					Integer totalprecommunitymember= preshgm+preugm+prefpom;
+					
+					Integer midshgm= wdcPrdDtlList.get(0).getMidMemberBasedShg();
+					Integer midugm= wdcPrdDtlList.get(0).getMidMemberBasedUg();
+					Integer midfpom= wdcPrdDtlList.get(0).getMidMemberBasedFpo();
+					Integer totalmidcommunitymember= midshgm+midugm+midfpom;
 					
 					Integer shgm1= wdcPrdDtlList.get(0).getControlMemberBasedShg();
 					Integer ugm1= wdcPrdDtlList.get(0).getControlMemberBasedUg();
@@ -4665,7 +4706,8 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "	Total No. of Members Community Based Organization", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (totalcommunitymember).toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
+					CommonFunctions.insertCell(table, (totalprecommunitymember).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (totalmidcommunitymember).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (totalcommunitym1).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 1, 1, bf8);
 

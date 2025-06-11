@@ -34,28 +34,36 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	private Integer midRuralUrban;					// mid_rural_urban
 	private Integer controlRuralUrban;				// control_rural_urban
 	private String remarkRuralUrban;				// remark_rural_urban
-	private Integer springRejuvenated;				// spring_rejuvenated
+	private Integer preSpringRejuvenated;			// pre_spring_rejuvenated
+	private Integer midSpringRejuvenated;			// mid_spring_rejuvenated
 	private Integer controlSpringRejuvenated;		// control_spring_rejuvenated
 	private String remarkSpringRejuvenated;			// remark_spring_rejuvenated
-	private Integer personBenefitte;				// person_benefitte
+	private Integer prePersonBenefitte;				// pre_person_benefitte
+	private Integer midPersonBenefitte;				// mid_person_benefitte
 	private Integer controlPersonBenefitte;			// control_person_benefitte
 	private String remarkPersonBenefitte;			// remark_person_benefitte
-	private Integer communityBasedShg;				// community_based_shg
+	private Integer preCommunityBasedShg;			// pre_community_based_shg
+	private Integer midCommunityBasedShg;			// mid_community_based_shg
 	private Integer controlCommunityBasedShg;		// control_community_based_shg
 	private String remarkCommunityBasedShg;			// remark_community_based_shg
-	private Integer communityBasedFpo;				// community_based_fpo
+	private Integer preCommunityBasedFpo;			// pre_community_based_fpo
+	private Integer midCommunityBasedFpo;			// mid_community_based_fpo
 	private Integer controlCommunityBasedFpo;		// control_community_based_fpo
 	private String remarkCommunityBasedFpo;			// remark_community_based_fpo
-	private Integer communityBasedUg;				// community_based_ug
+	private Integer preCommunityBasedUg;			// pre_community_based_ug
+	private Integer midCommunityBasedUg;			// mid_community_based_ug
 	private Integer controlCommunityBasedUg;		// control_community_based_ug
 	private String remarkCommunityBasedUg;			// remark_community_based_ug
-	private Integer memberBasedShg;					// member_based_shg
+	private Integer preMemberBasedShg;				// pre_member_based_shg
+	private Integer midMemberBasedShg;				// mid_member_based_shg
 	private Integer controlMemberBasedShg;			// control_member_based_shg
 	private String remarkMemberBasedShg;			// remark_member_based_shg
-	private Integer memberBasedFpo;					// member_based_fpo
+	private Integer preMemberBasedFpo;				// pre_member_based_fpo
+	private Integer midMemberBasedFpo;				// mid_member_based_fpo
 	private Integer controlMemberBasedFpo;			// control_member_based_fpo
 	private String remarkMemberBasedFpo;			// remark_member_based_fpo
-	private Integer memberBasedUg;					// member_based_ug
+	private Integer preMemberBasedUg;				// pre_member_based_ug
+	private Integer midMemberBasedUg;				// mid_member_based_ug
 	private Integer controlMemberBasedUg;			// control_member_based_ug
 	private String remarkMemberBasedUg;				// remark_member_based_ug
 	private BigDecimal preTrunoverFpo;				// pre_trunover_fpo
@@ -86,78 +94,87 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
     }
     
     
-    public WdcpmksyProductionDetails(int productionDetailId, WdcpmksyProjectProfileEvaluation wdcpmksyProjectProfileEvaluation, BigDecimal preMilchCattle, 
-    		BigDecimal midMilchCattle, BigDecimal controlMilchCattle, String remarkMilchCattle, BigDecimal preFodderProduction, BigDecimal midFodderProduction, 
-    		BigDecimal controlFodderProduction, String remarkFodderProduction, Integer preRuralUrban, Integer midRuralUrban, Integer controlRuralUrban, 
-    		String remarkRuralUrban, Integer springRejuvenated, Integer controlSpringRejuvenated, String remarkSpringRejuvenated, Integer personBenefitte, 
-    		Integer controlPersonBenefitte, String remarkPersonBenefitte, Integer communityBasedShg, Integer controlCommunityBasedShg, String remarkCommunityBasedShg, 
-    		Integer communityBasedFpo, Integer controlCommunityBasedFpo, String remarkCommunityBasedFpo, Integer communityBasedUg, Integer controlCommunityBasedUg, 
-    		String remarkCommunityBasedUg, Integer memberBasedShg, Integer controlMemberBasedShg, String remarkMemberBasedShg, Integer memberBasedFpo, 
-    		Integer controlMemberBasedFpo, String remarkMemberBasedFpo, Integer memberBasedUg, Integer controlMemberBasedUg, String remarkMemberBasedUg, 
-    		BigDecimal preTrunoverFpo, BigDecimal midTrunoverFpo, BigDecimal controlTrunoverFpo, String remarkTrunoverFpo, BigDecimal preIncomeFpo, 
-    		BigDecimal midIncomeFpo, BigDecimal controlIncomeFpo, String remarkIncomeFpo, BigDecimal preAnnualIncomeShg,
-    		BigDecimal midAnnualIncomeShg, BigDecimal controlAnnualIncomeShg, String remarkAnnualIncomeShg, 
-    		Date createdOn, String createdBy, Date updatedOn, String requestIp) {
-    	
-    	this.productionDetailId = productionDetailId;
-    	this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
-    	this.preMilchCattle = preMilchCattle;
-    	this.midMilchCattle = midMilchCattle;
-    	this.controlMilchCattle = controlMilchCattle;
-    	this.remarkMilchCattle = remarkMilchCattle;
-    	this.preFodderProduction = preFodderProduction;
-    	this.midFodderProduction = midFodderProduction;
-    	this.controlFodderProduction = controlFodderProduction;
-    	this.remarkFodderProduction = remarkFodderProduction;
-    	this.preRuralUrban = preRuralUrban;
-    	this.midRuralUrban = midRuralUrban;
-    	this.controlRuralUrban = controlRuralUrban;
-    	this.remarkRuralUrban = remarkRuralUrban;
-    	this.springRejuvenated = springRejuvenated;
-    	this.controlSpringRejuvenated = controlSpringRejuvenated;
-    	this.remarkSpringRejuvenated = remarkSpringRejuvenated;
-    	this.personBenefitte = personBenefitte;
-    	this.controlPersonBenefitte = controlPersonBenefitte;
-    	this.remarkPersonBenefitte = remarkPersonBenefitte;
-    	this.communityBasedShg = communityBasedShg;
-    	this.controlCommunityBasedShg = controlCommunityBasedShg;
-    	this.remarkCommunityBasedShg = remarkCommunityBasedShg;
-    	this.communityBasedFpo = communityBasedFpo;
-    	this.controlCommunityBasedFpo = controlCommunityBasedFpo;
-    	this.remarkCommunityBasedFpo = remarkCommunityBasedFpo;
-    	this.communityBasedUg = communityBasedUg;
-    	this.controlCommunityBasedUg = controlCommunityBasedUg;
-    	this.remarkCommunityBasedUg = remarkCommunityBasedUg;
-    	this.memberBasedShg = memberBasedShg;
-    	this.controlMemberBasedShg = controlMemberBasedShg;
-    	this.remarkMemberBasedShg = remarkMemberBasedShg;
-    	this.memberBasedFpo = memberBasedFpo;
-    	this.controlMemberBasedFpo = controlMemberBasedFpo;
-    	this.remarkMemberBasedFpo = remarkMemberBasedFpo;
-    	this.memberBasedUg = memberBasedUg;
-    	this.controlMemberBasedUg = controlMemberBasedUg;
-    	this.remarkMemberBasedUg = remarkMemberBasedUg;
-    	this.preTrunoverFpo = preTrunoverFpo;
-    	this.midTrunoverFpo = midTrunoverFpo;
-    	this.controlTrunoverFpo = controlTrunoverFpo;
-    	this.remarkTrunoverFpo = remarkTrunoverFpo;
-    	this.preIncomeFpo = preIncomeFpo;
-    	this.midIncomeFpo = midIncomeFpo;
-    	this.controlIncomeFpo = controlIncomeFpo;
-    	this.remarkIncomeFpo = remarkIncomeFpo;
-    	this.preAnnualIncomeShg = preAnnualIncomeShg;
-    	this.midAnnualIncomeShg = midAnnualIncomeShg;
-    	this.controlAnnualIncomeShg = controlAnnualIncomeShg;
-    	this.remarkAnnualIncomeShg = remarkAnnualIncomeShg;
-    	this.createdOn = createdOn;
-    	this.createdBy = createdBy;
-    	this.updatedOn = updatedOn;
-    	this.requestIp = requestIp;
-    	
-    }
+   
     
 
-    @Id 
+    public WdcpmksyProductionDetails(int productionDetailId, WdcpmksyProjectProfileEvaluation wdcpmksyProjectProfileEvaluation, BigDecimal preMilchCattle,
+			BigDecimal midMilchCattle, BigDecimal controlMilchCattle, String remarkMilchCattle, BigDecimal preFodderProduction, BigDecimal midFodderProduction, BigDecimal controlFodderProduction,
+			String remarkFodderProduction, Integer preRuralUrban, Integer midRuralUrban, Integer controlRuralUrban,	String remarkRuralUrban, Integer preSpringRejuvenated, Integer midSpringRejuvenated,
+			Integer controlSpringRejuvenated, String remarkSpringRejuvenated, Integer prePersonBenefitte, Integer midPersonBenefitte, Integer controlPersonBenefitte, String remarkPersonBenefitte,
+			Integer preCommunityBasedShg, Integer midCommunityBasedShg, Integer controlCommunityBasedShg, String remarkCommunityBasedShg, Integer preCommunityBasedFpo, Integer midCommunityBasedFpo,
+			Integer controlCommunityBasedFpo, String remarkCommunityBasedFpo, Integer preCommunityBasedUg, Integer midCommunityBasedUg, Integer controlCommunityBasedUg, String remarkCommunityBasedUg,
+			Integer preMemberBasedShg, Integer midMemberBasedShg, Integer controlMemberBasedShg, String remarkMemberBasedShg, Integer preMemberBasedFpo, Integer midMemberBasedFpo,
+			Integer controlMemberBasedFpo, String remarkMemberBasedFpo, Integer preMemberBasedUg, Integer midMemberBasedUg, Integer controlMemberBasedUg, String remarkMemberBasedUg,
+			BigDecimal preTrunoverFpo, BigDecimal midTrunoverFpo, BigDecimal controlTrunoverFpo, String remarkTrunoverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, BigDecimal controlIncomeFpo,
+			String remarkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, BigDecimal controlAnnualIncomeShg, String remarkAnnualIncomeShg, Date createdOn, String createdBy,
+			Date updatedOn, String requestIp) {
+		
+		this.productionDetailId = productionDetailId;
+		this.wdcpmksyProjectProfileEvaluation = wdcpmksyProjectProfileEvaluation;
+		this.preMilchCattle = preMilchCattle;
+		this.midMilchCattle = midMilchCattle;
+		this.controlMilchCattle = controlMilchCattle;
+		this.remarkMilchCattle = remarkMilchCattle;
+		this.preFodderProduction = preFodderProduction;
+		this.midFodderProduction = midFodderProduction;
+		this.controlFodderProduction = controlFodderProduction;
+		this.remarkFodderProduction = remarkFodderProduction;
+		this.preRuralUrban = preRuralUrban;
+		this.midRuralUrban = midRuralUrban;
+		this.controlRuralUrban = controlRuralUrban;
+		this.remarkRuralUrban = remarkRuralUrban;
+		this.preSpringRejuvenated = preSpringRejuvenated;
+		this.midSpringRejuvenated = midSpringRejuvenated;
+		this.controlSpringRejuvenated = controlSpringRejuvenated;
+		this.remarkSpringRejuvenated = remarkSpringRejuvenated;
+		this.prePersonBenefitte = prePersonBenefitte;
+		this.midPersonBenefitte = midPersonBenefitte;
+		this.controlPersonBenefitte = controlPersonBenefitte;
+		this.remarkPersonBenefitte = remarkPersonBenefitte;
+		this.preCommunityBasedShg = preCommunityBasedShg;
+		this.midCommunityBasedShg = midCommunityBasedShg;
+		this.controlCommunityBasedShg = controlCommunityBasedShg;
+		this.remarkCommunityBasedShg = remarkCommunityBasedShg;
+		this.preCommunityBasedFpo = preCommunityBasedFpo;
+		this.midCommunityBasedFpo = midCommunityBasedFpo;
+		this.controlCommunityBasedFpo = controlCommunityBasedFpo;
+		this.remarkCommunityBasedFpo = remarkCommunityBasedFpo;
+		this.preCommunityBasedUg = preCommunityBasedUg;
+		this.midCommunityBasedUg = midCommunityBasedUg;
+		this.controlCommunityBasedUg = controlCommunityBasedUg;
+		this.remarkCommunityBasedUg = remarkCommunityBasedUg;
+		this.preMemberBasedShg = preMemberBasedShg;
+		this.midMemberBasedShg = midMemberBasedShg;
+		this.controlMemberBasedShg = controlMemberBasedShg;
+		this.remarkMemberBasedShg = remarkMemberBasedShg;
+		this.preMemberBasedFpo = preMemberBasedFpo;
+		this.midMemberBasedFpo = midMemberBasedFpo;
+		this.controlMemberBasedFpo = controlMemberBasedFpo;
+		this.remarkMemberBasedFpo = remarkMemberBasedFpo;
+		this.preMemberBasedUg = preMemberBasedUg;
+		this.midMemberBasedUg = midMemberBasedUg;
+		this.controlMemberBasedUg = controlMemberBasedUg;
+		this.remarkMemberBasedUg = remarkMemberBasedUg;
+		this.preTrunoverFpo = preTrunoverFpo;
+		this.midTrunoverFpo = midTrunoverFpo;
+		this.controlTrunoverFpo = controlTrunoverFpo;
+		this.remarkTrunoverFpo = remarkTrunoverFpo;
+		this.preIncomeFpo = preIncomeFpo;
+		this.midIncomeFpo = midIncomeFpo;
+		this.controlIncomeFpo = controlIncomeFpo;
+		this.remarkIncomeFpo = remarkIncomeFpo;
+		this.preAnnualIncomeShg = preAnnualIncomeShg;
+		this.midAnnualIncomeShg = midAnnualIncomeShg;
+		this.controlAnnualIncomeShg = controlAnnualIncomeShg;
+		this.remarkAnnualIncomeShg = remarkAnnualIncomeShg;
+		this.createdOn = createdOn;
+		this.createdBy = createdBy;
+		this.updatedOn = updatedOn;
+		this.requestIp = requestIp;
+	}
+
+
+	@Id 
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name="production_detail_id", unique=true, nullable=false)
 	public int getProductionDetailId() {
@@ -299,13 +316,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="spring_rejuvenated", precision=20)
-	public Integer getSpringRejuvenated() {
-		return springRejuvenated;
+	@Column(name="pre_spring_rejuvenated", precision=20)
+	public Integer getPreSpringRejuvenated() {
+		return preSpringRejuvenated;
 	}
 
-	public void setSpringRejuvenated(Integer springRejuvenated) {
-		this.springRejuvenated = springRejuvenated;
+	public void setPreSpringRejuvenated(Integer preSpringRejuvenated) {
+		this.preSpringRejuvenated = preSpringRejuvenated;
+	}
+	
+	@Column(name="mid_spring_rejuvenated", precision=20)
+	public Integer getMidSpringRejuvenated() {
+		return preSpringRejuvenated;
+	}
+
+	public void setMidSpringRejuvenated(Integer midSpringRejuvenated) {
+		this.midSpringRejuvenated = midSpringRejuvenated;
 	}
 
 
@@ -329,13 +355,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="person_benefitte", precision=20)
-	public Integer getPersonBenefitte() {
-		return personBenefitte;
+	@Column(name="pre_person_benefitte", precision=20)
+	public Integer getPrePersonBenefitte() {
+		return prePersonBenefitte;
 	}
 
-	public void setPersonBenefitte(Integer personBenefitte) {
-		this.personBenefitte = personBenefitte;
+	public void setPrePersonBenefitte(Integer prePersonBenefitte) {
+		this.prePersonBenefitte = prePersonBenefitte;
+	}
+	
+	@Column(name="mid_person_benefitte", precision=20)
+	public Integer getMidPersonBenefitte() {
+		return midPersonBenefitte;
+	}
+
+	public void setMidPersonBenefitte(Integer midPersonBenefitte) {
+		this.midPersonBenefitte = midPersonBenefitte;
 	}
 
 
@@ -359,13 +394,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="community_based_shg", precision=20)
-	public Integer getCommunityBasedShg() {
-		return communityBasedShg;
+	@Column(name="pre_community_based_shg", precision=20)
+	public Integer getPreCommunityBasedShg() {
+		return preCommunityBasedShg;
 	}
 
-	public void setCommunityBasedShg(Integer communityBasedShg) {
-		this.communityBasedShg = communityBasedShg;
+	public void setPreCommunityBasedShg(Integer preCommunityBasedShg) {
+		this.preCommunityBasedShg = preCommunityBasedShg;
+	}
+	
+	@Column(name="mid_community_based_shg", precision=20)
+	public Integer getMidCommunityBasedShg() {
+		return midCommunityBasedShg;
+	}
+
+	public void setMidCommunityBasedShg(Integer midCommunityBasedShg) {
+		this.midCommunityBasedShg = midCommunityBasedShg;
 	}
 
 
@@ -389,13 +433,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="community_based_fpo", precision=20)
-	public Integer getCommunityBasedFpo() {
-		return communityBasedFpo;
+	@Column(name="pre_community_based_fpo", precision=20)
+	public Integer getPreCommunityBasedFpo() {
+		return preCommunityBasedFpo;
 	}
 
-	public void setCommunityBasedFpo(Integer communityBasedFpo) {
-		this.communityBasedFpo = communityBasedFpo;
+	public void setPreCommunityBasedFpo(Integer preCommunityBasedFpo) {
+		this.preCommunityBasedFpo = preCommunityBasedFpo;
+	}
+	
+	@Column(name="mid_community_based_fpo", precision=20)
+	public Integer getMidCommunityBasedFpo() {
+		return midCommunityBasedFpo;
+	}
+
+	public void setMidCommunityBasedFpo(Integer midCommunityBasedFpo) {
+		this.midCommunityBasedFpo = midCommunityBasedFpo;
 	}
 
 
@@ -419,13 +472,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="community_based_ug", precision=20)
-	public Integer getCommunityBasedUg() {
-		return communityBasedUg;
+	@Column(name="pre_community_based_ug", precision=20)
+	public Integer getPreCommunityBasedUg() {
+		return preCommunityBasedUg;
 	}
 
-	public void setCommunityBasedUg(Integer communityBasedUg) {
-		this.communityBasedUg = communityBasedUg;
+	public void setPreCommunityBasedUg(Integer preCommunityBasedUg) {
+		this.preCommunityBasedUg = preCommunityBasedUg;
+	}
+	
+	@Column(name="mid_community_based_ug", precision=20)
+	public Integer getMidCommunityBasedUg() {
+		return midCommunityBasedUg;
+	}
+
+	public void setMidCommunityBasedUg(Integer midCommunityBasedUg) {
+		this.midCommunityBasedUg = midCommunityBasedUg;
 	}
 
 
@@ -449,13 +511,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="member_based_shg", precision=20)
-	public Integer getMemberBasedShg() {
-		return memberBasedShg;
+	@Column(name="pre_member_based_shg", precision=20)
+	public Integer getPreMemberBasedShg() {
+		return preMemberBasedShg;
 	}
 
-	public void setMemberBasedShg(Integer memberBasedShg) {
-		this.memberBasedShg = memberBasedShg;
+	public void setPreMemberBasedShg(Integer preMemberBasedShg) {
+		this.preMemberBasedShg = preMemberBasedShg;
+	}
+	
+	@Column(name="mid_member_based_shg", precision=20)
+	public Integer getMidMemberBasedShg() {
+		return midMemberBasedShg;
+	}
+
+	public void setMidMemberBasedShg(Integer midMemberBasedShg) {
+		this.midMemberBasedShg = midMemberBasedShg;
 	}
 
 
@@ -479,13 +550,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="member_based_fpo", precision=20)
-	public Integer getMemberBasedFpo() {
-		return memberBasedFpo;
+	@Column(name="pre_member_based_fpo", precision=20)
+	public Integer getPreMemberBasedFpo() {
+		return preMemberBasedFpo;
 	}
 
-	public void setMemberBasedFpo(Integer memberBasedFpo) {
-		this.memberBasedFpo = memberBasedFpo;
+	public void setPreMemberBasedFpo(Integer preMemberBasedFpo) {
+		this.preMemberBasedFpo = preMemberBasedFpo;
+	}
+	
+	@Column(name="mid_member_based_fpo", precision=20)
+	public Integer getMidMemberBasedFpo() {
+		return midMemberBasedFpo;
+	}
+
+	public void setMidMemberBasedFpo(Integer midMemberBasedFpo) {
+		this.midMemberBasedFpo = midMemberBasedFpo;
 	}
 
 
@@ -509,13 +589,22 @@ public class WdcpmksyProductionDetails implements java.io.Serializable{
 	}
 
 
-	@Column(name="member_based_ug", precision=20)
-	public Integer getMemberBasedUg() {
-		return memberBasedUg;
+	@Column(name="pre_member_based_ug", precision=20)
+	public Integer getPreMemberBasedUg() {
+		return preMemberBasedUg;
 	}
 
-	public void setMemberBasedUg(Integer memberBasedUg) {
-		this.memberBasedUg = memberBasedUg;
+	public void setPreMemberBasedUg(Integer preMemberBasedUg) {
+		this.preMemberBasedUg = preMemberBasedUg;
+	}
+	
+	@Column(name="mid_member_based_ug", precision=20)
+	public Integer getMidMemberBasedUg() {
+		return midMemberBasedUg;
+	}
+
+	public void setMidMemberBasedUg(Integer midMemberBasedUg) {
+		this.midMemberBasedUg = midMemberBasedUg;
 	}
 
 

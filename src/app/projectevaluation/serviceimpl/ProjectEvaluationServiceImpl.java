@@ -219,17 +219,17 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	@Override
 	public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession session, Integer projProfId, BigDecimal preMilch, BigDecimal midMilch, 
 			BigDecimal cMilch, String rmkMilch, BigDecimal preFodder, BigDecimal midFodder, BigDecimal cFodder, String rmkFodder, Integer preRuralUrban, 
-			Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer spring, Integer cSpring, String rmkSpring, Integer benefit, Integer cBenefit, 
-			String rmkBenefit, Integer shg, Integer cShg, String rmkShg, Integer fpo, Integer cFpo, String rmkFpo, Integer ug, Integer cUg, String rmkUg, Integer mShg, 
-			Integer cMshg, String rmkMshg, Integer mFpo, Integer cMfpo, String rmkMfpo, Integer mUg, Integer cMug, String rmkMug, BigDecimal preTrunOverFpo, 
+			Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer prespring, Integer midspring, Integer cSpring, String rmkSpring, Integer prebenefit, Integer midbenefit, Integer cBenefit, 
+			String rmkBenefit, Integer preshg, Integer midshg, Integer cShg, String rmkShg, Integer prefpo, Integer midfpo, Integer cFpo, String rmkFpo, Integer preug, Integer midug, Integer cUg, String rmkUg, Integer preMShg, 
+			Integer midMShg, Integer cMshg, String rmkMshg, Integer preMFpo, Integer midMFpo, Integer cMfpo, String rmkMfpo, Integer preMUg, Integer midMUg, Integer cMug, String rmkMug, BigDecimal preTrunOverFpo, 
 			BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, BigDecimal cIncomeFpo, 
 			String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg) 
 	{
-		return PEDAO.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, 
-				cFodder, rmkFodder, preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, spring, cSpring, rmkSpring, benefit, cBenefit, rmkBenefit, 
-				shg, cShg, rmkShg, fpo, cFpo, rmkFpo, ug, cUg, rmkUg, mShg, cMshg, rmkMshg, mFpo, cMfpo, rmkMfpo, mUg, cMug, rmkMug, preTrunOverFpo, 
-				midTrunOverFpo, cTrunOverFpo, rmkTrunOverFpo, preIncomeFpo, midIncomeFpo, cIncomeFpo, rmkIncomeFpo, preAnnualIncomeShg, midAnnualIncomeShg, 
-				cAnnualIncomeShg, rmkAnnualIncomeShg);
+		return PEDAO.saveOrUpdateProductionDetails(request, session, projProfId, preMilch, midMilch, cMilch, rmkMilch, preFodder, midFodder, cFodder, rmkFodder, 
+				preRuralUrban, midRuralUrban, cRuralUrban, rmkRuralUrban, prespring, midspring, cSpring, rmkSpring, prebenefit, midbenefit, cBenefit, rmkBenefit, 
+				preshg, midshg, cShg, rmkShg, prefpo, midfpo, cFpo, rmkFpo, preug, midug, cUg, rmkUg, preMShg, midMShg, cMshg, rmkMshg, preMFpo, midMFpo, cMfpo, 
+				rmkMfpo, preMUg, midMUg, cMug, rmkMug, preTrunOverFpo, midTrunOverFpo, cTrunOverFpo, rmkTrunOverFpo, preIncomeFpo, midIncomeFpo, cIncomeFpo, rmkIncomeFpo, 
+				preAnnualIncomeShg, midAnnualIncomeShg, cAnnualIncomeShg, rmkAnnualIncomeShg);
 	}
 
 	@Override

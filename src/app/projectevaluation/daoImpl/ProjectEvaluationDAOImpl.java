@@ -1743,12 +1743,11 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		@Override
 		public String saveOrUpdateProductionDetails(HttpServletRequest request, HttpSession sess, Integer projProfId, BigDecimal preMilch, BigDecimal midMilch, 
 				BigDecimal cMilch, String rmkMilch, BigDecimal preFodder, BigDecimal midFodder, BigDecimal cFodder, String rmkFodder, Integer preRuralUrban, 
-				Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer spring, Integer cSpring, String rmkSpring, Integer benefit, Integer cBenefit, 
-				String rmkBenefit, Integer shg, Integer cShg, String rmkShg, Integer fpo, Integer cFpo, String rmkFpo, Integer ug, Integer cUg, String rmkUg, 
-				Integer mShg, Integer cMshg, String rmkMshg, Integer mFpo, Integer cMfpo, String rmkMfpo, Integer mUg, Integer cMug, String rmkMug, 
-				BigDecimal preTrunOverFpo, BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, 
-				BigDecimal cIncomeFpo, String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, 
-				BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg)
+				Integer midRuralUrban, Integer cRuralUrban, String rmkRuralUrban, Integer prespring, Integer midspring, Integer cSpring, String rmkSpring, Integer prebenefit, Integer midbenefit, Integer cBenefit, 
+				String rmkBenefit, Integer preshg, Integer midshg, Integer cShg, String rmkShg, Integer prefpo, Integer midfpo, Integer cFpo, String rmkFpo, Integer preug, Integer midug, Integer cUg, String rmkUg, Integer preMShg, 
+				Integer midMShg, Integer cMshg, String rmkMshg, Integer preMFpo, Integer midMFpo, Integer cMfpo, String rmkMfpo, Integer preMUg, Integer midMUg, Integer cMug, String rmkMug, BigDecimal preTrunOverFpo, 
+				BigDecimal midTrunOverFpo, BigDecimal cTrunOverFpo, String rmkTrunOverFpo, BigDecimal preIncomeFpo, BigDecimal midIncomeFpo, BigDecimal cIncomeFpo, 
+				String rmkIncomeFpo, BigDecimal preAnnualIncomeShg, BigDecimal midAnnualIncomeShg, BigDecimal cAnnualIncomeShg, String rmkAnnualIncomeShg)
 		{
 			
 			Session session = sessionFactory.getCurrentSession();
@@ -1796,35 +1795,43 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				prdDtl.setControlRuralUrban(cRuralUrban);
 				prdDtl.setRemarkRuralUrban(rmkRuralUrban);
 				
-				prdDtl.setSpringRejuvenated(spring);
+				prdDtl.setPreSpringRejuvenated(prespring);
+				prdDtl.setMidSpringRejuvenated(midspring);
 				prdDtl.setControlSpringRejuvenated(cSpring);
 				prdDtl.setRemarkSpringRejuvenated(rmkSpring);
 				
-				prdDtl.setPersonBenefitte(benefit);
+				prdDtl.setPrePersonBenefitte(prebenefit);
+				prdDtl.setMidPersonBenefitte(midbenefit);
 				prdDtl.setControlPersonBenefitte(cBenefit);
 				prdDtl.setRemarkPersonBenefitte(rmkBenefit);
 				
-				prdDtl.setCommunityBasedShg(shg);
+				prdDtl.setPreCommunityBasedShg(preshg);
+				prdDtl.setMidCommunityBasedShg(midshg);
 				prdDtl.setControlCommunityBasedShg(cShg);
 				prdDtl.setRemarkCommunityBasedShg(rmkShg);
 				
-				prdDtl.setCommunityBasedFpo(fpo);
+				prdDtl.setPreCommunityBasedFpo(prefpo);
+				prdDtl.setMidCommunityBasedFpo(midfpo);
 				prdDtl.setControlCommunityBasedFpo(cFpo);
 				prdDtl.setRemarkCommunityBasedFpo(rmkFpo);
 				
-				prdDtl.setCommunityBasedUg(ug);
+				prdDtl.setPreCommunityBasedUg(preug);
+				prdDtl.setMidCommunityBasedUg(midug);
 				prdDtl.setControlCommunityBasedUg(cUg);
 				prdDtl.setRemarkCommunityBasedUg(rmkUg);
 				
-				prdDtl.setMemberBasedShg(mShg);
+				prdDtl.setPreMemberBasedShg(preMShg);
+				prdDtl.setMidMemberBasedShg(midMShg);
 				prdDtl.setControlMemberBasedShg(cMshg);
 				prdDtl.setRemarkMemberBasedShg(rmkMshg);
 				
-				prdDtl.setMemberBasedFpo(mFpo);
+				prdDtl.setPreMemberBasedFpo(preMFpo);
+				prdDtl.setMidMemberBasedFpo(midMFpo);
 				prdDtl.setControlMemberBasedFpo(cMfpo);
 				prdDtl.setRemarkMemberBasedFpo(rmkMfpo);
 				
-				prdDtl.setMemberBasedUg(mUg);
+				prdDtl.setPreMemberBasedUg(preMUg);
+				prdDtl.setMidMemberBasedUg(midMUg);
 				prdDtl.setControlMemberBasedUg(cMug);
 				prdDtl.setRemarkMemberBasedUg(rmkMug);
 				
