@@ -378,6 +378,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getDistwiseCropDetailsReportData(stcode, type);
 	}
+
+	@Override
+	public String getpAgency(String project) {
+		// TODO Auto-generated method stub
+		return PEDAO.getpAgency(project);
+	}
+
+	@Override
+	public String updateProjAgency(Integer projid, String agencyName) {
+		// TODO Auto-generated method stub
+		return PEDAO.updateProjAgency(projid, agencyName);
+	}
 	
 	
 	

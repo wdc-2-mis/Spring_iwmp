@@ -167,5 +167,9 @@ public interface ProjectEvaluationService {
 	List<ProductionDetailsBean> getDistwiseAverageAnnualIncome(Integer stcode);
 	
 	List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode);
+
+	String getpAgency(String project);
+
+	String updateProjAgency(Integer projid, String agencyName);
 	
 }

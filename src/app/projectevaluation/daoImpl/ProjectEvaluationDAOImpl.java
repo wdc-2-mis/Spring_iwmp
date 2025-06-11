@@ -173,6 +173,9 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getDistWiseControlCropDetails}")
 	String getDistWiseControlCropDetails;
 	
+	@Value("${getpagency}")
+	String getpagency;
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -2525,6 +2528,74 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				session.getTransaction().rollback();
 			}
 			return list;
+		}
+
+		@Override
+		public String getpAgency(String project) {
+			     String pAgency = null;
+			    Session session = sessionFactory.openSession();
+
+			    Transaction tx = null;
+
+			    try {
+			        tx = session.beginTransaction();  
+			        String savesql = getpagency;
+
+			        SQLQuery query = session.createSQLQuery(savesql);
+			        query.setParameter("projid", Integer.parseInt(project));
+
+			        Object result = query.uniqueResult(); 
+
+			        if (result != null) {
+			        	pAgency = result.toString(); 
+			        }
+
+			        tx.commit();  
+			    } catch (Exception ex) {
+			        if (tx != null) {
+			            tx.rollback();  
+			        }
+			        throw ex;
+			    } finally {
+			        session.close();  
+			    }
+
+			    return pAgency;
+		}
+
+		@Override
+		public String updateProjAgency(Integer projid, String agencyName) {
+			Session session = sessionFactory.getCurrentSession();
+		    String res = "fail";
+		    try {
+		        session.beginTransaction(); // ✅ Ensure transaction is started
+
+		        Query<WdcpmksyProjectProfileEvaluation> query = session.createQuery(
+		            "FROM WdcpmksyProjectProfileEvaluation w WHERE w.iwmpMProject.projectId = :projid",
+		            WdcpmksyProjectProfileEvaluation.class
+		        );
+		        
+		        
+		        query.setParameter("projid", projid);
+		        WdcpmksyProjectProfileEvaluation savedata = query.uniqueResult();
+
+		        if (savedata != null) {
+		            savedata.setPagency(agencyName); 
+		            session.update(savedata); 
+		            session.getTransaction().commit(); 
+		            res = "success";
+		        } else {
+		            res = "not_found"; 
+		        }
+  
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        res = "fail";
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().rollback(); 
+		        }
+		    }
+		    return res;
 		}
 
 }

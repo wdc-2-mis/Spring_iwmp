@@ -164,5 +164,9 @@ public interface ProjectEvaluationDAO {
 	List<ProductionDetailsBean> getDistwiseCommunityBasedData(Integer stcode);
 	
 	List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type);
+
+	String getpAgency(String project);
+
+	String updateProjAgency(Integer projid, String agencyName);
 }
  

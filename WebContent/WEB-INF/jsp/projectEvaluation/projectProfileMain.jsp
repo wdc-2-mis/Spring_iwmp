@@ -134,7 +134,63 @@ $(document).ready(function () {
      
 
 });
+    
+    $('#updateAgency').submit(function (e) {
+        e.preventDefault();
+        var projid = $("#projid").val();
+        
+        var district = $("#dcode").val();
+        var distName = $("#distName").val();
+        var projName = $("#projName").val();
+        var finyear = $("#fincd").val();
+        var finName = $("#finyr").val();
+        var updateAgencyName = $("#updateAgencyName").val().trim(); 
+        var monthid = $("#monthid").val(); 
+        var monthName = $("#monthname").val() ;
+
+ 
+if (!updateAgencyName) {
+    alert("Agency name cannot be empty!");
+    return; 
+}
+
+
+  $.ajax({
+     type: 'POST',
+     url: 'updateAgency',
+     data: {projid: projid, updateAgencyName: updateAgencyName},
+     dataType: 'json',
+     success: function (response) {
+         if (response.status === "success") {
+             alert(response.message);
+             var redirectUrl = "getProjectProfile?project=" + encodeURIComponent(projid) +
+             "&district=" + encodeURIComponent(district) +
+             "&distName=" + encodeURIComponent(distName) +
+             "&projName=" + encodeURIComponent(projName) +
+             "&finyear=" + encodeURIComponent(finyear) +
+             "&finName=" + encodeURIComponent(finName) +
+             "&month=" + encodeURIComponent(monthid) +
+             "&monthName=" + encodeURIComponent(monthName);
+             window.location.href = redirectUrl;  
+         } else {
+             alert("Error: " + response.message); 
+         }
+     },
+     error: function () {
+         alert("An error occurred while updating the month.");
+     }
+ }); 
+
+ function getQueryParam(param) {
+     var urlParams = new URLSearchParams(window.location.search);
+     return urlParams.get(param) || "";
+ }
+     
+
+});   
 });
+
+
 
 </script>
 </head>
@@ -159,14 +215,44 @@ $(document).ready(function () {
 <b>
     &nbsp;&nbsp;&nbsp; Name of Project Evaluation Agency: &nbsp; <c:out value='${pagency}' />
     
-    <% if ("true".equals(request.getAttribute("evaluationDetailConfirmed"))) { %>
-    <a href="#" class="edit" data-toggle="modal" data-target="#editAgency" data-projid="${projid}" data-month="${monthid}">
+    <% if ("true".equals(request.getAttribute("projectProfileConfirmed"))) { %>
+    <a href="#" class="edit" data-toggle="modal" data-target="#editAgency" data-projid="${projid}">
         <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
     </a>
 <% } %>
 
 </b>
 
+ <div class="modal fade" id="editAgency" tabindex="-1" role="dialog" aria-labelledby="editAgencyLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="updateAgency">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Project Evaluation Agency</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="projid" value="${projid}" />
+                    <input type="hidden" id="projName" name="projName" value="<c:out value='${projName}' />">
+                    <input type="hidden" id="dcode" name="dcode" value="<c:out value='${dcode}' />">
+                    <input type="hidden" id="finyr" name="finyr" value="<c:out value='${finyr}' />">
+                    <input type="hidden" id="fincd" name="fincd" value="<c:out value='${fincd}' />">
+                    <input type="hidden" id="distName" name="distName" value="<c:out value='${distName}' />">
+                     <input type="hidden" id="monthid" name="monthid" value="<c:out value='${monthid}' />">
+                      <input type="hidden" id="monthname" name="monthname" value="<c:out value='${monthname}' />">
+                    
+                    <label for="agencyName">Agency Name:</label>
+                    <input type="text" name="updateAgencyName" id="updateAgencyName" class="form-control" value="${pagency}" autocomplete = "off" />
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ 
  
         <a href="projectProfile?dcode=<c:out value="${dcode}"/>&pcode=<c:out value="${projid}"/>&dname=<c:out value="${distName}"/>&pname=<c:out value="${projName}"/>&mcode=<c:out value="${monthid}"/>&mname=<c:out value="${monthname}"/>&fcode=<c:out value="${fincd}"/>&fname=<c:out value="${finyr}"/>&pagency=<c:out value="${pagency}"/>" class="tab-link">Project Profile
         <%

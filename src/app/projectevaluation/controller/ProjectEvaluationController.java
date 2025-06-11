@@ -201,6 +201,7 @@ public class ProjectEvaluationController {
 		if(session!=null && session.getAttribute("loginID")!=null) {
 			monthList = PEService.getmonthforproject();
             String projProfilestatus = PEService.checkProjectProfileStatus(project);
+            String pAgency = PEService.getpAgency(project);
 			if(projProfilestatus != null) {
 				if ("1".equals(projProfilestatus)) {
 		            request.setAttribute("projectProfileConfirmed", "true");
@@ -331,7 +332,13 @@ public class ProjectEvaluationController {
 			mav.addObject("monthname", monthName);
 			mav.addObject("fincd", finid);
 			mav.addObject("finyr", finName);
+			if(pAgency !=null)
+			{
+				mav.addObject("pagency", pAgency);
+			}
+			else {
 			mav.addObject("pagency", pagency);
+			}
 		}
 		else {
 			mav = new ModelAndView("login");
@@ -478,7 +485,7 @@ public class ProjectEvaluationController {
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 	        String fname = request.getParameter("fname");
-
+	        String pagency = PEService.getpAgency(project);
 	     try {
 	    if (session != null && session.getAttribute("loginID") != null) {
 	       
@@ -626,6 +633,8 @@ public class ProjectEvaluationController {
 	        	        mav.addObject("projid", projid);
 	        	        mav.addObject("monthid", mcode);
 	        	        mav.addObject("finyr", fname);
+	        	        mav.addObject("pagency", pagency);
+	        	        
 	        	        request.setAttribute("projectProfileConfirmed", "true");
 	        	    } 
 	        	    else {
@@ -1280,6 +1289,7 @@ public class ProjectEvaluationController {
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 	        String fname = request.getParameter("fname");
 	        String pagency = request.getParameter("pagency");
+	        
 	        mav.setViewName("projectEvaluation/projectProfileMain");
 	        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 			if(projProfilestatus != null) {
@@ -1407,7 +1417,7 @@ public class ProjectEvaluationController {
 	        if ("success".equals(result)) {
 	            request.setAttribute("projectProfileConfirmed", "true");
 	        }
-
+	        String pAgency = PEService.getpAgency(project);
 	        mav.addObject("distName", distName);
 	        mav.addObject("monthList", monthList);
 	        mav.addObject("projName", projName);
@@ -1417,6 +1427,7 @@ public class ProjectEvaluationController {
 	        mav.addObject("projid", projid);
 	        mav.addObject("monthid", mcode);
 	        mav.addObject("finyr", fname);
+	        mav.addObject("pagency", pAgency);
 	    } else {
 	        if (session != null) {
 	            session.invalidate();
@@ -4920,6 +4931,33 @@ public class ProjectEvaluationController {
 	    return response;
 	}
 	
+	@RequestMapping(value = "/updateAgency", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> updateAgency(@RequestParam("projid") Integer projid, @RequestParam("updateAgencyName") String agencyName) {
+	    Map<String, String> response = new HashMap<>();
+	    
+	    try {
+	        String res = PEService.updateProjAgency(projid, agencyName);
+
+	        if ("success".equals(res)) {
+	            response.put("status", "success");
+	            response.put("message", "Agency Name successfully updated!");
+	            response.put("redirectUrl", "getProjectProfile?projid=" + projid); // Redirect to project profile
+	        } else if ("not_found".equals(res)) {
+	            response.put("status", "not_found");
+	            response.put("message", "Project ID not found!");
+	        } else {
+	            response.put("status", "fail");
+	            response.put("message", "Issue on Updating Agency Name. Please try again.");
+	        }
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        response.put("status", "error");
+	        response.put("message", "An error occurred while updating the Agency Name.");
+	    }
+
+	    return response;
+	}
 	
 	@RequestMapping(value = "/croppedDetails3", method = RequestMethod.GET)
 	public ModelAndView croppedDetails3(HttpServletRequest request) {
