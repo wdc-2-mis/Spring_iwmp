@@ -691,7 +691,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 
     <tr>
       <td><b><c:out value="2." /></b></td>
-      <td><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season" /></b></td>
+      <td><b><c:out value="Average depth of Water table in dug wells (mts.)- Summer Season(February - March)" /></b></td>
       <td>${pre_dug_well}</td>
       <td>${mid_dug_well}</td>
       <td>${control_dug_well}</td>
@@ -700,7 +700,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 
     <tr>
       <td><b><c:out value="3." /></b></td>
-      <td><b><c:out value="Average depth of Water table in tube wells (mts.)- Summer Season" /></b></td>
+      <td><b><c:out value="Average depth of Water table in tube wells (mts.)- Summer Season(February - March)" /></b></td>
       <td>${pre_tube_well}</td>
       <td>${mid_tube_well}</td>
       <td>${control_tube_well}</td>
@@ -723,7 +723,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <td><b><c:out value="4." /></b></td>
       <td><b><c:out value="No. of Farmers Benefited" /></b></td>
       <td colspan="2">${farmer_benefited}</td>
-      <td>${control_farmer_benefited}</td>
+      <td>N/A</td>
       <td>${remark_farmer_benefited}</td>
     </tr>
 
@@ -731,7 +731,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <td><b><c:out value="5." /></b></td>
       <td><b><c:out value="No. of Persondays Generated (man-days)" /></b></td>
       <td colspan="2">${mandays_generated}</td>
-      <td>${control_mandays_generated}</td>
+      <td>N/A</td>
       <td>${remark_mandays_generated}</td>
     </tr>
   </tbody>
@@ -742,7 +742,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
   <thead>
     <tr>
       <th colspan="6" style="text-align: center;">
-        <h4><u>Production Details</u></h4>
+        <h4><u>Production, Spring and Community Details</u></h4>
       </th>
     </tr>
     <tr>
@@ -816,47 +816,59 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 
       
         <tr>
-      <th rowspan="2" class="text-center"><b>Sl. No.</b></th>
-      <th rowspan="2" class="text-center"><b>Production Details</b></th>
-      <th colspan="2" class="text-center"><b>Project Area Details</b></th>
-      <th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
-      <th rowspan="2" class="text-center"><b>Remarks</b></th>
-    </tr>
-    <tr>
-<!--       <th class="text-center"><b>Pre-Project Status (Aggregate)</b></th> -->
-<!--       <th class="text-center"><b>Mid-Project Status (Aggregate)</b></th> -->
-    </tr>
+							<th rowspan="2" class="text-center"><b>Sl.No.</b></th>
+							<th rowspan="2" class="text-center"><b>Spring Details</b></th>
+							<th colspan="2" class="text-center"><b>Project Area	Details</b></th>
+							<th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+							<th rowspan="2" class="text-center"><b>Remarks</b></th>
+						</tr>
+						<tr>
+							<th class="text-center"><b>Pre-Project Status(Aggregate)</b></th>
+							<th class="text-center"><b>Mid-Project Status(Aggregate)</b></th>
+						</tr>
     
     <tr>
         <td><b>7.</b></td>
         <td><b>No. of springs rejuvenated (if applicable)</b></td>
-        <td colspan="2">${list.springRejuvenated}</td>
-        <td>${list.controlSpringRejuvenated}</td>
+        <td>${list.preSpringRejuvenated}</td>
+        <td>${list.midSpringRejuvenated}</td>
+        <td>N/A</td>
         <td>${list.remarkSpringRejuvenated}</td>
       </tr>
 
       <tr>
         <td><b>8.</b></td>
         <td><b>No. of persons benefitted due to rejuvenation of springs</b></td>
-        <td colspan="2">${list.personBenefitte}</td>
-        <td>${list.controlPersonBenefitte}</td>
+        <td>${list.prePersonBenefitte}</td>
+        <td>${list.midPersonBenefitte}</td>
+        <td>N/A</td>
         <td>${list.remarkPersonBenefitte}</td>
       </tr>
 
+<tr>
+							<th rowspan="2" class="text-center"><b>Sl.No.</b></th>
+							<th rowspan="2" class="text-center"><b>Community Details</b></th>
+							<th colspan="2" class="text-center"><b>Project Area Details</b></th>
+							<th rowspan="2" class="text-center"><b>Controlled Area Details</b></th>
+							<th rowspan="2" class="text-center"><b>Remarks</b></th>
+						</tr>
+						<tr>
+							<th class="text-center"><b>Pre-Project Status(Aggregate)</b></th>
+							<th class="text-center"><b>Mid-Project Status(Aggregate)</b></th>
+						</tr>
+						
       <!-- Community Based Organization -->
       <tr>
         <td><b>9.</b></td>
-        <td><b>No. of Community Based Organizations</b></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="5"><b>No. of Community Based Organizations</b></td>
+        
       </tr>
 
       <tr>
         <td style="text-align: right;"><b>a.</b></td>
         <td><b>SHG</b></td>
-        <td colspan="2">${list.communityBasedShg}</td>
+        <td>${list.preCommunityBasedShg}</td>
+        <td>${list.midCommunityBasedShg}</td>
         <td>${list.controlCommunityBasedShg}</td>
         <td>${list.remarkCommunityBasedShg}</td>
       </tr>
@@ -864,7 +876,8 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <tr>
         <td style="text-align: right;"><b>b.</b></td>
         <td><b>FPO</b></td>
-        <td colspan="2">${list.communityBasedFpo}</td>
+        <td>${list.preCommunityBasedFpo}</td>
+        <td>${list.midCommunityBasedFpo}</td>
         <td>${list.controlCommunityBasedFpo}</td>
         <td>${list.remarkCommunityBasedFpo}</td>
       </tr>
@@ -872,31 +885,31 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <tr>
         <td style="text-align: right;"><b>c.</b></td>
         <td><b>UG</b></td>
-        <td colspan="2">${list.communityBasedUg}</td>
+        <td>${list.preCommunityBasedUg}</td>
+        <td>${list.midCommunityBasedUg}</td>
         <td>${list.controlCommunityBasedUg}</td>
         <td>${list.remarkCommunityBasedUg}</td>
       </tr>
   <tr>
         <td style="text-align: right;"><b></b></td>
         <td><b>	Total No. of Community Based Organization</b></td>
-        <td colspan="2">${list.communityBasedUg+ list.communityBasedFpo+ list.communityBasedShg}</td>
-        <td>${list.controlCommunityBasedUg + list.controlCommunityBasedFpo + list.controlCommunityBasedShg}</td>
+        <td>${list.preCommunityBasedShg + list.preCommunityBasedFpo + list.preCommunityBasedUg}</td>
+        <td>${list.midCommunityBasedShg + list.midCommunityBasedFpo + list.midCommunityBasedUg}</td>
+        <td>${list.controlCommunityBasedShg + list.controlCommunityBasedFpo + list.controlCommunityBasedUg}</td>
         <td></td>
       </tr>
       <!-- Members in Community Based Organization -->
       <tr>
         <td><b>10.</b></td>
-        <td><b>No. of Members in Community Based Organizations</b></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td colspan="5"><b>No. of Members in Community Based Organizations</b></td>
+        
       </tr>
 
       <tr>
         <td style="text-align: right;"><b>a.</b></td>
         <td><b>SHG</b></td>
-        <td colspan="2">${list.memberBasedShg}</td>
+        <td>${list.preMemberBasedShg}</td>
+        <td>${list.midMemberBasedShg}</td>
         <td>${list.controlMemberBasedShg}</td>
         <td>${list.remarkMemberBasedShg}</td>
       </tr>
@@ -904,7 +917,8 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <tr>
         <td style="text-align: right;"><b>b.</b></td>
         <td><b>FPO</b></td>
-        <td colspan="2">${list.memberBasedFpo}</td>
+        <td>${list.preMemberBasedFpo}</td>
+        <td>${list.midMemberBasedFpo}</td>
         <td>${list.controlMemberBasedFpo}</td>
         <td>${list.remarkMemberBasedFpo}</td>
       </tr>
@@ -912,15 +926,17 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
       <tr>
         <td style="text-align: right;"><b>c.</b></td>
         <td><b>UG</b></td>
-        <td colspan="2">${list.memberBasedUg}</td>
+        <td>${list.preMemberBasedUg}</td>
+        <td>${list.midMemberBasedUg}</td>
         <td>${list.controlMemberBasedUg}</td>
         <td>${list.remarkMemberBasedUg}</td>
       </tr>
  <tr>
         <td style="text-align: right;"><b></b></td>
         <td><b>	Total No. of Members Community Based Organization</b></td>
-        <td colspan="2">${list.memberBasedUg+ list.memberBasedFpo+ list.memberBasedShg}</td>
-        <td>${list.controlMemberBasedUg + list.controlMemberBasedFpo + list.controlMemberBasedShg}</td>
+        <td>${list.preMemberBasedShg + list.preMemberBasedFpo + list.preMemberBasedUg}</td>
+        <td>${list.midMemberBasedShg + list.midMemberBasedFpo + list.midMemberBasedUg}</td>
+        <td>${list.controlMemberBasedShg + list.controlMemberBasedFpo + list.controlMemberBasedUg}</td>
         <td></td>
       </tr>
      
@@ -1049,12 +1065,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 				</c:if>
 			</td>
 			<td>
-				<c:if test="${cWatershedCom eq true }">
-					 Yes
-				</c:if>
-				<c:if test="${cWatershedCom eq false }">
-					 No
-				</c:if>
+				N/A
 			</td>
 			<td>
 				${rmkWatershedCom}

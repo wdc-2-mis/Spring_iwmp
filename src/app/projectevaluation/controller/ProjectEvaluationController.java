@@ -3711,8 +3711,6 @@ public class ProjectEvaluationController {
 		String fname = request.getParameter("finName");
 		String stName = (String) session.getAttribute("stName");
 		Integer profile_id=0;
-		String admiMechanism=null;
-		String admiMechanismRemark=null;
 		Character dprSlna=null;
 		String dprSlnaRemark=null;
 		Character allManpower=null;
@@ -3816,8 +3814,6 @@ public class ProjectEvaluationController {
 			 for(ProjectEvaluationBean bean : indicatorslist) {
 					
 					
-				 admiMechanism=bean.getAdmin_mechanism().toString();
-				 admiMechanismRemark=bean.getAdmin_mechanism_remark().toString();
 				 dprSlna=bean.getDpr_slna();
 				 dprSlnaRemark=bean.getDpr_slna_remark().toString();
 				 allManpower=bean.getAll_manpower();
@@ -3925,8 +3921,6 @@ public class ProjectEvaluationController {
 		        
 		     mav = new ModelAndView("projectEvaluation/viewCompletePE");
 			 mav.addObject("projProfId",projProfId);
-			 mav.addObject("am",admiMechanism);
-			 mav.addObject("amd",admiMechanismRemark);
 			 mav.addObject("dpr",dprSlna);
 			 mav.addObject("dprremark",dprSlnaRemark);
 			 mav.addObject("mp", allManpower);
