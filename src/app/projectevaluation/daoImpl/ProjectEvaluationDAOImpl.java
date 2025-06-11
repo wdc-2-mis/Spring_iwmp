@@ -1087,7 +1087,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 
 	@Override
 	public String saveIndicatorEvaluationDetails(Integer profile_id, Integer fromno, Integer wcdc, Integer wc,
-			Integer pia, String admiMechanism, String admiMechanismRemark, Character dprSlna, String dprSlnaRemark,
+			Integer pia,  Character dprSlna, String dprSlnaRemark,
 			Character allManpower, String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark,
 			HttpSession session) {
 		Session sess = sessionFactory.getCurrentSession();
@@ -1113,8 +1113,6 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			        
 			        ppv.setProjectProfileId(profile_id);
 			        ieval.setWdcpmksyProjectProfileEvaluation(ppv);
-			        ieval.setAdminMechanism(admiMechanism);
-			        ieval.setAdminMechanismRemark(admiMechanismRemark);
 			        ieval.setDprSlna(dprSlna);
 			        ieval.setDprSlnaRemark(dprSlnaRemark);
 			        ieval.setAllManpower(allManpower);
@@ -1165,8 +1163,6 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 //		        Boolean allManpowerBool = parseBoolean(allManpower);
 //		        ieval.setWdcpmksyProjectProfileEvaluation(main);
 
-                ieval1.setAdminMechanism(admiMechanism);
-		        ieval1.setAdminMechanismRemark(admiMechanismRemark);
 		        ieval1.setDprSlna(dprSlna);
 		        ieval1.setDprSlnaRemark(dprSlnaRemark);
 		        ieval1.setAllManpower(allManpower);

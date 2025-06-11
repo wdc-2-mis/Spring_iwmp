@@ -363,8 +363,8 @@ public class ProjectEvaluationController {
 		String fname = request.getParameter("fname");
 		
 		Integer profile_id=0;
-		 String admiMechanism=null;
-		 String admiMechanismRemark=null;
+//		 String admiMechanism=null;
+//		 String admiMechanismRemark=null;
 		 Character dprSlna=null;
 		 String dprSlnaRemark=null;
 		 Character allManpower=null;
@@ -386,8 +386,6 @@ public class ProjectEvaluationController {
 			 list=PEService.getIndicatorEvaluation(profile_id);
 			 for(ProjectEvaluationBean bean : list) {
 					
-				 admiMechanism=bean.getAdmin_mechanism().toString();
-				 admiMechanismRemark=bean.getAdmin_mechanism_remark().toString();
 				 dprSlna=bean.getDpr_slna();
 				 dprSlnaRemark=bean.getDpr_slna_remark().toString();
 				 allManpower=bean.getAll_manpower();
@@ -411,8 +409,6 @@ public class ProjectEvaluationController {
 			mav.addObject("finyear", fname);
 			mav.addObject("projProfId",projProfId);
 			
-			mav.addObject("am",admiMechanism);
-			mav.addObject("amd",admiMechanismRemark);
 			mav.addObject("dpr",dprSlna);
 			mav.addObject("dprremark",dprSlnaRemark);
 			mav.addObject("mp", allManpower);
@@ -443,8 +439,8 @@ public class ProjectEvaluationController {
      	Integer wc =0;
 
 	     	//Character area = request.getParameter("area").charAt(0);
-	        String admiMechanism= request.getParameter("am");
-	        String admiMechanismRemark=request.getParameter("amd");
+//	        String admiMechanism= request.getParameter("am");
+//	        String admiMechanismRemark=request.getParameter("amd");
 //	        Character dprSlna =request.getParameter("dpr");
 	        String dpr = request.getParameter("dpr");
 	        Character dprSlna = (dpr != null && !dpr.isEmpty()) ? dpr.charAt(0) : null;
@@ -614,7 +610,7 @@ public class ProjectEvaluationController {
 			        }
 					}
 	            result = PEService.saveIndicatorEvaluationDetails(profile_id, fromno,
-	                wcdc, wc, pia, admiMechanism, admiMechanismRemark, dprSlna,
+	                wcdc, wc, pia, dprSlna,
 	                dprSlnaRemark, allManpower, allManpowerRemark, wcdcRemark,
 	                piaRemark, wcRemark, session);
 	            
@@ -4163,12 +4159,12 @@ public class ProjectEvaluationController {
 			CommonFunctions.insertCellHeader(table, "Remarks", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 					CommonFunctions.insertCell(table, "1", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Administrative Mechanism", Element.ALIGN_LEFT, 3, 1, bf8);
-					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism_remark(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Administrative Mechanism", Element.ALIGN_LEFT, 5, 1, bf8);
+//					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, indicatorslist.get(0).getAdmin_mechanism_remark(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "a", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether DPR approved by SLNA", Element.ALIGN_LEFT, 3, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether all manpower positions at the sanctioned level as per the guidelines", Element.ALIGN_LEFT, 3, 1, bf8);
 					if(indicatorslist.get(0).getDpr_slna().equals('Y')){
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
 					
@@ -4178,7 +4174,7 @@ public class ProjectEvaluationController {
 					}
 					CommonFunctions.insertCell(table, String.valueOf(indicatorslist.get(0).getDpr_slna_remark()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "b", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Whether all manpower positions in place at", Element.ALIGN_LEFT, 3, 1, bf8);
+					CommonFunctions.insertCell(table, "Whether all manpower positions at the sanctioned level as per the guidelines", Element.ALIGN_LEFT, 3, 1, bf8);
 					if(indicatorslist.get(0).getAll_manpower().equals('Y')){
 					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_CENTER, 1, 1, bf8);
 					}

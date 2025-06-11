@@ -184,9 +184,9 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
                     
                     <tr>
                         <td><b><c:out value="1."/></b></td>
-                        <td><b><c:out value="Administrative Mechanism"/></b></td>
-                        <td>${am}</td>
-                        <td>${amd}</td>
+                        <td colspan="3"><b><c:out value="Administrative Mechanism"/></b></td>
+<%--                         <td>${am}</td> --%>
+<%--                         <td>${amd}</td> --%>
                     </tr>
                     <tr>
                         <td class="text-right"><b><c:out value="a"/></b></td>
@@ -204,7 +204,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
                     </tr>
                     <tr>
                         <td class="text-right"><b><c:out value="b"/></b></td>
-                        <td><b><c:out value="Whether all manpower positions in place at"/></b></td>
+                        <td><b><c:out value="Whether all manpower positions at the sanctioned level as per the guidelines"/></b></td>
                         <td>
                          <c:if test="${mp == 'Y'.charAt(0)}">
                              Yes

@@ -44,7 +44,7 @@ public interface ProjectEvaluationDAO {
 			HttpSession session);
 
 	public String saveIndicatorEvaluationDetails(Integer profile_id, Integer fromno, Integer wcdc, Integer wc,
-			Integer pia, String admiMechanism, String admiMechanismRemark, Character dprSlna, String dprSlnaRemark,
+			Integer pia, Character dprSlna, String dprSlnaRemark,
 			Character allManpower, String allManpowerRemark, String wcdcRemark, String piaRemark, String wcRemark,
 			HttpSession session);
 

@@ -19,8 +19,8 @@ function savedata(){
     if (formSubmitted) return false;  
 //	var profile_id = $('#profileid').val();
 	var fromno = $('#fromno').val();
-    var admiMechanism = $('#am').val(); // Administrative Mechanism
-    var admiMechanismRemark = $('#amd').val(); // Administrative Mechanism Remark
+//     var admiMechanism = $('#am').val(); // Administrative Mechanism
+//     var admiMechanismRemark = $('#amd').val(); // Administrative Mechanism Remark
     var dprSlna = $('input[name="dpr"]:checked').val(); // DPR approval status
     var dprSlnaRemark = $('#dprremark').val(); // DPR Remark
     var allManpower = $('input[name="mp"]:checked').val(); // Manpower status
@@ -67,13 +67,13 @@ function savedata(){
 	
 	}
 
-		   if(admiMechanism=='' || admiMechanism == undefined || admiMechanism == null)
-		   {
-		   	alert('Please fill Administrative Mechanism Details')
-		   	$('#am').focus();
-		   	$flag=false;
-		   	return false;
-		   }
+// 		   if(admiMechanism=='' || admiMechanism == undefined || admiMechanism == null)
+// 		   {
+// 		   	alert('Please fill Administrative Mechanism Details')
+// 		   	$('#am').focus();
+// 		   	$flag=false;
+// 		   	return false;
+// 		   }
 		   
 		   if(dprSlna=='' || dprSlna == undefined || dprSlna == null)
 		   {
@@ -145,11 +145,11 @@ function savedata(){
                     </tr>
                     <tr>
                         <td><b><c:out value="1."/></b></td>
-                        <td><b><c:out value="Administrative Mechanism"/></b></td>
-                        <td><input type="text" id="am" name="am" value="${am}" autocomplete="off" /></td>
-                        <td>
-                        <textarea id="amd" name="amd" autocomplete="off" rows="2" cols="22" maxlength="200">${amd}</textarea>
-                        </td>
+                        <td colspan="3"><b><c:out value="Administrative Mechanism"/></b></td>
+<%--                         <td><input type="text" id="am" name="am" value="${am}" autocomplete="off" /></td> --%>
+<!--                         <td> -->
+<%--                         <textarea id="amd" name="amd" autocomplete="off" rows="2" cols="22" maxlength="200">${amd}</textarea> --%>
+<!--                         </td> -->
                     </tr>
                     <tr>
                         <td class="text-right"><b><c:out value="a"/></b></td>
@@ -178,7 +178,7 @@ function savedata(){
                     </tr>
                     <tr>
                         <td class="text-right"><b><c:out value="b"/></b></td>
-                        <td><b><c:out value="Whether all manpower positions in place at"/></b></td>
+                        <td><b><c:out value="Whether all manpower positions at the sanctioned level as per the guidelines"/></b></td>
                         <td>
                         <c:if test="${mp eq null }">
                             <input type="radio" id="mpyes" name="mp" value="Y" value="${mp}" /> Yes
