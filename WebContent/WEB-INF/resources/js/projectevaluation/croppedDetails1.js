@@ -380,11 +380,11 @@ $(document).on('click', '#viewProd', function(e){
 	
 	$prespring = $('#prespring').val();
 	$midspring = $('#midspring').val();
-	$cSpring = $('#cSpring').val();
+//	$cSpring = $('#cSpring').val();
 	
 	$prebenefit = $('#prebenefit').val();
 	$midbenefit = $('#midbenefit').val();
-	$cBenefit = $('#cBenefit').val();
+//	$cBenefit = $('#cBenefit').val();
 	
 	$preshg = $('#preshg').val();
 	$midshg = $('#midshg').val();
@@ -546,11 +546,11 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cSpring == '' || $cSpring == undefined || $cSpring == null) {
-		alert('Please Enter No. of Springs Details for Controlled Area.');
-		$('#cSpring').focus();
-		return false;
-	}
+//	if ($cSpring == '' || $cSpring == undefined || $cSpring == null) {
+//		alert('Please Enter No. of Springs Details for Controlled Area.');
+//		$('#cSpring').focus();
+//		return false;
+//	}
 	
 
 	if ($prebenefit == '' || $prebenefit == undefined || $prebenefit == null) {
@@ -565,11 +565,11 @@ $(document).on('click', '#viewProd', function(e){
 		return false;
 	}
 	
-	if ($cBenefit == '' || $cBenefit == undefined || $cBenefit == null) {
-		alert('Please Enter No. of Person Benefitted Details for Controlled Area.');
-		$('#cBenefit').focus();
-		return false;
-	}
+//	if ($cBenefit == '' || $cBenefit == undefined || $cBenefit == null) {
+//		alert('Please Enter No. of Person Benefitted Details for Controlled Area.');
+//		$('#cBenefit').focus();
+//		return false;
+//	}
 
 
 	if ($preshg == '' || $preshg == undefined || $preshg == null) {
