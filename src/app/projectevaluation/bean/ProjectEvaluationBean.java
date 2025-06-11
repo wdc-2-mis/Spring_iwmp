@@ -82,8 +82,8 @@ public class ProjectEvaluationBean {
 	private String total_fund_planned_remark;
 	private BigDecimal total_expenditure;
 	private String total_expenditure_remark;
-	private BigDecimal total_wdc;
-	private String total_wdc_remark;
+	private BigDecimal total_wdf;
+	private String total_wdf_remark;
 		
 	private String admin_mechanism;
 	private String admin_mechanism_remark;
@@ -746,17 +746,17 @@ public class ProjectEvaluationBean {
 	public void setTotal_expenditure_remark(String total_expenditure_remark) {
 		this.total_expenditure_remark = total_expenditure_remark;
 	}
-	public BigDecimal getTotal_wdc() {
-		return total_wdc;
+	public BigDecimal getTotal_wdf() {
+		return total_wdf;
 	}
-	public void setTotal_wdc(BigDecimal total_wdc) {
-		this.total_wdc = total_wdc;
+	public void setTotal_wdf(BigDecimal total_wdf) {
+		this.total_wdf = total_wdf;
 	}
-	public String getTotal_wdc_remark() {
-		return total_wdc_remark;
+	public String getTotal_wdf_remark() {
+		return total_wdf_remark;
 	}
-	public void setTotal_wdc_remark(String total_wdc_remark) {
-		this.total_wdc_remark = total_wdc_remark;
+	public void setTotal_wdf_remark(String total_wdf_remark) {
+		this.total_wdf_remark = total_wdf_remark;
 	}
 	public Boolean getNatural_resource() {
 		return natural_resource;

@@ -44,8 +44,8 @@ function savedata(){
   $totalFundPlannedRemark = $('#rmkConPlannedFund').val();
   $totalExpenditure = $('#exCon').val();
   $totalExpenditureRemark = $('#rmkExCon').val();
-  $totalWdc = $('#wdc').val();
-  $totalWdcRemark = $('#rmkWdc').val();
+  $totalWdf = $('#wdf').val();
+  $totalWdfRemark = $('#rmkWdf').val();
 	$fromno1 = $('#fromno').val();
  
   	
@@ -85,10 +85,10 @@ function savedata(){
 		return false;
 	}
 	
-	if($totalWdc==='')
+	if($totalWdf==='')
 	{
 		alert('Please enter the total amount of WDF collected so far');
-		$('#wdc').focus();
+		$('#wdf').focus();
 		return false;
 	}
 
@@ -283,14 +283,14 @@ function calSum(){
 				<b><c:out value="f"/></b>
 			</td>
 			<td>
-				<b><c:out value="Total WDC (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
+				<b><c:out value="Total WDF (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
 			</td>
 			<td>
-     			<input type="text" id="wdc" name="wdc" value="${wdc}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class=""  />
+     			<input type="text" id="wdf" name="wdf" value="${wdf}" autocomplete = "off" maxlength="11" onfocusin="decimalToFourPlace(event)" placeholder="Only Decimal" class=""  />
 			</td>
 			<td>
-<%--      			<input type="text" id="rmkWdc" name="rmkWdc" value="${rmkWdc}" autocomplete = "off" /> --%>
-     			<textarea id="rmkWdc" name="rmkWdc" autocomplete = "off" rows="2" cols="22" maxlength="200" >${rmkWdc}</textarea>
+<%--      			<input type="text" id="rmkWdf" name="rmkWdf" value="${rmkWdf}" autocomplete = "off" /> --%>
+     			<textarea id="rmkWdf" name="rmkWdf" autocomplete = "off" rows="2" cols="22" maxlength="200" >${rmkWdf}</textarea>
 			</td>
 		</tr>
 		<tr>

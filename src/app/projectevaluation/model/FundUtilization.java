@@ -32,8 +32,8 @@ public class FundUtilization implements java.io.Serializable{
     private String totalFundPlannedRemark; 					//   total_fund_planned_remark
     private BigDecimal totalExpenditure;				//   total_expenditure
     private String totalExpenditureRemark;						//  total_expenditure_remark
-    private BigDecimal totalWdc;				//   total_wdc
-    private String totalWdcRemark;						//  total_wdc_remark
+    private BigDecimal totalWdf;				//   total_wdf
+    private String totalWdfRemark;						//  total_wdf_remark
     
     private Date createdOn ;                    //created_on ;
 	private String createdBy ;         //created_by ;
@@ -52,7 +52,7 @@ public class FundUtilization implements java.io.Serializable{
 	
     public FundUtilization(int fundUtilizationId, WdcpmksyProjectProfileEvaluation  wdcpmksyProjectProfileEvaluation, BigDecimal centralShare, String centralShareRemark,
     		BigDecimal stateShare, String stateShareRemark, BigDecimal totalFund, String totalFundRemark, BigDecimal totalFundPlanned, String totalFundPlannedRemark, 
-    		BigDecimal totalExpenditure, String totalExpenditureRemark, BigDecimal totalWdc, String totalWdcRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
+    		BigDecimal totalExpenditure, String totalExpenditureRemark, BigDecimal totalWdf, String totalWdfRemark, Date CreatedOn, String CreatedBy, Date UpdatedOn, String RequestIp) {
     		
     	this.fundUtilizationId = fundUtilizationId;
         this.wdcpmksyProjectProfileEvaluation=wdcpmksyProjectProfileEvaluation;
@@ -66,8 +66,8 @@ public class FundUtilization implements java.io.Serializable{
         this.totalFundPlannedRemark=totalFundPlannedRemark;
         this.totalExpenditure=totalExpenditure;
         this.totalExpenditureRemark=totalExpenditureRemark;
-        this.totalWdc=totalWdc;
-        this.totalWdcRemark=totalWdcRemark;
+        this.totalWdf=totalWdf;
+        this.totalWdfRemark=totalWdfRemark;
         this.createdOn=CreatedOn;
 	    this.createdBy=CreatedBy;
 	    this.updatedOn=UpdatedOn;
@@ -185,22 +185,22 @@ public class FundUtilization implements java.io.Serializable{
 		this.totalExpenditureRemark = totalExpenditureRemark;
 	}
 	
-	@Column(name="total_wdc", precision=20)
-	public BigDecimal getTotalWdc() {
-		return totalWdc;
+	@Column(name="total_wdf", precision=20)
+	public BigDecimal getTotalWdf() {
+		return totalWdf;
 	}
 
-	public void setTotalWdc(BigDecimal totalWdc) {
-		this.totalWdc = totalWdc;
+	public void setTotalWdf(BigDecimal totalWdf) {
+		this.totalWdf = totalWdf;
 	}
 
-	@Column(name="total_wdc_remark", length=200)
-	public String getTotalWdcRemark() {
-		return totalWdcRemark;
+	@Column(name="total_wdf_remark", length=200)
+	public String getTotalWdfRemark() {
+		return totalWdfRemark;
 	}
 
-	public void setTotalWdcRemark(String totalWdcRemark) {
-		this.totalWdcRemark = totalWdcRemark;
+	public void setTotalWdfRemark(String totalWdfRemark) {
+		this.totalWdfRemark = totalWdfRemark;
 	}
 
 	@Temporal(TemporalType.DATE)

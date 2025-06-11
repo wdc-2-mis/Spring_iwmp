@@ -639,7 +639,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Override
 	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
 			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon, 
-			BigDecimal wdc, String rmkWdc, HttpSession session, Integer fromno) {
+			BigDecimal wdf, String rmkWdf, HttpSession session, Integer fromno) {
 		
 		Session sess = sessionFactory.getCurrentSession();
 		//System.out.println("projectProfileId:" + projectProfileId);
@@ -694,8 +694,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			fundUtilization.setTotalFundPlannedRemark(rmkConPlannedFund);
 			fundUtilization.setTotalExpenditure(exCon);
 			fundUtilization.setTotalExpenditureRemark(rmkExCon);
-			fundUtilization.setTotalWdc(wdc);
-			fundUtilization.setTotalWdcRemark(rmkWdc);
+			fundUtilization.setTotalWdf(wdf);
+			fundUtilization.setTotalWdfRemark(rmkWdf);
 			fundUtilization.setRequestIp(ipAddr);
 			
 			sess.saveOrUpdate(fundUtilization);		

@@ -65,10 +65,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	@Override
 	public String saveFundUtilization(Integer projectProfileId, BigDecimal centralShare, String rmkCentralShare, BigDecimal stateShare, String rmkStatelShare, 
 			BigDecimal totalFund, String rmkTotalFund, BigDecimal conPlannedFund, String rmkConPlannedFund, BigDecimal exCon, String rmkExCon,
-			BigDecimal wdc, String rmkWdc, HttpSession session, Integer fromno) {
+			BigDecimal wdf, String rmkWdf, HttpSession session, Integer fromno) {
 		
 		return PEDAO.saveFundUtilization(projectProfileId, centralShare, rmkCentralShare, stateShare, rmkStatelShare, totalFund, rmkTotalFund, conPlannedFund, 
-				rmkConPlannedFund, exCon, rmkExCon, wdc, rmkWdc, session, fromno);
+				rmkConPlannedFund, exCon, rmkExCon, wdf, rmkWdf, session, fromno);
 	}
 	
 	@Override

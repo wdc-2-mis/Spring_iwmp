@@ -332,13 +332,13 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 				<b><c:out value="f"/></b>
 			</td>
 			<td>
-				<b><c:out value="Total WDC (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
+				<b><c:out value="Total WDF (Watershed Development Fund) collected so far (Rs. Crores)"/></b>
 			</td>
 			<td>
-     			${wdc}
+     			${wdf}
 			</td>
 			<td>
-     			${rmkWdc}
+     			${rmkWdf}
 			</td>
 		</tr>
 		</tbody>
