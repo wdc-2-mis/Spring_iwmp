@@ -1581,11 +1581,13 @@ public class ProjectEvaluationController {
 	    	String remark_farmer_income = request.getParameter("remark_farmer_income");
 	    	
 	        Integer farmer_benefited = Integer.parseInt(request.getParameter("farmer_benefited"));
-	        Integer control_farmer_benefited = Integer.parseInt(request.getParameter("control_farmer_benefited"));
+//	        Integer control_farmer_benefited = Integer.parseInt(request.getParameter("control_farmer_benefited"));
+	        Integer control_farmer_benefited = null;
 	        String remark_farmer_benefited = request.getParameter("remark_farmer_benefited");
 	        
 	        Integer mandays_generated = Integer.parseInt(request.getParameter("mandays_generated"));
-	        Integer control_mandays_generated = Integer.parseInt(request.getParameter("control_mandays_generated"));
+//	        Integer control_mandays_generated = Integer.parseInt(request.getParameter("control_mandays_generated"));
+	        Integer control_mandays_generated = null;
 	        String remark_mandays_generated = request.getParameter("remark_mandays_generated");
 	        
 	        BigDecimal pre_dug_well = new BigDecimal(request.getParameter("pre_dug_well"));
@@ -4524,14 +4526,14 @@ public class ProjectEvaluationController {
 					
 
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average depth of Water table in dug wells (mts.)- Summer Season", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Average depth of Water table in dug wells (mts.)- Summer Season(February - March)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getPre_dug_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getMid_dug_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_dug_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getRemark_dug_well(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, "Average depth of Water table in tube wells (mts.)- Summer Season", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "Average depth of Water table in tube wells (mts.)- Summer Season(February - March)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getPre_tube_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getMid_tube_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_tube_well().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -4546,13 +4548,13 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, "4", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "No. of Farmers Benefited", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (mandayslist.get(0).getFarmer_benefited().toString()), Element.ALIGN_RIGHT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, (mandayslist.get(0).getControl_farmer_benefited().toString()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (mandayslist.get(0).getRemark_farmer_benefited()), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "5", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "No. of Persondays Generated (man-days)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, mandayslist.get(0).getMandays_generated().toString(), Element.ALIGN_RIGHT, 2, 1, bf8);
-					CommonFunctions.insertCell(table, mandayslist.get(0).getControl_mandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (mandayslist.get(0).getRemark_mandays_generated()), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "", Element.ALIGN_RIGHT, 6, 1, bf8);
@@ -4624,14 +4626,14 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCell(table, "No. of springs rejuvenated(if applicable)", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPreSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlSpringRejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkSpringRejuvenated(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "8", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "No. of persons benefitted due to rejuvenation of springs", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getPrePersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getMidPersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getControlPersonBenefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcPrdDtlList.get(0).getRemarkPersonBenefitte(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCellHeader(table, "Sl. No. ", Element.ALIGN_CENTER, 1, 2, bf8Bold);

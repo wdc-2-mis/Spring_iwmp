@@ -572,7 +572,7 @@
 								<td style="text-align: center;"><input type="text" id="midspring" name="midspring"
 									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
 									class="midspringError"></span></td>
-								<td>N/A</td>
+								<td style="text-align: center;">N/A</td>
 								<td>
      								<textarea id="rmkSpring" name="rmkSpring" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
 								</td>
@@ -588,7 +588,7 @@
 								<td style="text-align: center;"><input type="text" id="midbenefit" name="midbenefit"
 									placeholder="Only Numeric" autocomplete="off" onfocusin="numericOnly(event);" maxlength="5"/><span
 									class="midbenefitError"></span></td>
-								<td>N/A</td>
+								<td style="text-align: center;">N/A</td>
 								<td>
      								<textarea id="rmkBenefit" name="rmkBenefit" autocomplete = "off" rows="2" cols="22" maxlength="200" ></textarea> 
 								</td>
