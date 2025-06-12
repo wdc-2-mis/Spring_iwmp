@@ -522,7 +522,7 @@ public class CommonFunctions {
 		            
 					
 					 String emb="https://wdcpmksy.dolr.gov.in/resources/images/tiranga_national_emblem.png";
-					 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/g20-logo.png";
+					 String g20l="https://wdcpmksy.dolr.gov.in/resources/images/digi-india3.png";
 					 
 		           
 		          // String emb="http://localhost/resources/images/tiranga_national_emblem.png";

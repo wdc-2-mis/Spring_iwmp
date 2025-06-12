@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -3853,11 +3853,11 @@ public class ProjectEvaluationController {
 				 remark_farmer_income=bean.getRemark_farmer_income();
 				 
 				 farmer_benefited=bean.getFarmer_benefited().toString();
-				 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
+//				 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
 				 remark_farmer_benefited=bean.getRemark_farmer_benefited();
 				
 				 mandays_generated=bean.getMandays_generated().toString();
-				 control_mandays_generated=bean.getControl_mandays_generated().toString();
+//				 control_mandays_generated=bean.getControl_mandays_generated().toString();
 				 remark_mandays_generated=bean.getRemark_mandays_generated();
 				
 				 pre_dug_well=bean.getPre_dug_well().toString();
@@ -3965,10 +3965,10 @@ public class ProjectEvaluationController {
 			 mav.addObject("control_farmer_income",control_farmer_income); 
 			 mav.addObject("remark_farmer_income",remark_farmer_income); 
 			 mav.addObject("farmer_benefited",farmer_benefited); 
-			 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
+//			 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
 			 mav.addObject("remark_farmer_benefited",remark_farmer_benefited); 
 			 mav.addObject("mandays_generated",mandays_generated); 
-			 mav.addObject("control_mandays_generated",control_mandays_generated); 
+//			 mav.addObject("control_mandays_generated",control_mandays_generated); 
 			 mav.addObject("remark_mandays_generated",remark_mandays_generated);
 			 
 			 mav.addObject("pre_dug_well",pre_dug_well); 
@@ -4063,6 +4063,7 @@ public class ProjectEvaluationController {
 		String pagency = PEService.getpAgency(project);
 		
 		LinkedHashMap<Integer, String> block= PEService.getProjProfileBlock(pcode);
+		String result = block.values().stream().collect(Collectors.joining(", "));
 		
 		Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 		String userType = session.getAttribute("userType").toString();
@@ -4146,7 +4147,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph("Mid Term Project Evaluation - View & Complete ", f3);
-			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+  ", Block Name : "+ block.values() + ",  Financial Year : " +  fname + ", Month Name : "  + mname + ",  Name of Project Evaluation Agency :"+ pagency, bf9);
+			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+  ", Block Name : "+ result + ",  \n Financial Year : " +  fname + ", Month Name : "  + mname + ",  Name of Project Evaluation Agency :"+ pagency, bf9);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
 			paragraph4.setAlignment(Element.ALIGN_CENTER);
@@ -4928,15 +4929,25 @@ public class ProjectEvaluationController {
 						}
 					}
 					
+					Map<String, String> gradeMapping = Map.of(
+						    "E", "Excellent",
+						    "G", "Very Good",
+						    "S", "Satisfactory",
+						    "A", "Average"
+						);
+
+					
 					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Based on your Summary Project Grades:", Element.ALIGN_CENTER, 6, 1, bf8Bold);
-					for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
-						if(bean.getKey().equals(stCode)) {
-							for (ProjectEvaluationBean obj : bean.getValue()) {
-								CommonFunctions.insertCell(table, obj.getGrade() != null ? obj.getGrade().toString() : "",Element.ALIGN_LEFT, 6, 1, bf8);
-							}
-						}
+					for (Map.Entry<Integer, List<ProjectEvaluationBean>> bean : getprojectProfileData.entrySet()) {
+					    if (bean.getKey().equals(stCode)) {
+					        for (ProjectEvaluationBean obj : bean.getValue()) {
+					            String gradeText = obj.getGrade() != null ? gradeMapping.getOrDefault(obj.getGrade().toString(), obj.getGrade().toString()) : "";
+					            CommonFunctions.insertCell(table, gradeText, Element.ALIGN_LEFT, 6, 1, bf8);
+					        }
+					    }
 					}
+
 
 
 			if(indicatorslist.size()==0) 
