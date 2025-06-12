@@ -1,6 +1,7 @@
 <%@include file="/WEB-INF/jspf/header2.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -44,7 +45,13 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 		document.projectProfiledata.submit();
 	
 } 
+function openModal() {
+    document.getElementById("myModal").style.display = "block";
+}
 
+function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+}
 </script>
 </head>
 <body>
@@ -89,12 +96,14 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 <%--   	<b>District Name : &nbsp; <c:out value='${dname}' />, &nbsp;&nbsp;&nbsp; Project Name: &nbsp; <c:out value='${pname}' />, &nbsp;&nbsp;&nbsp;Month : &nbsp; <c:out value='${mname}' />, &nbsp;&nbsp;&nbsp;  --%>
 <%-- 		Financial Year : &nbsp; <c:out value='${fname}' />  </b> --%>
 		
-	State Name : &nbsp; <b><c:out value='${stName}' /></b>, District Name : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project Name : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; 
-	Month Name : &nbsp; <b><c:out value='${mname}' /></b>, &nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>
+	<div class="form-group">
+			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose>  <c:when test="${fn:length(blockList) == 2}"><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b></c:when> <c:otherwise><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b>     <a href="#" onclick="openModal()"><b>....more</b></a></c:otherwise></c:choose>
+			 ,&nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp; <b><c:out value='${mname}' />,</b>
+			<br>
+			 Name of Project Evaluation Agency: &nbsp; <b><c:out value='${pagency}' /></b>
+			</div>
+
 	
-<!-- 	<div class ="card"> -->
-<!-- 	<div class="row"> -->
-	<div class="col-1" ></div>
 	<div class="col-10"  id="exportHtmlToPdf">
 	<p align="right"> </p>
 <!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
