@@ -3773,7 +3773,9 @@ public class ProjectEvaluationController {
 		String variation_area_remark=null;
 		String twork=null;
 		String tworkre=null;
-		Character status = null;	
+		Character status = null;
+		String project = request.getParameter("project");
+		String pagency = PEService.getpAgency(project);
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
 		List<ProjectEvaluationBean> indicatorslist = new ArrayList<ProjectEvaluationBean>();  
 		List<ProjectEvaluationBean> utilizationlist = new ArrayList<ProjectEvaluationBean>();
@@ -4013,6 +4015,8 @@ public class ProjectEvaluationController {
 			 mav.addObject("twork",twork); 
 			 mav.addObject("tworkre",tworkre); 
 			 mav.addObject("stName", stName);
+			 mav.addObject("blockList", PEService.getProjProfileBlock(pcode));
+			 mav.addObject("pagency", pagency);
 			 
 		}
 		
