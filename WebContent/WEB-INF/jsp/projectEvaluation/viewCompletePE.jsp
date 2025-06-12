@@ -3,68 +3,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
-<style>
- .modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-        }
 
-        /* Modal content styling */
-        .modal-content {
-            background-color: #fff;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%; /* Modal width */
-            height: 30%; /* Modal height */
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-            position: relative; /* Relative positioning for the close button */
-        }
-
-        /* Close button styling */
-        .close {
-            color: #aaa;
-            position: absolute; /* Position it absolutely */
-            top: 10px; /* Position from the top */
-            right: 10px; /* Position from the right */
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-        }
-
-        /* Header styling */
-        .modal-header {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-            border-bottom: 2px solid #ddd;
-            padding-bottom: 10px;
-        }
-
-        /* Body styling for blocks */
-        .modal-body {
-            font-size: 16px;
-            line-height: 1.5;
-            text-align: left; /* Align to the left */
-            overflow-y: auto; /* Scroll if content overflows */
-        }
-
-</style>
 <script type="text/javascript">
 $(document).ready(function() {
     // Function to toggle visibility based on the selected radio button
