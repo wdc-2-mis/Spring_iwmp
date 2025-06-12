@@ -219,7 +219,8 @@ function validateInput(event) {
 		<input type="hidden" id="pagency" name="pagency" value= "<c:out value='${pagency}' />" />
 		
 		<div class="form-group">
-			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose>  <c:when test="${fn:length(blockList) == 2}"><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b></c:when> <c:otherwise><b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b>     <a href="#" onclick="openModal()"><b>....more</b></a></c:otherwise></c:choose>
+			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose> <c:when test="${fn:length(blockList) == 2}"> <b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b> </c:when> <c:when test="${fn:length(blockList) > 2}"> <b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b> <a href="#" onclick="openModal()"><b>....more</b></a> </c:when> <c:otherwise> <b>${blockList.values().toArray()[0]}</b> </c:otherwise> </c:choose>
+			
 			 ,&nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp; <b><c:out value='${mname}' /></b>
 			</div>
 			<hr />
