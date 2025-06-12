@@ -1502,11 +1502,11 @@ public class ProjectEvaluationController {
 						 remark_farmer_income=bean.getRemark_farmer_income();
 						 
 						 farmer_benefited=bean.getFarmer_benefited().toString();
-						 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
+//						 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
 						 remark_farmer_benefited=bean.getRemark_farmer_benefited();
 						
 						 mandays_generated=bean.getMandays_generated().toString();
-						 control_mandays_generated=bean.getControl_mandays_generated().toString();
+//						 control_mandays_generated=bean.getControl_mandays_generated().toString();
 						 remark_mandays_generated=bean.getRemark_mandays_generated();
 						
 						 pre_dug_well=bean.getPre_dug_well().toString();
@@ -1526,10 +1526,10 @@ public class ProjectEvaluationController {
 					 mav.addObject("control_farmer_income",control_farmer_income); 
 					 mav.addObject("remark_farmer_income",remark_farmer_income); 
 					 mav.addObject("farmer_benefited",farmer_benefited); 
-					 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
+//					 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
 					 mav.addObject("remark_farmer_benefited",remark_farmer_benefited); 
 					 mav.addObject("mandays_generated",mandays_generated); 
-					 mav.addObject("control_mandays_generated",control_mandays_generated); 
+//					 mav.addObject("control_mandays_generated",control_mandays_generated); 
 					 mav.addObject("remark_mandays_generated",remark_mandays_generated);
 					 
 					 mav.addObject("pre_dug_well",pre_dug_well); 
@@ -4058,6 +4058,11 @@ public class ProjectEvaluationController {
 		String mname =request.getParameter("mname"); 
 		String fname = request.getParameter("fname");
 		Integer projProfId = Integer.parseInt(request.getParameter("projProfId"));
+		String project = request.getParameter("pcode");
+		
+		String pagency = PEService.getpAgency(project);
+		
+		LinkedHashMap<Integer, String> block= PEService.getProjProfileBlock(pcode);
 		
 		Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 		String userType = session.getAttribute("userType").toString();
@@ -4141,7 +4146,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph("Mid Term Project Evaluation - View & Complete ", f3);
-			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+     ", Month Name : "  + mname+  ",  Financial Year : " +  fname, bf9);
+			paragraph4 = new Paragraph("State Name : "  + stateName + ", District Name : "  + dname + ", Project Name : "+   pname+  ", Block Name : "+ block.values() + ",  Financial Year : " +  fname + ", Month Name : "  + mname + ",  Name of Project Evaluation Agency :"+ pagency, bf9);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
 			paragraph4.setAlignment(Element.ALIGN_CENTER);
@@ -4815,12 +4820,12 @@ public class ProjectEvaluationController {
 					else {
 						CommonFunctions.insertCell(table, "No", Element.ALIGN_LEFT, 1, 1, bf8);
 					}
-					if(equityAspectList.get(0).getControlWaterCommittee()==true) {
-					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
-					}
-					else {
-						CommonFunctions.insertCell(table, "No", Element.ALIGN_LEFT, 1, 1, bf8);
-					}
+//					if(equityAspectList.get(0).getControlWaterCommittee()==true) {
+//					CommonFunctions.insertCell(table, "Yes", Element.ALIGN_LEFT, 1, 1, bf8);
+//					}
+//					else {
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_LEFT, 1, 1, bf8);
+//					}
 					CommonFunctions.insertCell(table, equityAspectList.get(0).getWaterCommitteeRemark().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "2", Element.ALIGN_LEFT, 1, 1, bf8);
