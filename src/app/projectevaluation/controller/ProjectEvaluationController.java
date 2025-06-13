@@ -4146,7 +4146,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph4 = null; 
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			 if(status == 'D') {
-			paragraph3 = new Paragraph("Mid Term Project Evaluation - View & Draft ", f3);
+			paragraph3 = new Paragraph("Mid Term Project Evaluation - Draft ", f3);
 			 }
 			 if(status == 'C') {
 			paragraph3 = new Paragraph("Mid Term Project Evaluation - View & Complete ", f3);
