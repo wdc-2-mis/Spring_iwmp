@@ -20,19 +20,24 @@ public class ProductionDetailsBean {
 	private BigDecimal midannualincomeshg;
 	private BigDecimal controlannualincomeshg;
 
-	private BigInteger communitybasedshg; 
+	private BigInteger precommunitybasedshg;
+	private BigInteger midcommunitybasedshg;
 	private BigInteger controlcommunitybasedshg; 
-	private BigInteger communitybasedfpo; 
+	private BigInteger precommunitybasedfpo;
+	private BigInteger midcommunitybasedfpo;
 	private BigInteger controlcommunitybasedfpo; 
-	private BigInteger communitybasedug; 
+	private BigInteger precommunitybasedug; 
+	private BigInteger midcommunitybasedug; 
 	private BigInteger controlcommunitybasedug; 
-	private BigInteger memberbasedshg; 
+	private BigInteger prememberbasedshg; 
+	private BigInteger midmemberbasedshg; 
 	private BigInteger controlmemberbasedshg; 
-	private BigInteger memberbasedfpo; 
+	private BigInteger prememberbasedfpo; 
+	private BigInteger midmemberbasedfpo; 
 	private BigInteger controlmemberbasedfpo; 
-	private BigInteger memberbasedug; 
+	private BigInteger prememberbasedug; 
+	private BigInteger midmemberbasedug; 
 	private BigInteger controlmemberbasedug;
-	
 	public Integer getStcode() {
 		return stcode;
 	}
@@ -117,11 +122,17 @@ public class ProductionDetailsBean {
 	public void setControlannualincomeshg(BigDecimal controlannualincomeshg) {
 		this.controlannualincomeshg = controlannualincomeshg;
 	}
-	public BigInteger getCommunitybasedshg() {
-		return communitybasedshg;
+	public BigInteger getPrecommunitybasedshg() {
+		return precommunitybasedshg;
 	}
-	public void setCommunitybasedshg(BigInteger communitybasedshg) {
-		this.communitybasedshg = communitybasedshg;
+	public void setPrecommunitybasedshg(BigInteger precommunitybasedshg) {
+		this.precommunitybasedshg = precommunitybasedshg;
+	}
+	public BigInteger getMidcommunitybasedshg() {
+		return midcommunitybasedshg;
+	}
+	public void setMidcommunitybasedshg(BigInteger midcommunitybasedshg) {
+		this.midcommunitybasedshg = midcommunitybasedshg;
 	}
 	public BigInteger getControlcommunitybasedshg() {
 		return controlcommunitybasedshg;
@@ -129,11 +140,17 @@ public class ProductionDetailsBean {
 	public void setControlcommunitybasedshg(BigInteger controlcommunitybasedshg) {
 		this.controlcommunitybasedshg = controlcommunitybasedshg;
 	}
-	public BigInteger getCommunitybasedfpo() {
-		return communitybasedfpo;
+	public BigInteger getPrecommunitybasedfpo() {
+		return precommunitybasedfpo;
 	}
-	public void setCommunitybasedfpo(BigInteger communitybasedfpo) {
-		this.communitybasedfpo = communitybasedfpo;
+	public void setPrecommunitybasedfpo(BigInteger precommunitybasedfpo) {
+		this.precommunitybasedfpo = precommunitybasedfpo;
+	}
+	public BigInteger getMidcommunitybasedfpo() {
+		return midcommunitybasedfpo;
+	}
+	public void setMidcommunitybasedfpo(BigInteger midcommunitybasedfpo) {
+		this.midcommunitybasedfpo = midcommunitybasedfpo;
 	}
 	public BigInteger getControlcommunitybasedfpo() {
 		return controlcommunitybasedfpo;
@@ -141,11 +158,17 @@ public class ProductionDetailsBean {
 	public void setControlcommunitybasedfpo(BigInteger controlcommunitybasedfpo) {
 		this.controlcommunitybasedfpo = controlcommunitybasedfpo;
 	}
-	public BigInteger getCommunitybasedug() {
-		return communitybasedug;
+	public BigInteger getPrecommunitybasedug() {
+		return precommunitybasedug;
 	}
-	public void setCommunitybasedug(BigInteger communitybasedug) {
-		this.communitybasedug = communitybasedug;
+	public void setPrecommunitybasedug(BigInteger precommunitybasedug) {
+		this.precommunitybasedug = precommunitybasedug;
+	}
+	public BigInteger getMidcommunitybasedug() {
+		return midcommunitybasedug;
+	}
+	public void setMidcommunitybasedug(BigInteger midcommunitybasedug) {
+		this.midcommunitybasedug = midcommunitybasedug;
 	}
 	public BigInteger getControlcommunitybasedug() {
 		return controlcommunitybasedug;
@@ -153,11 +176,17 @@ public class ProductionDetailsBean {
 	public void setControlcommunitybasedug(BigInteger controlcommunitybasedug) {
 		this.controlcommunitybasedug = controlcommunitybasedug;
 	}
-	public BigInteger getMemberbasedshg() {
-		return memberbasedshg;
+	public BigInteger getPrememberbasedshg() {
+		return prememberbasedshg;
 	}
-	public void setMemberbasedshg(BigInteger memberbasedshg) {
-		this.memberbasedshg = memberbasedshg;
+	public void setPrememberbasedshg(BigInteger prememberbasedshg) {
+		this.prememberbasedshg = prememberbasedshg;
+	}
+	public BigInteger getMidmemberbasedshg() {
+		return midmemberbasedshg;
+	}
+	public void setMidmemberbasedshg(BigInteger midmemberbasedshg) {
+		this.midmemberbasedshg = midmemberbasedshg;
 	}
 	public BigInteger getControlmemberbasedshg() {
 		return controlmemberbasedshg;
@@ -165,11 +194,17 @@ public class ProductionDetailsBean {
 	public void setControlmemberbasedshg(BigInteger controlmemberbasedshg) {
 		this.controlmemberbasedshg = controlmemberbasedshg;
 	}
-	public BigInteger getMemberbasedfpo() {
-		return memberbasedfpo;
+	public BigInteger getPrememberbasedfpo() {
+		return prememberbasedfpo;
 	}
-	public void setMemberbasedfpo(BigInteger memberbasedfpo) {
-		this.memberbasedfpo = memberbasedfpo;
+	public void setPrememberbasedfpo(BigInteger prememberbasedfpo) {
+		this.prememberbasedfpo = prememberbasedfpo;
+	}
+	public BigInteger getMidmemberbasedfpo() {
+		return midmemberbasedfpo;
+	}
+	public void setMidmemberbasedfpo(BigInteger midmemberbasedfpo) {
+		this.midmemberbasedfpo = midmemberbasedfpo;
 	}
 	public BigInteger getControlmemberbasedfpo() {
 		return controlmemberbasedfpo;
@@ -177,11 +212,17 @@ public class ProductionDetailsBean {
 	public void setControlmemberbasedfpo(BigInteger controlmemberbasedfpo) {
 		this.controlmemberbasedfpo = controlmemberbasedfpo;
 	}
-	public BigInteger getMemberbasedug() {
-		return memberbasedug;
+	public BigInteger getPrememberbasedug() {
+		return prememberbasedug;
 	}
-	public void setMemberbasedug(BigInteger memberbasedug) {
-		this.memberbasedug = memberbasedug;
+	public void setPrememberbasedug(BigInteger prememberbasedug) {
+		this.prememberbasedug = prememberbasedug;
+	}
+	public BigInteger getMidmemberbasedug() {
+		return midmemberbasedug;
+	}
+	public void setMidmemberbasedug(BigInteger midmemberbasedug) {
+		this.midmemberbasedug = midmemberbasedug;
 	}
 	public BigInteger getControlmemberbasedug() {
 		return controlmemberbasedug;

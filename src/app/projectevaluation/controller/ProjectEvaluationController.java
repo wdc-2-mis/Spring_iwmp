@@ -6707,7 +6707,7 @@ public class ProjectEvaluationController {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 18, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 26, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,7,0,0); 
 	        sheet.addMergedRegion(mergedRegion);
@@ -6721,21 +6721,21 @@ public class ProjectEvaluationController {
 	        mergedRegion = new CellRangeAddress(5,5,11,18); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
-	        mergedRegion = new CellRangeAddress(6,6,3,4); 
+	        mergedRegion = new CellRangeAddress(6,6,3,5); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,5,6); 
+	        mergedRegion = new CellRangeAddress(6,6,6,8); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,7,8); 
+	        mergedRegion = new CellRangeAddress(6,6,9,11); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,9,10); 
+	        mergedRegion = new CellRangeAddress(6,6,12,14); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,11,12); 
+	        mergedRegion = new CellRangeAddress(6,6,15,17); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,13,14); 
+	        mergedRegion = new CellRangeAddress(6,6,18,20); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,15,16); 
+	        mergedRegion = new CellRangeAddress(6,6,21,23); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,17,18); 
+	        mergedRegion = new CellRangeAddress(6,6,24,26); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
 			mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
@@ -6786,12 +6786,14 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
 				cell.setCellValue("FPO");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
+				rowhead.createCell(i).setCellStyle(style);
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -6800,12 +6802,14 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
 				cell.setCellValue("Total");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
+				rowhead.createCell(i).setCellStyle(style);
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 			}
@@ -6817,9 +6821,13 @@ public class ProjectEvaluationController {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			i = 3;
-			while(i<19) {
+			while(i<27) {
 				cell = rowhead.createCell(i);
-				cell.setCellValue("Project Area");  
+				cell.setCellValue("Pre Project Status(Aggregate)");  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Mid Project Status(Aggregate)");  
 				cell.setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -6830,7 +6838,7 @@ public class ProjectEvaluationController {
 			
 			
 			Row rowhead1 = sheet.createRow(8);
-			for(int j=0;j<19;j++)
+			for(int j=0;j<27;j++)
 			{
 				cell =rowhead1.createCell(j);
 				cell.setCellValue(j+1);
@@ -6840,24 +6848,32 @@ public class ProjectEvaluationController {
 	        int sno = 1;
 	        int rowno  = 9;
 	        Integer totproj = 0;
-	        BigInteger totcommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totprecommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totmidcommunitybasedshg = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
-			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totprecommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
-			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totprecommunitybasedug = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedug = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
 			
-			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totprecommunitybasedtot = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedtot = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
 			
-			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totprememberbasedshg = BigInteger.ZERO;
+			BigInteger totmidmemberbasedshg = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
-			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totprememberbasedfpo = BigInteger.ZERO;
+			BigInteger totmidmemberbasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
-			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totprememberbasedug = BigInteger.ZERO;
+			BigInteger totmidmemberbasedug = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
 			
-			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totprecmemberbasedtot = BigInteger.ZERO;
+			BigInteger totmidcmemberbasedtot = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
 	        
 	        for(ProductionDetailsBean bean: list) {
@@ -6865,42 +6881,58 @@ public class ProjectEvaluationController {
 	        	row.createCell(0).setCellValue(sno); 
 	        	row.createCell(1).setCellValue(bean.getStname());
 	        	row.createCell(2).setCellValue(bean.getTotproj());
-	        	row.createCell(3).setCellValue(bean.getCommunitybasedshg().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getPrecommunitybasedshg().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
 	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getCommunitybasedfpo().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
 	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedug().doubleValue());
 	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(9).setCellValue(bean.getCommunitybasedshg().doubleValue() + bean.getCommunitybasedfpo().doubleValue() + bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
 	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(11).setCellValue(bean.getMemberbasedshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getPrememberbasedshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getMidmemberbasedshg().doubleValue());
 	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getMemberbasedfpo().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getPrememberbasedfpo().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
 	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getMemberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getMidmemberbasedug().doubleValue());
 	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getMemberbasedshg().doubleValue() + bean.getMemberbasedfpo().doubleValue() + bean.getMemberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
 	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
 	        	
 	        	totproj = totproj + bean.getTotproj();
-	        	totcommunitybasedshg = totcommunitybasedshg.add(bean.getCommunitybasedshg());
+	        	totprecommunitybasedshg = totprecommunitybasedshg.add(bean.getPrecommunitybasedshg());
+	        	totmidcommunitybasedshg = totmidcommunitybasedshg.add(bean.getMidcommunitybasedshg());
 	        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(bean.getControlcommunitybasedshg());
-	        	totcommunitybasedfpo = totcommunitybasedfpo.add(bean.getCommunitybasedfpo());
+	        	totprecommunitybasedfpo = totprecommunitybasedfpo.add(bean.getPrecommunitybasedfpo());
+	        	totmidcommunitybasedfpo = totmidcommunitybasedfpo.add(bean.getMidcommunitybasedfpo());
 	        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(bean.getControlcommunitybasedfpo());
-	        	totcommunitybasedug = totcommunitybasedug.add(bean.getCommunitybasedug());
+	        	totprecommunitybasedug = totprecommunitybasedug.add(bean.getPrecommunitybasedug());
+	        	totmidcommunitybasedug = totmidcommunitybasedug.add(bean.getMidcommunitybasedug());
 	        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(bean.getControlcommunitybasedug());
-	        	totcommunitybasedtot = totcommunitybasedtot.add(bean.getCommunitybasedshg().add(bean.getCommunitybasedfpo()).add(bean.getCommunitybasedug()));
+	        	totprecommunitybasedtot = totprecommunitybasedtot.add(bean.getPrecommunitybasedshg().add(bean.getPrecommunitybasedfpo()).add(bean.getPrecommunitybasedug()));
+	        	totmidcommunitybasedtot = totmidcommunitybasedtot.add(bean.getMidcommunitybasedshg().add(bean.getMidcommunitybasedfpo()).add(bean.getMidcommunitybasedug()));
 	        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(bean.getControlcommunitybasedshg().add(bean.getControlcommunitybasedfpo()).add(bean.getControlcommunitybasedug()));
 	        	
-	        	totmemberbasedshg = totmemberbasedshg.add(bean.getMemberbasedshg());
+	        	totprememberbasedshg = totprememberbasedshg.add(bean.getPrememberbasedshg());
+	        	totmidmemberbasedshg = totmidmemberbasedshg.add(bean.getMidmemberbasedshg());
 	        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(bean.getControlmemberbasedshg());
-	        	totmemberbasedfpo = totmemberbasedfpo.add(bean.getMemberbasedfpo());
+	        	totprememberbasedfpo = totprememberbasedfpo.add(bean.getPrememberbasedfpo());
+	        	totmidmemberbasedfpo = totmidmemberbasedfpo.add(bean.getMidmemberbasedfpo());
 	        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(bean.getControlmemberbasedfpo());
-	        	totmemberbasedug = totmemberbasedug.add(bean.getMemberbasedug());
-	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getMemberbasedshg());
-	        	totcmemberbasedtot = totcmemberbasedtot.add(bean.getMemberbasedshg().add(bean.getMemberbasedfpo()).add(bean.getMemberbasedug()));
+	        	totprememberbasedug = totprememberbasedug.add(bean.getPrememberbasedug());
+	        	totmidmemberbasedug = totmidmemberbasedug.add(bean.getMidmemberbasedug());
+	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getControlmemberbasedug());
+	        	totprecmemberbasedtot = totprecmemberbasedtot.add(bean.getPrememberbasedshg().add(bean.getPrememberbasedfpo()).add(bean.getPrememberbasedug()));
+	        	totmidcmemberbasedtot = totmidcmemberbasedtot.add(bean.getMidmemberbasedshg().add(bean.getMidmemberbasedfpo()).add(bean.getMidmemberbasedug()));
 	        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(bean.getControlmemberbasedshg().add(bean.getControlmemberbasedfpo()).add(bean.getControlmemberbasedug()));
 	        	
 	        	sno++;
@@ -6932,70 +6964,102 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(3);
-	        cell.setCellValue(totcommunitybasedshg.doubleValue());
+	        cell.setCellValue(totprecommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(4);
-	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(5);
-	        cell.setCellValue(totcommunitybasedfpo.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(6);
-	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
+	        cell.setCellValue(totprecommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(7);
-	        cell.setCellValue(totcommunitybasedug.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(8);
-	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(9);
-	        cell.setCellValue(totcommunitybasedtot.doubleValue());
+	        cell.setCellValue(totprecommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(10);
-	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(11);
-	        cell.setCellValue(totmemberbasedshg.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(12);
-	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
+	        cell.setCellValue(totprecommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(13);
-	        cell.setCellValue(totmemberbasedfpo.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(14);
-	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(15);
-	        cell.setCellValue(totmemberbasedug.doubleValue());
+	        cell.setCellValue(totprememberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(16);
-	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellValue(totmidmemberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(17);
-	        cell.setCellValue(totcmemberbasedtot.doubleValue());
+	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(18);
+	        cell.setCellValue(totprememberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(19);
+	        cell.setCellValue(totmidmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(20);
+	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(21);
+	        cell.setCellValue(totprememberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(22);
+	        cell.setCellValue(totmidmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(23);
+	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(24);
+	        cell.setCellValue(totprecmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(25);
+	        cell.setCellValue(totmidcmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(26);
 	        cell.setCellValue(totcontrolmemberbasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 26);
 	        String fileName = "attachment; filename=Report PE10 - State.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -7044,8 +7108,8 @@ public class ProjectEvaluationController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 
-			table = new PdfPTable(19);
-			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+			table = new PdfPTable(27);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(0f);
@@ -7057,47 +7121,57 @@ public class ProjectEvaluationController {
 			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			int i = 3;
-			while(i<19) {
-				CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			while(i<27) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+				CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				i++;
 				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				i++;
 			}
 			
-			for(int j=0;j<19;j++)
+			for(int j=0;j<27;j++)
 			{
 				Integer count = j+1;
 				CommonFunctions.insertCellHeader(table, count.toString(), Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			}
 
 			Integer totproj = 0;
-			BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totprecommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totmidcommunitybasedshg = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
-			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totprecommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
-			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totprecommunitybasedug = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedug = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
 			
-			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totprecommunitybasedtot = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedtot = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
 			
-			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totprememberbasedshg = BigInteger.ZERO;
+			BigInteger totmidmemberbasedshg = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
-			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totprememberbasedfpo = BigInteger.ZERO;
+			BigInteger totmidmemberbasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
-			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totprememberbasedug = BigInteger.ZERO;
+			BigInteger totmidmemberbasedug = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
 			
-			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totprecmemberbasedtot = BigInteger.ZERO;
+			BigInteger totmidcmemberbasedtot = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
 			if (list.size() != 0)
 				for (i = 0; i < list.size(); i++) {
@@ -7107,65 +7181,89 @@ public class ProjectEvaluationController {
 							bf8);
 					
 					
-					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getPrecommunitybasedshg().add(list.get(i).getPrecommunitybasedfpo()).add(list.get(i).getPrecommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMidcommunitybasedshg().add(list.get(i).getMidcommunitybasedfpo()).add(list.get(i).getMidcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getPrememberbasedshg().add(list.get(i).getPrememberbasedfpo()).add(list.get(i).getPrememberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMidmemberbasedshg().add(list.get(i).getMidmemberbasedfpo()).add(list.get(i).getMidmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 
 					totproj = totproj + list.get(i).getTotproj();
-					totcommunitybasedshg = totcommunitybasedshg.add(list.get(i).getCommunitybasedshg());
+					totprecommunitybasedshg = totprecommunitybasedshg.add(list.get(i).getPrecommunitybasedshg());
+					totmidcommunitybasedshg = totmidcommunitybasedshg.add(list.get(i).getMidcommunitybasedshg());
 		        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(list.get(i).getControlcommunitybasedshg());
-		        	totcommunitybasedfpo = totcommunitybasedfpo.add(list.get(i).getCommunitybasedfpo());
+		        	totprecommunitybasedfpo = totprecommunitybasedfpo.add(list.get(i).getPrecommunitybasedfpo());
+		        	totmidcommunitybasedfpo = totmidcommunitybasedfpo.add(list.get(i).getMidcommunitybasedfpo());
 		        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(list.get(i).getControlcommunitybasedfpo());
-		        	totcommunitybasedug = totcommunitybasedug.add(list.get(i).getCommunitybasedug());
+		        	totprecommunitybasedug = totprecommunitybasedug.add(list.get(i).getPrecommunitybasedug());
+		        	totmidcommunitybasedug = totmidcommunitybasedug.add(list.get(i).getMidcommunitybasedug());
 		        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(list.get(i).getControlcommunitybasedug());
-		        	totcommunitybasedtot = totcommunitybasedtot.add(list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getCommunitybasedug()));
+		        	totprecommunitybasedtot = totprecommunitybasedtot.add(list.get(i).getPrecommunitybasedshg().add(list.get(i).getPrecommunitybasedfpo()).add(list.get(i).getPrecommunitybasedug()));
+		        	totmidcommunitybasedtot = totmidcommunitybasedtot.add(list.get(i).getMidcommunitybasedshg().add(list.get(i).getMidcommunitybasedfpo()).add(list.get(i).getMidcommunitybasedug()));
 		        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug()));
 		        	
-		        	totmemberbasedshg = totmemberbasedshg.add(list.get(i).getMemberbasedshg());
+		        	totprememberbasedshg = totprememberbasedshg.add(list.get(i).getPrememberbasedshg());
+		        	totmidmemberbasedshg = totmidmemberbasedshg.add(list.get(i).getMidmemberbasedshg());
 		        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(list.get(i).getControlmemberbasedshg());
-		        	totmemberbasedfpo = totmemberbasedfpo.add(list.get(i).getMemberbasedfpo());
+		        	totprememberbasedfpo = totprememberbasedfpo.add(list.get(i).getPrememberbasedfpo());
+		        	totmidmemberbasedfpo = totmidmemberbasedfpo.add(list.get(i).getMidmemberbasedfpo());
 		        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(list.get(i).getControlmemberbasedfpo());
-		        	totmemberbasedug = totmemberbasedug.add(list.get(i).getMemberbasedug());
-		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getMemberbasedshg());
-		        	totcmemberbasedtot = totcmemberbasedtot.add(list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug()));
+		        	totprememberbasedug = totprememberbasedug.add(list.get(i).getPrememberbasedug());
+		        	totmidmemberbasedug = totmidmemberbasedug.add(list.get(i).getMidmemberbasedug());
+		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getControlmemberbasedshg());
+		        	totprecmemberbasedtot = totprecmemberbasedtot.add(list.get(i).getPrememberbasedshg().add(list.get(i).getPrememberbasedfpo()).add(list.get(i).getPrememberbasedug()));
+		        	totmidcmemberbasedtot = totmidcmemberbasedtot.add(list.get(i).getMidmemberbasedshg().add(list.get(i).getMidmemberbasedfpo()).add(list.get(i).getMidmemberbasedug()));
 		        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug()));
 
 				}
 			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 
 			if (list.size() == 0)
-				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 19, 1, bf8);
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 27, 1, bf8);
 
 			document.add(table);
 			table = new PdfPTable(1);
@@ -7218,7 +7316,7 @@ public class ProjectEvaluationController {
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 18, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 26, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,7,0,0); 
 	        sheet.addMergedRegion(mergedRegion);
@@ -7232,21 +7330,21 @@ public class ProjectEvaluationController {
 	        mergedRegion = new CellRangeAddress(5,5,11,18); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
-	        mergedRegion = new CellRangeAddress(6,6,3,4); 
+	        mergedRegion = new CellRangeAddress(6,6,3,5); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,5,6); 
+	        mergedRegion = new CellRangeAddress(6,6,6,8); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,7,8); 
+	        mergedRegion = new CellRangeAddress(6,6,9,11); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,9,10); 
+	        mergedRegion = new CellRangeAddress(6,6,12,14); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,11,12); 
+	        mergedRegion = new CellRangeAddress(6,6,15,17); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,13,14); 
+	        mergedRegion = new CellRangeAddress(6,6,18,20); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,15,16); 
+	        mergedRegion = new CellRangeAddress(6,6,21,23); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(6,6,17,18); 
+	        mergedRegion = new CellRangeAddress(6,6,24,26); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
 			mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
@@ -7297,12 +7395,14 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
 				cell.setCellValue("FPO");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
+				rowhead.createCell(i).setCellStyle(style);
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -7311,12 +7411,14 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
 				cell.setCellValue("Total");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
+				rowhead.createCell(i).setCellStyle(style);
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 			}
@@ -7328,9 +7430,13 @@ public class ProjectEvaluationController {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			i = 3;
-			while(i<19) {
+			while(i<27) {
 				cell = rowhead.createCell(i);
-				cell.setCellValue("Project Area");  
+				cell.setCellValue("Pre Project Status(Aggregate)");  
+				cell.setCellStyle(style);
+				i++;
+				cell = rowhead.createCell(i);
+				cell.setCellValue("Mid Project Status(Aggregate)");  
 				cell.setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -7341,7 +7447,7 @@ public class ProjectEvaluationController {
 			
 			
 			Row rowhead1 = sheet.createRow(8);
-			for(int j=0;j<19;j++)
+			for(int j=0;j<27;j++)
 			{
 				cell =rowhead1.createCell(j);
 				cell.setCellValue(j+1);
@@ -7351,24 +7457,32 @@ public class ProjectEvaluationController {
 	        int sno = 1;
 	        int rowno  = 9;
 	        Integer totproj = 0;
-	        BigInteger totcommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totprecommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totmidcommunitybasedshg = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
-			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totprecommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
-			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totprecommunitybasedug = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedug = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
 			
-			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totprecommunitybasedtot = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedtot = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
 			
-			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totprememberbasedshg = BigInteger.ZERO;
+			BigInteger totmidmemberbasedshg = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
-			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totprememberbasedfpo = BigInteger.ZERO;
+			BigInteger totmidmemberbasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
-			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totprememberbasedug = BigInteger.ZERO;
+			BigInteger totmidmemberbasedug = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
 			
-			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totprecmemberbasedtot = BigInteger.ZERO;
+			BigInteger totmidcmemberbasedtot = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
 	        
 	        for(ProductionDetailsBean bean: list) {
@@ -7376,42 +7490,58 @@ public class ProjectEvaluationController {
 	        	row.createCell(0).setCellValue(sno); 
 	        	row.createCell(1).setCellValue(bean.getDistname());
 	        	row.createCell(2).setCellValue(bean.getTotproj());
-	        	row.createCell(3).setCellValue(bean.getCommunitybasedshg().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getPrecommunitybasedshg().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
 	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getCommunitybasedfpo().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
 	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedug().doubleValue());
 	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(9).setCellValue(bean.getCommunitybasedshg().doubleValue() + bean.getCommunitybasedfpo().doubleValue() + bean.getCommunitybasedug().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
 	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(11).setCellValue(bean.getMemberbasedshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getPrememberbasedshg().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getMidmemberbasedshg().doubleValue());
 	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getMemberbasedfpo().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getPrememberbasedfpo().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
 	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getMemberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getMidmemberbasedug().doubleValue());
 	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getMemberbasedshg().doubleValue() + bean.getMemberbasedfpo().doubleValue() + bean.getMemberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
 	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
 	        	
 	        	totproj = totproj + bean.getTotproj();
-	        	totcommunitybasedshg = totcommunitybasedshg.add(bean.getCommunitybasedshg());
+	        	totprecommunitybasedshg = totprecommunitybasedshg.add(bean.getPrecommunitybasedshg());
+	        	totmidcommunitybasedshg = totmidcommunitybasedshg.add(bean.getMidcommunitybasedshg());
 	        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(bean.getControlcommunitybasedshg());
-	        	totcommunitybasedfpo = totcommunitybasedfpo.add(bean.getCommunitybasedfpo());
+	        	totprecommunitybasedfpo = totprecommunitybasedfpo.add(bean.getPrecommunitybasedfpo());
+	        	totmidcommunitybasedfpo = totmidcommunitybasedfpo.add(bean.getMidcommunitybasedfpo());
 	        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(bean.getControlcommunitybasedfpo());
-	        	totcommunitybasedug = totcommunitybasedug.add(bean.getCommunitybasedug());
+	        	totprecommunitybasedug = totprecommunitybasedug.add(bean.getPrecommunitybasedug());
+	        	totmidcommunitybasedug = totmidcommunitybasedug.add(bean.getMidcommunitybasedug());
 	        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(bean.getControlcommunitybasedug());
-	        	totcommunitybasedtot = totcommunitybasedtot.add(bean.getCommunitybasedshg().add(bean.getCommunitybasedfpo()).add(bean.getCommunitybasedug()));
+	        	totprecommunitybasedtot = totprecommunitybasedtot.add(bean.getPrecommunitybasedshg().add(bean.getPrecommunitybasedfpo()).add(bean.getPrecommunitybasedug()));
+	        	totmidcommunitybasedtot = totmidcommunitybasedtot.add(bean.getMidcommunitybasedshg().add(bean.getMidcommunitybasedfpo()).add(bean.getMidcommunitybasedug()));
 	        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(bean.getControlcommunitybasedshg().add(bean.getControlcommunitybasedfpo()).add(bean.getControlcommunitybasedug()));
 	        	
-	        	totmemberbasedshg = totmemberbasedshg.add(bean.getMemberbasedshg());
+	        	totprememberbasedshg = totprememberbasedshg.add(bean.getPrememberbasedshg());
+	        	totmidmemberbasedshg = totmidmemberbasedshg.add(bean.getMidmemberbasedshg());
 	        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(bean.getControlmemberbasedshg());
-	        	totmemberbasedfpo = totmemberbasedfpo.add(bean.getMemberbasedfpo());
+	        	totprememberbasedfpo = totprememberbasedfpo.add(bean.getPrememberbasedfpo());
+	        	totmidmemberbasedfpo = totmidmemberbasedfpo.add(bean.getMidmemberbasedfpo());
 	        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(bean.getControlmemberbasedfpo());
-	        	totmemberbasedug = totmemberbasedug.add(bean.getMemberbasedug());
-	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getMemberbasedshg());
-	        	totcmemberbasedtot = totcmemberbasedtot.add(bean.getMemberbasedshg().add(bean.getMemberbasedfpo()).add(bean.getMemberbasedug()));
+	        	totprememberbasedug = totprememberbasedug.add(bean.getPrememberbasedug());
+	        	totmidmemberbasedug = totmidmemberbasedug.add(bean.getMidmemberbasedug());
+	        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(bean.getControlmemberbasedug());
+	        	totprecmemberbasedtot = totprecmemberbasedtot.add(bean.getPrememberbasedshg().add(bean.getPrememberbasedfpo()).add(bean.getPrememberbasedug()));
+	        	totmidcmemberbasedtot = totmidcmemberbasedtot.add(bean.getMidmemberbasedshg().add(bean.getMidmemberbasedfpo()).add(bean.getMidmemberbasedug()));
 	        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(bean.getControlmemberbasedshg().add(bean.getControlmemberbasedfpo()).add(bean.getControlmemberbasedug()));
 	        	
 	        	sno++;
@@ -7443,66 +7573,98 @@ public class ProjectEvaluationController {
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(3);
-	        cell.setCellValue(totcommunitybasedshg.doubleValue());
+	        cell.setCellValue(totprecommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(4);
-	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(5);
-	        cell.setCellValue(totcommunitybasedfpo.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(6);
-	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
+	        cell.setCellValue(totprecommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(7);
-	        cell.setCellValue(totcommunitybasedug.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(8);
-	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedfpo.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(9);
-	        cell.setCellValue(totcommunitybasedtot.doubleValue());
+	        cell.setCellValue(totprecommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(10);
-	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(11);
-	        cell.setCellValue(totmemberbasedshg.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedug.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(12);
-	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
+	        cell.setCellValue(totprecommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(13);
-	        cell.setCellValue(totmemberbasedfpo.doubleValue());
+	        cell.setCellValue(totmidcommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(14);
-	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellValue(totcontrolcommunitybasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(15);
-	        cell.setCellValue(totmemberbasedug.doubleValue());
+	        cell.setCellValue(totprememberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(16);
-	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellValue(totmidmemberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(17);
-	        cell.setCellValue(totcmemberbasedtot.doubleValue());
+	        cell.setCellValue(totcontrolmemberbasedshg.doubleValue());
 	        cell.setCellStyle(style1);
 	        
 	        cell = row.createCell(18);
+	        cell.setCellValue(totprememberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(19);
+	        cell.setCellValue(totmidmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(20);
+	        cell.setCellValue(totcontrolmemberbasedfpo.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(21);
+	        cell.setCellValue(totprememberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(22);
+	        cell.setCellValue(totmidmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(23);
+	        cell.setCellValue(totcontrolmemberbasedug.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(24);
+	        cell.setCellValue(totprecmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(25);
+	        cell.setCellValue(totmidcmemberbasedtot.doubleValue());
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(26);
 	        cell.setCellValue(totcontrolmemberbasedtot.doubleValue());
 	        cell.setCellStyle(style1);
 	        
@@ -7558,8 +7720,8 @@ public class ProjectEvaluationController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 
-			table = new PdfPTable(19);
-			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+			table = new PdfPTable(27);
+			table.setWidths(new int[] {3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 
 			table.setWidthPercentage(100);
 			table.setSpacingBefore(0f);
@@ -7571,47 +7733,57 @@ public class ProjectEvaluationController {
 			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			int i = 3;
-			while(i<19) {
-				CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			while(i<27) {
+				CommonFunctions.insertCellHeader(table, "Pre Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				i++;
+				CommonFunctions.insertCellHeader(table, "Mid Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				i++;
 				CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				i++;
 			}
 			
-			for(int j=0;j<19;j++)
+			for(int j=0;j<27;j++)
 			{
 				Integer count = j+1;
 				CommonFunctions.insertCellHeader(table, count.toString(), Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			}
 
 			Integer totproj = 0;
-			BigInteger totcommunitybasedshg = BigInteger.ZERO;
+			BigInteger totprecommunitybasedshg = BigInteger.ZERO;
+	        BigInteger totmidcommunitybasedshg = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedshg = BigInteger.ZERO;
-			BigInteger totcommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totprecommunitybasedfpo = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedfpo = BigInteger.ZERO;
-			BigInteger totcommunitybasedug = BigInteger.ZERO;
+			BigInteger totprecommunitybasedug = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedug = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedug = BigInteger.ZERO;
 			
-			BigInteger totcommunitybasedtot = BigInteger.ZERO;
+			BigInteger totprecommunitybasedtot = BigInteger.ZERO;
+			BigInteger totmidcommunitybasedtot = BigInteger.ZERO;
 			BigInteger totcontrolcommunitybasedtot = BigInteger.ZERO;
 			
-			BigInteger totmemberbasedshg = BigInteger.ZERO;
+			BigInteger totprememberbasedshg = BigInteger.ZERO;
+			BigInteger totmidmemberbasedshg = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedshg = BigInteger.ZERO;
-			BigInteger totmemberbasedfpo = BigInteger.ZERO;
+			BigInteger totprememberbasedfpo = BigInteger.ZERO;
+			BigInteger totmidmemberbasedfpo = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedfpo = BigInteger.ZERO;
-			BigInteger totmemberbasedug = BigInteger.ZERO;
+			BigInteger totprememberbasedug = BigInteger.ZERO;
+			BigInteger totmidmemberbasedug = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedug = BigInteger.ZERO;
 			
-			BigInteger totcmemberbasedtot = BigInteger.ZERO;
+			BigInteger totprecmemberbasedtot = BigInteger.ZERO;
+			BigInteger totmidcmemberbasedtot = BigInteger.ZERO;
 			BigInteger totcontrolmemberbasedtot = BigInteger.ZERO;
 			if (list.size() != 0)
 				for (i = 0; i < list.size(); i++) {
@@ -7621,65 +7793,89 @@ public class ProjectEvaluationController {
 							bf8);
 					
 					
-					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getCommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrecommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getControlcommunitybasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getPrecommunitybasedshg().add(list.get(i).getPrecommunitybasedfpo()).add(list.get(i).getPrecommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMidcommunitybasedshg().add(list.get(i).getMidcommunitybasedfpo()).add(list.get(i).getMidcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedshg().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedfpo().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getMemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPrememberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMidmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getControlmemberbasedug().toString(), Element.ALIGN_CENTER, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getPrememberbasedshg().add(list.get(i).getPrememberbasedfpo()).add(list.get(i).getPrememberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (list.get(i).getMidmemberbasedshg().add(list.get(i).getMidmemberbasedfpo()).add(list.get(i).getMidmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug())).toString(), Element.ALIGN_CENTER, 1, 1, bf8);
 
 					totproj = totproj + list.get(i).getTotproj();
-					totcommunitybasedshg = totcommunitybasedshg.add(list.get(i).getCommunitybasedshg());
+					totprecommunitybasedshg = totprecommunitybasedshg.add(list.get(i).getPrecommunitybasedshg());
+					totmidcommunitybasedshg = totmidcommunitybasedshg.add(list.get(i).getMidcommunitybasedshg());
 		        	totcontrolcommunitybasedshg = totcontrolcommunitybasedshg.add(list.get(i).getControlcommunitybasedshg());
-		        	totcommunitybasedfpo = totcommunitybasedfpo.add(list.get(i).getCommunitybasedfpo());
+		        	totprecommunitybasedfpo = totprecommunitybasedfpo.add(list.get(i).getPrecommunitybasedfpo());
+		        	totmidcommunitybasedfpo = totmidcommunitybasedfpo.add(list.get(i).getMidcommunitybasedfpo());
 		        	totcontrolcommunitybasedfpo = totcontrolcommunitybasedfpo.add(list.get(i).getControlcommunitybasedfpo());
-		        	totcommunitybasedug = totcommunitybasedug.add(list.get(i).getCommunitybasedug());
+		        	totprecommunitybasedug = totprecommunitybasedug.add(list.get(i).getPrecommunitybasedug());
+		        	totmidcommunitybasedug = totmidcommunitybasedug.add(list.get(i).getMidcommunitybasedug());
 		        	totcontrolcommunitybasedug = totcontrolcommunitybasedug.add(list.get(i).getControlcommunitybasedug());
-		        	totcommunitybasedtot = totcommunitybasedtot.add(list.get(i).getCommunitybasedshg().add(list.get(i).getCommunitybasedfpo()).add(list.get(i).getCommunitybasedug()));
+		        	totprecommunitybasedtot = totprecommunitybasedtot.add(list.get(i).getPrecommunitybasedshg().add(list.get(i).getPrecommunitybasedfpo()).add(list.get(i).getPrecommunitybasedug()));
+		        	totmidcommunitybasedtot = totmidcommunitybasedtot.add(list.get(i).getMidcommunitybasedshg().add(list.get(i).getMidcommunitybasedfpo()).add(list.get(i).getMidcommunitybasedug()));
 		        	totcontrolcommunitybasedtot = totcontrolcommunitybasedtot.add(list.get(i).getControlcommunitybasedshg().add(list.get(i).getControlcommunitybasedfpo()).add(list.get(i).getControlcommunitybasedug()));
 		        	
-		        	totmemberbasedshg = totmemberbasedshg.add(list.get(i).getMemberbasedshg());
+		        	totprememberbasedshg = totprememberbasedshg.add(list.get(i).getPrememberbasedshg());
+		        	totmidmemberbasedshg = totmidmemberbasedshg.add(list.get(i).getMidmemberbasedshg());
 		        	totcontrolmemberbasedshg = totcontrolmemberbasedshg.add(list.get(i).getControlmemberbasedshg());
-		        	totmemberbasedfpo = totmemberbasedfpo.add(list.get(i).getMemberbasedfpo());
+		        	totprememberbasedfpo = totprememberbasedfpo.add(list.get(i).getPrememberbasedfpo());
+		        	totmidmemberbasedfpo = totmidmemberbasedfpo.add(list.get(i).getMidmemberbasedfpo());
 		        	totcontrolmemberbasedfpo = totcontrolmemberbasedfpo.add(list.get(i).getControlmemberbasedfpo());
-		        	totmemberbasedug = totmemberbasedug.add(list.get(i).getMemberbasedug());
-		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getMemberbasedshg());
-		        	totcmemberbasedtot = totcmemberbasedtot.add(list.get(i).getMemberbasedshg().add(list.get(i).getMemberbasedfpo()).add(list.get(i).getMemberbasedug()));
+		        	totprememberbasedug = totprememberbasedug.add(list.get(i).getPrememberbasedug());
+		        	totmidmemberbasedug = totmidmemberbasedug.add(list.get(i).getMidmemberbasedug());
+		        	totcontrolmemberbasedug = totcontrolmemberbasedug.add(list.get(i).getControlmemberbasedshg());
+		        	totprecmemberbasedtot = totprecmemberbasedtot.add(list.get(i).getPrememberbasedshg().add(list.get(i).getPrememberbasedfpo()).add(list.get(i).getPrememberbasedug()));
+		        	totmidcmemberbasedtot = totmidcmemberbasedtot.add(list.get(i).getMidmemberbasedshg().add(list.get(i).getMidmemberbasedfpo()).add(list.get(i).getMidmemberbasedug()));
 		        	totcontrolmemberbasedtot = totcontrolmemberbasedtot.add(list.get(i).getControlmemberbasedshg().add(list.get(i).getControlmemberbasedfpo()).add(list.get(i).getControlmemberbasedug()));
 
 				}
 			CommonFunctions.insertCell3(table, " Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totproj.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolcommunitybasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedshg.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedfpo.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprememberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedug.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-			CommonFunctions.insertCell3(table, totcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totprecmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell3(table, totmidcmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 			CommonFunctions.insertCell3(table, totcontrolmemberbasedtot.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 
 			if (list.size() == 0)
-				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 19, 1, bf8);
+				CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 27, 1, bf8);
 
 			document.add(table);
 			table = new PdfPTable(1);
