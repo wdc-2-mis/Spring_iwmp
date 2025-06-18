@@ -75,7 +75,9 @@ public class CroppedDtlAreaRptController {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("projectEvaluation/croppedDetailAreaOthRpt");
-		mav.addObject("stwiseAreacroppedothsdtl",cropservice.getcroppedDtlAreaOthsDtl());
+		List<CroppedDetailBean> list = cropservice.getcroppedDtlAreaOthsDtl();
+		mav.addObject("stwiseAreacroppedothsdtl",list);
+		mav.addObject("listsize",list.size());
 		return mav;
 	}
 	
@@ -95,6 +97,25 @@ public class CroppedDtlAreaRptController {
 		model.addAttribute("stcode", stCode);
 		
 		return "projectEvaluation/croppedDetailAreaRpt";
+		
+	}
+	
+	@RequestMapping(value = "/getDistwiseCroppedDtlOthRpt", method = RequestMethod.GET)
+	public String getDistwiseCroppedDtlOthRpt(HttpServletRequest request, Model model) {
+		session = request.getSession(true);
+		
+		List<CroppedDetailBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =cropservice.getDistwiseCropDtlOthArea(stCode);
+		
+		model.addAttribute("distList", list);
+		model.addAttribute("distListSize", list.size());
+		model.addAttribute("stname", state);
+		model.addAttribute("stcode", stCode);
+		
+		return "projectEvaluation/croppedDetailAreaOthRpt";
 		
 	}
 	

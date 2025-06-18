@@ -32,6 +32,9 @@ public class CroppedDtlRptDaoImpl implements CroppedDtlRptDao{
 	@Value("${getDistwiseCroppedDtlArea}")
 	String getDistwiseCroppedDtlArea;
 	
+	@Value("${getDistwiseCroppedDtlOtherArea}")
+	String getDistwiseCroppedDtlOtherArea;
+	
 	@Override
 	public List<CroppedDetailBean> getcroppedDtlAreaDtl() {
 		List<CroppedDetailBean> getcroppedDetail = new ArrayList<>();
@@ -72,6 +75,28 @@ public class CroppedDtlRptDaoImpl implements CroppedDtlRptDao{
 	public List<CroppedDetailBean> getDistwiseCropDtlArea(int stCode) {
 		List<CroppedDetailBean> list = new ArrayList<>();
 		String hql = getDistwiseCroppedDtlArea;
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(CroppedDetailBean.class));
+			query.setInteger("stcode", stCode);
+			list = query.list();
+			
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<CroppedDetailBean> getDistwiseCropDtlOthArea(int stCode) {
+		List<CroppedDetailBean> list = new ArrayList<>();
+		String hql = getDistwiseCroppedDtlOtherArea;
 		Session session = sessionFactory.getCurrentSession();
 		
 		try {
