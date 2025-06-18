@@ -572,9 +572,7 @@ public class FundUtilizationEvalReportController {
 				int k = 1;
 				int totproj = 0;
 				BigInteger farbenefited = BigInteger.ZERO;
-				BigInteger contrfarbenefited = BigInteger.ZERO;
 				BigInteger mandays = BigInteger.ZERO;
-				BigInteger conmandays = BigInteger.ZERO;
 				BigDecimal pref = BigDecimal.ZERO;
 				BigDecimal midf = BigDecimal.ZERO;
 				BigDecimal conf = BigDecimal.ZERO;
@@ -588,17 +586,15 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getMid_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getMandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_mandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					    totproj = totproj + list.get(i).getTotal_project();
 					    pref = pref.add(list.get(i).getPre_farmer_income());
 					    midf = midf.add(list.get(i).getMid_farmer_income());
 					    conf = conf.add(list.get(i).getControl_farmer_income());
 					    farbenefited = farbenefited.add( list.get(i).getFarmer_benefited());
-					    contrfarbenefited = contrfarbenefited.add(list.get(i).getControl_farmer_benefited());
 					    mandays = mandays.add(list.get(i).getMandays_generated());
-					    conmandays = conmandays.add(list.get(i).getControl_mandays_generated());
 						k++;
 					}
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
@@ -607,9 +603,9 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(midf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(conf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(farbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(contrfarbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(mandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(conmandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					
 					if(list.size()==0) 
 						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
@@ -733,9 +729,9 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getMid_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getMandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_mandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 					    totproj = totproj + list.get(i).getTotal_project();
 					    pref = pref.add(list.get(i).getPre_farmer_income());
 					    midf = midf.add(list.get(i).getMid_farmer_income());
@@ -753,9 +749,9 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(midf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(conf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(farbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(contrfarbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(mandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(conmandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					if(list.size()==0) 
 						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
 			document.add(table);
@@ -2327,9 +2323,9 @@ public class FundUtilizationEvalReportController {
 	    BigDecimal midf = BigDecimal.ZERO;
 	    BigDecimal cf = BigDecimal.ZERO;
 	    BigInteger fb = BigInteger.ZERO;
-	    BigInteger fbc = BigInteger.ZERO;
+//	    BigInteger fbc = BigInteger.ZERO;
 	    BigInteger man = BigInteger.ZERO;
-	    BigInteger cman = BigInteger.ZERO;
+//	    BigInteger cman = BigInteger.ZERO;
 
 	    for (FundUtilizationEvalReportBean bean : list) {
 	        Row row = sheet.createRow(rowno);
@@ -2340,18 +2336,18 @@ public class FundUtilizationEvalReportController {
 	        row.createCell(4).setCellValue(bean.getMid_farmer_income().doubleValue());
 	        row.createCell(5).setCellValue(bean.getControl_farmer_income().doubleValue());
 	        row.createCell(6).setCellValue(bean.getFarmer_benefited().doubleValue());
-	        row.createCell(7).setCellValue(bean.getControl_farmer_benefited().doubleValue());
+	        row.createCell(7).setCellValue("N/A");
 	        row.createCell(8).setCellValue(bean.getMandays_generated().doubleValue());
-	        row.createCell(9).setCellValue(bean.getControl_mandays_generated().doubleValue());
+	        row.createCell(9).setCellValue("N/A");
 
 	        totproj += bean.getTotal_project();
 	        pref = pref.add(bean.getPre_farmer_income());
 	        midf = midf.add(bean.getMid_farmer_income());
 	        cf = cf.add(bean.getControl_farmer_income());
 	        fb = fb.add(bean.getFarmer_benefited());
-	        fbc = fbc.add(bean.getControl_farmer_benefited());
+//	        fbc = fbc.add(bean.getControl_farmer_benefited());
 	        man = man.add(bean.getMandays_generated());
-	        cman = cman.add(bean.getControl_mandays_generated());
+//	        cman = cman.add(bean.getControl_mandays_generated());
 	        sno++;
 	        rowno++;
 	    }
@@ -2385,11 +2381,11 @@ public class FundUtilizationEvalReportController {
 	    row.getCell(5).setCellStyle(style1);
 	    row.createCell(6).setCellValue(fb.doubleValue());
 	    row.getCell(6).setCellStyle(style1);
-	    row.createCell(7).setCellValue(fbc.doubleValue()); 
+	    row.createCell(7).setCellValue("N/A"); 
 	    row.getCell(7).setCellStyle(style1);
 	    row.createCell(8).setCellValue(man.doubleValue()); 
 	    row.getCell(8).setCellStyle(style1);
-	    row.createCell(9).setCellValue(cman.doubleValue()); 
+	    row.createCell(9).setCellValue("N/A"); 
 	    row.getCell(9).setCellStyle(style1);
 
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 9);
@@ -2487,9 +2483,9 @@ public class FundUtilizationEvalReportController {
 	        row.createCell(4).setCellValue(bean.getMid_farmer_income().doubleValue());
 	        row.createCell(5).setCellValue(bean.getControl_farmer_income().doubleValue());
 	        row.createCell(6).setCellValue(bean.getFarmer_benefited().doubleValue());
-	        row.createCell(7).setCellValue(bean.getControl_farmer_benefited().doubleValue());
+	        row.createCell(7).setCellValue("N/A");
 	        row.createCell(8).setCellValue(bean.getMandays_generated().doubleValue());
-	        row.createCell(9).setCellValue(bean.getControl_mandays_generated().doubleValue());
+	        row.createCell(9).setCellValue("N/A");
 
 	        totproj += bean.getTotal_project();
 	        pref = pref.add(bean.getPre_farmer_income());
@@ -2532,11 +2528,11 @@ public class FundUtilizationEvalReportController {
 	    row.getCell(5).setCellStyle(style1);
 	    row.createCell(6).setCellValue(fb.doubleValue());
 	    row.getCell(6).setCellStyle(style1);
-	    row.createCell(7).setCellValue(fbc.doubleValue()); 
+	    row.createCell(7).setCellValue("N/A"); 
 	    row.getCell(7).setCellStyle(style1);
 	    row.createCell(8).setCellValue(man.doubleValue()); 
 	    row.getCell(8).setCellStyle(style1);
-	    row.createCell(9).setCellValue(cman.doubleValue()); 
+	    row.createCell(9).setCellValue("N/A"); 
 	    row.getCell(9).setCellStyle(style1);
 
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 9);

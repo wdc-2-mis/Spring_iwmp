@@ -95,9 +95,9 @@ function exportExcel(){
 					<td class="text-right"><c:out value="${dt.mid_farmer_income}" /></td>
 					<td class="text-right"><c:out value="${dt.control_farmer_income}" /></td>
 					<td class="text-right"><c:out value="${dt.farmer_benefited}" /></td>
-					<td class="text-right"><c:out value="${dt.control_farmer_benefited}" /></td>
+					<td class="text-right"><c:out value="N/A" /></td>
 					<td class="text-right"><c:out value="${dt.mandays_generated}" /></td>
-					<td class="text-right"><c:out value="${dt.control_mandays_generated}" /></td>
+					<td class="text-right"><c:out value="N/A" /></td>
 					
 				</tr>
 				
@@ -127,9 +127,9 @@ function exportExcel(){
 					<td align="right" class="table-primary"><b><c:out value="${midfarmerincome}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${controlfarmerincome}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${farmerbenefited}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${controlfarmerbenefited}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="N/A" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${mandaysgenerated}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${controlmandaysgenerated}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="N/A" /></b></td>
 					
 				</tr>
 			</c:if>
