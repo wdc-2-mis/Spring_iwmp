@@ -3,7 +3,69 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <head>
+<style type="text/css">
+.modal1 {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+        }
 
+        /* Modal content styling */
+        .modal1-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Modal width */
+            height: 30%; /* Modal height */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+            position: relative; /* Relative positioning for the close button */
+        }
+
+        /* Close button styling */
+        .close {
+            color: #aaa;
+            position: absolute; /* Position it absolutely */
+            top: 10px; /* Position from the top */
+            right: 10px; /* Position from the right */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Header styling */
+        .modal1-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        /* Body styling for blocks */
+        .modal1-body {
+            font-size: 16px;
+            line-height: 1.5;
+            text-align: left; /* Align to the left */
+            overflow-y: auto; /* Scroll if content overflows */
+        }
+
+
+</style>
 <script type="text/javascript">
 $(document).ready(function() {
     // Function to toggle visibility based on the selected radio button
@@ -99,17 +161,16 @@ function closeModal() {
 		
 	<div class="form-group">
 			State : &nbsp; <b><c:out value='${stName}' /></b>, &nbsp;&nbsp;&nbsp; District : &nbsp; <b><c:out value='${dname}' /></b>, &nbsp;&nbsp;&nbsp; Project : &nbsp; <b><c:out value='${pname}' /></b>, &nbsp;&nbsp;&nbsp; Block : &nbsp; <c:choose> <c:when test="${fn:length(blockList) == 2}"> <b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b> </c:when> <c:when test="${fn:length(blockList) > 2}"> <b>${blockList.values().toArray()[0]}</b>, <b>${blockList.values().toArray()[1]}</b> <a href="#" onclick="openModal()"><b>....more</b></a> </c:when> <c:otherwise> <b>${blockList.values().toArray()[0]}</b> </c:otherwise> </c:choose>
-			
 			 ,&nbsp;&nbsp;&nbsp; Financial Year : &nbsp; <b><c:out value='${fname}' /></b>, &nbsp;&nbsp;&nbsp; Month : &nbsp; <b><c:out value='${mname}' />,</b>
 			<br>
 			 Name of Project Evaluation Agency: &nbsp; <b><c:out value='${pagency}' /></b>
 			</div>
 
-	<div id="myModal" class="modal">
-        <div class="modal-content">
+	<div id="myModal" class="modal1">
+        <div class="modal1-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <div class="modal-header">All Blocks</div>
-            <div class="modal-body">
+            <div class="modal1-header">All Blocks</div>
+            <div class="modal1-body">
                 <!-- Display comma-separated blocks -->
                 <c:forEach var="block" items="${blockList.values()}" varStatus="status">
                     <span>${block}</span>
