@@ -28,6 +28,7 @@ import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -46,6 +47,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.IOException;
 import app.common.CommonFunctions;
 import app.projectevaluation.bean.CroppedDetailBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.service.CroppedDtlRptService;
 
 @Controller("croppedDtlAreaRptController")
@@ -61,7 +63,10 @@ public class CroppedDtlAreaRptController {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("projectEvaluation/croppedDetailAreaRpt");
-		mav.addObject("stwiseAreacroppeddtl",cropservice.getcroppedDtlAreaDtl());
+		List<CroppedDetailBean> list = cropservice.getcroppedDtlAreaDtl();
+		mav.addObject("list",list);
+		mav.addObject("listsize",list.size());
+		
 		return mav;
 	}
 
@@ -72,6 +77,25 @@ public class CroppedDtlAreaRptController {
 		mav = new ModelAndView("projectEvaluation/croppedDetailAreaOthRpt");
 		mav.addObject("stwiseAreacroppedothsdtl",cropservice.getcroppedDtlAreaOthsDtl());
 		return mav;
+	}
+	
+	@RequestMapping(value = "/getDistwiseCroppedDtlArea", method = RequestMethod.GET)
+	public String getDistwiseCroppedDtlArea(HttpServletRequest request, Model model) {
+		session = request.getSession(true);
+		
+		List<CroppedDetailBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		
+		list =cropservice.getDistwiseCropDtlArea(stCode);
+		
+		model.addAttribute("distList", list);
+		model.addAttribute("distListSize", list.size());
+		model.addAttribute("stname", state);
+		model.addAttribute("stcode", stCode);
+		
+		return "projectEvaluation/croppedDetailAreaRpt";
+		
 	}
 	
 	@RequestMapping(value = "/downloadStWiseCropDtlAreaPDF", method = RequestMethod.POST)

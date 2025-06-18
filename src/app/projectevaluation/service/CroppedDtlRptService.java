@@ -9,6 +9,8 @@ public interface CroppedDtlRptService {
 	List<CroppedDetailBean> getcroppedDtlAreaDtl();
 
 	List<CroppedDetailBean> getcroppedDtlAreaOthsDtl();
+
+	List<CroppedDetailBean> getDistwiseCropDtlArea(int stCode);
 	
 
 }

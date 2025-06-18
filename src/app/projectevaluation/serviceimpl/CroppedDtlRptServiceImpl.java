@@ -25,6 +25,12 @@ public class CroppedDtlRptServiceImpl implements CroppedDtlRptService{
 		// TODO Auto-generated method stub
 		return croppedDtlRptDao.getcroppedDtlAreaOthsDtl();
 	}
+
+	@Override
+	public List<CroppedDetailBean> getDistwiseCropDtlArea(int stCode) {
+		// TODO Auto-generated method stub
+		return croppedDtlRptDao.getDistwiseCropDtlArea(stCode);
+	}
 	
 	
 }

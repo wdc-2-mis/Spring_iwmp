@@ -10,4 +10,6 @@ public interface CroppedDtlRptDao {
 
 	List<CroppedDetailBean> getcroppedDtlAreaOthsDtl();
 
+	List<CroppedDetailBean> getDistwiseCropDtlArea(int stCode);
+
 }

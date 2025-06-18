@@ -36,6 +36,8 @@ public class CroppedDetailBean {
 	private BigDecimal mid_protective;
 	private BigDecimal control_protective;
 	
+	private Integer dcode;
+	private String dist_name;
 	public Integer getSt_code() {
 		return st_code;
 	}
@@ -215,6 +217,18 @@ public class CroppedDetailBean {
 	}
 	public void setControl_protective(BigDecimal control_protective) {
 		this.control_protective = control_protective;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
+	}
+	public String getDist_name() {
+		return dist_name;
+	}
+	public void setDist_name(String dist_name) {
+		this.dist_name = dist_name;
 	}
 	
 	

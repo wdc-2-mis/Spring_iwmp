@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import app.bean.BaselineStateWiseAreaDetailBean;
 import app.projectevaluation.bean.CroppedDetailBean;
+import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.dao.CroppedDtlRptDao;
 
 @Repository("CroppedDtlRptDao")
@@ -28,6 +29,8 @@ public class CroppedDtlRptDaoImpl implements CroppedDtlRptDao{
 	@Value("${getStwisecroppedOthDtl}")
 	String getStwisecroppedOthDtl;
 	
+	@Value("${getDistwiseCroppedDtlArea}")
+	String getDistwiseCroppedDtlArea;
 	
 	@Override
 	public List<CroppedDetailBean> getcroppedDtlAreaDtl() {
@@ -63,6 +66,28 @@ public class CroppedDtlRptDaoImpl implements CroppedDtlRptDao{
 			session.getTransaction().rollback();
 		}
 		return getcroppedOthDetail;
+	}
+
+	@Override
+	public List<CroppedDetailBean> getDistwiseCropDtlArea(int stCode) {
+		List<CroppedDetailBean> list = new ArrayList<>();
+		String hql = getDistwiseCroppedDtlArea;
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(CroppedDetailBean.class));
+			query.setInteger("stcode", stCode);
+			list = query.list();
+			
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		
+		return list;
 	}
 
 
