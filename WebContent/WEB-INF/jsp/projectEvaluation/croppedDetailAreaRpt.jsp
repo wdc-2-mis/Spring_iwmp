@@ -6,7 +6,7 @@
 <html>
 
 <head>
-<title>Report MT1-State wise Cropped Detail Area</title>
+<title>Report MT1-Cropped Detail Area</title>
 </head>
 
 <script type="text/javascript">
@@ -30,6 +30,14 @@ function downloadPDF1(stcode, stname){
     document.getElementById("stcode").value=stcode;
     document.getElementById("stname").value=stname;
 	document.getcropdtlrpt.action="downloadDistWiseCropDtlAreaPDF";
+	document.getcropdtlrpt.method="post";
+	document.getcropdtlrpt.submit();
+}
+
+function exportExcel1(stcode, stname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+	document.getcropdtlrpt.action="downloadDistWiseCropDtlAreaExcel";
 	document.getcropdtlrpt.method="post";
 	document.getcropdtlrpt.submit();
 }

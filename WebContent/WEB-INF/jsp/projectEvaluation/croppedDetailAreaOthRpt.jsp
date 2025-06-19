@@ -6,7 +6,7 @@
 <html>
 
 <head>
-<title>Report MT2-State wise Cropped Others Detail Report</title>
+<title>Report MT2-Cropped Others Detail Report</title>
 </head>
 
 <script type="text/javascript">
@@ -29,6 +29,14 @@ function downloadPDF1(stcode, stname){
     document.getElementById("stcode").value=stcode;
     document.getElementById("stname").value=stname;
 	document.getcropdtlothrpt.action="downloadDistWiseCropDtlAreaOthPDF";
+	document.getcropdtlothrpt.method="post";
+	document.getcropdtlothrpt.submit();
+}
+
+function exportExcel1(stcode, stname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+	document.getcropdtlothrpt.action="downloadDistWiseCropDtlAreaOthExcel";
 	document.getcropdtlothrpt.method="post";
 	document.getcropdtlothrpt.submit();
 }
