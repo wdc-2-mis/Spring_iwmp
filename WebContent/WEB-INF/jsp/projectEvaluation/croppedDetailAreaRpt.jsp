@@ -25,6 +25,14 @@ function exportExcel()
 		document.getcropdtlrpt.submit();
 	
 }
+
+function downloadPDF1(stcode, stname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+	document.getcropdtlrpt.action="downloadDistWiseCropDtlAreaPDF";
+	document.getcropdtlrpt.method="post";
+	document.getcropdtlrpt.submit();
+}
 </script>
 <c:if test = "${listsize>0}">
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
@@ -148,13 +156,16 @@ function exportExcel()
 </c:if>
 
 <c:if test ="${distListSize >0}">
-<form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
+<form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt">
+	<input type="hidden" name="stcode" id="stcode" value="" />
+	     	 	<input type="hidden" name="stname" id="stname" value="" />
+</form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
 		<h5><label id="head1">Report MT1-District wise Cropped Detail Area</label></h5>
 	</div>
-	 <button name="exportDExcel" id="exportDExcel" onclick="exportDExcel()" class="btn btn-info">Excel</button>
-	<button name="exportDPDF" id="exportDPDF" onclick="downloadDPDF()"	class="btn btn-info">PDF</button>
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel1('${stcode}','${stname}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF1('${stcode}','${stname}')" class="btn btn-info">PDF</button> 
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id="pdfBasicExample" class="table">
 <!-- 	<tbody id="dtBasicExample"> -->
