@@ -45,7 +45,7 @@ function exportExcel1(stcode, stname){
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlothrpt"></form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-		<h5><label id="head1">Report MT2-State wise Cropped Others Detail Report</label></h5>
+		<h5><label id="head1">Report PE5-State wise Cropped Others Detail Report</label></h5>
 	</div>
 	 <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()"	class="btn btn-info">PDF</button>
@@ -193,7 +193,7 @@ function exportExcel1(stcode, stname){
 	     	 	<input type="hidden" name="stname" id="stname" value="" /></form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-		<h5><label id="head1">Report MT2-District wise Cropped Others Detail Report</label></h5>
+		<h5><label id="head1">Report PE5-District wise Cropped Others Detail Report</label></h5>
 	</div>
 	 <button name="exportExcel" id="exportExcel" onclick="exportExcel1('${stcode}','${stname}')" class="btn btn-info">Excel</button>
 	 <button name="exportPDF" id="exportPDF" onclick="downloadPDF1('${stcode}','${stname}')" class="btn btn-info">PDF</button>

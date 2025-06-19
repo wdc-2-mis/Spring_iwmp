@@ -142,7 +142,7 @@ public class CroppedDtlAreaRptController {
 	        Font bf10Bold = new Font(Font.FontFamily.HELVETICA, 8.0f, Font.BOLD);
 
 	        Paragraph heading1 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-	        Paragraph heading2 = new Paragraph("Report MT1 - District wise Cropped Detail Area for State '"+stName+"' ", f3);
+	        Paragraph heading2 = new Paragraph("Report PE4 - District wise Cropped Detail Area for State '"+stName+"' ", f3);
 	        heading1.setAlignment(Element.ALIGN_CENTER);
 	        heading2.setAlignment(Element.ALIGN_CENTER);
 	        heading1.setSpacingAfter(10);
@@ -273,7 +273,7 @@ public class CroppedDtlAreaRptController {
 
 	    try {
 	        response.setContentType("application/pdf");
-	        response.setHeader("Content-Disposition", "attachment; filename=Report_MT1_District.pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=report-PE4District.pdf");
 	        response.setContentLength(baos.size());
 	        response.setHeader("Expires", "0");
 	        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -311,7 +311,7 @@ public class CroppedDtlAreaRptController {
 	        Font bf10Bold = new Font(Font.FontFamily.HELVETICA, 8.0f, Font.BOLD);
 
 	        Paragraph heading1 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-	        Paragraph heading2 = new Paragraph("Report MT1 - State wise Cropped Detail Area", f3);
+	        Paragraph heading2 = new Paragraph("Report PE4 - State wise Cropped Detail Area", f3);
 	        heading1.setAlignment(Element.ALIGN_CENTER);
 	        heading2.setAlignment(Element.ALIGN_CENTER);
 	        heading1.setSpacingAfter(10);
@@ -441,7 +441,7 @@ public class CroppedDtlAreaRptController {
 
 	    try {
 	        response.setContentType("application/pdf");
-	        response.setHeader("Content-Disposition", "attachment; filename=Report_MT1_Projects.pdf");
+	        response.setHeader("Content-Disposition", "attachment; filename=report-PE4.pdf");
 	        response.setContentLength(baos.size());
 	        response.setHeader("Expires", "0");
 	        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -480,7 +480,7 @@ public class CroppedDtlAreaRptController {
 	        Font bf10Bold = new Font(Font.FontFamily.HELVETICA, 8.0f, Font.BOLD);
 
 	        Paragraph heading1 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-	        Paragraph heading2 = new Paragraph("Report MT2-District wise Cropped Others Detail Report for State '"+stName+"' ", f3);
+	        Paragraph heading2 = new Paragraph("Report PE5-District wise Cropped Others Detail Report for State '"+stName+"' ", f3);
 	        heading1.setAlignment(Element.ALIGN_CENTER);
 	        heading2.setAlignment(Element.ALIGN_CENTER);
 	        heading1.setSpacingAfter(10);
@@ -630,7 +630,7 @@ public class CroppedDtlAreaRptController {
 
 		    try {
 		        response.setContentType("application/pdf");
-		        response.setHeader("Content-Disposition", "attachment; filename=Report_MT2_District.pdf");
+		        response.setHeader("Content-Disposition", "attachment; filename=report-PE5District.pdf");
 		        response.setContentLength(baos.size());
 		        response.setHeader("Expires", "0");
 		        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -666,7 +666,7 @@ public class CroppedDtlAreaRptController {
 	        Font bf10Bold = new Font(Font.FontFamily.HELVETICA, 8.0f, Font.BOLD);
 
 	        Paragraph heading1 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-	        Paragraph heading2 = new Paragraph("Report MT2-State wise Cropped Others Detail Report", f3);
+	        Paragraph heading2 = new Paragraph("Report PE5-State wise Cropped Others Detail Report", f3);
 	        heading1.setAlignment(Element.ALIGN_CENTER);
 	        heading2.setAlignment(Element.ALIGN_CENTER);
 	        heading1.setSpacingAfter(10);
@@ -816,7 +816,7 @@ public class CroppedDtlAreaRptController {
 
 		    try {
 		        response.setContentType("application/pdf");
-		        response.setHeader("Content-Disposition", "attachment; filename=Report_MT2_Projects.pdf");
+		        response.setHeader("Content-Disposition", "attachment; filename=report-PE5.pdf");
 		        response.setContentLength(baos.size());
 		        response.setHeader("Expires", "0");
 		        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
@@ -842,11 +842,11 @@ public class CroppedDtlAreaRptController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report MT1-State wise Cropped Detail Area");
+		Sheet sheet = workbook.createSheet("Report PE4-State wise Cropped Detail Area");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report MT1-State wise Cropped Detail Area";
+		String rptName = "Report PE4-State wise Cropped Detail Area";
 		String areaAmtValDetail ="All area in ha.";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1147,7 +1147,7 @@ public class CroppedDtlAreaRptController {
 		
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 14);
-	    String fileName = "attachment; filename=Report MT1- State.xlsx";
+	    String fileName = "attachment; filename=Report PE4- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    
@@ -1506,11 +1506,11 @@ public class CroppedDtlAreaRptController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report MT2-State wise Cropped Others Detail Report");
+		Sheet sheet = workbook.createSheet("Report PE5-State wise Cropped Others Detail Report");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report MT2-State wise Cropped Others Detail Report";
+		String rptName = "Report PE5-State wise Cropped Others Detail Report";
 		String areaAmtValDetail ="All area in ha.";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1904,7 +1904,7 @@ public class CroppedDtlAreaRptController {
 		
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 17);
-	    String fileName = "attachment; filename=Report MT2- State.xlsx";
+	    String fileName = "attachment; filename=Report PE5- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
 	    

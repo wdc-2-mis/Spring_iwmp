@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE10-  State-wise Mid Term Evaluation of State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</title>
+<title>Report PE11-  State-wise Mid Term Evaluation of State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</title>
 
 <script type="text/javascript">
 
@@ -48,7 +48,7 @@ function downloadDPDF(stcode, stname) {
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE10 - State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</label>
+			<label id="head">Report PE11 - State-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG</label>
 		</h5>
 	</div>
 <br>
@@ -267,7 +267,7 @@ function downloadDPDF(stcode, stname) {
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE10 - District-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of <c:out value ="${stname}"/></label>
+			<label id="head">Report PE11 - District-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of <c:out value ="${stname}"/></label>
 		</h5>
 	</div>
 <br>

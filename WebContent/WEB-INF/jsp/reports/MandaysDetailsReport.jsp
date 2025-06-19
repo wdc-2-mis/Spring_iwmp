@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE7-  State-wise Mid Term Evaluation of Mandays Details</title>
+<title>Report PE8-  State-wise Mid Term Evaluation of Mandays Details</title>
 
 <script type="text/javascript">
 
@@ -31,7 +31,7 @@ function exportExcel(){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE7-  State-wise Mid Term Evaluation of Mandays Details</label>
+			<label id="head">Report PE8-  State-wise Mid Term Evaluation of Mandays Details</label>
 		</h5>
 	</div>
 <br>

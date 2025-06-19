@@ -6,7 +6,7 @@
 <html>
 
 <head>
-<title>Report MT1-Cropped Detail Area</title>
+<title>Report PE4-Cropped Detail Area</title>
 </head>
 
 <script type="text/javascript">
@@ -46,7 +46,7 @@ function exportExcel1(stcode, stname){
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-		<h5><label id="head1">Report MT1-State wise Cropped Detail Area</label></h5>
+		<h5><label id="head1">Report PE4-State wise Cropped Detail Area</label></h5>
 	</div>
 	 <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()"	class="btn btn-info">PDF</button>

@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE4-  State and District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</title>
+<title>Report PE6-  State and District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</title>
 
 <script type="text/javascript">
 
@@ -130,7 +130,7 @@ function exportDExcel(stcode, stname, radioBtn){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE4- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</label>
+			<label id="head">Report PE6- State-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</label>
 		</h5>
 	</div>
 <br>
@@ -210,7 +210,7 @@ function exportDExcel(stcode, stname, radioBtn){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE4 - District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops 
+			<label id="head">Report PE6 - District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops 
 			for <c:out value="${status}"/> of <c:out value="${stname}"/></label>
 		</h5>
 	</div>
