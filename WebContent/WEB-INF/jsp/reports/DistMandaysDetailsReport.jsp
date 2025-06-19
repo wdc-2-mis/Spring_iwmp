@@ -8,7 +8,7 @@
 <html>
 <head>
 
-<title>Report PE8-  District-wise Mid Term Evaluation of Mandays Details</title>
+<title>Report PE7-  District-wise Mid Term Evaluation of Mandays Details</title>
 
 <script type="text/javascript">
 function downloadPDF(stcd, stName){
@@ -34,7 +34,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE8-  District-wise Mid Term Evaluation of Mandays Details for State  '<c:out value="${stName }"></c:out>'</label>
+			<label id="head">Report PE7-  District-wise Mid Term Evaluation of Mandays Details for State  '<c:out value="${stName }"></c:out>'</label>
 		</h5>
 	</div>
 <br>

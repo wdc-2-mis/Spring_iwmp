@@ -170,7 +170,7 @@ function exportExcel1(stcode, stname){
 </form>
 <div class="container-fluid">
 	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-		<h5><label id="head1">Report MT1-District wise Cropped Detail Area</label></h5>
+		<h5><label id="head1">Report PE4-District wise Cropped Detail Area</label></h5>
 	</div>
 	<button name="exportExcel" id="exportExcel" onclick="exportExcel1('${stcode}','${stname}')" class="btn btn-info">Excel</button>
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF1('${stcode}','${stname}')" class="btn btn-info">PDF</button> 
