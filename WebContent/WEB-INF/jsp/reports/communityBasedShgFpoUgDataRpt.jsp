@@ -72,35 +72,43 @@ function downloadDPDF(stcode, stname) {
             <th rowspan="3">S.No.</th>
             <th rowspan="3">State Name</th>
             <th rowspan="3">Total No. of Project</th>
-            <th colspan="8" style="text-align: center">Number of Community Based Organization</th>
-            <th colspan="8" style="text-align: center">Members in Community Based Organization</th>
+            <th colspan="12" style="text-align: center">Number of Community Based Organization</th>
+            <th colspan="12" style="text-align: center">Members in Community Based Organization</th>
         </tr>
         <tr>
-            <th colspan="2" style="text-align: center">SHG</th>
-            <th colspan="2" style="text-align: center">FPO</th>
-            <th colspan="2" style="text-align: center">UG</th>
-            <th colspan="2" style="text-align: center">Total</th>
-            <th colspan="2" style="text-align: center">SHG</th>
-            <th colspan="2" style="text-align: center">FPO</th>
-            <th colspan="2" style="text-align: center">UG</th>
-            <th colspan="2" style="text-align: center">Total</th>
+            <th colspan="3" style="text-align: center">SHG</th>
+            <th colspan="3" style="text-align: center">FPO</th>
+            <th colspan="3" style="text-align: center">UG</th>
+            <th colspan="3" style="text-align: center">Total</th>
+            <th colspan="3" style="text-align: center">SHG</th>
+            <th colspan="3" style="text-align: center">FPO</th>
+            <th colspan="3" style="text-align: center">UG</th>
+            <th colspan="3" style="text-align: center">Total</th>
         </tr>
         <tr>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
 		</tr>
         <tr>
@@ -123,88 +131,127 @@ function downloadDPDF(stcode, stname) {
 			<th class="text-center">17</th>
 			<th class="text-center">18</th>
 			<th class="text-center">19</th>
+			<th class="text-center">20</th>
+			<th class="text-center">21</th>
+			<th class="text-center">22</th>
+			<th class="text-center">23</th>
+			<th class="text-center">24</th>
+			<th class="text-center">25</th>
+			<th class="text-center">26</th>
+			<th class="text-center">27</th>
 		</tr>
 		</thead>
 		<tbody id = "getCommunityBasedDataRptTbody">
 			<c:set var="totproj" value="0"/>
-			<c:set var="totComBasedShg" value="0"/>
+			<c:set var="totPreComBasedShg" value="0"/>
+			<c:set var="totMidComBasedShg" value="0"/>
 			<c:set var="totControlComBasedShg" value="0"/>
-			<c:set var="totComBasedFpo" value="0"/>
+			<c:set var="totPreComBasedFpo" value="0"/>
+			<c:set var="totMidComBasedFpo" value="0"/>
 			<c:set var="totControlComBasedFpo" value="0"/>
-			<c:set var="totComBasedUg" value="0"/>
+			<c:set var="totPreComBasedUg" value="0"/>
+			<c:set var="totMidComBasedUg" value="0"/>
 			<c:set var="totControlComBasedUg" value="0"/>
-			<c:set var="totComBasedTot" value="0"/>
+			<c:set var="totPreComBasedTot" value="0"/>
+			<c:set var="totMidComBasedTot" value="0"/>
 			<c:set var="totControlComBasedTot" value="0"/>
-			<c:set var="totMemBsdShg" value="0"/>
+			<c:set var="totPreMemBsdShg" value="0"/>
+			<c:set var="totMidMemBsdShg" value="0"/>
 			<c:set var="totControlMemBsdShg" value="0"/>
-			<c:set var="totMemBsdFpo" value="0"/>
+			<c:set var="totPreMemBsdFpo" value="0"/>
+			<c:set var="totMidMemBsdFpo" value="0"/>
 			<c:set var="totControlMemBsdFpo" value="0"/>
-			<c:set var="totMemBsdUg" value="0"/>
+			<c:set var="totPreMemBsdUg" value="0"/>
+			<c:set var="totMidMemBsdUg" value="0"/>
 			<c:set var="totControlMemBsdUg" value="0"/>
-			<c:set var="totMemBsdTot" value="0"/>
+			<c:set var="totPreMemBsdTot" value="0"/>
+			<c:set var="totMidMemBsdTot" value="0"/>
 			<c:set var="totControlMemBsdTot" value="0"/>
 			<c:forEach items="${list}" var="list" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
 					<td><a href="getDistwiseCommunityBasedData?stcode=${list.stcode}&&stname=${list.stname}">${list.stname}</a></td>
 					<td>${list.totproj}</td>
-					<td>${list.communitybasedshg}</td>
+					<td>${list.precommunitybasedshg}</td>
+					<td>${list.midcommunitybasedshg}</td>
 					<td>${list.controlcommunitybasedshg}</td>
-					<td>${list.communitybasedfpo}</td>
-					
+					<td>${list.precommunitybasedfpo}</td>
+					<td>${list.midcommunitybasedfpo}</td>
 					<td>${list.controlcommunitybasedfpo}</td>
-					<td>${list.communitybasedug}</td>
+					<td>${list.precommunitybasedug}</td>
+					<td>${list.midcommunitybasedug}</td>
 					<td>${list.controlcommunitybasedug}</td>
-					<td>${list.communitybasedshg + list.communitybasedfpo + list.communitybasedug}</td>
+					<td>${list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}</td>
+					<td>${list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}</td>
 					<td>${list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}</td>
-					<td>${list.memberbasedshg}</td>
+					<td>${list.prememberbasedshg}</td>
+					<td>${list.midmemberbasedshg}</td>
 					<td>${list.controlmemberbasedshg}</td>
-					<td>${list.memberbasedfpo}</td>
+					<td>${list.prememberbasedfpo}</td>
+					<td>${list.midmemberbasedfpo}</td>
 					<td>${list.controlmemberbasedfpo}</td>
-					<td>${list.memberbasedug}</td>
+					<td>${list.prememberbasedug}</td>
+					<td>${list.midmemberbasedug}</td>
 					<td>${list.controlmemberbasedug}</td>
-					<td>${list.memberbasedshg + list.memberbasedfpo + list.memberbasedug}</td>
+					<td>${list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}</td>
+					<td>${list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}</td>
 					<td>${list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}</td>
 				</tr>
 			<c:set var="totproj" value="${totproj + list.totproj}"/>
-			<c:set var="totComBasedShg" value="${totComBasedShg + list.communitybasedshg}"/>
+			<c:set var="totPreComBasedShg" value="${totPreComBasedShg + list.precommunitybasedshg}"/>
+			<c:set var="totMidComBasedShg" value="${totMidComBasedShg + list.midcommunitybasedshg}"/>
 			<c:set var="totControlComBasedShg" value="${totControlComBasedShg + list.controlcommunitybasedshg}"/>
-			<c:set var="totComBasedFpo" value="${totComBasedFpo + list.communitybasedfpo}"/>
+			<c:set var="totPreComBasedFpo" value="${totPreComBasedFpo + list.precommunitybasedfpo}"/>
+			<c:set var="totMidComBasedFpo" value="${totMidComBasedFpo + list.midcommunitybasedfpo}"/>
 			<c:set var="totControlComBasedFpo" value="${totControlComBasedFpo + list.controlcommunitybasedfpo}"/>
-			<c:set var="totComBasedUg" value="${totComBasedUg + list.communitybasedug}"/>
+			<c:set var="totPreComBasedUg" value="${totPreComBasedUg + list.precommunitybasedug}"/>
+			<c:set var="totMidComBasedUg" value="${totMidComBasedUg + list.midcommunitybasedug}"/>
 			<c:set var="totControlComBasedUg" value="${totControlComBasedUg + list.controlcommunitybasedug}"/>
-			<c:set var="totComBasedTot" value="${totComBasedTot + list.communitybasedshg + list.communitybasedfpo + list.communitybasedug}"/>
+			<c:set var="totPreComBasedTot" value="${totPreComBasedTot + list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}"/>
+			<c:set var="totMidComBasedTot" value="${totMidComBasedTot + list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}"/>
 			<c:set var="totControlComBasedTot" value="${totControlComBasedTot + list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}"/>
 			
-			<c:set var="totMemBsdShg" value="${totMemBsdShg + list.memberbasedshg}"/>
+			<c:set var="totPreMemBsdShg" value="${totPreMemBsdShg + list.prememberbasedshg}"/>
+			<c:set var="totMidMemBsdShg" value="${totMidMemBsdShg + list.midmemberbasedshg}"/>
 			<c:set var="totControlMemBsdShg" value="${totControlMemBsdShg + list.controlmemberbasedshg}"/>
-			<c:set var="totMemBsdFpo" value="${totMemBsdFpo + list.memberbasedfpo}"/>
+			<c:set var="totPreMemBsdFpo" value="${totPreMemBsdFpo + list.prememberbasedfpo}"/>
+			<c:set var="totMidMemBsdFpo" value="${totMidMemBsdFpo + list.midmemberbasedfpo}"/>
 			<c:set var="totControlMemBsdFpo" value="${totControlMemBsdFpo + list.controlmemberbasedfpo}"/>
-			<c:set var="totMemBsdUg" value="${totMemBsdUg + list.memberbasedug}"/>
+			<c:set var="totPreMemBsdUg" value="${totPreMemBsdUg + list.prememberbasedug}"/>
+			<c:set var="totMidMemBsdUg" value="${totMidMemBsdUg + list.midmemberbasedug}"/>
 			<c:set var="totControlMemBsdUg" value="${totControlMemBsdUg + list.controlmemberbasedug}"/>
-			<c:set var="totMemBsdTot" value="${totMemBsdTot + list.memberbasedshg + list.memberbasedfpo + list.memberbasedug}"/>
+			<c:set var="totPreMemBsdTot" value="${totPreMemBsdTot + list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}"/>
+			<c:set var="totMidMemBsdTot" value="${totMidMemBsdTot + list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}"/>
 			<c:set var="totControlMemBsdTot" value="${totControlMemBsdTot + list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}"/>
 			
 			</c:forEach>
 			<tr style="font-weight:bold; background:#f0f0f0; text-align: center">
 				<td colspan="2">Total</td>
 				<td>${totproj}</td>
-				<td>${totComBasedShg}</td>
+				<td>${totPreComBasedShg}</td>
+				<td>${totMidComBasedShg}</td>
 				<td>${totControlComBasedShg}</td>
-				<td>${totComBasedFpo}</td>
+				<td>${totPreComBasedFpo}</td>
+				<td>${totMidComBasedFpo}</td>
 				<td>${totControlComBasedFpo}</td>
-				<td>${totComBasedUg}</td>
+				<td>${totPreComBasedUg}</td>
+				<td>${totMidComBasedUg}</td>
 				<td>${totControlComBasedUg}</td>
-				<td>${totComBasedTot}</td>
+				<td>${totPreComBasedTot}</td>
+				<td>${totMidComBasedTot}</td>
 				<td>${totControlComBasedTot}</td>
 				
-				<td>${totMemBsdShg}</td>
+				<td>${totPreMemBsdShg}</td>
+				<td>${totMidMemBsdShg}</td>
 				<td>${totControlMemBsdShg}</td>
-				<td>${totMemBsdFpo}</td>
+				<td>${totPreMemBsdFpo}</td>
+				<td>${totMidMemBsdFpo}</td>
 				<td>${totControlMemBsdFpo}</td>
-				<td>${totMemBsdUg}</td>
+				<td>${totPreMemBsdUg}</td>
+				<td>${totMidMemBsdUg}</td>
 				<td>${totControlMemBsdUg}</td>
-				<td>${totMemBsdTot}</td>
+				<td>${totPreMemBsdTot}</td>
+				<td>${totMidMemBsdTot}</td>
 				<td>${totControlMemBsdTot}</td>
 			</tr>
 			
@@ -245,35 +292,43 @@ function downloadDPDF(stcode, stname) {
             <th rowspan="3">S.No.</th>
             <th rowspan="3">District Name</th>
             <th rowspan="3">Total No. of Project</th>
-            <th colspan="8" style="text-align: center">Number of Community Based Organization</th>
-            <th colspan="8" style="text-align: center">Members in Community Based Organization</th>
+            <th colspan="12" style="text-align: center">Number of Community Based Organization</th>
+            <th colspan="12" style="text-align: center">Members in Community Based Organization</th>
         </tr>
         <tr>
-            <th colspan="2" style="text-align: center">SHG</th>
-            <th colspan="2" style="text-align: center">FPO</th>
-            <th colspan="2" style="text-align: center">UG</th>
-            <th colspan="2" style="text-align: center">Total</th>
-            <th colspan="2" style="text-align: center">SHG</th>
-            <th colspan="2" style="text-align: center">FPO</th>
-            <th colspan="2" style="text-align: center">UG</th>
-            <th colspan="2" style="text-align: center">Total</th>
+            <th colspan="3" style="text-align: center">SHG</th>
+            <th colspan="3" style="text-align: center">FPO</th>
+            <th colspan="3" style="text-align: center">UG</th>
+            <th colspan="3" style="text-align: center">Total</th>
+            <th colspan="3" style="text-align: center">SHG</th>
+            <th colspan="3" style="text-align: center">FPO</th>
+            <th colspan="3" style="text-align: center">UG</th>
+            <th colspan="3" style="text-align: center">Total</th>
         </tr>
         <tr>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
-			<th>Project Area</th>
+			<th>Pre Project Status(Aggregate)</th>
+			<th>Mid Project Status(Aggregate)</th>
 			<th>Controlled Area</th>
 		</tr>
         <tr>
@@ -296,88 +351,127 @@ function downloadDPDF(stcode, stname) {
 			<th class="text-center">17</th>
 			<th class="text-center">18</th>
 			<th class="text-center">19</th>
+			<th class="text-center">20</th>
+			<th class="text-center">21</th>
+			<th class="text-center">22</th>
+			<th class="text-center">23</th>
+			<th class="text-center">24</th>
+			<th class="text-center">25</th>
+			<th class="text-center">26</th>
+			<th class="text-center">27</th>
 		</tr>
 		</thead>
 		<tbody id = "getCommunityBasedDataRptTbody">
 			<c:set var="totproj" value="0"/>
-			<c:set var="totComBasedShg" value="0"/>
+			<c:set var="totPreComBasedShg" value="0"/>
+			<c:set var="totMidComBasedShg" value="0"/>
 			<c:set var="totControlComBasedShg" value="0"/>
-			<c:set var="totComBasedFpo" value="0"/>
+			<c:set var="totPreComBasedFpo" value="0"/>
+			<c:set var="totMidComBasedFpo" value="0"/>
 			<c:set var="totControlComBasedFpo" value="0"/>
-			<c:set var="totComBasedUg" value="0"/>
+			<c:set var="totPreComBasedUg" value="0"/>
+			<c:set var="totMidComBasedUg" value="0"/>
 			<c:set var="totControlComBasedUg" value="0"/>
-			<c:set var="totComBasedTot" value="0"/>
+			<c:set var="totPreComBasedTot" value="0"/>
+			<c:set var="totMidComBasedTot" value="0"/>
 			<c:set var="totControlComBasedTot" value="0"/>
-			<c:set var="totMemBsdShg" value="0"/>
+			<c:set var="totPreMemBsdShg" value="0"/>
+			<c:set var="totMidMemBsdShg" value="0"/>
 			<c:set var="totControlMemBsdShg" value="0"/>
-			<c:set var="totMemBsdFpo" value="0"/>
+			<c:set var="totPreMemBsdFpo" value="0"/>
+			<c:set var="totMidMemBsdFpo" value="0"/>
 			<c:set var="totControlMemBsdFpo" value="0"/>
-			<c:set var="totMemBsdUg" value="0"/>
+			<c:set var="totPreMemBsdUg" value="0"/>
+			<c:set var="totMidMemBsdUg" value="0"/>
 			<c:set var="totControlMemBsdUg" value="0"/>
-			<c:set var="totMemBsdTot" value="0"/>
+			<c:set var="totPreMemBsdTot" value="0"/>
+			<c:set var="totMidMemBsdTot" value="0"/>
 			<c:set var="totControlMemBsdTot" value="0"/>
 			<c:forEach items="${distList}" var="list" varStatus="status">
 				<tr>
 					<td>${status.count}</td>
 					<td>${list.distname}</td>
 					<td>${list.totproj}</td>
-					<td>${list.communitybasedshg}</td>
+					<td>${list.precommunitybasedshg}</td>
+					<td>${list.midcommunitybasedshg}</td>
 					<td>${list.controlcommunitybasedshg}</td>
-					<td>${list.communitybasedfpo}</td>
-					
+					<td>${list.precommunitybasedfpo}</td>
+					<td>${list.midcommunitybasedfpo}</td>
 					<td>${list.controlcommunitybasedfpo}</td>
-					<td>${list.communitybasedug}</td>
+					<td>${list.precommunitybasedug}</td>
+					<td>${list.midcommunitybasedug}</td>
 					<td>${list.controlcommunitybasedug}</td>
-					<td>${list.communitybasedshg + list.communitybasedfpo + list.communitybasedug}</td>
+					<td>${list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}</td>
+					<td>${list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}</td>
 					<td>${list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}</td>
-					<td>${list.memberbasedshg}</td>
+					<td>${list.prememberbasedshg}</td>
+					<td>${list.midmemberbasedshg}</td>
 					<td>${list.controlmemberbasedshg}</td>
-					<td>${list.memberbasedfpo}</td>
+					<td>${list.prememberbasedfpo}</td>
+					<td>${list.midmemberbasedfpo}</td>
 					<td>${list.controlmemberbasedfpo}</td>
-					<td>${list.memberbasedug}</td>
+					<td>${list.prememberbasedug}</td>
+					<td>${list.midmemberbasedug}</td>
 					<td>${list.controlmemberbasedug}</td>
-					<td>${list.memberbasedshg + list.memberbasedfpo + list.memberbasedug}</td>
+					<td>${list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}</td>
+					<td>${list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}</td>
 					<td>${list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}</td>
 				</tr>
 			<c:set var="totproj" value="${totproj + list.totproj}"/>
-			<c:set var="totComBasedShg" value="${totComBasedShg + list.communitybasedshg}"/>
+			<c:set var="totPreComBasedShg" value="${totPreComBasedShg + list.precommunitybasedshg}"/>
+			<c:set var="totMidComBasedShg" value="${totMidComBasedShg + list.midcommunitybasedshg}"/>
 			<c:set var="totControlComBasedShg" value="${totControlComBasedShg + list.controlcommunitybasedshg}"/>
-			<c:set var="totComBasedFpo" value="${totComBasedFpo + list.communitybasedfpo}"/>
+			<c:set var="totPreComBasedFpo" value="${totPreComBasedFpo + list.precommunitybasedfpo}"/>
+			<c:set var="totMidComBasedFpo" value="${totMidComBasedFpo + list.midcommunitybasedfpo}"/>
 			<c:set var="totControlComBasedFpo" value="${totControlComBasedFpo + list.controlcommunitybasedfpo}"/>
-			<c:set var="totComBasedUg" value="${totComBasedUg + list.communitybasedug}"/>
+			<c:set var="totPreComBasedUg" value="${totPreComBasedUg + list.precommunitybasedug}"/>
+			<c:set var="totMidComBasedUg" value="${totMidComBasedUg + list.midcommunitybasedug}"/>
 			<c:set var="totControlComBasedUg" value="${totControlComBasedUg + list.controlcommunitybasedug}"/>
-			<c:set var="totComBasedTot" value="${totComBasedTot + list.communitybasedshg + list.communitybasedfpo + list.communitybasedug}"/>
+			<c:set var="totPreComBasedTot" value="${totPreComBasedTot + list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}"/>
+			<c:set var="totMidComBasedTot" value="${totMidComBasedTot + list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}"/>
 			<c:set var="totControlComBasedTot" value="${totControlComBasedTot + list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}"/>
 			
-			<c:set var="totMemBsdShg" value="${totMemBsdShg + list.memberbasedshg}"/>
+			<c:set var="totPreMemBsdShg" value="${totPreMemBsdShg + list.prememberbasedshg}"/>
+			<c:set var="totMidMemBsdShg" value="${totMidMemBsdShg + list.midmemberbasedshg}"/>
 			<c:set var="totControlMemBsdShg" value="${totControlMemBsdShg + list.controlmemberbasedshg}"/>
-			<c:set var="totMemBsdFpo" value="${totMemBsdFpo + list.memberbasedfpo}"/>
+			<c:set var="totPreMemBsdFpo" value="${totPreMemBsdFpo + list.prememberbasedfpo}"/>
+			<c:set var="totMidMemBsdFpo" value="${totMidMemBsdFpo + list.midmemberbasedfpo}"/>
 			<c:set var="totControlMemBsdFpo" value="${totControlMemBsdFpo + list.controlmemberbasedfpo}"/>
-			<c:set var="totMemBsdUg" value="${totMemBsdUg + list.memberbasedug}"/>
+			<c:set var="totPreMemBsdUg" value="${totPreMemBsdUg + list.prememberbasedug}"/>
+			<c:set var="totMidMemBsdUg" value="${totMidMemBsdUg + list.midmemberbasedug}"/>
 			<c:set var="totControlMemBsdUg" value="${totControlMemBsdUg + list.controlmemberbasedug}"/>
-			<c:set var="totMemBsdTot" value="${totMemBsdTot + list.memberbasedshg + list.memberbasedfpo + list.memberbasedug}"/>
+			<c:set var="totPreMemBsdTot" value="${totPreMemBsdTot + list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}"/>
+			<c:set var="totMidMemBsdTot" value="${totMidMemBsdTot + list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}"/>
 			<c:set var="totControlMemBsdTot" value="${totControlMemBsdTot + list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}"/>
 			
 			</c:forEach>
 			<tr style="font-weight:bold; background:#f0f0f0; text-align: center">
 				<td colspan="2">Total</td>
 				<td>${totproj}</td>
-				<td>${totComBasedShg}</td>
+				<td>${totPreComBasedShg}</td>
+				<td>${totMidComBasedShg}</td>
 				<td>${totControlComBasedShg}</td>
-				<td>${totComBasedFpo}</td>
+				<td>${totPreComBasedFpo}</td>
+				<td>${totMidComBasedFpo}</td>
 				<td>${totControlComBasedFpo}</td>
-				<td>${totComBasedUg}</td>
+				<td>${totPreComBasedUg}</td>
+				<td>${totMidComBasedUg}</td>
 				<td>${totControlComBasedUg}</td>
-				<td>${totComBasedTot}</td>
+				<td>${totPreComBasedTot}</td>
+				<td>${totMidComBasedTot}</td>
 				<td>${totControlComBasedTot}</td>
 				
-				<td>${totMemBsdShg}</td>
+				<td>${totPreMemBsdShg}</td>
+				<td>${totMidMemBsdShg}</td>
 				<td>${totControlMemBsdShg}</td>
-				<td>${totMemBsdFpo}</td>
+				<td>${totPreMemBsdFpo}</td>
+				<td>${totMidMemBsdFpo}</td>
 				<td>${totControlMemBsdFpo}</td>
-				<td>${totMemBsdUg}</td>
+				<td>${totPreMemBsdUg}</td>
+				<td>${totMidMemBsdUg}</td>
 				<td>${totControlMemBsdUg}</td>
-				<td>${totMemBsdTot}</td>
+				<td>${totPreMemBsdTot}</td>
+				<td>${totMidMemBsdTot}</td>
 				<td>${totControlMemBsdTot}</td>
 			</tr>
 			

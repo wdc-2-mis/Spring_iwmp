@@ -6716,9 +6716,9 @@ public class ProjectEvaluationController {
 	        mergedRegion = new CellRangeAddress(5,7,2,2); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
-	        mergedRegion = new CellRangeAddress(5,5,3,10); 
+	        mergedRegion = new CellRangeAddress(5,5,3,14); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,5,11,18); 
+	        mergedRegion = new CellRangeAddress(5,5,15,26); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
 	        mergedRegion = new CellRangeAddress(6,6,3,5); 
@@ -6762,15 +6762,15 @@ public class ProjectEvaluationController {
 			cell.setCellValue("Number of Community Based Organization");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-			for(int i =4;i<11;i++) {
+			for(int i =4;i<15;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			
-			cell = rowhead.createCell(11);
+			cell = rowhead.createCell(15);
 			cell.setCellValue("Members in Community Based Organization");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-			for(int i =12;i<19;i++) {
+			for(int i =16;i<27;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			
@@ -6779,13 +6779,14 @@ public class ProjectEvaluationController {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			int i = 3;
-			while(i<19) {
+			while(i<27) {
 				cell = rowhead.createCell(i);
 				cell.setCellValue("SHG");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -6794,6 +6795,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -6802,6 +6804,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -6810,6 +6813,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 			}
@@ -6882,31 +6886,31 @@ public class ProjectEvaluationController {
 	        	row.createCell(1).setCellValue(bean.getStname());
 	        	row.createCell(2).setCellValue(bean.getTotproj());
 	        	row.createCell(3).setCellValue(bean.getPrecommunitybasedshg().doubleValue());
-	        	row.createCell(3).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
-	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
-	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getPrecommunitybasedug().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedug().doubleValue());
-	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getMidcommunitybasedug().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
-	        	row.createCell(9).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
-	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
+	        	row.createCell(12).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
+	        	row.createCell(14).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(11).setCellValue(bean.getPrememberbasedshg().doubleValue());
-	        	row.createCell(11).setCellValue(bean.getMidmemberbasedshg().doubleValue());
-	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getPrememberbasedfpo().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
-	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getPrememberbasedug().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getMidmemberbasedug().doubleValue());
-	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
-	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getPrememberbasedshg().doubleValue());
+	        	row.createCell(16).setCellValue(bean.getMidmemberbasedshg().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getControlmemberbasedshg().doubleValue());
+	        	row.createCell(18).setCellValue(bean.getPrememberbasedfpo().doubleValue());
+	        	row.createCell(19).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
+	        	row.createCell(20).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
+	        	row.createCell(21).setCellValue(bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(22).setCellValue(bean.getMidmemberbasedug().doubleValue());
+	        	row.createCell(23).setCellValue(bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(24).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(25).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
+	        	row.createCell(26).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
 	        	
 	        	totproj = totproj + bean.getTotproj();
 	        	totprecommunitybasedshg = totprecommunitybasedshg.add(bean.getPrecommunitybasedshg());
@@ -7119,8 +7123,8 @@ public class ProjectEvaluationController {
 			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 12, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 12, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
@@ -7325,9 +7329,9 @@ public class ProjectEvaluationController {
 	        mergedRegion = new CellRangeAddress(5,7,2,2); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
-	        mergedRegion = new CellRangeAddress(5,5,3,10); 
+	        mergedRegion = new CellRangeAddress(5,5,3,14); 
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,5,11,18); 
+	        mergedRegion = new CellRangeAddress(5,5,15,26); 
 	        sheet.addMergedRegion(mergedRegion);
 	        
 	        mergedRegion = new CellRangeAddress(6,6,3,5); 
@@ -7371,15 +7375,15 @@ public class ProjectEvaluationController {
 			cell.setCellValue("Number of Community Based Organization");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-			for(int i =4;i<11;i++) {
+			for(int i =4;i<15;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			
-			cell = rowhead.createCell(11);
+			cell = rowhead.createCell(15);
 			cell.setCellValue("Members in Community Based Organization");  
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-			for(int i =12;i<19;i++) {
+			for(int i =16;i<27;i++) {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			
@@ -7388,13 +7392,14 @@ public class ProjectEvaluationController {
 				rowhead.createCell(i).setCellStyle(style);
 			}
 			int i = 3;
-			while(i<19) {
+			while(i<27) {
 				cell = rowhead.createCell(i);
 				cell.setCellValue("SHG");  
 				cell.setCellStyle(style);
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -7403,6 +7408,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -7411,6 +7417,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 				cell = rowhead.createCell(i);
@@ -7419,6 +7426,7 @@ public class ProjectEvaluationController {
 				CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 				i++;
 				rowhead.createCell(i).setCellStyle(style);
+				i++;
 				rowhead.createCell(i).setCellStyle(style);
 				i++;
 			}
@@ -7491,31 +7499,31 @@ public class ProjectEvaluationController {
 	        	row.createCell(1).setCellValue(bean.getDistname());
 	        	row.createCell(2).setCellValue(bean.getTotproj());
 	        	row.createCell(3).setCellValue(bean.getPrecommunitybasedshg().doubleValue());
-	        	row.createCell(3).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
-	        	row.createCell(4).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
-	        	row.createCell(6).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getPrecommunitybasedug().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedug().doubleValue());
-	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedug().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getMidcommunitybasedshg().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getControlcommunitybasedshg().doubleValue());
+	        	row.createCell(6).setCellValue(bean.getPrecommunitybasedfpo().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getMidcommunitybasedfpo().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getControlcommunitybasedfpo().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(10).setCellValue(bean.getMidcommunitybasedug().doubleValue());
+	        	row.createCell(11).setCellValue(bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(9).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
-	        	row.createCell(9).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
-	        	row.createCell(10).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
+	        	row.createCell(12).setCellValue(bean.getPrecommunitybasedshg().doubleValue() + bean.getPrecommunitybasedfpo().doubleValue() + bean.getPrecommunitybasedug().doubleValue());
+	        	row.createCell(13).setCellValue(bean.getMidcommunitybasedshg().doubleValue() + bean.getMidcommunitybasedfpo().doubleValue() + bean.getMidcommunitybasedug().doubleValue());
+	        	row.createCell(14).setCellValue(bean.getControlcommunitybasedshg().doubleValue() + bean.getControlcommunitybasedfpo().doubleValue() + bean.getControlcommunitybasedug().doubleValue());
 	        	
-	        	row.createCell(11).setCellValue(bean.getPrememberbasedshg().doubleValue());
-	        	row.createCell(11).setCellValue(bean.getMidmemberbasedshg().doubleValue());
-	        	row.createCell(12).setCellValue(bean.getControlmemberbasedshg().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getPrememberbasedfpo().doubleValue());
-	        	row.createCell(13).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
-	        	row.createCell(14).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getPrememberbasedug().doubleValue());
-	        	row.createCell(15).setCellValue(bean.getMidmemberbasedug().doubleValue());
-	        	row.createCell(16).setCellValue(bean.getControlmemberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
-	        	row.createCell(17).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
-	        	row.createCell(18).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(15).setCellValue(bean.getPrememberbasedshg().doubleValue());
+	        	row.createCell(16).setCellValue(bean.getMidmemberbasedshg().doubleValue());
+	        	row.createCell(17).setCellValue(bean.getControlmemberbasedshg().doubleValue());
+	        	row.createCell(18).setCellValue(bean.getPrememberbasedfpo().doubleValue());
+	        	row.createCell(19).setCellValue(bean.getMidmemberbasedfpo().doubleValue());
+	        	row.createCell(20).setCellValue(bean.getControlmemberbasedfpo().doubleValue());
+	        	row.createCell(21).setCellValue(bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(22).setCellValue(bean.getMidmemberbasedug().doubleValue());
+	        	row.createCell(23).setCellValue(bean.getControlmemberbasedug().doubleValue());
+	        	row.createCell(24).setCellValue(bean.getPrememberbasedshg().doubleValue() + bean.getPrememberbasedfpo().doubleValue() + bean.getPrememberbasedug().doubleValue());
+	        	row.createCell(25).setCellValue(bean.getMidmemberbasedshg().doubleValue() + bean.getMidmemberbasedfpo().doubleValue() + bean.getMidmemberbasedug().doubleValue());
+	        	row.createCell(26).setCellValue(bean.getControlmemberbasedshg().doubleValue() + bean.getControlmemberbasedfpo().doubleValue() + bean.getControlmemberbasedug().doubleValue());
 	        	
 	        	totproj = totproj + bean.getTotproj();
 	        	totprecommunitybasedshg = totprecommunitybasedshg.add(bean.getPrecommunitybasedshg());
@@ -7731,8 +7739,8 @@ public class ProjectEvaluationController {
 			CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 3, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 8, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Community Based Organization", Element.ALIGN_CENTER, 12, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Members in Community Based Organization", Element.ALIGN_CENTER, 12, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "SHG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "FPO", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "UG", Element.ALIGN_CENTER, 3, 1, bf8Bold);
