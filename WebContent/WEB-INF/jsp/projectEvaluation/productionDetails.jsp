@@ -132,7 +132,7 @@
 
 							<tr>
 								<td><b><c:out value="4." /></b></td>
-								<td><b> <c:out value="Avergage Annual Turnover of FPOs(Rs.)" /></b></td>
+								<td><b> <c:out value="Average Annual Turnover of FPOs(Rs.)" /></b></td>
 								<td><input type="text"
 									id="preTrunOverFpo" name="preTrunOverFpo"
 									onfocusin="decimalToFourPlace(event)"
