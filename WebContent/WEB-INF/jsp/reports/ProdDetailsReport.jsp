@@ -59,8 +59,8 @@ function exportExcel(){
             <th rowspan="3">Total No. of Project</th>
             <th colspan="6" style="text-align: center">Production</th>
             <th colspan="3" rowspan="2" style="text-align: center">Annual Migration from Rural to Urban Area in Project Area (Nos.)</th>
-            <th colspan="2" rowspan="2" style="text-align: center">No. of Springs Rejuvenated</th>
-            <th colspan="2" rowspan="2" style="text-align: center">No. of Persons Benefitted due to Rejuvenation of Springs</th>
+            <th colspan="3" rowspan="2" style="text-align: center">No. of Springs Rejuvenated</th>
+            <th colspan="3" rowspan="2" style="text-align: center">No. of Persons Benefitted due to Rejuvenation of Springs</th>
         </tr>
         <tr>
         <th colspan="3" style="text-align: center">	Milk Production of Milch Cattle (Kl/Yr.)</th>
@@ -76,9 +76,11 @@ function exportExcel(){
              <th rowspan="2">Pre - Project Status(Aggregate)</th>
             <th rowspan="2">Mid - Project Status(Aggregate)</th>
             <th rowspan="2">Controlled Area</th>
-            <th>Project Area</th>
+            <th>Pre - Project Status(Aggregate)</th>
+            <th>Mid - Project Status(Aggregate)a</th>
             <th>Controlled Area</th>
-            <th>Project Area</th>
+            <th>Pre - Project Status(Aggregate)</th>
+            <th>Mid - Project Status(Aggregate)</th>
             <th>Controlled Area</th>
         </tr>
         
@@ -101,6 +103,8 @@ function exportExcel(){
 				<th class="text-center">14</th>
 				<th class="text-center">15</th>
 				<th class="text-center">16</th>
+				<th class="text-center">17</th>
+				<th class="text-center">18</th>
 			</tr>
 			<c:forEach items="${pList}" var="dt" varStatus="sno">
 				<tr>
@@ -117,10 +121,12 @@ function exportExcel(){
 					<td class="text-right"><c:out value="${dt.pre_rural_urban}" /></td>
 					<td class="text-right"><c:out value="${dt.mid_rural_urban}" /></td>
 					<td class="text-right"><c:out value="${dt.control_rural_urban}" /></td>
-					<td class="text-right"><c:out value="${dt.spring_rejuvenated}" /></td>
-					<td class="text-right"><c:out value="${dt.control_spring_rejuvenated}" /></td>
-					<td class="text-right"><c:out value="${dt.person_benefitte}" /></td>
-					<td class="text-right"><c:out value="${dt.control_person_benefitte}" /></td>
+					<td class="text-right"><c:out value="${dt.pre_spring_rejuvenated}" /></td>
+					<td class="text-right"><c:out value="${dt.mid_spring_rejuvenated}" /></td>
+					<td class="text-right"><c:out value="N/A" /></td>
+					<td class="text-right"><c:out value="${dt.pre_person_benefitte}" /></td>
+					<td class="text-right"><c:out value="${dt.mid_person_benefitte}" /></td>
+					<td class="text-right"><c:out value="N/A" /></td>
 					
 				</tr>
 				
@@ -147,13 +153,19 @@ function exportExcel(){
   				<c:set var = "controlruralurban"  
   				value = "${controlruralurban + dt.control_rural_urban}" /> 
   				
-  				<c:set var = "springrejuvenated"  
- 				value = "${springrejuvenated + dt.spring_rejuvenated}" />
+  				<c:set var = "prespringrejuvenated"  
+ 				value = "${prespringrejuvenated + dt.pre_spring_rejuvenated}" />
+ 				
+ 				<c:set var = "midspringrejuvenated"  
+ 				value = "${midspringrejuvenated + dt.mid_spring_rejuvenated}" />
+ 				
  				<c:set var = "controlspringrejuvenated"  
  				value = "${controlspringrejuvenated + dt.control_spring_rejuvenated}" />
  				
- 				<c:set var = "personbenefitte"  
- 				value = "${personbenefitte + dt.person_benefitte}" />
+ 				<c:set var = "prepersonbenefitte"  
+ 				value = "${prepersonbenefitte + dt.pre_person_benefitte}" />
+ 				<c:set var = "midpersonbenefitte"  
+ 				value = "${midpersonbenefitte + dt.mid_person_benefitte}" />
  				<c:set var = "controlpersonbenefitte"  
  				value = "${controlpersonbenefitte + dt.control_person_benefitte}" />
 
@@ -171,10 +183,12 @@ function exportExcel(){
 					<td align="right" class="table-primary"><b><c:out value="${preruralurban}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${midruralurban}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${controlruralurban}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${springrejuvenated}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${controlspringrejuvenated}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${personbenefitte}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${controlpersonbenefitte}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="${prespringrejuvenated}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="${midspringrejuvenated}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="N/A" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="${prepersonbenefitte}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="${midpersonbenefitte}" /></b></td>
+					<td align="right" class="table-primary"><b><c:out value="N/A" /></b></td>
 					
 				</tr>
 			</c:if>

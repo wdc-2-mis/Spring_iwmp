@@ -39,11 +39,38 @@ public class FundUtilizationEvalReportBean {
 	private BigInteger pre_rural_urban;
 	private BigInteger mid_rural_urban;
 	private BigInteger control_rural_urban;
-	private BigInteger spring_rejuvenated;
+	private BigInteger pre_spring_rejuvenated;
+	private BigInteger mid_spring_rejuvenated;
 	private BigInteger control_spring_rejuvenated;
-	private BigInteger person_benefitte;
+	private BigInteger pre_person_benefitte;
+	private BigInteger mid_person_benefitte;
 	private BigInteger control_person_benefitte;
 	
+	
+	public BigInteger getPre_spring_rejuvenated() {
+		return pre_spring_rejuvenated;
+	}
+	public void setPre_spring_rejuvenated(BigInteger pre_spring_rejuvenated) {
+		this.pre_spring_rejuvenated = pre_spring_rejuvenated;
+	}
+	public BigInteger getMid_spring_rejuvenated() {
+		return mid_spring_rejuvenated;
+	}
+	public void setMid_spring_rejuvenated(BigInteger mid_spring_rejuvenated) {
+		this.mid_spring_rejuvenated = mid_spring_rejuvenated;
+	}
+	public BigInteger getPre_person_benefitte() {
+		return pre_person_benefitte;
+	}
+	public void setPre_person_benefitte(BigInteger pre_person_benefitte) {
+		this.pre_person_benefitte = pre_person_benefitte;
+	}
+	public BigInteger getMid_person_benefitte() {
+		return mid_person_benefitte;
+	}
+	public void setMid_person_benefitte(BigInteger mid_person_benefitte) {
+		this.mid_person_benefitte = mid_person_benefitte;
+	}
 	public BigDecimal getPre_milch_cattle() {
 		return pre_milch_cattle;
 	}
@@ -98,23 +125,11 @@ public class FundUtilizationEvalReportBean {
 	public void setControl_rural_urban(BigInteger control_rural_urban) {
 		this.control_rural_urban = control_rural_urban;
 	}
-	public BigInteger getSpring_rejuvenated() {
-		return spring_rejuvenated;
-	}
-	public void setSpring_rejuvenated(BigInteger spring_rejuvenated) {
-		this.spring_rejuvenated = spring_rejuvenated;
-	}
 	public BigInteger getControl_spring_rejuvenated() {
 		return control_spring_rejuvenated;
 	}
 	public void setControl_spring_rejuvenated(BigInteger control_spring_rejuvenated) {
 		this.control_spring_rejuvenated = control_spring_rejuvenated;
-	}
-	public BigInteger getPerson_benefitte() {
-		return person_benefitte;
-	}
-	public void setPerson_benefitte(BigInteger person_benefitte) {
-		this.person_benefitte = person_benefitte;
 	}
 	public BigInteger getControl_person_benefitte() {
 		return control_person_benefitte;

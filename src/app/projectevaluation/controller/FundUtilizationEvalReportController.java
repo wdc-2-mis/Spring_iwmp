@@ -197,20 +197,20 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.addHeader(document);
 			    document.add(paragraph2);
 			    document.add(paragraph3);
-			    table = new PdfPTable(16);
-			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+			    table = new PdfPTable(18);
+			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
 			    table.setHeaderRows(4);
-			    CommonFunctions.insertCellHeader(table,"State Name : "+ stName, Element.ALIGN_LEFT, 16, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table,"State Name : "+ stName, Element.ALIGN_LEFT, 18, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Total No. of Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Production", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Annual Migration from Rural to Urban Area in Project Area (Nos.)", Element.ALIGN_CENTER, 3, 2, bf8Bold);
-			    CommonFunctions.insertCellHeader(table, "No. of Springs Rejuvenated", Element.ALIGN_CENTER, 2, 2, bf8Bold);
-			    CommonFunctions.insertCellHeader(table, "No. of Persons Benefitted due to Rejuvenation of Springs", Element.ALIGN_CENTER, 2, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Springs Rejuvenated", Element.ALIGN_CENTER, 3, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Persons Benefitted due to Rejuvenation of Springs", Element.ALIGN_CENTER, 3, 2, bf8Bold);
 			    
 			    CommonFunctions.insertCellHeader(table, "Milk Production of Milch Cattle (Kl/Yr.)	", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Fodder Production (Qt./Yr.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
@@ -225,12 +225,15 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
 			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
-			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
-			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // TE
-			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
-			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
-			    for (int i = 1; i <= 16; i++) {
+
+			    for (int i = 1; i <= 18; i++) {
 			    	CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_LEFT, 1, 1, bf8Bold);
 			    }
 				int k = 1;
@@ -245,8 +248,10 @@ public class FundUtilizationEvalReportController {
 				BigInteger midrural = BigInteger.ZERO;
 				BigInteger controlrural = BigInteger.ZERO;
 				BigInteger spring = BigInteger.ZERO;
+				BigInteger mspring = BigInteger.ZERO;
 				BigInteger controlspring = BigInteger.ZERO;
 				BigInteger personb = BigInteger.ZERO;
+				BigInteger mpersonb = BigInteger.ZERO;
 				BigInteger controlpersonb = BigInteger.ZERO;
 				
 				if(list.size()!=0)
@@ -264,10 +269,12 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getPre_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getMid_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getSpring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getPerson_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 						totproj = totproj + list.get(i).getTotal_project();
 						premilk = premilk.add(list.get(i).getPre_milch_cattle());
 					    midmilk = midmilk.add(list.get(i).getMid_milch_cattle());
@@ -278,9 +285,11 @@ public class FundUtilizationEvalReportController {
 					    prerural = prerural.add(list.get(i).getPre_rural_urban());
 					    midrural = midrural.add(list.get(i).getMid_rural_urban());
 					    controlrural = controlrural.add(list.get(i).getControl_rural_urban());
-					    spring = spring.add(list.get(i).getSpring_rejuvenated());
+					    spring = spring.add(list.get(i).getPre_spring_rejuvenated());
+					    mspring = mspring.add(list.get(i).getMid_spring_rejuvenated());
 					    controlspring = controlspring.add(list.get(i).getControl_spring_rejuvenated());
-					    personb = personb.add(list.get(i).getPerson_benefitte());
+					    personb = personb.add(list.get(i).getPre_person_benefitte());
+					    mpersonb = mpersonb.add(list.get(i).getMid_person_benefitte());
 					    controlpersonb = controlpersonb.add(list.get(i).getControl_person_benefitte());
 						k++;
 					}
@@ -297,11 +306,13 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(midrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(controlrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(spring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(controlspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(personb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(controlpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					if(list.size()==0) 
-						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 16, 1, bf8);
+						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 18, 1, bf8);
 			document.add(table);
 			table = new PdfPTable(1);
 			table.setWidthPercentage(90);
@@ -369,8 +380,8 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.addHeader(document);
 			    document.add(paragraph2);
 			    document.add(paragraph3);
-			    table = new PdfPTable(16);
-			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+			    table = new PdfPTable(18);
+			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 			    table.setWidthPercentage(90);
 			    table.setSpacingBefore(0f);
 			    table.setSpacingAfter(0f);
@@ -380,8 +391,8 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.insertCellHeader(table, "Total No. of Projects", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Production", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Annual Migration from Rural to Urban Area in Project Area (Nos.)", Element.ALIGN_CENTER, 3, 2, bf8Bold);
-			    CommonFunctions.insertCellHeader(table, "No. of Springs Rejuvenated", Element.ALIGN_CENTER, 2, 2, bf8Bold);
-			    CommonFunctions.insertCellHeader(table, "No. of Persons Benefitted due to Rejuvenation of Springs", Element.ALIGN_CENTER, 2, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Springs Rejuvenated", Element.ALIGN_CENTER, 3, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Persons Benefitted due to Rejuvenation of Springs", Element.ALIGN_CENTER, 3, 2, bf8Bold);
 			    
 			    CommonFunctions.insertCellHeader(table, "Milk Production of Milch Cattle (Kl/Yr.)	", Element.ALIGN_CENTER, 3, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Fodder Production (Qt./Yr.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
@@ -396,12 +407,14 @@ public class FundUtilizationEvalReportController {
 			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
 			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
-			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // TE
-			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
 
-			    for (int i = 1; i <= 16; i++) {
+			    for (int i = 1; i <= 18; i++) {
 			    	CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_LEFT, 1, 1, bf8Bold);
 			    }
 				int k = 1;
@@ -416,8 +429,10 @@ public class FundUtilizationEvalReportController {
 				BigInteger midrural = BigInteger.ZERO;
 				BigInteger controlrural = BigInteger.ZERO;
 				BigInteger spring = BigInteger.ZERO;
+				BigInteger mspring = BigInteger.ZERO;
 				BigInteger controlspring = BigInteger.ZERO;
 				BigInteger personb = BigInteger.ZERO;
+				BigInteger mpersonb = BigInteger.ZERO;
 				BigInteger controlpersonb = BigInteger.ZERO;
 				if(list.size()!=0)
 					for(int i=0;i<list.size();i++) 
@@ -434,10 +449,12 @@ public class FundUtilizationEvalReportController {
 						CommonFunctions.insertCell(table, list.get(i).getPre_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getMid_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getControl_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getSpring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getPerson_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getControl_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
 						totproj = totproj + list.get(i).getTotal_project();
 						premilk = premilk.add(list.get(i).getPre_milch_cattle());
 					    midmilk = midmilk.add(list.get(i).getMid_milch_cattle());
@@ -448,9 +465,11 @@ public class FundUtilizationEvalReportController {
 					    prerural = prerural.add(list.get(i).getPre_rural_urban());
 					    midrural = midrural.add(list.get(i).getMid_rural_urban());
 					    controlrural = controlrural.add(list.get(i).getControl_rural_urban());
-					    spring = spring.add(list.get(i).getSpring_rejuvenated());
+					    spring = spring.add(list.get(i).getPre_spring_rejuvenated());
+					    mspring = mspring.add(list.get(i).getMid_spring_rejuvenated());
 					    controlspring = controlspring.add(list.get(i).getControl_spring_rejuvenated());
-					    personb = personb.add(list.get(i).getPerson_benefitte());
+					    personb = personb.add(list.get(i).getPre_person_benefitte());
+					    mpersonb = mpersonb.add(list.get(i).getMid_person_benefitte());
 					    controlpersonb = controlpersonb.add(list.get(i).getControl_person_benefitte());
 						k++;
 					}
@@ -466,11 +485,13 @@ public class FundUtilizationEvalReportController {
 					CommonFunctions.insertCell3(table, String.valueOf(midrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(controlrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(spring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(controlspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(personb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(controlpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					if(list.size()==0) 
-						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 16, 1, bf8);
+						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 18, 1, bf8);
 			document.add(table);
 			table = new PdfPTable(1);
 			table.setWidthPercentage(90);
@@ -1309,9 +1330,9 @@ public class FundUtilizationEvalReportController {
 	    	row.createCell(9).setCellValue(bean.getPre_rural_urban().doubleValue());
 	    	row.createCell(10).setCellValue(bean.getMid_rural_urban().doubleValue());
 	    	row.createCell(11).setCellValue(bean.getControl_rural_urban().doubleValue());
-	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
+//	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
 	    	row.createCell(13).setCellValue(bean.getControl_spring_rejuvenated().doubleValue());
-	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
+//	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
 	    	row.createCell(15).setCellValue(bean.getControl_person_benefitte().doubleValue());
 	    	totproj = totproj + bean.getTotal_project();
 			premilk = premilk.add(bean.getPre_milch_cattle());
@@ -1323,9 +1344,9 @@ public class FundUtilizationEvalReportController {
 			prerural = prerural.add(bean.getPre_rural_urban());
 			midrural = midrural.add(bean.getMid_rural_urban());
 			conrural = conrural.add(bean.getControl_rural_urban());
-			spring = spring.add(bean.getSpring_rejuvenated());
+//			spring = spring.add(bean.getSpring_rejuvenated());
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
-			personb = personb.add(bean.getPerson_benefitte());
+//			personb = personb.add(bean.getPerson_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
 			sno++;
 	    	rowno++;
@@ -1626,9 +1647,9 @@ public class FundUtilizationEvalReportController {
 	    	row.createCell(9).setCellValue(bean.getPre_rural_urban().doubleValue());
 	    	row.createCell(10).setCellValue(bean.getMid_rural_urban().doubleValue());
 	    	row.createCell(11).setCellValue(bean.getControl_rural_urban().doubleValue());
-	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
+//	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
 	    	row.createCell(13).setCellValue(bean.getControl_spring_rejuvenated().doubleValue());
-	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
+//	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
 	    	row.createCell(15).setCellValue(bean.getControl_person_benefitte().doubleValue());
 	    	
 	    	totproj = totproj + bean.getTotal_project();
@@ -1641,9 +1662,9 @@ public class FundUtilizationEvalReportController {
 			prerural = prerural.add(bean.getPre_rural_urban());
 			midrural = midrural.add(bean.getMid_rural_urban());
 			conrural = conrural.add(bean.getControl_rural_urban());
-			spring = spring.add(bean.getSpring_rejuvenated());
+//			spring = spring.add(bean.getSpring_rejuvenated());
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
-			personb = personb.add(bean.getPerson_benefitte());
+//			personb = personb.add(bean.getPerson_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
 			sno++;
 	    	rowno++;
