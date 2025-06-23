@@ -1125,7 +1125,7 @@ public class FundUtilizationEvalReportController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 15, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 17, areaAmtValDetail, workbook);
 		
 		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
 		sheet.addMergedRegion(mergedRegion);
@@ -1139,9 +1139,9 @@ public class FundUtilizationEvalReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(5,6,9,11); 
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,12,13); 
+		mergedRegion = new CellRangeAddress(5,6,12,14); 
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,14,15); 
+		mergedRegion = new CellRangeAddress(5,6,15,17);
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,6,3,5); 
 		sheet.addMergedRegion(mergedRegion);
@@ -1189,18 +1189,31 @@ public class FundUtilizationEvalReportController {
 			cell =rowhead.createCell(i);
 			cell.setCellStyle(style);
 		}
+		
 		cell = rowhead.createCell(12);
 		cell.setCellValue("No. of Springs Rejuvenated");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		rowhead.createCell(13).setCellStyle(style);
-		cell = rowhead.createCell(14);
+		
+		for(int i=13;i<15;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(15);
 		cell.setCellValue("No. of Persons Benefitted due to Rejuvenation of Springs");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		rowhead.createCell(15).setCellStyle(style);
+		
+		for(int i=16;i<18;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
 		
 		Row rowhead1 = sheet.createRow(6);
 		for(int i=0;i<3;i++)
@@ -1225,7 +1238,7 @@ public class FundUtilizationEvalReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		for(int i=7;i<16;i++)
+		for(int i=7;i<18;i++)
 		{
 			cell =rowhead1.createCell(i);
 			cell.setCellStyle(style);
@@ -1277,28 +1290,38 @@ public class FundUtilizationEvalReportController {
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(12);
-		cell.setCellValue("Project Area");  
+		cell.setCellValue("Pre - Project Status(Aggregate)");  
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(13);
-		cell.setCellValue("Controlled Area");  
+		cell.setCellValue("Mid - Project Status(Aggregate)");  
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(14);
-		cell.setCellValue("Project Area");  
-		cell.setCellStyle(style);
-		
-		cell = rowhead2.createCell(15);
 		cell.setCellValue("Controlled Area");  
 		cell.setCellStyle(style);
 		
+		cell = rowhead2.createCell(15);
+		cell.setCellValue("Pre - Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(16);
+		cell.setCellValue("Mid - Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(17);
+		cell.setCellValue("Controlled Area");  
+		cell.setCellStyle(style);
+		
+		
 		Row rowhead3 = sheet.createRow(8);
-		for(int i=0;i<16;i++)
+		for(int i=0;i<18;i++)
 		{
 			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
+		
 		int sno = 1;
 		int rowno  = 9;
 		int totproj = 0;
@@ -1311,10 +1334,13 @@ public class FundUtilizationEvalReportController {
 		BigInteger prerural = BigInteger.ZERO;
 		BigInteger midrural = BigInteger.ZERO;
 		BigInteger conrural = BigInteger.ZERO;
-		BigInteger spring = BigInteger.ZERO;
+		BigInteger prespring = BigInteger.ZERO;
+		BigInteger midspring = BigInteger.ZERO;
 		BigInteger conspring = BigInteger.ZERO;
-		BigInteger personb = BigInteger.ZERO;
+		BigInteger prepersonb = BigInteger.ZERO;
+		BigInteger midpersonb = BigInteger.ZERO;
 		BigInteger conpersonb = BigInteger.ZERO;
+		
 	    for(FundUtilizationEvalReportBean bean: list) 
 	    {
 	    	Row row = sheet.createRow(rowno);
@@ -1330,10 +1356,13 @@ public class FundUtilizationEvalReportController {
 	    	row.createCell(9).setCellValue(bean.getPre_rural_urban().doubleValue());
 	    	row.createCell(10).setCellValue(bean.getMid_rural_urban().doubleValue());
 	    	row.createCell(11).setCellValue(bean.getControl_rural_urban().doubleValue());
-//	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
-	    	row.createCell(13).setCellValue(bean.getControl_spring_rejuvenated().doubleValue());
-//	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
-	    	row.createCell(15).setCellValue(bean.getControl_person_benefitte().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getPre_spring_rejuvenated().doubleValue());
+	    	row.createCell(13).setCellValue(bean.getMid_spring_rejuvenated().doubleValue());
+	    	row.createCell(14).setCellValue("N/A");
+	    	row.createCell(15).setCellValue(bean.getPre_person_benefitte().doubleValue());
+	    	row.createCell(16).setCellValue(bean.getMid_person_benefitte().doubleValue());
+	    	row.createCell(17).setCellValue("N/A");
+	    	
 	    	totproj = totproj + bean.getTotal_project();
 			premilk = premilk.add(bean.getPre_milch_cattle());
 			midmilk = midmilk.add(bean.getMid_milch_cattle());
@@ -1344,13 +1373,16 @@ public class FundUtilizationEvalReportController {
 			prerural = prerural.add(bean.getPre_rural_urban());
 			midrural = midrural.add(bean.getMid_rural_urban());
 			conrural = conrural.add(bean.getControl_rural_urban());
-//			spring = spring.add(bean.getSpring_rejuvenated());
+			prespring = prespring.add(bean.getPre_spring_rejuvenated());
+			midspring = midspring.add(bean.getMid_spring_rejuvenated());
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
-//			personb = personb.add(bean.getPerson_benefitte());
+			prepersonb = prepersonb.add(bean.getPre_person_benefitte());
+			midpersonb = midpersonb.add(bean.getMid_person_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
 			sno++;
 	    	rowno++;
 	    }
+	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
 		style1.setBorderBottom(BorderStyle.THIN);
@@ -1402,19 +1434,25 @@ public class FundUtilizationEvalReportController {
 		cell.setCellValue(conrural.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(12);
-		cell.setCellValue(spring.doubleValue());
+		cell.setCellValue(prespring.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(13);
-		cell.setCellValue(conspring.doubleValue());
+		cell.setCellValue(midspring.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(14);
-		cell.setCellValue(personb.doubleValue());
+		cell.setCellValue("N/A");
 		cell.setCellStyle(style1);
 		cell = row.createCell(15);
-		cell.setCellValue(conpersonb.doubleValue());
-		cell.setCellStyle(style1);;
+		cell.setCellValue(prepersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(midpersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue("N/A");
+		cell.setCellStyle(style1);
 		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 15);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 17);
 	    String fileName = "attachment; filename=Report PE8- District.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -1441,7 +1479,7 @@ public class FundUtilizationEvalReportController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 15, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 17, areaAmtValDetail, workbook);
 		
 		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
 		sheet.addMergedRegion(mergedRegion);
@@ -1455,9 +1493,9 @@ public class FundUtilizationEvalReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(5,6,9,11); 
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,12,13); 
+		mergedRegion = new CellRangeAddress(5,6,12,14); 
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,6,14,15); 
+		mergedRegion = new CellRangeAddress(5,6,15,17); 
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,6,3,5); 
 		sheet.addMergedRegion(mergedRegion);
@@ -1511,14 +1549,24 @@ public class FundUtilizationEvalReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		rowhead.createCell(13).setCellStyle(style);
+
+		for(int i=13;i<15;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
 		
-		cell = rowhead.createCell(14);
+		cell = rowhead.createCell(15);
 		cell.setCellValue("No. of Persons Benefitted due to Rejuvenation of Springs");  
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
-		rowhead.createCell(15).setCellStyle(style);
+		
+		for(int i=16;i<18;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
 		
 		Row rowhead1 = sheet.createRow(6);
 		for(int i=0;i<3;i++)
@@ -1542,7 +1590,7 @@ public class FundUtilizationEvalReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		for(int i=7;i<16;i++)
+		for(int i=7;i<18;i++)
 		{
 			cell =rowhead1.createCell(i);
 			cell.setCellStyle(style);
@@ -1593,28 +1641,38 @@ public class FundUtilizationEvalReportController {
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(12);
-		cell.setCellValue("Project Area");  
+		cell.setCellValue("Pre - Project Status(Aggregate)");  
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(13);
-		cell.setCellValue("Controlled Area");  
+		cell.setCellValue("Mid - Project Status(Aggregate)");  
 		cell.setCellStyle(style);
 		
 		cell = rowhead2.createCell(14);
-		cell.setCellValue("Project Area");  
-		cell.setCellStyle(style);
-		
-		cell = rowhead2.createCell(15);
 		cell.setCellValue("Controlled Area");  
 		cell.setCellStyle(style);
 		
+		cell = rowhead2.createCell(15);
+		cell.setCellValue("Pre - Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(16);
+		cell.setCellValue("Mid - Project Status(Aggregate)");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(17);
+		cell.setCellValue("Controlled Area");  
+		cell.setCellStyle(style);
+		
+		
 		Row rowhead3 = sheet.createRow(8);
-		for(int i=0;i<16;i++)
+		for(int i=0;i<18;i++)
 		{
 			cell =rowhead3.createCell(i);
 			cell.setCellValue(i+1);
 			cell.setCellStyle(style);
 		}
+		
 		int sno = 1;
 		int rowno  = 9;
 		int totproj = 0;
@@ -1627,9 +1685,11 @@ public class FundUtilizationEvalReportController {
 		BigInteger prerural = BigInteger.ZERO;
 		BigInteger midrural = BigInteger.ZERO;
 		BigInteger conrural = BigInteger.ZERO;
-		BigInteger spring = BigInteger.ZERO;
+		BigInteger prespring = BigInteger.ZERO;
+		BigInteger midspring = BigInteger.ZERO;
 		BigInteger conspring = BigInteger.ZERO;
-		BigInteger personb = BigInteger.ZERO;
+		BigInteger prepersonb = BigInteger.ZERO;
+		BigInteger midpersonb = BigInteger.ZERO;
 		BigInteger conpersonb = BigInteger.ZERO;
 		
 	    for(FundUtilizationEvalReportBean bean: list) 
@@ -1647,10 +1707,12 @@ public class FundUtilizationEvalReportController {
 	    	row.createCell(9).setCellValue(bean.getPre_rural_urban().doubleValue());
 	    	row.createCell(10).setCellValue(bean.getMid_rural_urban().doubleValue());
 	    	row.createCell(11).setCellValue(bean.getControl_rural_urban().doubleValue());
-//	    	row.createCell(12).setCellValue(bean.getSpring_rejuvenated().doubleValue());
-	    	row.createCell(13).setCellValue(bean.getControl_spring_rejuvenated().doubleValue());
-//	    	row.createCell(14).setCellValue(bean.getPerson_benefitte().doubleValue());
-	    	row.createCell(15).setCellValue(bean.getControl_person_benefitte().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getPre_spring_rejuvenated().doubleValue());
+	    	row.createCell(13).setCellValue(bean.getMid_spring_rejuvenated().doubleValue());
+	    	row.createCell(14).setCellValue("N/A");
+	    	row.createCell(15).setCellValue(bean.getPre_person_benefitte().doubleValue());
+	    	row.createCell(16).setCellValue(bean.getMid_person_benefitte().doubleValue());
+	    	row.createCell(17).setCellValue("N/A");
 	    	
 	    	totproj = totproj + bean.getTotal_project();
 			premilk = premilk.add(bean.getPre_milch_cattle());
@@ -1662,9 +1724,11 @@ public class FundUtilizationEvalReportController {
 			prerural = prerural.add(bean.getPre_rural_urban());
 			midrural = midrural.add(bean.getMid_rural_urban());
 			conrural = conrural.add(bean.getControl_rural_urban());
-//			spring = spring.add(bean.getSpring_rejuvenated());
+			prespring = prespring.add(bean.getPre_spring_rejuvenated());
+			midspring = midspring.add(bean.getMid_spring_rejuvenated());
 			conspring = conspring.add(bean.getControl_spring_rejuvenated());
-//			personb = personb.add(bean.getPerson_benefitte());
+			prepersonb = prepersonb.add(bean.getPre_person_benefitte());
+			midpersonb = midpersonb.add(bean.getMid_person_benefitte());
 			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
 			sno++;
 	    	rowno++;
@@ -1720,19 +1784,25 @@ public class FundUtilizationEvalReportController {
 		cell.setCellValue(conrural.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(12);
-		cell.setCellValue(spring.doubleValue());
+		cell.setCellValue(prespring.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(13);
-		cell.setCellValue(conspring.doubleValue());
+		cell.setCellValue(midspring.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(14);
-		cell.setCellValue(personb.doubleValue());
+		cell.setCellValue("N/A");
 		cell.setCellStyle(style1);
 		cell = row.createCell(15);
-		cell.setCellValue(conpersonb.doubleValue());
-		cell.setCellStyle(style1);;
+		cell.setCellValue(prepersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(midpersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue("N/A");
+		cell.setCellStyle(style1);
 		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 15);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 17);
 	    String fileName = "attachment; filename=Report PE8- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
