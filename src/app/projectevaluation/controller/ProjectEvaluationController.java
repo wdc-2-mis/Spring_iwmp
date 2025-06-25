@@ -5917,7 +5917,7 @@ public class ProjectEvaluationController {
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE9 - State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members";
+			String rptName = "Report PE9 - State-wise Mid Term Evaluation of Average Annual Income of FPOs, Net Income of FPO and SHG members";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -6152,7 +6152,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE9 - State-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members",f3);
+					"Report PE9 - State-wise Mid Term Evaluation of Average Annual Income of FPOs, Net Income of FPO and SHG members",f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -6310,7 +6310,7 @@ public class ProjectEvaluationController {
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report PE9 - District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state;
+			String rptName = "Report PE9 - District-wise Mid Term Evaluation of Average Annual Income of FPOs, Net Income of FPO and SHG members of "+state;
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -6549,7 +6549,7 @@ public class ProjectEvaluationController {
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
 			paragraph3 = new Paragraph(
-					"Report PE9 - District-wise Mid Term Evaluation of Average Annual Income FPOs, FPO and SHG members of "+state,f3);
+					"Report PE9 - District-wise Mid Term Evaluation of Average Annual Income of FPOs, Net Income of FPO and SHG members of "+state,f3);
 
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
