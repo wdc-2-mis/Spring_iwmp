@@ -614,7 +614,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	    try {
 	        Transaction tx = session.beginTransaction();
 
-	        String sql = "select central_share_amt as central, state_share_amt as state from iwmp_m_project where status='C' and proj_id=:pcode";
+	        String sql = "select round(central_share_amt/100,4) as central, round(state_share_amt/100,4) as state from iwmp_m_project where status='C' and proj_id=:pcode";
 
 	        SQLQuery query = session.createSQLQuery(sql);
 	        query.setInteger("pcode", pcode);

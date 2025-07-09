@@ -1412,7 +1412,7 @@ function closeModal() {
         </tr>
         <tr>
         <td colspan="4">
-            <textarea name="evaluationSummary" rows="5" cols="170" maxlength="500" placeholder="Enter your evaluation summary here..."></textarea>
+            <textarea name="evaluationSummary" rows="5" cols="170"  placeholder="Enter your evaluation summary here..."></textarea>
         </td>
     </tr>
     <tr>
