@@ -24,7 +24,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -OOMF State and Activities wise Project Reported Status for Financal Year <c:out value='${finyr}' /> and Month <c:out value='${month}' /> </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -State and Activities wise No. of Project Achievement Status for the Financal Year <c:out value='${finyr}' /> and Month <c:out value='${month}' /> </label></h5></div>
 <br>
 <div class ="card">
 

@@ -173,7 +173,7 @@ public class OOMFCurrentStatusController {
 	        Rectangle layout = new Rectangle(PageSize.A4.rotate());
 	        layout.setBackgroundColor(new BaseColor(255, 255, 255));
 	        Document document = new Document(layout, 25, 10, 10, 0);
-	        document.addTitle("O12");
+	        document.addTitle("ME-6");
 	        document.addCreationDate();
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -191,7 +191,7 @@ public class OOMFCurrentStatusController {
 	        Paragraph paragraph3 = null;
 	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-	        paragraph3 = new Paragraph("Report O12- OOMF State and Activities wise Project Reported Status for Financal Year "+finyr +" and Month "+month , f3);
+	        paragraph3 = new Paragraph("Report ME6 -State and Activities wise No. of Project Achievement Status for the Financal Year "+finyr +" and Month "+month , f3);
 
 	        paragraph2.setAlignment(Element.ALIGN_CENTER);
 	        paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -344,7 +344,7 @@ public class OOMFCurrentStatusController {
 	        Rectangle layout = new Rectangle(PageSize.A4.rotate());
 	        layout.setBackgroundColor(new BaseColor(255, 255, 255));
 	        Document document = new Document(layout, 25, 10, 10, 0);
-	        document.addTitle("O12");
+	        document.addTitle("ME-7");
 	        document.addCreationDate();
 	        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	        PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -362,7 +362,7 @@ public class OOMFCurrentStatusController {
 	        Paragraph paragraph3 = null;
 	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-	        paragraph3 = new Paragraph("Report O13- State and Activities Wise OOMF Before Pushing Data for Financal Year "+finyr +" and Month "+month , f3);
+	        paragraph3 = new Paragraph("Report ME7- State and Activities Wise Draft Achievement for the Financal Year "+finyr +" and Month "+month , f3);
 
 	        paragraph2.setAlignment(Element.ALIGN_CENTER);
 	        paragraph3.setAlignment(Element.ALIGN_CENTER);

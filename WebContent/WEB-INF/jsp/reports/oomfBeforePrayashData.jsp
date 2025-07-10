@@ -23,7 +23,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- State and Activities Wise OOMF Before Pushing Data for Financal Year <c:out value='${finyr}' /> and Month  <c:out value='${month}' /> </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- State and Activities Wise Draft Achievement for the Financal Year <c:out value='${finyr}' /> and Month  <c:out value='${month}' /> </label></h5></div>
 <br>
 <div class ="card">
 
