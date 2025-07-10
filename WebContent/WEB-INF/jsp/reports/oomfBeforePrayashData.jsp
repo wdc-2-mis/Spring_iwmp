@@ -36,8 +36,8 @@
 			</div>
 		</form>
 	
-	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>  
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>    -->
+	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>   -->
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id="dtBasicExample" cellspacing="0" class="table" >
   	<thead>
