@@ -995,6 +995,10 @@ display: none; /* Hidden by default */
      		<td><input type="radio" id="gramSabhaYes" name="gram_sabha" value="true" autocomplete="off" />Yes</td>
      		<td><input type="radio" id="gramSabhaNo" name="gram_sabha" value="false" autocomplete="off" checked="checked" />No</td>
      		</c:if>
+     		<c:if test="${data.gram_sabha== null }">
+     		<td><input type="radio" id="gramSabhaYes" name="gram_sabha" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="gramSabhaNo" name="gram_sabha" value="false" autocomplete="off"  />No</td>
+     		</c:if>
      	</tr>
      	<tr>
      		<td>Prabhat Pheri completed before the arrival of the van</td>
@@ -1005,6 +1009,10 @@ display: none; /* Hidden by default */
      		<c:if test="${data.prabhat_pheri== 'false' }">
      		<td><input type="radio" id="prabhatPheriYes" name="prabhat_pheri" value="true" autocomplete="off" />Yes</td>
      		<td><input type="radio" id="prabhatPheriNo" name="prabhat_pheri" value="false" autocomplete="off" checked="checked" />No</td>
+     		</c:if>
+     		<c:if test="${data.prabhat_pheri== null }">
+     		<td><input type="radio" id="prabhatPheriYes" name="prabhat_pheri" value="true" autocomplete="off" />Yes</td>
+     		<td><input type="radio" id="prabhatPheriNo" name="prabhat_pheri" value="false" autocomplete="off" />No</td>
      		</c:if>
      	</tr>
      	</table>
