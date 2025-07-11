@@ -257,7 +257,13 @@ $(document).on('change', '#district', function(e) {
 				    if (input.files && input.files[0]) {
 				        let file = input.files[0];
 				        let fileSizeKB = file.size / 1024;
-
+						let allowedTypes = ["image/jpeg", "image/png"];
+			
+						if (!allowedTypes.includes(file.type)) {
+						    alert("Invalid file type. Only JPEG and PNG images are allowed.");
+						    input.value = "";
+						    return;
+						}
 				        // Validate file size
 				        if (fileSizeKB > maxSizeKB) {
 				            alert("File size exceeds " + maxSizeKB + " KB. Please upload a smaller image.");

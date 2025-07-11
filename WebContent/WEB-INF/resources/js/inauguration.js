@@ -458,6 +458,14 @@ $(function() {
 			let file = input.files[0];
 			let fileSizeKB = file.size / 1024;
 
+			let allowedTypes = ["image/jpeg", "image/png"];
+			
+			if (!allowedTypes.includes(file.type)) {
+			    alert("Invalid file type. Only JPEG and PNG images are allowed.");
+			    input.value = "";
+			    return;
+			}
+
 			getImageHash(file, function(hash) {
 				if (imageRecords[file.name] && imageRecords[file.name] === hash) {
 					alert("This image has been already uploaded. Please upload a different image.");

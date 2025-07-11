@@ -60,7 +60,13 @@ function validatePhoto(input, photoId, maxSizeKB, maxWidth, maxHeight) {
         let file = input.files[0];
         let fileSizeKB = file.size / 1024;
 
-
+		let allowedTypes = ["image/jpeg", "image/png"];
+			
+			if (!allowedTypes.includes(file.type)) {
+			    alert("Invalid file type. Only JPEG and PNG images are allowed.");
+			    input.value = "";
+			    return;
+			}
         
         let sanitizedFileName = file.name.replace(/\s+/g, '_');
 
