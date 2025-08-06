@@ -362,7 +362,7 @@ public class OOMFCurrentStatusController {
 	        Paragraph paragraph3 = null;
 	        Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 
-	        paragraph3 = new Paragraph("Report ME7- State and Activities Wise Draft Achievement for the Financal Year "+finyr +" and Month "+month , f3);
+	        paragraph3 = new Paragraph("Report ME7- State and Activities Wise Current Achievement for the Financal Year "+finyr +" and Month "+month , f3);
 
 	        paragraph2.setAlignment(Element.ALIGN_CENTER);
 	        paragraph3.setAlignment(Element.ALIGN_CENTER);
