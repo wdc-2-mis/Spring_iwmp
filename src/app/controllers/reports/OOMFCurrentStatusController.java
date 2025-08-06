@@ -212,7 +212,7 @@ public class OOMFCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted Area of Degraded Land Covered/Rainfed Area Developed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted Area covered with soil and moisture conservation activities", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted Area Brought under Plantation (Afforestation/Horticulture)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted Area Brought under Plantation (Afforestation/Horticulture)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted No. of Water Harvesting Structure (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted No. of Farmers Benefited", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Project submitted Area Brought under Protective Irrigation (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -383,7 +383,7 @@ public class OOMFCurrentStatusController {
 	        CommonFunctions.insertCellHeader(table, "Total Area of Degraded Land Covered/Rainfed Area Developed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total Area covered with soil and moisture conservation activities", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total Area Brought under Plantation (Afforestation/Horticulture)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-	        CommonFunctions.insertCellHeader(table, "Total No. of Water Harvesting Structure (created/renovated)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Total No. of Water Harvesting Structure (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of Farmers Benefited", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total Area Brought under Protective Irrigation (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of man-days generated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
