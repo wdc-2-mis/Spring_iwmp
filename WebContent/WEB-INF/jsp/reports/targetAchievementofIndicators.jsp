@@ -275,7 +275,8 @@ function exportExcel(state, year, quarter){
           <td><b>Financial Year <span style="color: red;">*</span></b></td>
            <td>
               <select name="year" id="year"  required="required" onchange="updateQuarterOptions()">
-              		<option value="0">--All---</option>
+               		<!-- <option value="">--Select--</option> -->
+              		 <option value="0">--All---</option>
 						  <c:if test="${not empty financialYear}">
                					<c:forEach items="${financialYear}" var="lists">
                					<c:if test="${lists.finYrCd eq year}">
@@ -340,7 +341,7 @@ function exportExcel(state, year, quarter){
   <thead>
 	 <tr> 
 	 	<th colspan="7" style="text-align:left; ">State : ${stName} &emsp; Financial Year : ${finName} &emsp; Quarter : ${quartename}  </th>
-		<th colspan="6" style="text-align:right; ">All Area in Ha.  </th>
+		<th colspan="7" style="text-align:right; ">All Area in Ha.  </th>
 	</tr>
     <tr>
      <!--  <th rowspan="2" style="text-align:center; vertical-align: middle;">S.No.</th>
@@ -371,6 +372,7 @@ function exportExcel(state, year, quarter){
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
       <th style="text-align:center" >Increase in cropped area</th>
       <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)
+      <th style="text-align:center" >Average area of degraded land covered/Rainfed area developed (<b>%</b>)
       
       
       
@@ -416,8 +418,8 @@ function exportExcel(state, year, quarter){
 		<th class="text-center">11</th>
 		<th class="text-center">12</th>
 		<th class="text-center">13</th>
-		<!-- <th class="text-center">14</th>
-		<th class="text-center">15</th>
+		<th class="text-center">14</th>
+		<!--<th class="text-center">15</th>
 		<th class="text-center">16</th>
 		<th class="text-center">17</th>
 		<th class="text-center">18</th>
@@ -459,6 +461,8 @@ function exportExcel(state, year, quarter){
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[22]}' /></fmt:formatNumber></td>
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[24]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[25]}' /></fmt:formatNumber></td>
 		
 		
 		
@@ -526,7 +530,7 @@ function exportExcel(state, year, quarter){
 
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/stcount}' /></fmt:formatNumber></b></td>
 				
-				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[22]/stcount}' /></fmt:formatNumber></b></td>
 				
 				
 				<%-- <td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[12]}' /></fmt:formatNumber> </b></td> 
@@ -565,7 +569,7 @@ function exportExcel(state, year, quarter){
     </c:if>
     	<c:if test="${dataListsize==0}">
 			<tr>
-				<td align="center" colspan="13" class="required" style="color:red;">Data Not Found</td>
+				<td align="center" colspan="14" class="required" style="color:red;">Data Not Found</td>
 			</tr>
 		</c:if>
     

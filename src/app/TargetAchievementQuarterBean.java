@@ -42,6 +42,7 @@ public class TargetAchievementQuarterBean {
 	private Integer proj_id;
 	private String proj_name;
 	
+	private BigDecimal degradedper;
 	
 	public Integer getDcode() {
 		return dcode;
@@ -253,6 +254,12 @@ public class TargetAchievementQuarterBean {
 	}
 	public void setProj_name(String proj_name) {
 		this.proj_name = proj_name;
+	}
+	public BigDecimal getDegradedper() {
+		return degradedper;
+	}
+	public void setDegradedper(BigDecimal degradedper) {
+		this.degradedper = degradedper;
 	}
 	
 	

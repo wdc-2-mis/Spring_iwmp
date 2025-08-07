@@ -117,15 +117,15 @@ public class TargetAchievementofIndicatorController {
 			String[] dataArrNetTotalStr = null;
 			Integer[] dataArrNetTotal = null;
 			BigDecimal [] dataArrNetTotalBD = {BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,BigDecimal.ZERO, BigDecimal.ZERO,  
-					BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
+					BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO};
 			list=ser.getQuarterReport(Integer.parseInt(userState), Integer.parseInt(year),  Integer.parseInt(quarter));
-			dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
+			dataArrNetTotalStr = new String[] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""};
 		//	dataArrNetTotal = new Integer[] { 0, 0, 0, 0};
 		if(list != null) 
 		{
 			for(TargetAchievementQuarterBean bean : list) 
 			{
-				  data = new String[25]; 
+				  data = new String[26]; 
 				  if(bean.getSt_code()!=null) {
 						
 						data[0] = String.valueOf(i); // serial no
@@ -238,7 +238,10 @@ public class TargetAchievementofIndicatorController {
 						else 
 							data[16] =bean.getAreaof_degraded_land_achie().toString();
 						 
-							
+						if(bean.getDegradedper()==null) 
+							data[25] ="0.00"; 
+						else 
+							data[25] =bean.getDegradedper().toString();	
 							
 							i++;
 							
@@ -266,7 +269,7 @@ public class TargetAchievementofIndicatorController {
 							dataArrNetTotalBD[19] = dataArrNetTotalBD[19].add(BigDecimal.valueOf(Double.valueOf(data[22])));
 							dataArrNetTotalBD[20] = dataArrNetTotalBD[20].add(BigDecimal.valueOf(Double.valueOf(data[23])));
 							dataArrNetTotalBD[21] = dataArrNetTotalBD[21].add(BigDecimal.valueOf(Double.valueOf(data[24])));
-							
+							dataArrNetTotalBD[22] = dataArrNetTotalBD[22].add(BigDecimal.valueOf(Double.valueOf(data[25])));
 							
 							
 							/*
@@ -318,6 +321,7 @@ public class TargetAchievementofIndicatorController {
 			dataArrNetTotalStr[19] = dataArrNetTotalBD[19].toString();
 			dataArrNetTotalStr[20] = dataArrNetTotalBD[20].toString();
 			dataArrNetTotalStr[21] = dataArrNetTotalBD[21].toString();
+			dataArrNetTotalStr[22] = dataArrNetTotalBD[22].toString();
 			
 			dataListNetTotal.add(dataArrNetTotalStr);
 			mav.addObject("dataListNetTotal", dataListNetTotal);
@@ -406,8 +410,8 @@ public class TargetAchievementofIndicatorController {
 			//	table = new PdfPTable(24);
 			//	table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,5,5,5,5,5,5,5,5});
 				
-				table = new PdfPTable(13);
-				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+				table = new PdfPTable(14);
+				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 				
 				
 				table.setWidthPercentage(100);
@@ -448,10 +452,12 @@ public class TargetAchievementofIndicatorController {
 				BigDecimal increase_farmerincome_tar= BigDecimal.valueOf(0);
 				BigDecimal increase_farmerincome_achie= BigDecimal.valueOf(0);
 				
+				BigDecimal degradedper= BigDecimal.valueOf(0);
+				
 				list=ser.getQuarterReport(Integer.parseInt(userState), Integer.parseInt(year),  Integer.parseInt(quarter));
 				
 				CommonFunctions.insertCellHeader(table, "State: "+stName+", Financial Year: "+finName+", Quarter: "+quartename, Element.ALIGN_LEFT, 7, 1, bf8Bold); 
-				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 6, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 7, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Area of degraded land covered/Rainfed area developed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -465,7 +471,7 @@ public class TargetAchievementofIndicatorController {
 				CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Increase in cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Average Increase in farmers income (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				
+				CommonFunctions.insertCellHeader(table, "Average area of degraded land covered/Rainfed area developed (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				
 				
@@ -523,8 +529,8 @@ public class TargetAchievementofIndicatorController {
 				CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			/*	CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				/*	CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "17", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "18", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -569,7 +575,7 @@ public class TargetAchievementofIndicatorController {
 					//	CommonFunctions.insertCell(table, list.get(i).getIncrease_farmerincome_tar()==null?"": String.format(Locale.US, "%.4f",list.get(i).getIncrease_farmerincome_tar()), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getIncrease_farmerincome_achie()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getIncrease_farmerincome_achie()), Element.ALIGN_RIGHT, 1, 1, bf8);
 						
-						
+						CommonFunctions.insertCell(table, list.get(i).getDegradedper()==null?"":  String.format(Locale.US, "%.4f",list.get(i).getDegradedper()), Element.ALIGN_RIGHT, 1, 1, bf8);
 						
 						k=k+1;
 						
@@ -602,6 +608,7 @@ public class TargetAchievementofIndicatorController {
 						increase_croparea_achie=increase_croparea_achie.add(list.get(i).getIncrease_croparea_achie()==null?BigDecimal.ZERO:list.get(i).getIncrease_croparea_achie());
 						increase_farmerincome_tar=increase_farmerincome_tar.add(list.get(i).getIncrease_farmerincome_tar()==null?BigDecimal.ZERO:list.get(i).getIncrease_farmerincome_tar());
 						increase_farmerincome_achie=increase_farmerincome_achie.add(list.get(i).getIncrease_farmerincome_achie()==null?BigDecimal.ZERO:list.get(i).getIncrease_farmerincome_achie());
+						degradedper=degradedper.add(list.get(i).getDegradedper()==null?BigDecimal.ZERO:list.get(i).getDegradedper());
 						
 					}
 				
@@ -642,12 +649,13 @@ public class TargetAchievementofIndicatorController {
 					
 				//	CommonFunctions.insertCell3(table, String.valueOf(increase_farmerincome_tar.divide(vart, 4, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(increase_farmerincome_achie.divide(vara, 4, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(degradedper.divide(vara, 4, RoundingMode.HALF_UP)), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					
 				//	CommonFunctions.insertCell3(table, "", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				//	CommonFunctions.insertCell3(table, "", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					
 					if(list.size()==0) 
-					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 13, 1, bf8);
+					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 14, 1, bf8);
 				
 				
 		document.add(table);
@@ -708,11 +716,11 @@ public class TargetAchievementofIndicatorController {
 			String areaAmtValDetail ="";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 12, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 13, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(5,5,0,7);
 	        sheet.addMergedRegion(mergedRegion);
-	        mergedRegion = new CellRangeAddress(5,5,8,12);
+	        mergedRegion = new CellRangeAddress(5,5,8,13);
 	        sheet.addMergedRegion(mergedRegion);
 	        
 		
@@ -734,7 +742,7 @@ public class TargetAchievementofIndicatorController {
 			cell.setCellValue("All Area in Ha.");  
 	        cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
-			for(int i =9; i<13;i++) {
+			for(int i =9; i<14;i++) {
 				detail.createCell(i).setCellStyle(style);
 			}
 			
@@ -814,11 +822,14 @@ public class TargetAchievementofIndicatorController {
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			
-			
+			cell = rowhead.createCell(13);
+			cell.setCellValue("Average area of degraded land covered/Rainfed area developed (%) ");
+			cell.setCellStyle(style);
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
 			
 			Row rowhead1 = sheet.createRow(7);
-			for(int i=0;i<13;i++)
+			for(int i=0;i<14;i++)
 			{
 				cell =rowhead1.createCell(i);
 				cell.setCellValue(i+1);
@@ -851,6 +862,7 @@ public class TargetAchievementofIndicatorController {
 	        double totCroppedAreaAch = 0;
 	        double totFarmerIncomeTar = 0;
 	        double totFarmerIncomeAch = 0;
+	        double degradedperAch = 0;
 	        
 	        for(TargetAchievementQuarterBean bean: list) {
 	        	Row row = sheet.createRow(rowno);
@@ -867,7 +879,7 @@ public class TargetAchievementofIndicatorController {
 	        	row.createCell(10).setCellValue(bean.getArea_nilsingto_doubmulcrop_achie()==null?0.0:bean.getArea_nilsingto_doubmulcrop_achie().doubleValue());
 	        	row.createCell(11).setCellValue(bean.getIncrease_croparea_achie()==null?0.0:bean.getIncrease_croparea_achie().doubleValue());
 	        	row.createCell(12).setCellValue(bean.getIncrease_farmerincome_achie()==null?0.0:bean.getIncrease_farmerincome_achie().doubleValue());
-	        	
+	        	row.createCell(13).setCellValue(bean.getDegradedper()==null?0.0:bean.getDegradedper().doubleValue());
 	        	
 	        	totAreaCovSoilTar = totAreaCovSoilTar + (bean.getArea_soilmoisture_activities_tar()==null?0.0:bean.getArea_soilmoisture_activities_tar().doubleValue());
 	        	totAreaCovSoilAch = totAreaCovSoilAch + (bean.getArea_soilmoisture_activities_achie()==null?0.0:bean.getArea_soilmoisture_activities_achie().doubleValue());
@@ -893,7 +905,7 @@ public class TargetAchievementofIndicatorController {
 	        	totCroppedAreaAch = totCroppedAreaAch + (bean.getIncrease_croparea_achie()==null?0.0:bean.getIncrease_croparea_achie().doubleValue());
 	        	totFarmerIncomeTar = totFarmerIncomeTar + (bean.getIncrease_farmerincome_tar()==null?0.0:bean.getIncrease_farmerincome_tar().doubleValue());
 	        	totFarmerIncomeAch = totFarmerIncomeAch + (bean.getIncrease_farmerincome_achie()==null?0.0:bean.getIncrease_farmerincome_achie().doubleValue());
-	        	
+	        	degradedperAch=degradedperAch+(bean.getDegradedper()==null?0.0:bean.getDegradedper().doubleValue());
 	        	sno++;
 	        	rowno++;
 	        }
@@ -975,9 +987,23 @@ public class TargetAchievementofIndicatorController {
 		        cell.setCellStyle(style1);
 			}
 			
+			if(userState.equals("0")) 
+			{
+		        cell = row.createCell(13);
+		        cell.setCellValue(String.format(Locale.US, "%.4f",degradedperAch/30));
+		        cell.setCellStyle(style1);
+			}
+			
+			if(!userState.equals("0")) {
+		        cell = row.createCell(13);
+		        cell.setCellValue(String.format(Locale.US, "%.4f",degradedperAch));
+		        cell.setCellStyle(style1);
+			}
+			
+			
 	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 12); 
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 13); 
 			
 			
 			
