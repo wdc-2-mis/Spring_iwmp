@@ -2515,7 +2515,7 @@ public class TargetAchievementofIndicatorController {
 				list=ser.getDistWiseQuarterReport(Integer.parseInt(userState), Integer.parseInt(year),  Integer.parseInt(quarter));
 				
 				CommonFunctions.insertCellHeader(table, "State: "+stName+", Financial Year: "+finName+", Quarter: "+quartename, Element.ALIGN_LEFT, 7, 1, bf8Bold); 
-				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 6, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "All area in ha.", Element.ALIGN_RIGHT, 7, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "District ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Area of degraded land covered/Rainfed area developed", Element.ALIGN_CENTER, 1, 1, bf8Bold);

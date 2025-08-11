@@ -147,7 +147,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
   <thead>
 	 <tr>
 	 	<th colspan="7" style="text-align:left; ">State : ${stName} &emsp; Financial Year : ${finName} &emsp; Quarter : ${quartename}  </th>
-		<th colspan="6" style="text-align:right; ">All Area in Ha.</th>
+		<th colspan="7" style="text-align:right; ">All Area in Ha.</th>
 	</tr>
 	
 	 <tr>
