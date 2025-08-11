@@ -165,6 +165,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
       <th style="text-align:center" >Increase in cropped area</th>
       <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
+      <th style="text-align:center" >Average area of degraded land covered/Rainfed area developed (<b>%</b>)</th>
      </tr>
   
 
@@ -228,8 +229,8 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 		<th class="text-center">11</th>
 		<th class="text-center">12</th>
 		<th class="text-center">13</th>
-		<!-- <th class="text-center">14</th>
-		<th class="text-center">15</th>
+		<th class="text-center">14</th>
+		<!-- <th class="text-center">15</th>
 		<th class="text-center">16</th>
 		<th class="text-center">17</th>
 		<th class="text-center">18</th>
@@ -272,6 +273,8 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[22]}' /></fmt:formatNumber></td>
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[24]}' /></fmt:formatNumber></td> 
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[25]}' /></fmt:formatNumber></td> 
 			
 			<%-- <td><c:out value='${dataV[0]}' /></td>
 			<td><c:out value='${dataV[2]}' /></td>
@@ -336,7 +339,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 				
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/noofdistrict}' /></fmt:formatNumber> </b></td> 
 				
-				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[22]/noofdistrict}' /></fmt:formatNumber> </b></td>
 				
 				
 				
@@ -377,7 +380,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
     </c:if>
     	<c:if test="${distWiseDataListsize==0}">
 			<tr>
-				<td align="center" colspan="13" class="required" style="color:red;">Data Not Found</td>
+				<td align="center" colspan="14" class="required" style="color:red;">Data Not Found</td>
 			</tr>
 		</c:if>
     
