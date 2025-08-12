@@ -28,6 +28,12 @@ public class OOMFDaoImpl implements OOMFDao{
 	
 	@Value("${getOOMFBeforePrayashData}")
 	String getOOMFBeforePrayashData;
+	
+	@Value("${getDistOOMFBeforePrayashData}")
+	String getDistOOMFBeforePrayashData;
+	
+	@Value("${getProjOOMFBeforePrayashData}")
+	String getProjOOMFBeforePrayashData;
 
 	@Override
 	public List<OOMFCurrentStatusBean> getOOMFCurrentStatusReport() {
@@ -187,5 +193,90 @@ public class OOMFDaoImpl implements OOMFDao{
 		}
 		return result;
 	}
+	
+	@Override
+	public List<OOMFCurrentStatusBean> getDistOOMFBeforePrayashData(Integer stcd) {
+		
+		List<OOMFCurrentStatusBean> result=new ArrayList<OOMFCurrentStatusBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				int monaddi=0;
+				String hql=null;
+				SQLQuery query = null;
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				
+				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
+				int finyr= Integer.parseInt(list.get(0).toString());
+				
+				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				int month= Integer.parseInt(list1.get(0).toString());
+				
+				hql=getDistOOMFBeforePrayashData;
+				query = session.createSQLQuery(hql);
+				query.setInteger("yr", finyr);
+				query.setInteger("mnth", month);
+				query.setInteger("stcd", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(OOMFCurrentStatusBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+	
+	@Override
+	public List<OOMFCurrentStatusBean> getProjOOMFBeforePrayashData(Integer dcode) {
+		
+		List<OOMFCurrentStatusBean> result=new ArrayList<OOMFCurrentStatusBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				int monaddi=0;
+				String hql=null;
+				SQLQuery query = null;
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				
+				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
+				int finyr= Integer.parseInt(list.get(0).toString());
+				
+				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				int month= Integer.parseInt(list1.get(0).toString());
+				
+				hql=getProjOOMFBeforePrayashData;
+				query = session.createSQLQuery(hql);
+				query.setInteger("yr", finyr);
+				query.setInteger("mnth", month);
+				query.setInteger("dcode", dcode);
+				query.setResultTransformer(Transformers.aliasToBean(OOMFCurrentStatusBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+	
 
 }

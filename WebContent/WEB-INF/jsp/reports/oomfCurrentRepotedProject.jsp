@@ -24,7 +24,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -State and Activities wise Project Achievement Status for the Financal Year <c:out value='${finyr}' /> and Month <c:out value='${month}' /> </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -State and Activities wise Project Achievement Status for the Financial Year <c:out value='${finyr}' /> and Month <c:out value='${month}' /> </label></h5></div>
 <br>
 <div class ="card">
 
@@ -37,7 +37,7 @@
 			</div>
 		</form>
 	
-	<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>  --> 
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>  
 	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id="dtBasicExample" cellspacing="0" class="table" >
@@ -56,7 +56,7 @@
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Half Year Wise Additional area brought under diversified crops/change in cropping system</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Half Year Wise  Area brought from no crop/single crop to single/multiple crop</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Year Wise Increase in Cropped Area</th>
-			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Increase in Farmer`s Income </th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Increase in Farmer's Income </th>
 		</tr>
   	</thead>
   	<tbody>

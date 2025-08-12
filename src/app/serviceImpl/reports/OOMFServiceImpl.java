@@ -39,5 +39,17 @@ public class OOMFServiceImpl implements OOMFService{
 		return dao.getOOMFBeforePrayashData();
 	}
 	
+	@Override
+	public List<OOMFCurrentStatusBean> getDistOOMFBeforePrayashData(Integer stcd) {
+		
+		return dao.getDistOOMFBeforePrayashData(stcd);
+	}
+	
+	@Override
+	public List<OOMFCurrentStatusBean> getProjOOMFBeforePrayashData(Integer dcode) {
+		
+		return dao.getProjOOMFBeforePrayashData(dcode);
+	}
+	
 
 }

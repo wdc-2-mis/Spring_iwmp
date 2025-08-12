@@ -6,6 +6,10 @@ public class OOMFCurrentStatusBean {
 	
 	private String st_name;
 	private int st_code;
+	private String dist_name;
+	private int dcode;
+	private String proj_name;
+	private int proj_id;
 	private int totaldist;
 	private int totalproject;
 	private int degraded_land_proj_no;
@@ -37,6 +41,30 @@ public class OOMFCurrentStatusBean {
 	}
 	public void setSt_code(int st_code) {
 		this.st_code = st_code;
+	}
+	public String getDist_name() {
+		return dist_name;
+	}
+	public void setDist_name(String dist_name) {
+		this.dist_name = dist_name;
+	}
+	public int getDcode() {
+		return dcode;
+	}
+	public void setDcode(int dcode) {
+		this.dcode = dcode;
+	}
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
+	}
+	public int getProj_id() {
+		return proj_id;
+	}
+	public void setProj_id(int proj_id) {
+		this.proj_id = proj_id;
 	}
 	public int getTotaldist() {
 		return totaldist;

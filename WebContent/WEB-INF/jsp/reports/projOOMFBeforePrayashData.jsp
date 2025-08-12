@@ -4,26 +4,31 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<title>State and Activities Wise OOMF Before Pushing Data</title>
+<title>Project and Activities Wise OOMF Before Pushing Data</title>
 	<script type="text/javascript">
-	function exportExcel(){
-		document.OOMFStateActivities.action="downloadExcelOOMFBeforePrayashData";
-		document.OOMFStateActivities.method="post";
-		document.OOMFStateActivities.submit();
+	function downloadPDF(dcode, stName, distName){
+		document.getElementById("dcode").value=dcode;
+		document.getElementById("stName").value=stName;
+		document.getElementById("distName").value=distName;
+		document.OOMFProjActivities.action="downloadPDFProjOOMFBeforePrayashData";
+		document.OOMFProjActivities.method="post";
+		document.OOMFProjActivities.submit();
 	}
-	
-	function downloadPDF()
-	{
-		document.OOMFStateActivities.action="getOOMFBeforePrayashDataPDF";
-		document.OOMFStateActivities.method="post";
-		document.OOMFStateActivities.submit();
-	} 
+
+	function exportExcel(dcode, stName, distName){
+		document.getElementById("dcode").value=dcode;
+		document.getElementById("stName").value=stName;
+		document.getElementById("distName").value=distName;
+		document.OOMFProjActivities.action="downloadExcelProjOOMFBeforePrayashData";
+		document.OOMFProjActivities.method="post";
+		document.OOMFProjActivities.submit();
+	}
 	
 	</script>
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- State and Activities Wise Current Achievement for the Financial Year <c:out value='${finyr}' /> and Month  <c:out value='${month}' /> </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- Project and Activities Wise Current Achievement for the Financial Year <c:out value='${finyr}' /> and Month  <c:out value='${month}' /> for District '<c:out value='${distName}' />' of State '<c:out value='${stName}' />' </label></h5></div>
 <br>
 <div class ="card">
 
@@ -31,20 +36,23 @@
 	<div class="row">
 	<div class="col-1" ></div>
 	<div class="col-10" >
+	<form action="getOOMFBeforePrayashData" method="post" id="OOMFProjActivities" name="OOMFProjActivities">
+	<input type="hidden" name="stcd" id="stcd" value="" />
 	<input type="hidden" name="stName" id="stName" value="" />
-	<form action="getOOMFBeforePrayashData" method="post" id="OOMFStateActivities" name="OOMFStateActivities">
+	<input type="hidden" name="dcode" id="dcode" value="" />
+	<input type="hidden" name="distName" id="distName" value="" />
 			<div class="form-row">
 			</div>
 		</form>
 	
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>  
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>   
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}', '${stName}','${distName}')" class="btn btn-info">Excel</button>  
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}', '${stName}','${distName}')" class="btn btn-info">PDF</button>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id="dtBasicExample" cellspacing="0" class="table" >
   	<thead>
     	<tr>
       		<th style="text-align:center; vertical-align: middle; width: 2%;">S.No.</th>
-      		<th style="text-align:center; vertical-align: middle; width: 20%;">State Name</th>
+      		<th style="text-align:center; vertical-align: middle; width: 20%;">Project Name</th>
       	<!-- 	<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project</th> -->
       		<th style="text-align:center; vertical-align: middle; width: 7%;">Total Area of Degraded Land Covered/Rainfed Area Developed</th>
      		<th style="text-align:center; vertical-align: middle; width: 7%;">Total Area covered with soil and moisture conservation activities</th>
@@ -58,33 +66,22 @@
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Year Wise Increase in Cropped Area</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Increase in Farmer's Income </th> -->
 		</tr>
+		<tr>
+						<% for (int i = 1; i <= 9; i++) { %>
+						<th class="text-center"><%= i %></th>
+						<% } %>
+		</tr>
   	</thead>
   	<tbody>
-    	<tr>
-			<th class="text-center">1</th>
-			<th class="text-center">2</th>
-			<th class="text-center">3</th>
-			<th class="text-center">4</th>
-			<th class="text-center">5</th>
-			<th class="text-center">6</th>
-			<th class="text-center">7</th>
-			<th class="text-center">8</th>
-			<th class="text-center">9</th>
-			<!-- <th class="text-center">10</th>
-			<th class="text-center">11</th>
-			<th class="text-center">12</th>
-			<th class="text-center">13</th>
-			<th class="text-center">14</th> -->
-			
-		</tr>
+    	
 		<c:set var="count" value="1" />
 		
 				<c:if test="${dataListSize>0}">
 						<c:forEach items="${dataList}" var="data" varStatus="count">							
 							<tr>
 								<td><c:out value='${count.count}' /></td>
- 								<td><a href="getDistOOMFBeforePrayashData?stcd=<c:out value='${data.st_code}' />&stName=${data.st_name}" > <c:out value="${data.st_name}" /></a></td>
-<%--  								<td> <c:out value="${data.st_name}" /></td>  --%>
+ 								<%-- <td><a href="getdistrictWiseJanbhagidariActivitiesReport?id=<c:out value='${data.st_code}' />&stname=${data.st_name}" > <c:out value="${data.st_name}" /></a></td> --%>
+ 								<td> <c:out value="${data.proj_name}" /></td> 
  							<%-- 	<td class="text-right"> <c:out value="${data.totalproject}" /></td> --%>
  								<td class="text-right"> <c:out value="${data.degraded_land}" /></td>
  								<td class="text-right"> <c:out value="${data.soilmoisture}" /></td>

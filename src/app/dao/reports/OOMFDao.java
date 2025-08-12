@@ -10,5 +10,7 @@ public interface OOMFDao {
 	String getOOMFFinYear();
 	String getOOMFFinyearMonth();
 	List<OOMFCurrentStatusBean> getOOMFBeforePrayashData();
+	List<OOMFCurrentStatusBean> getDistOOMFBeforePrayashData(Integer stcd);
+	List<OOMFCurrentStatusBean> getProjOOMFBeforePrayashData(Integer dcode);
 
 }
