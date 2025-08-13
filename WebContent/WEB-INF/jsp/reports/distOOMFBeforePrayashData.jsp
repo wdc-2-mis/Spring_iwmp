@@ -24,6 +24,13 @@
 	}
 	
 	</script>
+	
+	<head>
+<%
+    response.setHeader("Cache-Control", "public, max-age=600");
+    response.setHeader("Pragma", "public");
+%>
+</head>
 
 <body>
 <br>
