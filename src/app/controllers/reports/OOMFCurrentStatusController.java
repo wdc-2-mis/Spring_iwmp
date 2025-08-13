@@ -115,7 +115,7 @@ public class OOMFCurrentStatusController {
 		String stcd = request.getParameter("stcd");
 		String stName = request.getParameter("stName");
 		String distName = request.getParameter("distName");
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = new ModelAndView(); 
 		
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
 		try {
