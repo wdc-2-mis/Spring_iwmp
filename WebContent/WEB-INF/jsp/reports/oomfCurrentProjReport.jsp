@@ -29,7 +29,7 @@ document.OOMFProjectActivities.submit();
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -District and Activities wise Project Achievement Status for the Financial Year <c:out value='${finyr}' /> and Month '<c:out value=' ${month}' />' for State  '<c:out value=' ${stName}' />' </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -Project and Activities wise Project Achievement Status for the Financial Year <c:out value='${finyr}' /> and Month '<c:out value=' ${month}' />' for District  '<c:out value=' ${distName}' />' of State  '<c:out value=' ${stName}' />' </label></h5></div>
 <br>
 <div class ="card">
 
@@ -45,15 +45,15 @@ document.OOMFProjectActivities.submit();
 </div>
 </form>
 
-<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>  
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>  
+<%-- <button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>   --%>
+<%-- <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>   --%>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 <table id="dtBasicExample" cellspacing="0" class="table" >
   <thead>
     <tr>
       <th style="text-align:center; vertical-align: middle; width: 2%;">S.No.</th>
-      <th style="text-align:center; vertical-align: middle; width: 20%;">District Name</th>
-      <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project</th>
+      <th style="text-align:center; vertical-align: middle; width: 20%;">Project Name</th>
+<!--       <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project</th> -->
       <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Area of Degraded Land Covered/Rainfed Area Developed</th>
       <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Area covered with soil and moisture conservation activities</th>
 <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Area Brought under Plantation (Afforestation/Horticulture)</th>
@@ -82,7 +82,6 @@ document.OOMFProjectActivities.submit();
 <th class="text-center">11</th>
 <th class="text-center">12</th>
 <th class="text-center">13</th>
-<th class="text-center">14</th>
 
 </tr>
 <c:set var="count" value="1" />
@@ -91,9 +90,9 @@ document.OOMFProjectActivities.submit();
 <c:forEach items="${dataList}" var="data" varStatus="count">
 <tr>
 <td><c:out value='${count.count}' /></td>
-<td><a href="getProjOOMFCurrentStatusReport?dcode=<c:out value='${data.dcode}' />&stName=<c:out value='${stName}' />&distName=${data.dist_name}" > <c:out value="${data.dist_name}" /></a></td>
-<%--   <td> <c:out value="${data.dist_name}" /></td> --%>
-  <td class="text-right"> <c:out value="${data.totalproject}" /></td>
+  <%-- <td><a href="getdistrictWiseJanbhagidariActivitiesReport?id=<c:out value='${data.st_code}' />&stname=${data.st_name}" > <c:out value="${data.st_name}" /></a></td> --%>
+  <td> <c:out value="${data.proj_name}" /></td>
+<%--   <td class="text-right"> <c:out value="${data.totalproject}" /></td> --%>
   <td class="text-right"> <c:out value="${data.degraded_land_proj_no}" /></td>
   <td class="text-right"> <c:out value="${data.soilmoisture_proj_no}" /></td>
   <td class="text-right"> <c:out value="${data.afforestation_horticulture_proj_no}" /></td>
@@ -113,7 +112,7 @@ document.OOMFProjectActivities.submit();
 
 <tr>
 <td align="right" class="table-primary" colspan="2"><b>Grand Total </b></td>
-<td align="right" class="table-primary" ><b><c:out value='${totalproject1}' /> </b></td>
+<%-- <td align="right" class="table-primary" ><b><c:out value='${totalproject1}' /> </b></td> --%>
 <td align="right" class="table-primary" ><b><c:out value='${degraded_land_proj_no1}' /> </b></td>
 <td align="right" class="table-primary" ><b><c:out value='${soilmoisture_proj_no1}' /> </b></td>
 <td align="right" class="table-primary" ><b><c:out value='${afforestation_horticulture_proj_no1}' /> </b></td>

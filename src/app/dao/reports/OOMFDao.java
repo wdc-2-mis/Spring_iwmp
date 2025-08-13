@@ -13,5 +13,5 @@ public interface OOMFDao {
 	List<OOMFCurrentStatusBean> getOOMFBeforePrayashData();
 	List<OOMFCurrentStatusBean> getDistOOMFBeforePrayashData(Integer stcd);
 	List<OOMFCurrentStatusBean> getProjOOMFBeforePrayashData(Integer dcode);
-
+	List<OOMFCurrentStatusBean> getprojOOMFCurrentStatusReport(Integer dcode);
 }

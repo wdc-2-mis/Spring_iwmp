@@ -37,6 +37,9 @@ public class OOMFDaoImpl implements OOMFDao{
 	
 	@Value("${getProjOOMFBeforePrayashData}")
 	String getProjOOMFBeforePrayashData;
+	
+	@Value("${getProjOOMFCurrentStatusReport}")
+	String getProjOOMFCurrentStatusReport;
 
 	@Override
 	public List<OOMFCurrentStatusBean> getOOMFCurrentStatusReport() {
@@ -312,6 +315,55 @@ public class OOMFDaoImpl implements OOMFDao{
 				query.setInteger("yr", finyr);
 				query.setInteger("mnth", month);
 				query.setInteger("dcode", dcode);
+				query.setResultTransformer(Transformers.aliasToBean(OOMFCurrentStatusBean.class));
+				result = query.list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+			 // session.flush(); session.close();
+		}
+		return result;
+	}
+
+	@Override
+	public List<OOMFCurrentStatusBean> getprojOOMFCurrentStatusReport(Integer dcode) {
+		List<OOMFCurrentStatusBean> result=new ArrayList<OOMFCurrentStatusBean>();
+		Session session = sessionFactory.openSession();
+		try {
+				int monaddi=0;
+				String hql=null;
+				SQLQuery query = null;
+				@SuppressWarnings("unused")
+				Transaction tx = session.beginTransaction(); 
+				
+				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
+				int finyr= Integer.parseInt(list.get(0).toString());
+				
+				int currentMonth = LocalDate.now().getMonthValue();
+				if(currentMonth>=4 && currentMonth<=9)
+					monaddi=9;
+				else
+					monaddi=3;
+				
+				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				int month= Integer.parseInt(list1.get(0).toString());
+				
+				hql=getProjOOMFCurrentStatusReport;
+
+				query = session.createSQLQuery(hql);
+				query.setInteger("dcode", dcode);
+				query.setInteger("yr", finyr);
+				query.setInteger("mnth", month);
+				query.setInteger("mon", monaddi);
 				query.setResultTransformer(Transformers.aliasToBean(OOMFCurrentStatusBean.class));
 				result = query.list();
 		} 

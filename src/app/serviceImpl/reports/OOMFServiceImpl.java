@@ -56,5 +56,11 @@ public class OOMFServiceImpl implements OOMFService{
 		return dao.getProjOOMFBeforePrayashData(dcode);
 	}
 
+	@Override
+	public List<OOMFCurrentStatusBean> getprojOOMFCurrentStatusReport(Integer dcode) {
+
+		return dao.getprojOOMFCurrentStatusReport(dcode);
+	}
+
 
 }

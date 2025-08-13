@@ -174,6 +174,70 @@ public class OOMFCurrentStatusController {
 		return mav; 
 	}
 	
+	@RequestMapping(value="/getProjOOMFCurrentStatusReport", method = RequestMethod.GET)
+	public ModelAndView getProjOOMFCurrentStatusReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		String dcode = request.getParameter("dcode");
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("distName");
+		ModelAndView mav = new ModelAndView(); 
+		
+		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
+		try {
+			
+			mav = new ModelAndView("reports/oomfCurrentProjReport");
+			
+			String finyr=ser.getOOMFFinYear();
+			String month=ser.getOOMFFinyearMonth();
+			
+			list=ser.getprojOOMFCurrentStatusReport(Integer.parseInt(dcode));
+			mav.addObject("dataList",list);
+			mav.addObject("dataListSize",list.size());
+			mav.addObject("dcode",dcode);
+			mav.addObject("stName",stName);
+			mav.addObject("distName",distName);
+			mav.addObject("finyr",finyr);
+			mav.addObject("month",month);
+			
+			int totalproject1=0, degraded_land_proj_no1=0, soilmoisture_proj_no1=0, afforestation_horticulture_proj_no1=0, water_harvest_proj_no1=0,
+					farmer_benefitte_proj_no1=0, protective_irrigation_proj_no1=0, mandays_generated_proj_no1=0, halfyearfill1=0, yearwisefill1=0;
+			
+			
+			if(list != null) 
+			{
+				for(OOMFCurrentStatusBean bean : list) 
+				{
+					totalproject1=totalproject1+bean.getTotalproject();
+					degraded_land_proj_no1=degraded_land_proj_no1+bean.getDegraded_land_proj_no();
+					soilmoisture_proj_no1=soilmoisture_proj_no1+bean.getSoilmoisture_proj_no();
+					afforestation_horticulture_proj_no1=afforestation_horticulture_proj_no1+bean.getAfforestation_horticulture_proj_no();
+					water_harvest_proj_no1=water_harvest_proj_no1+bean.getWater_harvest_proj_no();
+					farmer_benefitte_proj_no1=farmer_benefitte_proj_no1+bean.getFarmer_benefitte_proj_no();
+					protective_irrigation_proj_no1=protective_irrigation_proj_no1+bean.getProtective_irrigation_proj_no();
+					mandays_generated_proj_no1=mandays_generated_proj_no1+bean.getMandays_generated_proj_no();
+					halfyearfill1=halfyearfill1+bean.getHalfyearfill();
+					yearwisefill1=yearwisefill1+bean.getYearwisefill();
+				}
+			}	
+			mav.addObject("totalproject1",totalproject1);
+			mav.addObject("degraded_land_proj_no1",degraded_land_proj_no1);
+			mav.addObject("soilmoisture_proj_no1",soilmoisture_proj_no1);
+			mav.addObject("afforestation_horticulture_proj_no1",afforestation_horticulture_proj_no1);
+			mav.addObject("water_harvest_proj_no1",water_harvest_proj_no1);
+			mav.addObject("farmer_benefitte_proj_no1",farmer_benefitte_proj_no1);
+			mav.addObject("protective_irrigation_proj_no1",protective_irrigation_proj_no1);
+			mav.addObject("mandays_generated_proj_no1",mandays_generated_proj_no1);
+			mav.addObject("halfyearfill1",halfyearfill1);
+			mav.addObject("yearwisefill1",yearwisefill1);
+			
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return mav; 
+	}
+	
 	@RequestMapping(value="/getOOMFBeforePrayashData", method = RequestMethod.GET)
 	public ModelAndView getOOMFBeforePrayashData(HttpServletRequest request, HttpServletResponse response)
 	{
