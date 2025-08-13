@@ -112,6 +112,7 @@ public class OOMFCurrentStatusController {
 	@RequestMapping(value="/getDistOOMFCurrentStatusReport", method = RequestMethod.GET)
 	public ModelAndView getDistOOMFCurrentStatusReport(HttpServletRequest request, HttpServletResponse response)
 	{
+		//
 		String stcd = request.getParameter("stcd");
 		String stName = request.getParameter("stName");
 		String distName = request.getParameter("distName");
