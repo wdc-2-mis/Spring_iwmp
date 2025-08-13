@@ -11,6 +11,8 @@ public interface OOMFService {
 	
 	
 	List<OOMFCurrentStatusBean> getOOMFCurrentStatusReport();
+	List<OOMFCurrentStatusBean> getDistOOMFCurrentStatusReport(Integer stcd);
+	
 	String getOOMFFinYear();
 	String getOOMFFinyearMonth();
 	

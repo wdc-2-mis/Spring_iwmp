@@ -20,6 +20,11 @@ public class OOMFServiceImpl implements OOMFService{
 		
 		return dao.getOOMFCurrentStatusReport();
 	}
+	
+	@Override
+	public List<OOMFCurrentStatusBean> getDistOOMFCurrentStatusReport(Integer stcd) {
+		return dao.getDistOOMFCurrentStatusReport(stcd);
+	}
 
 	@Override
 	public String getOOMFFinYear() {
@@ -50,6 +55,6 @@ public class OOMFServiceImpl implements OOMFService{
 		
 		return dao.getProjOOMFBeforePrayashData(dcode);
 	}
-	
+
 
 }

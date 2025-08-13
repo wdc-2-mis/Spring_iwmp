@@ -83,8 +83,8 @@
 						<c:forEach items="${dataList}" var="data" varStatus="count">							
 							<tr>
 								<td><c:out value='${count.count}' /></td>
- 								<%-- <td><a href="getdistrictWiseJanbhagidariActivitiesReport?id=<c:out value='${data.st_code}' />&stname=${data.st_name}" > <c:out value="${data.st_name}" /></a></td> --%>
- 								<td> <c:out value="${data.st_name}" /></td> 
+ 								<td><a href="getDistOOMFCurrentStatusReport?stcd=<c:out value='${data.st_code}' />&stName=${data.st_name}" > <c:out value="${data.st_name}" /></a></td>
+<%--  								<td> <c:out value="${data.st_name}" /></td>  --%>
  								<td class="text-right"> <c:out value="${data.totalproject}" /></td>
  								<td class="text-right"> <c:out value="${data.degraded_land_proj_no}" /></td>
  								<td class="text-right"> <c:out value="${data.soilmoisture_proj_no}" /></td>

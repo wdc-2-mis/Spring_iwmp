@@ -7,6 +7,7 @@ import app.bean.reports.OOMFCurrentStatusBean;
 public interface OOMFDao {
 	
 	List<OOMFCurrentStatusBean> getOOMFCurrentStatusReport();
+	List<OOMFCurrentStatusBean> getDistOOMFCurrentStatusReport(Integer stcd);
 	String getOOMFFinYear();
 	String getOOMFFinyearMonth();
 	List<OOMFCurrentStatusBean> getOOMFBeforePrayashData();
