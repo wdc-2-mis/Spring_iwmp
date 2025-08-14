@@ -300,4 +300,16 @@ public class CreateAssetIdServiceImpl implements CreateAssetIdService{
 		// TODO Auto-generated method stub
 		return createAssetIdDao.getHeadActivitydesc(headtype);
 	}
+
+	@Override
+	public List<AssetIdBean> getListofWorkWiseStatus(Integer projid, Integer fyear, String hactivity, String wstatus) {
+		// TODO Auto-generated method stub
+		return createAssetIdDao.getListofWorkWiseStatus(projid, fyear, hactivity, wstatus);
+	}
+
+	@Override
+	public List<AssetIdBean> getWorkWiseStatus(Integer workid, String activityid, Integer stcd) {
+		// TODO Auto-generated method stub
+		return createAssetIdDao.getWorkWiseStatus(workid, activityid, stcd);
+	}
 }

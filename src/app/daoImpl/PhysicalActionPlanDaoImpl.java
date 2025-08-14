@@ -837,7 +837,7 @@ public class PhysicalActionPlanDaoImpl implements PhysicalActionPlanDao{
 	public LinkedHashMap<Integer, String> getFromYearForPhysicalActionPlanReport(Integer pCode) {
 		// TODO Auto-generated method stub
 		String getProject=getFromYear;
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.openSession();
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 		try {
 			session.beginTransaction();

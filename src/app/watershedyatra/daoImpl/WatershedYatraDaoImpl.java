@@ -138,10 +138,11 @@ public class WatershedYatraDaoImpl implements WatershedYatraDao{
 		String hql=districtListWatershedyatra;
 		LinkedHashMap<Integer, String> distMap=new LinkedHashMap<Integer, String>();
 		
-		Session session = sessionFactory.getCurrentSession();
-		
+		/* Session session = sessionFactory.getCurrentSession(); */
+		Session session = sessionFactory.openSession();
 		try {
-				session.beginTransaction();
+			
+			Transaction tx = session.beginTransaction();
 				Query query = session.createQuery(hql);
 				query.setInteger("stcode", stcode);
 				distList = query.list();

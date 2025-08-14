@@ -223,6 +223,66 @@ public class CreateAssetIdDaoImpl implements CreateAssetIdDao{
 	@Value("${getMProdCoreactivity}")
 	String getMProdCoreactivity;
 	
+	@Value("${getNrmNotStartedData}")
+	String getNrmNotStartedData;
+	
+	@Value("${getNrmData}")
+	String getNrmData;
+	
+	@Value("${getLivelihoodNotStartedData}")
+	String getLivelihoodNotStartedData;
+	
+	@Value("${getLivelihoodData}")
+	String getLivelihoodData;
+	
+	@Value("${getProductionNotStartedData}")
+	String getProductionNotStartedData;
+	
+	@Value("${getProductionData}")
+	String getProductionData;
+	
+	@Value("${getEPANotStartedData}")
+	String getEPANotStartedData;
+	
+	@Value("${getEPAData}")
+	String getEPAData;
+	
+	@Value("${checkQueryStr}")
+	String checkQueryStr;
+	
+	@Value("${secondQueryStr}")
+	String secondQueryStr;
+	
+	@Value("${thirdQueryStr}")
+	String thirdQueryStr;
+	
+	@Value("${checkLiveQueryStr}")
+	String checkLiveQueryStr;
+	
+	@Value("${secondLivQueryStr}")
+	String secondLivQueryStr;
+	
+	@Value("${thirdLivQueryStr}")
+	String thirdLivQueryStr;
+	
+	@Value("${checkEPAQueryStr}")
+	String checkEPAQueryStr;
+	
+	@Value("${secondEPAQueryStr}")
+	String secondEPAQueryStr;
+	
+	@Value("${thirdEPAQueryStr}")
+	String thirdEPAQueryStr;
+	
+	@Value("${checkProdQueryStr}")
+	String checkProdQueryStr;
+	
+	@Value("${secondProdQueryStr}")
+	String secondProdQueryStr;
+	
+	@Value("${thirdProdQueryStr}")
+	String thirdProdQueryStr;
+	
 	@Override
 	public List<IwmpProjectPhysicalAap> getActionPlan(Integer projId, Integer finYr) {
 		// TODO Auto-generated method stub
@@ -2070,4 +2130,188 @@ public class CreateAssetIdDaoImpl implements CreateAssetIdDao{
 		}
 		return map;
 }
+
+	@Override
+	public List<AssetIdBean> getListofWorkWiseStatus(Integer projid, Integer fyear, String hactivity, String wstatus) {
+		List<AssetIdBean> getrecords=new ArrayList<AssetIdBean>();
+	    SQLQuery query = null;
+	    try {
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			if(hactivity.equals("N")) 
+			{
+				if(wstatus.equals("N"))
+				{
+					query = session.createSQLQuery(getNrmNotStartedData);
+				}
+				else {
+					query = session.createSQLQuery(getNrmData);
+					 }
+				
+			}
+			if(hactivity.equals("E")) 
+			{
+				if(wstatus.equals("N"))
+				{
+					query = session.createSQLQuery(getEPANotStartedData);
+				}
+				else {
+					query = session.createSQLQuery(getEPAData);
+					 }
+				
+			}
+			if(hactivity.equals("L")) 
+			{
+				if(wstatus.equals("N"))
+				{
+					query = session.createSQLQuery(getLivelihoodNotStartedData);
+				}
+				else {
+					query = session.createSQLQuery(getLivelihoodData);
+					 }
+				
+			}
+			if(hactivity.equals("P")) 
+			{
+				if(wstatus.equals("N"))
+				{
+					query = session.createSQLQuery(getProductionNotStartedData);
+				}
+				else {
+					query = session.createSQLQuery(getProductionData);
+					 }
+				
+			}
+			
+			query.setInteger("projid", projid);
+			if(hactivity.equals("N")) {
+			query.setInteger("fyear", fyear);
+			}
+			if(!wstatus.equals("N")) {
+			query.setString("wstatus", wstatus);
+			}
+			
+			query.setResultTransformer(Transformers.aliasToBean(AssetIdBean.class));
+			getrecords = query.list();
+			session.getTransaction().commit();
+	    }
+	    
+	    catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+		}
+		return getrecords;
+	}
+
+	@Override
+	public List<AssetIdBean> getWorkWiseStatus(Integer workid, String activityid, Integer stcd) {
+		List<AssetIdBean> getrecords=new ArrayList<AssetIdBean>();
+	    SQLQuery query = null;
+	    try {
+			Session session = sessionFactory.getCurrentSession();
+			session.beginTransaction();
+			if(activityid.equals("N")) 
+			{
+				SQLQuery checkQuery  = session.createSQLQuery(checkQueryStr);
+				checkQuery.setInteger("stcd", stcd);
+	            checkQuery.setInteger("workid", workid);
+	            
+	            List<Object[]> existsResult = checkQuery.list();
+	            if (!existsResult.isEmpty()) {
+	            	SQLQuery secondQuery = session.createSQLQuery(secondQueryStr);
+	            	secondQuery.setInteger("workid", workid);
+	            	
+	            	
+	            	List<Object[]> secondResult = secondQuery.list();
+	            	 if (secondResult.isEmpty()) {
+	                     query = session.createSQLQuery(thirdQueryStr);
+	                     query.setInteger("workid", workid);
+	                 } else {
+	                     query = secondQuery;
+	                 }
+	            }
+			}
+			if(activityid.equals("E")) 
+			{
+				SQLQuery checkQuery  = session.createSQLQuery(checkEPAQueryStr);
+				checkQuery.setInteger("stcd", stcd);
+	            checkQuery.setInteger("workid", workid);
+	            
+	            List<Object[]> existsResult = checkQuery.list();
+	            if (!existsResult.isEmpty()) {
+	            	SQLQuery secondQuery = session.createSQLQuery(secondEPAQueryStr);
+	            	secondQuery.setInteger("workid", workid);
+	            	
+	            	
+	            	List<Object[]> secondResult = secondQuery.list();
+	            	 if (secondResult.isEmpty()) {
+	                     query = session.createSQLQuery(thirdEPAQueryStr);
+	                     query.setInteger("workid", workid);
+	                 } else {
+	                     query = secondQuery;
+	                 }
+	            }
+			}
+			if(activityid.equals("L")) 
+			{
+				SQLQuery checkQuery  = session.createSQLQuery(checkLiveQueryStr);
+				checkQuery.setInteger("stcd", stcd);
+	            checkQuery.setInteger("workid", workid);
+	            
+	            List<Object[]> existsResult = checkQuery.list();
+	            if (!existsResult.isEmpty()) {
+	            	SQLQuery secondQuery = session.createSQLQuery(secondLivQueryStr);
+	            	secondQuery.setInteger("workid", workid);
+	            	
+	            	
+	            	List<Object[]> secondResult = secondQuery.list();
+	            	 if (secondResult.isEmpty()) {
+	                     query = session.createSQLQuery(thirdLivQueryStr);
+	                     query.setInteger("workid", workid);
+	                 } else {
+	                     query = secondQuery;
+	                 }
+	            }
+			}
+			if(activityid.equals("P")) 
+			{
+				SQLQuery checkQuery  = session.createSQLQuery(checkProdQueryStr);
+				checkQuery.setInteger("stcd", stcd);
+	            checkQuery.setInteger("workid", workid);
+	            
+	            List<Object[]> existsResult = checkQuery.list();
+	            if (!existsResult.isEmpty()) {
+	            	SQLQuery secondQuery = session.createSQLQuery(secondProdQueryStr);
+	            	secondQuery.setInteger("workid", workid);
+	            	
+	            	
+	            	List<Object[]> secondResult = secondQuery.list();
+	            	 if (secondResult.isEmpty()) {
+	                     query = session.createSQLQuery(thirdProdQueryStr);
+	                     query.setInteger("workid", workid);
+	                 } else {
+	                     query = secondQuery;
+	                 }
+	            }
+			}
+			if (query != null) {
+	            query.setResultTransformer(Transformers.aliasToBean(AssetIdBean.class));
+	            getrecords = query.list();
+	        }
+	    }
+	    
+	    catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+		}
+		return getrecords;
+	}
 }

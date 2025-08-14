@@ -70,4 +70,6 @@ public interface CreateAssetIdDao {
 	List<AssetIdBean> getassetcompletiondata(Integer pCode, Integer fCode);
 	List<AssetIdBean> getassetforcloseddata(Integer pCode, Integer fCode);
 	LinkedHashMap<Integer, String> getHeadActivitydesc(String headtype);
+	List<AssetIdBean> getListofWorkWiseStatus(Integer projid, Integer fyear, String hactivity, String wstatus);
+	List<AssetIdBean> getWorkWiseStatus(Integer workid, String activityid, Integer stcd);
 }

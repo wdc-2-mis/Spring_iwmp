@@ -95,68 +95,41 @@ public class ProfileDaoImpl implements ProfileDao{
 	}
 
 	@Override
-	public List<ProfileBean> getMapstate(Integer regid, String usertype) 
-	{
-		List<ProfileBean> result=new ArrayList<ProfileBean>();
-		Session session = sessionFactory.getCurrentSession();
-		
-		try {
-				String hql=null;
-				SQLQuery query = null;
-				
-				
-				 
-				session.beginTransaction();
-				 // query = session.createSQLQuery(hql);
-				if(usertype.equals("ADMIN") || usertype.equals("DL")) {
-					hql =getMapAdminst;
-					query = session.createSQLQuery(hql);
-					query.setInteger("regid", regid);
-					query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
-					result = query.list();
-					
-				}
-				if(usertype.equals("SL")) {
-					hql =getMapState;
-					query = session.createSQLQuery(hql);
-					query.setInteger("regid", regid);
-					query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
-					result = query.list();
-				}
-				if(usertype.equals("DI")) {
-					hql =getMapDistrict;
-					query = session.createSQLQuery(hql);
-					query.setInteger("regid", regid);
-					query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
-					result = query.list();
-					
-				}
-				if(usertype.equals("PI")) {
-					hql =getMapProject;
-					query = session.createSQLQuery(hql);
-					query.setInteger("regid", regid);
-					query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
-					result = query.list();
-					
-				}
-			//	System.out.println("list: "+result.size()+ "regId: "+regid);
-		} 
-		catch (HibernateException e) 
-		{
-			System.err.print("Hibernate error");
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		} 
-		catch(Exception ex)
-		{
-			session.getTransaction().rollback();
-			//System.err.print("Error"+ex.getMessage()+ex.getCause());
-			ex.printStackTrace();
-		}finally {
-			session.getTransaction().commit();
-			
-		}
-		return result;
+	public List<ProfileBean> getMapstate(Integer regid, String usertype) {
+	    List<ProfileBean> result = new ArrayList<>();
+	    Session session = sessionFactory.openSession();
+	    Transaction tx = null;
+
+	    try {
+	        tx = session.beginTransaction();
+	        String hql = null;
+	        SQLQuery query = null;
+
+	        if ("ADMIN".equals(usertype) || "DL".equals(usertype)) {
+	            hql = getMapAdminst;
+	        } else if ("SL".equals(usertype)) {
+	            hql = getMapState;
+	        } else if ("DI".equals(usertype)) {
+	            hql = getMapDistrict;
+	        } else if ("PI".equals(usertype)) {
+	            hql = getMapProject;
+	        }
+
+	        if (hql != null) {
+	            query = session.createSQLQuery(hql);
+	            query.setInteger("regid", regid);
+	            query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
+	            result = query.list();
+	        }
+	        tx.commit();
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
+	        throw e;
+	    } finally {
+	        session.close();
+	    }
+
+	    return result;
 	}
 
 
