@@ -34,7 +34,7 @@
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- District and Activities Wise Current Achievement for the Financial Year <c:out value='${finyr}' /> and Month  <c:out value='${month}' /> for State '<c:out value='${stName}' />' </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME7- District and Activities Wise Current Achievement for the Financial Year '<c:out value='${finyr}' />' and Month '<c:out value='${month}' />' for State '<c:out value='${stName}' />' </label></h5></div>
 <br>
 <div class ="card">
 

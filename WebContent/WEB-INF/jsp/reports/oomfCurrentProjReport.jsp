@@ -4,32 +4,32 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<title>District wise Current Status of OOMF Project Activities</title>
+<title>Project wise Current Status of OOMF Project Activities</title>
 <script type="text/javascript">
-function exportExcel(stcd,stName)
-{
-document.getElementById("stcd").value=stcd;
-document.getElementById("stName").value=stName;
-document.OOMFProjectActivities.action="getOOMFCurrentStatusDistrictReportExcel";
-document.OOMFProjectActivities.method="post";
-document.OOMFProjectActivities.submit();
+
+function downloadPDF(dcode, stName, distName){
+	document.getElementById("dcode").value=dcode;
+	document.getElementById("stName").value=stName;
+	document.getElementById("distName").value=distName;
+	document.OOMFProjectActivities.action="getOOMFCurrentStatusProjectReportPDF";
+	document.OOMFProjectActivities.method="post";
+	document.OOMFProjectActivities.submit();
 }
 
-function downloadPDF(stcd,stName)
-{
-document.getElementById("stcd").value=stcd;
-document.getElementById("stName").value=stName;
-document.OOMFProjectActivities.action="getOOMFCurrentStatusDistrictReportPDF";
-document.OOMFProjectActivities.method="post";
-document.OOMFProjectActivities.submit();
-
+function exportExcel(dcode, stName, distName){
+	document.getElementById("dcode").value=dcode;
+	document.getElementById("stName").value=stName;
+	document.getElementById("distName").value=distName;
+	document.OOMFProjectActivities.action="getOOMFCurrentStatusProjectReportExcel";
+	document.OOMFProjectActivities.method="post";
+	document.OOMFProjectActivities.submit();
 }
 
 </script>
 
 <body>
 <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6 -Project and Activities wise Project Achievement Status for the Financial Year <c:out value='${finyr}' /> and Month '<c:out value=' ${month}' />' for District  '<c:out value=' ${distName}' />' of State  '<c:out value=' ${stName}' />' </label></h5></div>
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5><label id="head">Report ME6- Project and Activities wise Project Achievement Status for the Financial Year '<c:out value='${finyr}' />' and Month '<c:out value='${month}' />' for District '<c:out value='${distName}' />' of State '<c:out value='${stName}' />' </label></h5></div>
 <br>
 <div class ="card">
 
@@ -38,15 +38,17 @@ document.OOMFProjectActivities.submit();
 <div class="col-1" ></div>
 <div class="col-10" >
 <form action="getOOMFCurrentStatusReport" method="post" id="OOMFProjectActivities" name="OOMFProjectActivities">
-<input type="hidden" name="stcd" id="stcd" value="" />
-<input type="hidden" name="stName" id="stName" value="" />
+	<input type="hidden" name="stcd" id="stcd" value="" />
+	<input type="hidden" name="stName" id="stName" value="" />
+	<input type="hidden" name="dcode" id="dcode" value="" />
+	<input type="hidden" name="distName" id="distName" value="" />
 
 <div class="form-row">
 </div>
 </form>
 
-<%-- <button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>   --%>
-<%-- <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>   --%>
+<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}', '${stName}','${distName}')" class="btn btn-info">Excel</button>  
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}', '${stName}','${distName}')" class="btn btn-info">PDF</button>  
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 <table id="dtBasicExample" cellspacing="0" class="table" >
   <thead>
