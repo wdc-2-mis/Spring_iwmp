@@ -986,6 +986,7 @@ public class TargetAchievementofIndicatorController {
 		        cell.setCellValue(String.format(Locale.US, "%.4f",totFarmerIncomeAch));
 		        cell.setCellStyle(style1);
 			}
+			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 			
 			if(userState.equals("0")) 
 			{
@@ -999,7 +1000,6 @@ public class TargetAchievementofIndicatorController {
 		        cell.setCellValue(String.format(Locale.US, "%.4f",degradedperAch));
 		        cell.setCellStyle(style1);
 			}
-			
 			
 	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 	        
@@ -1978,6 +1978,8 @@ public class TargetAchievementofIndicatorController {
 	        cell = row.createCell(12);  
 	        cell.setCellValue(String.format(Locale.US, "%.4f",totFarmerIncomeAch/noofdist));
 	        cell.setCellStyle(style1);
+	        
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 	        
 	        cell = row.createCell(13);  
 	        cell.setCellValue(String.format(Locale.US, "%.4f",degradedperAch/noofdist));
