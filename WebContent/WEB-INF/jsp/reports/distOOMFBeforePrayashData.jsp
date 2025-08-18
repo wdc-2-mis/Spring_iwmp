@@ -85,8 +85,8 @@
 						<c:forEach items="${dataList}" var="data" varStatus="count">							
 							<tr>
 								<td><c:out value='${count.count}' /></td>
-<%--  								<td><a href="getProjOOMFBeforePrayashData?dcode=<c:out value='${data.dcode}' />&stName=<c:out value='${stName}' />&distName=${data.dist_name}" > <c:out value="${data.dist_name}" /></a></td> --%>
- 								<td> <c:out value="${data.dist_name}" /></td> 
+ 								<td><a href="getProjOOMFBeforePrayashData?dcode=<c:out value='${data.dcode}' />&stName=<c:out value='${stName}' />&distName=${data.dist_name}" > <c:out value="${data.dist_name}" /></a></td>
+<%--  								<td> <c:out value="${data.dist_name}" /></td>  --%>
  							<%-- 	<td class="text-right"> <c:out value="${data.totalproject}" /></td> --%>
  								<td class="text-right"> <c:out value="${data.degraded_land}" /></td>
  								<td class="text-right"> <c:out value="${data.soilmoisture}" /></td>
