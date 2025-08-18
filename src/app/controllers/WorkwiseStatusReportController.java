@@ -145,11 +145,17 @@ public class WorkwiseStatusReportController {
 		Integer workid  = Integer.parseInt(request.getParameter("workid"));
 		String activityid= request.getParameter("activityid1");
 		List<AssetIdBean> list=new  ArrayList<AssetIdBean>();
+		Character status = null;
 		 if(session!=null && session.getAttribute("loginID")!=null) {
 			 mav = new ModelAndView("listofWorkWiseStatus");
 			 Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 			 Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 			 list=createAssetIdService.getWorkWiseStatus(workid, activityid, stcd);
+			 if (!list.isEmpty()) {
+				     status = list.get(0).getStatus(); // Assuming getStatus() exists in AssetIdBean
+				   
+				}
+System.out.println("value of status:" +status);
 			 String userType = session.getAttribute("userType").toString();
 			 String stateName = "";
 			 List<ProfileBean> listm = new ArrayList<ProfileBean>();
@@ -162,6 +168,7 @@ public class WorkwiseStatusReportController {
 			 mav.addObject("RecordsCount", list.size());
 			 mav.addObject("stateName", stateName);
 			 mav.addObject("distList", ser.getDistrictList(stcd));	
+			 mav.addObject("statusValue", status);
 			 mav.addObject("hactivity1", activityid);	
 			 
 		 }
