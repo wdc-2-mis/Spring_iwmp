@@ -395,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </c:when>
                 <c:otherwise>
                     <tr>
-                        <td colspan="7" style="text-align:center;">Work Id not found</td>
+                        <td colspan="7" style="text-align:center;">Work Id not found in this Head Activity</td>
                     </tr>
                 </c:otherwise>
             </c:choose>
