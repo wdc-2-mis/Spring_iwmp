@@ -106,7 +106,7 @@ public class UnfreezeOomfQuarterlyTargetController {
 			String all = "";
 			if(!list.isEmpty()) {
 				wdc = list.get(0);
-				all = wdc.getQ1status()!='C'?"disabled":wdc.getQ2status()!='C'?"disabled":wdc.getQ3status()!='C'?"disabled":wdc.getQ4status()!='C'?"disabled":"";
+				all = !Character.valueOf('C').equals(wdc.getQ1status())?"disabled":!Character.valueOf('C').equals(wdc.getQ2status())?"disabled":!Character.valueOf('C').equals(wdc.getQ3status())?"disabled":!Character.valueOf('C').equals(wdc.getQ4status())?"disabled":"";
 			}
 			
 			if(session!=null && session.getAttribute("loginID")!=null) {
@@ -115,10 +115,10 @@ public class UnfreezeOomfQuarterlyTargetController {
 //				mav.addObject("menu", menuController.getMenuUserId(request));
 				if (!list.isEmpty()) {
 					mav.addObject("qAllStatus", all);
-					mav.addObject("q1status", wdc.getQ1status() == 'C' ? "" : "disabled");
-					mav.addObject("q2status", wdc.getQ2status() == 'C' ? "" : "disabled");
-					mav.addObject("q3status", wdc.getQ3status() == 'C' ? "" : "disabled");
-					mav.addObject("q4status", wdc.getQ4status() == 'C' ? "" : "disabled");
+					mav.addObject("q1status", Character.valueOf('C').equals(wdc.getQ1status()) ? "" : "disabled");
+					mav.addObject("q2status", Character.valueOf('C').equals(wdc.getQ2status()) ? "" : "disabled");
+					mav.addObject("q3status", Character.valueOf('C').equals(wdc.getQ3status()) ? "" : "disabled");
+					mav.addObject("q4status", Character.valueOf('C').equals(wdc.getQ4status()) ? "" : "disabled");
 				}
 				mav.addObject("projlistUnfreezeBasel", list);
 				mav.addObject("projlistUnfreezeBaselSize", list.size());
@@ -183,12 +183,12 @@ public class UnfreezeOomfQuarterlyTargetController {
 				String all = "";
 				if(!list.isEmpty()) {
 					wdc = list.get(0);
-					all = wdc.getQ1status()!='C'?"disabled":wdc.getQ2status()!='C'?"disabled":wdc.getQ3status()!='C'?"disabled":wdc.getQ4status()!='C'?"disabled":"";
+					all = !Character.valueOf('C').equals(wdc.getQ1status())?"disabled":!Character.valueOf('C').equals(wdc.getQ2status())?"disabled":!Character.valueOf('C').equals(wdc.getQ3status())?"disabled":!Character.valueOf('C').equals(wdc.getQ4status())?"disabled":"";
 					mav.addObject("qAllStatus", all);
-					mav.addObject("q1status", wdc.getQ1status() == 'C' ? "" : "disabled");
-					mav.addObject("q2status", wdc.getQ2status() == 'C' ? "" : "disabled");
-					mav.addObject("q3status", wdc.getQ3status() == 'C' ? "" : "disabled");
-					mav.addObject("q4status", wdc.getQ4status() == 'C' ? "" : "disabled");
+					mav.addObject("q1status", Character.valueOf('C').equals(wdc.getQ1status()) ? "" : "disabled");
+					mav.addObject("q2status", Character.valueOf('C').equals(wdc.getQ2status()) ? "" : "disabled");
+					mav.addObject("q3status", Character.valueOf('C').equals(wdc.getQ3status()) ? "" : "disabled");
+					mav.addObject("q4status", Character.valueOf('C').equals(wdc.getQ4status()) ? "" : "disabled");
 				}
 				mav.addObject("projlistUnfreezeBasel", list);
 				mav.addObject("projlistUnfreezeBaselSize", list.size());
