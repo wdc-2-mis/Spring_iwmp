@@ -46,6 +46,15 @@ document.addEventListener("DOMContentLoaded", function () {
         let upperComplete = !!(district || project || activityUpper || workStatus || (activityUpper === "N" && year));
         let lowerComplete = !!(workId || activityLower);
 
+        if (!upperComplete && !lowerComplete) {
+            alert("Please fill either upper section or lower section");
+            return false;
+        }
+        if (upperComplete && lowerComplete) {
+            alert("Only fill either upper section or lower section");
+            return false;
+        }
+        
         if (upperComplete) {
              if (!district) { alert("Please select District"); document.getElementById("district").focus(); return false; }
             if (!project) { alert("Please select Project"); document.getElementById("projid").focus(); return false; }
@@ -67,18 +76,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!activityLower) { alert("Please select Head Activity"); document.getElementById("activityid1").focus(); return; }
 
             this.action = "getworkWiseStatus";
+            document.getworkwisedetails.method="post";
             this.submit();
             return false;
         }
 
-        if (!upperComplete && !lowerComplete) {
-            alert("Please fill either upper section or lower section");
-            return false;
-        }
-        if (upperComplete && lowerComplete) {
-            alert("Only fill either upper section or lower section");
-            return false;
-        }
+        
     });
 });
 </script>
@@ -313,11 +316,38 @@ document.addEventListener("DOMContentLoaded", function () {
             <tr>
                 <th>S No</th>
                 <th>Work-id</th>
-                <th>Name of Activity</th>
+                <c:choose>
+                    <c:when test="${hactivity1 == 'N'}">
+                        <th>Name of Head</th>
+                        <th>Name of Activity</th>
+                    </c:when>
+                    <c:otherwise>
+                        <th>Name of Activity</th>
+                    </c:otherwise>
+                </c:choose>
                 <th>Block</th>
                 <th>Village</th>
+                <c:choose>
+                    <c:when test="${statusValue == 'O'.charAt(0)}">
+                        <th>Start Date</th>
+                    </c:when>
+                    <c:when test="${statusValue == 'C'.charAt(0)}">
+                        <th>Start Date</th>
+                        <th>Complete Date</th>
+                       <c:if test="${hactivity1 == 'N'}">
+                        <th>Convergence with other scheme</th>
+                        </c:if>
+                    </c:when>
+                    <c:when test="${statusValue == 'F'.charAt(0)}">
+                        <th>Start Date</th>
+                        <th>Reason</th>
+                        <c:if test="${hactivity1 == 'N'}">
+                        <th>Convergence with other scheme</th>
+                        </c:if>
+                    </c:when>
+                </c:choose>
                 <th>Status</th>
-                <th>Details</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -327,28 +357,40 @@ document.addEventListener("DOMContentLoaded", function () {
                         <tr>
                             <td>${st.index + 1}</td>
                             <td>${row.asseteid}</td>
+                            <c:choose>
+                        <c:when test="${hactivity1 == 'N'}">
+                            <td>${row.headdesc}</td>
                             <td>${row.activitydesc}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${row.activitydesc}</td>
+                        </c:otherwise>
+                    </c:choose>
                             <td>${row.bname}</td>
                             <td>${row.vname}</td>
+                            
+                             <c:choose>
+                        <c:when test="${statusValue == 'O'.charAt(0)}">
+                            <td>${row.sdate}</td>
+                        </c:when>
+                        <c:when test="${statusValue == 'C'.charAt(0)}">
+                            <td>${row.sdate}</td>
+                            <td>${row.cdate}</td>
+                            <c:if test="${hactivity1 == 'N'}">
+                            <td>${row.convergence}</td>
+                            </c:if>
+                        </c:when>
+                        <c:when test="${statusValue == 'F'.charAt(0)}">
+                            <td>${row.sdate}</td>
+                            <td>${row.reason}</td>
+                            <c:if test="${hactivity1 == 'N'}">
+                            <td>${row.convergence}</td>
+                            </c:if>
+                        </c:when>
+                    </c:choose> 
+                            
                             <td>${row.status}</td>
-                            <td></td>
-                            <%-- <td>
-                                <c:choose>
-                                    <c:when test="${row.status == 'O'}">
-                                        Start Date: ${row.sdate}
-                                    </c:when>
-                                    <c:when test="${row.status == 'C'}">
-                                        Start Date: ${row.sdate}, Complete Date: ${row.cdate}
-                                    </c:when>
-                                    <c:when test="${row.status == 'F'}">
-                                        Start Date: ${row.sdate}, Reason: ${row.reason}
-                                    </c:when>
-                                    <c:otherwise>
-                                        N/A
-                                    </c:otherwise>
-                                </c:choose>
-                            </td> --%>
-                        </tr>
+                       </tr>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>

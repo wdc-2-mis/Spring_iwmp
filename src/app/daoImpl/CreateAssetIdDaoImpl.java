@@ -2212,7 +2212,7 @@ public class CreateAssetIdDaoImpl implements CreateAssetIdDao{
 		List<AssetIdBean> getrecords=new ArrayList<AssetIdBean>();
 	    SQLQuery query = null;
 	    try {
-			Session session = sessionFactory.getCurrentSession();
+			Session session = sessionFactory.openSession();
 			session.beginTransaction();
 			if(activityid.equals("N")) 
 			{
