@@ -1426,7 +1426,7 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	    Session session = sessionFactory.getCurrentSession();
 	    try {
 	        session.beginTransaction();
-	        Query<IwmpMFinYear> query = session.createQuery(hql, IwmpMFinYear.class);
+	        Query<IwmpMFinYear> query = session.createQuery(hql, IwmpMFinYear.class).setMaxResults(2);
 	        List<IwmpMFinYear> finList = query.list();
 	        
 	        for (IwmpMFinYear finyear : finList) {
