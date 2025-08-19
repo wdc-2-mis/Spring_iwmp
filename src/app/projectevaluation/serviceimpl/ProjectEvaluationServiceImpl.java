@@ -172,8 +172,8 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		return PEDAO.getCurrentFinYear();
 	}
 	@Override
-	public LinkedHashMap<Integer, String> getmonthforproject() {
-		return PEDAO.getmonthforproject();
+	public LinkedHashMap<Integer, String> getmonthforproject(Integer finid) {
+		return PEDAO.getmonthforproject(finid);
 	}
     @Override
     public List<ProjectEvaluationBean> getprojectstatus(int project, int month) {
@@ -390,6 +390,14 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.updateProjAgency(projid, agencyName);
 	}
+
+	@Override
+	public List<ProjectEvaluationBean> getMonthList(int finYear) {
+		// TODO Auto-generated method stub
+		return PEDAO.getMonthList(finYear);
+	}
+
+	
 	
 	
 	

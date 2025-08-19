@@ -156,7 +156,7 @@ $(document).ready(function() {
   <td><b>Financial Year: <span style="color: red;">*</span></b></td>
           <td>
              <select class="form-control finyear" name="finyear" id="finyear">
-              		<!-- <option value="">--Select Year--</option> -->
+              		<option value="">--Select Year--</option> 
                   	 <c:if test="${not empty finYear}">
                					<c:forEach items="${finYear}" var="lists">
                						<c:if test="${lists.key eq finyear}">
@@ -213,5 +213,5 @@ $(document).ready(function() {
 <footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 </footer>
-<%-- <script src='<c:url value="/resources/js/projectevaluation/profilestart.js" />'></script>  --%>
+<script src='<c:url value="/resources/js/projectevaluation/profilestart.js" />'></script>  
 </body>

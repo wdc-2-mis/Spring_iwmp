@@ -176,6 +176,9 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getpagency}")
 	String getpagency;
 	
+	@Value("${getallprojMonth}")
+	String getallprojMonth;
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -1453,13 +1456,20 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	}
 
 	@Override
-	public LinkedHashMap<Integer, String> getmonthforproject() {
+	public LinkedHashMap<Integer, String> getmonthforproject(Integer finid) {
 		String getMonth=getprojMonth;
+		String getallMonth=getallprojMonth;
 		Session session = sessionFactory.getCurrentSession();
 		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 		try {
 			session.beginTransaction();
-			SQLQuery query= session.createSQLQuery(getMonth);
+			Integer maxYear = (Integer) session.createSQLQuery(
+	                "SELECT MAX(fin_yr_cd) FROM iwmp_m_fin_year")
+	                .uniqueResult();
+
+	        // Step 2: Decide query
+	        String finalQuery = (maxYear != null &&  maxYear == finid) ? getMonth : getallMonth;
+			SQLQuery query= session.createSQLQuery(finalQuery);
 			
 			List<Object[]> rows = query.list();
 			  for(Object[] row : rows){
@@ -2600,6 +2610,43 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		    }
 		    return res;
 		}
+
+		@Override
+		public List<ProjectEvaluationBean> getMonthList(int finYear) {
+		    String hql = getprojMonth;   // query when finYear = max(fin_yr_cd)
+		    String hql1 = getallprojMonth; // query otherwise
+
+		    Session session = null;
+		    List<ProjectEvaluationBean> monthList = new ArrayList<>();
+
+		    try {
+		        session = sessionFactory.getCurrentSession();
+		        session.beginTransaction();
+
+		        // Step 1: Get max(fin_yr_cd)
+		        Integer maxYear = (Integer) session.createSQLQuery(
+		                "SELECT MAX(fin_yr_cd) FROM iwmp_m_fin_year")
+		                .uniqueResult();
+
+		        // Step 2: Decide query
+		        String finalQuery = (maxYear != null && finYear == maxYear) ? hql : hql1;
+
+		        // Step 3: Run query & get list
+		        monthList = session.createSQLQuery(finalQuery)
+                .setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class))
+		                .list();
+
+		        session.getTransaction().commit();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		        if (session != null && session.getTransaction() != null && session.getTransaction().isActive()) {
+		            session.getTransaction().rollback();
+		        }
+		    }
+
+		    return monthList;
+		}
+
 
 }
 

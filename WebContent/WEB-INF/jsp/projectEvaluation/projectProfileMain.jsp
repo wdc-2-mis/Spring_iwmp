@@ -210,7 +210,7 @@ if (!updateAgencyName) {
 </div>
 	 <hr/>
     <div class="tabs-container">  
-        <b> &nbsp;&nbsp;&nbsp; State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, </b>
+        <b>State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, </b>
 
 <b>
     &nbsp;&nbsp;&nbsp; Name of Project Evaluation Agency: &nbsp; <c:out value='${pagency}' />

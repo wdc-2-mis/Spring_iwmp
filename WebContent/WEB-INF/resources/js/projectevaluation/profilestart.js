@@ -47,7 +47,7 @@
 	
 	});*/
 			
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('#view').on('click', function(e) {
         e.preventDefault();
 
@@ -138,9 +138,41 @@ $(document).ready(function() {
             });
         }
     });
+*/
+$(document).ready(function() {
+$("#finyear").change(function() {
+    var selectedYear = $(this).val();
+    if (selectedYear) {
+        $.ajax({
+            url: "getMonthsByFinYear",  // Controller URL
+            type: "GET",
+            data: { finYear: selectedYear },
+            success: function(response) {
+                var $monthDropdown = $("#month");
+                $monthDropdown.empty(); 
+                $monthDropdown.append('<option value="">--Select Month--</option>');
 
-    
+                if (response && response.length > 0) {
+                    $.each(response, function(index, monthObj) {
+                        // Assuming response = [{key: '01', value: 'January'}, ...]
+                        $monthDropdown.append(
+                            $('<option>', {
+                                value: monthObj.key,
+                                text: monthObj.value
+                            })
+                        );
+                    });
+                }
+            },
+            error: function() {
+                console.log("Error loading months for selected financial year.");
+            }
+        });
+    }
 });
+});
+    
+
 
 
 

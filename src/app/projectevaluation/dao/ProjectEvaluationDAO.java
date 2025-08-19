@@ -83,7 +83,7 @@ public interface ProjectEvaluationDAO {
 
     LinkedHashMap<Integer, String> getCurrentFinYear();
 
-	LinkedHashMap<Integer, String> getmonthforproject();
+	LinkedHashMap<Integer, String> getmonthforproject(Integer finid);
 
 	List<ProjectEvaluationBean> getprojectstatus(int project, int month);
 	
@@ -168,5 +168,9 @@ public interface ProjectEvaluationDAO {
 	String getpAgency(String project);
 
 	String updateProjAgency(Integer projid, String agencyName);
+
+	List<ProjectEvaluationBean> getMonthList(int finYear);
+
+	
 }
  

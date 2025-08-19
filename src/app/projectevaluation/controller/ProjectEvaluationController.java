@@ -109,7 +109,10 @@ public class ProjectEvaluationController {
 			mav = new ModelAndView("projectEvaluation/profilestart");
 			mav.addObject("districtList", ser.getDistrictList(stcode));
 			mav.addObject("finYear", PEService.getCurrentFinYear());
-			monthList = PEService.getmonthforproject();
+			System.out.println("himanshu finyear:" +finyear);
+			if(finyear!=null && !finyear.trim().isEmpty()) {
+			monthList = PEService.getmonthforproject(Integer.parseInt(finyear));
+			}
 			mav.addObject("monthList", monthList);
 			
 			if( district!=null && !district.equalsIgnoreCase("")) {
@@ -173,6 +176,23 @@ public class ProjectEvaluationController {
 	    return response;
     }
 
+	@RequestMapping(value = "getMonthsByFinYear", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Map<String, String>> getMonthsByFinYear(@RequestParam("finYear") int finYear) {
+	    List<ProjectEvaluationBean> monthlist = PEService.getMonthList(finYear);
+	    List<Map<String, String>> response = new ArrayList<>();
+
+	    if (monthlist != null && !monthlist.isEmpty()) {
+	        for (ProjectEvaluationBean bean : monthlist) {
+	            Map<String, String> m = new HashMap<>();
+	            m.put("key", String.valueOf(bean.getMonthid()));   // ensure bean has getMonthId()
+	            m.put("value", bean.getMonthname());               // ensure bean has getMonthName()
+	            response.add(m);
+	        }
+	    }
+	    return response; // JSON list like [{"key":"01","value":"January"}, ...]
+	}
+
 	
 	@RequestMapping(value="getProjectProfile", method=RequestMethod.GET)
 	public ModelAndView ProjectProfile(HttpServletRequest request, HttpServletResponse response)
@@ -199,7 +219,7 @@ public class ProjectEvaluationController {
 		 */
 		ModelAndView mav = new ModelAndView();
 		if(session!=null && session.getAttribute("loginID")!=null) {
-			monthList = PEService.getmonthforproject();
+			monthList = PEService.getmonthforproject(Integer.parseInt(finid));
             String projProfilestatus = PEService.checkProjectProfileStatus(project);
             String pAgency = PEService.getpAgency(project);
 			if(projProfilestatus != null) {
@@ -487,7 +507,7 @@ public class ProjectEvaluationController {
 	       
 	    	mav.setViewName("projectEvaluation/projectProfileMain");
 	        	Integer profile_id=0;
-	        	monthList = PEService.getmonthforproject();
+	        	monthList = PEService.getmonthforproject(fcode);
 		        profile_id=PEService.getProjectProfileId( projid, fcode, mcode);
 		        String projProfilestatus = PEService.checkProjectProfileStatus(project);
 				if(projProfilestatus != null) {
@@ -767,7 +787,7 @@ public class ProjectEvaluationController {
 		try {
 			
 		if (session != null && session.getAttribute("loginID") != null) {
-			monthList = PEService.getmonthforproject();
+			
 			Integer projectProfileId = 0;
 			Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
@@ -780,6 +800,7 @@ public class ProjectEvaluationController {
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
+	        monthList = PEService.getmonthforproject(fcode);
 	        
 	        projectProfileId=PEService.getProjectProfileId( projid, fcode, mcode);
 			
@@ -1030,7 +1051,7 @@ public class ProjectEvaluationController {
 		try {
 			
 		if (session != null && session.getAttribute("loginID") != null) {
-			monthList = PEService.getmonthforproject();
+			
 			Integer projectProfileId = 0;
 			Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
@@ -1041,6 +1062,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
@@ -1271,7 +1293,7 @@ public class ProjectEvaluationController {
 	    ModelAndView mav = new ModelAndView();
         try {
 	    if (session != null && session.getAttribute("loginID") != null) {
-	    	monthList = PEService.getmonthforproject();
+	    	
             BigDecimal sanctionedC = new BigDecimal(request.getParameter("sanctionedC"));
 	        BigDecimal cShare = new BigDecimal(request.getParameter("cShare"));
 	        BigDecimal sShare = new BigDecimal(request.getParameter("sShare"));
@@ -1289,6 +1311,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = request.getParameter("pagency");
 	        
@@ -1574,7 +1597,7 @@ public class ProjectEvaluationController {
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
 	    	Character area = 'P';
-	    	monthList = PEService.getmonthforproject();
+	    	
 	    	BigDecimal pre_farmer_income = new BigDecimal(request.getParameter("pre_farmer_income"));
 	    	BigDecimal mid_farmer_income = new BigDecimal(request.getParameter("mid_farmer_income"));
 	    	BigDecimal control_farmer_income = new BigDecimal(request.getParameter("control_farmer_income"));
@@ -1611,7 +1634,7 @@ public class ProjectEvaluationController {
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
-	        
+	        monthList = PEService.getmonthforproject(fcode);
 	        Integer profile_id=0;
 	        profile_id=PEService.getProjectProfileId( projid, fcode, mcode);
 	        
@@ -1848,7 +1871,7 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
-	    	monthList = PEService.getmonthforproject();
+	    	
             Integer created_work = Integer.parseInt(request.getParameter("created_work"));
 	        String created_work_remark = request.getParameter("created_work_remark");
 	        Integer completed_work = Integer.parseInt(request.getParameter("completed_work"));
@@ -1865,6 +1888,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
@@ -2112,7 +2136,7 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
-	    	monthList = PEService.getmonthforproject();
+	    	
 	    	BigDecimal shape_file_area = new BigDecimal(request.getParameter("shape_file_area"));
 	        String shape_file_area_remark = request.getParameter("shape_file_area_remark");
 	        BigDecimal variation_area = new BigDecimal(request.getParameter("variation_area"));
@@ -2127,6 +2151,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
@@ -2364,7 +2389,7 @@ public class ProjectEvaluationController {
 	    	Integer geo_tagg_work = Integer.parseInt(request.getParameter("geo_tagg_work"));
 	        String geo_tagg_work_remark = request.getParameter("geo_tagg_work_remark");
 	        
-	        monthList = PEService.getmonthforproject();
+	        
 	        Integer fromno = Integer.parseInt(request.getParameter("fromno"));
 	        Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 	        String distName = request.getParameter("distName");
@@ -2374,6 +2399,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
@@ -2625,7 +2651,7 @@ public class ProjectEvaluationController {
 
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
-				monthList = PEService.getmonthforproject();
+				
 				Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 				String distName = request.getParameter("dname");
 				Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -2634,6 +2660,7 @@ public class ProjectEvaluationController {
 				Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 				String mname = request.getParameter("mname");
 				Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+				monthList = PEService.getmonthforproject(fcode);
 				String fname = request.getParameter("fname");
 				String pagency = PEService.getpAgency(project);
 				
@@ -2960,7 +2987,7 @@ public class ProjectEvaluationController {
 	    
 	    if (session != null && session.getAttribute("loginID") != null) 
 	    {
-	    	monthList = PEService.getmonthforproject();
+	    	
             String naturalresource =request.getParameter("ntrlresource");
 	        String naturalresourceRemark= request.getParameter("ntrlresourceremark");
 	        String norm=request.getParameter("norm");
@@ -2980,6 +3007,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
@@ -3236,7 +3264,7 @@ public class ProjectEvaluationController {
 		
 		try { 
 			if (session != null && session.getAttribute("loginID") != null) {
-				monthList = PEService.getmonthforproject();
+				
                 Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		        String distName = request.getParameter("dname");
 		        Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -3245,6 +3273,7 @@ public class ProjectEvaluationController {
 		        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 		        String mname = request.getParameter("mname");
 		        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+		        monthList = PEService.getmonthforproject(fcode);
 		        String fname = request.getParameter("fname");
 		        String pagency = PEService.getpAgency(project);
 		        
@@ -3502,7 +3531,7 @@ public class ProjectEvaluationController {
 		
 		try { 
 			if (session != null && session.getAttribute("loginID") != null) {
-				monthList = PEService.getmonthforproject();
+				
                 Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 		        String distName = request.getParameter("dname");
 		        Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -3511,6 +3540,7 @@ public class ProjectEvaluationController {
 		        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 		        String mname = request.getParameter("mname");
 		        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+		        monthList = PEService.getmonthforproject(fcode);
 		        String fname = request.getParameter("fname");
 		        String pagency = PEService.getpAgency(project);
 		        
@@ -5092,7 +5122,7 @@ public class ProjectEvaluationController {
 	
 	try { 
 		if (session != null && session.getAttribute("loginID") != null) {
-			monthList = PEService.getmonthforproject();
+			
 			Integer dcode = Integer.parseInt(request.getParameter("dcode"));
 	        String distName = request.getParameter("dname");
 	        Integer projid = Integer.parseInt(request.getParameter("pcode"));
@@ -5101,6 +5131,7 @@ public class ProjectEvaluationController {
 	        Integer mcode = Integer.parseInt(request.getParameter("mcode"));
 	        String mname = request.getParameter("mname");
 	        Integer fcode = Integer.parseInt(request.getParameter("fcode"));
+	        monthList = PEService.getmonthforproject(fcode);
 	        String fname = request.getParameter("fname");
 	        String pagency = PEService.getpAgency(project);
 	        
