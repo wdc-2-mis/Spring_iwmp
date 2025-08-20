@@ -210,10 +210,10 @@ if (!updateAgencyName) {
 </div>
 	 <hr/>
     <div class="tabs-container">  
-        <b>State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, &nbsp;&nbsp;&nbsp; Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, </b>
+        <center><b>State: &nbsp; <c:out value='${stName}' /> , &nbsp;&nbsp;&nbsp; District: &nbsp; <c:out value='${distName}' /> , &nbsp;&nbsp;&nbsp; Project: &nbsp; <c:out value='${projName}'  />, </b></center>
+        <center><b> Financial Year: &nbsp; <c:out value='${finyr}' />, &nbsp;&nbsp;&nbsp; Month: &nbsp; <c:out value='${monthname}' /><a href="#" class="edit" data-toggle="modal" data-target="#editMonth" data-projid="${projid}" data-month="${monthid}"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>, 
 
-<b>
-    &nbsp;&nbsp;&nbsp; Name of Project Evaluation Agency: &nbsp; <c:out value='${pagency}' />
+&nbsp;&nbsp; Name of Project Evaluation Agency: &nbsp; <c:out value='${pagency}' />
     
     <% if ("true".equals(request.getAttribute("projectProfileConfirmed"))) { %>
     <a href="#" class="edit" data-toggle="modal" data-target="#editAgency" data-projid="${projid}">
@@ -221,7 +221,7 @@ if (!updateAgencyName) {
     </a>
 <% } %>
 
-</b>
+</b></center>
 
  <div class="modal fade" id="editAgency" tabindex="-1" role="dialog" aria-labelledby="editAgencyLabel">
     <div class="modal-dialog" role="document">
