@@ -128,7 +128,6 @@ public class QuarterlyTargetController {
 		List<WdcpmksyMQuadIndicators>indicators = null;
 		Integer i=0;
 		String yes=request.getParameter("res"); 
-		System.out.println("value:" +yes);
 		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("quarterlytarget");
 	//	List<WdcpmksyQuadTarget> Indicatorslist=new  ArrayList<WdcpmksyQuadTarget>();
@@ -155,6 +154,10 @@ public class QuarterlyTargetController {
         //	mav.addObject("Indicatorslist", Indicatorslist);
 		    
 		}
+		 else {
+		        mav.setViewName("login");
+		        mav.addObject("login", new Login());
+		    }
 		
 	return mav;
 	}
