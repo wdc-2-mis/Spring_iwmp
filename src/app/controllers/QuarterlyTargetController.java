@@ -110,7 +110,7 @@ public class QuarterlyTargetController {
 	
 	
 	@RequestMapping(value="/savequarterlytarget", method = RequestMethod.POST) 
-	public ModelAndView saveProjectPreparedness(HttpServletRequest request, HttpServletResponse response, @RequestParam Character status)
+	public ModelAndView saveProjectPreparedness(HttpServletRequest request, HttpServletResponse response, @RequestParam Character status, HttpSession session)
 	{
 		String[] quarter1 = request.getParameterValues("quarter1");
 		String[] quarter2 = request.getParameterValues("quarter2");
@@ -121,7 +121,7 @@ public class QuarterlyTargetController {
 		String q2s = request.getParameter("quad2");
 		String q3s = request.getParameter("quad3");
 		String q4s = request.getParameter("quad4");
-		Integer stcode= Integer.parseInt(session.getAttribute("stateCode").toString());
+		Integer stcode= (Integer) session.getAttribute("stateCode");
 		
 		String ProjId=request.getParameter("project");
 		String financial=request.getParameter("financial");
