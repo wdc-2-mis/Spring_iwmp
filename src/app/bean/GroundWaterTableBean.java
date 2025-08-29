@@ -42,8 +42,15 @@ public class GroundWaterTableBean {
 	private String bstname;
 	private String stname;
 	
+	private Integer fin_yr;
 	
 	
+	public Integer getFin_yr() {
+		return fin_yr;
+	}
+	public void setFin_yr(Integer fin_yr) {
+		this.fin_yr = fin_yr;
+	}
 	public Integer getProj_id() {
 		return proj_id;
 	}
