@@ -179,6 +179,22 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getallprojMonth}")
 	String getallprojMonth;
 	
+	@Value("${peData}")
+	String getMidProjEvlData;
+	
+	@Value("${peStateData}")
+	String getStateMidPEData;
+	
+	@Value("${peDistData}")
+	String getDistMidPEData;
+	
+	@Value("${gradeWiseData}")
+	String getPieGradeMidPEData;
+	
+	@Value("${gradeWiseStateData}")
+	String getGradeStateMidPEData;
+	
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -2645,6 +2661,103 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		    }
 
 		    return monthList;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getProjEvlData() {
+			List<ProjectEvaluationBean> getMidProjEvlDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getMidProjEvlData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getMidProjEvlDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getMidProjEvlDetails;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getStateProjEvlData() {
+			List<ProjectEvaluationBean> getStateMidPEDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getStateMidPEData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getStateMidPEDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getStateMidPEDetails;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getDistProjEvlData(Integer stcd) {
+			List<ProjectEvaluationBean> getDistMidPEDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getDistMidPEData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("stcd", stcd);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getDistMidPEDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getDistMidPEDetails;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getPieGradeData() {
+			List<ProjectEvaluationBean> getPieGradePEDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getPieGradeMidPEData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getPieGradePEDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getPieGradePEDetails;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getGradeWiseStateProjEvlData(String grade) {
+			List<ProjectEvaluationBean> getGradeWiseStateMidPEDetails = new ArrayList<ProjectEvaluationBean>();
+			String hql = getGradeStateMidPEData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setString("grd", grade);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				getGradeWiseStateMidPEDetails = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+				
+			return getGradeWiseStateMidPEDetails;
 		}
 
 

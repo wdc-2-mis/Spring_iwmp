@@ -397,7 +397,30 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		return PEDAO.getMonthList(finYear);
 	}
 
-	
+	@Override
+	public List<ProjectEvaluationBean> getProjEvlData() {
+		return PEDAO.getProjEvlData();
+	}
+
+	@Override
+	public List<ProjectEvaluationBean> getStateProjEvlData() {
+		return PEDAO.getStateProjEvlData();
+	}
+
+	@Override
+	public List<ProjectEvaluationBean> getDistProjEvlData(Integer stcd) {
+		return PEDAO.getDistProjEvlData(stcd);
+	}
+
+	@Override
+	public List<ProjectEvaluationBean> getPieGradeData() {
+		return PEDAO.getPieGradeData();
+	}
+
+	@Override
+	public List<ProjectEvaluationBean> getGradeWiseStateProjEvlData(String grade) {
+		return PEDAO.getGradeWiseStateProjEvlData(grade);
+	}
 	
 	
 	

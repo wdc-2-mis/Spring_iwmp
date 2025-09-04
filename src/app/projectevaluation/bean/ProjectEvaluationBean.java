@@ -19,6 +19,16 @@ public class ProjectEvaluationBean {
 	private Integer not_entered;
 	private Integer total_dist;
 	private Integer total_project;
+	private Integer total_state;
+	private Integer entered_states;
+	private Integer total;
+	private Integer total_e;
+	private Integer total_g;
+	private Integer total_s;
+	private Integer total_a;
+	private BigDecimal grade_percentage;
+	private Integer grade_marks;
+	
 	
 	private BigDecimal sanctioned_cost;
 	private BigDecimal central;
@@ -320,7 +330,60 @@ public class ProjectEvaluationBean {
 	public void setTotal_project(Integer total_project) {
 		this.total_project = total_project;
 	}
-	
+	public Integer getTotal_state() {
+		return total_state;
+	}
+	public void setTotal_state(Integer total_state) {
+		this.total_state = total_state;
+	}
+	public Integer getEntered_states() {
+		return entered_states;
+	}
+	public void setEntered_states(Integer entered_states) {
+		this.entered_states = entered_states;
+	}
+	public Integer getTotal() {
+		return total;
+	}
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+	public Integer getTotal_e() {
+		return total_e;
+	}
+	public void setTotal_e(Integer total_e) {
+		this.total_e = total_e;
+	}
+	public Integer getTotal_g() {
+		return total_g;
+	}
+	public void setTotal_g(Integer total_g) {
+		this.total_g = total_g;
+	}
+	public Integer getTotal_s() {
+		return total_s;
+	}
+	public void setTotal_s(Integer total_s) {
+		this.total_s = total_s;
+	}
+	public Integer getTotal_a() {
+		return total_a;
+	}
+	public void setTotal_a(Integer total_a) {
+		this.total_a = total_a;
+	}
+	public BigDecimal getGrade_percentage() {
+		return grade_percentage;
+	}
+	public void setGrade_percentage(BigDecimal grade_percentage) {
+		this.grade_percentage = grade_percentage;
+	}
+	public Integer getGrade_marks() {
+		return grade_marks;
+	}
+	public void setGrade_marks(Integer grade_marks) {
+		this.grade_marks = grade_marks;
+	}
 	public BigDecimal getSanctioned_cost() {
 		return sanctioned_cost;
 	}

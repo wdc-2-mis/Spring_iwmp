@@ -173,7 +173,15 @@ public interface ProjectEvaluationService {
 	String updateProjAgency(Integer projid, String agencyName);
 
 	List<ProjectEvaluationBean> getMonthList(int finYear);
-
 	
+	List<ProjectEvaluationBean> getProjEvlData();
+	
+	List<ProjectEvaluationBean> getStateProjEvlData();
+	
+	List<ProjectEvaluationBean> getDistProjEvlData(Integer stcd);
+
+	List<ProjectEvaluationBean> getPieGradeData();
+
+	List<ProjectEvaluationBean> getGradeWiseStateProjEvlData(String grade);
 	
 }
