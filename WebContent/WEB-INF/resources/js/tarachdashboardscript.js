@@ -2079,7 +2079,7 @@ formatter: function (val, opt) {
         areaChart.render();  
   
  // bar chart start 
- var barChartsOptions = {
+ /*var barChartsOptions = {
 	      series: [{
 			   name: 'Achievement',
 		  data: $irrLab1,
@@ -2170,556 +2170,631 @@ formatter: function (val, opt) {
         var barChart = new ApexCharts(document.querySelector("#bar-chart1"), barChartsOptions);
         barChart.render();
         
+*/
+// Full 12 months data
+let fullCategories = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData = $irrLab1;   // assume $irrLab1 = [valApr, valMay, ..., valMar]
 
+// Show window size = 5 months
+let windowSize = 5;
+let startIndex = 0;
 
-        
-   var barChartsOptions = {
-          series: [{
-			   name: 'Achievement',
-         data: $irrLab2,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          toolbar:{
-			  show: false,
-		  },
-        },
-        colors: [
-			
-			'#4f35a1'
-			],
-			
-		   plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-       stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-			 grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },   
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 1
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: "#000000",
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+// Function to render chart with sliced data
+function renderChart() {
+  let sliceCategories = fullCategories.slice(startIndex, startIndex + windowSize);
+  let sliceData = fullData.slice(startIndex, startIndex + windowSize);
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart2"), barChartsOptions);
-        barChart.render();
-        
-   var barChartsOptions = {
-	      series: [{
-			   name: 'Achievement',
-		  data: $irrLab3,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          toolbar:{
-			  show: false,
-		  },
-        },
-        colors: [
-			'#BA4A00'
-			],
-			
-		    plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },   
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 1
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: "#000000",
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+  var barChartsOptions = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#2e7d32'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart3"), barChartsOptions);
-        barChart.render();
-      
+  // destroy previous chart before re-render
+  if (window.barChart1) {
+    window.barChart1.destroy();
+  }
+
+  window.barChart1 = new ApexCharts(document.querySelector("#bar-chart1"), barChartsOptions);
+  window.barChart1.render();
+}
+
+// Initial render
+renderChart();
+
+// Button click events
+document.getElementById("prevBtn").addEventListener("click", function () {
+  if (startIndex > 0) {
+    startIndex--;
+    renderChart();
+  }
+});
+
+document.getElementById("nextBtn").addEventListener("click", function () {
+  if (startIndex + windowSize < fullCategories.length) {
+    startIndex++;
+    renderChart();
+  }
+});
+
+  /*end of bar chart 1*/ 
+  
+  /*start of bar chart 2*/     
+   let fullCategories2 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData2 = $irrLab2;   // assume $irrLab2 = [valApr, valMay, ..., valMar]
+
+let windowSize2 = 5;
+let startIndex2 = 0;
+
+function renderChart2() {
+  let sliceCategories = fullCategories2.slice(startIndex2, startIndex2 + windowSize2);
+  let sliceData = fullData2.slice(startIndex2, startIndex2 + windowSize2);
+
+  var barChartsOptions2 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#4f35a1'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart2) {
+    window.barChart2.destroy();
+  }
+
+  window.barChart2 = new ApexCharts(document.querySelector("#bar-chart2"), barChartsOptions2);
+  window.barChart2.render();
+}
+
+// Initial render
+renderChart2();
+
+// Button click events
+document.getElementById("prevBtn2").addEventListener("click", function () {
+  if (startIndex2 > 0) {
+    startIndex2--;
+    renderChart2();
+  }
+});
+
+document.getElementById("nextBtn2").addEventListener("click", function () {
+  if (startIndex2 + windowSize2 < fullCategories2.length) {
+    startIndex2++;
+    renderChart2();
+  }
+});
+
+/*end of bar chart 2*/    
+    
+/* start bar chart 3*/
+
+let fullCategories3 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData3 = $irrLab3;   // assume $irrLab2 = [valApr, valMay, ..., valMar]
+
+let windowSize3 = 5;
+let startIndex3 = 0;
+
+function renderChart3() {
+  let sliceCategories = fullCategories3.slice(startIndex3, startIndex3 + windowSize3);
+  let sliceData = fullData3.slice(startIndex3, startIndex3 + windowSize3);
+
+  var barChartsOptions3 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#BA4A00'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart3) {
+    window.barChart3.destroy();
+  }
+
+  window.barChart3 = new ApexCharts(document.querySelector("#bar-chart3"), barChartsOptions3);
+  window.barChart3.render();
+}
+
+// Initial render
+renderChart3();
+
+// Button click events
+document.getElementById("prevBtn3").addEventListener("click", function () {
+  if (startIndex3 > 0) {
+    startIndex3--;
+    renderChart3();
+  }
+});
+
+document.getElementById("nextBtn3").addEventListener("click", function () {
+  if (startIndex3 + windowSize3 < fullCategories3.length) {
+    startIndex3++;
+    renderChart3();
+  }
+});
+
+/*end of bar char 3*/    
+    
+/*start of bar chart 4*/
+let fullCategories4 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData4 = $irrLab4;   // assume $irrLab2 = [valApr, valMay, ..., valMar]
+
+let windowSize4 = 5;
+let startIndex4 = 0;
+
+function renderChart4() {
+  let sliceCategories = fullCategories4.slice(startIndex4, startIndex4 + windowSize4);
+  let sliceData = fullData4.slice(startIndex4, startIndex4 + windowSize4);
+
+  var barChartsOptions4 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#378FBB'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart4) {
+    window.barChart4.destroy();
+  }
+
+  window.barChart4 = new ApexCharts(document.querySelector("#bar-chart4"), barChartsOptions4);
+  window.barChart4.render();
+}
+
+// Initial render
+renderChart4();
+
+// Button click events
+document.getElementById("prevBtn4").addEventListener("click", function () {
+  if (startIndex4 > 0) {
+    startIndex4--;
+    renderChart4();
+  }
+});
+
+document.getElementById("nextBtn4").addEventListener("click", function () {
+  if (startIndex4 + windowSize4 < fullCategories4.length) {
+    startIndex4++;
+    renderChart4();
+  }
+});
        
-        
-   var barChartsOptions = {
-	      series: [{
-			   name: 'Achievement',
-		  data: $irrLab4,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          toolbar:{
-			  show: false,
-		  },
-        },
-        colors: [
-			'#378FBB'
-			],
-			
-		    plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-			/*stroke: {
-			curve: 'straight',
-			},*/
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },   
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 1
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: "#000000",
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+/*end of bar chart 4*/
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart4"), barChartsOptions);
-        barChart.render();          
+
+/*start of bar chart 5*/
+let fullCategories5 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData5 = $irrLab5;  
+
+let windowSize5 = 5;
+let startIndex5 = 0;
+
+function renderChart5() {
+  let sliceCategories = fullCategories5.slice(startIndex5, startIndex5 + windowSize5);
+  let sliceData = fullData5.slice(startIndex5, startIndex5 + windowSize5);
+
+  var barChartsOptions5 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#DB7093'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart5) {
+    window.barChart5.destroy();
+  }
+
+  window.barChart5 = new ApexCharts(document.querySelector("#bar-chart5"), barChartsOptions5);
+  window.barChart5.render();
+}
+
+// Initial render
+renderChart5();
+
+// Button click events
+document.getElementById("prevBtn5").addEventListener("click", function () {
+  if (startIndex5 > 0) {
+    startIndex5--;
+    renderChart5();
+  }
+});
+
+document.getElementById("nextBtn5").addEventListener("click", function () {
+  if (startIndex5 + windowSize5 < fullCategories5.length) {
+    startIndex5++;
+    renderChart5();
+  }
+});
+/*end of bar chart 5*/
+          
+   /*start of bar chart 6*/
+   let fullCategories6 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData6 = $irrLab6;  
+
+let windowSize6 = 5;
+let startIndex6 = 0;
+
+function renderChart6() {
+  let sliceCategories = fullCategories6.slice(startIndex6, startIndex6 + windowSize6);
+  let sliceData = fullData6.slice(startIndex6, startIndex6 + windowSize6);
+
+  var barChartsOptions6 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#DAA520'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart6) {
+    window.barChart6.destroy();
+  }
+
+  window.barChart6 = new ApexCharts(document.querySelector("#bar-chart6"), barChartsOptions6);
+  window.barChart6.render();
+}
+
+// Initial render
+renderChart6();
+
+// Button click events
+document.getElementById("prevBtn6").addEventListener("click", function () {
+  if (startIndex6 > 0) {
+    startIndex6--;
+    renderChart6();
+  }
+});
+
+document.getElementById("nextBtn6").addEventListener("click", function () {
+  if (startIndex6 + windowSize6 < fullCategories6.length) {
+    startIndex6++;
+    renderChart6();
+  }
+});
+   /*end of bar chart 6*/    
        
-       
-    var barChartsOptions = {
-	      series: [{
-			   name: 'Achievement',
-		  data: $irrLab5,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          toolbar:{
-			  show: false,
-		  },
-        },
-        colors: [
-			'#DB7093'
-			],
-			
-		    plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },   
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 1
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: "#000000",
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+   /*start of bar chart 7*/
+   let fullCategories7 = ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'];
+let fullData7 = $irrLab7;  
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart5"), barChartsOptions);
-        barChart.render();      
-       
-       var barChartsOptions = {
-	      series: [{
-			   name: 'Achievement',
-		  data: $irrLab6,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          zoom: {
-            enabled: false
-          }
-        },
-        colors: [
-			'#DAA520'
-			],
-			
-		   plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-			 grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 0.5
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: '#f3f3f3',
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+let windowSize7 = 5;
+let startIndex7 = 0;
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart6"), barChartsOptions);
-        barChart.render();    
-        
-        var barChartsOptions = {
-	      series: [{
-			   name: 'Achievement',
-		  data: $irrLab7,
-        }
-        ],
-         
-          chart: {
-          type: 'bar',
-          height: 350,
-          toolbar:{
-			  show: false,
-		  },
-        },
-        colors: [
-			'#800000'
-			],
-			
-		    plotOptions: {
-          bar: {
-			  distributed: false,
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded',
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-			show: true,
-			width: 2,
-			colors: ['transparent']
-			},
-        grid: {
-          row: {
-            colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-            opacity: 0.5
-          },   
-        },
-        xaxis: {
-          categories: ['April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'March'],
-        labels: {
-			style: {
-				colors: "#000000",
-		},
-		},
-		},
-		yaxis:{
-			
-		labels:{
-			style: {
-				colors: "#000000"
-			},
-		},
-		},
-		fill: {
-			opacity: 1
-		},
-		grid:{
-			borderColor: "#55596e",
-			yaxis: {
-				lines:{
-					show: true,
-				},
-			},
-			xaxis:{
-				lines: {
-					show: true,
-				},
-			},
-		},
-		legend:{
-		labels: {
-			colors: "#000000",
-			},
-			show: true,
-			position: "bottom",
-		},
-		tooltip: {
-			shared: true,
-          intersect: false,
-          theme:"dark",
-		}
-        
-        };
+function renderChart7() {
+  let sliceCategories = fullCategories7.slice(startIndex7, startIndex7 + windowSize7);
+  let sliceData = fullData7.slice(startIndex7, startIndex7 + windowSize7);
 
-        var barChart = new ApexCharts(document.querySelector("#bar-chart7"), barChartsOptions);
-        barChart.render();    
-        
+  var barChartsOptions7 = {
+    series: [{
+      name: 'Achievement',
+      data: sliceData,
+    }],
+    chart: {
+      type: 'bar',
+      height: 350,
+      toolbar: { show: false },
+    },
+    colors: ['#800000'],
+    plotOptions: {
+      bar: {
+        distributed: false,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded',
+      },
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    xaxis: {
+      categories: sliceCategories,
+      labels: { style: { colors: "#000000" } }
+    },
+    yaxis: {
+      labels: { style: { colors: "#000000" } }
+    },
+    fill: { opacity: 1 },
+    grid: {
+      borderColor: "#55596e",
+      yaxis: { lines: { show: true } },
+      xaxis: { lines: { show: true } },
+    },
+    legend: {
+      labels: { colors: "#000000" },
+      show: true,
+      position: "bottom",
+    },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      theme: "dark",
+    }
+  };
+
+  if (window.barChart7) {
+    window.barChart7.destroy();
+  }
+
+  window.barChart7 = new ApexCharts(document.querySelector("#bar-chart7"), barChartsOptions7);
+  window.barChart7.render();
+}
+
+// Initial render
+renderChart7();
+
+// Button click events
+document.getElementById("prevBtn7").addEventListener("click", function () {
+  if (startIndex7 > 0) {
+    startIndex7--;
+    renderChart7();
+  }
+});
+
+document.getElementById("nextBtn7").addEventListener("click", function () {
+  if (startIndex7 + windowSize7 < fullCategories7.length) {
+    startIndex7++;
+    renderChart7();
+  }
+});
+   /*end of bar chart 7*/   
     
     
   var pieChartsoptions = {

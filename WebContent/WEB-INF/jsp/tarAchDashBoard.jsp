@@ -68,9 +68,9 @@
  <div class ="grid-container">
  
  <header class="header">
- <div class="menu-icon" onclick="openSidebar()">
+ <!-- <div class="menu-icon" onclick="openSidebar()">
  <span class="material-icons-outlined">menu</span>
- </div>
+ </div> -->
  
  
  <div class="header-left">
@@ -90,6 +90,11 @@
  <span class="material-icons-outlined">poll</span>REPORT
  </a>
  </li>
+ <li class="list-item">
+ <a href="tarAchProgDashboardData">
+ <span class="material-icons-outlined">dashboard</span>TARGET/ACHIEVMENT (Progressive)
+ </a>
+ </li>
  </ul>
  </div>
   
@@ -104,7 +109,7 @@
  </div>
  </header>
  
- <div id="sidebar">
+ <!-- <div id="sidebar">
  <div class="sidebar-title">
  <div class="sidebar-brand">
  <span class="material-icons-outlined">menu</span>Dashboard
@@ -131,7 +136,7 @@
   </ul>
   
    
- </div>
+ </div> -->
   <main class="main-container">
   <form action="getTarAchDashboardData" method="get">
   <div class="main-title">
@@ -374,20 +379,32 @@
   
  <div class="charts-card">
  <h3 class="chart-title">Area brought under Afforestation / Agriculture / Pasture etc.</h3>
+ 
  <div id="bar-chart1"></div>
  <c:forEach var="list" items="${monthWiseAch1}">
  <input type="hidden" name = "afforestation1[]" id = "afforestation1" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn">⬅️</button>
+    <button id="nextBtn">➡️</button>
+  </div>
+ 
  </div>
  
  
+
  <div class="charts-card">
- <p class="chart-title">Area brought under Horticulture</p>
- <div id="bar-chart2"></div>
- <c:forEach var="list" items="${monthWiseAch2}">
- <input type="hidden" name = "afforestation2[]" id = "afforestation2" value="${list.achievement }">
- </c:forEach>
- </div>
+  <h3 class="chart-title">Area brought under Agriculture Production</h3>
+<h3></h3>
+  <div id="bar-chart2"></div>
+  <c:forEach var="list" items="${monthWiseAch2}">
+    <input type="hidden" name="afforestation2[]" id="afforestation2" value="${list.achievement}">
+  </c:forEach>
+  <div style="text-align:center;">
+    <button id="prevBtn2">⬅️</button>
+    <button id="nextBtn2">➡️</button>
+  </div>
+</div>
  
  <div class="charts-card">
  <p class="chart-title">Area covered under Soil and Moisture conservation activities</p>
@@ -395,22 +412,36 @@
  <c:forEach var="list" items="${monthWiseAch3}">
  <input type="hidden" name = "afforestation3[]" id = "afforestation3" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn3">⬅️</button>
+    <button id="nextBtn3">➡️</button>
+  </div>
  </div>
  
  <div class="charts-card">
  <p class="chart-title">Water Harvesting Structure (New created)</p>
+ <h3></h3>
  <div id="bar-chart4"></div>
  <c:forEach var="list" items="${monthWiseAch4}">
  <input type="hidden" name = "afforestation4[]" id = "afforestation4" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn4">⬅️</button>
+    <button id="nextBtn4">➡️</button>
+  </div>
  </div>
  
  <div class="charts-card">
  <p class="chart-title">Water Harvesting Structure (Renovated)</p>
+  <h3></h3>
  <div id="bar-chart5"></div>
  <c:forEach var="list" items="${monthWiseAch5}">
  <input type="hidden" name = "afforestation5[]" id = "afforestation5" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn5">⬅️</button>
+    <button id="nextBtn5">➡️</button>
+  </div>
  </div>
  
  <div class="charts-card">
@@ -419,6 +450,10 @@
  <c:forEach var="list" items="${monthWiseAch6}">
  <input type="hidden" name = "afforestation6[]" id = "afforestation6" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn6">⬅️</button>
+    <button id="nextBtn6">➡️</button>
+  </div>
  </div>
  <!--  -->
  <div class="charts-card">
@@ -427,6 +462,10 @@
  <c:forEach var="list" items="${monthWiseAch7}">
  <input type="hidden" name = "afforestation7[]" id = "afforestation7" value="${list.achievement }">
  </c:forEach>
+ <div style="text-align:center;">
+    <button id="prevBtn7">⬅️</button>
+    <button id="nextBtn7">➡️</button>
+  </div>
  </div>
  
  <div class="charts-card">

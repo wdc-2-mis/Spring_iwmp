@@ -24,9 +24,9 @@
  <div class ="grid-container">
  
  <header class="header">
- <div class="menu-icon" onclick="openSidebar()">
+ <!-- <div class="menu-icon" onclick="openSidebar()">
  <span class="material-icons-outlined">menu</span>
- </div>
+ </div> -->
  
  
  <div class="header-left">
@@ -46,6 +46,11 @@
  <span class="material-icons-outlined">poll</span>REPORT
  </a>
  </li>
+ <li class="list-item">
+ <a href="tarachDashBoard">
+ <span class="material-icons-outlined">dashboard</span>TARGET/ACHIEVEMENT
+ </a>
+ </li>
  </ul>
  </div>
   
@@ -60,7 +65,7 @@
  </div>
  </header>
  
- <div id="sidebar">
+ <!-- <div id="sidebar">
  <div class="sidebar-title">
  <div class="sidebar-brand">
  <span class="material-icons-outlined">menu</span>Dashboard
@@ -85,7 +90,7 @@
   </ul>
   
   
- </div>
+ </div> -->
  
 
 <main class="main-container" > 
