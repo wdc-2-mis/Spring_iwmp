@@ -1898,6 +1898,26 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 					menu.setUpdatedOn(new Date());
 					menu.setSummary(summary);
 					menu.setGrade(grade);
+					
+					int gradeMarks = 0;
+		            switch (grade) {
+		                case 'E':
+		                    gradeMarks = 100;
+		                    break;
+		                case 'G':
+		                    gradeMarks = 75;
+		                    break;
+		                case 'S':
+		                    gradeMarks = 50;
+		                    break;
+		                case 'A':
+		                    gradeMarks = 25;
+		                    break;
+		                default:
+		                    gradeMarks = 0;
+		            }
+		            menu.setGrade_marks(gradeMarks);
+					
 					session.update(menu);
 				}
 				session.getTransaction().commit();
