@@ -26,7 +26,7 @@ public class UnfreezeAddParaOutcomeDaoImpl implements UnfreezeAddParaOutcomeDao 
 		try {
 			Query query = null;
 			session.beginTransaction();
-			query = session.createQuery("from Outcome2Data where iwmpMFinYear.finYrCd = :finyear and iwmpMProject.projectId = :projid and status = 'C'");
+			query = session.createQuery("from Outcome2Data where iwmpMFinYear.finYrCd = :finyear and iwmpMFinYear.achievStatus = null and iwmpMMonth.achievStatus = null and iwmpMProject.projectId = :projid and status = 'C'");
 			query.setInteger("finyear", finYrCd);
 			query.setInteger("projid", projId);
 //			query.setResultTransformer(Transformers.aliasToBean(WdcpmksyQuadTarget.class));

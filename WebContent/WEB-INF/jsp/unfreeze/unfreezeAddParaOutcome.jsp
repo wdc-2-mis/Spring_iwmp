@@ -171,13 +171,18 @@ function completebsl(){
               <option value="">--Select FinYear--</option>
               	 <c:if test="${not empty financialYear}">
                					<c:forEach items="${financialYear}" var="lists">
-               					<c:if test="${lists.finYrCd eq year}">
-       								<option value="<c:out value='${lists.finYrCd}'/>" selected="selected" ><c:out value="${lists.finYrDesc}" /></option>
-       								  
-       							</c:if>	
-       							<c:if test="${lists.finYrCd ne year}">
-       								<option value="<c:out value='${lists.finYrCd}'/>" ><c:out value="${lists.finYrDesc}" /></option>
-       							</c:if>
+									<c:if test="${lists.achievStatus eq null}">
+										<c:if test="${lists.finYrCd eq year}">
+											<option value="<c:out value='${lists.finYrCd}'/>"
+												selected="selected"><c:out
+													value="${lists.finYrDesc}" /></option>
+
+										</c:if>
+										<c:if test="${lists.finYrCd ne year}">
+											<option value="<c:out value='${lists.finYrCd}'/>"><c:out
+													value="${lists.finYrDesc}" /></option>
+										</c:if>
+									</c:if>
 								</c:forEach>
 						</c:if>  
               </select>
@@ -192,38 +197,47 @@ function completebsl(){
 		<c:if test="${not empty state and not empty district and not empty project and not empty year}">
             	<table id="tblReport" class="table">
             	<thead>
-              		
-              		<c:if test = "${projlistUnfreezeBaselSize > 0}">
-              		<tr>
-              				<th class="displ" align="center"><input type="checkbox" id="allmonth" onchange="selects(this);">&nbsp;&nbsp; Select All</th>
-              				<th align="center"> Financial Year</th>
-              				<th align="center"> Month</th>
-              				
-              		</tr>
-              		<c:forEach var="list" items="${projlistUnfreezeBasel}" varStatus="status">
-              			<tr>
-              				<td align="left"><input type="checkbox" id = "month" name="month" value=<c:out value ="${list.outcome2Id}"/> onchange="checkAllCheckboxes()"> &nbsp;&nbsp; <c:out value ="${status.count}"/></td>
-              				<td align="left"> <c:out value ="${list.iwmpMFinYear.finYrDesc}"/></td>
-              				<td align="left"> <c:out value ="${list.iwmpMMonth.monthName}"/></td>
-              			</tr>
-              		</c:forEach>
-              		</c:if>
-								<c:if test="${projlistUnfreezeBaselSize==0}">
-									
-										<td align="left" colspan = "5">No Data Found !</td>
-								
-								</c:if>
-							
-               		</thead>
+
+							<c:if test="${projlistUnfreezeBaselSize > 0}">
+								<tr>
+									<th class="displ" align="center"><input type="checkbox"
+										id="allmonth" onchange="selects(this);">&nbsp;&nbsp;
+										Select All</th>
+									<th align="center">Financial Year</th>
+									<th align="center">Month</th>
+
+								</tr>
+								<c:forEach var="list" items="${projlistUnfreezeBasel}"
+									varStatus="status">
+									<tr>
+										<td align="left"><input type="checkbox" id="month"
+											name="month" value=<c:out value ="${list.outcome2Id}"/>
+											onchange="checkAllCheckboxes()"> &nbsp;&nbsp; <c:out
+												value="${status.count}" /></td>
+										<td align="left"><c:out
+												value="${list.iwmpMFinYear.finYrDesc}" /></td>
+										<td align="left"><c:out
+												value="${list.iwmpMMonth.monthName}" /></td>
+									</tr>
+								</c:forEach>
+								<tr>
+
+									<td colspan="5" align="center"><input type="button"
+										class="btn btn-info" id="Unfreeze" onclick="completebsl();"
+										name="Unfreeze" value='Unfreeze' /></td>
+								</tr>
+							</c:if>
+							<c:if test="${projlistUnfreezeBaselSize==0}">
+
+								<td align="center" colspan="5">No Data Found !</td>
+
+							</c:if>
+
+						</thead>
                		<tbody>
                		
                 	
-                	<tr>
                 	
-                	<td colspan="5" align="center">
-                	 <input type="button" class="btn btn-info" id="Unfreeze" onclick="completebsl();" name="Unfreeze" value='Unfreeze' /> 
-                	 </td>
-                	 </tr>
                 	</tbody>
                		
               </table>
