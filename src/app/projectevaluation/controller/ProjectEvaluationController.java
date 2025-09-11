@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -4382,13 +4383,10 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "e", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Others  " +"("+ wdcCrpDtlList.get(0).getOthercrop()+")", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOther() != null ?  wdcCrpDtlList.get(0).getPredifferentCropOther().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table,wdcCrpDtlList.get(0).getMiddifferentCropOther() != null ?  wdcCrpDtlList.get(0).getMiddifferentCropOther().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_other() != null ? wdcCrpDtlList.get(0).getControl_different_crop_other().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-
-//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getPredifferentCropOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getMiddifferentCropOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getControl_different_crop_other().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList.get(0).getPredifferentCropOther()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList.get(0).getMiddifferentCropOther()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList.get(0).getControl_different_crop_other()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, wdcCrpDtlList.get(0).getOthersremark(), Element.ALIGN_LEFT, 1, 1, bf8);
 
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
@@ -4526,13 +4524,11 @@ public class ProjectEvaluationController {
 					
 					CommonFunctions.insertCell(table, "f", Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, "Other Crops "+"(" +wdcCrpDtlList3.get(0).getOthercrop()+")" , Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreOther() != null ?  wdcCrpDtlList3.get(0).getPreOther().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table,wdcCrpDtlList3.get(0).getMidOther() != null ?  wdcCrpDtlList3.get(0).getMidOther().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlOther() != null ? wdcCrpDtlList3.get(0).getControlOther().toString() : null, Element.ALIGN_RIGHT, 1, 1, bf8);
-
-//					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getPreOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getMidOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
-//					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getControlOther().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList3.get(0).getPreOther()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList3.get(0).getMidOther()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table,Optional.ofNullable(wdcCrpDtlList3.get(0).getControlOther()).map(Object::toString).orElse(null),Element.ALIGN_RIGHT, 1, 1, bf8);
+					
 					CommonFunctions.insertCell(table, wdcCrpDtlList3.get(0).getRemarkOther(), Element.ALIGN_LEFT, 1, 1, bf8);
 					
 					CommonFunctions.insertCell(table, "3", Element.ALIGN_LEFT, 1, 1, bf8);
