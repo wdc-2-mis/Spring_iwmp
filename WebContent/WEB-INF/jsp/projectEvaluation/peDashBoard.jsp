@@ -20,6 +20,7 @@
 
 
  <style>
+ /* Boxes */
 .component-container {
 	display: flex;
 	flex-direction: column;
@@ -53,12 +54,6 @@
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.component-field {
-	margin-left: 10px;
-	color: Green;
-	align-self: center;
-}
-
 .field-title {
 	position: relative;
 	margin-left: 10px;
@@ -84,11 +79,7 @@
 	text-align: center;
 }
 
-.panel-underline {
-	border-top: 2px solid black;
-	margin-left: 10px;
-}
-
+/* Charts & Graphs */
 .dashboard-frame {
     background-color: #FAF9F6;
     border: 1px solid #ccc;
@@ -99,7 +90,6 @@
     width: 1870px;
 }
 
-/* Frame Title */
 .frame-title {
     text-align: center;
     font-size: 1.5rem;
@@ -108,40 +98,11 @@
     font-weight: bold;
 }
 
-/* Dropdown and Chart Unified Layout */
 .frame-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px; /* Space between dropdown and chart */
-}
-
-/* Dropdown Section Styling */
-.dropdown-container {
-    text-align: center;
-}
-
-.dropdown-label {
-    font-size: 1rem;
-    color: #34495E;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.state-dropdown {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.state-dropdown:hover {
-    border-color: #1ABC9C;
-    background-color: #F4F8F9;
+    gap: 20px;
 }
 
 .chart-wrapper {
@@ -152,8 +113,8 @@
     width: 100%;
     background-color: #F4F8F9;
 }
- /* Chart Styling */
-.chart-container1 {
+
+.chart-container {
     flex: 1 1 45%;
     min-width: 800px;
     max-width: 100%;
@@ -199,58 +160,17 @@
 }
 
 @media screen and (max-width: 1300px) {
-    .chart-container1 {
+    .chart-container {
         flex: 1 1 100%;
     }
 }
-
- .chart-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: nowrap;
-    width: 1870px;
-  }
-  .chart_items{
-  	border: 1px solid #ccc;
-  	background-color: #FAF9F6; 
-  	padding: 15px; 
-  	width: 500px; 
-  	height: 600px; 
-  	margin: 10px; 
-  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-  	border-radius: 10px;
-  }
-  .piechart-container{
-  	display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: nowrap;
-    width: 1870px;
-  }
   
-  .pie-items{
-  	border: 1px solid #ccc;
-  	background-color: #FAF9F6; 
-  	padding: 15px; 
-  	width: 350px; 
-  	height: 450px; 
-  	margin: 10px; 
-  	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-  	border-radius: 10px;
-  	display: flex;
-    flex-direction: column;
-    align-item: center;
-  }
-  
-  #gradePieChart {
+#gradePieChart {
     display: block;
     margin: 0 auto;
     width: 100%;
     height: 100%;
 	padding: 0;
-
-
 }
 
 canvas {
@@ -279,12 +199,16 @@ canvas {
                         <div class="field-value">${dt.total_state}</div>
                     </div>
                     <div class="field-container">
+                        <div class="field-title">Total States Entered Mid Term Evaluation</div>
+                        <div class="field-value">${dt.entered_states}</div>
+                    </div>
+                    <div class="field-container">
                         <div class="field-title">Total Projects</div>
                         <div class="field-value">${dt.total_project}</div>
                     </div>
                     <div class="field-container">
-                        <div class="field-title">Total States Entered Mid Term Evaluation</div>
-                        <div class="field-value">${dt.entered_states}</div>
+                        <div class="field-title">Total Projects Entered Mid Term Evaluation</div>
+                        <div class="field-value">${dt.entered_projects}</div>
                     </div>
                 </c:forEach>
             </div>
@@ -294,13 +218,13 @@ canvas {
 <div class="dashboard-frame">
     <div class="chart-wrapper">
         <!-- Pie Chart Block -->
-        <div class="chart-container1">
+        <div class="chart-container">
             <h4 class="frame-title">Grade-wise Project Distribution</h4>
             <canvas id="gradePieChart"></canvas>
         </div>
 
 
-        <div class="chart-container1">
+        <div class="chart-container">
             <h4 class="frame-title">State-wise Grade Performance</h4>
             <div class="chart-navigation">
             <img id="prevGradeState" src="<c:url value='/resources/images/back-button.png'/>" alt="Previous" class="nav-icon left-icon" />
@@ -317,7 +241,7 @@ canvas {
     <div id="loading" style="display:none; text-align:center; font-weight:bold;">Loading...</div>
     		<div class="frame-content">
 				<div class="chart-wrapper">
-        			<div class="chart-container1">
+        			<div class="chart-container">
     					<h4 class="frame-title">State-wise Mid Term Project Evaluation</h4>
     				<div class="chart-navigation">
         				<img id="prevState" src="<c:url value='/resources/images/back-button.png'/>" alt="Previous" class="nav-icon left-icon" />
@@ -325,7 +249,7 @@ canvas {
         				<img id="nextState" src="<c:url value='/resources/images/forward-button.png'/>" alt="Next" class="nav-icon right-icon" />
     				</div>
 					</div>	
-    				<div class="chart-container1">
+    				<div class="chart-container">
     				<h4 id="districtTitle" class="frame-title">District-wise Mid Term Project Evaluation - ${initialStateName}</h4>
     					<div class="chart-navigation">
         				<img id="prevDistrict" src="<c:url value='/resources/images/back-button.png'/>" alt="Previous" class="nav-icon left-icon" />

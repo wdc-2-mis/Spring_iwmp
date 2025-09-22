@@ -21,6 +21,7 @@ public class ProjectEvaluationBean {
 	private Integer total_project;
 	private Integer total_state;
 	private Integer entered_states;
+	private Integer entered_projects;
 	private Integer total;
 	private Integer total_e;
 	private Integer total_g;
@@ -341,6 +342,12 @@ public class ProjectEvaluationBean {
 	}
 	public void setEntered_states(Integer entered_states) {
 		this.entered_states = entered_states;
+	}
+	public Integer getEntered_projects() {
+		return entered_projects;
+	}
+	public void setEntered_projects(Integer entered_projects) {
+		this.entered_projects = entered_projects;
 	}
 	public Integer getTotal() {
 		return total;
