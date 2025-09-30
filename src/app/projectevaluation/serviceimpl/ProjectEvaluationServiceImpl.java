@@ -421,6 +421,18 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	public List<ProjectEvaluationBean> getGradeWiseStateProjEvlData(String grade) {
 		return PEDAO.getGradeWiseStateProjEvlData(grade);
 	}
+
+	@Override
+	public List<WdcpmksyProjectProfileEvaluation> showMidTermDetails(int project) {
+		// TODO Auto-generated method stub
+		return PEDAO.showMidTermDetails(project);
+	}
+
+	@Override
+	public boolean unfreezeMidTermProj(int project) {
+		// TODO Auto-generated method stub
+		return PEDAO.unfreezeMidTermProj(project);
+	}
 	
 	
 	

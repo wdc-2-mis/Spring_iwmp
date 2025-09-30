@@ -24,6 +24,7 @@ public interface UserService {
 	Map<String, String> getUseridList(String st_code, String distCode);
 	Map<Integer, String> getCurrentFinYear();
 	Map<Integer, String> getnotcompletedmonth();
+	Map<String, String> getMidTermProjList(int district);
 	
 	
 	//public void saveProfile(UserReg userReg);

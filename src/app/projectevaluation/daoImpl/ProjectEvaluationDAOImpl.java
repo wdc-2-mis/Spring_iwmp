@@ -32,6 +32,7 @@ import app.model.IwmpMMonth;
 import app.model.IwmpMProject;
 import app.model.outcome.FpoMain;
 import app.model.project.WdcpmksyBaselineupdateAchievementDetail;
+import app.model.project.WdcpmksyProjectPhysicalAchievementDetails;
 import app.projectevaluation.bean.CroppedDetailsReportBean;
 import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
@@ -193,6 +194,12 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	
 	@Value("${gradeWiseStateData}")
 	String getGradeStateMidPEData;
+	
+	@Value("${getmidTermRecords}")
+	String getmidTermRecords;
+	
+	@Value("${unfreezemidTermProj}")
+	String unfreezemidTermProj;
 	
 	
 	@Override
@@ -2778,6 +2785,53 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 				
 			return getGradeWiseStateMidPEDetails;
+		}
+
+		@Override
+		public List<WdcpmksyProjectProfileEvaluation> showMidTermDetails(int project) {
+			List<WdcpmksyProjectProfileEvaluation> list = new ArrayList<WdcpmksyProjectProfileEvaluation>();
+			String hql=getmidTermRecords;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				Query query = session.createQuery(hql);
+				query.setParameter("project",project);
+				list = query.list();
+				
+				session.getTransaction().commit();
+			}catch(Exception ex) {
+			      //System.out.print(ex.getStackTrace()[0].getLineNumber());
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}finally {
+			
+			}
+			return list;
+			
+		}
+
+		@Override
+		public boolean unfreezeMidTermProj(int project) {
+			Boolean res=false;
+			Session session = sessionFactory.getCurrentSession();
+			String hql=unfreezemidTermProj;
+			try 
+			{
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setParameter("project", project);
+				query.executeUpdate();
+				session.getTransaction().commit();
+		        res = true;
+		}
+		catch(Exception ex) 
+		{
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		return false;
+		}
+		
+		return res;	
 		}
 
 

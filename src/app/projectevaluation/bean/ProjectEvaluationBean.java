@@ -29,7 +29,7 @@ public class ProjectEvaluationBean {
 	private Integer total_a;
 	private BigDecimal grade_percentage;
 	private Integer grade_marks;
-	
+	private String pagency;
 	
 	private BigDecimal sanctioned_cost;
 	private BigDecimal central;
@@ -1013,6 +1013,12 @@ public class ProjectEvaluationBean {
 	}
 	public void setCtl_clt(BigDecimal ctl_clt) {
 		this.ctl_clt = ctl_clt;
+	}
+	public String getPagency() {
+		return pagency;
+	}
+	public void setPagency(String pagency) {
+		this.pagency = pagency;
 	}
 	
 

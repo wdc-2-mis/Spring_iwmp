@@ -137,6 +137,17 @@ public class UserServiceImpl implements UserService {
 		return getmonth;
 	}
 
+	@Override
+	public Map<String, String> getMidTermProjList(int district) {
+		Map<String, String> getprojList = new LinkedHashMap<String, String>();
+		for (IwmpMProject temp : userDao.getMidTermProjList(district)) 
+		{
+			getprojList.put(temp.getProjectId()+"", temp.getProjName());
+		}
+		
+		return getprojList;
+	}
+
 	
 
 	

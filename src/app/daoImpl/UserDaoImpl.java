@@ -61,7 +61,9 @@ public class UserDaoImpl implements UserDao{
 	  @Value("${getnotcomMonth}") 
 	  String getnotcomMonth;
 	  
-	
+	  @Value("${midprojmasterlist}") 
+	  String midprojmasterlist;
+	  
 	@SuppressWarnings("unchecked")
 	public List<User> validateUser(Login login) {
 		
@@ -295,6 +297,31 @@ public class UserDaoImpl implements UserDao{
 			ses.beginTransaction();	
 			String hql=getnotcomMonth;
 			result = ses.createQuery(hql).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+	@Override
+	public List<IwmpMProject> getMidTermProjList(int district) {
+		List<IwmpMProject> result=new ArrayList<IwmpMProject>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=midprojmasterlist;
+			result = ses.createQuery(hql).setParameter("distCode", Integer.valueOf(district)).list();
 		} 
 		catch (HibernateException e) 
 		{

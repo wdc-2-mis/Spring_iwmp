@@ -183,5 +183,9 @@ public interface ProjectEvaluationService {
 	List<ProjectEvaluationBean> getPieGradeData();
 
 	List<ProjectEvaluationBean> getGradeWiseStateProjEvlData(String grade);
+
+	List<WdcpmksyProjectProfileEvaluation> showMidTermDetails(int project);
+
+	boolean unfreezeMidTermProj(int project);
 	
 }

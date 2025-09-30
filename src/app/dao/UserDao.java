@@ -24,6 +24,7 @@ public interface UserDao {
 	Integer regId();
 	List<IwmpMFinYear> getCurrentFinYear();
 	List<IwmpMMonth> getnotcompletedmonth();
+	List<IwmpMProject> getMidTermProjList(int district);
 	
 	
 }
