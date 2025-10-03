@@ -18,4 +18,8 @@ public interface FundUtilizationEvalReportService {
 
 	List<FundUtilizationEvalReportBean> getDistMandaysDetailsReport(Integer stcd);
 
+	List<FundUtilizationEvalReportBean> getGradeEvaluationReport();
+
+	List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode);
+
 }

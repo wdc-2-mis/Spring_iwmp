@@ -8,7 +8,7 @@ public class FundUtilizationEvalReportBean {
 	private Integer st_code;
 	private String st_name;
 	private Integer total_project;
-	
+	private Integer totaldist;
 	private BigDecimal total_project_area;
 	private BigDecimal total_evaluation_central_share;
 	private BigDecimal total_evaluation_state_share;
@@ -20,6 +20,8 @@ public class FundUtilizationEvalReportBean {
 	
 	private Integer dcode;
 	private String dist_name;
+	private String proj_name;
+	private Integer proj_id;
 	
 	private BigDecimal pre_farmer_income;
 	private BigDecimal mid_farmer_income;
@@ -46,7 +48,53 @@ public class FundUtilizationEvalReportBean {
 	private BigInteger mid_person_benefitte;
 	private BigInteger control_person_benefitte;
 	
+	private Integer excelent_proj;
+	private Integer good_proj;
+	private Integer avg_proj;
+	private Integer satisfactory_proj;
 	
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
+	}
+	public Integer getProj_id() {
+		return proj_id;
+	}
+	public void setProj_id(Integer proj_id) {
+		this.proj_id = proj_id;
+	}
+	public Integer getTotaldist() {
+		return totaldist;
+	}
+	public void setTotaldist(Integer totaldist) {
+		this.totaldist = totaldist;
+	}
+	public Integer getExcelent_proj() {
+		return excelent_proj;
+	}
+	public void setExcelent_proj(Integer excelent_proj) {
+		this.excelent_proj = excelent_proj;
+	}
+	public Integer getGood_proj() {
+		return good_proj;
+	}
+	public void setGood_proj(Integer good_proj) {
+		this.good_proj = good_proj;
+	}
+	public Integer getAvg_proj() {
+		return avg_proj;
+	}
+	public void setAvg_proj(Integer avg_proj) {
+		this.avg_proj = avg_proj;
+	}
+	public Integer getSatisfactory_proj() {
+		return satisfactory_proj;
+	}
+	public void setSatisfactory_proj(Integer satisfactory_proj) {
+		this.satisfactory_proj = satisfactory_proj;
+	}
 	public BigInteger getPre_spring_rejuvenated() {
 		return pre_spring_rejuvenated;
 	}

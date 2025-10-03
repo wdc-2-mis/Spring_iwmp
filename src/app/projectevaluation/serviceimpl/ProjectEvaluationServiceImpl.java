@@ -433,6 +433,11 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.unfreezeMidTermProj(project);
 	}
+
+	@Override
+	public List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode) {
+		return PEDAO.getprojMidProjEvlCropDetailsRpt(dcode);
+	}
 	
 	
 	

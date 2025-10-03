@@ -188,4 +188,6 @@ public interface ProjectEvaluationService {
 
 	boolean unfreezeMidTermProj(int project);
 	
+	List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode);
+
 }

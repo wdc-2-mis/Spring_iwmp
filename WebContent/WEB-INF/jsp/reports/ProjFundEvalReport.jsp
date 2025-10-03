@@ -8,25 +8,30 @@
 <html>
 <head>
 
-<title>Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</title>
+<title>Report PE2-  Project-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization</title>
 
 <script type="text/javascript">
 
-function downloadPDF(stcd, stName){
-	    document.getElementById("stcd").value=stcd;
+function downloadPDF(dcode, stName,distName){
+		document.getElementById("dcode").value=dcode;
 	    document.getElementById("stName").value=stName;
-		document.getfundutl.action="downloadDistFundUtilizationEvalReportPdf";
+	    document.getElementById("distName").value=distName;
+		document.getfundutl.action="downloadProjFundUtilizationEvalReportPdf";
 		document.getfundutl.method="post";
 		document.getfundutl.submit();
 }
 
-function exportExcel(stcd, stName){
-	   document.getElementById("stcd").value=stcd;
-	    document.getElementById("stName").value=stName;
-		document.getfundutl.action="downloadExcelDistFundUtilizationEvalReport";
-		document.getfundutl.method="post";
-		document.getfundutl.submit();
+function exportExcel(dcode, stName, distName){
+    document.getElementById("dcode").value = dcode;
+    document.getElementById("stName").value = stName;
+    document.getElementById("distName").value = distName;
+
+    let form = document.getElementById("getfundutl");
+    form.action = "downloadExcelProjFundUtilizationEvalReport";
+    form.method = "post";
+    form.submit();
 }
+
 	
 </script>
 
@@ -34,7 +39,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE2-  District-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization for State  '<c:out value="${stName}"/>'</label>
+			<label id="head">Report PE2-  Project-wise Mid Term Evaluation of Sanctioned Cost and  Fund Utilization for District  '<c:out value="${distName}"/>' of State '<c:out value="${stName}"/>'</label>
 		</h5>
 	</div>
 <br>
@@ -43,24 +48,28 @@ function exportExcel(stcd, stName){
 			<div class="col-2" ></div>
 			<div class="col-8">
 
-	<form:form action="getConWorksDetails" name="getfundutl" id="getfundutl" method="get">
-          <input type="hidden" name="stcd" id="stcd" value="" />
-	      <input type="hidden" name="stName" id="stName" value="" />
-		
- 	</form:form>
+	<form:form action="getProjFundUtilizationEvalReport" 
+           name="getfundutl" 
+           id="getfundutl" 
+           method="post">   <!-- changed to post -->
+    <input type="hidden" name="dcode" id="dcode" value="" />
+    <input type="hidden" name="stName" id="stName" value="" />
+    <input type="hidden" name="distName" id="distName" value="" />
+</form:form>
+
  
 <br>
-	<c:if test="${not empty fundDList}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}','${stName}')" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}','${stName}')" class="btn btn-info">PDF</button> 
+	<c:if test="${not empty fundPList}">
+	<button type="button" class="btn btn-info" onclick="exportExcel('${dcode}','${stName}','${distName}')"> Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}','${stName}','${distName}')" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table">
 		<thead>
 			   <tr>
             <th rowspan="4">S.No.</th>
-            <th rowspan="4">District Name</th>
-            <th rowspan="4">Total No. of Project</th>
+            <th rowspan="4">Project Name</th>
+<!--             <th rowspan="4">Total No. of Project</th> -->
             <th rowspan="4">Sanctioned Project Area  (in ha.)</th>
             <th colspan="3" style="text-align: center">Sanctioned Cost</th>
             <th colspan="4" style="text-align: center">Fund Utilization</th>
@@ -90,16 +99,13 @@ function exportExcel(stcd, stName){
 				<th class="text-center">8</th>
 				<th class="text-center">9</th>
 				<th class="text-center">10</th>
-				<th class="text-center">11</th>
+<!-- 				<th class="text-center">11</th> -->
 			</tr>
-			<c:forEach items="${fundDList}" var="dt" varStatus="sno">
+			<c:forEach items="${fundPList}" var="dt" varStatus="sno">
 				<tr>
 					<td class="text-left"><c:out value="${sno.count}" /></td>
-					<td><a
-						href="getProjFundUtilizationEvalReport?dcode=<c:out value="${dt.dcode}"/>"><c:out
-								value="${dt.dist_name}" /></a></td>
-<%-- 					<td class="text-left"><c:out value="${dt.dist_name}" /></td> --%>
-					<td class="text-right"><c:out value="${dt.total_project}" /></td>
+					<td class="text-left"><c:out value="${dt.proj_name}" /></td>
+<%-- 					<td class="text-right"><c:out value="${dt.total_project}" /></td> --%>
 					<td class="text-right"><c:out value="${dt.total_project_area}" /></td>
 					<td class="text-right"><c:out value="${dt.total_evaluation_central_share}" /></td>
 					<td class="text-right"><c:out value="${dt.total_evaluation_state_share}" /></td>
@@ -111,8 +117,8 @@ function exportExcel(stcd, stName){
 					
 				</tr>
 				
- 				<c:set var = "totproj" 
-  				value = "${totproj + dt.total_project}" />  
+<%--  				<c:set var = "totproj"  --%>
+<%--   				value = "${totproj + dt.total_project}" />   --%>
  				<c:set var = "totalprojectarea"  
   				value = "${totalprojectarea + dt.total_project_area}" /> 
   				<c:set var = "centE"  
@@ -131,10 +137,10 @@ function exportExcel(stcd, stName){
  				value = "${totExp + dt.total_expenditure}" />
 
 			</c:forEach>
-			<c:if test="${fundListDSize>0}">
+			<c:if test="${fundListPSize>0}">
 				<tr>
 					<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
-					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td>
+<%-- 					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td> --%>
 					<td align="right" class="table-primary"><b><c:out value="${totalprojectarea}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${centE}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${stateE}" /></b></td>
@@ -146,7 +152,7 @@ function exportExcel(stcd, stName){
 					
 				</tr>
 			</c:if>
-			<c:if test="${fundListDSize==0}">
+			<c:if test="${fundListPSize==0}">
 				<tr>
 					<td align="center" colspan="7" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>

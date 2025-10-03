@@ -17,4 +17,8 @@ public interface FundUtilizationEvalReportDao {
 	List<FundUtilizationEvalReportBean> getDistProdDetailsReport(Integer stcd);
 	
 	List<FundUtilizationEvalReportBean> getDistMandaysDetailsReport(Integer stcd);
+	
+	List<FundUtilizationEvalReportBean> getGradeEvaluationReport();
+
+	List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode);
 }

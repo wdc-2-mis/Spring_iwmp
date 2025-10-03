@@ -201,6 +201,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${unfreezemidTermProj}")
 	String unfreezemidTermProj;
 	
+	@Value("${getProjMidProjEvlCropData}")
+	String getProjMidProjEvlCropData;
 	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
@@ -2834,7 +2836,24 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 		return res;	
 		}
 
-
+		@Override
+		public List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode) {
+			List<ProjectEvaluationBean> listP = new ArrayList<>();
+			String hql = getProjMidProjEvlCropData;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("dcode", dcode);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				listP = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return listP;
+		}
 }
 
 

@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -50,6 +51,7 @@ import app.projectevaluation.model.WdcpmksyProjectProfileEvaluation;
 import app.projectevaluation.service.ProjectEvaluationService;
 import app.service.DistrictMasterService;
 import app.service.ProjectMasterService;
+import app.service.StateMasterService;
 
 @Controller("PEReportController")
 public class PEReportController {
@@ -64,6 +66,9 @@ public class PEReportController {
 
 	@Autowired
 	ProjectEvaluationService PEService;
+	
+	@Autowired
+	StateMasterService stateMasterService;
 
 	@RequestMapping(value = "/projEvoluationRpt", method = RequestMethod.GET)
 	public ModelAndView projEvoluationRpt(HttpServletRequest request, HttpServletResponse response) {
@@ -242,6 +247,28 @@ public class PEReportController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/projMidProjEvlCropDetailsRpt", method = RequestMethod.GET)
+	public ModelAndView projMidProjEvlCropDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
+		int dcode = Integer.parseInt(request.getParameter("dcode"));
+		
+		ModelAndView mav = new ModelAndView();
+		try {
+				mav = new ModelAndView("projectEvaluation/ProjMidProjEvlCropDetailsRpt");
+				List<ProjectEvaluationBean> listP = new ArrayList<ProjectEvaluationBean>();
+				 listP = PEService.getprojMidProjEvlCropDetailsRpt(dcode);
+					
+				 Map.Entry<Integer,String> entry = stateMasterService.getStateByDistCode(dcode).entrySet().iterator().next();
+				 mav.addObject("stName",stateMasterService.getStateByDistCode(dcode).get(entry.getKey()));	
+				 mav.addObject("distName",districtMasterService.getDistrictByDistCode(dcode).get(dcode));	
+				 mav.addObject("cropPList",listP);
+				mav.addObject("cropListPSize",listP.size());
+				mav.addObject("dcode", dcode);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
 	@RequestMapping(value = "/downloadExcelStMidProjEvoluation", method = RequestMethod.POST)
 	@ResponseBody

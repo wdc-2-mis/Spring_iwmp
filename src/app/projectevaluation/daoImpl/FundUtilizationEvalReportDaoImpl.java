@@ -29,6 +29,9 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	@Value("${getDistFundUtilizationEvalReport}")
 	String getDistFundUtilizationEvalReport;
 	
+	@Value("${getProjwiseFundEvalReport}")
+	String getProjwiseFundEvalReport;
+	
 	@Value("${getMandaysDetailsReport}")
 	String getMandaysDetailsReport;
 	
@@ -40,6 +43,9 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	
 	@Value("${getDistProdDetailsReport}")
 	String getDistProdDetailsReport;
+	
+	@Value("${stateWiseGradeReport}")
+	String stateWiseGradeReport;
 
 	@Override
 	public List<FundUtilizationEvalReportBean> getFundUtilizationEvalReport() {
@@ -158,4 +164,42 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 		return listmD;
 	}
 
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getGradeEvaluationReport() {
+		List<FundUtilizationEvalReportBean> gList = new ArrayList<>();
+		String hql = stateWiseGradeReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			gList = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return gList;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode) {
+		List<FundUtilizationEvalReportBean> listP = new ArrayList<>();
+		String hql = getProjwiseFundEvalReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("dcode", dcode);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			listP = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return listP;
+	}
 }

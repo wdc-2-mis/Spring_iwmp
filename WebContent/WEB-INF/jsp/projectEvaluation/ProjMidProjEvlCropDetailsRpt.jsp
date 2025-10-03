@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
-<title>Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</title>
+<title>Report PE3 - Project-wise Mid Term Project Evaluation of Cropped Area Details</title>
 
 <html>
 <script type="text/javascript">
@@ -30,15 +30,15 @@ function exportExcel(stcd, stName){
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h5>Report PE3 - District-wise Mid Term Project Evaluation of Cropped Area Details</h5>
+        <h5>Report PE3 - Project-wise Mid Term Project Evaluation of Cropped Area Details for District  '<c:out value="${distName}"/>' of State '<c:out value="${stName}"/>'</h5>
     </div>
     <br>
     <div class="container-fluid">
 	
-	<c:if test="${not empty distMidPrjEvlCrpDetailsList}" >
-		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>
-		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>
-	</c:if>
+<%-- 	<c:if test="${not empty cropPList}" > --%>
+<%-- 		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button> --%>
+<%-- 		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button> --%>
+<%-- 	</c:if> --%>
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	
 	<div class="row">
@@ -52,12 +52,12 @@ function exportExcel(stcd, stName){
                 <table class="table" id="distMidPECrpData" >
                     <thead>
                     	<tr>
-                    		<th colspan="21">State Name : ${stName}</th>
+                    		<th colspan="20">State Name : ${stName}</th>
                     	</tr>
                         <tr>
                             <th rowspan="3" class="text-center">S.No.</th>
-                            <th rowspan="3" class="text-center">District Name</th>
-                            <th rowspan="3" class="text-center">Project</th>
+                            <th rowspan="3" class="text-center">Project Name</th>
+<!--                             <th rowspan="3" class="text-center">Project</th> -->
                             <th colspan="9" class="text-center">Gross Cropped Area (ha.)</th>
                             <th colspan="3" class="text-center">Total Gross Cropped Area (ha.)</th>
                             <th colspan="3" class="text-center">Area under Plantation Cover (ha.)</th>
@@ -83,7 +83,7 @@ function exportExcel(stcd, stName){
                         </tr>
                         <tr>
                         	
-                        	<c:forEach var="i" begin="1" end="21">
+                        	<c:forEach var="i" begin="1" end="20">
                 				<th class="text-center">${i}</th>
             				</c:forEach>
                         	
@@ -95,14 +95,11 @@ function exportExcel(stcd, stName){
                         </tr>
                     </thead>
                       <tbody id="tbodyDistMidProjEvolRpt">
-						<c:forEach items="${distMidPrjEvlCrpDetailsList}" var="dt" varStatus="sno">
+						<c:forEach items="${cropPList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td><a
-						href="projMidProjEvlCropDetailsRpt?dcode=<c:out value="${dt.dcode}"/>"><c:out
-								value="${dt.distname}" /></a></td>
-<%-- 								<td class="text-left"><c:out value="${dt.distname}" /></td> --%>
-								<td class="text-right"><c:out value="${dt.total_project}" /></td> 
+								<td class="text-left"><c:out value="${dt.proj_name}" /></td>
+<%-- 								<td class="text-right"><c:out value="${dt.total_project}" /></td>  --%>
 								<td class="text-right"><c:out value="${dt.pre_kharif}" /></td>
 								<td class="text-right"><c:out value="${dt.mid_kharif}" /></td>
 								<td class="text-right"><c:out value="${dt.ctl_kharif}" /></td>
@@ -123,7 +120,7 @@ function exportExcel(stcd, stName){
 								<td class="text-right"><c:out value="${dt.ctl_clt}" /></td>
 							</tr>
 							
-							<c:set var="totProj" value="${totProj + dt.total_project}" />
+<%-- 							<c:set var="totProj" value="${totProj + dt.total_project}" /> --%>
 							<c:set var="totPreKharif" value="${totPreKharif + dt.pre_kharif}" />
 							<c:set var="totMidKharif" value="${totMidKharif + dt.mid_kharif}" />
 							<c:set var="totCtlKharif" value="${totCtlKharif + dt.ctl_kharif}" />
@@ -144,10 +141,10 @@ function exportExcel(stcd, stName){
 							<c:set var="totCtlClt" value="${totCtlClt + dt.ctl_clt}" />
 							
 						</c:forEach>
-						<c:if test="${distMidPrjEvlCrpDetailsListSize>0}">
+						<c:if test="${cropListPSize>0}">
 							<tr>
 								<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totProj}" /></b></td>
+<%-- 								<td align="right" class="table-primary"><b><c:out value="${totProj}" /></b></td> --%>
 								<td align="right" class="table-primary"><b><c:out value="${totPreKharif}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totMidKharif}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totCtlKharif}" /></b></td>
@@ -168,7 +165,7 @@ function exportExcel(stcd, stName){
 								<td align="right" class="table-primary"><b><c:out value="${totCtlClt}" /></b></td>
 							</tr> 
 						</c:if>
-						<c:if test="${distMidPrjEvlCrpDetailsListSize==0}">
+						<c:if test="${cropListPSize==0}">
 							<tr>
 								<td align="center" colspan="21" class="required" style="color: red;"><b>Data Not Found</b></td>
 							</tr>
