@@ -13,7 +13,7 @@ public interface PhysicalActionAchievementService {
 	
 	LinkedHashMap<Integer, String> getYearForPhysicalActionAchievementReport(Integer pCode);
 	List<PhysicalActionAchievementBean> getPhysicalActionAchievementReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
-	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear);
+	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode, Integer distCode, Integer projId,String fromYear, String sdate, String edate);
 	LinkedHashMap<Integer, String> getYearForAchDashboard();
 	List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseEPALivProdWorkReport(Integer stCode, Integer distCode, Integer projId,Integer fromYear, String headType);
 }

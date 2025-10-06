@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -72,15 +74,16 @@ public class ActivityWiseUptoPlanAchievWork {
 	
 	@RequestMapping(value="/activityWiseUptoPlanAchievWork", method = RequestMethod.POST)
 	public ModelAndView getActivityWiseUptoPlanAchievWorkReport(HttpServletRequest request,@RequestParam(value ="state") Integer stCode,
-			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId,
-			@RequestParam(value ="fromYear") Integer fromYear)
+			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId, @RequestParam(value ="fromYear") String fromYear,
+			@RequestParam(value ="userdate") String userdate, @RequestParam(value ="userdateto") String userdateto)
 	{
 		
 		String stName= request.getParameter("stName");
 		String distName= request.getParameter("distName");
 		String projName= request.getParameter("projName");
 		String yearName= request.getParameter("yearName");
-		//System.out.println("state: "+stCode+" district: "+distCode);
+		
+	//	System.out.println("userdate: "+userdate+" userdateto: "+userdateto);
 		ModelAndView mav = new ModelAndView();
 		List<String[]> dataList = new ArrayList<String[]>();
 		String str[] = null;
@@ -95,9 +98,21 @@ public class ActivityWiseUptoPlanAchievWork {
 		List<String> activityCode = new ArrayList<String>();
 		
 		try {
+			
+			String fromDateStr=null;
+			String toDateStr =null;
+			if(!userdate.equals("")) {
+		        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+		        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				}
+				if(!userdateto.equals("")) {
+		        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+		        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+				}
+			
 				mav = new ModelAndView("reports/activityWiseUptoPlanAchievWork");
 				List<ActivityWiseUptoPlanAchieveWorkBean> beanList = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
-				beanList=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear);
+				beanList=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear, userdate, userdateto);
 				for(ActivityWiseUptoPlanAchieveWorkBean bean : beanList) 
 				{
 					str = new String[13];
@@ -150,6 +165,13 @@ public class ActivityWiseUptoPlanAchievWork {
 			 mav.addObject("distName",distName);
 			 mav.addObject("projName",projName);
 			 mav.addObject("yearName",yearName);
+
+			 mav.addObject("fromDateStr", fromDateStr);
+			 mav.addObject("toDateStr", toDateStr);
+			 mav.addObject("userdate1", userdate);
+			 mav.addObject("userdateto1", userdateto);
+			
+			
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -160,8 +182,8 @@ public class ActivityWiseUptoPlanAchievWork {
 	
 	@RequestMapping(value = "/activityWiseUptoPlanAchievWorkPDF", method = RequestMethod.POST)
 	public ModelAndView activityWiseUptoPlanAchievWorkPDF(HttpServletRequest request, HttpServletResponse response,@RequestParam(value ="state") Integer stCode,
-			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId,
-			@RequestParam(value ="fromYear") Integer fromYear) 
+			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId, @RequestParam(value ="fromYear") String fromYear,
+			@RequestParam(value ="userdate1") String userdate, @RequestParam(value ="userdateto1") String userdateto) 
 	{
 		//WDC-PMKSY-0001113
 		String state=request.getParameter("state");;
@@ -182,6 +204,16 @@ public class ActivityWiseUptoPlanAchievWork {
 		
 		try {
 			
+			String fromDateStr=null;
+			String toDateStr =null;
+			if(!userdate.equals("")) {
+		        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+		        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
+		        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+		        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
 			
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
@@ -189,7 +221,7 @@ public class ActivityWiseUptoPlanAchievWork {
 			document.addTitle("activityWiseUptoPlanAchievWork");
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			 PdfWriter writer=PdfWriter.getInstance(document, baos);
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
 			
 			document.open(); 
 		
@@ -223,8 +255,10 @@ public class ActivityWiseUptoPlanAchievWork {
 			table.setSpacingAfter(0f);
 			table.setHeaderRows(3);
 			
-			
+			if(!fromYear.equals(""))
 				CommonFunctions.insertCellHeader(table, "State : "+stName+ " District : "+distName+ " Project : "+projName+"  Financial Year : "+yearName, Element.ALIGN_LEFT, 10, 1, bf8Bold);
+			else	
+				CommonFunctions.insertCellHeader(table, "State : "+stName+ " District : "+distName+ " Project : "+projName+"  From Date : "+fromDateStr+"  To Date : "+toDateStr, Element.ALIGN_LEFT, 10, 1, bf8Bold);
 				
 				CommonFunctions.insertCellHeader(table, "Name of the Activity", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Unit", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -268,7 +302,7 @@ public class ActivityWiseUptoPlanAchievWork {
 		        int grndtotClsWrk = 0;
 
 				List<ActivityWiseUptoPlanAchieveWorkBean> beanList = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
-				beanList=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear);
+				beanList=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear,userdate, userdateto);
 				for(ActivityWiseUptoPlanAchieveWorkBean bean : beanList) 
 				{
 					str = new String[13];
@@ -439,8 +473,8 @@ public class ActivityWiseUptoPlanAchievWork {
 	@RequestMapping(value = "/downloadExcelactivityWiseUptoPlanAchievWork", method = RequestMethod.POST)
 	@ResponseBody
 	public String downloadExcelactivityWiseUptoPlanAchievWork(HttpServletRequest request, HttpServletResponse response,@RequestParam(value ="state") Integer stCode,
-			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId,
-			@RequestParam(value ="fromYear") Integer fromYear) 
+			@RequestParam(value ="district") Integer distCode,@RequestParam(value ="project") Integer projId, @RequestParam(value ="fromYear") String fromYear,
+			@RequestParam(value ="userdate1") String userdate, @RequestParam(value ="userdateto1") String userdateto) 
 	{
 		
 		String stName= request.getParameter("stName");
@@ -448,9 +482,20 @@ public class ActivityWiseUptoPlanAchievWork {
 		String projName= request.getParameter("projName");
 		String yearName= request.getParameter("yearName");
 		
+		String fromDateStr=null;
+		String toDateStr =null;
+		if(!userdate.equals("")) {
+	        LocalDate date = LocalDate.parse(userdate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        fromDateStr = date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+			if(!userdateto.equals("")) {
+	        LocalDate date1 = LocalDate.parse(userdateto, DateTimeFormatter.ISO_LOCAL_DATE);
+	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			}
+		
 		List<ActivityWiseUptoPlanAchieveWorkBean> list = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
 		
-		list=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear);
+		list=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear,userdate,userdateto);
 		
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
@@ -471,7 +516,12 @@ public class ActivityWiseUptoPlanAchievWork {
 	        Row detail = sheet.createRow(5);
 	        
 	        Cell cell = detail.createCell(0);
-	        cell.setCellValue("State : "+stName +"   District : "+distName +"   Project : " +projName+"   Financial Year "+yearName);  
+	        
+	        if(!fromYear.equals(""))
+	        	cell.setCellValue("State : "+stName +"   District : "+distName +"   Project : " +projName+"   Financial Year "+yearName); 
+			else
+				cell.setCellValue("State : "+stName +"   District : "+distName +"   Project : " +projName+"   From Date "+fromDateStr+"   To Date "+toDateStr);  
+	        
 	        cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.LEFT);
 			

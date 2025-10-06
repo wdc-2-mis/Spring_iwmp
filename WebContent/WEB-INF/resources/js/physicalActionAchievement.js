@@ -3,7 +3,6 @@ $(function(){
 
 	/****************************** State Dropdown change ********************************** */
 	$(document).on('change', '#state', function(e) {
-	//$('#state').on('change', function(e){
 		e.preventDefault();
 		$stCode=$('#state option:selected').val();
 		$.ajax({  
@@ -217,6 +216,24 @@ $(function(){
 	$('#toyear option:selected').val($('#tYear').val());
 	$("#toyear").trigger("change");
 	}
+	
+	$(document).on('change', '#userdate', function(e) {
+			e.preventDefault();
+		
+			const specifiedDate = new Date('2022-04-01');
+			const enteredDate = new Date(this.value);
+				    
+			enteredDate.setHours(0, 0, 0, 0);
+			specifiedDate.setHours(0, 0, 0, 0);
+
+			if (enteredDate < specifiedDate) 
+			{
+				alert("The input date cannot be less than 01/04/2022");
+				document.getElementById('userdate').value = '';
+				document.getElementById('userdate').focus();
+			}
+		});
+
 	
 	});
 	

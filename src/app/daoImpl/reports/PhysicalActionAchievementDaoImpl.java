@@ -1,8 +1,12 @@
 package app.daoImpl.reports;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.StringJoiner;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -80,6 +84,15 @@ public class PhysicalActionAchievementDaoImpl implements PhysicalActionAchieveme
 	
 	@Value("${projWiseYrlyProdActWork}")
 	String projWiseYrlyProdActWork;
+	
+	@Value("${activtiyWiseUptoPlanAchievWorkdatewise}")
+	String activtiyWiseUptoPlanAchievWorkdatewise;
+	
+	@Value("${activtiyWiseUptoPlanAchievWorkDistdatewise}")
+	String activtiyWiseUptoPlanAchievWorkDistdatewise;
+	
+	@Value("${activtiyWiseUptoPlanAchievWorkProjdatewise}")
+	String activtiyWiseUptoPlanAchievWorkProjdatewise;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getYearForPhysicalActionAchievementReport(Integer pCode) {
@@ -172,12 +185,16 @@ public class PhysicalActionAchievementDaoImpl implements PhysicalActionAchieveme
 
 	@Override
 	public List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode,
-			Integer distCode, Integer projId, Integer fromYear) {
+			Integer distCode, Integer projId, String fromYear, String sdate, String edate) {
 		
 		String getReport=null;
 		Session session = sessionFactory.getCurrentSession();
 		List<ActivityWiseUptoPlanAchieveWorkBean> list = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
 		SQLQuery query;
+		Date yadate =null;
+		Date yadateto =null;
+		List<Integer> monthList = new ArrayList<>();
+
 		try {
 			session.beginTransaction();   
 			
@@ -191,33 +208,99 @@ public class PhysicalActionAchievementDaoImpl implements PhysicalActionAchieveme
 				query.setResultTransformer(Transformers.aliasToBean(PhysicalActionAchievementBean.class));
 				list = query.list();
 			}  */
-			if( distCode==0) 
-			{
-				getReport=activtiyWiseUptoPlanAchievWork;
-				query= session.createSQLQuery(getReport);
-				query.setInteger("stcd",stCode); 
-				query.setInteger("finyr",fromYear); 
-				query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
-				list = query.list();
+			if(!fromYear.equals("")) {
+			
+				if( distCode==0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWork;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("stcd",stCode); 
+					query.setInteger("finyr",Integer.parseInt(fromYear)); 
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if(distCode!=0 && projId==0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWorkDist;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("distcd",distCode); 
+					query.setInteger("finyr",Integer.parseInt(fromYear)); 
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if(projId!=0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWorkProj;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("projid",projId); 
+					query.setInteger("finyr",Integer.parseInt(fromYear)); 
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				} 
 			}
-			if(distCode!=0 && projId==0) 
-			{
-				getReport=activtiyWiseUptoPlanAchievWorkDist;
-				query= session.createSQLQuery(getReport);
-				query.setInteger("distcd",distCode); 
-				query.setInteger("finyr",fromYear); 
-				query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
-				list = query.list();
+			else {
+				
+		        LocalDate localDate = LocalDate.parse(sdate);
+		        int year = localDate.getYear();
+		        String str = String.valueOf(year);
+		        String finyrr = str.substring(str.length() - 2);
+		        
+		        LocalDate start = LocalDate.parse(sdate);
+		        LocalDate end = LocalDate.parse(edate);
+
+		        for (LocalDate date1 = start; !date1.isAfter(end); date1 = date1.plusMonths(1)) {
+		            monthList.add(date1.getMonthValue());
+		        }
+
+		        
+		        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				
+				if(!sdate.equals("")) 
+					yadate = formatter.parse(sdate);
+				
+				if(!edate.equals("")) 
+					yadateto = formatter.parse(edate);
+
+				
+				if( distCode==0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWorkdatewise;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("stcd",stCode); 
+					query.setInteger("finyr", Integer.parseInt(finyrr)); 
+					query.setParameterList("monthid", monthList);
+					query.setParameter("frmdate", yadate);
+					query.setParameter("enddate", yadateto);
+					
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if(distCode!=0 && projId==0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWorkDistdatewise;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("distcd",distCode); 
+					query.setInteger("finyr", Integer.parseInt(finyrr)); 
+					query.setParameterList("monthid", monthList);
+					query.setParameter("frmdate", yadate);
+					query.setParameter("enddate", yadateto);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				}
+				if(projId!=0) 
+				{
+					getReport=activtiyWiseUptoPlanAchievWorkProjdatewise;
+					query= session.createSQLQuery(getReport);
+					query.setInteger("projid",projId); 
+					query.setInteger("finyr", Integer.parseInt(finyrr)); 
+					query.setParameterList("monthid", monthList);
+					query.setParameter("frmdate", yadate);
+					query.setParameter("enddate", yadateto);
+					query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
+					list = query.list();
+				} 
 			}
-			if(projId!=0) 
-			{
-				getReport=activtiyWiseUptoPlanAchievWorkProj;
-				query= session.createSQLQuery(getReport);
-				query.setInteger("projid",projId); 
-				query.setInteger("finyr",fromYear); 
-				query.setResultTransformer(Transformers.aliasToBean(ActivityWiseUptoPlanAchieveWorkBean.class));
-				list = query.list();
-			} 
+			
 			session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {

@@ -31,9 +31,9 @@ public class PhysicalActionAchievementServiceImpl implements PhysicalActionAchie
 
 	@Override
 	public List<ActivityWiseUptoPlanAchieveWorkBean> getActivityWiseUptoPlanAchievWorkReport(Integer stCode,
-			Integer distCode, Integer projId, Integer fromYear) {
+			Integer distCode, Integer projId, String fromYear, String sdate, String edate) {
 		// TODO Auto-generated method stub
-		return dao.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId, fromYear);
+		return dao.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId, fromYear, sdate, edate);
 	}
 
 	@Override
