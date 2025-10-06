@@ -38,6 +38,9 @@ public class CroppedDetailBean {
 	
 	private Integer dcode;
 	private String dist_name;
+	
+	private Integer proj_id;
+	private String proj_name;
 	public Integer getSt_code() {
 		return st_code;
 	}
@@ -229,6 +232,18 @@ public class CroppedDetailBean {
 	}
 	public void setDist_name(String dist_name) {
 		this.dist_name = dist_name;
+	}
+	public Integer getProj_id() {
+		return proj_id;
+	}
+	public void setProj_id(Integer proj_id) {
+		this.proj_id = proj_id;
+	}
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
 	}
 	
 	

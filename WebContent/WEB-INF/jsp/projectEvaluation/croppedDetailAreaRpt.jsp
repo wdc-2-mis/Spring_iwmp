@@ -41,6 +41,26 @@ function exportExcel1(stcode, stname){
 	document.getcropdtlrpt.method="post";
 	document.getcropdtlrpt.submit();
 }
+
+function downloadPDF2(stcode, stname, dcode, distname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("distname").value=distname;
+	document.getcropdtlrpt.action="downloadProjWiseCropDtlAreaPDF";
+	document.getcropdtlrpt.method="post";
+	document.getcropdtlrpt.submit();
+}
+
+function exportExcel2(stcode, stname, dcode, distname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("distname").value=distname;
+	document.getcropdtlrpt.action="downloadProjWiseCropDtlAreaExcel";
+	document.getcropdtlrpt.method="post";
+	document.getcropdtlrpt.submit();
+}
 </script>
 <c:if test = "${listsize>0}">
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
@@ -217,7 +237,7 @@ function exportExcel1(stcode, stname){
 			<c:forEach items="${distList}" var="project" varStatus="sno">
 				<tr>
 					<td class="text-center"><c:out value="${sno.count}" /></td>
-					<td class="text-right"><c:out value="${project.dist_name}" /></td>
+					<td class="text-right"><a href="getProjwiseCroppedDtlArea?dcode=${project.dcode}&&distname=${project.dist_name}&&stcode=${stcode}&&stname=${stname}"><c:out value="${project.dist_name}" /></a></td>
 				 	<td class="text-right"><c:out value="${project.project}" /></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_div_change}" /></fmt:formatNumber></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_div_change}" /></fmt:formatNumber></td>
@@ -266,6 +286,128 @@ function exportExcel1(stcode, stname){
 				<td class="table-primary"></td>
 				<td align="right" class="table-primary"><b>Grand Total </b></td>
 				<td align="right" class="table-primary"><b><c:out value="${totalproject}" /></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_div_change}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_div_change}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_nil_single}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_nil_single}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_single_double}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_single_double}" /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary"><b><c:out value="${totalproj_whs_rejuvenated}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totalcon_whs_rejuvenated}" /></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_soil_moist}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_soil_moist}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_deg_rain}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_deg_rain}" /></fmt:formatNumber></b></td>
+				
+			</tr>	 
+			</tbody>		
+</thead>
+
+</table>
+</div>
+</c:if>
+
+<c:if test ="${projListSize >0}">
+<form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt">
+	<input type="hidden" name="stcode" id="stcode" value="" />
+	     	 	<input type="hidden" name="stname" id="stname" value="" />
+	     	 	<input type="hidden" name="dcode" id="dcode" value="" />
+	     	 	<input type="hidden" name="distname" id="distname" value="" />
+</form>
+<div class="container-fluid">
+	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
+		<h5><label id="head1">Report PE4-Project wise Cropped Detail Area</label></h5>
+	</div>
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel2('${stcode}','${stname}','${dcode}','${distname}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF2('${stcode}','${stname}','${dcode}','${distname}')" class="btn btn-info">PDF</button> 
+	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+	<table id="pdfBasicExample" class="table">
+<!-- 	<tbody id="dtBasicExample"> -->
+		<thead>
+			<tr>
+			    <th class="text-left" colspan="12">State: ${stname} District: ${distname}</th>
+				<th class="text-right" colspan="2">All area in ha.</th>
+			</tr>
+			<tr>
+				<th rowspan="3" class="text-center">S.No.</th>
+				<th rowspan="3" class="text-center">Project</th>
+				<th colspan="2" rowspan="2" class="text-center">Area covered under diversified crops/ change in cropping system</th>
+				<th colspan="4" class="text-center">Area brought from Nil/Single crop to double or more crop</th>
+				<th colspan="2" rowspan="2" class="text-center">No. of Water Harvesting Structure (WHS) constructed /rejuvenated</th>
+				<th colspan="2" rowspan="2" class="text-center">Area Covered with soil and Moisture</th>
+				<th colspan="2" rowspan="2" class="text-center">Area of degraded land covered /rainfed area developed</th>
+			</tr>
+			
+			<tr>
+			<th colspan="2" class="text-center">Nil to single crop</th>
+			<th colspan="2" class="text-center">Single to double or more crop</th>
+			</tr>
+			
+			<tr>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			<th rowspan="2" class="text-center">Project Area</th>
+			<th rowspan="2" class="text-center">Controlled Area</th>
+			</tr>
+			
+			<tbody id="dtBasicExample">
+			<c:forEach items="${projList}" var="project" varStatus="sno">
+				<tr>
+					<td class="text-center"><c:out value="${sno.count}" /></td>
+					<td class="text-right"><c:out value="${project.proj_name}" /></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_div_change}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_div_change}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_nil_single}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_nil_single}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_single_double}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_single_double}" /></fmt:formatNumber></td>
+					<td class="text-right"><c:out value="${project.proj_whs_rejuvenated}" /></td>
+					<td class="text-right"><c:out value="${project.con_whs_rejuvenated}" /></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_soil_moist}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_soil_moist}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_deg_rain}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_deg_rain}" /></fmt:formatNumber></td>
+					
+			</tr>
+			
+				<c:set var="totalproj_div_change"
+					value="${totalproj_div_change+project.proj_div_change}" />
+				<c:set var="totalcon_div_change"
+					value="${totalcon_div_change+project.con_div_change}" />
+				<c:set var="totalproj_nil_single"
+					value="${totalproj_nil_single+project.proj_nil_single}" />
+				<c:set var="totalcon_nil_single"
+					value="${totalcon_nil_single+project.con_nil_single}" />
+				<c:set var="totalproj_single_double"
+					value="${totalproj_single_double+project.proj_single_double}" />
+				<c:set var="totalcon_single_double"
+					value="${totalcon_single_double+project.con_single_double}" />
+					
+				<c:set var="totalproj_whs_rejuvenated"
+					value="${totalproj_whs_rejuvenated+project.proj_whs_rejuvenated}" />
+				<c:set var="totalcon_whs_rejuvenated"
+					value="${totalcon_whs_rejuvenated+project.con_whs_rejuvenated}" />
+				<c:set var="totalproj_soil_moist"
+					value="${totalproj_soil_moist+project.proj_soil_moist}" />
+				<c:set var="totalcon_soil_moist"
+					value="${totalcon_soil_moist+project.con_soil_moist}" />
+				<c:set var="totalproj_deg_rain"
+					value="${totalproj_deg_rain+project.proj_deg_rain}" />
+				<c:set var="totalcon_deg_rain"
+					value="${totalcon_deg_rain+project.con_deg_rain}" />
+			</c:forEach>
+			<tr>
+				<td class="table-primary"></td>
+				<td align="right" class="table-primary"><b>Grand Total </b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_div_change}" /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcon_div_change}" /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalproj_nil_single}" /></fmt:formatNumber></b></td>
