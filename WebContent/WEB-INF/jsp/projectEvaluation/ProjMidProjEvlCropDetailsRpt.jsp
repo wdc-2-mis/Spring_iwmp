@@ -10,18 +10,20 @@
 <html>
 <script type="text/javascript">
 
-function downloadPDF(stcd, stName){
-	document.getElementById("stcd").value=stcd;
+function downloadPDF(dcode, stName, distName){
+	document.getElementById("dcode").value=dcode;
 	document.getElementById("stName").value=stName;
-	document.getPEDetails.action="downloadPDFDistMidProjEvlCropDetails";
+	document.getElementById("distName").value=distName;
+	document.getPEDetails.action="downloadPDFProjMidProjEvlCropDetails";
 	document.getPEDetails.method="post";
 	document.getPEDetails.submit();
 }
 
-function exportExcel(stcd, stName){
-	document.getElementById("stcd").value=stcd;
+function exportExcel(dcode, stName, distName){
+	document.getElementById("dcode").value=dcode;
 	document.getElementById("stName").value=stName;
-	document.getPEDetails.action="downloadExcelDistMidProjEvlCropDetails";
+	document.getElementById("distName").value=distName;
+	document.getPEDetails.action="downloadExcelProjMidProjEvlCropDetails";
 	document.getPEDetails.method="post";
 	document.getPEDetails.submit();
 }
@@ -35,19 +37,20 @@ function exportExcel(stcd, stName){
     <br>
     <div class="container-fluid">
 	
-<%-- 	<c:if test="${not empty cropPList}" > --%>
-<%-- 		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button> --%>
-<%-- 		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button> --%>
-<%-- 	</c:if> --%>
+	<c:if test="${not empty cropPList}" >
+		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}','${stName}','${distName}')" class="btn btn-info">Excel</button>
+		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}','${stName}','${distName}')" class="btn btn-info">PDF</button>
+	</c:if>
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	
 	<div class="row">
 	<div class="col text-center">
     
-        <form action="downloadExcelDistMidProjEvlCropDetails" name="getPEDetails" id="getPEDetails" method="post">
+        <form action="downloadExcelProjMidProjEvlCropDetails" name="getPEDetails" id="getPEDetails" method="post">
         	
-        	<input type="hidden" name="stcd" id="stcd" value="" />
-			<input type="hidden" name="stName" id="stName" value="" />
+			<input type="hidden" name="dcode" id="dcode" value="" />
+    	    <input type="hidden" name="stName" id="stName" value="" />
+    		<input type="hidden" name="distName" id="distName" value="" />
 		
                 <table class="table" id="distMidPECrpData" >
                     <thead>
