@@ -186,7 +186,7 @@ public interface ProjectEvaluationDAO {
 	boolean unfreezeMidTermProj(int project);
 	
 	List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode);
-
+	List<ProjectEvaluationBean> getprojMidProjEvoluation(int dCode);
 	
 }
  

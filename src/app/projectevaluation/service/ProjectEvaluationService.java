@@ -190,4 +190,5 @@ public interface ProjectEvaluationService {
 	
 	List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode);
 
+	List<ProjectEvaluationBean> getprojMidProjEvoluation(int dCode);
 }

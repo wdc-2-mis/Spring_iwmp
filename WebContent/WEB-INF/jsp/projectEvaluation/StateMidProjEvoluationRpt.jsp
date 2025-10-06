@@ -59,11 +59,16 @@ function exportExcel(){
                             <th rowspan="2" class="text-center">Gram Panchayat</th>
                             <th rowspan="2" class="text-center">Village</th>
                             <th colspan="3" class="text-center">Project Evaluation Status</th>
+                            <th colspan="4" class="text-center">Project Grade</th>
                         </tr>
                         <tr>
                         	<th class="text-center">Completed</th>
                             <th class="text-center">Under Process</th>
                             <th class="text-center">Not Entered</th>
+                            <th class="text-center">Excellent</th>
+                            <th class="text-center">Very Good</th>
+                            <th class="text-center">Satisfactory</th>
+                            <th class="text-center">Average</th>
                         </tr>
                         <tr>
                             <th class="text-center">1</th>
@@ -76,6 +81,10 @@ function exportExcel(){
                             <th class="text-center">8</th>
                             <th class="text-center">9</th>
                             <th class="text-center">10</th>
+                            <th class="text-center">11</th>
+                            <th class="text-center">12</th>
+                            <th class="text-center">13</th>
+                            <th class="text-center">14</th>
                         </tr>
                     </thead>
                       <tbody id="tbodyStMidProjEvolRpt">
@@ -92,6 +101,10 @@ function exportExcel(){
 								<td class="text-right"><c:out value="${dt.completed}" /></td>
 								<td class="text-right"><c:out value="${dt.process}" /></td>
 								<td class="text-right"><c:out value="${dt.not_entered}" /></td>
+								<td class="text-right"><c:out value="${dt.grade_e}" /></td>
+								<td class="text-right"><c:out value="${dt.grade_g}" /></td>
+								<td class="text-right"><c:out value="${dt.grade_s}" /></td>
+								<td class="text-right"><c:out value="${dt.grade_a}" /></td>
 							</tr>
 							
 							<c:set var="totProj" value="${totProj + dt.total_project}" />
@@ -102,6 +115,10 @@ function exportExcel(){
 							<c:set var="totComplete" value="${totComplete + dt.completed}" />
 							<c:set var="totProcess" value="${totProcess + dt.process}" />
 							<c:set var="totNotEntr" value="${totNotEntr + dt.not_entered}" />
+							<c:set var="totGradeE" value="${totGradeE + dt.grade_e}" />
+							<c:set var="totGradeG" value="${totGradeG + dt.grade_g}" />
+							<c:set var="totGradeS" value="${totGradeS + dt.grade_s}" />
+							<c:set var="totGradeA" value="${totGradeA + dt.grade_a}" />
 							
 						</c:forEach>
 						<c:if test="${stateMidPrjEvlListSize>0}">
@@ -115,11 +132,16 @@ function exportExcel(){
 								<td align="right" class="table-primary"><b><c:out value="${totComplete}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totProcess}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totNotEntr}" /></b></td>
+								<td align="right" class="table-primary"><b><c:out value="${totGradeE}" /></b></td>
+								<td align="right" class="table-primary"><b><c:out value="${totGradeG}" /></b></td>
+								<td align="right" class="table-primary"><b><c:out value="${totGradeS}" /></b></td>
+								<td align="right" class="table-primary"><b><c:out value="${totGradeA}" /></b></td>
+								
 							</tr>
 						</c:if>
 						<c:if test="${stateMidPrjEvlListSize==0}">
 							<tr>
-								<td align="center" colspan="10" class="required" style="color: red;"><b>Data Not Found</b></td>
+								<td align="center" colspan="14" class="required" style="color: red;"><b>Data Not Found</b></td>
 							</tr>
 						</c:if>
 					</tbody>

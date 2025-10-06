@@ -164,6 +164,10 @@ public class ProjectEvaluationBean {
     
     private String proj_name;
 	private Integer proj_id;
+	private Integer grade_e;
+    private Integer grade_g;
+    private Integer grade_s;
+    private Integer grade_a;
 	
 	public String getProj_name() {
 		return proj_name;
@@ -1034,6 +1038,30 @@ public class ProjectEvaluationBean {
 	}
 	public void setPagency(String pagency) {
 		this.pagency = pagency;
+	}
+	public Integer getGrade_e() {
+		return grade_e;
+	}
+	public void setGrade_e(Integer grade_e) {
+		this.grade_e = grade_e;
+	}
+	public Integer getGrade_g() {
+		return grade_g;
+	}
+	public void setGrade_g(Integer grade_g) {
+		this.grade_g = grade_g;
+	}
+	public Integer getGrade_s() {
+		return grade_s;
+	}
+	public void setGrade_s(Integer grade_s) {
+		this.grade_s = grade_s;
+	}
+	public Integer getGrade_a() {
+		return grade_a;
+	}
+	public void setGrade_a(Integer grade_a) {
+		this.grade_a = grade_a;
 	}
 	
 

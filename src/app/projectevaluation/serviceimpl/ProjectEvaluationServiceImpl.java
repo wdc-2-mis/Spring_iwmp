@@ -440,5 +440,9 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 	}
 	
 	
-	
+	@Override
+	public List<ProjectEvaluationBean> getprojMidProjEvoluation(int dCode) {
+		// TODO Auto-generated method stub
+		return PEDAO.getprojMidProjEvoluation(dCode);
+	}
 }

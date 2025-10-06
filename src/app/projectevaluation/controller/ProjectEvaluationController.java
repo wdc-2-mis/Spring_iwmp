@@ -3740,7 +3740,11 @@ public class ProjectEvaluationController {
 		Integer fcode = Integer.parseInt(request.getParameter("finyear")); 
 		String mname =request.getParameter("monthName"); 
 		String fname = request.getParameter("finName");
-		String stName = (String) session.getAttribute("stName");
+		String stName = request.getParameter("stName");
+	    if (stName == null || stName.trim().isEmpty()) {
+	        stName = (String) session.getAttribute("stName");
+	    }
+		String reportdata = request.getParameter("reportdata");
 		Integer profile_id=0;
 		Character dprSlna=null;
 		String dprSlnaRemark=null;
@@ -3813,6 +3817,7 @@ public class ProjectEvaluationController {
 		List<ProjectEvaluationBean> mandayslist = new ArrayList<ProjectEvaluationBean>();
 		List<ProjectEvaluationBean> ecoperlist = new ArrayList<ProjectEvaluationBean>();
 		Integer projProfId = PEService.getProjectProfileId(pcode, fcode, mcode);
+		
 		if(session!=null && session.getAttribute("loginID")!=null) {
 			
 			
@@ -3951,9 +3956,12 @@ public class ProjectEvaluationController {
 					
 				 }
 		        WdcpmksyEquityAspect es = equityAspectList.get(0);
+		     
+		         mav = new ModelAndView("projectEvaluation/viewCompletePE");
 		        
-		     mav = new ModelAndView("projectEvaluation/viewCompletePE");
-			 mav.addObject("projProfId",projProfId);
+
+			 
+		     mav.addObject("projProfId",projProfId);
 			 mav.addObject("dpr",dprSlna);
 			 mav.addObject("dprremark",dprSlnaRemark);
 			 mav.addObject("mp", allManpower);
@@ -4051,6 +4059,245 @@ public class ProjectEvaluationController {
 			 
 		}
 		
+		else {
+			ProjectEvaluationBean projData = PEService.getProjectDetails(pcode);
+			 status = projData.getStatus();
+			  if(status == 'D') {
+			 getprojectProfileData = PEService.fetchprojProfileData(pcode);
+			 }
+			 else if(status == 'C')
+			 {
+				 getprojectProfileData = PEService.fetchcompleteProjProfileData(pcode);
+			 }
+			 profile_id=PEService.getProjectProfileId( pcode, fcode, mcode);
+			 indicatorslist =PEService.getIndicatorEvaluation(profile_id);
+			 utilizationlist=PEService.getFundUtilization(profile_id);
+			 List<WdcpmksyCroppedDetails1> wdcCrpDtlList = new ArrayList<>();
+			 wdcCrpDtlList = PEService.getCroppedDetails(profile_id);
+			 List<WdcpmksyCroppedDetails2> wdcCrpDtlList2 = new ArrayList<>();
+			 wdcCrpDtlList2 = PEService.getCroppedDetails2(profile_id);
+			 List<WdcpmksyCroppedDetails3> wdcCrpDtlList3 = PEService.getCroppedDetails3(profile_id);
+			 mandayslist=PEService.getMandayDeatails(profile_id);
+			 List<WdcpmksyProductionDetails> wdcPrdDtlList = new ArrayList<>();
+			 wdcPrdDtlList = PEService.getProductionDetails(profile_id);
+			 List<WdcpmksyEquityAspect> equityAspectList = PEService.getEquityAspect(profile_id);
+			 List<ProjectEvaluationBean> targetlist = new ArrayList<ProjectEvaluationBean>();
+			 List<ProjectEvaluationBean> projshapelist = new ArrayList<ProjectEvaluationBean>();
+			 projshapelist=PEService.getQualityShapeFile(profile_id);
+			 List<ProjectEvaluationBean> geotagginglist = new ArrayList<ProjectEvaluationBean>();
+			 geotagginglist=PEService.getStatusGeotagWork(profile_id);
+				
+			 targetlist=PEService.getExecutionPlanWork(profile_id);
+			 for(ProjectEvaluationBean bean : indicatorslist) {
+					
+					
+				 dprSlna=bean.getDpr_slna();
+				 dprSlnaRemark=bean.getDpr_slna_remark().toString();
+				 allManpower=bean.getAll_manpower();
+				 allManpowerRemark=bean.getAll_manpower_remark().toString();
+				 wcdc=bean.getWcdc();
+				 wcdcRemark=bean.getWcdc_remark().toString();
+				 pia=bean.getPia();
+				 piaRemark=bean.getPia_remark().toString();
+				 wc=bean.getWc();
+				 wcRemark=bean.getWc_remark().toString();
+
+					 
+			}
+			 for(ProjectEvaluationBean bean : utilizationlist) {
+				 centralShare = bean.getCentral_share().toString();
+				 rmkCentralShare = bean.getCentral_share_remark();
+				 stateShare = bean.getState_share().toString();
+				 rmkStateShare = bean.getState_share_remark();
+				 totalFund = bean.getTotal_fund().toString();
+				 rmkTotalFund = bean.getTotal_fund_remark();
+				 conPlannedFund = bean.getTotal_fund_planned().toString();
+				 rmkConPlannedFund = bean.getTotal_fund_planned_remark();
+				 exCon = bean.getTotal_expenditure().toString();
+				 rmkExCon = bean.getTotal_expenditure_remark();
+				 wdf = bean.getTotal_wdf().toString();
+				 rmkWdf = bean.getTotal_wdf_remark();
+
+			 }
+			 
+			 for(ProjectEvaluationBean bean : mandayslist) 
+			 {
+				 pre_farmer_income=bean.getPre_farmer_income().toString();
+				 mid_farmer_income=bean.getMid_farmer_income().toString();
+				 control_farmer_income=bean.getControl_farmer_income().toString();
+				 remark_farmer_income=bean.getRemark_farmer_income();
+				 
+				 farmer_benefited=bean.getFarmer_benefited().toString();
+//				 control_farmer_benefited=bean.getControl_farmer_benefited().toString();
+				 remark_farmer_benefited=bean.getRemark_farmer_benefited();
+				
+				 mandays_generated=bean.getMandays_generated().toString();
+//				 control_mandays_generated=bean.getControl_mandays_generated().toString();
+				 remark_mandays_generated=bean.getRemark_mandays_generated();
+				
+				 pre_dug_well=bean.getPre_dug_well().toString();
+				 mid_dug_well=bean.getMid_dug_well().toString();
+				 control_dug_well=bean.getControl_dug_well().toString();
+				 remark_dug_well=bean.getRemark_dug_well().toString();
+				 
+				 pre_tube_well=bean.getPre_tube_well().toString();
+				 mid_tube_well=bean.getMid_tube_well().toString();
+				 control_tube_well=bean.getControl_tube_well().toString();
+				 remark_tube_well=bean.getRemark_tube_well().toString();
+
+				 
+			 }
+			 ecoperlist=PEService.getEcoPerspective(profile_id);
+			 for(ProjectEvaluationBean bean : ecoperlist) {
+				 
+					
+					  naturalresource=bean.getNatural_resource();
+					  naturalresourceRemark=bean.getNatural_resource_remark().toString();
+					  norm=bean.getNorms_relating();
+					  normRemark=bean.getNorms_relating_remark().toString();
+					  antrlasset=bean.getAntural_asset();
+					  antrlassetRemark=bean.getAntural_asset_remark().toString();
+					  controlntlresource=bean.getControl_natural_resource();
+					  controlnorm=bean.getControl_norms_relating();
+					  controlantrlasset=bean.getControl_antural_asset();
+					 
+				 
+			 }
+			 for(ProjectEvaluationBean bean : targetlist) {
+					
+					
+					  created_work=bean.getCreated_work().toString();
+					  created_work_remark=bean.getCreated_work_remark().toString();
+					  completed_work=bean.getCompleted_work().toString();
+					  completed_work_remark=bean.getCompleted_work_remark().toString();
+					  ongoing_work=bean.getOngoing_work().toString();
+					  ongoing_work_remark=bean.getOngoing_work_remark().toString();
+					 
+					
+				 }
+			 for(ProjectEvaluationBean bean : projshapelist) {
+					
+					
+					  shape_file_area=bean.getShape_file_area().toString();
+					  shape_file_area_remark=bean.getShape_file_area_remark().toString();
+					  variation_area=bean.getVariation_area().toString();
+					  variation_area_remark=bean.getVariation_area_remark().toString();
+					 
+					
+					
+				 }
+			 for(ProjectEvaluationBean bean : geotagginglist) {
+					
+					
+					  twork=bean.getGeo_tagg_work().toString();
+					  tworkre=bean.getGeo_tagg_work_remark().toString();
+					 
+					
+				 }
+		        WdcpmksyEquityAspect es = equityAspectList.get(0);
+		     
+		         mav = new ModelAndView("projectEvaluation/viewComplete");
+		        
+
+			 
+		     mav.addObject("projProfId",projProfId);
+			 mav.addObject("dpr",dprSlna);
+			 mav.addObject("dprremark",dprSlnaRemark);
+			 mav.addObject("mp", allManpower);
+			 mav.addObject("mpremark", allManpowerRemark);
+			 mav.addObject("wdc", wcdc);
+			 mav.addObject("pi", pia);
+			 mav.addObject("wc",wc);
+			 mav.addObject("wdcd", wcdcRemark);
+			 mav.addObject("pid", piaRemark);
+			 mav.addObject("wcd",wcRemark);
+			 
+			 mav.addObject("projectList",getprojectProfileData);
+			 mav.addObject("dname",dname);
+			 mav.addObject("pname",pname);
+			 mav.addObject("mname", mname);
+			 mav.addObject("fname", fname);
+			 mav.addObject("dcode",dcode);
+			 mav.addObject("pcode",pcode);
+			 mav.addObject("mcode",mcode);
+			 mav.addObject("fcode",fcode);
+			 mav.addObject("status", status);
+			 mav.addObject("centralShare",centralShare);
+			 mav.addObject("rmkCentralShare",rmkCentralShare);
+			 mav.addObject("stateShare",stateShare);
+			 mav.addObject("rmkStateShare", rmkStateShare);
+			 mav.addObject("totalFund", totalFund);
+			 mav.addObject("rmkTotalFund",rmkTotalFund);
+			 mav.addObject("conPlannedFund",conPlannedFund);
+			 mav.addObject("rmkConPlannedFund",rmkConPlannedFund);
+			 mav.addObject("exCon", exCon);
+			 mav.addObject("rmkExCon", rmkExCon);
+			 mav.addObject("wdf", wdf);
+			 mav.addObject("rmkWdf", rmkWdf);
+			 mav.addObject("wdcCrpDtlList", wdcCrpDtlList);
+			 mav.addObject("areaType", areaType);
+            mav.addObject("wdcCrpDtlList2", wdcCrpDtlList2);
+            mav.addObject("wdcCrpDtlList3", wdcCrpDtlList3);
+            mav.addObject("pre_farmer_income",pre_farmer_income); 
+			 mav.addObject("mid_farmer_income",mid_farmer_income); 
+			 mav.addObject("control_farmer_income",control_farmer_income); 
+			 mav.addObject("remark_farmer_income",remark_farmer_income); 
+			 mav.addObject("farmer_benefited",farmer_benefited); 
+//			 mav.addObject("control_farmer_benefited",control_farmer_benefited); 
+			 mav.addObject("remark_farmer_benefited",remark_farmer_benefited); 
+			 mav.addObject("mandays_generated",mandays_generated); 
+//			 mav.addObject("control_mandays_generated",control_mandays_generated); 
+			 mav.addObject("remark_mandays_generated",remark_mandays_generated);
+			 
+			 mav.addObject("pre_dug_well",pre_dug_well); 
+			 mav.addObject("mid_dug_well",mid_dug_well); 
+			 mav.addObject("control_dug_well",control_dug_well); 
+			 mav.addObject("remark_dug_well",remark_dug_well); 
+			 mav.addObject("pre_tube_well",pre_tube_well); 
+			 mav.addObject("mid_tube_well",mid_tube_well); 
+			 mav.addObject("control_tube_well",control_tube_well); 
+			 mav.addObject("remark_tube_well",remark_tube_well);
+			 mav.addObject("wdcPrdDtlList", wdcPrdDtlList);
+			 
+			 mav.addObject("ntrlresource",naturalresource);
+			 mav.addObject("ntrlresourceremark",naturalresourceRemark);
+			 mav.addObject("norm",norm);
+			 mav.addObject("normremark",normRemark);
+			 mav.addObject("ntlasset", antrlasset);
+			 mav.addObject("ntlassetremark", antrlassetRemark);
+			 mav.addObject("controlntlresource", controlntlresource);
+			 mav.addObject("controlnorm", controlnorm);
+			 mav.addObject("controlantrlasset",controlantrlasset);
+			 
+			 mav.addObject("pWatershedCom", es.getWaterCommittee());
+			 mav.addObject("cWatershedCom", es.getControlWaterCommittee());
+			 mav.addObject("rmkWatershedCom", es.getWaterCommitteeRemark());
+			 mav.addObject("pFpoShgVli", es.getFpoShgVli());
+			 mav.addObject("cFpoShgVli", es.getControlFpoShgVli());
+			 mav.addObject("rmkFpoShgVli", es.getFpoShgVliRemark());
+			 mav.addObject("pLivelihood", es.getLivelihoodOption());
+			 mav.addObject("cLivelihood", es.getControlLivelihoodOption());				
+			 mav.addObject("rmkLivelihood", es.getLivelihoodOptionRemark());
+			 
+			 mav.addObject("crw",created_work); 
+			 mav.addObject("crwre",created_work_remark); 
+			 mav.addObject("comw",completed_work); 
+			 mav.addObject("comwre",completed_work_remark); 
+			 mav.addObject("ongw",ongoing_work); 
+			 mav.addObject("ongwre",ongoing_work_remark); 
+			 
+			 mav.addObject("sfile_area",shape_file_area); 
+			 mav.addObject("sfile_areare",shape_file_area_remark); 
+			 mav.addObject("variationarea",variation_area); 
+			 mav.addObject("variationareare",variation_area_remark); 
+			 mav.addObject("twork",twork); 
+			 mav.addObject("tworkre",tworkre); 
+			 mav.addObject("stName", stName);
+			 mav.addObject("blockList", PEService.getProjProfileBlock(pcode));
+			 mav.addObject("pagency", pagency);
+			
+			
+		}
 		return mav;
 	}
 

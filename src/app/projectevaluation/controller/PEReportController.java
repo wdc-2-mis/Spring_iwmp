@@ -505,7 +505,7 @@ public class PEReportController {
 			
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
-			Document document = new Document(layout, 25, 10, 10, 0);
+			Document document = new Document(layout, 25, 14, 14, 0);
 			document.addTitle("MidTermProjEvlReport");
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -527,13 +527,13 @@ public class PEReportController {
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
-		    paragraph2.setSpacingAfter(10);
-		    paragraph3.setSpacingAfter(10);
+		    paragraph2.setSpacingAfter(14);
+		    paragraph3.setSpacingAfter(14);
 		    CommonFunctions.addHeader(document);
 		    document.add(paragraph2);
 		    document.add(paragraph3);
-		    table = new PdfPTable(10);
-		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table = new PdfPTable(14);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 		    table.setWidthPercentage(60);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
@@ -547,12 +547,17 @@ public class PEReportController {
 			CommonFunctions.insertCellHeader(table, "Gram Panchayat", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Village", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Project Evaluation Status", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project Grade", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 			
 			CommonFunctions.insertCellHeader(table, "Completed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Under Process", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Not Entered", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
-		    
+			CommonFunctions.insertCellHeader(table, "Excellent", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Very Good", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Satisfactory", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
 			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -563,6 +568,10 @@ public class PEReportController {
 			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
 			
 			int k = 1;
@@ -574,7 +583,10 @@ public class PEReportController {
 			int totComplete = 0;
 			int totProcess = 0;
 			int totNotEntr = 0;
-			
+			int totGradeE = 0;
+			int totGradeG = 0;
+			int totGradeS = 0;
+			int totGradeA = 0;
 				
 			if(list.size()!=0)
 				for(int i=0;i<list.size();i++)
@@ -590,6 +602,11 @@ public class PEReportController {
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProcess()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getNot_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_e()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_g()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_s()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_a()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
 					totProj = totProj + list.get(i).getTotal_project();
 				    totDist = totDist + list.get(i).getDistrict();
 			    	totBlk = totBlk + list.get(i).getBlock();
@@ -598,7 +615,11 @@ public class PEReportController {
 			    	totComplete = totComplete + list.get(i).getCompleted();
 			    	totProcess = totProcess + list.get(i).getProcess();
 			    	totNotEntr = totNotEntr + list.get(i).getNot_entered();
-					
+					totGradeE = totGradeE + list.get(i).getGrade_e();
+			    	totGradeG = totGradeG + list.get(i).getGrade_g();
+			    	totGradeS = totGradeS + list.get(i).getGrade_s();
+			    	totGradeA = totGradeA + list.get(i).getGrade_a();
+			    	
 					k++;
 				}
 				
@@ -611,9 +632,13 @@ public class PEReportController {
 				CommonFunctions.insertCell3(table, String.valueOf(totComplete), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totProcess), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totNotEntr), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeE), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeG), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeS), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeA), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				
 				if(list.size()==0)
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 10, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 14, 1, bf8);
 				
 				
 		document.add(table);
@@ -912,14 +937,14 @@ public class PEReportController {
 		    CommonFunctions.addHeader(document);
 		    document.add(paragraph2);
 		    document.add(paragraph3);
-		    table = new PdfPTable(9);
-		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+		    table = new PdfPTable(13);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 		    table.setWidthPercentage(60);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
 		    table.setHeaderRows(4);
 		    
-		    CommonFunctions.insertCellHeader(table, "State Name : "+stName, Element.ALIGN_LEFT, 9, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName, Element.ALIGN_LEFT, 13, 1, bf8Bold);
 		    
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
@@ -928,12 +953,17 @@ public class PEReportController {
 			CommonFunctions.insertCellHeader(table, "Gram Panchayat", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Village", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Project Evaluation Status", Element.ALIGN_CENTER, 3, 1, bf8Bold);
-			
+			CommonFunctions.insertCellHeader(table, "Project Grade", Element.ALIGN_CENTER, 4, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Completed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Under Process", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Not Entered", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
-		    
+            CommonFunctions.insertCellHeader(table, "Excellent", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Very Good", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Satisfactory", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Average", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
 			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -943,6 +973,10 @@ public class PEReportController {
 			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
 			
 			int k = 1;
@@ -953,6 +987,10 @@ public class PEReportController {
 			int totComplete = 0;
 			int totProcess = 0;
 			int totNotEntr = 0;
+			int totGradeE = 0;
+			int totGradeG = 0;
+			int totGradeS = 0;
+			int totGradeA = 0;
 			
 				
 			if(list.size()!=0)
@@ -967,6 +1005,10 @@ public class PEReportController {
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCompleted()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProcess()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getNot_entered()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_e()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_g()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_s()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrade_a()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					
 					totProj = totProj + list.get(i).getTotal_project();
 			    	totBlk = totBlk + list.get(i).getBlock();
@@ -975,7 +1017,10 @@ public class PEReportController {
 			    	totComplete = totComplete + list.get(i).getCompleted();
 			    	totProcess = totProcess + list.get(i).getProcess();
 			    	totNotEntr = totNotEntr + list.get(i).getNot_entered();
-					
+					totGradeE = totGradeE + list.get(i).getGrade_e();
+					totGradeG = totGradeG + list.get(i).getGrade_g();
+					totGradeS = totGradeS + list.get(i).getGrade_s();
+					totGradeA = totGradeA + list.get(i).getGrade_a();
 					k++;
 				}
 				
@@ -987,9 +1032,141 @@ public class PEReportController {
 				CommonFunctions.insertCell3(table, String.valueOf(totComplete), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totProcess), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totNotEntr), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeE), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeG), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeS), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGradeA), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				
 				if(list.size()==0)
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 9, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 13, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE1- District.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadPDFProjMidProjEvoluation", method = RequestMethod.POST)
+	public ModelAndView downloadPDFProjMidProjEvoluation(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stName = request.getParameter("stName");
+		String dCode = request.getParameter("dcode");
+		String dName = request.getParameter("dName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getprojMidProjEvoluation(Integer.parseInt(dCode));
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("MidTermProjEvlReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report PE1 - Project-wise Mid Term Project Evaluation Entry Status", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(5);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5});
+		    table.setWidthPercentage(60);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(3);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName + ", District Name : "+dName, Element.ALIGN_LEFT, 5, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Block", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Gram Panchayat", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Village", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			
+			int k = 1;
+			int totBlk = 0;
+			int totGP = 0;
+			int totVlg = 0;
+			
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProjname()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getBlock()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getVillage()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					
+					totBlk = totBlk + list.get(i).getBlock();
+			    	totGP = totGP + list.get(i).getGp();
+			    	totVlg = totVlg + list.get(i).getVillage();
+			    	
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totBlk), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGP), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totVlg), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 5, 1, bf8);
 				
 				
 		document.add(table);
