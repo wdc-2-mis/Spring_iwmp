@@ -177,6 +177,27 @@ public class PEReportController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/projMidProjEvoluationRpt", method = RequestMethod.GET)
+	public ModelAndView projMidProjEvoluationRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("dName");
+		String dCode = request.getParameter("distcd");
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		ModelAndView mav = new ModelAndView("projectEvaluation/ProjMidProjEvoluationRpt");
+		
+		list = PEService.getprojMidProjEvoluation(Integer.parseInt(dCode));
+		
+		mav.addObject("dcode",dCode);
+		mav.addObject("dName",distName);
+		mav.addObject("stName",stName);
+		mav.addObject("projMidPrjEvlList",list);
+		mav.addObject("projMidPrjEvlListSize",list.size());
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/stateMidProjEvlCropDetailsRpt", method = RequestMethod.GET)
 	public ModelAndView stateMidProjEvlCropDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
 		
