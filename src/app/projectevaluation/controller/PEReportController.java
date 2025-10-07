@@ -310,7 +310,7 @@ public class PEReportController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 9, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 13, areaAmtValDetail, workbook);
 		
 		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1);
 		sheet.addMergedRegion(mergedRegion);
@@ -329,6 +329,8 @@ public class PEReportController {
 		mergedRegion = new CellRangeAddress(5,6,6,6);
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(5,5,7,9);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,10,13);
 		sheet.addMergedRegion(mergedRegion);
 		
 		Row rowhead = sheet.createRow(5);
@@ -386,6 +388,17 @@ public class PEReportController {
 			cell.setCellStyle(style);
 		}
 		
+		cell = rowhead.createCell(10);
+		cell.setCellValue("Project Grade");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=11;i<14;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
 		
 		Row rowhead1 = sheet.createRow(6);
 		
@@ -410,10 +423,30 @@ public class PEReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Excellent");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(11);
+		cell.setCellValue("Very Good");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(12);
+		cell.setCellValue("Satisfactory");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(13);
+		cell.setCellValue("Average");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
 		
 		Row rowhead2 = sheet.createRow(7);
 		
-		for(int i=0;i<10;i++)
+		for(int i=0;i<14;i++)
 		{
 			cell =rowhead2.createCell(i);
 			cell.setCellValue(i+1);
@@ -430,6 +463,10 @@ public class PEReportController {
 		int totComplete = 0;
 		int totProcess = 0;
 		int totNotEntr = 0;
+		int totGradeE = 0;
+		int totGradeG = 0;
+		int totGradeS = 0;
+		int totGradeA = 0;
 		
 		
 	    for(ProjectEvaluationBean bean: list)
@@ -445,6 +482,10 @@ public class PEReportController {
 	    	row.createCell(7).setCellValue(bean.getCompleted());
 	    	row.createCell(8).setCellValue(bean.getProcess());
 	    	row.createCell(9).setCellValue(bean.getNot_entered());
+	    	row.createCell(10).setCellValue(bean.getGrade_e());
+	    	row.createCell(11).setCellValue(bean.getGrade_g());
+	    	row.createCell(12).setCellValue(bean.getGrade_s());
+	    	row.createCell(13).setCellValue(bean.getGrade_a());
 	    	
 	    	totProj = totProj + bean.getTotal_project();
 	    	totDist = totDist + bean.getDistrict();
@@ -454,6 +495,10 @@ public class PEReportController {
 	    	totComplete = totComplete + bean.getCompleted();
 	    	totProcess = totProcess + bean.getProcess();
 	    	totNotEntr = totNotEntr + bean.getNot_entered();
+	    	totGradeE = totGradeE + bean.getGrade_e();
+	    	totGradeG = totGradeG + bean.getGrade_g();
+	    	totGradeS = totGradeS + bean.getGrade_s();
+	    	totGradeA = totGradeA + bean.getGrade_a();
 	    	
 	    	sno++;
 	    	rowno++;
@@ -504,9 +549,21 @@ public class PEReportController {
 		cell = row.createCell(9);
 		cell.setCellValue(totNotEntr);
 		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totGradeE);
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totGradeG);
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totGradeS);
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totGradeA);
+		cell.setCellStyle(style1);
 		
 		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 9);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 13);
 	    String fileName = "attachment; filename=Report PE1- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -711,11 +768,11 @@ public class PEReportController {
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 12, areaAmtValDetail, workbook);
 		
 		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(5,5,0,8);
+		mergedRegion = new CellRangeAddress(5,5,0,12);
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,7,0,0);
 		sheet.addMergedRegion(mergedRegion);
@@ -731,6 +788,8 @@ public class PEReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,6,6,8);
 		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,9,12);
+		sheet.addMergedRegion(mergedRegion);
 		
 		
 		Row rowDetail = sheet.createRow(5);
@@ -739,7 +798,7 @@ public class PEReportController {
 		cell.setCellValue("State Name : "+ stName);  
 		cell.setCellStyle(style);
 		
-		for(int i=1;i<9;i++)
+		for(int i=1;i<13;i++)
 		{
 			cell = rowDetail.createCell(i);
 			cell.setCellStyle(style);
@@ -795,6 +854,17 @@ public class PEReportController {
 			cell.setCellStyle(style);
 		}
 		
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Project Grade");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=10;i<13;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
 		
 		Row rowhead1 = sheet.createRow(7);
 		
@@ -819,10 +889,30 @@ public class PEReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
+		cell = rowhead1.createCell(9);
+		cell.setCellValue("Excellent");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Very Good");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(11);
+		cell.setCellValue("Satisfactory");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(12);
+		cell.setCellValue("Average");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
 		
 		Row rowhead2 = sheet.createRow(8);
 		
-		for(int i=0;i<9;i++)
+		for(int i=0;i<13;i++)
 		{
 			cell =rowhead2.createCell(i);
 			cell.setCellValue(i+1);
@@ -838,6 +928,10 @@ public class PEReportController {
 		int totComplete = 0;
 		int totProcess = 0;
 		int totNotEntr = 0;
+		int totGradeE = 0;
+		int totGradeG = 0;
+		int totGradeS = 0;
+		int totGradeA = 0;
 		
 		
 	    for(ProjectEvaluationBean bean: list)
@@ -852,6 +946,10 @@ public class PEReportController {
 	    	row.createCell(6).setCellValue(bean.getCompleted());
 	    	row.createCell(7).setCellValue(bean.getProcess());
 	    	row.createCell(8).setCellValue(bean.getNot_entered());
+	    	row.createCell(9).setCellValue(bean.getGrade_e());
+	    	row.createCell(10).setCellValue(bean.getGrade_g());
+	    	row.createCell(11).setCellValue(bean.getGrade_s());
+	    	row.createCell(12).setCellValue(bean.getGrade_a());
 	    	
 	    	totProj = totProj + bean.getTotal_project();
 	    	totBlk = totBlk + bean.getBlock();
@@ -860,6 +958,10 @@ public class PEReportController {
 	    	totComplete = totComplete + bean.getCompleted();
 	    	totProcess = totProcess + bean.getProcess();
 	    	totNotEntr = totNotEntr + bean.getNot_entered();
+	    	totGradeE = totGradeE + bean.getGrade_e();
+	    	totGradeG = totGradeG + bean.getGrade_g();
+	    	totGradeS = totGradeS + bean.getGrade_s();
+	    	totGradeA = totGradeA + bean.getGrade_a();
 	    	
 	    	sno++;
 	    	rowno++;
@@ -907,9 +1009,20 @@ public class PEReportController {
 		cell = row.createCell(8);
 		cell.setCellValue(totNotEntr);
 		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totGradeE);
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totGradeG);
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totGradeS);
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totGradeA);
+		cell.setCellStyle(style1);
 		
-		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 12);
 	    String fileName = "attachment; filename=Report PE1- District.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -1090,6 +1203,146 @@ public class PEReportController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/downloadExcelProjMidProjEvoluation", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelProjMidProjEvoluation(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stName = request.getParameter("stName");
+		String dCode = request.getParameter("dcode");
+		String dName = request.getParameter("dName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getprojMidProjEvoluation(Integer.parseInt(dCode));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report PE1 - Project-wise Mid Term Project Evaluation Entry Status");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE1 - Project-wise Mid Term Project Evaluation Entry Status";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 4, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,4);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName + ",   District Name : "+ dName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<5;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Project Name");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Block");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Gram Panchayat");
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(4);
+		cell.setCellValue("Village");
+		cell.setCellStyle(style);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<5;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 8;
+		int totBlk = 0;
+		int totGP = 0;
+		int totVlg = 0;
+		
+		
+	    for(ProjectEvaluationBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getProjname());
+	    	row.createCell(2).setCellValue(bean.getBlock());
+	    	row.createCell(3).setCellValue(bean.getGp());
+	    	row.createCell(4).setCellValue(bean.getVillage());
+	    	
+	    	
+	    	totBlk = totBlk + bean.getBlock();
+	    	totGP = totGP + bean.getGp();
+	    	totVlg = totVlg + bean.getVillage();
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+8);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totBlk);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totGP);
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totVlg);
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 4);
+	    String fileName = "attachment; filename=Report PE1- Project.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "projectEvaluation/ProjMidProjEvoluationRpt";
+	}
+	
 	@RequestMapping(value = "/downloadPDFProjMidProjEvoluation", method = RequestMethod.POST)
 	public ModelAndView downloadPDFProjMidProjEvoluation(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -1167,7 +1420,7 @@ public class PEReportController {
 				for(int i=0;i<list.size();i++)
 				{
 					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProjname()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProjname()), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getBlock()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getVillage()), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -1202,7 +1455,7 @@ public class PEReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report PE1- District.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE1- Project.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();

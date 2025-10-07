@@ -72,7 +72,7 @@ function exportExcel(dcode, dName, stName){
 			<div class="col-8">
 			<br>
     <c:if test="${not empty projMidPrjEvlList}">
-		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}', '${dName}'), '${stName}' " class="btn btn-info">Excel</button>
+		<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}', '${dName}', '${stName}')" class="btn btn-info">Excel</button>
 		<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}', '${dName}', '${stName}')" class="btn btn-info">PDF</button>
 	</c:if>
     <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
