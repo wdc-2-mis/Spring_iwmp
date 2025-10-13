@@ -93,7 +93,7 @@ $(document).ready(function() {
         toggleWdcRow();
     });
 });
-function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
+function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode, stName)
 {
 		document.getElementById("projProfId").value=projProfId;
 		document.getElementById("dname").value=dname;
@@ -104,6 +104,7 @@ function downloadPDF(projProfId,dname,mname,fname,pname,dcode,fcode,pcode,mcode)
 		document.getElementById("fcode").value=fcode;
 		document.getElementById("pcode").value=pcode;
 		document.getElementById("mcode").value=mcode;
+		document.getElementById("stName").value=stName;
 		
 		document.projectProfiledata.action="downloadViewCompleteFormPDF";
 		document.projectProfiledata.method="post";
@@ -149,12 +150,24 @@ function closeModal() {
         </div>
     </div>
 </div>
-
+         <form:form name="projectProfiledata" id="projectProfiledata">
+         <input type="hidden" id="projProfId" name="projProfId" value= <c:out value='${projProfId}' /> />
+	     <input type="hidden" id="dname" name="dname" value= "<c:out value='${dname}' />" />
+		<input type="hidden" id="pname" name="pname" value= "<c:out value='${pname}' />" />
+		<input type="hidden" id="pcode" name="pcode" value= <c:out value='${pcode}' /> />
+		<input type="hidden" id="dcode" name="dcode" value= <c:out value='${dcode}' /> />
+		<input type="hidden" id="mcode" name="mcode" value= <c:out value='${mcode}' /> />
+		<input type="hidden" id="mname" name="mname" value= <c:out value='${month}' /> />
+		<input type="hidden" id="fcode" name="fcode" value= <c:out value='${fcode}' /> />
+		<input type="hidden" id="fname" name="fname" value= <c:out value='${finyear}' /> />
+		<input type="hidden" id="stName" name="stName" value= <c:out value='${stName}' /> />
+		
+		</form:form>
 <table cellspacing="0" class="table"   width="auto">
 <div class="col-10"  id="exportHtmlToPdf">
 	<p align="right"> </p>
 <!-- 	<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button> -->
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${projProfId}','${dname}','${mname}','${fname}','${pname}','${dcode}','${fcode}','${pcode}','${mcode}')" class="btn btn-info">PDF</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${projProfId}','${dname}','${mname}','${fname}','${pname}','${dcode}','${fcode}','${pcode}','${mcode}', '${stName}')" class="btn btn-info">PDF</button>
 <p align="right"> </p>
 	
 	<thead>

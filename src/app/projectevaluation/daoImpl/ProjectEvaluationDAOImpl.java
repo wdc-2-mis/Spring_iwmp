@@ -207,6 +207,10 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getProjMidProjEvlDetails}")
 	String getProjMidProjEvlDetails;
 	
+	@Value("${getProjMidProjEvlWorkDtlRpt}")
+	String getProjMidProjEvlWorkDtlRpt;
+	
+	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
 		LinkedHashMap<Integer, List<ProjectEvaluationBean>> map = new LinkedHashMap<Integer, List<ProjectEvaluationBean>>();
@@ -2876,6 +2880,25 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 			}
 				
 			return getProjMidProjEvoluation;
+		}
+
+		@Override
+		public List<ProjectEvaluationBean> getprojMidProjEvolWorkDtl(int dCode) {
+			List<ProjectEvaluationBean> listP = new ArrayList<>();
+			String hql = getProjMidProjEvlWorkDtlRpt;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("dcode", dCode);
+				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				listP = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return listP;
 		}
 }
 

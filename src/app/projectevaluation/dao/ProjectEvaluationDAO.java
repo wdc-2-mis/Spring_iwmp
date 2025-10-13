@@ -187,6 +187,8 @@ public interface ProjectEvaluationDAO {
 	
 	List<ProjectEvaluationBean> getprojMidProjEvlCropDetailsRpt(Integer dcode);
 	List<ProjectEvaluationBean> getprojMidProjEvoluation(int dCode);
+
+	List<ProjectEvaluationBean> getprojMidProjEvolWorkDtl(int dCode);
 	
 }
  

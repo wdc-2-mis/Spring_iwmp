@@ -198,6 +198,140 @@ public class PEReportController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/downloadPDFProjMidProjEvolWork", method = RequestMethod.POST)
+	public ModelAndView downloadPDFProjMidProjEvolWork(HttpServletRequest request, HttpServletResponse response)
+	{
+		String stName = request.getParameter("stName");
+		String dCode = request.getParameter("dcode");
+		String dName = request.getParameter("dName");
+		
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		list = PEService.getprojMidProjEvolWorkDtl(Integer.parseInt(dCode));
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("MidTermProjEvlReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report PE11 - Project-wise Mid Term Project Evaluation of Geotagged Work Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(7);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(60);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(3);
+		    
+      	    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName + ", District Name : "+dName, Element.ALIGN_LEFT, 7, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Works", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Area of Shape Files", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Geotagged Works", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Created", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Ongoing", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Completed", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			for (int i = 1; i <= 7; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			int totCreated = 0;
+			int totOngoing = 0;
+			int totCompleted = 0;
+			BigDecimal totShapeFie = BigDecimal.ZERO;
+			int totGeoTagg = 0;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProj_name()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCreated_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getOngoing_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCompleted_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getShape_file_area()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGeo_tagg_work()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					totCreated = totCreated + list.get(i).getCreated_work();
+					totOngoing = totOngoing + list.get(i).getOngoing_work();
+					totCompleted = totCompleted + list.get(i).getCompleted_work();
+					totShapeFie = totShapeFie.add(list.get(i).getShape_file_area());
+                    totGeoTagg = totGeoTagg + list.get(i).getGeo_tagg_work();
+			    	
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCreated), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totOngoing), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCompleted), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totShapeFie), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGeoTagg), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 7, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report PE11- Project.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
 	@RequestMapping(value = "/stateMidProjEvlCropDetailsRpt", method = RequestMethod.GET)
 	public ModelAndView stateMidProjEvlCropDetailsRpt(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -264,6 +398,27 @@ public class PEReportController {
 		mav.addObject("stName",stName);
 		mav.addObject("distMidPrjEvlWrkDetailsList",list);
 		mav.addObject("distMidPrjEvlWrkDetailsListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/projMidProjEvolWorkDtlRpt", method = RequestMethod.GET)
+	public ModelAndView projMidProjEvolWorkDtlRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("dName");
+		String dCode = request.getParameter("distcd");
+		List<ProjectEvaluationBean> list = new ArrayList<ProjectEvaluationBean>();
+		
+		ModelAndView mav = new ModelAndView("projectEvaluation/ProjMidProjEvolWorkRpt");
+		
+		list = PEService.getprojMidProjEvolWorkDtl(Integer.parseInt(dCode));
+		
+		mav.addObject("dcode",dCode);
+		mav.addObject("dName",distName);
+		mav.addObject("stName",stName);
+		mav.addObject("projMidPrjEvlWorkDtlList",list);
+		mav.addObject("projMidPrjEvlWorkDtlListSize",list.size());
 		
 		return mav;
 	}

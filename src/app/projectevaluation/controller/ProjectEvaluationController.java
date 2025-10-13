@@ -3729,6 +3729,7 @@ public class ProjectEvaluationController {
 	@RequestMapping(value="getviewcomplete", method=RequestMethod.GET)
 	public ModelAndView getviewcomplete(HttpServletRequest request, HttpServletResponse response)
 	{
+		System.out.println("hello i am in........");
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		
@@ -4343,20 +4344,25 @@ public class ProjectEvaluationController {
 		LinkedHashMap<Integer, String> block= PEService.getProjProfileBlock(pcode);
 		String result = block.values().stream().collect(Collectors.joining(", "));
 		
-		Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
-		String userType = session.getAttribute("userType").toString();
-		List<ProfileBean> listm=new  ArrayList<ProfileBean>();
-		listm=profileService.getMapstate(regId, userType);
+		
+		
 		String distName = "";
-		String stateName = "";
+		String stateName = request.getParameter("stName");
 		int stCode = 0;
 		int distCode = 0;
 		Character status = null;
+		
+		if(stateName == null || stateName.trim().isEmpty()) {
+			Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType = session.getAttribute("userType").toString();
+		List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+		listm=profileService.getMapstate(regId, userType);
 		for(ProfileBean bean : listm) {
 			distName =bean.getDistrictname();
 			distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
 			stateName = bean.getStatename();
 			stCode = bean.getStatecode()==null?0:bean.getStatecode();
+		}
 		}
 		String projProfilestatus = PEService.checkProjectProfileStatus(pcode.toString());
 			LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojectProfileData = null;
@@ -4446,12 +4452,12 @@ public class ProjectEvaluationController {
 			table.setSpacingBefore(0f);
 			table.setSpacingAfter(0f);
 			
-			CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Project Profile", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 			
 			for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
 				System.out.println("Key: " + bean.getKey() + ", Value: " + bean.getValue());
-				if(bean.getKey().equals(stCode)) {
+				/*if(bean.getKey().equals(stCode)) {*/
 					for (ProjectEvaluationBean obj : bean.getValue()) {
 						CommonFunctions.insertCell(table, "Total Sanctioned Project Area (in ha.)",Element.ALIGN_LEFT, 2, 1, bf8);
 						CommonFunctions.insertCell(table, obj.getSanctioned_area().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -4470,7 +4476,7 @@ public class ProjectEvaluationController {
 					    CommonFunctions.insertCell(table, "Number of Households Covered in the Project area",Element.ALIGN_LEFT, 2, 1, bf8);
 					    CommonFunctions.insertCell(table, obj.getHousehold().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					}
-				}
+					/* } */
 			}
 			
 			CommonFunctions.insertCell(table, "", Element.ALIGN_LEFT, 6, 1, bf8);
@@ -5207,11 +5213,11 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Summary of Evaluation:", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					for(Map.Entry<Integer, List<ProjectEvaluationBean>> bean: getprojectProfileData.entrySet()) {
-						if(bean.getKey().equals(stCode)) {
+						//if(bean.getKey().equals(stCode)) {
 							for (ProjectEvaluationBean obj : bean.getValue()) {
 								CommonFunctions.insertCell(table, obj.getSummary(), Element.ALIGN_LEFT, 6, 1, bf8);
 							}
-						}
+						//}
 					}
 					
 					Map<String, String> gradeMapping = Map.of(
@@ -5225,12 +5231,12 @@ public class ProjectEvaluationController {
 					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
 					CommonFunctions.insertCellHeader(table, "Based on your Summary Project Grades:", Element.ALIGN_CENTER, 6, 1, bf8Bold);
 					for (Map.Entry<Integer, List<ProjectEvaluationBean>> bean : getprojectProfileData.entrySet()) {
-					    if (bean.getKey().equals(stCode)) {
+					  //  if (bean.getKey().equals(stCode)) {
 					        for (ProjectEvaluationBean obj : bean.getValue()) {
 					            String gradeText = obj.getGrade() != null ? gradeMapping.getOrDefault(obj.getGrade().toString(), obj.getGrade().toString()) : "";
 					            CommonFunctions.insertCell(table, gradeText, Element.ALIGN_LEFT, 6, 1, bf8);
 					        }
-					    }
+					   // }
 					}
 
 
