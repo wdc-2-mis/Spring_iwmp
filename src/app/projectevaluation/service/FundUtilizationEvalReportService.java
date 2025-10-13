@@ -22,4 +22,8 @@ public interface FundUtilizationEvalReportService {
 
 	List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode);
 
+	List<FundUtilizationEvalReportBean> getProjMandaysDetailsReport(Integer dcode);
+
+	List<FundUtilizationEvalReportBean> getProjProdDetailsReport(Integer dcode);
+
 }

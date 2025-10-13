@@ -46,6 +46,13 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	
 	@Value("${stateWiseGradeReport}")
 	String stateWiseGradeReport;
+	
+	@Value("${getProjMandaysReport}")
+	String getProjMandaysReport;
+	
+	@Value("${getProjProdDetailsReport}")
+	String getProjProdDetailsReport;
+	
 
 	@Override
 	public List<FundUtilizationEvalReportBean> getFundUtilizationEvalReport() {
@@ -188,6 +195,46 @@ public class FundUtilizationEvalReportDaoImpl implements FundUtilizationEvalRepo
 	public List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode) {
 		List<FundUtilizationEvalReportBean> listP = new ArrayList<>();
 		String hql = getProjwiseFundEvalReport;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("dcode", dcode);
+			query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+			listP = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return listP;
+	}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getProjMandaysDetailsReport(Integer dcode) {
+		List<FundUtilizationEvalReportBean> listP = new ArrayList<>();
+	String hql = getProjMandaysReport;
+	Session session = sessionFactory.getCurrentSession();
+	try {
+		session.beginTransaction();
+		SQLQuery query = session.createSQLQuery(hql);
+		query.setInteger("dcode", dcode);
+		query.setResultTransformer(Transformers.aliasToBean(FundUtilizationEvalReportBean.class));
+		listP = query.list();
+		session.getTransaction().commit();
+	} catch (Exception ex) {
+		ex.printStackTrace();
+		session.getTransaction().rollback();
+	}
+	return listP;
+}
+
+
+	@Override
+	public List<FundUtilizationEvalReportBean> getProjProdDetailsReport(Integer dcode) {
+		List<FundUtilizationEvalReportBean> listP = new ArrayList<>();
+		String hql = getProjProdDetailsReport;
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();

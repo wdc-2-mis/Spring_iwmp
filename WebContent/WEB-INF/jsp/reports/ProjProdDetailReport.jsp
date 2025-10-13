@@ -8,22 +8,24 @@
 <html>
 <head>
 
-<title>Report PE8-  District-wise Mid Term Evaluation of Production Details</title>
+<title>Report PE8-  Project-wise Mid Term Evaluation of Production Details</title>
 
 <script type="text/javascript">
 
-function downloadPDF(stcd, stName){
-    document.getElementById("stcd").value=stcd;
+function downloadPDF(dcode, stName, distName){
+    document.getElementById("dcode").value=dcode;
     document.getElementById("stName").value=stName;
-	document.getprod.action="downloadDistProdDetailsReportPdf";
+    document.getElementById("distName").value=distName;
+	document.getprod.action="downloadProjProdDetailsReportPdf";
 	document.getprod.method="post";
 	document.getprod.submit();
 }
 
-function exportExcel(stcd, stName){
-    document.getElementById("stcd").value=stcd;
+function exportExcel(dcode, stName, distName){
+    document.getElementById("dcode").value=dcode;
     document.getElementById("stName").value=stName;
-	document.getprod.action="downloadExcelDistProdDetailsReport";
+    document.getElementById("distName").value=distName;
+	document.getprod.action="downloadExcelProjProdDetailsReport";
 	document.getprod.method="post";
 	document.getprod.submit();
 }
@@ -35,7 +37,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE8-  District-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted) for State  '<c:out value="${stName}"/>'</label>
+			<label id="head">Report PE8-  Project-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted) for District  '<c:out value="${distName}"/>'  of State '<c:out value="${stName}"/>'</label>
 		</h5>
 	</div>
 <br>
@@ -44,24 +46,26 @@ function exportExcel(stcd, stName){
 			<div class="col-2" ></div>
 			<div class="col-11">
 
-	<form:form action="getConWorksDetails" name="getprod" id="getprod" method="get">
+	<form:form action="getProjProdDetailsReport" name="getprod" id="getprod" method="post">
 				<input type="hidden" name="stcd" id="stcd" value="" />
+				<input type="hidden" name="dcode" id="dcode" value="" />
 	     	 	<input type="hidden" name="stName" id="stName" value="" />
-		
+				<input type="hidden" name="distName" id="distName" value="" />
+				
  	</form:form>
  
 <br>
-	<c:if test="${not empty prodDList}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}','${stName}')" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}','${stName}')" class="btn btn-info">PDF</button> 
+	<c:if test="${not empty pList}">
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}','${stName}','${distName}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}','${stName}','${distName}')" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table"  style="width: 70%;">
 		<thead>
 			   <tr>
             <th rowspan="3">S.No.</th>
-            <th rowspan="3">District Name</th>
-            <th rowspan="3">Total No. of Project</th>
+            <th rowspan="3">Project Name</th>
+<!--             <th rowspan="3">Total No. of Project</th> -->
             <th colspan="6" style="text-align: center">Production</th>
             <th colspan="3" rowspan="2" style="text-align: center">Annual Migration from Rural to Urban Area in Project Area (Nos.)</th>
             <th colspan="3" rowspan="2" style="text-align: center">No. of Springs Rejuvenated</th>
@@ -109,16 +113,13 @@ function exportExcel(stcd, stName){
 				<th class="text-center">15</th>
 				<th class="text-center">16</th>
 				<th class="text-center">17</th>
-				<th class="text-center">18</th>
+<!-- 				<th class="text-center">18</th> -->
 			</tr>
-			<c:forEach items="${prodDList}" var="dt" varStatus="sno">
+			<c:forEach items="${pList}" var="dt" varStatus="sno">
 				<tr>
 					<td class="text-left"><c:out value="${sno.count}" /></td>
-					<td><a
-						href="getProjProdDetailsReport?dcode=<c:out value="${dt.dcode}"/>"><c:out
-								value="${dt.dist_name}" /></a></td>
-<%-- 					<td class="text-left"><c:out value="${dt.dist_name}" /></td> --%>
-					<td class="text-right"><c:out value="${dt.total_project}" /></td>
+					<td class="text-left"><c:out value="${dt.proj_name}" /></td>
+<%-- 					<td class="text-right"><c:out value="${dt.total_project}" /></td> --%>
 					<td class="text-right"><c:out value="${dt.pre_milch_cattle}" /></td>
 					<td class="text-right"><c:out value="${dt.mid_milch_cattle}" /></td>
 					<td class="text-right"><c:out value="${dt.control_milch_cattle}" /></td>
@@ -137,8 +138,8 @@ function exportExcel(stcd, stName){
 					
 				</tr>
 				
- 				<c:set var = "totproj" 
-  				value = "${totproj + dt.total_project}" />  
+<%--  				<c:set var = "totproj"  --%>
+<%--   				value = "${totproj + dt.total_project}" />   --%>
  				<c:set var = "premilchcattle"  
   				value = "${premilchcattle + dt.pre_milch_cattle}" /> 
   				<c:set var = "midmilchcattle"  
@@ -176,10 +177,10 @@ function exportExcel(stcd, stName){
  				value = "${controlpersonbenefitte + dt.control_person_benefitte}" />
 
 			</c:forEach>
-			<c:if test="${prodListDSize>0}">
+			<c:if test="${pListSize>0}">
 				<tr>
 					<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
-					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td>
+<%-- 					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td> --%>
 					<td align="right" class="table-primary"><b><c:out value="${premilchcattle}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${midmilchcattle}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${controlmilchcattle}" /></b></td>
@@ -198,7 +199,7 @@ function exportExcel(stcd, stName){
 					
 				</tr>
 			</c:if>
-			<c:if test="${prodListDSize==0}">
+			<c:if test="${pListSize==0}">
 				<tr>
 					<td align="center" colspan="10" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>

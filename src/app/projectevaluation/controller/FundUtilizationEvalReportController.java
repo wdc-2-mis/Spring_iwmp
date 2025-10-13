@@ -156,6 +156,53 @@ public class FundUtilizationEvalReportController {
 
 			return mav;
 		}
+		@RequestMapping(value = "/getProjMandaysDetailsReport", method = RequestMethod.GET)
+		public ModelAndView getProjMandaysDetailsReport(HttpServletRequest request, HttpServletResponse response) {
+			int dcode = Integer.parseInt(request.getParameter("dcode"));
+			
+			ModelAndView mav = new ModelAndView();
+			try {
+					mav = new ModelAndView("reports/ProjMandaysDetailsReport");
+					List<FundUtilizationEvalReportBean> listP = new ArrayList<FundUtilizationEvalReportBean>();
+					 listP = fundService.getProjMandaysDetailsReport(dcode);
+						
+					 Map.Entry<Integer,String> entry = stateMasterService.getStateByDistCode(dcode).entrySet().iterator().next();
+					 mav.addObject("stName",stateMasterService.getStateByDistCode(dcode).get(entry.getKey()));	
+					 mav.addObject("distName",districtMasterService.getDistrictByDistCode(dcode).get(dcode));	
+					 mav.addObject("manPList",listP);
+					mav.addObject("manPListSize",listP.size());
+					mav.addObject("dcode", dcode);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return mav;
+		}
+		
+		@RequestMapping(value = "/getProjProdDetailsReport", method = RequestMethod.GET)
+		public ModelAndView getProjProdDetailsReport(HttpServletRequest request, HttpServletResponse response) {
+			int dcode = Integer.parseInt(request.getParameter("dcode"));
+			
+			ModelAndView mav = new ModelAndView();
+			try {
+					mav = new ModelAndView("reports/ProjProdDetailReport");
+					List<FundUtilizationEvalReportBean> listP = new ArrayList<FundUtilizationEvalReportBean>();
+					 listP = fundService.getProjProdDetailsReport(dcode);
+						
+					 Map.Entry<Integer,String> entry = stateMasterService.getStateByDistCode(dcode).entrySet().iterator().next();
+					 mav.addObject("stName",stateMasterService.getStateByDistCode(dcode).get(entry.getKey()));	
+					 mav.addObject("distName",districtMasterService.getDistrictByDistCode(dcode).get(dcode));	
+					 mav.addObject("pList",listP);
+					mav.addObject("pListSize",listP.size());
+					mav.addObject("dcode", dcode);
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return mav;
+		}
+		
+		
 		
 		@RequestMapping(value = "/getProdDetailsReport", method = RequestMethod.GET)
 		public ModelAndView getProdDetailsReport(HttpServletRequest request) 
@@ -207,6 +254,186 @@ public class FundUtilizationEvalReportController {
 			return mav;
 		}
 		
+		@RequestMapping(value = "/downloadProjProdDetailsReportPdf", method = RequestMethod.POST)
+		public ModelAndView downloadProjProdDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
+		{
+			String dcode = request.getParameter("dcode");
+			String stName = request.getParameter("stName");
+			String distName = request.getParameter("distName");
+			
+			List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
+
+			list = fundService.getProjProdDetailsReport(Integer.parseInt(dcode));
+
+			try {
+				Rectangle layout = new Rectangle(PageSize.A4.rotate());
+				layout.setBackgroundColor(new BaseColor(255, 255, 255));
+				Document document = new Document(layout, 25, 10, 10, 0);
+				document.addTitle("ProdReport");
+				document.addCreationDate();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				PdfWriter writer=PdfWriter.getInstance(document, baos);
+				document.open(); 
+		       
+				Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+				Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+				Font bf8 = new Font(FontFamily.HELVETICA, 8);
+				Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+				Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+				PdfPTable table = null;
+				document.newPage();
+				Paragraph paragraph3 = null; 
+				Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+				
+				paragraph3 = new Paragraph("Report PE8- Project-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted)", f3);
+					
+				paragraph2.setAlignment(Element.ALIGN_CENTER);
+			    paragraph3.setAlignment(Element.ALIGN_CENTER);
+			    paragraph2.setSpacingAfter(10);
+			    paragraph3.setSpacingAfter(10);
+			    CommonFunctions.addHeader(document);
+			    document.add(paragraph2);
+			    document.add(paragraph3);
+			    table = new PdfPTable(17);
+			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+			    table.setWidthPercentage(90);
+			    table.setSpacingBefore(0f);
+			    table.setSpacingAfter(0f);
+			    table.setHeaderRows(4);
+			    CommonFunctions.insertCellHeader(table,"State Name : "+ stName+", District Name : "+ distName, Element.ALIGN_LEFT, 18, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Project Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Production", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Annual Migration from Rural to Urban Area in Project Area (Nos.)", Element.ALIGN_CENTER, 3, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Springs Rejuvenated", Element.ALIGN_CENTER, 3, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Persons Benefitted due to Rejuvenation of Springs", Element.ALIGN_CENTER, 3, 2, bf8Bold);
+			    
+			    CommonFunctions.insertCellHeader(table, "Milk Production of Milch Cattle (Kl/Yr.)	", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Fodder Production (Qt./Yr.)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			    
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+
+
+			    for (int i = 1; i <= 17; i++) {
+			    	CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_LEFT, 1, 1, bf8Bold);
+			    }
+				int k = 1;
+				BigDecimal premilk = BigDecimal.ZERO;
+				BigDecimal midmilk = BigDecimal.ZERO;
+				BigDecimal controlmilk = BigDecimal.ZERO;
+				BigDecimal prefod = BigDecimal.ZERO;
+				BigDecimal midfod = BigDecimal.ZERO;
+				BigDecimal controlfod = BigDecimal.ZERO;
+				BigInteger prerural = BigInteger.ZERO;
+				BigInteger midrural = BigInteger.ZERO;
+				BigInteger controlrural = BigInteger.ZERO;
+				BigInteger spring = BigInteger.ZERO;
+				BigInteger mspring = BigInteger.ZERO;
+				BigInteger controlspring = BigInteger.ZERO;
+				BigInteger personb = BigInteger.ZERO;
+				BigInteger mpersonb = BigInteger.ZERO;
+				BigInteger controlpersonb = BigInteger.ZERO;
+				
+				if(list.size()!=0)
+					for(int i=0;i<list.size();i++) 
+					{
+						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getProj_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_milch_cattle().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_milch_cattle().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_milch_cattle().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_fodder_production().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_fodder_production().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_fodder_production().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_rural_urban().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_spring_rejuvenated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_person_benefitte().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+						premilk = premilk.add(list.get(i).getPre_milch_cattle());
+					    midmilk = midmilk.add(list.get(i).getMid_milch_cattle());
+					    controlmilk = controlmilk.add(list.get(i).getControl_milch_cattle());
+					    prefod = prefod.add( list.get(i).getPre_fodder_production());
+					    midfod = midfod.add(list.get(i).getMid_fodder_production());
+					    controlfod = controlfod.add(list.get(i).getControl_fodder_production());
+					    prerural = prerural.add(list.get(i).getPre_rural_urban());
+					    midrural = midrural.add(list.get(i).getMid_rural_urban());
+					    controlrural = controlrural.add(list.get(i).getControl_rural_urban());
+					    spring = spring.add(list.get(i).getPre_spring_rejuvenated());
+					    mspring = mspring.add(list.get(i).getMid_spring_rejuvenated());
+					    controlspring = controlspring.add(list.get(i).getControl_spring_rejuvenated());
+					    personb = personb.add(list.get(i).getPre_person_benefitte());
+					    mpersonb = mpersonb.add(list.get(i).getMid_person_benefitte());
+					    controlpersonb = controlpersonb.add(list.get(i).getControl_person_benefitte());
+						k++;
+					}
+					
+					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(premilk), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(midmilk), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(controlmilk), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(prefod), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(midfod), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(controlfod), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(prerural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(midrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(controlrural), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(spring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mspring), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(personb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mpersonb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					if(list.size()==0) 
+						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 17, 1, bf8);
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(90);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+			CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE8- Project.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+			} 
+			catch (Exception ex) 
+			{
+				ex.printStackTrace();
+			} 
+			
+			return null;
+		}
+
 		@RequestMapping(value = "/downloadDistProdDetailsReportPdf", method = RequestMethod.POST)
 		public ModelAndView downloadDistProdDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
 		{
@@ -568,6 +795,145 @@ public class FundUtilizationEvalReportController {
 			
 			return null;
 		}
+		
+
+		@RequestMapping(value = "/downloadProjMandaysDetailsReportPdf", method = RequestMethod.POST)
+		public ModelAndView downloadProjMandaysDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
+		{
+			 String stName = request.getParameter("stName");
+			    String dcode = request.getParameter("dcode");
+			    String distName = request.getParameter("distName");
+
+			List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
+
+			list = fundService.getProjMandaysDetailsReport(Integer.parseInt(dcode));
+			
+			try {
+				Rectangle layout = new Rectangle(PageSize.A4.rotate());
+				layout.setBackgroundColor(new BaseColor(255, 255, 255));
+				Document document = new Document(layout, 25, 10, 10, 0);
+				document.addTitle("MandaysReport");
+				document.addCreationDate();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				PdfWriter writer=PdfWriter.getInstance(document, baos);
+				document.open(); 
+		       
+				Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+				Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+				Font bf8 = new Font(FontFamily.HELVETICA, 8);
+				Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+				Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+				PdfPTable table = null;
+				document.newPage();
+				Paragraph paragraph3 = null; 
+				Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+				paragraph3 = new Paragraph("Report PE7- Project-wise Mid Term Evaluation of Mandays Details ", f3);
+				paragraph2.setAlignment(Element.ALIGN_CENTER);
+			    paragraph3.setAlignment(Element.ALIGN_CENTER);
+			    paragraph2.setSpacingAfter(10);
+			    paragraph3.setSpacingAfter(10);
+			    CommonFunctions.addHeader(document);
+			    document.add(paragraph2);
+			    document.add(paragraph3);
+			    table = new PdfPTable(9);
+			    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+			    table.setWidthPercentage(90);
+			    table.setSpacingBefore(0f);
+			    table.setSpacingAfter(0f);
+			    table.setHeaderRows(3);
+
+			    CommonFunctions.insertCellHeader(table, "State Name:  "+ stName +", District Name:  "+ distName, Element.ALIGN_LEFT, 10, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Project Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "Farmer`s Average Household Income per Annum (Rs. in Lakhs)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Farmers Benefited", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "No. of Persondays Generated (man-days)", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+
+			    CommonFunctions.insertCellHeader(table, "Pre - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold); // SC
+			    CommonFunctions.insertCellHeader(table, "Mid - Project Status(Aggregate)", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // SS
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold);   // TS
+			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // TE
+			    CommonFunctions.insertCellHeader(table, "Project Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR
+			    CommonFunctions.insertCellHeader(table, "Controlled Area", Element.ALIGN_CENTER, 1, 1, bf8Bold); // FR-CS
+
+			    CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			    CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				int k = 1;
+				int totproj = 0;
+				BigInteger farbenefited = BigInteger.ZERO;
+				BigInteger mandays = BigInteger.ZERO;
+				BigDecimal pref = BigDecimal.ZERO;
+				BigDecimal midf = BigDecimal.ZERO;
+				BigDecimal conf = BigDecimal.ZERO;
+				if(list.size()!=0)
+					for(int i=0;i<list.size();i++) 
+					{
+						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getProj_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getPre_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMid_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getControl_farmer_income().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getFarmer_benefited().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getMandays_generated().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf8);
+					    pref = pref.add(list.get(i).getPre_farmer_income());
+					    midf = midf.add(list.get(i).getMid_farmer_income());
+					    conf = conf.add(list.get(i).getControl_farmer_income());
+					    farbenefited = farbenefited.add( list.get(i).getFarmer_benefited());
+					    mandays = mandays.add(list.get(i).getMandays_generated());
+						k++;
+					}
+					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(pref), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(midf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(conf), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(farbenefited), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(mandays), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, "N/A", Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					
+					if(list.size()==0) 
+						CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
+					
+					
+			document.add(table);
+			table = new PdfPTable(1);
+			table.setWidthPercentage(90);
+			table.setSpacingBefore(15f);
+			table.setSpacingAfter(0f);
+			CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+			CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+			document.add(table);
+			document.close();
+			response.setContentType("application/pdf");
+			response.setHeader("Expires", "0");
+			response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+			response.setHeader("Content-Disposition", "attachment;filename=Report PE7- Project.pdf");
+			response.setHeader("Pragma", "public");
+			response.setContentLength(baos.size());
+			OutputStream os = response.getOutputStream();
+			baos.writeTo(os);
+			os.flush();
+			os.close();
+			} 
+			catch (Exception ex) 
+			{
+				ex.printStackTrace();
+			} 
+			
+			return null;
+		}
+		
 
 		@RequestMapping(value = "/downloadDistMandaysDetailsReportPdf", method = RequestMethod.POST)
 		public ModelAndView downloadDistMandaysDetailsReportPdf(HttpServletRequest request, HttpServletResponse response) 
@@ -1658,6 +2024,632 @@ public class FundUtilizationEvalReportController {
 
 	    return "reports/DistProdDetailReport";
 	}
+	
+	@RequestMapping(value = "/downloadExcelProjProdDetailsReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelProjProdDetailsReport(HttpServletRequest request, HttpServletResponse response) {
+	    String dcode = request.getParameter("dcode");
+	    String stName = request.getParameter("stName");
+	    String distName = request.getParameter("distName");
+
+	    List<FundUtilizationEvalReportBean> list = fundService.getProjProdDetailsReport(Integer.parseInt(dcode));
+
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Report PE8- Project-wise Mid Term Evaluation of Production Details");
+
+	    CellStyle style = CommonFunctions.getStyle(workbook);
+
+	    String rptName = "Report PE8- Project-wise Mid Term Evaluation of Production Details (Milk, Fodder, Migration, Springs Rejuvenated, Persons Benefitted) for District '" + distName + "' of State  '"+stName+"' ";
+	    String areaAmtValDetail = "";
+
+	    CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, 0);
+	    CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 16, areaAmtValDetail, workbook);
+
+	    // Adjust merged regions (columns shifted left after removing total_project)
+	    mergedRegion = new CellRangeAddress(list.size() + 9, list.size() + 9, 0, 1);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 7, 0, 0);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 7, 1, 1);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 5, 2, 7);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 6, 8, 10);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 6, 11, 13);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(5, 6, 14, 16);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(6, 6, 2, 4);
+	    sheet.addMergedRegion(mergedRegion);
+	    mergedRegion = new CellRangeAddress(6, 6, 5, 7);
+	    sheet.addMergedRegion(mergedRegion);
+
+	    // ---------- Header Row 1 ----------
+	    Row rowhead = sheet.createRow(5);
+	    Cell cell = rowhead.createCell(0);
+	    cell.setCellValue("S.No.");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    cell = rowhead.createCell(1);
+	    cell.setCellValue("Project Name");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    cell = rowhead.createCell(2);
+	    cell.setCellValue("Production");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    for (int i = 3; i < 8; i++) {
+	        cell = rowhead.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    cell = rowhead.createCell(8);
+	    cell.setCellValue("Annual Migration from Rural to Urban Area (Nos.)");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    for (int i = 9; i < 11; i++) {
+	        cell = rowhead.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    cell = rowhead.createCell(11);
+	    cell.setCellValue("No. of Springs Rejuvenated");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    for (int i = 12; i < 14; i++) {
+	        cell = rowhead.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    cell = rowhead.createCell(14);
+	    cell.setCellValue("No. of Persons Benefitted due to Rejuvenation of Springs");
+	    cell.setCellStyle(style);
+	    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+	    for (int i = 15; i < 17; i++) {
+	        cell = rowhead.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    // ---------- Header Row 2 ----------
+	    Row rowhead1 = sheet.createRow(6);
+	    for (int i = 0; i < 2; i++) {
+	        cell = rowhead1.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    cell = rowhead1.createCell(2);
+	    cell.setCellValue("Milk Production of Milch Cattle (Kl/Yr.)");
+	    cell.setCellStyle(style);
+
+	    for (int i = 3; i < 5; i++) {
+	        cell = rowhead1.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    cell = rowhead1.createCell(5);
+	    cell.setCellValue("Fodder Production (Qt./Yr.)");
+	    cell.setCellStyle(style);
+
+	    for (int i = 6; i < 17; i++) {
+	        cell = rowhead1.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    // ---------- Header Row 3 ----------
+	    Row rowhead2 = sheet.createRow(7);
+	    for (int i = 0; i < 2; i++) {
+	        cell = rowhead2.createCell(i);
+	        cell.setCellStyle(style);
+	    }
+
+	    String[] subHeaders = {
+	        "Pre - Project Status(Aggregate)", "Mid - Project Status(Aggregate)", "Controlled Area",
+	        "Pre - Project Status(Aggregate)", "Mid - Project Status(Aggregate)", "Controlled Area",
+	        "Pre - Project Status(Aggregate)", "Mid - Project Status(Aggregate)", "Controlled Area",
+	        "Pre - Project Status(Aggregate)", "Mid - Project Status(Aggregate)", "Controlled Area",
+	        "Pre - Project Status(Aggregate)", "Mid - Project Status(Aggregate)", "Controlled Area"
+	    };
+
+	    int colIndex = 2;
+	    for (String header : subHeaders) {
+	        cell = rowhead2.createCell(colIndex++);
+	        cell.setCellValue(header);
+	        cell.setCellStyle(style);
+	    }
+
+	    // ---------- Index Row ----------
+	    Row rowhead3 = sheet.createRow(8);
+	    for (int i = 0; i < 17; i++) {
+	        cell = rowhead3.createCell(i);
+	        cell.setCellValue(i + 1);
+	        cell.setCellStyle(style);
+	    }
+
+	    // ---------- Data Rows ----------
+	    int sno = 1;
+	    int rowno = 9;
+	    BigDecimal premilk = BigDecimal.ZERO, midmilk = BigDecimal.ZERO, conmilk = BigDecimal.ZERO;
+	    BigDecimal prefod = BigDecimal.ZERO, midfod = BigDecimal.ZERO, confod = BigDecimal.ZERO;
+	    BigInteger prerural = BigInteger.ZERO, midrural = BigInteger.ZERO, conrural = BigInteger.ZERO;
+	    BigInteger prespring = BigInteger.ZERO, midspring = BigInteger.ZERO, conspring = BigInteger.ZERO;
+	    BigInteger prepersonb = BigInteger.ZERO, midpersonb = BigInteger.ZERO, conpersonb = BigInteger.ZERO;
+
+	    for (FundUtilizationEvalReportBean bean : list) {
+	        Row row = sheet.createRow(rowno);
+	        row.createCell(0).setCellValue(sno);
+	        row.createCell(1).setCellValue(bean.getProj_name());
+	        row.createCell(2).setCellValue(bean.getPre_milch_cattle().doubleValue());
+	        row.createCell(3).setCellValue(bean.getMid_milch_cattle().doubleValue());
+	        row.createCell(4).setCellValue(bean.getControl_milch_cattle().doubleValue());
+	        row.createCell(5).setCellValue(bean.getPre_fodder_production().doubleValue());
+	        row.createCell(6).setCellValue(bean.getMid_fodder_production().doubleValue());
+	        row.createCell(7).setCellValue(bean.getControl_fodder_production().doubleValue());
+	        row.createCell(8).setCellValue(bean.getPre_rural_urban().doubleValue());
+	        row.createCell(9).setCellValue(bean.getMid_rural_urban().doubleValue());
+	        row.createCell(10).setCellValue(bean.getControl_rural_urban().doubleValue());
+	        row.createCell(11).setCellValue(bean.getPre_spring_rejuvenated().doubleValue());
+	        row.createCell(12).setCellValue(bean.getMid_spring_rejuvenated().doubleValue());
+	        row.createCell(13).setCellValue("N/A");
+	        row.createCell(14).setCellValue(bean.getPre_person_benefitte().doubleValue());
+	        row.createCell(15).setCellValue(bean.getMid_person_benefitte().doubleValue());
+	        row.createCell(16).setCellValue("N/A");
+
+	        premilk = premilk.add(bean.getPre_milch_cattle());
+	        midmilk = midmilk.add(bean.getMid_milch_cattle());
+	        conmilk = conmilk.add(bean.getControl_milch_cattle());
+	        prefod = prefod.add(bean.getPre_fodder_production());
+	        midfod = midfod.add(bean.getMid_fodder_production());
+	        confod = confod.add(bean.getControl_fodder_production());
+	        prerural = prerural.add(bean.getPre_rural_urban());
+	        midrural = midrural.add(bean.getMid_rural_urban());
+	        conrural = conrural.add(bean.getControl_rural_urban());
+	        prespring = prespring.add(bean.getPre_spring_rejuvenated());
+	        midspring = midspring.add(bean.getMid_spring_rejuvenated());
+	        conspring = conspring.add(bean.getControl_spring_rejuvenated());
+	        prepersonb = prepersonb.add(bean.getPre_person_benefitte());
+	        midpersonb = midpersonb.add(bean.getMid_person_benefitte());
+	        conpersonb = conpersonb.add(bean.getControl_person_benefitte());
+	        sno++;
+	        rowno++;
+	    }
+
+	    // ---------- Grand Total ----------
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(premilk.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(midmilk.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(conmilk.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(prefod.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(midfod.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(confod.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(prerural.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(midrural.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(conrural.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(prespring.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(midspring.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue("N/A");
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(prepersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(midpersonb.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue("N/A");
+		cell.setCellStyle(style1);
+		
+
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 16);
+
+	    String fileName = "attachment; filename=Report_PE8_Project.xlsx";
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+
+	    return "reports/ProjProdDetailReport";
+	}
+
+//	@RequestMapping(value = "/downloadExcelProjProdDetailsReport", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String downloadExcelProjProdDetailsReport(HttpServletRequest request, HttpServletResponse response) 
+//	{
+//		String dcode = request.getParameter("dcode");
+//		String stName = request.getParameter("stName");
+//		String distName = request.getParameter("distName");
+//		List<FundUtilizationEvalReportBean> list = new ArrayList<FundUtilizationEvalReportBean>();
+//
+//		list = fundService.getProjProdDetailsReport(Integer.parseInt(dcode));
+//			
+//		Workbook workbook = new XSSFWorkbook();  
+//		//invoking creatSheet() method and passing the name of the sheet to be created   
+//		Sheet sheet = workbook.createSheet("Report PE8- Project-wise Mid Term Evaluation of Production Details(Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted)");   
+//		
+//		CellStyle style = CommonFunctions.getStyle(workbook);
+//	    
+//		String rptName = "Report PE8- Project-wise Mid Term Evaluation of Production Details(Milk, Fodder, Migration from Rural to Urban, Springs Rejuvenated and Persons Benefitted) for State '"+ stName+ "' ";
+//		String areaAmtValDetail ="";
+//		
+//		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+//		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 17, areaAmtValDetail, workbook);
+//		
+//		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,7,0,0); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,7,1,1); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,7,2,2); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,5,3,8); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,6,9,11); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,6,12,14); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(5,6,15,17);
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(6,6,3,5); 
+//		sheet.addMergedRegion(mergedRegion);
+//		mergedRegion = new CellRangeAddress(6,6,6,8); 
+//		sheet.addMergedRegion(mergedRegion);
+//
+//		Row rowhead = sheet.createRow(5);
+//		Cell cell = rowhead.createCell(0);
+//		cell.setCellValue("S.No.");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		cell = rowhead.createCell(1);
+//		cell.setCellValue("Project Name");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		cell = rowhead.createCell(2);
+//		cell.setCellValue("Total No. of Project");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		cell = rowhead.createCell(3);
+//		cell.setCellValue("Production");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=4;i<9;i++)
+//		{
+//			cell =rowhead.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		cell = rowhead.createCell(9);
+//		cell.setCellValue("Annual Migration from Rural to Urban Area in Project Area (Nos.)");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=10;i<12;i++)
+//		{
+//			cell =rowhead.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		cell = rowhead.createCell(12);
+//		cell.setCellValue("No. of Springs Rejuvenated");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=13;i<15;i++)
+//		{
+//			cell =rowhead.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		cell = rowhead.createCell(15);
+//		cell.setCellValue("No. of Persons Benefitted due to Rejuvenation of Springs");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=16;i<18;i++)
+//		{
+//			cell =rowhead.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		
+//		Row rowhead1 = sheet.createRow(6);
+//		for(int i=0;i<3;i++)
+//		{
+//			cell =rowhead1.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//
+//		cell = rowhead1.createCell(3);
+//		cell.setCellValue("Milk Production of Milch Cattle (Kl/Yr.)");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=4;i<6;i++)
+//		{
+//			cell =rowhead1.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		cell = rowhead1.createCell(6);
+//		cell.setCellValue("Fodder Production (Qt./Yr.)");  
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		
+//		for(int i=7;i<18;i++)
+//		{
+//			cell =rowhead1.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		
+//		Row rowhead2 = sheet.createRow(7);
+//		
+//		for(int i=0;i<3;i++)
+//		{
+//			cell =rowhead2.createCell(i);
+//			cell.setCellStyle(style);
+//		}
+//
+//		cell = rowhead2.createCell(3);
+//		cell.setCellValue("Pre - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(4);
+//		cell.setCellValue("Mid - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(5);
+//		cell.setCellValue("Controlled Area");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(6);
+//		cell.setCellValue("Pre - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(7);
+//		cell.setCellValue("Mid - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(8);
+//		cell.setCellValue("Controlled Area");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(9);
+//		cell.setCellValue("Pre - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(10);
+//		cell.setCellValue("Mid - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(11);
+//		cell.setCellValue("Controlled Area");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(12);
+//		cell.setCellValue("Pre - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(13);
+//		cell.setCellValue("Mid - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(14);
+//		cell.setCellValue("Controlled Area");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(15);
+//		cell.setCellValue("Pre - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(16);
+//		cell.setCellValue("Mid - Project Status(Aggregate)");  
+//		cell.setCellStyle(style);
+//		
+//		cell = rowhead2.createCell(17);
+//		cell.setCellValue("Controlled Area");  
+//		cell.setCellStyle(style);
+//		
+//		
+//		Row rowhead3 = sheet.createRow(8);
+//		for(int i=0;i<18;i++)
+//		{
+//			cell =rowhead3.createCell(i);
+//			cell.setCellValue(i+1);
+//			cell.setCellStyle(style);
+//		}
+//		
+//		int sno = 1;
+//		int rowno  = 9;
+//		int totproj = 0;
+//		BigDecimal premilk = BigDecimal.ZERO;
+//		BigDecimal midmilk = BigDecimal.ZERO;
+//		BigDecimal conmilk = BigDecimal.ZERO;
+//		BigDecimal prefod = BigDecimal.ZERO;
+//		BigDecimal midfod = BigDecimal.ZERO;
+//		BigDecimal confod = BigDecimal.ZERO;
+//		BigInteger prerural = BigInteger.ZERO;
+//		BigInteger midrural = BigInteger.ZERO;
+//		BigInteger conrural = BigInteger.ZERO;
+//		BigInteger prespring = BigInteger.ZERO;
+//		BigInteger midspring = BigInteger.ZERO;
+//		BigInteger conspring = BigInteger.ZERO;
+//		BigInteger prepersonb = BigInteger.ZERO;
+//		BigInteger midpersonb = BigInteger.ZERO;
+//		BigInteger conpersonb = BigInteger.ZERO;
+//		
+//	    for(FundUtilizationEvalReportBean bean: list) 
+//	    {
+//	    	Row row = sheet.createRow(rowno);
+//	    	row.createCell(0).setCellValue(sno); 
+//	    	row.createCell(1).setCellValue(bean.getProj_name());
+//	    	row.createCell(2).setCellValue(bean.getTotal_project());
+//	    	row.createCell(3).setCellValue(bean.getPre_milch_cattle().doubleValue());
+//	    	row.createCell(4).setCellValue(bean.getMid_milch_cattle().doubleValue());
+//	    	row.createCell(5).setCellValue(bean.getControl_milch_cattle().doubleValue());
+//	    	row.createCell(6).setCellValue(bean.getPre_fodder_production().doubleValue());
+//	    	row.createCell(7).setCellValue(bean.getMid_fodder_production().doubleValue());
+//	    	row.createCell(8).setCellValue(bean.getControl_fodder_production().doubleValue());
+//	    	row.createCell(9).setCellValue(bean.getPre_rural_urban().doubleValue());
+//	    	row.createCell(10).setCellValue(bean.getMid_rural_urban().doubleValue());
+//	    	row.createCell(11).setCellValue(bean.getControl_rural_urban().doubleValue());
+//	    	row.createCell(12).setCellValue(bean.getPre_spring_rejuvenated().doubleValue());
+//	    	row.createCell(13).setCellValue(bean.getMid_spring_rejuvenated().doubleValue());
+//	    	row.createCell(14).setCellValue("N/A");
+//	    	row.createCell(15).setCellValue(bean.getPre_person_benefitte().doubleValue());
+//	    	row.createCell(16).setCellValue(bean.getMid_person_benefitte().doubleValue());
+//	    	row.createCell(17).setCellValue("N/A");
+//	    	
+//			premilk = premilk.add(bean.getPre_milch_cattle());
+//			midmilk = midmilk.add(bean.getMid_milch_cattle());
+//			conmilk = conmilk.add(bean.getControl_milch_cattle());
+//			prefod = prefod.add(bean.getPre_fodder_production());
+//			midfod= midfod.add(bean.getMid_fodder_production());
+//			confod = confod.add(bean.getControl_fodder_production());
+//			prerural = prerural.add(bean.getPre_rural_urban());
+//			midrural = midrural.add(bean.getMid_rural_urban());
+//			conrural = conrural.add(bean.getControl_rural_urban());
+//			prespring = prespring.add(bean.getPre_spring_rejuvenated());
+//			midspring = midspring.add(bean.getMid_spring_rejuvenated());
+//			conspring = conspring.add(bean.getControl_spring_rejuvenated());
+//			prepersonb = prepersonb.add(bean.getPre_person_benefitte());
+//			midpersonb = midpersonb.add(bean.getMid_person_benefitte());
+//			conpersonb =  conpersonb.add(bean.getControl_person_benefitte());
+//			sno++;
+//	    	rowno++;
+//	    }
+//	    
+//	    CellStyle style1 = workbook.createCellStyle();
+//		style1.setBorderTop(BorderStyle.THIN); 
+//		style1.setBorderBottom(BorderStyle.THIN);
+//		style1.setBorderLeft(BorderStyle.THIN);
+//		style1.setBorderRight(BorderStyle.THIN);
+//		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+//		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+//		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+//		font1.setFontHeightInPoints((short) 12);
+//		font1.setBold(true);
+//		//			font1.setColor(IndexedColors.WHITE.getIndex());
+//		style1.setFont(font1);
+//
+//		Row row = sheet.createRow(list.size()+9);
+//		cell = row.createCell(0);
+//		cell.setCellValue("Grand Total");
+//		cell.setCellStyle(style1);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+//		cell = row.createCell(1);
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(2);
+////		cell.setCellValue(totproj);
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(3);
+//		cell.setCellValue(premilk.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(4);
+//		cell.setCellValue(midmilk.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(5);
+//		cell.setCellValue(conmilk.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(6);
+//		cell.setCellValue(prefod.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(7);
+//		cell.setCellValue(midfod.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(8);
+//		cell.setCellValue(confod.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(9);
+//		cell.setCellValue(prerural.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(10);
+//		cell.setCellValue(midrural.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(11);
+//		cell.setCellValue(conrural.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(12);
+//		cell.setCellValue(prespring.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(13);
+//		cell.setCellValue(midspring.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(14);
+//		cell.setCellValue("N/A");
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(15);
+//		cell.setCellValue(prepersonb.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(16);
+//		cell.setCellValue(midpersonb.doubleValue());
+//		cell.setCellStyle(style1);
+//		cell = row.createCell(17);
+//		cell.setCellValue("N/A");
+//		cell.setCellStyle(style1);
+//		
+//	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 17);
+//	    String fileName = "attachment; filename=Report PE8- Project.xlsx";
+//	    
+//	    CommonFunctions.downloadExcel(response, workbook, fileName);
+//
+//	    return "reports/ProjProdDetailReport";
+//	}
 	
 	@RequestMapping(value = "/downloadExcelProdDetailsReport", method = RequestMethod.POST)
 	@ResponseBody
@@ -2901,6 +3893,141 @@ public class FundUtilizationEvalReportController {
 	    return "reports/DistMandaysDetailsReport";
 	}
 
+	
+	@RequestMapping(value = "/downloadExcelProjMandaysDetailsReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelProjMandaysDetailsReport(HttpServletRequest request, HttpServletResponse response) {
+	    String dcode = request.getParameter("dcode");
+	    String stName = request.getParameter("stName");
+	    String distName = request.getParameter("distName");
+	    List<FundUtilizationEvalReportBean> list = fundService.getProjMandaysDetailsReport(Integer.parseInt(dcode));
+
+	    Workbook workbook = new XSSFWorkbook();
+	    Sheet sheet = workbook.createSheet("Report PE7 - Project-wise Mid Term Evaluation of Mandays Details");
+
+	    CellStyle style = CommonFunctions.getStyle(workbook);
+
+	    String rptName = "Report PE7 - Project-wise Mid Term Evaluation of Mandays Details for District '" + distName + "' of State '"+ stName+"' ";
+	    String areaAmtValDetail = "";
+
+	    CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, 8);
+	    CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+
+	    // HEADER MERGES
+	    sheet.addMergedRegion(new CellRangeAddress(list.size() + 8, list.size() + 8, 0, 1));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 6, 0, 0));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 6, 1, 1));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 2, 4));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 5, 6));
+	    sheet.addMergedRegion(new CellRangeAddress(5, 5, 7, 8));
+
+	    // HEADER ROWS
+	    Row row5 = sheet.createRow(5);
+	    Cell cell = row5.createCell(0);
+	    cell.setCellValue("S.No.");
+	    cell.setCellStyle(style);
+	    cell = row5.createCell(1);
+	    cell.setCellValue("Project Name");
+	    cell.setCellStyle(style);
+	    cell = row5.createCell(2);
+	    cell.setCellValue("Farmer`s Average Household Income per Annum (Rs. in Lakhs)");
+	    cell.setCellStyle(style);
+	    cell = row5.createCell(5);
+	    cell.setCellValue("No. of Farmers Benefited");
+	    cell.setCellStyle(style);
+	    cell = row5.createCell(7);
+	    cell.setCellValue("No. of Persondays Generated (man-days)");
+	    cell.setCellStyle(style);
+
+	    Row row6 = sheet.createRow(6);
+	    for (int i = 0; i <= 8; i++) row6.createCell(i).setCellStyle(style);
+
+	    row6.getCell(2).setCellValue("Pre - Project Status(Aggregate)");
+	    row6.getCell(3).setCellValue("Mid - Project Status(Aggregate)");
+	    row6.getCell(4).setCellValue("Controlled Area");
+	    row6.getCell(5).setCellValue("Project Area");
+	    row6.getCell(6).setCellValue("Controlled Area");
+	    row6.getCell(7).setCellValue("Project Area");
+	    row6.getCell(8).setCellValue("Controlled Area");
+
+	    Row row7 = sheet.createRow(7);
+	    for (int i = 0; i <= 8; i++) {
+	        Cell c = row7.createCell(i);
+	        c.setCellValue(i + 1);
+	        c.setCellStyle(style);
+	    }
+
+	    int sno = 1;
+	    int rowno = 8;
+	    BigDecimal pref = BigDecimal.ZERO;
+	    BigDecimal midf = BigDecimal.ZERO;
+	    BigDecimal cf = BigDecimal.ZERO;
+	    BigInteger fb = BigInteger.ZERO;
+	    BigInteger man = BigInteger.ZERO;
+
+	    for (FundUtilizationEvalReportBean bean : list) {
+	        Row row = sheet.createRow(rowno);
+	        row.createCell(0).setCellValue(sno);
+	        row.createCell(1).setCellValue(bean.getProj_name());
+	        row.createCell(2).setCellValue(bean.getPre_farmer_income().doubleValue());
+	        row.createCell(3).setCellValue(bean.getMid_farmer_income().doubleValue());
+	        row.createCell(4).setCellValue(bean.getControl_farmer_income().doubleValue());
+	        row.createCell(5).setCellValue(bean.getFarmer_benefited().doubleValue());
+	        row.createCell(6).setCellValue("N/A");
+	        row.createCell(7).setCellValue(bean.getMandays_generated().doubleValue());
+	        row.createCell(8).setCellValue("N/A");
+
+	        pref = pref.add(bean.getPre_farmer_income());
+	        midf = midf.add(bean.getMid_farmer_income());
+	        cf = cf.add(bean.getControl_farmer_income());
+	        fb = fb.add(bean.getFarmer_benefited());
+	        man = man.add(bean.getMandays_generated());
+	        sno++;
+	        rowno++;
+	    }
+
+	    CellStyle style1 = workbook.createCellStyle();
+	    style1.setBorderTop(BorderStyle.THIN);
+	    style1.setBorderBottom(BorderStyle.THIN);
+	    style1.setBorderLeft(BorderStyle.THIN);
+	    style1.setBorderRight(BorderStyle.THIN);
+	    style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+	    style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+	    org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+	    font1.setFontHeightInPoints((short) 12);
+	    font1.setBold(true);
+	    style1.setFont(font1);
+
+	    Row row = sheet.createRow(rowno);
+	    cell = row.createCell(0);
+	    cell.setCellValue("Grand Total");
+	    cell.setCellStyle(style1);
+	    cell = row.createCell(1);
+	    cell.setCellStyle(style1);
+	    row.createCell(2).setCellValue(pref.doubleValue());
+	    row.getCell(2).setCellStyle(style1);
+	    row.createCell(3).setCellValue(midf.doubleValue());
+	    row.getCell(3).setCellStyle(style1);
+	    row.createCell(4).setCellValue(cf.doubleValue());
+	    row.getCell(4).setCellStyle(style1);
+	    row.createCell(5).setCellValue(fb.doubleValue());
+	    row.getCell(5).setCellStyle(style1);
+	    row.createCell(6).setCellValue("N/A");
+	    row.getCell(6).setCellStyle(style1);
+	    row.createCell(7).setCellValue(man.doubleValue());
+	    row.getCell(7).setCellStyle(style1);
+	    row.createCell(8).setCellValue("N/A");
+	    row.getCell(8).setCellStyle(style1);
+
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
+
+	    for (int i = 0; i <= 8; i++) sheet.autoSizeColumn(i);
+
+	    String fileName = "attachment; filename=Report PE7- Project.xlsx";
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+
+	    return "reports/ProjMandaysDetailsReport";
+	}
 	@RequestMapping(value = "/downloadExcelMandaysDetailsReport", method = RequestMethod.POST)
 	@ResponseBody
 	public String downloadExcelMandaysDetailsReport(HttpServletRequest request, HttpServletResponse response) {

@@ -8,25 +8,61 @@
 <html>
 <head>
 
-<title>Report PE7-  District-wise Mid Term Evaluation of Mandays Details</title>
+<title>Report PE7-  Project-wise Mid Term Evaluation of Mandays Details</title>
 
 <script type="text/javascript">
-function downloadPDF(stcd, stName){
-    document.getElementById("stcd").value=stcd;
+
+var stName = "${stName != null ? stName : ''}";
+function handleProjectClick(projId) {
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+            if (response.exists && response.status === "C") {
+            	var reportdata = "rptdata";
+            	var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+            	    + "&reportdata=" + encodeURIComponent(reportdata)
+            	    + "&stName=" + encodeURIComponent(stName);
+
+            	window.open(url, "_blank");
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
+function downloadPDF(dcode, stName,distName){
+	document.getElementById("dcode").value=dcode;
     document.getElementById("stName").value=stName;
-	document.getmandays.action="downloadDistMandaysDetailsReportPdf";
+    document.getElementById("distName").value=distName;
+	document.getmandays.action="downloadProjMandaysDetailsReportPdf";
 	document.getmandays.method="post";
 	document.getmandays.submit();
 }
 
-function exportExcel(stcd, stName){
-        document.getElementById("stcd").value=stcd;
-        document.getElementById("stName").value=stName;
-		document.getmandays.action="downloadExcelDistrictMandaysDetailsReport";
-		document.getmandays.method="post";
-		document.getmandays.submit();
+	function exportExcel(dcode, stName, distName){
+	document.getElementById("dcode").value = dcode;
+	document.getElementById("stName").value = stName;
+	document.getElementById("distName").value = distName;
+
+	let form = document.getElementById("getmandays");
+	form.action = "downloadExcelProjMandaysDetailsReport";
+		form.method = "post";
+		form.submit();
 }
-	
 </script>
 
 
@@ -34,7 +70,7 @@ function exportExcel(stcd, stName){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE7-  District-wise Mid Term Evaluation of Mandays Details for State  '<c:out value="${stName }"></c:out>'</label>
+			<label id="head">Report PE7-  Project-wise Mid Term Evaluation of Mandays Details for District  '<c:out value="${distName }"> </c:out>'  of State  '<c:out value="${stName }"></c:out>'</label>
 		</h5>
 	</div>
 <br>
@@ -42,25 +78,24 @@ function exportExcel(stcd, stName){
 		<div class="row">
 			<div class="col-2" ></div>
 			<div class="col-8">
-
-	<form:form action="getConWorksDetails" name="getmandays" id="getmandays" method="get">
-				<input type="hidden" name="stcd" id="stcd" value="" />
-	     	 	<input type="hidden" name="stName" id="stName" value="" />
-		
- 	</form:form>
+<form:form action="getProjMandaysDetailsReport" name="getmandays" id="getmandays" method="post">   
+    <input type="hidden" name="dcode" id="dcode" value="" />
+    <input type="hidden" name="stName" id="stName" value="" />
+    <input type="hidden" name="distName" id="distName" value="" />
+</form:form>
  
 <br>
-	<c:if test="${not empty manDList}">
-	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}','${stName}')" class="btn btn-info">Excel</button>
-	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}','${stName}')" class="btn btn-info">PDF</button> 
+	<c:if test="${not empty manPList}">
+	<button name="exportExcel" id="exportExcel" onclick="exportExcel('${dcode}','${stName}','${distName}')" class="btn btn-info">Excel</button>
+	<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${dcode}','${stName}','${distName}')" class="btn btn-info">PDF</button> 
 	</c:if>   
 	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 	<table id = "tblReport" class = "table">
 		<thead>
 			   <tr>
             <th rowspan="3">S.No.</th>
-            <th rowspan="3">District Name</th>
-            <th rowspan="3">Total No. of Project</th>
+            <th rowspan="3">Project Name</th>
+<!--             <th rowspan="3">Total No. of Project</th> -->
             <th colspan="3" style="text-align: center">Farmer`s Average Household Income per Annum (Rs. in Lakhs)</th>
             <th colspan="2" style="text-align: center">No. of Farmers Benefited</th>
             <th colspan="2" style="text-align: center">No. of Persondays Generated (man-days)</th>
@@ -87,16 +122,13 @@ function exportExcel(stcd, stName){
 				<th class="text-center">7</th>
 				<th class="text-center">8</th>
 				<th class="text-center">9</th>
-				<th class="text-center">10</th>
+<!-- 				<th class="text-center">10</th> -->
 			</tr>
-			<c:forEach items="${manDList}" var="dt" varStatus="sno">
+			<c:forEach items="${manPList}" var="dt" varStatus="sno">
 				<tr>
 					<td class="text-left"><c:out value="${sno.count}" /></td>
-					<td><a
-						href="getProjMandaysDetailsReport?dcode=<c:out value="${dt.dcode}"/>"><c:out
-								value="${dt.dist_name}" /></a></td>
-<%-- 					<td class="text-left"><c:out value="${dt.dist_name}" /></td> --%>
-					<td class="text-right"><c:out value="${dt.total_project}" /></td>
+						<td class="text-left"><a href="javascript:void(0);" onclick="handleProjectClick(${dt.proj_id})"><c:out value="${dt.proj_name}" />
+                                 </a></td>
 					<td class="text-right"><c:out value="${dt.pre_farmer_income}" /></td>
 					<td class="text-right"><c:out value="${dt.mid_farmer_income}" /></td>
 					<td class="text-right"><c:out value="${dt.control_farmer_income}" /></td>
@@ -125,10 +157,9 @@ function exportExcel(stcd, stName){
  				value = "${controlmandaysgenerated + dt.control_mandays_generated}" />
 
 			</c:forEach>
-			<c:if test="${manDListSize>0}">
+			<c:if test="${manPListSize>0}">
 				<tr>
 					<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
-					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${prefarmerincome}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${midfarmerincome}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${controlfarmerincome}" /></b></td>
@@ -139,7 +170,7 @@ function exportExcel(stcd, stName){
 					
 				</tr>
 			</c:if>
-			<c:if test="${manDListSize==0}">
+			<c:if test="${manPListSize==0}">
 				<tr>
 					<td align="center" colspan="10" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>

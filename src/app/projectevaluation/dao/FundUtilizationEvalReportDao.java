@@ -21,4 +21,8 @@ public interface FundUtilizationEvalReportDao {
 	List<FundUtilizationEvalReportBean> getGradeEvaluationReport();
 
 	List<FundUtilizationEvalReportBean> getProjFundUtilizationEvalReport(Integer dcode);
+	
+	List<FundUtilizationEvalReportBean> getProjMandaysDetailsReport(Integer dcode);
+	
+	List<FundUtilizationEvalReportBean> getProjProdDetailsReport(Integer dcode);
 }
