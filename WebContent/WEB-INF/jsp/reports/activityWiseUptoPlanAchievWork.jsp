@@ -214,7 +214,16 @@ function exportExcel()
       			<option value="0">--All--</option>
     		</select>
           </td>
-          <td ><b>Financial Year </b></td>
+          
+          <td>  
+           <table>
+           
+           <tr>
+           
+          
+           
+           
+           <td ><b>Financial Year </b></td>
           <td >
               <select class="form-control finyear" id="fromyear" name="fromYear" required="required">
       			<option value="">--Select Year--</option>
@@ -224,6 +233,8 @@ function exportExcel()
 				</c:forEach>
     		  </select>
           </td>
+        
+           <td colspan="2" align="center" style="color: green"><b>OR</b></td>
           <td ><b>From Date</b></td>
           <td>
       		  <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />
@@ -232,6 +243,22 @@ function exportExcel()
 		  <td>
       		  <input type="date" name="userdateto" id="userdateto" class="form-control activity" style="width: 100%;" />
 		  </td>
+           
+           
+           </tr>
+           
+           
+           
+           </table>
+          
+          
+          
+          
+              </td>
+          
+          
+		  
+		  
           <td  align="center" class="label"> 
           <input type="button" class="btn btn-info" id="btnGetReport" onclick="validation1()" name="btnGetReport" value="Get Report" />
          <!--  <input type="submit" class="btn btn-info form-control" id="btnGetReport2" name="btnGetReport" value="Get Report"> </td> -->
@@ -261,7 +288,6 @@ function exportExcel()
 		<th colspan="10" >State : &nbsp; <c:out value='${stName}' /> &nbsp;&nbsp;&nbsp; District : &nbsp; <c:out value='${distName}' /> &nbsp;&nbsp;&nbsp; 
 		Project : &nbsp; <c:out value='${projName}' />&nbsp;&nbsp;&nbsp; <c:if test = "${fromYear ne '' }"> Financial Year : &nbsp; <c:out value='${yearName}' /> </c:if> 
 		<c:if test = "${fromYear eq '' }"> From Date : &nbsp; <c:out value='${fromDateStr}' /> &nbsp;&nbsp;&nbsp; To Date : &nbsp; <c:out value='${toDateStr}' /></c:if>
-		
 		
 		</th>
 	</tr>
