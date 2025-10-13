@@ -165,7 +165,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
       <th style="text-align:center" >Increase in cropped area</th>
       <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
-      <th style="text-align:center" >Average area of degraded land covered/Rainfed area developed (<b>%</b>)</th>
+      <th style="text-align:center" >% Area  developed under degraded/ rainfed</th>
      </tr>
   
 

@@ -471,7 +471,7 @@ public class TargetAchievementofIndicatorController {
 				CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Increase in cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Average Increase in farmers income (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Average area of degraded land covered/Rainfed area developed (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "% Area  developed under degraded/ rainfed ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				
 				
@@ -823,7 +823,7 @@ public class TargetAchievementofIndicatorController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			
 			cell = rowhead.createCell(13);
-			cell.setCellValue("Average area of degraded land covered/Rainfed area developed (%) ");
+			cell.setCellValue("% Area  developed under degraded/ rainfed");
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
@@ -1820,7 +1820,7 @@ public class TargetAchievementofIndicatorController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			
 			cell = rowhead.createCell(13);
-			cell.setCellValue("Average area of degraded land covered/Rainfed area developed (%) ");
+			cell.setCellValue("% Area  developed under degraded/ rainfed");
 			cell.setCellStyle(style);
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 			
@@ -2531,7 +2531,7 @@ public class TargetAchievementofIndicatorController {
 				CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Increase in cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Average Increase in farmers income (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Average area of degraded land covered/Rainfed area developed (%) ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "% Area  developed under degraded/ rainfed ", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 
 				
 				

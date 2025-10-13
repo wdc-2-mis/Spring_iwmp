@@ -371,8 +371,8 @@ function exportExcel(state, year, quarter){
       <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
       <th style="text-align:center" >Increase in cropped area</th>
-      <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)
-      <th style="text-align:center" >Average area of degraded land covered/Rainfed area developed (<b>%</b>)
+      <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>
+      <th style="text-align:center" >% Area  developed under degraded/ rainfed </th>
       
       
       
