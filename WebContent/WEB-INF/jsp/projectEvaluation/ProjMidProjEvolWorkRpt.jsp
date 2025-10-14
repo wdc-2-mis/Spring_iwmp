@@ -18,7 +18,6 @@ function handleProjectClick(projId) {
         data: { projectId: projId },
         contentType: "application/x-www-form-urlencoded",
         success: function(response) {
-        	alert(stName);
             if (response.exists && response.status === "C") {
                 var reportdata = "rptdata";
                 var url = "getviewcomplete?"

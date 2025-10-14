@@ -26,13 +26,13 @@ public class UnfreezeEpaLivProdDaoImpl implements UnfreezeEpaLivProdDao{
 	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Value("${getEpaData}") 
+	@Value("${getEpaDetails}") 
 	String getEpaData;
 	
-	@Value("${getLivelihoodData}") 
+	@Value("${getLivelihoodDetails}") 
 	String getLivelihoodData;
 	
-	@Value("${getProductionData}") 
+	@Value("${getProductionDetails}") 
 	String getProductionData;
 	
 	@Value("${getEpaWorkid}") 
