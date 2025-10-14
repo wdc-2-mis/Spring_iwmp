@@ -15,5 +15,7 @@ public interface CroppedDtlRptDao {
 	List<CroppedDetailBean> getDistwiseCropDtlOthArea(int stCode);
 	
 	List<CroppedDetailBean> getProjwiseCropDtlArea(int dcode);
+	
+	List<CroppedDetailBean> getProjwiseCropDtlOthArea(int dcode);
 
 }

@@ -142,6 +142,29 @@ public class CroppedDtlAreaRptController {
 		
 	}
 	
+	@RequestMapping(value = "/getProjwiseCroppedDtlOthRpt", method = RequestMethod.GET)
+	public String getProjwiseCroppedDtlOthRpt(HttpServletRequest request, Model model) {
+		session = request.getSession(true);
+		
+		List<CroppedDetailBean> list = new ArrayList<>();
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		int dcode = Integer.parseInt(request.getParameter("dcode"));    
+		String district = request.getParameter("distname");
+		
+		list =cropservice.getProjwiseCropDtlOthArea(dcode);
+		
+		model.addAttribute("projList", list);
+		model.addAttribute("projListSize", list.size());
+		model.addAttribute("stname", state);
+		model.addAttribute("stcode", stCode);
+		model.addAttribute("distname", district);
+		model.addAttribute("dcode", dcode);
+		
+		return "projectEvaluation/croppedDetailAreaOthRpt";
+		
+	}
+	
 	@RequestMapping(value = "/downloadProjWiseCropDtlAreaPDF", method = RequestMethod.POST)
 	public void downloadProjWiseCropDtlAreaPDF(HttpServletRequest request, HttpServletResponse response) {
 		String stcd = request.getParameter("stcode");
@@ -974,6 +997,611 @@ public class CroppedDtlAreaRptController {
 	    } catch (IOException ioEx) {
 	        ioEx.printStackTrace();
 	    }
+	}
+	
+	@RequestMapping(value = "/downloadProjWiseCropDtlAreaOthPDF", method = RequestMethod.POST)
+	public void downloadProjWiseCropDtlAreaOthPDF(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcode");
+		String stName = request.getParameter("stname");
+		String dcode = request.getParameter("dcode");
+		String distName = request.getParameter("distname");
+	    List<CroppedDetailBean> list = cropservice.getProjwiseCropDtlOthArea(Integer.parseInt(dcode));
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    Document document = null;
+	    PdfWriter writer = null;
+
+	    try {
+	        Rectangle layout = new Rectangle(PageSize.A4.rotate());
+	        layout.setBackgroundColor(new BaseColor(255, 255, 255));
+	        document = new Document(layout, 25, 10, 10, 0);
+	        writer = PdfWriter.getInstance(document, baos);
+
+	        document.open();
+	        Font f1 = new Font(Font.FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC);
+	        Font f3 = new Font(Font.FontFamily.HELVETICA, 13.0f, Font.BOLD);
+	        Font bf8 = new Font(Font.FontFamily.HELVETICA, 8);
+	        Font bf8Bold = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+	        Font bf10Bold = new Font(Font.FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+	        Paragraph heading1 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+	        Paragraph heading2 = new Paragraph("Report PE5-Project wise Cropped Others Detail Report for District "+distName+" of State "+stName, f3);
+	        heading1.setAlignment(Element.ALIGN_CENTER);
+	        heading2.setAlignment(Element.ALIGN_CENTER);
+	        heading1.setSpacingAfter(10);
+	        heading2.setSpacingAfter(10);
+
+	        CommonFunctions.addHeader(document); // Assuming you already have a header function
+
+	        document.add(heading1);
+	        document.add(heading2);
+
+	        PdfPTable table = new PdfPTable(17);
+	        table.setWidths(new int[]{3, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+	        table.setWidthPercentage(100);
+	        table.setHeaderRows(4);
+	        
+	        CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Project Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Total Gross Cropped Area", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Area of horticulture crop", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Net Sown Area", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Cropping Intensity (%)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "Area under protective irrigation", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+
+	        
+	        for (int i = 0; i < 5; i++) {
+	            CommonFunctions.insertCellHeader(table, "Project Area Details", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+	            CommonFunctions.insertCellHeader(table, "Controlled Area Details", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+	         }
+	        for (int i = 0; i < 5; i++) {
+	            CommonFunctions.insertCellHeader(table, "Pre Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	            CommonFunctions.insertCellHeader(table, "Mid Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	         }
+	        
+	        for (int i = 1; i <= 17; i++) {
+	            CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        }
+	        
+	        int k = 1;
+	        BigDecimal total_pre_gross_cropped = BigDecimal.ZERO;
+            BigDecimal total_mid_gross_cropped = BigDecimal.ZERO;
+	        BigDecimal total_control_gross_cropped = BigDecimal.ZERO;
+	        BigDecimal pre_horticulture = BigDecimal.ZERO;
+	        BigDecimal mid_horticulture = BigDecimal.ZERO;
+	        BigDecimal control_horticulture = BigDecimal.ZERO;
+	        BigDecimal pre_netsown = BigDecimal.ZERO;
+	        BigDecimal mid_netsown = BigDecimal.ZERO;
+	        BigDecimal control_netsown = BigDecimal.ZERO;
+	        BigDecimal pre_cropping = BigDecimal.ZERO;
+	        BigDecimal mid_cropping = BigDecimal.ZERO;
+	        BigDecimal control_cropping = BigDecimal.ZERO;
+	        BigDecimal pre_protective = BigDecimal.ZERO;
+	        BigDecimal mid_protective = BigDecimal.ZERO;
+	        BigDecimal control_protective = BigDecimal.ZERO;
+	        
+	        for (CroppedDetailBean bean : list) {
+	            CommonFunctions.insertCell(table, String.valueOf(k++), Element.ALIGN_LEFT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getProj_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getTotal_pre_gross_cropped().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getTotal_mid_gross_cropped().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getTotal_control_gross_cropped().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            
+	            CommonFunctions.insertCell(table, bean.getPre_horticulture().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getMid_horticulture().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getControl_horticulture().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            
+	            CommonFunctions.insertCell(table, bean.getPre_netsown().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getMid_netsown().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getControl_netsown().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            
+	            CommonFunctions.insertCell(table, bean.getPre_cropping().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getMid_cropping().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getControl_cropping().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            
+	            CommonFunctions.insertCell(table, bean.getPre_protective().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getMid_protective().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            CommonFunctions.insertCell(table, bean.getControl_protective().setScale(4, RoundingMode.HALF_UP).toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+	            
+	            total_pre_gross_cropped = total_pre_gross_cropped.add(bean.getTotal_pre_gross_cropped());
+	            total_mid_gross_cropped = total_mid_gross_cropped.add(bean.getTotal_mid_gross_cropped());
+	            total_control_gross_cropped = total_control_gross_cropped.add(bean.getTotal_control_gross_cropped());
+	            
+	            pre_horticulture = pre_horticulture.add(bean.getPre_horticulture());
+	            mid_horticulture = mid_horticulture.add(bean.getMid_horticulture());
+	            control_horticulture = control_horticulture.add(bean.getControl_horticulture());
+	            
+	            pre_netsown = pre_netsown.add(bean.getPre_netsown());
+	            mid_netsown = mid_netsown.add(bean.getMid_netsown());
+	            control_netsown = control_netsown.add(bean.getControl_netsown());
+	            
+	            pre_cropping = pre_cropping.add(bean.getPre_cropping());
+	            mid_cropping = mid_cropping.add(bean.getMid_cropping());
+	            control_cropping = control_cropping.add(bean.getControl_cropping());
+	            
+	            pre_protective = pre_protective.add(bean.getPre_protective());
+	            mid_protective = mid_protective.add(bean.getMid_protective());
+	            control_protective = control_protective.add(bean.getControl_protective());
+	        }
+	        
+	            CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", total_pre_gross_cropped), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", total_mid_gross_cropped), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", total_control_gross_cropped), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", pre_horticulture), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", mid_horticulture), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", control_horticulture), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", pre_netsown), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", mid_netsown), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", control_netsown), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", pre_cropping), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", mid_cropping), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", control_cropping), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", pre_protective), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", mid_protective), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            CommonFunctions.insertCell3(table, String.format(Locale.US, "%.4f", control_protective), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            
+	            document.add(table);
+
+	            
+	            PdfPTable footer = new PdfPTable(1);
+		        footer.setWidthPercentage(70);
+		        footer.setSpacingBefore(15f);
+				CommonFunctions.insertCellPageHeader(footer,
+						"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "
+								+ CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"),
+						Element.ALIGN_LEFT, 1, 4, bf8);
+		        document.add(footer);
+
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    } finally {
+		        if (document != null && document.isOpen()) document.close();
+		    }
+
+		    try {
+		        response.setContentType("application/pdf");
+		        response.setHeader("Content-Disposition", "attachment; filename=report-PE5 Project.pdf");
+		        response.setContentLength(baos.size());
+		        response.setHeader("Expires", "0");
+		        response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		        response.setHeader("Pragma", "public");
+
+		        OutputStream os = response.getOutputStream();
+		        baos.writeTo(os);
+		        os.flush();
+		        os.close();
+		    } catch (IOException ioEx) {
+		        ioEx.printStackTrace();
+		    }
+		}
+	
+	
+	@RequestMapping(value = "/downloadProjWiseCropDtlAreaOthExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadProjWiseCropDtlAreaOthExcel(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<CroppedDetailBean> list = new ArrayList<CroppedDetailBean>();
+		
+		int stCode = Integer.parseInt(request.getParameter("stcode"));    
+		String state = request.getParameter("stname");
+		int dcode = Integer.parseInt(request.getParameter("dcode"));
+		String distName = request.getParameter("distname");
+		
+		list =cropservice.getProjwiseCropDtlOthArea(dcode);
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report PE5-Project wise Cropped Others Detail Report");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report PE5-Project wise Cropped Others Detail Report";
+		String areaAmtValDetail ="All area in ha.";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 16, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+10,list.size()+10,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,8,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,2,4);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,5,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,8,10);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,11,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,14,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,2,3);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,4,4);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,5,6);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,7,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,8,9);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,10,10);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,11,12);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,13,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,7,14,15);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(7,8,16,16);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ state +" District Name : "+distName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<17;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Project Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+				
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Total Gross Cropped Area");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=3;i<5;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(5);
+		cell.setCellValue("Area of horticulture crop");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=6;i<8;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("Net Sown Area");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=9;i<11;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(11);
+		cell.setCellValue("Cropping Intensity (%)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=12;i<14;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(14);
+		cell.setCellValue("Area under protective irrigation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=15;i<17;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<2;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(2);
+		cell.setCellValue("Project Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		rowhead.createCell(3).setCellStyle(style);
+		
+		cell = rowhead1.createCell(4);
+		cell.setCellValue("Controlled Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(5);
+		cell.setCellValue("Project Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		rowhead.createCell(6).setCellStyle(style);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellValue("Controlled Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(8);
+		cell.setCellValue("Project Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		rowhead.createCell(9).setCellStyle(style);
+		
+		cell = rowhead1.createCell(10);
+		cell.setCellValue("Controlled Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(11);
+		cell.setCellValue("Project Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		rowhead.createCell(12).setCellStyle(style);
+		
+		cell = rowhead1.createCell(13);
+		cell.setCellValue("Controlled Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(14);
+		cell.setCellValue("Project Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		rowhead.createCell(15).setCellStyle(style);
+		
+		cell = rowhead1.createCell(16);
+		cell.setCellValue("Controlled Area Details");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<2;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(2);
+		cell.setCellValue("Pre Project");
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(3);
+		cell.setCellValue("Mid Project");
+		cell.setCellStyle(style);
+		rowhead2.createCell(4).setCellStyle(style);
+		
+		cell = rowhead2.createCell(5);
+		cell.setCellValue("Pre Project");
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(6);
+		cell.setCellValue("Mid Project");
+		cell.setCellStyle(style);
+		rowhead2.createCell(7).setCellStyle(style);
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("Pre Project");
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(9);
+		cell.setCellValue("Mid Project");
+		cell.setCellStyle(style);
+		rowhead2.createCell(10).setCellStyle(style);
+		
+		cell = rowhead2.createCell(11);
+		cell.setCellValue("Pre Project");
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(12);
+		cell.setCellValue("Mid Project");
+		cell.setCellStyle(style);
+		rowhead2.createCell(13).setCellStyle(style);
+		
+		cell = rowhead2.createCell(14);
+		cell.setCellValue("Pre Project");
+		cell.setCellStyle(style);
+		
+		cell = rowhead2.createCell(15);
+		cell.setCellValue("Mid Project");
+		cell.setCellStyle(style);
+		rowhead2.createCell(16).setCellStyle(style);
+		
+		
+		Row rowhead3 = sheet.createRow(9);
+		
+		for(int i=0;i<17;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 10;
+		BigDecimal total_pre_gross_cropped = BigDecimal.ZERO;
+        BigDecimal total_mid_gross_cropped = BigDecimal.ZERO;
+        BigDecimal total_control_gross_cropped = BigDecimal.ZERO;
+        BigDecimal pre_horticulture = BigDecimal.ZERO;
+        BigDecimal mid_horticulture = BigDecimal.ZERO;
+        BigDecimal control_horticulture = BigDecimal.ZERO;
+        BigDecimal pre_netsown = BigDecimal.ZERO;
+        BigDecimal mid_netsown = BigDecimal.ZERO;
+        BigDecimal control_netsown = BigDecimal.ZERO;
+        BigDecimal pre_cropping = BigDecimal.ZERO;
+        BigDecimal mid_cropping = BigDecimal.ZERO;
+        BigDecimal control_cropping = BigDecimal.ZERO;
+        BigDecimal pre_protective = BigDecimal.ZERO;
+        BigDecimal mid_protective = BigDecimal.ZERO;
+        BigDecimal control_protective = BigDecimal.ZERO;
+		
+		
+	    for(CroppedDetailBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getProj_name());
+	    	row.createCell(2).setCellValue(bean.getTotal_pre_gross_cropped().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(3).setCellValue(bean.getTotal_mid_gross_cropped().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(4).setCellValue(bean.getTotal_control_gross_cropped().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(5).setCellValue(bean.getPre_horticulture().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(6).setCellValue(bean.getMid_horticulture().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(7).setCellValue(bean.getControl_horticulture().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(8).setCellValue(bean.getPre_netsown().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(9).setCellValue(bean.getMid_netsown().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(10).setCellValue(bean.getControl_netsown().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(11).setCellValue(bean.getPre_cropping().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(12).setCellValue(bean.getMid_cropping().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(13).setCellValue(bean.getControl_cropping().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(14).setCellValue(bean.getPre_protective().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(15).setCellValue(bean.getMid_protective().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	row.createCell(16).setCellValue(bean.getControl_protective().setScale(4, RoundingMode.HALF_UP).doubleValue());
+	    	
+	    	
+            total_pre_gross_cropped = total_pre_gross_cropped.add(bean.getTotal_pre_gross_cropped());
+            total_mid_gross_cropped = total_mid_gross_cropped.add(bean.getTotal_mid_gross_cropped());
+            total_control_gross_cropped = total_control_gross_cropped.add(bean.getTotal_control_gross_cropped());
+            
+            pre_horticulture = pre_horticulture.add(bean.getPre_horticulture());
+            mid_horticulture = mid_horticulture.add(bean.getMid_horticulture());
+            control_horticulture = control_horticulture.add(bean.getControl_horticulture());
+            
+            pre_netsown = pre_netsown.add(bean.getPre_netsown());
+            mid_netsown = mid_netsown.add(bean.getMid_netsown());
+            control_netsown = control_netsown.add(bean.getControl_netsown());
+            
+            pre_cropping = pre_cropping.add(bean.getPre_cropping());
+            mid_cropping = mid_cropping.add(bean.getMid_cropping());
+            control_cropping = control_cropping.add(bean.getControl_cropping());
+            
+            pre_protective = pre_protective.add(bean.getPre_protective());
+            mid_protective = mid_protective.add(bean.getMid_protective());
+            control_protective = control_protective.add(bean.getControl_protective());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+10);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(total_pre_gross_cropped.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(total_mid_gross_cropped.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(total_control_gross_cropped.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(pre_horticulture.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(mid_horticulture.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(control_horticulture.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(pre_netsown.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(mid_netsown.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(control_netsown.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(pre_cropping.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(mid_cropping.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(control_cropping.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(pre_protective.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(mid_protective.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(control_protective.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 16);
+	    String fileName = "attachment; filename=Report PE5- Project.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "projectEvaluation/croppedDetailAreaOthRpt";
 	}
 
 	@RequestMapping(value = "/downloadDistWiseCropDtlAreaOthPDF", method = RequestMethod.POST)

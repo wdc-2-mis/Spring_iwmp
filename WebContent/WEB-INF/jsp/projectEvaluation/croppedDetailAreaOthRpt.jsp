@@ -40,6 +40,59 @@ function exportExcel1(stcode, stname){
 	document.getcropdtlothrpt.method="post";
 	document.getcropdtlothrpt.submit();
 }
+
+function downloadPDF2(stcode, stname, dcode, distname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("distname").value=distname;
+	document.getcropdtlothrpt.action="downloadProjWiseCropDtlAreaOthPDF";
+	document.getcropdtlothrpt.method="post";
+	document.getcropdtlothrpt.submit();
+}
+
+function exportExcel2(stcode, stname, dcode, distname){
+    document.getElementById("stcode").value=stcode;
+    document.getElementById("stname").value=stname;
+    document.getElementById("dcode").value=dcode;
+    document.getElementById("distname").value=distname;
+	document.getcropdtlothrpt.action="downloadProjWiseCropDtlAreaOthExcel";
+	document.getcropdtlothrpt.method="post";
+	document.getcropdtlothrpt.submit();
+}
+
+function handleProjectClick(projId) {
+	var stName = "${stname != null ? stname : ''}";
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+            if (response.exists && response.status === "C") {
+            	var reportdata = "rptdata";
+            	var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+            	    + "&reportdata=" + encodeURIComponent(reportdata)
+            	    + "&stName=" + encodeURIComponent(stName);
+
+            	window.open(url, "_blank");
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
 </script>
 <c:if test = "${listsize>0}">
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlothrpt"></form>
@@ -246,7 +299,7 @@ function exportExcel1(stcode, stname){
 			<c:forEach items="${distList}" var="project" varStatus="sno">
 				<tr>
 					<td class="text-center"><c:out value="${sno.count}" /></td>
-					<td><c:out value="${project.dist_name}" /></td>
+					<td><a href="getProjwiseCroppedDtlOthRpt?dcode=${project.dcode}&&distname=${project.dist_name}&&stcode=${stcode}&&stname=${stname}"><c:out value="${project.dist_name}" /></a></td>
 					<td class="text-right"><c:out value="${project.project}" /></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.total_pre_gross_cropped}" /></fmt:formatNumber></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.total_mid_gross_cropped}" /></fmt:formatNumber></td>
@@ -308,6 +361,159 @@ function exportExcel1(stcode, stname){
 				<td class="table-primary"></td>
 				<td align="right" class="table-primary"><b>Grand Total </b></td>
 				<td align="right" class="table-primary"><b><c:out value="${totalproject}" /></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_gross_cropped}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_gross_cropped}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_gross_cropped}" /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_horticulture}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_horticulture}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_horticulture}" /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_netsown}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_netsown}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_netsown}" /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_cropping}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_cropping}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_cropping}" /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_protective}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_protective}" /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_protective}" /></fmt:formatNumber></b></td>
+				
+			</tr>	 
+			</tbody> 		
+</thead>
+
+</table>
+</div>
+</c:if>
+
+<c:if test = "${projListSize>0}">
+<form action="downloadblsurveyPDF" method="post" name="getcropdtlothrpt">
+				<input type="hidden" name="stcode" id="stcode" value="" />
+	     	 	<input type="hidden" name="stname" id="stname" value="" />
+	     	 	<input type="hidden" name="dcode" id="dcode" value="" />
+	     	 	<input type="hidden" name="distname" id="distname" value="" /></form>
+<div class="container-fluid">
+	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
+		<h5><label id="head1">Report PE5-Project wise Cropped Others Detail Report</label></h5>
+	</div>
+	 <button name="exportExcel" id="exportExcel" onclick="exportExcel2('${stcode}','${stname}','${dcode}','${distname}')" class="btn btn-info">Excel</button>
+	 <button name="exportPDF" id="exportPDF" onclick="downloadPDF2('${stcode}','${stname}','${dcode}','${distname}')" class="btn btn-info">PDF</button>
+	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+	<table id="pdfBasicExample" class="table">
+<!-- 	<tbody id="dtBasicExample"> -->
+		<thead>
+			<tr>
+		    	<th class="text-left" colspan="16">State: ${stname} District: ${distname}</th>
+				<th class="text-right" colspan="2">All area in ha.</th>
+			</tr>
+			<tr>
+				<th rowspan="3" class="text-center">S.No.</th>
+				<th rowspan="3" class="text-center">Project</th>
+				<th colspan="3" class="text-center">Total Gross Cropped Area</th>
+				<th colspan="3" class="text-center">Area of horticulture crop</th>
+				<th colspan="3" class="text-center">Net Sown Area</th>
+				<th colspan="3" class="text-center">Cropping Intensity (%)</th>
+				<th colspan="3" class="text-center">Area under protective irrigation</th>
+			</tr>
+			
+			<tr>
+			<th colspan="2" class="text-center">Project Area Details</th>
+			<th colspan="1" rowspan="2" class="text-center">Controlled Area Details</th>
+			<th colspan="2" class="text-center">Project Area Details</th>
+			<th colspan="1" rowspan="2" class="text-center">Controlled Area Details</th>
+			<th colspan="2" class="text-center">Project Area Details</th>
+			<th colspan="1" rowspan="2" class="text-center">Controlled Area Details</th>
+			<th colspan="2" class="text-center">Project Area Details</th>
+			<th colspan="1" rowspan="2" class="text-center">Controlled Area Details</th>
+			<th colspan="2" class="text-center">Project Area Details</th>
+			<th colspan="1" rowspan="2" class="text-center">Controlled Area Details</th>
+			</tr>
+			
+			 <tr>
+			<th rowspan="2" class="text-center">Pre Project</th>
+			<th rowspan="2" class="text-center">Mid Project </th>
+			<th rowspan="2" class="text-center">Pre Project</th>
+			<th rowspan="2" class="text-center">Mid Project </th>
+			<th rowspan="2" class="text-center">Pre Project</th>
+			<th rowspan="2" class="text-center">Mid Project </th>
+			<th rowspan="2" class="text-center">Pre Project</th>
+			<th rowspan="2" class="text-center">Mid Project </th>
+			<th rowspan="2" class="text-center">Pre Project</th>
+			<th rowspan="2" class="text-center">Mid Project </th>
+			</tr> 
+			
+			 <tbody id="dtBasicExample">
+			<c:forEach items="${projList}" var="project" varStatus="sno">
+				<tr>
+					<td class="text-center"><c:out value="${sno.count}" /></td>
+					<c:choose>
+						<c:when test ="${project.total_pre_gross_cropped eq 0 && project.total_mid_gross_cropped eq 0 && project.total_control_gross_cropped eq 0 && project.pre_horticulture eq 0 && project.mid_horticulture eq 0 && project.control_horticulture eq 0}">
+							<td class="text-right"><c:out value="${project.proj_name}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td class="text-right"><a href="javascript:void(0);" onclick="handleProjectClick(${project.proj_id})"><c:out value="${project.proj_name}" /></a></td>
+						</c:otherwise>
+					</c:choose>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.total_pre_gross_cropped}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.total_mid_gross_cropped}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.total_control_gross_cropped}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.pre_horticulture}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.mid_horticulture}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.control_horticulture}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.pre_netsown}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.mid_netsown}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.control_netsown}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.pre_cropping}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.mid_cropping}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.control_cropping}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.pre_protective}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.mid_protective}" /></fmt:formatNumber></td>
+					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.control_protective}" /></fmt:formatNumber></td>
+					
+			</tr>
+			
+				<c:set var="totalpre_gross_cropped"
+					value="${totalpre_gross_cropped+project.total_pre_gross_cropped}" />
+				<c:set var="totalmid_gross_cropped"
+					value="${totalmid_gross_cropped+project.total_mid_gross_cropped}" />
+				<c:set var="totalcontrol_gross_cropped"
+					value="${totalcontrol_gross_cropped+project.total_control_gross_cropped}" />
+					
+				<c:set var="totalpre_horticulture"
+					value="${totalpre_horticulture+project.pre_horticulture}" />
+				<c:set var="totalmid_horticulture"
+					value="${totalmid_horticulture+project.mid_horticulture}" />
+				<c:set var="totalcontrol_horticulture"
+					value="${totalcontrol_horticulture+project.control_horticulture}" />
+					
+				<c:set var="totalpre_netsown"
+					value="${totalpre_netsown+project.pre_netsown}" />
+				<c:set var="totalmid_netsown"
+					value="${totalmid_netsown+project.mid_netsown}" />
+				<c:set var="totalcontrol_netsown"
+					value="${totalcontrol_netsown+project.control_netsown}" />
+					
+				<c:set var="totalpre_cropping"
+					value="${totalpre_cropping+project.pre_cropping}" />
+				<c:set var="totalmid_cropping"
+					value="${totalmid_cropping+project.mid_cropping}" />
+				<c:set var="totalcontrol_cropping"
+					value="${totalcontrol_cropping+project.control_cropping}" />
+					
+				<c:set var="totalpre_protective"
+					value="${totalpre_protective+project.pre_protective}" />
+				<c:set var="totalmid_protective"
+					value="${totalmid_protective+project.mid_protective}" />
+				<c:set var="totalcontrol_protective"
+					value="${totalcontrol_protective+project.control_protective}" />
+						
+			</c:forEach>
+			<tr>
+				<td class="table-primary"></td>
+				<td align="right" class="table-primary"><b>Grand Total </b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalpre_gross_cropped}" /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalmid_gross_cropped}" /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary"><b><fmt:formatNumber minFractionDigits="4"><c:out value="${totalcontrol_gross_cropped}" /></fmt:formatNumber></b></td>

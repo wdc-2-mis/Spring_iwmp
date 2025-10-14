@@ -61,6 +61,39 @@ function exportExcel2(stcode, stname, dcode, distname){
 	document.getcropdtlrpt.method="post";
 	document.getcropdtlrpt.submit();
 }
+
+function handleProjectClick(projId) {
+	var stName = "${stname != null ? stname : ''}";
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+            if (response.exists && response.status === "C") {
+            	var reportdata = "rptdata";
+            	var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+            	    + "&reportdata=" + encodeURIComponent(reportdata)
+            	    + "&stName=" + encodeURIComponent(stName);
+
+            	window.open(url, "_blank");
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
 </script>
 <c:if test = "${listsize>0}">
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
@@ -363,7 +396,14 @@ function exportExcel2(stcode, stname, dcode, distname){
 			<c:forEach items="${projList}" var="project" varStatus="sno">
 				<tr>
 					<td class="text-center"><c:out value="${sno.count}" /></td>
-					<td class="text-right"><c:out value="${project.proj_name}" /></td>
+					<c:choose>
+						<c:when test ="${project.proj_div_change eq 0 && project.con_div_change eq 0 && project.proj_nil_single eq 0 && project.con_nil_single eq 0}">
+							<td class="text-right"><c:out value="${project.proj_name}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td class="text-right"><a href="javascript:void(0);" onclick="handleProjectClick(${project.proj_id})"><c:out value="${project.proj_name}" /></a></td>
+						</c:otherwise>
+					</c:choose>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_div_change}" /></fmt:formatNumber></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.con_div_change}" /></fmt:formatNumber></td>
 					<td class="text-right"><fmt:formatNumber minFractionDigits="4"><c:out value="${project.proj_nil_single}" /></fmt:formatNumber></td>
