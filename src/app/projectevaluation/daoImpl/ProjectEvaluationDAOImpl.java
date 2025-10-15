@@ -34,6 +34,7 @@ import app.model.outcome.FpoMain;
 import app.model.project.WdcpmksyBaselineupdateAchievementDetail;
 import app.model.project.WdcpmksyProjectPhysicalAchievementDetails;
 import app.projectevaluation.bean.CroppedDetailsReportBean;
+import app.projectevaluation.bean.FundUtilizationEvalReportBean;
 import app.projectevaluation.bean.ProductionDetailsBean;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.projectevaluation.dao.ProjectEvaluationDAO;
@@ -210,6 +211,8 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getProjMidProjEvlWorkDtlRpt}")
 	String getProjMidProjEvlWorkDtlRpt;
 	
+	@Value("${projwiseAverageAnnualIncome}")
+	String projwiseAverageAnnualIncome;
 	
 	@Override
 	public LinkedHashMap<Integer, List<ProjectEvaluationBean>> getprojProfileData(Integer dcode, Integer pcode) {
@@ -2892,6 +2895,25 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				SQLQuery query = session.createSQLQuery(hql);
 				query.setInteger("dcode", dCode);
 				query.setResultTransformer(Transformers.aliasToBean(ProjectEvaluationBean.class));
+				listP = query.list();
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return listP;
+		}
+
+		@Override
+		public List<ProductionDetailsBean> getProjwiseAverageAnnualIncome(Integer dcode) {
+			List<ProductionDetailsBean> listP = new ArrayList<>();
+			String hql = projwiseAverageAnnualIncome;
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query = session.createSQLQuery(hql);
+				query.setInteger("dcode", dcode);
+				query.setResultTransformer(Transformers.aliasToBean(ProductionDetailsBean.class));
 				listP = query.list();
 				session.getTransaction().commit();
 			} catch (Exception ex) {

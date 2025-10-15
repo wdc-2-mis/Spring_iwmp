@@ -190,5 +190,7 @@ public interface ProjectEvaluationDAO {
 
 	List<ProjectEvaluationBean> getprojMidProjEvolWorkDtl(int dCode);
 	
+	List<ProductionDetailsBean> getProjwiseAverageAnnualIncome(Integer dcode);
+	
 }
  

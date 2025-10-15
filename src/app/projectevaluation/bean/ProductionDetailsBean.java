@@ -38,6 +38,21 @@ public class ProductionDetailsBean {
 	private BigInteger prememberbasedug; 
 	private BigInteger midmemberbasedug; 
 	private BigInteger controlmemberbasedug;
+	private Integer proj_id;
+	private String proj_name;
+	
+	public Integer getProj_id() {
+		return proj_id;
+	}
+	public void setProj_id(Integer proj_id) {
+		this.proj_id = proj_id;
+	}
+	public String getProj_name() {
+		return proj_name;
+	}
+	public void setProj_name(String proj_name) {
+		this.proj_name = proj_name;
+	}
 	public Integer getStcode() {
 		return stcode;
 	}

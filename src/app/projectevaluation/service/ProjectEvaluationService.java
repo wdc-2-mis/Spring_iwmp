@@ -193,4 +193,6 @@ public interface ProjectEvaluationService {
 	List<ProjectEvaluationBean> getprojMidProjEvoluation(int dCode);
 
 	List<ProjectEvaluationBean> getprojMidProjEvolWorkDtl(int dCode);
+
+	List<ProductionDetailsBean> getProjwiseAverageAnnualIncome(Integer dcode);
 }

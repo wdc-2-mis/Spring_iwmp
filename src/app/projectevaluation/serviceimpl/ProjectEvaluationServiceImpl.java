@@ -451,4 +451,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getprojMidProjEvolWorkDtl(dCode);
 	}
+
+	@Override
+	public List<ProductionDetailsBean> getProjwiseAverageAnnualIncome(Integer dcode) {
+		// TODO Auto-generated method stub
+		return PEDAO.getProjwiseAverageAnnualIncome(dcode);
+	}
 }
