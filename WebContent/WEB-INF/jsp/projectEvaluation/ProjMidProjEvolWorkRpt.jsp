@@ -18,7 +18,7 @@ function handleProjectClick(projId) {
         data: { projectId: projId },
         contentType: "application/x-www-form-urlencoded",
         success: function(response) {
-            if (response.exists && response.status === "C") {
+        	 if (response.exists && response.status === "C") {
                 var reportdata = "rptdata";
                 var url = "getviewcomplete?"
                     + "project=" + response.projId
@@ -158,16 +158,17 @@ function exportExcel(dcode, dName, stName){
 								<td class="text-left"><c:out value="${sno.count}" /></td>
 								<td align="left">
 								<c:choose>
-                                   <c:when test="${dt.completed_work > 0}">
-                                   <a href="projMidProjEvolWorkDtlRpt?distcd=${dt.dcode}&dName=${dt.distname}&stName=${stName}">
-                                   <c:out value="${dt.distname}"/>
-                                </a>
+                                   <c:when test="${dt.status ne null}">
+                                   <a href="javascript:void(0);" onclick="handleProjectClick(${dt.proj_id})">
+                                            <c:out value="${dt.proj_name}" />
+                                        </a>
                                    </c:when>
                               <c:otherwise>
-                                <c:out value="${dt.distname}"/>
+                                <c:out value="${dt.proj_name}"/>
                               </c:otherwise>
                               </c:choose>
                               </td>
+								
 								<td class="text-right"><c:out value="${dt.created_work}" /></td>
 								<td class="text-right"><c:out value="${dt.ongoing_work}" /></td>
 								<td class="text-right"><c:out value="${dt.completed_work}" /></td>
