@@ -156,11 +156,18 @@ function exportExcel(dcode, dName, stName){
 						<c:forEach items="${projMidPrjEvlWorkDtlList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td class="text-left">
-                                        <a href="javascript:void(0);" onclick="handleProjectClick(${dt.proj_id})">
-                                            <c:out value="${dt.proj_name}" />
-                                        </a>
-                                    </td>
+								<td align="left">
+								<c:choose>
+                                   <c:when test="${dt.completed_work > 0}">
+                                   <a href="projMidProjEvolWorkDtlRpt?distcd=${dt.dcode}&dName=${dt.distname}&stName=${stName}">
+                                   <c:out value="${dt.distname}"/>
+                                </a>
+                                   </c:when>
+                              <c:otherwise>
+                                <c:out value="${dt.distname}"/>
+                              </c:otherwise>
+                              </c:choose>
+                              </td>
 								<td class="text-right"><c:out value="${dt.created_work}" /></td>
 								<td class="text-right"><c:out value="${dt.ongoing_work}" /></td>
 								<td class="text-right"><c:out value="${dt.completed_work}" /></td>
