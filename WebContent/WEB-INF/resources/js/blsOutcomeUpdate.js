@@ -42,6 +42,9 @@ $(document).ready(function() {
 					}
 				}
 				orderByNameDDL($ddlVillage);
+				// Ensure default option is selected
+				$ddlVillage.val('0');
+
 			}
 		});
 
