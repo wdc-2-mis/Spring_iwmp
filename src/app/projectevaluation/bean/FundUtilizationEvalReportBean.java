@@ -52,7 +52,14 @@ public class FundUtilizationEvalReportBean {
 	private Integer good_proj;
 	private Integer avg_proj;
 	private Integer satisfactory_proj;
+	private Character status;
 	
+	public Character getStatus() {
+		return status;
+	}
+	public void setStatus(Character status) {
+		this.status = status;
+	}
 	public String getProj_name() {
 		return proj_name;
 	}

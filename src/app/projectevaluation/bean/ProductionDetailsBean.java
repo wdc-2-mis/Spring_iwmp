@@ -40,7 +40,14 @@ public class ProductionDetailsBean {
 	private BigInteger controlmemberbasedug;
 	private Integer proj_id;
 	private String proj_name;
+	private Character status;
 	
+	public Character getStatus() {
+		return status;
+	}
+	public void setStatus(Character status) {
+		this.status = status;
+	}
 	public Integer getProj_id() {
 		return proj_id;
 	}

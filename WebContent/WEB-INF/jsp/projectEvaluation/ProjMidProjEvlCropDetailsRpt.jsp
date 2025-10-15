@@ -9,6 +9,46 @@
 
 <html>
 <script type="text/javascript">
+var stName = "${stName != null ? stName : ''}";
+
+function handleProjectClick(projId) {
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+        	 if (response.exists && response.status === "C") {
+                var reportdata = "rptdata";
+                var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+                    + "&reportdata=" + encodeURIComponent(reportdata)
+                    + "&stName=" + encodeURIComponent(stName);
+
+                // Load JSP inside iframe and open modal
+                document.getElementById("childFrame").src = url;
+                document.getElementById("childModal").style.display = "block";
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
+
+function closeChildModal() {
+    document.getElementById("childModal").style.display = "none";
+    document.getElementById("childFrame").src = "";
+}
 
 function downloadPDF(dcode, stName, distName){
 	document.getElementById("dcode").value=dcode;
@@ -29,6 +69,42 @@ function exportExcel(dcode, stName, distName){
 }
 
 </script>
+<style>
+/* ===== Modal Styling ===== */
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal1-content {
+    background-color: #fff;
+    margin: 3% auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close:hover {
+    color: #000;
+}
+</style>
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
@@ -60,7 +136,6 @@ function exportExcel(dcode, stName, distName){
                         <tr>
                             <th rowspan="3" class="text-center">S.No.</th>
                             <th rowspan="3" class="text-center">Project Name</th>
-<!--                             <th rowspan="3" class="text-center">Project</th> -->
                             <th colspan="9" class="text-center">Gross Cropped Area (ha.)</th>
                             <th colspan="3" class="text-center">Total Gross Cropped Area (ha.)</th>
                             <th colspan="3" class="text-center">Area under Plantation Cover (ha.)</th>
@@ -101,8 +176,18 @@ function exportExcel(dcode, stName, distName){
 						<c:forEach items="${cropPList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td class="text-left"><c:out value="${dt.proj_name}" /></td>
-<%-- 								<td class="text-right"><c:out value="${dt.total_project}" /></td>  --%>
+								<td align="left">
+								<c:choose>
+                                   <c:when test="${dt.status ne null}">
+                                   <a href="javascript:void(0);" onclick="handleProjectClick(${dt.proj_id})">
+                                            <c:out value="${dt.proj_name}" />
+                                        </a>
+                                   </c:when>
+                              <c:otherwise>
+                                <c:out value="${dt.proj_name}"/>
+                              </c:otherwise>
+                              </c:choose>
+                              </td>
 								<td class="text-right"><c:out value="${dt.pre_kharif}" /></td>
 								<td class="text-right"><c:out value="${dt.mid_kharif}" /></td>
 								<td class="text-right"><c:out value="${dt.ctl_kharif}" /></td>
@@ -123,7 +208,6 @@ function exportExcel(dcode, stName, distName){
 								<td class="text-right"><c:out value="${dt.ctl_clt}" /></td>
 							</tr>
 							
-<%-- 							<c:set var="totProj" value="${totProj + dt.total_project}" /> --%>
 							<c:set var="totPreKharif" value="${totPreKharif + dt.pre_kharif}" />
 							<c:set var="totMidKharif" value="${totMidKharif + dt.mid_kharif}" />
 							<c:set var="totCtlKharif" value="${totCtlKharif + dt.ctl_kharif}" />
@@ -147,7 +231,6 @@ function exportExcel(dcode, stName, distName){
 						<c:if test="${cropListPSize>0}">
 							<tr>
 								<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
-<%-- 								<td align="right" class="table-primary"><b><c:out value="${totProj}" /></b></td> --%>
 								<td align="right" class="table-primary"><b><c:out value="${totPreKharif}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totMidKharif}" /></b></td>
 								<td align="right" class="table-primary"><b><c:out value="${totCtlKharif}" /></b></td>
@@ -181,7 +264,12 @@ function exportExcel(dcode, stName, distName){
     </div>
     </div>
 </div>
-
+<div id="childModal" class="modal1">
+    <div class="modal1-content">
+        <span class="close" onclick="closeChildModal()">&times;</span>
+        <iframe id="childFrame" src="" width="100%" height="95%" frameborder="0"></iframe>
+    </div>
+</div>
 <footer class="text-center">
     <%@ include file="/WEB-INF/jspf/footer2.jspf" %>
 </footer>
