@@ -457,4 +457,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getProjwiseAverageAnnualIncome(dcode);
 	}
+	
+	@Override
+	public List<ProductionDetailsBean> getProjwiseCommunityBasedData(Integer dcode) {
+		// TODO Auto-generated method stub
+		return PEDAO.getProjwiseCommunityBasedData(dcode);
+	}
 }

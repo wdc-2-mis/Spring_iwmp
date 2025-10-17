@@ -61,7 +61,7 @@ function unfreezedata(){
 
 </head>
 
-<div class="col formheading" style=""><h4><u>Unfreeze Physical Achievement</u></h4></div>
+<div class="col formheading" style=""><h4><u>Unfreeze Mid Term Project Evoluation Details</u></h4></div>
 <c:if test="${messageUpload != null}">
 	<script>
 		alert("<c:out value='${messageUpload}'/>");

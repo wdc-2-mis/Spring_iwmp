@@ -77,18 +77,7 @@ function exportExcel(stcd, stName){
 						<c:forEach items="${distMidPrjEvlWrkDetailsList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td align="left">
-								<c:choose>
-                                   <c:when test="${dt.completed_work > 0}">
-                                   <a href="projMidProjEvolWorkDtlRpt?distcd=${dt.dcode}&dName=${dt.distname}&stName=${stName}">
-                                   <c:out value="${dt.distname}"/>
-                                </a>
-                                   </c:when>
-                              <c:otherwise>
-                                <c:out value="${dt.distname}"/>
-                              </c:otherwise>
-                              </c:choose>
-                              </td>
+								<td align="left"><a href="projMidProjEvolWorkDtlRpt?distcd=${dt.dcode}&dName=${dt.distname}&stName=${stName}"><c:out value="${dt.distname}"/></a></td>
 								<td class="text-right"><c:out value="${dt.total_project}" /></td>
 								<td class="text-right"><c:out value="${dt.created_work}" /></td>
 								<td class="text-right"><c:out value="${dt.ongoing_work}" /></td>

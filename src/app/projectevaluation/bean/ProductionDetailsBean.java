@@ -42,6 +42,8 @@ public class ProductionDetailsBean {
 	private String proj_name;
 	private Character status;
 	
+	
+	
 	public Character getStatus() {
 		return status;
 	}
