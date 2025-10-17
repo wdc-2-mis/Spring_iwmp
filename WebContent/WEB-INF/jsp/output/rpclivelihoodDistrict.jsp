@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@include file="/WEB-INF/jspf/header.jspf"%>
 
-<title>Report OC3</title>
+<title>Report OC3- District wise details</title>
 
 <script type="text/javascript">
 function showProjectWise(dCode, distname, headtype, stname)

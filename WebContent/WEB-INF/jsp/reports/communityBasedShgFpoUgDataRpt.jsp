@@ -588,7 +588,7 @@ function downloadPPDF(dcode, district, stname){
 <br>
 	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
 		<h5>
-			<label id="head">Report PE10 - Project-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG of <c:out value ="${stname}"/> (<c:out value ="${district}"/>)</label>
+			<label id="head">Report PE10 - Project-wise Mid Term Evaluation of Community Based Organization Details of FPO, SHG and UG for State '<c:out value ="${stname}"/>' of District '<c:out value ="${district}"/>'</label>
 		</h5>
 	</div>
 <br>
@@ -724,30 +724,30 @@ function downloadPPDF(dcode, district, stname){
                               </c:otherwise>
                               </c:choose>
                               </td>
-					<td>${list.precommunitybasedshg}</td>
-					<td>${list.midcommunitybasedshg}</td>
-					<td>${list.controlcommunitybasedshg}</td>
-					<td>${list.precommunitybasedfpo}</td>
-					<td>${list.midcommunitybasedfpo}</td>
-					<td>${list.controlcommunitybasedfpo}</td>
-					<td>${list.precommunitybasedug}</td>
-					<td>${list.midcommunitybasedug}</td>
-					<td>${list.controlcommunitybasedug}</td>
-					<td>${list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}</td>
-					<td>${list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}</td>
-					<td>${list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}</td>
-					<td>${list.prememberbasedshg}</td>
-					<td>${list.midmemberbasedshg}</td>
-					<td>${list.controlmemberbasedshg}</td>
-					<td>${list.prememberbasedfpo}</td>
-					<td>${list.midmemberbasedfpo}</td>
-					<td>${list.controlmemberbasedfpo}</td>
-					<td>${list.prememberbasedug}</td>
-					<td>${list.midmemberbasedug}</td>
-					<td>${list.controlmemberbasedug}</td>
-					<td>${list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}</td>
-					<td>${list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}</td>
-					<td>${list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}</td>
+					<td class="text-right">${list.precommunitybasedshg}</td>
+					<td class="text-right">${list.midcommunitybasedshg}</td>
+					<td class="text-right">${list.controlcommunitybasedshg}</td>
+					<td class="text-right">${list.precommunitybasedfpo}</td>
+					<td class="text-right">${list.midcommunitybasedfpo}</td>
+					<td class="text-right">${list.controlcommunitybasedfpo}</td>
+					<td class="text-right">${list.precommunitybasedug}</td>
+					<td class="text-right">${list.midcommunitybasedug}</td>
+					<td class="text-right">${list.controlcommunitybasedug}</td>
+					<td class="text-right">${list.precommunitybasedshg + list.precommunitybasedfpo + list.precommunitybasedug}</td>
+					<td class="text-right">${list.midcommunitybasedshg + list.midcommunitybasedfpo + list.midcommunitybasedug}</td>
+					<td class="text-right">${list.controlcommunitybasedshg + list.controlcommunitybasedfpo + list.controlcommunitybasedug}</td>
+					<td class="text-right">${list.prememberbasedshg}</td>
+					<td class="text-right">${list.midmemberbasedshg}</td>
+					<td class="text-right">${list.controlmemberbasedshg}</td>
+					<td class="text-right">${list.prememberbasedfpo}</td>
+					<td class="text-right">${list.midmemberbasedfpo}</td>
+					<td class="text-right">${list.controlmemberbasedfpo}</td>
+					<td class="text-right">${list.prememberbasedug}</td>
+					<td class="text-right">${list.midmemberbasedug}</td>
+					<td class="text-right">${list.controlmemberbasedug}</td>
+					<td class="text-right">${list.prememberbasedshg + list.prememberbasedfpo + list.prememberbasedug}</td>
+					<td class="text-right">${list.midmemberbasedshg + list.midmemberbasedfpo + list.midmemberbasedug}</td>
+					<td class="text-right">${list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}</td>
 				</tr>
 			<c:set var="totPreComBasedShg" value="${totPreComBasedShg + list.precommunitybasedshg}"/>
 			<c:set var="totMidComBasedShg" value="${totMidComBasedShg + list.midcommunitybasedshg}"/>
@@ -776,33 +776,35 @@ function downloadPPDF(dcode, district, stname){
 			<c:set var="totControlMemBsdTot" value="${totControlMemBsdTot + list.controlmemberbasedshg + list.controlmemberbasedfpo + list.controlmemberbasedug}"/>
 			
 			</c:forEach>
-			<tr style="font-weight:bold; background:#f0f0f0; text-align: center">
-				<td colspan="2">Total</td>
-				<td>${totPreComBasedShg}</td>
-				<td>${totMidComBasedShg}</td>
-				<td>${totControlComBasedShg}</td>
-				<td>${totPreComBasedFpo}</td>
-				<td>${totMidComBasedFpo}</td>
-				<td>${totControlComBasedFpo}</td>
-				<td>${totPreComBasedUg}</td>
-				<td>${totMidComBasedUg}</td>
-				<td>${totControlComBasedUg}</td>
-				<td>${totPreComBasedTot}</td>
-				<td>${totMidComBasedTot}</td>
-				<td>${totControlComBasedTot}</td>
+			
+			<tr>
+				<td colspan="2" align="right" class="table-primary"><b>Grand Total</b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreComBasedShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidComBasedShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlComBasedShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreComBasedFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidComBasedFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlComBasedFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreComBasedUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidComBasedUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlComBasedUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreComBasedTot}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidComBasedTot}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlComBasedTot}" /></b></td>
 				
-				<td>${totPreMemBsdShg}</td>
-				<td>${totMidMemBsdShg}</td>
-				<td>${totControlMemBsdShg}</td>
-				<td>${totPreMemBsdFpo}</td>
-				<td>${totMidMemBsdFpo}</td>
-				<td>${totControlMemBsdFpo}</td>
-				<td>${totPreMemBsdUg}</td>
-				<td>${totMidMemBsdUg}</td>
-				<td>${totControlMemBsdUg}</td>
-				<td>${totPreMemBsdTot}</td>
-				<td>${totMidMemBsdTot}</td>
-				<td>${totControlMemBsdTot}</td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreMemBsdShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidMemBsdShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlMemBsdShg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreMemBsdFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidMemBsdFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlMemBsdFpo}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreMemBsdUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidMemBsdUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlMemBsdUg}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totPreMemBsdTot}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totMidMemBsdTot}" /></b></td>
+				<td align="right" class="table-primary"><b><c:out value="${totControlMemBsdTot}" /></b></td>
+								
 			</tr>
 			
 			

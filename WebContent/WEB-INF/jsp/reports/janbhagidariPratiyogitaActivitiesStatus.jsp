@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
-<title>State wise Current Status of Watershed Janbhagidari Activities</title>
+<title>Report JP3- State wise Current Status of Watershed Janbhagidari Activities</title>
 	<script type="text/javascript">
 	function exportExcel(){
 		document.getJanbhagidariActStatus.action="ExcelJanbhagidariStateWiseActivitiesStatus";

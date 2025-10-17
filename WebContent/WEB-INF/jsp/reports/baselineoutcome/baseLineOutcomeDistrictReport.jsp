@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
-<title>Report O4- Details of Comparison of Distribution of Gross Cropped Area as Per Classification of Land, 
+<title>Report O4- District wise Comparison of Distribution of Gross Cropped Area as Per Classification of Land, 
 Net Sown Area, Gross Cropped Area and Total Income as On Date with Baseline Status</title>
 <script type="text/javascript">
 

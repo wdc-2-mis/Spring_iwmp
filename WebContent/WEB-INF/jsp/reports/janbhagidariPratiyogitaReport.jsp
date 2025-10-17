@@ -7,7 +7,7 @@
 
 <html>
 <head>
-<title>janbhagidariPratiyogitaReport</title>
+<title>Report JP1- janbhagidariPratiyogitaReport</title>
 
 <script type="text/javascript">
 

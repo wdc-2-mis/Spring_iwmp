@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@include file="/WEB-INF/jspf/header.jspf"%>
 
-<title>Report OC3</title>
+<title>Report OC3- Project wise details</title>
 
 
 <script type="text/javascript">
