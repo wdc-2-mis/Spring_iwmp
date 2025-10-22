@@ -7,6 +7,8 @@ import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+
+import app.bean.NRSCWorksBean;
 import app.common.CommonFunctions;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.VillageWatershedYatraReportDao;
@@ -38,6 +40,9 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 		
 		@Value("${getWatershedYatraReporttodate}")
 		String getWatershedYatraReporttodate;
+		
+		@Value("${getWorkStatusReport}")
+		String getWorkStatusReport;
 		
 
 		@Override
@@ -115,6 +120,56 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 				}
 				return list;
 			}
+
+
+		@Override
+		public List<NRSCWorksBean> getWorkStatusReport(Integer State, String userdate, String userdateto) {
+			// TODO Auto-generated method stub
+			
+			String sql=getWorkStatusReport;
+			
+			Date yadate =null;
+			Date yadateto =null;
+			Query query;
+			
+			Session session = sessionFactory.getCurrentSession();
+			List<NRSCWorksBean> list = new ArrayList<NRSCWorksBean>();
+			try {
+				
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+				
+				if(!userdate.equals("")) 
+					yadate = formatter.parse(userdate);
+				
+				if(!userdateto.equals("")) 
+					yadateto = formatter.parse(userdateto);
+				
+					session.beginTransaction();
+					
+					if( !userdate.equals("") && !userdateto.equals("")) {
+						query= session.createSQLQuery(sql);
+						query.setInteger("statecd",State); 
+						query.setParameter("userdate",yadate);
+						query.setParameter("yadateto",yadateto);
+						query.setResultTransformer(Transformers.aliasToBean(NRSCWorksBean.class));
+						list = query.list();
+					}
+					
+					session.getTransaction().commit();
+			} 
+			catch (HibernateException e) 
+			{
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex)
+			{
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return list;
+		}
 		
 		
 }

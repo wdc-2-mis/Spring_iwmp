@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.bean.NRSCWorksBean;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.dao.VillageWatershedYatraReportDao;
 import app.watershedyatra.service.VillageWatershedYatraReportService;
@@ -20,6 +21,12 @@ public class VillageWatershedYatraReportServiceImpl implements VillageWatershedY
 			Integer grampan, String userdate, String userdateto) {
 		
 		return dao.showWatershedYatraVillageReport(State, district, block, grampan, userdate, userdateto);
+	}
+
+	@Override
+	public List<NRSCWorksBean> getWorkStatusReport(Integer State, String userdate, String userdateto) {
+		// TODO Auto-generated method stub
+		return dao.getWorkStatusReport(State, userdate, userdateto);
 	}
 
 }
