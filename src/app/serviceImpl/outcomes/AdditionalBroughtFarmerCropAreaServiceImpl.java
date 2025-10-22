@@ -111,4 +111,11 @@ public class AdditionalBroughtFarmerCropAreaServiceImpl implements AdditionalBro
 	}
 
 
+	@Override
+	public int getmonthidtoclosed() {
+		// TODO Auto-generated method stub
+		return dao.getmonthidtoclosed();
+	}
+
+
 }

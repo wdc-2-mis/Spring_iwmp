@@ -611,5 +611,34 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 		return getnotyearlydata;
 	}
 
+	@Override
+	public int getmonthidtoclosed() {
+		
+		int result=0;
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();
+			String hql="Select month_id from wdcpmksy_additional_m_month where achiev_status is null order by month_id desc limit 1";
+			List list = ses.createSQLQuery(hql).list();
+		//	System.out.println(list.get(0));
+			result=Integer.parseInt(list.get(0).toString());
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+
 
 }

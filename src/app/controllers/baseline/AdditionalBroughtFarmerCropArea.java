@@ -82,6 +82,7 @@ public class AdditionalBroughtFarmerCropArea {
 						mav.addObject("completesize", complete.size());
 					}
 				} 
+				int montid=Ser.getmonthidtoclosed();
 				
 				java.util.Date date1 = new Date();
 				Calendar cal = Calendar.getInstance();
@@ -90,10 +91,13 @@ public class AdditionalBroughtFarmerCropArea {
 				
 				userType.put("fy","Year-Wise");
 				userType.put("m","Half-Yearly");
-				if(monthid>=3 && monthid<=8)
+				
+				if(montid==9)
+				if(monthid==9 && monthid<=8)
 				halfyearmont.put("9","April-September");
 				
-				if(monthid<=2 || monthid>=9)
+				if(montid==3)
+				if(monthid<=2 || monthid==3)
 				halfyearmont.put("3","October-March");
 				
 				mav.addObject("groupType",userType);
@@ -224,14 +228,25 @@ public class AdditionalBroughtFarmerCropArea {
 		cal.setTime(date1);
 		int monthid = cal.get(Calendar.MONTH);
 		
+		int montid=Ser.getmonthidtoclosed();
+		
 		if(fyear==23 || fyear==22) {
 			halfyearmont.put(3,"October-March");
 		}
 		else {				 
-			if(monthid>=3 && monthid<=9)
+			
+			/*if(monthid>=3 && monthid<=9)
 				halfyearmont.put(9,"April-September");
 							
 			if(monthid<=3 || monthid>=9)
+				halfyearmont.put(3,"October-March");  */
+			
+			if(montid==9)
+				if(monthid>=8 && monthid<=9)
+				halfyearmont.put(9,"April-September");
+				
+			if(montid==3)
+				if(monthid>=2 || monthid<=3)
 				halfyearmont.put(3,"October-March");
 		}
 		
