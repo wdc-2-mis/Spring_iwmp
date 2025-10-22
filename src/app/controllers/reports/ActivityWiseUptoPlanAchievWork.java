@@ -493,9 +493,9 @@ public class ActivityWiseUptoPlanAchievWork {
 	        toDateStr = date1.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 			}
 		
-		List<ActivityWiseUptoPlanAchieveWorkBean> list = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
+			List<ActivityWiseUptoPlanAchieveWorkBean> list = new ArrayList<ActivityWiseUptoPlanAchieveWorkBean>();
 		
-		list=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear,userdate,userdateto);
+			list=pAAservices.getActivityWiseUptoPlanAchievWorkReport(stCode, distCode, projId,fromYear,userdate,userdateto);
 		
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   

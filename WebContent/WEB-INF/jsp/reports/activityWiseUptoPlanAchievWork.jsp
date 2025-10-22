@@ -220,11 +220,8 @@ function exportExcel()
            
            <tr>
            
-          
-           
-           
            <td ><b>Financial Year </b></td>
-          <td >
+           <td >
               <select class="form-control finyear" id="fromyear" name="fromYear" required="required">
       			<option value="">--Select Year--</option>
       			<c:forEach items="${yearList}" var="yearl">
