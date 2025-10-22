@@ -37,6 +37,12 @@ public class NRSCWorksBean {
 	private String proj_name;
 	private int proj_id;
 	
+	private int createdwork;
+	private int startedwork;
+	private int ongoing;
+	private int completed;
+	private int forclosed;
+	
 	
 	public String getSt_name() {
 		return st_name;
@@ -230,6 +236,37 @@ public class NRSCWorksBean {
 	public void setProj_id(int proj_id) {
 		this.proj_id = proj_id;
 	}
+	public int getCreatedwork() {
+		return createdwork;
+	}
+	public void setCreatedwork(int createdwork) {
+		this.createdwork = createdwork;
+	}
+	public int getStartedwork() {
+		return startedwork;
+	}
+	public void setStartedwork(int startedwork) {
+		this.startedwork = startedwork;
+	}
+	public int getOngoing() {
+		return ongoing;
+	}
+	public void setOngoing(int ongoing) {
+		this.ongoing = ongoing;
+	}
+	public int getCompleted() {
+		return completed;
+	}
+	public void setCompleted(int completed) {
+		this.completed = completed;
+	}
+	public int getForclosed() {
+		return forclosed;
+	}
+	public void setForclosed(int forclosed) {
+		this.forclosed = forclosed;
+	}
+	
 	
 	
 }
