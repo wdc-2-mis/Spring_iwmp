@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ME-8 State and Date Wise Work Status List</title>
+<title>Report ME8- State and Date Wise Work Status List</title>
 <meta charset="ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
@@ -82,7 +82,7 @@ function downloadPDF(state, userdate, dateto){
     document.getElementById("userdate1").value=userdate;
     document.getElementById("userdate2").value=dateto;
 	
-    document.workstatusr.action="getWorkStatusReportPDF";
+    document.workstatusr.action="downloadWorkStatusReportPDF";
 	document.workstatusr.method="post";
 	document.workstatusr.submit();
 }
@@ -96,7 +96,7 @@ function downloadExcel(state, userdate, dateto){
     document.getElementById("userdate1").value=userdate;
     document.getElementById("userdate2").value=dateto;
 	
-    document.workstatusr.action="getWorkStatusReportExcel";
+    document.workstatusr.action="downloadExcelWorkStatusReport";
 	document.workstatusr.method="post";
 	document.workstatusr.submit();
 }
@@ -138,6 +138,7 @@ function downloadExcel(state, userdate, dateto){
    		<input type="hidden" name="stName" id="stName" value="" />
 		<input type="hidden" name="userdate1" id="userdate1" value="" />
 		<input type="hidden" name="userdate2" id="userdate2" value="" />
+		
       <table style="width:100%; align-content: center;" >
         <tr align="center" >
         
@@ -214,7 +215,7 @@ function downloadExcel(state, userdate, dateto){
 		<th style="text-align:center; vertical-align: middle;">Started Works</th> 
 		<th style="text-align:center; vertical-align: middle;">Ongoing Works</th>
  		<th style="text-align:center; vertical-align: middle;">Completed Works</th>  
-		<th style="text-align:center; vertical-align: middle;">forClose Works</th>
+		<th style="text-align:center; vertical-align: middle;">Foreclosed Works</th>
      </tr>
    
   </thead>
