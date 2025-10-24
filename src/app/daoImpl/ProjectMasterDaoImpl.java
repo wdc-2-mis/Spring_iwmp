@@ -59,6 +59,9 @@ public class ProjectMasterDaoImpl implements ProjectMasterDao{
 	@Value("${getProjByStateCode}")
 	String getProjByStateCode;
 	
+	@Value("${getAdditionalMonth}")
+	String getAdditionalMonth;
+	
 	@Override
 	public LinkedHashMap<String, String> getProjectByDcode(Integer dCode) {
 		// TODO Auto-generated method stub
@@ -321,6 +324,35 @@ public class ProjectMasterDaoImpl implements ProjectMasterDao{
 			session.beginTransaction();
 			Query query = sessionFactory.getCurrentSession().createQuery(hql);
 			query.setInteger("stCode",stCode);
+			Iterator itr = query.list().iterator();
+			while(itr.hasNext())
+			{
+				Object ob[] = (Object[])itr.next();
+				projMap.put(Integer.parseInt(ob[0].toString()), ob[1].toString());
+			}
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+        return projMap;
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getAdditionalMonth() {
+		
+		String hql=getAdditionalMonth;
+		LinkedHashMap<Integer, String> projMap=new LinkedHashMap<Integer, String>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = sessionFactory.getCurrentSession().createSQLQuery(hql);
 			Iterator itr = query.list().iterator();
 			while(itr.hasNext())
 			{
