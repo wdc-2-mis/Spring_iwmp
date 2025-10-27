@@ -8,9 +8,50 @@
 <html>
 <head>
 
-<title>Report PE6-  State and District-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</title>
+<title>Report PE6 - State, District and Project-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops</title>
 
 <script type="text/javascript">
+
+var stName = "${stName != null ? stName : ''}";
+
+function handleProjectClick(projId) {
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+        	 if (response.exists && response.status === "C") {
+                var reportdata = "rptdata";
+                var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+                    + "&reportdata=" + encodeURIComponent(reportdata)
+                    + "&stName=" + encodeURIComponent(stName);
+
+                // Load JSP inside iframe and open modal
+                document.getElementById("childFrame").src = url;
+                document.getElementById("childModal").style.display = "block";
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
+
+function closeChildModal() {
+    document.getElementById("childModal").style.display = "none";
+    document.getElementById("childFrame").src = "";
+}
 
 function filterData(selectedValue) {
 	document.getElementById("radioBtn").value = selectedValue;
@@ -121,9 +162,66 @@ function exportDExcel(stcode, stname, radioBtn){
 	document.getCrpDtl.method="post";
 	document.getCrpDtl.submit();
 }
+
+function downloadPPDF(stcode, stname, dcode, distname, radioBtn){
+	document.getElementById("stcode").value = stcode;
+	document.getElementById("stname").value = stname;
+	document.getElementById("dcode").value = dcode;
+	document.getElementById("distname").value = distname;
+	document.getElementById("radioBtn").value=radioBtn;
+	document.getCrpDtl.action="downloadProjwiseCroppedDetailsReportPdf";
+	document.getCrpDtl.method="post";
+	document.getCrpDtl.submit();
+}
+
+function exportPExcel(stcode, stname, dcode, distname, radioBtn){
+	document.getElementById("stcode").value = stcode;
+	document.getElementById("stname").value = stname;
+	document.getElementById("dcode").value = dcode;
+	document.getElementById("distname").value = distname;
+	document.getElementById("radioBtn").value=radioBtn;
+	document.getCrpDtl.action="downloadProjwiseExcelCroppedDetailsReport";
+	document.getCrpDtl.method="post";
+	document.getCrpDtl.submit();
+}
 	
 </script>
+<style>
+/* ===== Modal Styling ===== */
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
 
+.modal1-content {
+    background-color: #fff;
+    margin: 3% auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close:hover {
+    color: #000;
+}
+</style>
 
 <body>
 <c:if test ="${mapJsonSize > 0}">
@@ -303,7 +401,7 @@ function exportDExcel(stcode, stname, radioBtn){
 				
 			<tr>
             	<td>${status.count}</td>
-                <td>${item.distname}</td>
+                <td><a href ="getProjwiseCroppedDetailsReportData?dcode=${item.dcode}&&distname=${item.distname}&&stcode=${stcode}&&stname=${stname}&&radioBtn=${radioBtn}"><c:out value = "${item.distname}"/></a></td>
                 <td>${item.totproj}</td>
                 <td>${item.cropcereals}</td>
                 <td>${item.croppulses}</td>
@@ -342,6 +440,153 @@ function exportDExcel(stcode, stname, radioBtn){
 	</div>
 
 </c:if>
+
+<c:if test ="${projListSize > 0}">
+<br>
+	<div class="offset-md-3 col-6 formheading" style="text-align:center;">
+		<h5>
+			<label id="head">Report PE6 - Project-wise Mid Term Evaluation of Area Under Different Crops and Yield per Hectare of Major Crops 
+			for <c:out value="${status}"/> for District <c:out value="${distname}"/> of <c:out value="${stname}"/></label>
+		</h5>
+	</div>
+<br>
+	<div class ="card">
+		<div class="row">
+			<div class="col-2" ></div>
+			<div class="col-8">
+
+	<form:form action="getCroppedDetails" name="getCrpDtl" id="getCrpDtl" method="get">
+    	<input type="hidden" name="radioBtn" id="radioBtn" value="" />
+    	<input type="hidden" name="stcode" id="stcode" value="" />
+    	<input type="hidden" name="stname" id="stname" value="" />
+    	<input type="hidden" name="dcode" id="dcode" value="" />
+    	<input type="hidden" name="distname" id="distname" value="" />
+ 	</form:form>
+ 
+<br>
+	<div id ="excelDpdf">
+	<button name="exportDExcel" id="exportDExcel" onclick="exportPExcel('${stcode}','${stname}','${dcode}','${distname}','${radioBtn}')" class="btn btn-info">Excel</button>
+	<button name="exportDPDF" id="exportDPDF" onclick="downloadPPDF('${stcode}','${stname}','${dcode}','${distname}','${radioBtn}')" class="btn btn-info">PDF</button> 
+	</div>   
+	<p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+	<table id = "tblReport" class = "table">
+		<thead>
+			   <tr>
+            <th rowspan="2">S.No.</th>
+            <th rowspan="2">Project Name</th>
+            <th colspan="5" style="text-align: center">Area Under Different Crops(in ha.)</th>
+            <th colspan="6" style="text-align: center">Yield per Hectare of Major Crops</th>
+        </tr>
+        <tr>
+            <th>Cereals</th>
+            <th>Pulses</th>
+            <th>Oil Seeds</th>
+            <th>Millet</th>
+            <th>Other</th>
+            
+            <th>Rice</th>
+            <th>Wheat</th>
+            <th>Pulses</th>
+            <th>Millet</th>
+            <th>Oil Seeds</th>
+            <th>Other</th>
+        </tr>
+        <tr>
+			<th class="text-center">1</th>
+			<th class="text-center">2</th>
+			<th class="text-center">3</th>
+			<th class="text-center">4</th>
+			<th class="text-center">5</th>
+			<th class="text-center">6</th>
+			<th class="text-center">7</th>
+			<th class="text-center">8</th>
+			<th class="text-center">9</th>
+			<th class="text-center">10</th>
+			<th class="text-center">11</th>
+			<th class="text-center">12</th>
+			<th class="text-center">13</th>
+		</tr>
+		</thead>
+		<tbody id = "projCroppedDetailsRptTbody">
+			
+			<c:set var = "totalCereals" value ="0"/>
+			<c:set var = "totalPulses" value ="0"/>
+			<c:set var = "totalOilseed" value ="0"/>
+			<c:set var = "totalMillets" value ="0"/>
+			<c:set var = "totalOther" value ="0"/>
+			<c:set var = "totalRice" value ="0"/>
+			<c:set var = "totalWheat" value ="0"/>
+			<c:set var = "totalPulsesMain" value ="0"/>
+			<c:set var = "totalOilseedMain" value ="0"/>
+			<c:set var = "totalMilletsMain" value ="0"/>
+			<c:set var = "totalOtherMain" value ="0"/>
+			
+			<c:forEach items="${projList}" var= "item" varStatus="status">
+				<c:set var = "totalCereals" value ="${totalCereals + item.cropcereals}"/>
+				<c:set var = "totalPulses" value ="${totalPulses + item.croppulses}"/>
+				<c:set var = "totalOilseed" value ="${totalOilseed + item.cropoilseed}"/>
+				<c:set var = "totalMillets" value ="${totalMillets + item.cropmillets}"/>
+				<c:set var = "totalOther" value ="${totalOther + item.cropother}"/>
+				<c:set var = "totalRice" value ="${totalRice + item.rice}"/>
+				<c:set var = "totalWheat" value ="${totalWheat + item.wheat}"/>
+				<c:set var = "totalPulsesMain" value ="${totalPulsesMain + item.pulses}"/>
+				<c:set var = "totalOilseedMain" value ="${totalOilseedMain + item.oilseed}"/>
+				<c:set var = "totalMilletsMain" value ="${totalMilletsMain + item.millets}"/>
+				<c:set var = "totalOtherMain" value ="${totalOtherMain + item.other}"/>
+				
+			<tr>
+            	<td>${status.count}</td>
+                <c:choose>
+						<c:when test ="${item.cropcereals eq 0 && item.croppulses eq 0 && item.cropoilseed eq 0 && item.cropmillets eq 0}">
+							<td class="text-right"><c:out value="${item.projname}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td class="text-right"><a href="javascript:void(0);" onclick="handleProjectClick(${item.projid})"><c:out value="${item.projname}" /></a></td>
+						</c:otherwise>
+					</c:choose>
+                <td>${item.cropcereals}</td>
+                <td>${item.croppulses}</td>
+                <td>${item.cropoilseed}</td>
+                <td>${item.cropmillets}</td>
+                <td>${item.cropother}</td>
+                <td>${item.rice}</td>
+                <td>${item.wheat}</td>
+                <td>${item.pulses}</td>
+                <td>${item.oilseed}</td>
+                <td>${item.millets}</td>
+                <td>${item.other}</td>
+            </tr>
+			
+			</c:forEach>
+				<tr style="font-weight:bold; background:#f0f0f0; text-align: center">
+            	<tr style="font-weight:bold; background:#f0f0f0; text-align: center">
+                <td colspan="2">Total</td>
+                <td>${totalCereals}</td>
+                <td>${totalPulses}</td>
+                <td>${totalOilseed}</td>
+                <td>${totalMillets}</td>
+                <td>${totalOther}</td>
+                <td>${totalRice}</td>
+                <td>${totalWheat}</td>
+                <td>${totalPulsesMain}</td>
+                <td>${totalOilseedMain}</td>
+                <td>${totalMilletsMain}</td>
+                <td>${totalOtherMain}</td>
+            </tr>
+		</tbody>
+	</table>
+			</div>
+ 		</div>
+	</div>
+
+</c:if>
+<div id="childModal" class="modal1">
+    <div class="modal1-content">
+        <span class="close" onclick="closeChildModal()">&times;</span>
+        <iframe id="childFrame" src="" width="100%" height="95%" frameborder="0"></iframe>
+    </div>
+</div>
+
 
 	<footer class=" text-center">
 		<%@include file="/WEB-INF/jspf/footer2.jspf"%>

@@ -10,6 +10,46 @@
 </head>
 
 <script type="text/javascript">
+var stName = "${stName != null ? stName : ''}";
+function handleProjectClick(projId) {
+    $.ajax({
+        url: "checkProjIdExists",
+        type: "GET",
+        data: { projectId: projId },
+        contentType: "application/x-www-form-urlencoded",
+        success: function(response) {
+        	 if (response.exists && response.status === "C") {
+                var reportdata = "rptdata";
+                var url = "getviewcomplete?"
+                    + "project=" + response.projId
+                    + "&district=" + response.distCode
+                    + "&distName=" + encodeURIComponent(response.distName)
+                    + "&projName=" + encodeURIComponent(response.projName)
+                    + "&finyear=" + response.finYearCode
+                    + "&finName=" + encodeURIComponent(response.finYearDesc)
+                    + "&month=" + response.monthId
+                    + "&monthName=" + encodeURIComponent(response.monthName)
+                    + "&reportdata=" + encodeURIComponent(reportdata)
+                    + "&stName=" + encodeURIComponent(stName);
+
+                // Load JSP inside iframe and open modal
+                document.getElementById("childFrame").src = url;
+                document.getElementById("childModal").style.display = "block";
+            } else {
+                alert("Project not found or not completed.");
+            }
+        },
+        error: function() {
+            console.log("Error checking project existence.");
+        }
+    });
+}
+
+function closeChildModal() {
+    document.getElementById("childModal").style.display = "none";
+    document.getElementById("childFrame").src = "";
+}
+
 function downloadPDF()
 {
 		document.getcropdtlrpt.action="downloadStWiseCropDtlAreaPDF";
@@ -62,39 +102,44 @@ function exportExcel2(stcode, stname, dcode, distname){
 	document.getcropdtlrpt.submit();
 }
 
-function handleProjectClick(projId) {
-	var stName = "${stname != null ? stname : ''}";
-    $.ajax({
-        url: "checkProjIdExists",
-        type: "GET",
-        data: { projectId: projId },
-        contentType: "application/x-www-form-urlencoded",
-        success: function(response) {
-            if (response.exists && response.status === "C") {
-            	var reportdata = "rptdata";
-            	var url = "getviewcomplete?"
-                    + "project=" + response.projId
-                    + "&district=" + response.distCode
-                    + "&distName=" + encodeURIComponent(response.distName)
-                    + "&projName=" + encodeURIComponent(response.projName)
-                    + "&finyear=" + response.finYearCode
-                    + "&finName=" + encodeURIComponent(response.finYearDesc)
-                    + "&month=" + response.monthId
-                    + "&monthName=" + encodeURIComponent(response.monthName)
-            	    + "&reportdata=" + encodeURIComponent(reportdata)
-            	    + "&stName=" + encodeURIComponent(stName);
-
-            	window.open(url, "_blank");
-            } else {
-                alert("Project not found or not completed.");
-            }
-        },
-        error: function() {
-            console.log("Error checking project existence.");
-        }
-    });
-}
 </script>
+<style>
+/* ===== Modal Styling ===== */
+.modal1 {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal1-content {
+    background-color: #fff;
+    margin: 3% auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    position: relative;
+    width: 90%;
+    height: 90%;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+}
+.close:hover {
+    color: #000;
+}
+</style>
+
 <c:if test = "${listsize>0}">
 <form action="downloadblsurveyPDF" method="post" name="getcropdtlrpt"></form>
 <div class="container-fluid">
@@ -469,6 +514,12 @@ function handleProjectClick(projId) {
 </table>
 </div>
 </c:if>
+<div id="childModal" class="modal1">
+    <div class="modal1-content">
+        <span class="close" onclick="closeChildModal()">&times;</span>
+        <iframe id="childFrame" src="" width="100%" height="95%" frameborder="0"></iframe>
+    </div>
+</div>
 
 <footer class="text-center">
 		<%@include file="/WEB-INF/jspf/footer.jspf"%>

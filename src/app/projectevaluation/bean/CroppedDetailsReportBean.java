@@ -8,6 +8,8 @@ public class CroppedDetailsReportBean {
 	private String stname;
 	private Integer dcode;
 	private String distname;
+	private Integer projid;
+	private String projname;
 	private Integer totproj;	
 	private BigDecimal cropcereals;	
 	private BigDecimal croppulses;	
@@ -116,6 +118,18 @@ public class CroppedDetailsReportBean {
 	}
 	public void setOther(BigDecimal other) {
 		this.other = other;
+	}
+	public Integer getProjid() {
+		return projid;
+	}
+	public void setProjid(Integer projid) {
+		this.projid = projid;
+	}
+	public String getProjname() {
+		return projname;
+	}
+	public void setProjname(String projname) {
+		this.projname = projname;
 	}
 
 }

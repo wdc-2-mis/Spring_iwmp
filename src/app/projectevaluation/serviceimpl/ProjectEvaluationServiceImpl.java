@@ -463,4 +463,10 @@ public class ProjectEvaluationServiceImpl implements ProjectEvaluationService{
 		// TODO Auto-generated method stub
 		return PEDAO.getProjwiseCommunityBasedData(dcode);
 	}
+
+	@Override
+	public List<CroppedDetailsReportBean> getProjwiseCropDetailsReportData(Integer dcode, String type) {
+		// TODO Auto-generated method stub
+		return PEDAO.getProjwiseCropDetailsReportData(dcode, type);
+	}
 }

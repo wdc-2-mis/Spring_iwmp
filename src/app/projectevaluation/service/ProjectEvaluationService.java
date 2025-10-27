@@ -160,6 +160,8 @@ public interface ProjectEvaluationService {
 	
 	List<CroppedDetailsReportBean> getDistwiseCropDetailsReportData(Integer stcode, String type);
 	
+	List<CroppedDetailsReportBean> getProjwiseCropDetailsReportData(Integer dcode, String type);
+	
 	List<ProductionDetailsBean> getAverageAnnualIncome();
 	
 	List<ProductionDetailsBean> getCommunityBasedData();

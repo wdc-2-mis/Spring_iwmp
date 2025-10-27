@@ -175,6 +175,15 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 	@Value("${getDistWiseControlCropDetails}")
 	String getDistWiseControlCropDetails;
 	
+	@Value("${getProjWisePreCropDetails}")
+	String getProjWisePreCropDetails;
+	
+	@Value("${getProjWiseMidCropDetails}")
+	String getProjWiseMidCropDetails;
+	
+	@Value("${getProjWiseControlCropDetails}")
+	String getProjWiseControlCropDetails;
+	
 	@Value("${getpagency}")
 	String getpagency;
 	
@@ -2945,6 +2954,45 @@ public class ProjectEvaluationDAOImpl implements ProjectEvaluationDAO{
 				session.getTransaction().rollback();
 			}
 			
+			return list;
+		}
+
+		@Override
+		public List<CroppedDetailsReportBean> getProjwiseCropDetailsReportData(Integer dcode, String type) {
+			String prehql = getProjWisePreCropDetails;
+			String midhql = getProjWiseMidCropDetails;
+			String controlhql = getProjWiseControlCropDetails;
+			List<CroppedDetailsReportBean> list = new ArrayList<>();
+			
+			Session session = sessionFactory.getCurrentSession();
+			try {
+				session.beginTransaction();
+				SQLQuery query;
+				if(type.equals("pre")){
+					query = session.createSQLQuery(prehql);
+					query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+					query.setInteger("dcode", dcode);
+					list = query.list();
+				}
+				
+				else if(type.equals("mid")) {
+				query = session.createSQLQuery(midhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				query.setInteger("dcode", dcode);
+				list = query.list();
+				}
+				else if(type.equals("control")){
+				query = session.createSQLQuery(controlhql);
+				query.setResultTransformer(Transformers.aliasToBean(CroppedDetailsReportBean.class));
+				query.setInteger("dcode", dcode);
+				list = query.list();
+				}
+				
+				session.getTransaction().commit();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				session.getTransaction().rollback();
+			}
 			return list;
 		}
 }
