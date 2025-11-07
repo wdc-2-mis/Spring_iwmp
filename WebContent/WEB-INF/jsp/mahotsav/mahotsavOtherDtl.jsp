@@ -6,7 +6,7 @@
 function showChangedata(){
 	
 	
-    document.mohotsav.action="otherMohotsav";
+    document.mohotsav.action="otherMahotsav";
 	document.mohotsav.method="post";
 	document.mohotsav.submit();
 }
