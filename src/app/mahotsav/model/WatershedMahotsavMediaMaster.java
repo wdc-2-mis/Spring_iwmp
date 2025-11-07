@@ -33,7 +33,7 @@ public class WatershedMahotsavMediaMaster implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "media_id", unique = true, nullable = false)
-    public int getMediaId() {
+    public Integer getMediaId() {
         return this.mediaId;
     }
 

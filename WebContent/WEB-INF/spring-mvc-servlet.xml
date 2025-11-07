@@ -180,6 +180,8 @@ p:basename="classpath:messages/messages">
 	<bean name="JanbhagidariTypeOfWork" class="app.model.master.JanbhagidariTypeOfWork" />
 	<bean name="JanbhagidariPratiyogitaTypeofWork" class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork" />
 	
-	
+	<bean name="WatershedMahotsavMediaMaster" class="app.mahotsav.model.WatershedMahotsavMediaMaster" />
+	<bean name="WatershedMahotsavRegistration" class="app.mahotsav.model.WatershedMahotsavRegistration" />
+	<bean name="WatershedMahotsavVideoDetails" class="app.mahotsav.model.WatershedMahotsavVideoDetails" />
 	
 </beans>

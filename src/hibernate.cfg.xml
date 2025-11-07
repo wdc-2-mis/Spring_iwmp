@@ -102,7 +102,9 @@
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaSWCKAccount" />
         <mapping class="app.model.master.JanbhagidariTypeOfWork" />
         <mapping class="app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork" />
-        
+        <mapping class="app.mahotsav.model.WatershedMahotsavMediaMaster" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavRegistration" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavVideoDetails" />
         
         
 	</session-factory>
