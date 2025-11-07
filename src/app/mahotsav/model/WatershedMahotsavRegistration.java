@@ -14,6 +14,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     private Integer phno;
     private String email;
     private String address;
+    private String user_reg_no;
     private String requestedIp;
     private String updatedBy;
     private Date updatedDate;
@@ -28,16 +29,17 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     public WatershedMahotsavRegistration() {
     }
 
-    public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, Integer phno, String email, String address, String requestedIp , 
-    		String updatedBy, Date updatedDate, String createdBy, Date createdDate) 
+    public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, Integer phno, String email, String address, String user_reg_no, 
+    		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate) 
     {
         this.mahotsavRegId = mahotsavRegId;
         this.regName = regName;
         this.phno = phno;
         this.email = email;
         this.address = address;
+        this.user_reg_no = user_reg_no;
         this.requestedIp = requestedIp;
-        this.updatedBy =updatedBy;
+        this.updatedBy = updatedBy;
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
@@ -90,8 +92,17 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+    
+    @Column(name = "user_reg_no", length = 20)
+    public String getUser_reg_no() {
+		return this.user_reg_no;
+	}
 
-    @Column(name = "requested_ip", length=20)
+	public void setUser_reg_no(String user_reg_no) {
+		this.user_reg_no = user_reg_no;
+	}
+
+	@Column(name = "requested_ip", length=20)
 	public String getRequestedIp() {
 		return requestedIp;
 	}

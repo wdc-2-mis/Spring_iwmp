@@ -30,6 +30,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
     private IwmpBlock iwmpBlock;
     private IwmpVillage iwmpVillage;
     private WatershedMahotsavMediaMaster mediaMaster;
+    private WatershedMahotsavRegistration mahotsavReg;
     
     
     public static long getSerialversionuid() {
@@ -41,7 +42,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
 
     public WatershedMahotsavVideoDetails(Integer videoDetailId, String longitute, String latitude, String mediaUrl, String status, String requestedIp, 
     		String updatedBy, Date updatedDate, String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict, IwmpBlock iwmpBlock, 
-    		IwmpVillage iwmpVillage, WatershedMahotsavMediaMaster mediaMaster) 
+    		IwmpVillage iwmpVillage, WatershedMahotsavMediaMaster mediaMaster, WatershedMahotsavRegistration mahotsavReg) 
     {
     	this.videoDetailId = videoDetailId;
     	this.longitute = longitute;
@@ -58,6 +59,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
     	this.iwmpBlock = iwmpBlock;
         this.iwmpVillage = iwmpVillage;
         this.mediaMaster = mediaMaster;
+        this.mahotsavReg = mahotsavReg;
     }
     
     
@@ -121,8 +123,18 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
     public void setMediaMaster(WatershedMahotsavMediaMaster mediaMaster) {
         this.mediaMaster = mediaMaster;
     }
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "mahotsav_reg_id")
+    public WatershedMahotsavRegistration getMahotsavReg() {
+		return mahotsavReg;
+	}
 
-    @Column(name = "longitute", length = 50)
+	public void setMahotsavReg(WatershedMahotsavRegistration mahotsavReg) {
+		this.mahotsavReg = mahotsavReg;
+	}
+
+	@Column(name = "longitute", length = 50)
     public String getLongitute() {
         return this.longitute;
     }
