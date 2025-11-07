@@ -232,7 +232,7 @@ public class AdditionalBroughtFarmerCropArea {
 		
 		if(fyear==23 || fyear==22) {
 			halfyearmont.put(3,"October-March");
-		}
+		} 
 		else {				 
 			
 			/*if(monthid>=3 && monthid<=9)
@@ -241,15 +241,17 @@ public class AdditionalBroughtFarmerCropArea {
 			if(monthid<=3 || monthid>=9)
 				halfyearmont.put(3,"October-March");  */
 			
-		//	halfyearmont=projectMasterService.getAdditionalMonth();  
+			//commit when slna service start
+			halfyearmont=projectMasterService.getAdditionalMonth();  
 			
-			if(montid==9)
+			//uncommit when slna service start
+			/*if(montid==9)
 				if(monthid>=8 && monthid<=9)
 				halfyearmont.put(9,"April-September");
 				
 			if(montid==3)
 				if(monthid>=2 || monthid<=3)
-				halfyearmont.put(3,"October-March"); 
+				halfyearmont.put(3,"October-March"); */
 		}
 		
 		return halfyearmont;
