@@ -35,7 +35,7 @@
 <div class="registration-container">
     <h4 class="text-center mb-4 text-primary">Registration Form</h4>
     
-    <form id="registrationForm" action="otherMohotsav" method="post">
+    <form id="registrationForm" action="otherMahotsav" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Full Name</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
