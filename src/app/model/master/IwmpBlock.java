@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.model.IwmpDistrict;
 import app.watershedyatra.model.NodalOfficer;
 import app.watershedyatra.model.PreYatraPreparation;
@@ -68,6 +69,7 @@ public class IwmpBlock implements java.io.Serializable {
 	private Set<WatershedYatVill> watershedYatVill = new HashSet<WatershedYatVill>(0);
 	private Set<RoutePlanVanTravel> routePlanVanTravel = new HashSet<RoutePlanVanTravel>(0);
 	private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
+	private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
 	 
 	@Transient
 	private boolean updatestatus;
@@ -98,7 +100,7 @@ public class IwmpBlock implements java.io.Serializable {
 			String districtCode2011, String subdistrictCode2001, String subdistrictCode2011,
 			String censusCodePortedData, Integer stateCodelgd, Integer districtCodelgd, Integer blockCodelgd,
 			Boolean active, Set<IwmpGramPanchayat> iwmpGramPanchayats, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer,
-			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel) {
+			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
 		this.bcode = bcode;
 		this.iwmpDistrict = iwmpDistrict;
 		this.stCode = stCode;
@@ -131,6 +133,7 @@ public class IwmpBlock implements java.io.Serializable {
 		this.watershedYatVill=watershedYatVill;
 		this.routePlanVanTravel=routePlanVanTravel;
 		this.preYatraPreparation = preYatraPreparation;
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
 	}
 
 	@Id
@@ -424,6 +427,13 @@ public class IwmpBlock implements java.io.Serializable {
 		this.preYatraPreparation = preYatraPreparation;
 	}
     
-    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpBlock")
+	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
+		return watershedMahotsavVideoDetails;
+	}
+
+	public void setWatershedMahotsavVideoDetails(Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
+	}
 
 }

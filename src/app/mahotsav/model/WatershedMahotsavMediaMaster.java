@@ -1,6 +1,10 @@
 package app.mahotsav.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "watershed_mahotsav_media_master", schema = "public")
@@ -10,7 +14,7 @@ public class WatershedMahotsavMediaMaster implements java.io.Serializable {
 
     private Integer mediaId;
     private String mediaName;
-    
+    private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
     
     public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -19,9 +23,10 @@ public class WatershedMahotsavMediaMaster implements java.io.Serializable {
     public WatershedMahotsavMediaMaster() {
     }
 
-    public WatershedMahotsavMediaMaster(Integer mediaId, String mediaName) {
+    public WatershedMahotsavMediaMaster(Integer mediaId, String mediaName, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
         this.mediaId = mediaId;
         this.mediaName = mediaName;
+        this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
     }
     
 
@@ -44,5 +49,16 @@ public class WatershedMahotsavMediaMaster implements java.io.Serializable {
     public void setMediaName(String mediaName) {
         this.mediaName = mediaName;
     }
+
+    @OneToMany(fetch=FetchType.LAZY, mappedBy="mediaMaster")
+	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
+		return watershedMahotsavVideoDetails;
+	}
+
+	public void setWatershedMahotsavVideoDetails(Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
+	}
+    
+    
     
 }

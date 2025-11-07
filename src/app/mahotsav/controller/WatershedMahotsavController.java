@@ -32,6 +32,8 @@ public class WatershedMahotsavController {
 	
 	private Map<String, String> blockList;
 	
+	private Map<String, String> villageList;
+	
 	@RequestMapping(value="/registerMahotsav", method = RequestMethod.GET)
 	public ModelAndView registerMahotsav(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -40,7 +42,7 @@ public class WatershedMahotsavController {
 	}
 	
 	
-	@RequestMapping(value="/otherMahotsav", method = RequestMethod.POST)
+	@RequestMapping(value="/registerMahotsav", method = RequestMethod.POST)
 	public ModelAndView otherMahotsav(HttpServletRequest request, HttpServletResponse response)
 	{
 		 ModelAndView mav = new ModelAndView("mahotsav/mahotsavOtherDtl");
@@ -51,6 +53,7 @@ public class WatershedMahotsavController {
          String userState= request.getParameter("state"); 
          String district= request.getParameter("district");
          String block= request.getParameter("block");
+         String village= request.getParameter("village");
          
          stateList = stateMasterService.getAllState();
          mav.addObject("stateList", stateList);
@@ -65,6 +68,11 @@ public class WatershedMahotsavController {
 			blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
 			mav.addObject("blockList", blockList);}
 			mav.addObject("blkd", block);
+			
+		if( block!=null && !block.equalsIgnoreCase("") && !block.equals("0")) {
+			villageList = ser.getmahotsavvillageList(Integer.parseInt(block));
+			mav.addObject("villageList", villageList);}
+			mav.addObject("vlg", village);	
 				
  		 mav.addObject("stateList", stateList);
          mav.addObject("name", name);
@@ -83,7 +91,11 @@ public class WatershedMahotsavController {
 
 	    // Retrieve page 1 data
 	    String name = request.getParameter("name");
-        System.out.println("name details:" +name);
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+        String address = request.getParameter("address");
+        
+        
 	    
 	return null;
 	}

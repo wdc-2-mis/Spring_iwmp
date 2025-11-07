@@ -1,6 +1,9 @@
 package app.mahotsav.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,7 +23,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     private Date updatedDate;
     private String createdBy;
     private Date createdDate;
-    
+    private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
     
     public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -30,7 +33,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     }
 
     public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, Integer phno, String email, String address, String user_reg_no, 
-    		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate) 
+    		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) 
     {
         this.mahotsavRegId = mahotsavRegId;
         this.regName = regName;
@@ -43,6 +46,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
+        this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
     }
     
 
@@ -148,5 +152,15 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mahotsavReg")
+	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
+		return watershedMahotsavVideoDetails;
+	}
+
+	public void setWatershedMahotsavVideoDetails(Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
+	}
+
 	
 }

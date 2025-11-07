@@ -23,6 +23,7 @@ import javax.validation.constraints.Min;
 
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogita;
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.model.master.IwmpBlock;
 import app.model.master.PfmsEatmisdataDetail;
 import app.watershedyatra.model.NodalOfficer;
@@ -86,6 +87,7 @@ public class IwmpDistrict  implements java.io.Serializable {
      private Set<PreYatraPreparation> preYatraPreparation = new HashSet<PreYatraPreparation>(0);
      private Set<JanbhagidariPratiyogita> janbhagidariPratiyogita = new HashSet<JanbhagidariPratiyogita>(0);
      private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
+     private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
 
     public IwmpDistrict() {
     }
@@ -104,7 +106,7 @@ public class IwmpDistrict  implements java.io.Serializable {
     		String stateCodelgd, Integer districtCodelgd, String lgdCodePortedData, BigDecimal jalShakati, Set<IwmpMProject> iwmpMProjects, 
     		Set<IwmpBlock> iwmpBlocks, Set<IwmpActPlan> iwmpActPlans, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer, 
     		Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel,
-    		Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+    		Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
        this.dcode = dcode;
        this.iwmpState = iwmpState;
        this.distCode = distCode;
@@ -145,6 +147,7 @@ public class IwmpDistrict  implements java.io.Serializable {
        this.preYatraPreparation=preYatraPreparation;
        this.janbhagidariPratiyogita=janbhagidariPratiyogita;
        this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
+       this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
     }
    
     @Id 
@@ -581,7 +584,14 @@ public class IwmpDistrict  implements java.io.Serializable {
 		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
 	}
     
-    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpDistrict")
+	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
+		return watershedMahotsavVideoDetails;
+	}
+
+	public void setWatershedMahotsavVideoDetails(Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
+	}
     
 
 }

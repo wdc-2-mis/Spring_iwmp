@@ -21,6 +21,7 @@ import javax.persistence.Transient;
 
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaNgovillage;
 import app.janbhagidariPratiyogita.JanbhagidariPratiyogitaTypeofWork;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.model.BlsOutMain;
 import app.model.BlsOutMainAchiev;
 import app.model.BlsOutMainHis;
@@ -79,6 +80,7 @@ public class IwmpVillage implements java.io.Serializable {
     private Set<WatershedYatVillDuplicate> watershedYatVillDuplicate = new HashSet<WatershedYatVillDuplicate>(0);
     private Set<JanbhagidariPratiyogitaNgovillage> janbhagidariPratiyogitaNgovillage = new HashSet<JanbhagidariPratiyogitaNgovillage>(0);
     private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
+    private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
     
 	@Transient
 	private boolean updatestatus;
@@ -112,7 +114,7 @@ public class IwmpVillage implements java.io.Serializable {
 			String districtCode2001, String districtCode2011, String subdistrictCode2001, String subdistrictCode2011,
 			String villageCode2001, String villageCode2011, String censusCodePortedData, Boolean active, Set<WatershedYatVill> watershedYatVill,
 			Set<RoutePlanVanTravel> routePlanVanTravel, Set<PreYatraPreparation> preYatraPreparation, Set<WatershedYatVillDuplicate> watershedYatVillDuplicate,
-			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork) {
+			Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
 		this.vcode = vcode;
 		this.iwmpGramPanchayat = iwmpGramPanchayat;
 		this.stCode = stCode;
@@ -140,6 +142,7 @@ public class IwmpVillage implements java.io.Serializable {
 		this.preYatraPreparation=preYatraPreparation;
 		this.watershedYatVillDuplicate=watershedYatVillDuplicate;
 		this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
 	}
 
 	@Id
@@ -472,7 +475,14 @@ public class IwmpVillage implements java.io.Serializable {
 		this.janbhagidariPratiyogitaTypeofWork = janbhagidariPratiyogitaTypeofWork;
 	}
 
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpVillage")
+	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
+		return watershedMahotsavVideoDetails;
+	}
 
+	public void setWatershedMahotsavVideoDetails(Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) {
+		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
+	}
     
     
     
