@@ -5,6 +5,7 @@ import java.util.List;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.model.master.IwmpVillage;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
@@ -26,5 +27,6 @@ public interface WatershedYatraReportDao {
 	List<StatusVlgDataBean> getStatusVlgReportData();
 	
 	List<NodalOfficerBean> getRoutePlanReportDataA(Integer State, Integer district, Integer block,Integer grampan, String userdate, String userdateto);
+	List<IwmpVillage> getVillageList(int block);
 	
 }

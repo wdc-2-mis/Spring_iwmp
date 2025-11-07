@@ -21,6 +21,7 @@ import app.dao.reports.WatershedYatraReportDao;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.model.master.IwmpVillage;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
 import app.watershedyatra.bean.PreYatraPreparationBean;
@@ -87,6 +88,9 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 	
 	@Value("${getWYStatusVlgData}") 
 	String getWYStatusVlgRecordData;
+	
+	@Value("${getMahotVillageList}") 
+	String villlist;
 	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -491,6 +495,32 @@ public class WatershedYatraReportDaoImpl implements WatershedYatraReportDao{
 			ex.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<IwmpVillage> getVillageList(int block) {
+		List<IwmpVillage> result=new ArrayList<IwmpVillage>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=villlist;
+			result = ses.createQuery(hql).setParameter("block", block).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
 	}
 
 }

@@ -11,6 +11,7 @@ import app.dao.reports.WatershedYatraReportDao;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.model.master.IwmpVillage;
 import app.service.reports.WatershedYatraReportService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.bean.NodalOfficerBean;
@@ -123,4 +124,17 @@ public class WatershedYatraReportServiceImpl implements WatershedYatraReportServ
 		return dao.getRoutePlanReportDataA(State, district, block,grampan, userdate, userdateto);
 	}
 
+
+
+	@Override
+	public Map<String, String> getmahotsavvillageList(int block) {
+		Map<String, String> villageList=new LinkedHashMap<String, String>();
+		for(IwmpVillage temp: dao.getVillageList(block)) {
+			villageList.put(temp.getVcode()+"", temp.getVillageName());
+		}
+		return villageList;
+	}
+
+	
+	
 }

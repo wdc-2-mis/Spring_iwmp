@@ -27,5 +27,6 @@ public interface WatershedYatraReportService {
 	List<StatusVlgDataBean> getStatusVlgReportData();
 	
 	List<NodalOfficerBean> getRoutePlanReportDataA(Integer State, Integer district, Integer block, Integer grampan,String userdate, String userdateto);
+	Map<String, String> getmahotsavvillageList(int block);
 
 }
