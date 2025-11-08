@@ -227,7 +227,7 @@ $(document).ready(function() {
         <h5 class="modal-title">Confirmation</h5>
       </div>
       <div class="modal-body text-center">
-        <p>Do you want to Save Video links?</p>
+        <p>Do you want to Save?</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-success" id="yesBtn">Yes</button>
