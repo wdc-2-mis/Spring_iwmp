@@ -1,0 +1,35 @@
+package app.mahotsav.serviceImpl;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import app.mahotsav.dao.WatershedMahotsavDao;
+import app.mahotsav.model.WatershedMahotsavRegistration;
+import app.mahotsav.service.WatershedMahotsavService;
+
+@Service("watershedMahotsavService")
+public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
+
+	@Autowired
+	WatershedMahotsavDao watershedMahotsavDao;
+
+	@Override
+	public String saveMahotsaveData(String name, String phone, String email, String address, int state, int district,
+			int block, int village, String longitude, String latitude, String facebook, String youtube,
+			String instagram, String twitter, String linkedin, String regNoParam, HttpServletRequest request) {
+		
+		return watershedMahotsavDao.saveMahotsaveData(name, phone, email, address, state, district, block, village, longitude, latitude, facebook, youtube, instagram, twitter, linkedin, regNoParam, request);
+	}
+
+	@Override
+	public WatershedMahotsavRegistration findByRegNo(String regNo) {
+		
+		return watershedMahotsavDao.findByRegNo(regNo);
+	}
+
+	
+	
+	
+}

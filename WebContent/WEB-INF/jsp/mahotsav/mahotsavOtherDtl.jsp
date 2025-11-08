@@ -116,18 +116,17 @@ $(document).ready(function() {
         }
     });
 
-    // Confirmation modal handling
-    $('#yesBtn').click(function() {
+   $('#yesBtn').click(function() {
         $('#confirmationModal').modal('hide');
-        document.mohotsav.reset();
-        $('#submitBtn').prop('disabled', true);
-        $('.error-text').hide();
+        document.mohotsav.action = "submitRegistration";
+        document.mohotsav.method = "post";
+        document.mohotsav.submit();
     });
 
     $('#noBtn').click(function() {
-        $('#confirmationModal').modal('hide');
-        document.mohotsav.submit();
+         $('#confirmationModal').modal('hide');
     });
+
 });
 </script>
 
@@ -140,6 +139,7 @@ $(document).ready(function() {
             <input type="hidden" name="phone" value="${phone}">
             <input type="hidden" name="email" value="${email}">
             <input type="hidden" name="address" value="${address}">
+            <input type="hidden" name="regNo" value="${regNo}">
 
             <div class="row mb-3">
                 <div class="col-md-4">
@@ -208,7 +208,7 @@ $(document).ready(function() {
             <div class="form-check mb-4 mt-3">
                 <input class="form-check-input" type="checkbox" id="consentCheck">
                 <label class="form-check-label" for="consentCheck">
-                    I give consent to DoLR / State Dept’s to use my pictures or reels for publicity or on any media platforms.
+                    I give consent to DoLR / State Agency to use my pictures or reels for publicity or educational purpose. Winners give consent to agency for publicity.
                 </label>
             </div>
 
@@ -220,22 +220,24 @@ $(document).ready(function() {
 </div>
 
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+ <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title">Confirmation</h5>
       </div>
       <div class="modal-body text-center">
-        <p>Do you want to upload another Video link?</p>
+        <p>Do you want to Save Video links?</p>
       </div>
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-success" id="yesBtn">Yes</button>
         <button type="button" class="btn btn-secondary" id="noBtn">No</button>
       </div>
+      
+      
     </div>
   </div>
-</div>
+</div> 
 
 <br>
 <footer class="text-center">

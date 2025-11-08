@@ -71,7 +71,7 @@
         <!-- Address -->
         <div class="mb-3">
             <label for="address" class="form-label">Address<span class="required">*</span></label>
-            <textarea id="address" class="form-control" name="userAddres" placeholder="Enter your address" rows="3" maxlength="200"></textarea>
+            <textarea id="address" class="form-control" name="address" placeholder="Enter your address" rows="3" maxlength="200"></textarea>
             <div class="error-text" id="addressError">Please enter your address.</div>
         </div>
 

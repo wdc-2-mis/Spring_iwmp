@@ -14,7 +14,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
 
     private Integer mahotsavRegId;
     private String regName;
-    private Integer phno;
+    private String phno;
     private String email;
     private String address;
     private String user_reg_no;
@@ -32,7 +32,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     public WatershedMahotsavRegistration() {
     }
 
-    public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, Integer phno, String email, String address, String user_reg_no, 
+    public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, String phno, String email, String address, String user_reg_no, 
     		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) 
     {
         this.mahotsavRegId = mahotsavRegId;
@@ -71,11 +71,11 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     }
 
     @Column(name = "phno")
-    public Integer getPhno() {
+    public String getPhno() {
         return this.phno;
     }
 
-    public void setPhno(Integer phno) {
+    public void setPhno(String phno) {
         this.phno = phno;
     }
 

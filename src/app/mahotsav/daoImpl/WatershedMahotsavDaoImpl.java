@@ -1,0 +1,215 @@
+package app.mahotsav.daoImpl;
+
+import java.util.Date;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import app.mahotsav.dao.WatershedMahotsavDao;
+import app.mahotsav.model.WatershedMahotsavRegistration;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
+import app.model.IwmpDistrict;
+import app.model.IwmpState;
+import app.model.master.IwmpBlock;
+import app.model.master.IwmpVillage;
+
+@Repository("watershedMahotsavDao")
+public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
+
+	@Autowired
+	private SessionFactory sessionFactory;
+	
+	public static String getClientIpAddr(HttpServletRequest request) {  
+	    String ip = request.getHeader("X-Forwarded-For");  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("WL-Proxy-Client-IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_X_CLUSTER_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_CLIENT_IP");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED_FOR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_FORWARDED");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("HTTP_VIA");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getHeader("REMOTE_ADDR");  
+	    }  
+	    if (ip == null || ip.length() == 0 || ip.equalsIgnoreCase("unknown")) {  
+	        ip = request.getRemoteAddr();  
+	    }  
+	    return ip;  
+	}
+	
+	@Override
+	public String saveMahotsaveData(String name, String phone, String email, String address, int state, int district,
+	        int block, int village, String longitude, String latitude, String facebook, String youtube,
+	        String instagram, String twitter, String linkedin, String regNoParam, HttpServletRequest request) {
+
+	    String regNo = "";
+	    Session ses = sessionFactory.getCurrentSession();
+
+	    try {
+	        ses.beginTransaction();
+
+	        WatershedMahotsavRegistration registration;
+
+	        if (regNoParam != null && !regNoParam.trim().isEmpty()) {
+	            registration = (WatershedMahotsavRegistration) ses
+	                    .createQuery("FROM WatershedMahotsavRegistration WHERE user_reg_no = :regNo")
+	                    .setParameter("regNo", regNoParam)
+	                    .uniqueResult();
+
+	            if (registration == null) {
+	                registration = new WatershedMahotsavRegistration();
+	                registration.setRegName(name);
+	                registration.setPhno(phone);
+	                registration.setEmail(email);
+	                registration.setAddress(address);
+	                registration.setCreatedDate(new Date());
+	                registration.setRequestedIp(getClientIpAddr(request));
+
+	                regNo = generateRegNo(state, district);
+	                registration.setUser_reg_no(regNo);
+
+	                ses.save(registration);
+	            } else {
+	                regNo = registration.getUser_reg_no();
+	            }
+	        } 
+	        else {
+	            registration = new WatershedMahotsavRegistration();
+	            registration.setRegName(name);
+	            registration.setPhno(phone);
+	            registration.setEmail(email);
+	            registration.setAddress(address);
+	            registration.setCreatedDate(new Date());
+	            registration.setRequestedIp(getClientIpAddr(request));
+
+	            regNo = generateRegNo(state, district);
+	            registration.setUser_reg_no(regNo);
+
+	            ses.save(registration);
+	        }
+
+	        saveVideoIfPresent(ses, facebook, "Facebook", 1, state, district, block, village, longitude, latitude, registration);
+	        saveVideoIfPresent(ses, youtube, "YouTube", 2, state, district, block, village, longitude, latitude, registration);
+	        saveVideoIfPresent(ses, instagram, "Instagram", 3, state, district, block, village, longitude, latitude, registration);
+	        saveVideoIfPresent(ses, twitter, "Twitter", 4, state, district, block, village, longitude, latitude, registration);
+	        saveVideoIfPresent(ses, linkedin, "LinkedIn", 5, state, district, block, village, longitude, latitude, registration);
+
+	        ses.getTransaction().commit();
+
+	    } catch (Exception e) {
+	        if (ses.getTransaction().isActive()) {
+	            ses.getTransaction().rollback();
+	        }
+	        e.printStackTrace();
+	    }
+
+	    return regNo;
+	}
+
+
+	
+	private String generateRegNo(int state, int district) {
+        Random random = new Random();
+        int randomNum = 10000 + random.nextInt(90000);
+        return "WM" + state + district + randomNum;
+    }
+	
+	private void saveVideoIfPresent(Session ses, String url, String platform, int mediaId, int state, int district,
+            int block, int village, String longitude, String latitude,
+            WatershedMahotsavRegistration registration) {
+          if (url != null && !url.trim().isEmpty()) {
+
+       if (!isValidPlatformUrl(platform, url)) {
+        throw new IllegalArgumentException("Invalid URL for " + platform + ": " + url);
+      }
+
+       WatershedMahotsavVideoDetails video = new WatershedMahotsavVideoDetails();
+       video.setMediaUrl(url);
+       video.setLatitude(latitude);
+       video.setLongitute(longitude);
+       video.setCreatedDate(new Date());
+       video.setStatus("PENDING");
+       video.setRequestedIp(registration.getRequestedIp());
+       video.setMahotsavReg(registration);
+
+       video.setIwmpState(ses.get(IwmpState.class, state));
+       video.setIwmpDistrict(ses.get(IwmpDistrict.class, district));
+       video.setIwmpBlock(ses.get(IwmpBlock.class, block));
+       video.setIwmpVillage(ses.get(IwmpVillage.class, village));
+
+       ses.createNativeQuery(
+           "UPDATE watershed_mahotsav_video_details SET media = :mediaId WHERE video_detail_id = :videoId")
+           .setParameter("mediaId", mediaId)
+           .setParameter("videoId", ses.save(video))
+           .executeUpdate();
+   }
+}
+
+         private boolean isValidPlatformUrl(String platform, String url) {
+         url = url.toLowerCase();
+         switch (platform.toLowerCase()) {
+         case "facebook":
+         return url.contains("facebook.com");
+         case "youtube":
+         return url.contains("youtube.com") || url.contains("youtu.be");
+         case "instagram":
+         return url.contains("instagram.com");
+         case "twitter":
+         return url.contains("twitter.com");
+         case "linkedin":
+         return url.contains("linkedin.com");
+         default:
+         return false;
+     }
+   }
+
+         @Override
+         public WatershedMahotsavRegistration findByRegNo(String regNo) {
+             Session session = sessionFactory.getCurrentSession();
+             WatershedMahotsavRegistration registration = null;
+             try {
+                 session.beginTransaction();
+
+                 registration = (WatershedMahotsavRegistration) session
+                     .createQuery("FROM WatershedMahotsavRegistration WHERE user_reg_no = :regNo")
+                     .setParameter("regNo", regNo)
+                     .uniqueResult();
+
+                 session.getTransaction().commit();
+             } catch (Exception e) {
+                 if (session.getTransaction().isActive()) {
+                     session.getTransaction().rollback();
+                 }
+                 e.printStackTrace();
+             }
+
+             return registration;
+         }
+
+	
+}
