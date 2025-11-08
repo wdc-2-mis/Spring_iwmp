@@ -17,6 +17,14 @@ import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.service.WatershedMahotsavService;
 import app.service.StateMasterService;
 import app.service.reports.WatershedYatraReportService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.ServletContext;
+import java.io.InputStream;
 
 
 
@@ -39,6 +47,10 @@ public class WatershedMahotsavController {
 	private Map<String, String> blockList;
 	
 	private Map<String, String> villageList;
+	
+	@Autowired
+    private ServletContext servletContext;
+
 	
 	@RequestMapping(value="/registerMahotsav", method = RequestMethod.GET)
 	public ModelAndView registerMahotsav(HttpServletRequest request, HttpServletResponse response)
@@ -141,5 +153,69 @@ public class WatershedMahotsavController {
 	    mav.addObject("regNo", regNo);  // optional to show in next JSP
 	    return mav;
 	}
+	
+	@RequestMapping(value="/wdcpmksyActivityWork", method = RequestMethod.GET)
+	public ModelAndView wdcpmksyActivityWork(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView("mahotsav/wdcpmksyActivityWork");
+		 stateList = stateMasterService.getAllState();
+         mav.addObject("stateList", stateList);
+         
+		return mav;
+	}
+	
+	
+	
+    @GetMapping("/wdcpmksyActivityWorkOpen")
+    public ResponseEntity<InputStreamResource> openPdf(@RequestParam("state") String state ) {
+
+        try {
+
+          //  System.out.println("State code received: " + state);
+
+            String pdfFileName = state+".pdf";
+
+            String pdfPath = "/WEB-INF/workactivity/" + pdfFileName;
+
+            InputStream pdfStream = servletContext.getResourceAsStream(pdfPath);
+
+            if (pdfStream == null) {
+
+                pdfStream = servletContext.getResourceAsStream("/WEB-INF/workactivity/"+state+".pdf");
+
+                if (pdfStream == null) {
+
+                    return ResponseEntity.notFound().build();
+
+                }
+
+            }
+
+            return ResponseEntity.ok()
+
+                    .contentType(MediaType.APPLICATION_PDF)
+
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=" + pdfFileName)
+
+                    .body(new InputStreamResource(pdfStream));
+
+
+        } 
+        catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity.internalServerError().build();
+
+        }
+
+    }
+
+
+
+
+	
+	
+	
 }
 	
