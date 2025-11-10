@@ -181,7 +181,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
          case "instagram":
          return url.contains("instagram.com");
          case "twitter":
-         return url.contains("twitter.com");
+         return url.contains("x.com");
          case "linkedin":
          return url.contains("linkedin.com");
          default:
