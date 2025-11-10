@@ -273,14 +273,19 @@ $(document).ready(function() {
         
 	});
     // Enable submit only when consent checkbox checked
-    $('#consentCheck').on('change', function() {
+    /* $('#consentCheck').on('change', function() {
         $('#submitBtn').prop('disabled', !this.checked);
-    });
+    }); */
 
     // Submit button click
     $('#submitBtn').click(function(e) {
         e.preventDefault();
 
+        if (!$('#consentCheck').is(':checked')) {
+            alert("Please check the consent checkbox before submitting.");
+            return; // Stop form submission
+        }
+        
         let valid = true;
         $('.error-text').hide();
 
@@ -442,11 +447,11 @@ $(document).ready(function() {
 
             <h4 class="text-center text-primary mb-3">List of URL's</h4>
             <div id="videoAlert" class="error-text text-left"></div>
-            <div class="mb-3"><label>1. Facebook </label><div id="fbError" class="error-text text-left"></div><input type="url" name="facebook" id="facebook" class="form-control" placeholder="Enter Facebook video URL"></div>
-            <div class="mb-3"><label>2. YouTube</label><div id="ytError" class="error-text text-left"></div><input type="url" name="youtube" id = "youtube" class="form-control" placeholder="Enter YouTube video URL"></div>
-            <div class="mb-3"><label>3. Instagram</label><div id="igError" class="error-text text-left"></div><input type="url" name="instagram" id="instagram" class="form-control" placeholder="Enter Instagram video URL"></div>
-            <div class="mb-3"><label>4. Twitter</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL"></div>
-            <div class="mb-3"><label>5. LinkedIn</label><div id="liError" class="error-text text-left"></div><input type="url" name="linkedin" id="linkedin" class="form-control" placeholder="Enter LinkedIn video URL"></div>
+            <div class="mb-3"><label>1. Facebook </label><div id="fbError" class="error-text text-left"></div><input type="url" name="facebook" id="facebook" class="form-control" placeholder="Enter Facebook video URL" autocomplete="off"></div>
+            <div class="mb-3"><label>2. YouTube</label><div id="ytError" class="error-text text-left"></div><input type="url" name="youtube" id = "youtube" class="form-control" placeholder="Enter YouTube video URL" autocomplete="off"></div>
+            <div class="mb-3"><label>3. Instagram</label><div id="igError" class="error-text text-left"></div><input type="url" name="instagram" id="instagram" class="form-control" placeholder="Enter Instagram video URL" autocomplete="off"></div>
+            <div class="mb-3"><label>4. Twitter</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL" autocomplete="off"></div>
+            <div class="mb-3"><label>5. LinkedIn</label><div id="liError" class="error-text text-left"></div><input type="url" name="linkedin" id="linkedin" class="form-control" placeholder="Enter LinkedIn video URL" autocomplete="off"></div>
 
             <div class="form-check mb-4 mt-3">
                 <input class="form-check-input" type="checkbox" id="consentCheck">
@@ -456,7 +461,7 @@ $(document).ready(function() {
             </div>
 
             <div class="text-center">
-                <button type="button" id="submitBtn" class="btn btn-success px-5" disabled>Submit</button>
+                <button type="button" id="submitBtn" class="btn btn-success px-5">Submit</button>
             </div>
         </form>
     </div>
