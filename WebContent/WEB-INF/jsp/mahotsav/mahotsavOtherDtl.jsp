@@ -55,6 +55,223 @@ $(document).ready(function() {
         showChangedata();
     });
 
+    let fbValid = true;
+    $('#facebook').on('blur', function() {
+	    let facebook = $('#facebook').val().trim();
+        $('#fbError').hide();
+        fbValid = true;
+        
+        if (facebook === "") {
+            // blank Facebook is allowed
+            fbValid = true;
+            return;
+        }
+        
+        const fbPattern = /^(https?:\/\/)?(www\.)?facebook\.com\/.+$/i;
+        if (!fbPattern.test(facebook)) {
+            $('#fbError')
+                .text("Please enter a valid Facebook URL (facebook.com/...)")
+                .show();
+            fbValid = false;
+            return;
+        }
+        
+        $.ajax({
+            type: "POST",
+            url: "checkmediaExists",
+            data: { media: facebook },
+            async: false, // synchronous check before allowing form submission
+            success: function(response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#fbError')
+                        .text("This Facebook video is already registered. Kindly use a different one.")
+                        .show();
+                    fbValid = false;
+                }
+            },
+            error: function() {
+                console.error("Error while checking Facebook URL");
+                fbValid = false;
+            }
+        });
+    });
+    
+    let ytValid = true;
+    $('#youtube').on('blur', function() {
+	    let youtube = $('#youtube').val().trim();
+        $('#ytError').hide();
+        ytValid = true;
+        
+        if (youtube === "") {
+            // blank Facebook is allowed
+            ytValid = true;
+            return;
+        }
+        
+        const ytPattern = /^(https?:\/\/)?(www\.)?youtube\.com\/.+$/i;
+        if (!ytPattern.test(youtube)) {
+            $('#ytError')
+                .text("Please enter a valid Youtube URL (youtube.com/...)")
+                .show();
+            ytValid = false;
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "checkmediaExists",
+            data: { media: youtube },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#ytError')
+                        .text("This video  is already registered. Kindly use a different one.")
+                        .show();
+                    
+                    ytValid = false;
+                } 
+            },
+            error: function () {
+                console.error("Error while checking url");
+                ytValid = false;
+            }
+        });
+        
+	});
+    
+    let igValid = true;
+    $('#instagram').on('blur', function() {
+	    let instagram = $('#instagram').val().trim();
+        $('#igError').hide();
+        igValid = true;
+        
+        if (instagram === "") {
+            // blank Facebook is allowed
+            igValid = true;
+            return;
+        }
+        
+        const igPattern = /^(https?:\/\/)?(www\.)?instagram\.com\/.+$/i;
+        if (!igPattern.test(instagram)) {
+            $('#igError')
+                .text("Please enter a valid Instagram URL (instagram.com/...)")
+                .show();
+            igValid = false;
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "checkmediaExists",
+            data: { media: instagram },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#igError')
+                        .text("This video  is already registered. Kindly use a different one.")
+                        .show();
+                    
+                    igValid = false;
+                } 
+            },
+            error: function () {
+                console.error("Error while checking url");
+                igValid = false;
+            }
+        });
+        
+	});
+    
+    let xValid = true;
+    $('#twitter').on('blur', function() {
+	    let twitter = $('#twitter').val().trim();
+        $('#xError').hide();
+        xValid = true;
+        
+        if (twitter === "") {
+            // blank Facebook is allowed
+            xValid = true;
+            return;
+        }
+        
+        const xPattern = /^(https?:\/\/)?(www\.)?x\.com\/.+$/i;
+        if (!xPattern.test(twitter)) {
+            $('#xError')
+                .text("Please enter a valid X URL (x.com/...)")
+                .show();
+            xValid = false;
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "checkmediaExists",
+            data: { media: twitter },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#xError')
+                        .text("This video  is already registered. Kindly use a different one.")
+                        .show();
+                    
+                    xValid = false;
+                } 
+            },
+            error: function () {
+                console.error("Error while checking url");
+                xValid = false;
+            }
+        });
+        
+	});
+    
+    let liValid = true;
+    $('#linkedin').on('blur', function() {
+	    let linkedin = $('#linkedin').val().trim();
+        $('#liError').hide();
+        liValid = true;
+        
+        if (linkedin === "") {
+            // blank Facebook is allowed
+            liValid = true;
+            return;
+        }
+        
+        const liPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/i;
+        if (!liPattern.test(linkedin)) {
+            $('#liError')
+                .text("Please enter a valid linkedin URL (linkedin.com/...)")
+                .show();
+            liValid = false;
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "checkmediaExists",
+            data: { media: linkedin },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#liError')
+                        .text("This video  is already registered. Kindly use a different one.")
+                        .show();
+                    
+                    liValid = false;
+                } 
+            },
+            error: function () {
+                console.error("Error while checking url");
+                liValid = false;
+            }
+        });
+        
+	});
     // Enable submit only when consent checkbox checked
     $('#consentCheck').on('change', function() {
         $('#submitBtn').prop('disabled', !this.checked);
@@ -83,7 +300,7 @@ $(document).ready(function() {
         const fbPattern = /^(https?:\/\/)?(www\.)?facebook\.com\/.+$/i;
         const ytPattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/i;
         const igPattern = /^(https?:\/\/)?(www\.)?instagram\.com\/.+$/i;
-        const twPattern = /^(https?:\/\/)?(www\.)?twitter\.com\/.+$/i;
+        const twPattern = /^(https?:\/\/)?(www\.)?x\.com\/.+$/i;
         const liPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/i;
 
         // At least one URL required
@@ -103,13 +320,39 @@ $(document).ready(function() {
             $('#videoAlert').text("Please enter a valid Instagram URL (instagram.com/...)").show();
             valid = false;
         } else if (twitter && !twPattern.test(twitter)) {
-            $('#videoAlert').text("Please enter a valid Twitter URL (twitter.com/...)").show();
+            $('#videoAlert').text("Please enter a valid Twitter URL (x.com/...)").show();
             valid = false;
         } else if (linkedin && !liPattern.test(linkedin)) {
             $('#videoAlert').text("Please enter a valid LinkedIn URL (linkedin.com/...)").show();
             valid = false;
         }
-
+        
+        if (!fbValid) {
+            $('#fbError').show();
+            valid = false;
+        }
+        
+        if(!ytValid){
+          $('#ytError').show();
+            valid = false;
+        }
+         if (!igValid) {
+            $('#igError').show();
+            valid = false;
+        }
+       
+        
+        if (!xValid) {
+            $('#xError').show();
+            valid = false;
+        }
+       
+        
+        if (!liValid) {
+            $('#liError').show();
+            valid = false;
+        }
+       
         // Show modal if valid
         if (valid) {
             $('#confirmationModal').modal('show');
@@ -199,11 +442,11 @@ $(document).ready(function() {
 
             <h4 class="text-center text-primary mb-3">List of URL's</h4>
             <div id="videoAlert" class="error-text text-left"></div>
-            <div class="mb-3"><label>1. Facebook</label><input type="url" name="facebook" class="form-control" placeholder="Enter Facebook video URL"></div>
-            <div class="mb-3"><label>2. YouTube</label><input type="url" name="youtube" class="form-control" placeholder="Enter YouTube video URL"></div>
-            <div class="mb-3"><label>3. Instagram</label><input type="url" name="instagram" class="form-control" placeholder="Enter Instagram video URL"></div>
-            <div class="mb-3"><label>4. Twitter</label><input type="url" name="twitter" class="form-control" placeholder="Enter Twitter video URL"></div>
-            <div class="mb-3"><label>5. LinkedIn</label><input type="url" name="linkedin" class="form-control" placeholder="Enter LinkedIn video URL"></div>
+            <div class="mb-3"><label>1. Facebook </label><div id="fbError" class="error-text text-left"></div><input type="url" name="facebook" id="facebook" class="form-control" placeholder="Enter Facebook video URL"></div>
+            <div class="mb-3"><label>2. YouTube</label><div id="ytError" class="error-text text-left"></div><input type="url" name="youtube" id = "youtube" class="form-control" placeholder="Enter YouTube video URL"></div>
+            <div class="mb-3"><label>3. Instagram</label><div id="igError" class="error-text text-left"></div><input type="url" name="instagram" id="instagram" class="form-control" placeholder="Enter Instagram video URL"></div>
+            <div class="mb-3"><label>4. Twitter</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL"></div>
+            <div class="mb-3"><label>5. LinkedIn</label><div id="liError" class="error-text text-left"></div><input type="url" name="linkedin" id="linkedin" class="form-control" placeholder="Enter LinkedIn video URL"></div>
 
             <div class="form-check mb-4 mt-3">
                 <input class="form-check-input" type="checkbox" id="consentCheck">

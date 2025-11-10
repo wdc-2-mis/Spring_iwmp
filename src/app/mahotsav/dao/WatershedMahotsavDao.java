@@ -14,5 +14,9 @@ public interface WatershedMahotsavDao {
 
 	boolean emailAlreadyExists(String email);
 
+	boolean phoneAlreadyExists(String phone);
+
+	boolean mediaAlreadyExists(String media);
+
 	
 }

@@ -112,6 +112,19 @@ public class WatershedMahotsavController {
 	    return exists ? "exists" : "not_exists";
 	}
 	
+	@RequestMapping(value="/checkPhoneExists", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkPhoneExists(@RequestParam("phone") String phone) {
+	    boolean exists = watershedMahotsavService.phoneAlreadyExists(phone);
+	    return exists ? "exists" : "not_exists";
+	}
+	
+	@RequestMapping(value="/checkmediaExists", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkfbExists(@RequestParam("media") String media) {
+	    boolean exists = watershedMahotsavService.mediaAlreadyExists(media);
+	    return exists ? "exists" : "not_exists";
+	}
 	
 	@RequestMapping(value="/submitRegistration", method = RequestMethod.POST)
 	public ModelAndView submitFullRegistration(HttpServletRequest request) {
@@ -135,14 +148,31 @@ public class WatershedMahotsavController {
         String linkedin = request.getParameter("linkedin");
         String regNoParam = request.getParameter("regNo");
         
-        String regNo = watershedMahotsavService.saveMahotsaveData(name, phone, email, address, Integer.parseInt(state), Integer.parseInt(district), Integer.parseInt(block), 
-        		Integer.parseInt(village), longitude, latitude, facebook, youtube, instagram, twitter, linkedin, regNoParam, request);
-	    
         ModelAndView mv = new ModelAndView("mahotsav/registrationSuccess");
-        mv.addObject("regNo", regNo);
-        mv.addObject("message", "Your registration number is " + regNo + ". Do you want to upload another video?");
+        try {
+            String regNo = watershedMahotsavService.saveMahotsaveData(name, phone, email, address,
+                    Integer.parseInt(state), Integer.parseInt(district), Integer.parseInt(block),
+                    Integer.parseInt(village), longitude, latitude, facebook, youtube, instagram, twitter,
+                    linkedin, regNoParam, request);
+
+            if (regNo != null && !regNo.trim().isEmpty()) {
+            mv.setViewName("mahotsav/registrationSuccess");
+            mv.addObject("regNo", regNo);
+            mv.addObject("message", "Your registration number is " + regNo + ". Do you want to upload another video?");
+            }
+            else {
+            	 mv.setViewName("mahotsav/registrationSuccess");
+            	 mv.addObject("errorMessage", "An error occurred during registration. Please try again later.");
+            }
+        
+        } catch (Exception e) {
+            mv.addObject("errorMessage", "An error occurred during registration. Please try again later.");
+            e.printStackTrace();  // Log the stack trace for debugging purposes
+        }
+
         return mv;
-	}
+    }
+	
 	
 	@RequestMapping(value="/uploadAnotherVideo", method = RequestMethod.GET)
 	public ModelAndView uploadAnotherVideo(HttpServletRequest request, HttpServletResponse response, @RequestParam("regNo") String regNo)

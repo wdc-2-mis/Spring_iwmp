@@ -34,6 +34,18 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 		return watershedMahotsavDao.emailAlreadyExists(email);
 	}
 
+	@Override
+	public boolean phoneAlreadyExists(String phone) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.phoneAlreadyExists(phone);
+	}
+
+	@Override
+	public boolean mediaAlreadyExists(String media) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.mediaAlreadyExists(media);
+	}
+
 	
 	
 	

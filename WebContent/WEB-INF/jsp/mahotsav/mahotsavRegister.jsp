@@ -58,7 +58,7 @@
         <!-- Phone -->
         <div class="mb-3">
             <label for="phone" class="form-label">Phone Number<span class="required">*</span></label>
-            <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" placeholder="Enter your phone number" autocomplete="off">
+            <input type="text" class="form-control" id="phone" name="phone" maxlength="10" placeholder="Enter your phone number" autocomplete="off">
             <div class="error-text" id="phoneError">Enter a valid 10-digit phone number.</div>
         </div>
 
@@ -103,9 +103,66 @@ function recaptchaExpired() {
 }
 
 let emailValid = false;
+let phoneValid = false;
 let lastCheckedEmail = "";
+let lastCheckedphone = "";
+
 $(document).ready(function() {
 
+	$('#phone').on('input', function() {
+        this.value = this.value.replace(/[^0-9]/g, ''); // removes non-numeric characters
+    });
+
+     $('#name').on('input', function() {
+        this.value = this.value.replace(/\s{2,}/g, ' ');
+    });
+
+    $('#name').on('blur', function() {
+        let name = $(this).val();
+        if (name.startsWith(' ')) {
+            $(this).val(name.trimStart()); // remove leading spaces
+        }
+    });
+	
+	
+	$('#phone').on('blur', function() {
+	    let phone = $('#phone').val().trim();
+        $('#phoneError').hide();
+        phoneValid = false;
+        
+        if (phone === "") {
+            $('#phoneError').text("Enter a valid 10-digit phone number.").show();
+            phoneValid = false;
+          return;
+        }
+        
+        if (phone === lastCheckedphone && phoneValid) return;
+        lastCheckedphone = phone;
+          
+        $.ajax({
+            type: "POST",
+            url: "checkPhoneExists",
+            data: { phone: phone },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#phoneError')
+                        .text("This phone no is already registered. Kindly use a different one.")
+                        .show();
+                    phoneValid = false;
+                } else {
+                    $('#phoneError').hide();
+                    phoneValid = true;
+                }
+            },
+            error: function () {
+                console.error("Error while checking phone");
+                phoneValid = false;
+            }
+        });
+        
+	});
     $('#email').on('blur', function() {
         let email = $('#email').val().trim();
         $('#emailError').hide();
@@ -185,6 +242,10 @@ $(document).ready(function() {
 
         if (captcha === "") {
             $('#captchaError').show();
+            isValid = false;
+        }
+        if (!phoneValid) {
+            $('#phoneError').show();
             isValid = false;
         }
         if (!emailValid) {

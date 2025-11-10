@@ -125,7 +125,8 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	        if (ses.getTransaction().isActive()) {
 	            ses.getTransaction().rollback();
 	        }
-	        
+	        e.printStackTrace();
+	        regNo = null;
 	    }
 
 	    return regNo;
@@ -228,6 +229,42 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
              }
              return exists;
          }
+
+		@Override
+		public boolean phoneAlreadyExists(String phone) {
+			boolean exists = false;
+            Session session = sessionFactory.openSession();
+            try {
+                String hql = "SELECT COUNT(r) FROM WatershedMahotsavRegistration r  WHERE r.phno = :phone";
+                Long count = (Long) session.createQuery(hql)
+                        .setParameter("phone", phone)
+                        .uniqueResult();
+                exists = (count != null && count > 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+            return exists;
+		}
+
+		@Override
+		public boolean mediaAlreadyExists(String media) {
+			boolean exists = false;
+            Session session = sessionFactory.openSession();
+            try {
+                String hql = "SELECT COUNT(r) FROM WatershedMahotsavVideoDetails r  WHERE r.mediaUrl = :media";
+                Long count = (Long) session.createQuery(hql)
+                        .setParameter("media", media)
+                        .uniqueResult();
+                exists = (count != null && count > 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                session.close();
+            }
+            return exists;
+		}
 
 
 	

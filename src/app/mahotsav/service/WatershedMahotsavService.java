@@ -17,6 +17,10 @@ public interface WatershedMahotsavService {
 
 	boolean emailAlreadyExists(String email);
 
+	boolean phoneAlreadyExists(String phone);
+
+	boolean mediaAlreadyExists(String media);
+
 	
 	
 
