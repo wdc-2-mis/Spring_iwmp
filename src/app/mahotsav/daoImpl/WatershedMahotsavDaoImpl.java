@@ -125,7 +125,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	        if (ses.getTransaction().isActive()) {
 	            ses.getTransaction().rollback();
 	        }
-	        e.printStackTrace();
+	        
 	    }
 
 	    return regNo;
@@ -210,6 +210,25 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 
              return registration;
          }
+
+         @Override
+         public boolean emailAlreadyExists(String email) {
+             boolean exists = false;
+             Session session = sessionFactory.openSession();
+             try {
+                 String hql = "SELECT COUNT(r) FROM WatershedMahotsavRegistration r WHERE LOWER(r.email) = :email";
+                 Long count = (Long) session.createQuery(hql)
+                         .setParameter("email", email.toLowerCase())
+                         .uniqueResult();
+                 exists = (count != null && count > 0);
+             } catch (Exception e) {
+                 e.printStackTrace();
+             } finally {
+                 session.close();
+             }
+             return exists;
+         }
+
 
 	
 }

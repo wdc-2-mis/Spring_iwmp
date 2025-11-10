@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import app.mahotsav.model.WatershedMahotsavRegistration;
@@ -103,6 +104,14 @@ public class WatershedMahotsavController {
 
 		return mav;
 	}
+	
+	@RequestMapping(value="/checkEmailExists", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkEmailExists(@RequestParam("email") String email) {
+	    boolean exists = watershedMahotsavService.emailAlreadyExists(email);
+	    return exists ? "exists" : "not_exists";
+	}
+	
 	
 	@RequestMapping(value="/submitRegistration", method = RequestMethod.POST)
 	public ModelAndView submitFullRegistration(HttpServletRequest request) {

@@ -29,6 +29,11 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 		return watershedMahotsavDao.findByRegNo(regNo);
 	}
 
+	@Override
+	public boolean emailAlreadyExists(String email) {
+		return watershedMahotsavDao.emailAlreadyExists(email);
+	}
+
 	
 	
 	

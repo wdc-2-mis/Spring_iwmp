@@ -5,6 +5,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- Google reCAPTCHA JS API -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -50,24 +51,25 @@
         <!-- Full Name -->
         <div class="mb-3">
             <label for="name" class="form-label">Full Name<span class="required">*</span></label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" autocomplete="off">
             <div class="error-text" id="nameError">Please enter your Name.</div>
         </div>
 
         <!-- Phone -->
         <div class="mb-3">
             <label for="phone" class="form-label">Phone Number<span class="required">*</span></label>
-            <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" placeholder="Enter your phone number">
+            <input type="tel" class="form-control" id="phone" name="phone" maxlength="10" placeholder="Enter your phone number" autocomplete="off">
             <div class="error-text" id="phoneError">Enter a valid 10-digit phone number.</div>
         </div>
 
         <!-- Email -->
         <div class="mb-3">
             <label for="email" class="form-label">Email ID<span class="required">*</span></label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" autocomplete="off">
             <div class="error-text" id="emailError">Please enter a valid email address.</div>
         </div>
-
+        
+    
         <!-- Address -->
         <div class="mb-3">
             <label for="address" class="form-label">Address<span class="required">*</span></label>
@@ -90,6 +92,7 @@
 </div>
 
 <script>
+
 function recaptchaVerified() {
     $('#nextBtn').fadeIn();
     $('#captchaError').hide();
@@ -99,49 +102,104 @@ function recaptchaExpired() {
     $('#nextBtn').fadeOut();
 }
 
-$('#registrationForm').on('submit', function(e) {
-    let isValid = true;
+let emailValid = false;
+let lastCheckedEmail = "";
+$(document).ready(function() {
 
-    $('.error-text').hide();
+    $('#email').on('blur', function() {
+        let email = $('#email').val().trim();
+        $('#emailError').hide();
+        emailValid = false;
+        
+        if (email === "") {
+            $('#emailError').text("Please enter your email address.").show();
+            emailValid = false;
+          return;
+        }
 
-    let name = $('#name').val().trim();
-    let phone = $('#phone').val().trim();
-    let email = $('#email').val().trim();
-    let address = $('#address').val().trim();
-    let captcha = grecaptcha.getResponse();
+       let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            $('#emailError').text("Please enter a valid email address.").show();
+            emailValid = false;
+          return;
+        }
 
-     if (name === "") {
-        $('#nameError').show();
-        isValid = false;
-    }
+        if (email === lastCheckedEmail && emailValid) return;
+        lastCheckedEmail = email;
 
-    if (!/^[0-9]{10}$/.test(phone)) {
-        $('#phoneError').show();
-        isValid = false;
-    }
+        $.ajax({
+            type: "POST",
+            url: "checkEmailExists",
+            data: { email: email },
+            async: false, // keeps synchronous (blocks until done)
+            success: function (response) {
+                console.log("Response:", response);
+                if (response.trim() === "exists") {
+                    $('#emailError')
+                        .text("This email is already registered. Kindly use a different one.")
+                        .show();
+                    emailValid = false;
+                } else {
+                    $('#emailError').hide();
+                    emailValid = true;
+                }
+            },
+            error: function () {
+                console.error("Error while checking email");
+                emailValid = false;
+            }
+        });
+    });
 
-    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        $('#emailError').show();
-        isValid = false;
-    }
 
-    if (address === "") {
-        $('#addressError').show();
-        isValid = false;
-    }
+     $('#registrationForm').on('submit', function(e) {
+        let isValid = true;
+        $('.error-text').hide();
 
-    if (captcha === "") {
-        $('#captchaError').show();
-        isValid = false;
-    }
+        let name = $('#name').val().trim();
+        let phone = $('#phone').val().trim();
+        let email = $('#email').val().trim();
+        let address = $('#address').val().trim();
+        let captcha = grecaptcha.getResponse();
 
-    if (!isValid) {
-        e.preventDefault();
-    }
+        if (name === "") {
+            $('#nameError').show();
+            isValid = false;
+        }
+
+        if (!/^[0-9]{10}$/.test(phone)) {
+            $('#phoneError').show();
+            isValid = false;
+        }
+
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            $('#emailError').show();
+            isValid = false;
+        }
+
+        if (address === "") {
+            $('#addressError').show();
+            isValid = false;
+        }
+
+        if (captcha === "") {
+            $('#captchaError').show();
+            isValid = false;
+        }
+        if (!emailValid) {
+            $('#emailError').show();
+            isValid = false;
+        }
+
+        if (!isValid) {
+            e.preventDefault();
+        }
+    });
 });
-
 </script>
+
+
 
 <br>
 <br>

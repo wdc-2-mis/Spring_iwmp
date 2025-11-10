@@ -15,6 +15,8 @@ public interface WatershedMahotsavService {
 
 	WatershedMahotsavRegistration findByRegNo(String regNo);
 
+	boolean emailAlreadyExists(String email);
+
 	
 	
 

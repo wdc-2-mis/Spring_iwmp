@@ -12,5 +12,7 @@ public interface WatershedMahotsavDao {
 
 	WatershedMahotsavRegistration findByRegNo(String regNo);
 
+	boolean emailAlreadyExists(String email);
+
 	
 }
