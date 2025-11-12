@@ -424,6 +424,7 @@ public class CommonController {
 
 		String parentName = "";
 		String data[] = null;
+		roleId=1;
 		int i = 1;
 		List<String[]> dataList = new ArrayList<String[]>();
 		List<RoleMenuList> list = new ArrayList<RoleMenuList>();
