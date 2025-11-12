@@ -29,6 +29,10 @@ public class OOMFCurrentStatusBean {
 	private BigDecimal farmer_benefitte;
 	private BigDecimal protective_irrigation;
 	private BigDecimal mandays_generated;
+	private int spring_rej;
+	private BigDecimal diversified;
+	private BigDecimal chnagesingle;
+	private BigDecimal incr_corp;
 	
 	public String getSt_name() {
 		return st_name;
@@ -173,6 +177,30 @@ public class OOMFCurrentStatusBean {
 	}
 	public void setMandays_generated(BigDecimal mandays_generated) {
 		this.mandays_generated = mandays_generated;
+	}
+	public int getSpring_rej() {
+		return spring_rej;
+	}
+	public void setSpring_rej(int spring_rej) {
+		this.spring_rej = spring_rej;
+	}
+	public BigDecimal getDiversified() {
+		return diversified;
+	}
+	public void setDiversified(BigDecimal diversified) {
+		this.diversified = diversified;
+	}
+	public BigDecimal getChnagesingle() {
+		return chnagesingle;
+	}
+	public void setChnagesingle(BigDecimal chnagesingle) {
+		this.chnagesingle = chnagesingle;
+	}
+	public BigDecimal getIncr_corp() {
+		return incr_corp;
+	}
+	public void setIncr_corp(BigDecimal incr_corp) {
+		this.incr_corp = incr_corp;
 	}
 	
 	

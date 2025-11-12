@@ -3,6 +3,7 @@ package app.controllers.reports;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -242,7 +243,7 @@ public class OOMFCurrentStatusController {
 	public ModelAndView getOOMFBeforePrayashData(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView mav = new ModelAndView();
-		
+		int monaddi=0;
 		List<OOMFCurrentStatusBean> data = new ArrayList<OOMFCurrentStatusBean>();
 		try {
 			
@@ -266,6 +267,11 @@ public class OOMFCurrentStatusController {
 			BigDecimal protective_irrigationt = BigDecimal.valueOf(0);
 			BigDecimal mandays_generatedt = BigDecimal.valueOf(0);
 			
+			int spring_rej = 0;
+			BigDecimal diversified = BigDecimal.valueOf(0);
+			BigDecimal chnagesingle = BigDecimal.valueOf(0);
+			BigDecimal incr_corp = BigDecimal.valueOf(0);
+			
 			if(data != null) 
 			{
 				for(OOMFCurrentStatusBean bean : data) 
@@ -277,8 +283,19 @@ public class OOMFCurrentStatusController {
 					farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 					protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 					mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
+					spring_rej=spring_rej+bean.getSpring_rej();
+					diversified=diversified.add(bean.getDiversified());
+					chnagesingle=chnagesingle.add(bean.getChnagesingle());
+					incr_corp=incr_corp.add(bean.getIncr_corp());
 				}
 			}	
+			
+			int currentMonth = LocalDate.now().getMonthValue();
+			if(currentMonth>=3 && currentMonth<=4)
+				monaddi=9;
+			
+			
+			
 			mav.addObject("degraded_landt",degraded_landt);
 			mav.addObject("soilmoisturet",soilmoisturet);
 			mav.addObject("afforestation_horticulturet",afforestation_horticulturet);
@@ -286,7 +303,11 @@ public class OOMFCurrentStatusController {
 			mav.addObject("farmer_benefittet",farmer_benefittet);
 			mav.addObject("protective_irrigationt",protective_irrigationt);
 			mav.addObject("mandays_generatedt",mandays_generatedt);
-			
+			mav.addObject("spring_rejt",spring_rej);
+			mav.addObject("diversifiedt",diversified);
+			mav.addObject("chnagesinglet",chnagesingle);
+			mav.addObject("incr_corpt",incr_corp);
+			mav.addObject("monaddi",monaddi);
 			
 		}
 		catch (Exception e) 
@@ -305,7 +326,9 @@ public class OOMFCurrentStatusController {
 		String stcd = request.getParameter("stcd");
 		String stName = request.getParameter("stName");
 //		String distName = request.getParameter("distName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
+
 		try {
 			
 			mav = new ModelAndView("reports/distOOMFBeforePrayashData");
@@ -330,6 +353,12 @@ public class OOMFCurrentStatusController {
 			BigDecimal farmer_benefittet = BigDecimal.valueOf(0);
 			BigDecimal protective_irrigationt = BigDecimal.valueOf(0);
 			BigDecimal mandays_generatedt = BigDecimal.valueOf(0);
+			BigDecimal diversified = BigDecimal.valueOf(0);
+			BigDecimal chnagesingle = BigDecimal.valueOf(0);
+			BigDecimal incr_corp = BigDecimal.valueOf(0);
+			int currentMonth = LocalDate.now().getMonthValue();
+			if(currentMonth>=3 && currentMonth<=4)
+				monaddi=9;
 			
 			if(data != null) 
 			{
@@ -342,6 +371,11 @@ public class OOMFCurrentStatusController {
 					farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 					protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 					mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
+					spring_rej=spring_rej+bean.getSpring_rej();
+					diversified=diversified.add(bean.getDiversified());
+					chnagesingle=chnagesingle.add(bean.getChnagesingle());
+					incr_corp=incr_corp.add(bean.getIncr_corp());
+
 				}
 			}	
 			mav.addObject("degraded_landt",degraded_landt);
@@ -351,6 +385,11 @@ public class OOMFCurrentStatusController {
 			mav.addObject("farmer_benefittet",farmer_benefittet);
 			mav.addObject("protective_irrigationt",protective_irrigationt);
 			mav.addObject("mandays_generatedt",mandays_generatedt);
+			mav.addObject("spring_rejt",spring_rej);
+			mav.addObject("diversifiedt",diversified);
+			mav.addObject("chnagesinglet",chnagesingle);
+			mav.addObject("incr_corpt",incr_corp);
+			mav.addObject("monaddi",monaddi);
 			
 			
 		}
@@ -370,7 +409,9 @@ public class OOMFCurrentStatusController {
 		String dcode = request.getParameter("dcode");
 		String distName = request.getParameter("distName");
 		String stName = request.getParameter("stName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
+
 		try {
 			
 			mav = new ModelAndView("reports/projOOMFBeforePrayashData");
@@ -395,6 +436,12 @@ public class OOMFCurrentStatusController {
 			BigDecimal farmer_benefittet = BigDecimal.valueOf(0);
 			BigDecimal protective_irrigationt = BigDecimal.valueOf(0);
 			BigDecimal mandays_generatedt = BigDecimal.valueOf(0);
+			BigDecimal diversified = BigDecimal.valueOf(0);
+			BigDecimal chnagesingle = BigDecimal.valueOf(0);
+			BigDecimal incr_corp = BigDecimal.valueOf(0);
+			int currentMonth = LocalDate.now().getMonthValue();
+			if(currentMonth>=3 && currentMonth<=4)
+				monaddi=9;
 			
 			if(data != null) 
 			{
@@ -407,6 +454,11 @@ public class OOMFCurrentStatusController {
 					farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 					protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 					mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
+					spring_rej=spring_rej+bean.getSpring_rej();
+					diversified=diversified.add(bean.getDiversified());
+					chnagesingle=chnagesingle.add(bean.getChnagesingle());
+					incr_corp=incr_corp.add(bean.getIncr_corp());
+
 				}
 			}	
 			mav.addObject("degraded_landt",degraded_landt);
@@ -416,7 +468,11 @@ public class OOMFCurrentStatusController {
 			mav.addObject("farmer_benefittet",farmer_benefittet);
 			mav.addObject("protective_irrigationt",protective_irrigationt);
 			mav.addObject("mandays_generatedt",mandays_generatedt);
-			
+			mav.addObject("spring_rejt",spring_rej);
+			mav.addObject("diversifiedt",diversified);
+			mav.addObject("chnagesinglet",chnagesingle);
+			mav.addObject("incr_corpt",incr_corp);
+			mav.addObject("monaddi",monaddi);
 			
 		}
 		catch (Exception e) 
@@ -1540,7 +1596,7 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	@RequestMapping(value = "/getOOMFBeforePrayashDataPDF", method = RequestMethod.POST)
 	public ModelAndView getOOMFBeforePrayashDataPDF(HttpServletRequest request, HttpServletResponse response) {
 		
-	  
+		int monaddi=0;	
 	    try {
 	    	
 	    	List<OOMFCurrentStatusBean> data = new ArrayList<OOMFCurrentStatusBean>();
@@ -1558,6 +1614,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			BigDecimal protective_irrigationt = BigDecimal.valueOf(0);
 			BigDecimal mandays_generatedt = BigDecimal.valueOf(0);
 	    	
+			int spring_rej = 0;
+			BigDecimal diversified = BigDecimal.valueOf(0);
+			BigDecimal chnagesingle = BigDecimal.valueOf(0);
+			BigDecimal incr_corp = BigDecimal.valueOf(0);
+			
 	        Rectangle layout = new Rectangle(PageSize.A4.rotate());
 	        layout.setBackgroundColor(new BaseColor(255, 255, 255));
 	        Document document = new Document(layout, 25, 10, 10, 0);
@@ -1574,6 +1635,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	        Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
 	        Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
 
+	        int currentMonth = LocalDate.now().getMonthValue();
+	        if(currentMonth>=3 && currentMonth<=4)
+	        	monaddi=9;
+
+	        
 	        PdfPTable table = null;
 	        document.newPage();
 	        Paragraph paragraph3 = null;
@@ -1588,8 +1654,14 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	        CommonFunctions.addHeader(document);
 	        document.add(paragraph2);
 	        document.add(paragraph3);
-	        table = new PdfPTable(9);
-	        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+	        if(monaddi==0) {
+		        table = new PdfPTable(10);
+		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
+	        }
+	        else {
+	        	table = new PdfPTable(13);
+		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+	        }
 	        table.setWidthPercentage(90);
 	        table.setSpacingBefore(0f);
 	        table.setSpacingAfter(0f);
@@ -1604,7 +1676,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	        CommonFunctions.insertCellHeader(table, "Total No. of Farmers Benefited", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total Area Brought under Protective Irrigation (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "Total No. of man-days generated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-	        
+	        CommonFunctions.insertCellHeader(table, "Total No. of Springs Rejuvenated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        if(monaddi>0) {
+	        	CommonFunctions.insertCellHeader(table, "Area covered under diversified crops/change in cropping system", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	 	        CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	 	        CommonFunctions.insertCellHeader(table, "Increase in gross cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        }
 	        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1614,6 +1691,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 	        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        if(monaddi>0) {
+	        	CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	 	        CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	 	        CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+	        }
 	        
 			int k = 1;
 			if(data != null) 
@@ -1629,7 +1712,13 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	                CommonFunctions.insertCell(table, String.valueOf(bean.getFarmer_benefitte()), Element.ALIGN_RIGHT, 1,1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(bean.getProtective_irrigation()), Element.ALIGN_RIGHT, 1,1, bf8);
 	                CommonFunctions.insertCell(table, String.valueOf(bean.getMandays_generated()), Element.ALIGN_RIGHT, 1,1, bf8);
-	                
+	                CommonFunctions.insertCell(table, String.valueOf(bean.getSpring_rej()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                if(monaddi>0) {
+	                	
+	                	CommonFunctions.insertCell(table, String.valueOf(bean.getDiversified()), Element.ALIGN_RIGHT, 1,1, bf8);
+	 	                CommonFunctions.insertCell(table, String.valueOf(bean.getChnagesingle()), Element.ALIGN_RIGHT, 1,1, bf8);
+	 	                CommonFunctions.insertCell(table, String.valueOf(bean.getIncr_corp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+	                }
 	                degraded_landt=degraded_landt.add(bean.getDegraded_land());
 					soilmoisturet=soilmoisturet.add(bean.getSoilmoisture());
 					afforestation_horticulturet=afforestation_horticulturet.add(bean.getAfforestation_horticulture());
@@ -1637,7 +1726,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 					farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 					protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 					mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
-					
+					spring_rej=spring_rej+bean.getSpring_rej();
+					diversified=diversified.add(bean.getDiversified());
+					chnagesingle=chnagesingle.add(bean.getChnagesingle());
+					incr_corp=incr_corp.add(bean.getIncr_corp());
+
 					k = k + 1;
 					
 				}
@@ -1651,7 +1744,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	            CommonFunctions.insertCell3(table, String.valueOf(farmer_benefittet), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(protective_irrigationt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(mandays_generatedt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-	           
+	            CommonFunctions.insertCell3(table, String.valueOf(spring_rej), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            if(monaddi>0) {
+		            CommonFunctions.insertCell3(table, String.valueOf(diversified), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(chnagesingle), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(incr_corp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            }
 	            document.add(table);
 	            table = new PdfPTable(1);
 				table.setWidthPercentage(70);
@@ -1687,11 +1785,17 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		
 		String finyr=ser.getOOMFFinYear();
 		String month=ser.getOOMFFinyearMonth();
-		
+		int monaddi=0;
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
 		
 		list = ser.getOOMFBeforePrayashData();
-			
+		
+
+		int currentMonth = LocalDate.now().getMonthValue();
+		if(currentMonth>=3 && currentMonth<=4)
+			monaddi=9;
+
+		
 		Workbook workbook = new XSSFWorkbook();  
 		//invoking creatSheet() method and passing the name of the sheet to be created   
 		Sheet sheet = workbook.createSheet("Report ME7- State and Activities Wise Current Achievement for the Financial Year");   
@@ -1746,16 +1850,42 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell.setCellValue("Total No. of man-days generated");  
 		cell.setCellStyle(style);
 		
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Total No. of Springs Rejuvenated");  
+		cell.setCellStyle(style);
 		
-		Row rowhead1 = sheet.createRow(6);
+		if(monaddi>0) {
+		cell = rowhead.createCell(10);
+		cell.setCellValue("Area covered under diversified crops/change in cropping system");
+		cell.setCellStyle(style);
 		
-		for(int i=0;i<9;i++)
-		{
-			cell =rowhead1.createCell(i);
-			cell.setCellValue(i+1);
-			cell.setCellStyle(style);
+		cell = rowhead.createCell(11);
+		cell.setCellValue("Area brought from no crop/single crop to single/multiple crop");  
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(12);
+		cell.setCellValue("Increase in gross cropped area");  
+		cell.setCellStyle(style);
 		}
 		
+		Row rowhead1 = sheet.createRow(6);
+		if(monaddi>0) {
+			
+			for(int i=0;i<13;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+		}
+		else {
+			for(int i=0;i<10;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+		}
 		
 		int sno = 1;
 		int rowno  = 7;
@@ -1766,9 +1896,13 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		BigDecimal farmer_benefittet = BigDecimal.ZERO;
 		BigDecimal protective_irrigationt = BigDecimal.ZERO;
 		BigDecimal mandays_generatedt = BigDecimal.ZERO;
+		int spring_rej = 0;
+		BigDecimal diversified = BigDecimal.valueOf(0);
+		BigDecimal chnagesingle = BigDecimal.valueOf(0);
+		BigDecimal incr_corp = BigDecimal.valueOf(0);
 		
-		
-	    for(OOMFCurrentStatusBean bean: list) {
+	    for(OOMFCurrentStatusBean bean: list) 
+	    {
 	    	Row row = sheet.createRow(rowno);
 	    	row.createCell(0).setCellValue(sno); 
 	    	row.createCell(1).setCellValue(bean.getSt_name());
@@ -1779,8 +1913,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	    	row.createCell(6).setCellValue(bean.getFarmer_benefitte().doubleValue());
 	    	row.createCell(7).setCellValue(bean.getProtective_irrigation().doubleValue());
 	    	row.createCell(8).setCellValue(bean.getMandays_generated().doubleValue());
-	    	
-	    	
+	    	row.createCell(9).setCellValue(bean.getSpring_rej());
+	    	if(monaddi>0) {
+		    	row.createCell(10).setCellValue(bean.getDiversified().doubleValue());
+		    	row.createCell(11).setCellValue(bean.getChnagesingle().doubleValue());
+		    	row.createCell(12).setCellValue(bean.getIncr_corp().doubleValue());
+	    	}
 	    	degraded_landt = degraded_landt.add(bean.getDegraded_land());
 	    	soilmoisturet = soilmoisturet.add(bean.getSoilmoisture());
 			afforestation_horticulturet = afforestation_horticulturet.add(bean.getAfforestation_horticulture());
@@ -1788,12 +1926,14 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			farmer_benefittet = farmer_benefittet.add(bean.getFarmer_benefitte());
 			protective_irrigationt = protective_irrigationt.add(bean.getProtective_irrigation());
 			mandays_generatedt = mandays_generatedt.add(bean.getMandays_generated());
-			
-			
+			spring_rej=spring_rej+bean.getSpring_rej();
+			diversified=diversified.add(bean.getDiversified());
+			chnagesingle=chnagesingle.add(bean.getChnagesingle());
+			incr_corp=incr_corp.add(bean.getIncr_corp());
+
 	    	sno++;
 	    	rowno++;
 	    }
-	    
 	    
 	    CellStyle style1 = workbook.createCellStyle();
 		style1.setBorderTop(BorderStyle.THIN); 
@@ -1831,13 +1971,28 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell.setCellValue(farmer_benefittet.doubleValue());
 		cell.setCellStyle(style1);
 		cell = row.createCell(7);
-		cell.setCellValue(protective_irrigationt.doubleValue());
+		cell.setCellValue(protective_irrigationt.doubleValue()); 
 		cell.setCellStyle(style1);
 		cell = row.createCell(8);
 		cell.setCellValue(mandays_generatedt.doubleValue());
 		cell.setCellStyle(style1);
-		
+		cell = row.createCell(9);
+		cell.setCellValue(spring_rej);
+		cell.setCellStyle(style1);
 
+		if(monaddi>0) {
+			
+			cell = row.createCell(10);
+			cell.setCellValue(diversified.doubleValue()); 
+			cell.setCellStyle(style1);
+			cell = row.createCell(11);
+			cell.setCellValue(chnagesingle.doubleValue());
+			cell.setCellStyle(style1);
+			cell = row.createCell(12);
+			cell.setCellValue(incr_corp.doubleValue());
+			cell.setCellStyle(style1);
+			
+		}
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
 	    String fileName = "attachment; filename=Report ME7- State.xlsx";
@@ -1855,13 +2010,20 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		String month=ser.getOOMFFinyearMonth();
 		String stcd = request.getParameter("stcd");
 		String stName = request.getParameter("stName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
+
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
 		
 		list = ser.getDistOOMFBeforePrayashData(Integer.parseInt(stcd));
 		
 		try {
 			
+			 int currentMonth = LocalDate.now().getMonthValue();
+		        if(currentMonth>=3 && currentMonth<=4)
+		        	monaddi=9;
+		        
+		        
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
 			Document document = new Document(layout, 25, 10, 10, 0);
@@ -1893,8 +2055,15 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.addHeader(document);
 		        document.add(paragraph2);
 		        document.add(paragraph3);
-		        table = new PdfPTable(9);
-		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+		        if(monaddi==0) {
+			        table = new PdfPTable(10);
+			        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
+		        }
+		        else {
+		        	table = new PdfPTable(13);
+			        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		        }
+
 		        table.setWidthPercentage(100);
 		        table.setSpacingBefore(0f);
 		        table.setSpacingAfter(0f);
@@ -1910,6 +2079,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.insertCellHeader(table, "Total No. of Farmers Benefited", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "Total Area Brought under Protective Irrigation (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "Total No. of man-days generated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        CommonFunctions.insertCellHeader(table, "Total No. of Springs Rejuvenated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        if(monaddi>0) {
+		        	CommonFunctions.insertCellHeader(table, "Area covered under diversified crops/change in cropping system", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "Increase in gross cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        }
 		        
 		        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1920,8 +2095,13 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        if(monaddi>0) {
+		        	CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        }
 
-				
 				int k = 1;
 				BigDecimal degraded_landt = BigDecimal.ZERO;
 				BigDecimal soilmoisturet = BigDecimal.ZERO;
@@ -1930,6 +2110,9 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 				BigDecimal farmer_benefittet = BigDecimal.ZERO;
 				BigDecimal protective_irrigationt = BigDecimal.ZERO;
 				BigDecimal mandays_generatedt = BigDecimal.ZERO;
+				BigDecimal diversified = BigDecimal.valueOf(0);
+				BigDecimal chnagesingle = BigDecimal.valueOf(0);
+				BigDecimal incr_corp = BigDecimal.valueOf(0);
 
 				
 				if(list != null) 
@@ -1945,7 +2128,14 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getFarmer_benefitte()), Element.ALIGN_RIGHT, 1,1, bf8);
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getProtective_irrigation()), Element.ALIGN_RIGHT, 1,1, bf8);
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getMandays_generated()), Element.ALIGN_RIGHT, 1,1, bf8);
-		                
+		                CommonFunctions.insertCell(table, String.valueOf(bean.getSpring_rej()), Element.ALIGN_RIGHT, 1, 1, bf8);
+		                if(monaddi>0) {
+		                	
+		                	CommonFunctions.insertCell(table, String.valueOf(bean.getDiversified()), Element.ALIGN_RIGHT, 1,1, bf8);
+		 	                CommonFunctions.insertCell(table, String.valueOf(bean.getChnagesingle()), Element.ALIGN_RIGHT, 1,1, bf8);
+		 	                CommonFunctions.insertCell(table, String.valueOf(bean.getIncr_corp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+		                }
+
 		                degraded_landt=degraded_landt.add(bean.getDegraded_land());
 						soilmoisturet=soilmoisturet.add(bean.getSoilmoisture());
 						afforestation_horticulturet=afforestation_horticulturet.add(bean.getAfforestation_horticulture());
@@ -1953,7 +2143,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 						farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 						protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 						mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
-						
+						spring_rej=spring_rej+bean.getSpring_rej();
+						diversified=diversified.add(bean.getDiversified());
+						chnagesingle=chnagesingle.add(bean.getChnagesingle());
+						incr_corp=incr_corp.add(bean.getIncr_corp());
+
 						k = k + 1;
 						
 					}
@@ -1968,10 +2162,15 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	            CommonFunctions.insertCell3(table, String.valueOf(farmer_benefittet), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(protective_irrigationt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(mandays_generatedt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-	           
+	            CommonFunctions.insertCell3(table, String.valueOf(spring_rej), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            if(monaddi>0) {
+		            CommonFunctions.insertCell3(table, String.valueOf(diversified), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(chnagesingle), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(incr_corp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            }
 				
 				if(list.size()==0) 
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 9, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 10, 1, bf8);
 				
 				
 		document.add(table);
@@ -2012,11 +2211,15 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		String month=ser.getOOMFFinyearMonth();
 		String stcd = request.getParameter("stcd");
 		String stName = request.getParameter("stName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
 		
 		list = ser.getDistOOMFBeforePrayashData(Integer.parseInt(stcd));
-			
+		int currentMonth = LocalDate.now().getMonthValue();
+		if(currentMonth>=3 && currentMonth<=4)
+			monaddi=9;
+	
 		Workbook workbook = new XSSFWorkbook();  
 		//invoking creatSheet() method and passing the name of the sheet to be created   
 		Sheet sheet = workbook.createSheet("Report ME7- District and Activities Wise Current Achievement for the Financial Year");   
@@ -2071,16 +2274,42 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell.setCellValue("Total No. of man-days generated");  
 		cell.setCellStyle(style);
 		
-		
-		Row rowhead1 = sheet.createRow(6);
-		
-		for(int i=0;i<9;i++)
-		{
-			cell =rowhead1.createCell(i);
-			cell.setCellValue(i+1);
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Total No. of Springs Rejuvenated");  
+		cell.setCellStyle(style);
+		if(monaddi>0) {
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Area covered under diversified crops/change in cropping system");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Area brought from no crop/single crop to single/multiple crop");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Increase in gross cropped area");  
 			cell.setCellStyle(style);
 		}
+
+		Row rowhead1 = sheet.createRow(6);
 		
+		if(monaddi>0) {
+					
+					for(int i=0;i<13;i++)
+					{
+						cell =rowhead1.createCell(i);
+						cell.setCellValue(i+1);
+						cell.setCellStyle(style);
+					}
+		}
+		else {
+					for(int i=0;i<10;i++)
+					{
+						cell =rowhead1.createCell(i);
+						cell.setCellValue(i+1);
+						cell.setCellStyle(style);
+					}
+		}
 		
 		int sno = 1;
 		int rowno  = 7;
@@ -2091,7 +2320,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		BigDecimal farmer_benefittet = BigDecimal.ZERO;
 		BigDecimal protective_irrigationt = BigDecimal.ZERO;
 		BigDecimal mandays_generatedt = BigDecimal.ZERO;
-		
+		BigDecimal diversified = BigDecimal.valueOf(0);
+		BigDecimal chnagesingle = BigDecimal.valueOf(0);
+		BigDecimal incr_corp = BigDecimal.valueOf(0);
+
+
 		
 	    for(OOMFCurrentStatusBean bean: list) {
 	    	Row row = sheet.createRow(rowno);
@@ -2104,8 +2337,13 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	    	row.createCell(6).setCellValue(bean.getFarmer_benefitte().doubleValue());
 	    	row.createCell(7).setCellValue(bean.getProtective_irrigation().doubleValue());
 	    	row.createCell(8).setCellValue(bean.getMandays_generated().doubleValue());
-	    	
-	    	
+	    	row.createCell(9).setCellValue(bean.getSpring_rej());
+	    	if(monaddi>0) {
+		    	row.createCell(10).setCellValue(bean.getDiversified().doubleValue());
+		    	row.createCell(11).setCellValue(bean.getChnagesingle().doubleValue());
+		    	row.createCell(12).setCellValue(bean.getIncr_corp().doubleValue());
+	    	}
+
 	    	degraded_landt = degraded_landt.add(bean.getDegraded_land());
 	    	soilmoisturet = soilmoisturet.add(bean.getSoilmoisture());
 			afforestation_horticulturet = afforestation_horticulturet.add(bean.getAfforestation_horticulture());
@@ -2113,7 +2351,11 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			farmer_benefittet = farmer_benefittet.add(bean.getFarmer_benefitte());
 			protective_irrigationt = protective_irrigationt.add(bean.getProtective_irrigation());
 			mandays_generatedt = mandays_generatedt.add(bean.getMandays_generated());
-			
+			spring_rej=spring_rej+bean.getSpring_rej();
+			diversified=diversified.add(bean.getDiversified());
+			chnagesingle=chnagesingle.add(bean.getChnagesingle());
+			incr_corp=incr_corp.add(bean.getIncr_corp());
+
 			
 	    	sno++;
 	    	rowno++;
@@ -2161,8 +2403,21 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell = row.createCell(8);
 		cell.setCellValue(mandays_generatedt.doubleValue());
 		cell.setCellStyle(style1);
-		
-
+		cell = row.createCell(9);
+		cell.setCellValue(spring_rej);
+		cell.setCellStyle(style1);
+		if(monaddi>0) {
+			
+			cell = row.createCell(10);
+			cell.setCellValue(diversified.doubleValue()); 
+			cell.setCellStyle(style1);
+			cell = row.createCell(11);
+			cell.setCellValue(chnagesingle.doubleValue());
+			cell.setCellStyle(style1);
+			cell = row.createCell(12);
+			cell.setCellValue(incr_corp.doubleValue());
+			cell.setCellStyle(style1);
+		}
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
 	    String fileName = "attachment; filename=Report ME7- District.xlsx";
@@ -2181,7 +2436,8 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		String dcode = request.getParameter("dcode");
 		String distName = request.getParameter("distName");
 		String stName = request.getParameter("stName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
 		
 		list = ser.getProjOOMFBeforePrayashData(Integer.parseInt(dcode));
@@ -2195,6 +2451,10 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			
+			int currentMonth = LocalDate.now().getMonthValue();
+			if(currentMonth>=3 && currentMonth<=4)
+				monaddi=9;
 			
 			document.open(); 
 	       
@@ -2210,7 +2470,6 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
 				paragraph3 = new Paragraph("Report ME7- Project and Activities Wise Current Achievement for the Financial Year '"+finyr +"' and Month '"+month+"' for District '"+distName+"' of State '"+stName+"'"  , f3);
-
 				
 				paragraph2.setAlignment(Element.ALIGN_CENTER);
 		        paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -2219,8 +2478,15 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.addHeader(document);
 		        document.add(paragraph2);
 		        document.add(paragraph3);
-		        table = new PdfPTable(9);
-		        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5});
+		        if(monaddi==0) {
+			        table = new PdfPTable(10);
+			        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
+		        }
+		        else {
+		        	table = new PdfPTable(13);
+			        table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		        }
+
 		        table.setWidthPercentage(100);
 		        table.setSpacingBefore(0f);
 		        table.setSpacingAfter(0f);
@@ -2236,7 +2502,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.insertCellHeader(table, "Total No. of Farmers Benefited", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "Total Area Brought under Protective Irrigation (created/renovated)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "Total No. of man-days generated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-		        
+		        CommonFunctions.insertCellHeader(table, "Total No. of Springs Rejuvenated", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        if(monaddi>0) {
+		        	CommonFunctions.insertCellHeader(table, "Area covered under diversified crops/change in cropping system", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "Area brought from no crop/single crop to single/multiple crop", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "Increase in gross cropped area", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        }
 		        CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -2246,7 +2517,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		        CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 		        CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-
+		        CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        if(monaddi>0) {
+		        	CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		 	        CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		        }
 				
 				int k = 1;
 				BigDecimal degraded_landt = BigDecimal.ZERO;
@@ -2256,6 +2532,9 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 				BigDecimal farmer_benefittet = BigDecimal.ZERO;
 				BigDecimal protective_irrigationt = BigDecimal.ZERO;
 				BigDecimal mandays_generatedt = BigDecimal.ZERO;
+				BigDecimal diversified = BigDecimal.valueOf(0);
+				BigDecimal chnagesingle = BigDecimal.valueOf(0);
+				BigDecimal incr_corp = BigDecimal.valueOf(0);
 
 				
 				if(list != null) 
@@ -2271,7 +2550,14 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getFarmer_benefitte()), Element.ALIGN_RIGHT, 1,1, bf8);
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getProtective_irrigation()), Element.ALIGN_RIGHT, 1,1, bf8);
 		                CommonFunctions.insertCell(table, String.valueOf(bean.getMandays_generated()), Element.ALIGN_RIGHT, 1,1, bf8);
-		                
+		                CommonFunctions.insertCell(table, String.valueOf(bean.getSpring_rej()), Element.ALIGN_RIGHT, 1,1, bf8);
+		                if(monaddi>0) {
+		                	
+		                	CommonFunctions.insertCell(table, String.valueOf(bean.getDiversified()), Element.ALIGN_RIGHT, 1,1, bf8);
+		 	                CommonFunctions.insertCell(table, String.valueOf(bean.getChnagesingle()), Element.ALIGN_RIGHT, 1,1, bf8);
+		 	                CommonFunctions.insertCell(table, String.valueOf(bean.getIncr_corp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+		                }
+
 		                degraded_landt=degraded_landt.add(bean.getDegraded_land());
 						soilmoisturet=soilmoisturet.add(bean.getSoilmoisture());
 						afforestation_horticulturet=afforestation_horticulturet.add(bean.getAfforestation_horticulture());
@@ -2279,12 +2565,15 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 						farmer_benefittet=farmer_benefittet.add(bean.getFarmer_benefitte());
 						protective_irrigationt=protective_irrigationt.add(bean.getProtective_irrigation());
 						mandays_generatedt=mandays_generatedt.add(bean.getMandays_generated());
-						
+						spring_rej=spring_rej+bean.getSpring_rej();
+						diversified=diversified.add(bean.getDiversified());
+						chnagesingle=chnagesingle.add(bean.getChnagesingle());
+						incr_corp=incr_corp.add(bean.getIncr_corp());
+
 						k = k + 1;
 						
 					}
 				}
-					
 				
 				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(degraded_landt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -2294,10 +2583,14 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	            CommonFunctions.insertCell3(table, String.valueOf(farmer_benefittet), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(protective_irrigationt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 	            CommonFunctions.insertCell3(table, String.valueOf(mandays_generatedt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-	           
-				
+	            CommonFunctions.insertCell3(table, String.valueOf(spring_rej), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            if(monaddi>0) {
+		            CommonFunctions.insertCell3(table, String.valueOf(diversified), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(chnagesingle), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		            CommonFunctions.insertCell3(table, String.valueOf(incr_corp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+	            }
 				if(list.size()==0) 
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 9, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 10, 1, bf8);
 				
 				
 		document.add(table);
@@ -2339,11 +2632,16 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		String dcode = request.getParameter("dcode");
 		String distName = request.getParameter("distName");
 		String stName = request.getParameter("stName");
-		
+		int monaddi=0;
+		int spring_rej = 0;
+
 		List<OOMFCurrentStatusBean> list = new ArrayList<OOMFCurrentStatusBean>();
-		
 		list = ser.getProjOOMFBeforePrayashData(Integer.parseInt(dcode));
-			
+		
+		int currentMonth = LocalDate.now().getMonthValue();
+		if(currentMonth>=3 && currentMonth<=4)
+			monaddi=9;
+	
 		Workbook workbook = new XSSFWorkbook();  
 		//invoking creatSheet() method and passing the name of the sheet to be created   
 		Sheet sheet = workbook.createSheet("Report ME7- Project and Activities Wise Current Achievement for the Financial Year");   
@@ -2398,17 +2696,43 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell.setCellValue("Total No. of man-days generated");  
 		cell.setCellStyle(style);
 		
-		
-		Row rowhead1 = sheet.createRow(6);
-		
-		for(int i=0;i<9;i++)
-		{
-			cell =rowhead1.createCell(i);
-			cell.setCellValue(i+1);
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Total No. of Springs Rejuvenated");  
+		cell.setCellStyle(style);
+		if(monaddi>0) {
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Area covered under diversified crops/change in cropping system");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Area brought from no crop/single crop to single/multiple crop");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Increase in gross cropped area");  
 			cell.setCellStyle(style);
 		}
 		
+		Row rowhead1 = sheet.createRow(6);
 		
+		if(monaddi>0) {
+			
+			for(int i=0;i<13;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+		}
+		else {
+			for(int i=0;i<10;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+		}
+
 		int sno = 1;
 		int rowno  = 7;
 		BigDecimal degraded_landt = BigDecimal.ZERO;
@@ -2418,7 +2742,9 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		BigDecimal farmer_benefittet = BigDecimal.ZERO;
 		BigDecimal protective_irrigationt = BigDecimal.ZERO;
 		BigDecimal mandays_generatedt = BigDecimal.ZERO;
-		
+		BigDecimal diversified = BigDecimal.valueOf(0);
+		BigDecimal chnagesingle = BigDecimal.valueOf(0);
+		BigDecimal incr_corp = BigDecimal.valueOf(0);
 		
 	    for(OOMFCurrentStatusBean bean: list) {
 	    	Row row = sheet.createRow(rowno);
@@ -2431,7 +2757,12 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 	    	row.createCell(6).setCellValue(bean.getFarmer_benefitte().doubleValue());
 	    	row.createCell(7).setCellValue(bean.getProtective_irrigation().doubleValue());
 	    	row.createCell(8).setCellValue(bean.getMandays_generated().doubleValue());
-	    	
+	    	row.createCell(9).setCellValue(bean.getSpring_rej());
+	    	if(monaddi>0) {
+		    	row.createCell(10).setCellValue(bean.getDiversified().doubleValue());
+		    	row.createCell(11).setCellValue(bean.getChnagesingle().doubleValue());
+		    	row.createCell(12).setCellValue(bean.getIncr_corp().doubleValue());
+	    	}
 	    	
 	    	degraded_landt = degraded_landt.add(bean.getDegraded_land());
 	    	soilmoisturet = soilmoisturet.add(bean.getSoilmoisture());
@@ -2440,7 +2771,10 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 			farmer_benefittet = farmer_benefittet.add(bean.getFarmer_benefitte());
 			protective_irrigationt = protective_irrigationt.add(bean.getProtective_irrigation());
 			mandays_generatedt = mandays_generatedt.add(bean.getMandays_generated());
-			
+			spring_rej=spring_rej+bean.getSpring_rej();
+			diversified=diversified.add(bean.getDiversified());
+			chnagesingle=chnagesingle.add(bean.getChnagesingle());
+			incr_corp=incr_corp.add(bean.getIncr_corp());
 			
 	    	sno++;
 	    	rowno++;
@@ -2488,8 +2822,21 @@ public String getOOMFCurrentStatusProjectReportExcel(HttpServletRequest request,
 		cell = row.createCell(8);
 		cell.setCellValue(mandays_generatedt.doubleValue());
 		cell.setCellStyle(style1);
-		
-
+		cell = row.createCell(9);
+		cell.setCellValue(spring_rej);
+		cell.setCellStyle(style1);
+		if(monaddi>0) {
+			
+			cell = row.createCell(10);
+			cell.setCellValue(diversified.doubleValue()); 
+			cell.setCellStyle(style1);
+			cell = row.createCell(11);
+			cell.setCellValue(chnagesingle.doubleValue());
+			cell.setCellStyle(style1);
+			cell = row.createCell(12);
+			cell.setCellValue(incr_corp.doubleValue());
+			cell.setCellStyle(style1);
+		}
 		
 	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 8);
 	    String fileName = "attachment; filename=Report ME7- Project.xlsx";

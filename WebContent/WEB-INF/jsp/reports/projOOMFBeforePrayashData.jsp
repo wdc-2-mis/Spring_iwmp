@@ -61,15 +61,29 @@
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Farmers Benefited</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total Area Brought under Protective Irrigation (created/renovated)</th>
 			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of man-days generated</th>
-			<!-- <th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Half Year Wise Additional area brought under diversified crops/change in cropping system</th>
-			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Half Year Wise  Area brought from no crop/single crop to single/multiple crop</th>
-			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Year Wise Increase in Cropped Area</th>
-			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Project submitted Increase in Farmer's Income </th> -->
+			<th style="text-align:center; vertical-align: middle; width: 7%;">Total No. of Springs Rejuvenated </th>
+			<c:if test="${monaddi>0}">
+			<th style="text-align:center; vertical-align: middle; width: 7%;">Area covered under diversified crops/change in cropping system</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">Area brought from no crop/single crop to single/multiple crop</th>
+			<th style="text-align:center; vertical-align: middle; width: 7%;">Increase in gross cropped area</th>
+			</c:if>
 		</tr>
 		<tr>
-						<% for (int i = 1; i <= 9; i++) { %>
-						<th class="text-center"><%= i %></th>
-						<% } %>
+			<th class="text-center">1</th>
+			<th class="text-center">2</th>
+			<th class="text-center">3</th>
+			<th class="text-center">4</th>
+			<th class="text-center">5</th>
+			<th class="text-center">6</th>
+			<th class="text-center">7</th>
+			<th class="text-center">8</th>
+			<th class="text-center">9</th>
+			<th class="text-center">10</th>
+			<c:if test="${monaddi>0}">
+			<th class="text-center">11</th>
+			<th class="text-center">12</th>
+			<th class="text-center">13</th>
+			</c:if>
 		</tr>
   	</thead>
   	<tbody>
@@ -90,11 +104,12 @@
 		 						<td class="text-right"> <c:out value="${data.farmer_benefitte}" /></td>
 								<td class="text-right"> <c:out value="${data.protective_irrigation}" /></td>
 								<td class="text-right"> <c:out value="${data.mandays_generated}" /></td>
-								
-						<%-- 		<td class="text-right"> <c:out value="${data.halfyearfill}" /></td>
-								<td class="text-right"> <c:out value="${data.halfyearfill}" /></td>
-								<td class="text-right"> <c:out value="${data.yearwisefill}" /></td>
-								<td class="text-right"> <c:out value="${data.yearwisefill}" /></td> --%>
+								<td class="text-right"> <c:out value="${data.spring_rej}" /></td>
+								<c:if test="${monaddi>0}">
+								<td class="text-right"> <c:out value="${data.diversified}" /></td>
+								<td class="text-right"> <c:out value="${data.chnagesingle}" /></td>
+								<td class="text-right"> <c:out value="${data.incr_corp}" /></td> 
+								</c:if>
 								
  							</tr>
 						</c:forEach>
@@ -109,10 +124,12 @@
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="0"><c:out value='${farmer_benefittet}' /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${protective_irrigationt}' /></fmt:formatNumber></b></td>
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="0"><c:out value='${mandays_generatedt}' /></fmt:formatNumber></b></td>
-				<%-- <td align="right" class="table-primary" ><b><c:out value='${halfyearfill1}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${halfyearfill1}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${yearwisefill1}' /> </b></td>
-				<td align="right" class="table-primary" ><b><c:out value='${yearwisefill1}' /> </b></td> --%>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="0"><c:out value='${spring_rejt}' /></fmt:formatNumber></b></td>
+				<c:if test="${monaddi>0}">
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${diversifiedt}' /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${chnagesinglet}' /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value='${incr_corpt}' /></fmt:formatNumber></b></td>
+				</c:if>
 			</tr> 
 		
 	</tbody>
