@@ -6,10 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <style>
-    
-    
     .registration-container {
         max-width: 550px;
         margin: 60px auto;
@@ -128,6 +125,7 @@ $(document).ready(function(){
 
                 $("#msgBox").html("<span class='text-success'> Registration verified successfully!</span>");
                 $("#detailsSection").fadeIn(400);
+                $("#verifyBtn").hide(); // ✅ Hides the Verify button after success
 
                 // Handle Next Button → redirect with regNo
                 $("#nextBtn").off("click").on("click", function(){

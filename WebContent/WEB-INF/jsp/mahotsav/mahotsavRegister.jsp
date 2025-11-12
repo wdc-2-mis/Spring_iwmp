@@ -41,7 +41,15 @@
     margin-top: 4px;
     display: none;
 }
-    
+   .friendly-link {
+    color: #0d6efd;             /* Bootstrap primary blue */
+    text-decoration: none;
+    font-weight: 500;
+}
+.friendly-link:hover {
+    color: #0a58ca;             /* Slightly darker on hover */
+    text-decoration: underline;
+} 
 </style>
 
 <div class="registration-container">
@@ -87,6 +95,13 @@
         </div>
 
         <button type="submit" class="btn btn-primary btn-next" id="nextBtn">Next Page</button>
+        
+      <div class="text-left mt-3">
+    Already registered? 
+    <a href="addWMSocialMedia" class="friendly-link">Click here</a>
+</div>
+
+        
     </form>
 
 </div>
