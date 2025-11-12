@@ -64,7 +64,7 @@
         <!-- Registration No -->
         <div class="mb-4">
             <label for="name" class="form-label">Registration No.<span class="required">*</span></label>
-            <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Enter your Registration No.">
+            <input type="text" class="form-control form-control-lg" id="name" name="name" placeholder="Enter your Registration No." autocomplete="off">
             <div class="form-text text-danger d-none" id="nameError">Please enter your Registration No.</div>
         </div>
 
