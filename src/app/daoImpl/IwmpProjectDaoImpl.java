@@ -203,9 +203,12 @@ public class IwmpProjectDaoImpl implements IwmpProjectDao {
 			String status) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.getCurrentSession();
-
+		Character statusChar = null;
 		session.beginTransaction();
-		// from IwmpState where stCode=case 1 when 0 then stCode else 1 end
+		if (status != null && !status.isEmpty()) {
+		    statusChar = status.charAt(0);
+		}
+
 		@SuppressWarnings("unchecked")
 		List<IwmpMProject> temp = session.createQuery("from IwmpMProject as p where p.iwmpDistrict.iwmpState.stCode="
 				+ "case :stcode when 0 then p.iwmpDistrict.iwmpState.stCode else :stcode end and p.iwmpDistrict.dcode=case :distcode when 0 then"
@@ -216,7 +219,7 @@ public class IwmpProjectDaoImpl implements IwmpProjectDao {
 				+ "order by p.iwmpDistrict.iwmpState.stName,p.iwmpDistrict.distName,p.projectSeqNo ").setParameter("stcode", stcode)
 				.setParameter("distcode", distcode).setParameter("finyear", finyear)
 				.setParameter("iwmpMProjectPrd", period).setParameter("iwmpMAreaType", areatype)
-				.setParameter("status", status).list();
+				.setCharacter("status", statusChar).list();
 
 		session.getTransaction().commit();
 

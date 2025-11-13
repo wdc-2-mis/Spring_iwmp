@@ -156,7 +156,7 @@ function exportExcel(fyear){
 									<td align="right"><fmt:formatNumber value = "${proj.sanctionAmount}"
 									type="number" minFractionDigits="2"/>
 									</td>
-									</tr>
+								</tr>
 									<c:if test = "${checkStName eq proj.getIwmpStateByStCode().stName || status.count eq 1}">
 										<c:set var="totalAmnt" value="${totalAmnt + proj.sanctionAmount}" />
 									</c:if>

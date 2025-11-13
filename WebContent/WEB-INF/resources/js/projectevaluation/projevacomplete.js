@@ -45,8 +45,8 @@ $(document).on('click', '#view', function(e){
 						$('#popup').modal('hide');
 						window.location.href='getProfileStart';
 					});
-						}
-							});
+				}
+			});
 			});  
 			}
 			$(".close").click(function(){

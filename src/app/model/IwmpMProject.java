@@ -377,7 +377,7 @@ public class IwmpMProject implements java.io.Serializable {
 		this.projName = projName;
 	}
 
-	@Column(name = "area_proposed", precision = 12)
+	@Column(name = "area_proposed", precision = 15, scale = 2)
 	public BigDecimal getAreaProposed() {
 		return this.areaProposed;
 	}

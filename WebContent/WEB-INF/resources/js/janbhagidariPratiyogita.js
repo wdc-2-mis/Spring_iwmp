@@ -49,7 +49,8 @@ $(function() {
 						    {
 								if(data==='success')
 								{
-									alert('Data Already Exists. Now You want to add NGO Details Only !');
+									alert('Data Already Exists. Now You can add NGO Details Only !');
+									//alert('Data Already Exists. Please select different project');
 									//$("select#projid")[0].selectedIndex = 0;
 								}
 						    }

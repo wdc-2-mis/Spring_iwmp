@@ -108,8 +108,12 @@ function downloadExcel(state, userdate, dateto){
 
 
  <br>
-<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>Report ME8- State and Date Wise Work Status List</h5></div>
-
+ <c:if test="${state==0}">
+	<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>Report ME8- State and Date Wise Work Status List</h5></div>
+</c:if>
+<c:if test="${state gt 0}">
+<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>Report ME8- Activity and Date Wise Work Status List</h5></div>
+</c:if>
 <br>
 <div class ="card">
 <div class="row">
@@ -208,6 +212,7 @@ function downloadExcel(state, userdate, dateto){
 	 	<th colspan="7" style="text-align:left; "><b>State :</b> ${stName} &emsp; <b>From Date :</b> ${fromDateStr} &emsp; <b> To Date :</b> ${toDateStr}</th>
 		
 	</tr>
+	<c:if test="${state==0}">
     <tr>
      	<th style="text-align:center; vertical-align: middle;">S.No.</th>  
 		<th style="text-align:center; vertical-align: middle;">State Name</th>
@@ -217,7 +222,18 @@ function downloadExcel(state, userdate, dateto){
  		<th style="text-align:center; vertical-align: middle;">Completed Works</th>  
 		<th style="text-align:center; vertical-align: middle;">Foreclosed Works</th>
      </tr>
-   
+   </c:if>
+   <c:if test="${state gt 0}">
+    <tr>
+     	<th style="text-align:center; vertical-align: middle;">Name of the Activity</th>  
+		<th style="text-align:center; vertical-align: middle;">Unit</th>
+		<th style="text-align:center; vertical-align: middle;">Created Works</th> 
+		<th style="text-align:center; vertical-align: middle;">Started Works</th> 
+		<th style="text-align:center; vertical-align: middle;">Ongoing Works</th>
+ 		<th style="text-align:center; vertical-align: middle;">Completed Works</th>  
+		<th style="text-align:center; vertical-align: middle;">Foreclosed Works</th>
+     </tr>
+   </c:if>
   </thead>
 
   <tbody>
@@ -231,8 +247,8 @@ function downloadExcel(state, userdate, dateto){
 		<th class="text-center">7</th>
 	</tr>
 	 
-	 				<c:if test="${dataList != null}">
-		
+	 			<c:if test="${dataList != null}">
+		 			<c:if test="${state== 0}">
 						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
 								<td><c:out value='${count.count}' /></td>
@@ -245,7 +261,6 @@ function downloadExcel(state, userdate, dateto){
  								
  							</tr>
  						</c:forEach>
- 						
  						<tr>
 							<td align="right" class="table-primary" colspan="2"><b>Grand Total </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${createdwork1}' /> </b></td>
@@ -254,7 +269,179 @@ function downloadExcel(state, userdate, dateto){
 							<td align="right" class="table-primary" ><b><c:out value='${completed1}' /> </b></td>
 							<td align="right" class="table-primary" ><b><c:out value='${forclosed1}' /> </b></td>
 	 					</tr>
-    				</c:if>
+	 				</c:if>	
+	 				</c:if>
+	 				
+	 <c:if test="${state gt 0}">
+	 	<c:set var="counter" value="0" />
+		<c:set var="count1" value="1" />
+		<c:set var="headVal" value="" />
+		<c:set var="actVal" value="" />
+		<c:set var="hdCount" value="1" />
+		<c:set var="actCount" value="1" />
+		<c:set var="subActCount" value="1" />
+		<c:set var="colTotal" value="0" />
+				
+		<c:set var="countHead" value="0" />
+		<c:set var="headOld" value="" />
+		<c:set var="keyPlc" value="0" />
+		<c:set var="headYrSum" value="0" />
+						
+		<c:set var="totPhyTar" value="" />
+		<c:set var="totPhyAch" value="" />
+		<c:set var="totWrk" value="" />
+		<c:set var="totOnWrk" value="" />
+		<c:set var="totCoWrk" value="" />
+		<c:set var="totYrlyWrk" value="" />
+		<c:set var="totClsWrk" value="" />
+		<c:set var="unitName" value="" />
+						
+		<c:set var="grndtotWrk" value="" />
+		<c:set var="grndtotOnWrk" value="" />
+		<c:set var="grndtotCoWrk" value="" />
+		<c:set var="grndtotYrlyWrk" value="" />
+		<c:set var="grndtotClsWrk" value="" />
+		
+	 <c:if test="${dataListact != null}">
+	 				
+	 	<c:forEach items="${dataListact}" var="dataListSh">
+	
+			<c:if test="${countHead == 0}">
+				<c:set var="countHead" value="1" />
+				<c:set var="headOld" value="${dataListSh[2]}" />
+			</c:if>
+
+			<c:if test="${headOld != dataListSh[2]}">
+				<c:set var="headYrSum" value="0" />
+				
+				<c:set var="countHead" value="${countHead + 1}" />
+				<c:set var="headOld" value="${dataListSh[2]}" />
+				<c:set var="keyPlc" value="${keyPlc + 1}" />
+			</c:if>
+			
+			<c:if test="${dataListSh[1] != null}">
+						<c:if test="${headVal != dataListSh[0]}">
+							<c:if test="${hdCount != 1 && dataListSh[0] lt 9}">
+							<tr>
+							<th colspan ="2" class="text-center">Sub-Total</th>
+							<%-- <c:if test = "${unitName eq 'ha' }">
+							<th class="text-right"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${totPhyTar}"/></th>
+							<th class="text-right"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${totPhyAch}"/></th>
+							</c:if>
+							<c:if test = "${unitName eq 'nos' }">
+							<th class="text-right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${totPhyTar}"/></th>
+							<th class="text-right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${totPhyAch}"/></th>
+							</c:if>
+							<th class="text-right"><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${(totPhyAch*100)/totPhyTar}"/>%</th> --%>
+							<th class="text-right"><c:out value="${totWrk}"/></th>
+							<th class="text-right"><c:out value="${totOnWrk}"/></th>
+							<th class="text-right"><c:out value="${totCoWrk}"/></th>
+							<th class="text-right"><c:out value="${totYrlyWrk}"/></th>
+							<th class="text-right"><c:out value="${totClsWrk}"/></th>
+							</tr>
+							</c:if>
+								<c:set var="totPhyTar" value="" />
+								<c:set var="totPhyAch" value="" />
+								<c:set var="totWrk" value="" />
+								<c:set var="totOnWrk" value="" />
+								<c:set var="totCoWrk" value="" />
+								<c:set var="totYrlyWrk" value="" />
+								<c:set var="totClsWrk" value="" />
+							<tr>
+								<td class="altrow">
+								<SPAN>
+								<c:out value="${dataListSh[1]}" /> 
+								</SPAN> 
+								<br> 
+								<c:set	var="headVal" value="${dataListSh[0]}" /> 
+								<c:set  var="hdCount" value="${hdCount + 1}" /> 
+								<c:set var="actCount" value="1" /> 
+								<c:set var="subActCount" value="1" />
+								</td>
+								<!-- <td></td>
+								<td></td>
+								<td></td> -->
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						</c:if>
+						
+						<c:if test="${actVal != dataListSh[2]}">
+							<tr>
+								<td class="altrow">
+									<span style="padding-left: 20px;">
+										<c:out value="${dataListSh[3]}" /> 
+									</span> 
+									<br>
+									<c:set var="actVal" value="${dataListSh[2]}" />
+									<c:set var="actCount" value="${actCount + 1}" />
+								</td>
+								<td class="altrow">
+									<c:out value="${dataListSh[4]}" />
+								</td>
+									
+								<%-- <td align="right"> 
+									<c:if test="${dataListSh[4]=='nos'}"> 
+										<fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataListSh[5]}"/>
+									</c:if>
+									<c:if test="${dataListSh[4]!='nos'}"> 
+										<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${dataListSh[5]}"/>
+									</c:if>
+								</td>
+								<td align="right">
+									<c:if test="${dataListSh[4]=='nos'}"> 
+										<fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataListSh[6]}"/>
+									</c:if>
+									<c:if test="${dataListSh[4]!='nos'}"> 
+										<fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${dataListSh[6]}"/>
+									</c:if>
+								</td>
+								<td align="right">
+									<c:out value="${dataListSh[11]}" /><b>%</b>
+								</td> --%>
+								<td align="right">
+									<c:out value="${dataListSh[5]}" />
+								</td>
+								<td align="right">
+									<c:out value="${dataListSh[6]}" />
+								</td>
+								<td align="right">
+									<c:out value="${dataListSh[7]}" />
+								</td>
+								<td align="right">
+									<c:out value="${dataListSh[8]}" />
+								</td>
+								<td align="right">
+									<c:out value="${dataListSh[9]}" />
+								</td>
+								<c:set var="unitName" value="${dataListSh[4]}" />
+							<%-- 	<c:set var="totPhyTar" value="${totPhyTar + dataListSh[5]}" />
+								<c:set var="totPhyAch" value="${totPhyAch + dataListSh[6]}" /> --%>
+								<c:set var="totWrk" value="${totWrk + dataListSh[5]}" />
+								<c:set var="totOnWrk" value="${totOnWrk + dataListSh[6]}" />
+								<c:set var="totCoWrk" value="${totCoWrk + dataListSh[7]}" />
+								<c:set var="totYrlyWrk" value="${totYrlyWrk + dataListSh[8]}" />
+								<c:set var="totClsWrk" value="${totClsWrk + dataListSh[9]}" />
+								
+						</c:if>
+							
+					</c:if>
+								<c:set var="grndtotWrk" value="${grndtotWrk + dataListSh[5]}" />
+								<c:set var="grndtotOnWrk" value="${grndtotOnWrk + dataListSh[6]}" />
+								<c:set var="grndtotCoWrk" value="${grndtotCoWrk + dataListSh[7]}" />
+								<c:set var="grndtotYrlyWrk" value="${grndtotYrlyWrk + dataListSh[8]}" />
+								<c:set var="grndtotClsWrk" value="${grndtotClsWrk + dataListSh[9]}" />
+	
+	</c:forEach>
+	 				
+	 				
+	 					</c:if>
+	 </c:if>
+    			
     	<c:if test="${dataListsize==0}">
 			<tr>
 				<td align="center" colspan="7" class="required" style="color:red;">Data Not Found</td>

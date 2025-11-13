@@ -1,5 +1,6 @@
 package app.bean;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class NRSCWorksBean {
@@ -37,12 +38,18 @@ public class NRSCWorksBean {
 	private String proj_name;
 	private int proj_id;
 	
-	private int createdwork;
-	private int startedwork;
-	private int ongoing;
-	private int completed;
-	private int forclosed;
-	
+	private Integer createdwork;
+	private Integer startedwork;
+	private Integer ongoing;
+	private Integer completed;
+	private Integer forclosed;
+	private Integer head_code;
+	private String head_desc;
+	private BigDecimal seq_no;
+	private Integer activity_code;
+	private String activity_desc;
+	private BigDecimal aseq_no;
+	private String unitname;
 	
 	public String getSt_name() {
 		return st_name;
@@ -236,35 +243,78 @@ public class NRSCWorksBean {
 	public void setProj_id(int proj_id) {
 		this.proj_id = proj_id;
 	}
-	public int getCreatedwork() {
+	
+	public Integer getCreatedwork() {
 		return createdwork;
 	}
-	public void setCreatedwork(int createdwork) {
+	public void setCreatedwork(Integer createdwork) {
 		this.createdwork = createdwork;
 	}
-	public int getStartedwork() {
+	public Integer getStartedwork() {
 		return startedwork;
 	}
-	public void setStartedwork(int startedwork) {
+	public void setStartedwork(Integer startedwork) {
 		this.startedwork = startedwork;
 	}
-	public int getOngoing() {
+	public Integer getOngoing() {
 		return ongoing;
 	}
-	public void setOngoing(int ongoing) {
+	public void setOngoing(Integer ongoing) {
 		this.ongoing = ongoing;
 	}
-	public int getCompleted() {
+	public Integer getCompleted() {
 		return completed;
 	}
-	public void setCompleted(int completed) {
+	public void setCompleted(Integer completed) {
 		this.completed = completed;
 	}
-	public int getForclosed() {
+	public Integer getForclosed() {
 		return forclosed;
 	}
-	public void setForclosed(int forclosed) {
+	public void setForclosed(Integer forclosed) {
 		this.forclosed = forclosed;
+	}
+	public Integer getHead_code() {
+		return head_code;
+	}
+	public void setHead_code(Integer head_code) {
+		this.head_code = head_code;
+	}
+	public String getHead_desc() {
+		return head_desc;
+	}
+	public void setHead_desc(String head_desc) {
+		this.head_desc = head_desc;
+	}
+	public BigDecimal getSeq_no() {
+		return seq_no;
+	}
+	public void setSeq_no(BigDecimal seq_no) {
+		this.seq_no = seq_no;
+	}
+	public Integer getActivity_code() {
+		return activity_code;
+	}
+	public void setActivity_code(Integer activity_code) {
+		this.activity_code = activity_code;
+	}
+	public String getActivity_desc() {
+		return activity_desc;
+	}
+	public void setActivity_desc(String activity_desc) {
+		this.activity_desc = activity_desc;
+	}
+	public BigDecimal getAseq_no() {
+		return aseq_no;
+	}
+	public void setAseq_no(BigDecimal aseq_no) {
+		this.aseq_no = aseq_no;
+	}
+	public String getUnitname() {
+		return unitname;
+	}
+	public void setUnitname(String unitname) {
+		this.unitname = unitname;
 	}
 	
 	

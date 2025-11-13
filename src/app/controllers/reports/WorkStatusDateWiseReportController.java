@@ -105,6 +105,12 @@ public class WorkStatusDateWiseReportController {
 			String userdate= request.getParameter("userdate");
 			String userdateto= request.getParameter("userdateto");
 			String stName= request.getParameter("stName");
+			List<String[]> dataListact = new ArrayList<String[]>();
+			String str[] = null;
+			Integer headSeq=0;
+			List<Integer> headCode = new ArrayList<Integer>();
+			Integer activitySeq =1;
+			List<String> activityCode = new ArrayList<String>();
 			
 			List<NRSCWorksBean> list = new ArrayList<NRSCWorksBean>();
 			String fromDateStr=null;
@@ -131,9 +137,43 @@ public class WorkStatusDateWiseReportController {
 				int forclosed=0;
 				
 				
-				for(NRSCWorksBean bean: list) {
+				for(NRSCWorksBean bean: list) 
+				{
+					if(Integer.parseInt(userState)>0) 
+					{
+						str = new String[13];
+						if(!headCode.contains(bean.getHead_code()) && activityCode.contains(bean.getHead_code()+"."+bean.getActivity_code())) 
+						{
+							headCode.add(bean.getHead_code());
+							headSeq++;
+						}
+						if(!headCode.contains(bean.getHead_code()) && !activityCode.contains(bean.getHead_code()+"."+bean.getActivity_code())) 
+						{
+							headCode.add(bean.getHead_code());
+							activityCode.add(bean.getHead_code()+"."+bean.getActivity_code());
+							headSeq++;
+							activitySeq=1;
+						}
+						if(headCode.contains(bean.getHead_code()) && !activityCode.contains(bean.getHead_code()+"."+bean.getActivity_code())) 
+						{
+							activityCode.add(bean.getHead_code()+"."+bean.getActivity_code());
+							activitySeq++;
+						}
 					
-
+						str[0] = bean.getHead_code().toString();//"head_code"
+						str[1] = headSeq+". "+bean.getHead_desc();//"head_desc"
+						str[2] = bean.getActivity_code().toString();//"activity_code"
+						str[3] = headSeq+"."+activitySeq+" "+bean.getActivity_desc();//"activity_desc"
+						str[4] = bean.getUnitname();//"uom_code"
+						
+						str[5] = bean.getCreatedwork().toString();
+						str[6] = bean.getStartedwork().toString();
+						str[7] = bean.getOngoing().toString();
+						str[8] = bean.getCompleted().toString();
+						str[9] = bean.getForclosed().toString();
+						
+						dataListact.add(str);
+					}
 					createdwork = createdwork + bean.getCreatedwork();
 					startedwork = startedwork + bean.getStartedwork();
 					ongoing = ongoing + bean.getOngoing();
@@ -141,17 +181,20 @@ public class WorkStatusDateWiseReportController {
 					forclosed = forclosed + bean.getForclosed();
 					
 				}
-				
-				
 				mav.addObject("createdwork1", createdwork);
 				mav.addObject("startedwork1", startedwork);
 				mav.addObject("ongoing1", ongoing);
 				mav.addObject("completed1", completed);
 				mav.addObject("forclosed1", forclosed);
 				
-				mav.addObject("dataList", list);
-				mav.addObject("dataListSize", list.size());
-				
+				if(Integer.parseInt(userState)>0) {
+					mav.addObject("dataListact",dataListact);
+					mav.addObject("dataListSize",dataListact.size());
+				}
+				else {
+					mav.addObject("dataList", list);
+					mav.addObject("dataListSize", list.size());
+				}
 				mav.addObject("userdate", userdate);
 				mav.addObject("dateto", userdateto);
 				mav.addObject("fromDateStr", fromDateStr);

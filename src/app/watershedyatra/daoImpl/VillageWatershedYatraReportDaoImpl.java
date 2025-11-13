@@ -44,6 +44,8 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 		@Value("${getWorkStatusReport}")
 		String getWorkStatusReport;
 		
+		@Value("${getWorkStatusReportActivity}")
+		String getWorkStatusReportActivity;
 
 		@Override
 		public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
@@ -127,7 +129,7 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 			// TODO Auto-generated method stub
 			
 			String sql=getWorkStatusReport;
-			
+			String sqla=getWorkStatusReportActivity;
 			Date yadate =null;
 			Date yadateto =null;
 			Query query;
@@ -147,7 +149,12 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 					session.beginTransaction();
 					
 					if( !userdate.equals("") && !userdateto.equals("")) {
-						query= session.createSQLQuery(sql);
+						
+						if(State>0)
+							query= session.createSQLQuery(sqla);
+						else
+							query= session.createSQLQuery(sql);
+						
 						query.setInteger("statecd",State); 
 						query.setParameter("userdate",yadate);
 						query.setParameter("yadateto",yadateto);

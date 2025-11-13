@@ -28,7 +28,8 @@
 			},
 		});
 	});
-	function getValue(param1) {
+/*	function getValue() {
+		
 		var ap = document.getElementById("areaProposed");
 		var at = document.getElementById("iwmpMAreaType");//$("#iwmpDistrict["+param1+"]").val();
 		if (ap.value != "" && at.value > 0) {
@@ -56,7 +57,48 @@
 				}
 			})
 		}
+	};  */
+	
+	function getValue() {
+	    const ap = document.getElementById("areaProposed");
+	    const at = document.getElementById("iwmpMAreaType");
+
+	    if (ap && at && ap.value.trim() !== "" && parseInt(at.value) > 0) {
+	        const pc = document.getElementById("projectCost");
+	        const csa = document.getElementById("centralShareAmt");
+	        const ssa = document.getElementById("stateShareAmt");
+
+	        $.ajax({
+	        	
+	        	url: 'onChange',
+	            type: 'POST',
+	            data: {
+	                ap: ap.value.trim(),
+	                at: at.value
+	            },
+	            error:function(xhr,status,er){
+	                console.log(er);
+					$('.error').append(' There is some error please try again !');
+	            },	
+	            success: function(data) {
+	                if (Array.isArray(data) && data.length >= 3) {
+	                    if (pc) pc.value = data[0];
+	                    if (csa) csa.value = data[1];
+	                    if (ssa) ssa.value = data[2];
+	                } 
+	                else {
+	                    console.warn("Unexpected response format:", data);
+	                }
+	            }
+	            
+	        });
+	    }
 	};
+
+	
+	
+	
+	
 </script>
 </head>
 <body>
