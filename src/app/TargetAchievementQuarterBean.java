@@ -43,7 +43,14 @@ public class TargetAchievementQuarterBean {
 	private String proj_name;
 	
 	private BigDecimal degradedper;
+	private BigDecimal spring_reju_achiev;
 	
+	public BigDecimal getSpring_reju_achiev() {
+		return spring_reju_achiev;
+	}
+	public void setSpring_reju_achiev(BigDecimal spring_reju_achiev) {
+		this.spring_reju_achiev = spring_reju_achiev;
+	}
 	public Integer getDcode() {
 		return dcode;
 	}

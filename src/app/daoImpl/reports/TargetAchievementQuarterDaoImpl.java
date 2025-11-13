@@ -49,6 +49,21 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	@Value("${allQuarterofYearData}") 
 	String allQuarterofYearData;
 	
+	@Value("${firstQuarterofAboveYear}") 
+	String firstQuarterofAboveYear;
+	
+	@Value("${secondQuarterofAboveYear}") 
+	String secondQuarterofAboveYear;
+	
+	@Value("${thirdQuarterofAboveYear}") 
+	String thirdQuarterofAboveYear;
+	
+	@Value("${fourQuarterofAboveYear}") 
+	String fourQuarterofAboveYear;
+	
+	@Value("${allQuarterofAboveYearData}") 
+	String allQuarterofAboveYearData;
+	
 	@Value("${firstQuarterDistWiseStartingYear}") 
 	String firstQuarterDistWiseStartingYear;
 	
@@ -67,6 +82,21 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	
 	@Value("${allQuarterDistWiseYearData}") 
 	String allQuarterDistWiseYearData;
+	
+	@Value("${firstQuarterDistWiseAboveYear}") 
+	String firstQuarterDistWiseAboveYear;
+	
+	@Value("${secondQuarterDistWiseAboveYear}") 
+	String secondQuarterDistWiseAboveYear;
+	
+	@Value("${thirdQuarterDistWiseAboveYear}") 
+	String thirdQuarterDistWiseAboveYear;
+	
+	@Value("${fourQuarterDistWiseAboveYear}") 
+	String fourQuarterDistWiseAboveYear;
+	
+	@Value("${allQuarterDistWiseAboveYearData}") 
+	String allQuarterDistWiseAboveYearData;
 	
 	@Value("${statefinyrWiseExpenditure}") 
 	String statefinyrWiseExpenditure;
@@ -104,6 +134,21 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 	@Value("${allQuarterProjectWiseYearData}") 
 	String allQuarterProjectWiseYearData;
 	
+	@Value("${firstQuarterProjectWiseAboveYear}") 
+	String firstQuarterProjectWiseAboveYear;
+	
+	@Value("${secondQuarterProjectWiseAboveYear}") 
+	String secondQuarterProjectWiseAboveYear;
+	
+	@Value("${thirdQuarterProjectWiseAboveYear}") 
+	String thirdQuarterProjectWiseAboveYear;
+	
+	@Value("${fourQuarterProjectWiseAboveYear}") 
+	String fourQuarterProjectWiseAboveYear;
+	
+	@Value("${allQuarterProjectWiseAboveYearData}") 
+	String allQuarterProjectWiseAboveYearData;
+	
 	@Override
 	public List<IwmpMFinYear> getFinancialYearonward21() {
 		
@@ -130,117 +175,171 @@ public class TargetAchievementQuarterDaoImpl implements TargetAchievementQuarter
 			
 			  @SuppressWarnings("unused")
 			  Transaction tx = session.beginTransaction(); 
-			 
-			  	if(qtr==1) 
-			  	{   int i=4, j=5, k=6;
-			  		String qtr1="20"+year+"-04-01";
-					String qtr2="20"+year+"-07-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(qtr2);
-					hql=firstQuarterStartingYear;
-					query = session.createSQLQuery(hql);
-					query.setInteger("stcd", state);
-					query.setInteger("finyr", year);
-				//	query.setDate("quarter1", date1);
-					query.setDate("quarter2", date2);
-				//	query.setInteger("im", i);
-				//	query.setInteger("jm", j);
-				//	query.setInteger("km", k);
-			  	}	
-				/*
-				 * if(qtr==1 && year > 22) {
-				 * 
-				 * int i=4, j=5, k=6; String qtr1= "20"+year+"-04-01"; String qtr2=
-				 * "20"+year+"-07-01"; Date date1=Date.valueOf(qtr1); Date
-				 * date2=Date.valueOf(qtr2); hql=firstQuarterStartingNextYear; query
-				 * =session.createSQLQuery(hql); // query.setInteger("stcd", state);
-				 * query.setInteger("finyr", year); query.setDate("quarter1", date1);
-				 * query.setDate("quarter2", date2); // query.setInteger("im", i); //
-				 * query.setInteger("jm", j); // query.setInteger("km", k);
-				 * 
-				 * }
-				 */
-				if(qtr==2) {
-					int i=7, j=8, k=9;
-					String qtr1= "20"+year+"-07-01";
-					String qtr2= "20"+year+"-10-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(qtr2);
-					hql=secondQuarterStartingYear; 
-					query =session.createSQLQuery(hql); 
-					query.setInteger("stcd", state);
-					query.setInteger("finyr", year);
-				//	query.setDate("quarter1", date1);
-					query.setDate("quarter2", date2);
-				//	query.setInteger("im", i);
-				//	query.setInteger("jm", j);
-				//	query.setInteger("km", k);
-				}
-				if(qtr==3) {
-					int i=10, j=11, k=12;
-					String qtr1= "20"+year+"-10-01";
-					String qtr2= "20"+(year+1)+"-01-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(qtr2);
-					hql=thirdQuarterStartingYear; 
-					query =session.createSQLQuery(hql); 
-					query.setInteger("stcd", state);
-					query.setInteger("finyr", year);
-				//	query.setDate("quarter1", date1);
-					query.setDate("quarter2", date2);
-				//	query.setInteger("im", i);
-				//	query.setInteger("jm", j);
-				//	query.setInteger("km", k);
-				}
-				if(qtr==4) {
-					int i=1, j=2, k=3;
-					String qtr1= "20"+(year+1)+"-01-01";
-					String qtr2= "20"+(year+1)+"-04-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(qtr2);
-					hql=fourQuarterStartingYear; 
-					query =session.createSQLQuery(hql); 
-					query.setInteger("stcd", state);
-					query.setInteger("finyr", year);
-				//	query.setDate("quarter1", date1);
-					query.setDate("quarter2", date2);
-				//	query.setInteger("im", i);
-				//	query.setInteger("jm", j);
-				//	query.setInteger("km", k);
-				}
-				if(year>0 && qtr==5) {
-					
-					List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop where fin_yr_cd="+year).list();
-					list.get(0).toString();
-					
-					String qtr1= "20"+year+"-04-01";
-					//String qtr2= "20"+(year+1)+"-04-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(list.get(0).toString());
-					hql=allQuarterofYearData; 
-					query =session.createSQLQuery(hql); 
-					query.setInteger("stcd", state);
-					query.setInteger("finyr", year);
-					//query.setDate("quarter1", date1);
-					//query.setDate("quarter2", date2);
-				}
-				if(year==0 && qtr==5) {
-					
-					List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop").list();
-					list.get(0).toString();
-					
-					String qtr1= "2022-04-01";
-					//String qtr2= "2024-01-01";
-					Date date1=Date.valueOf(qtr1);
-					Date date2=Date.valueOf(list.get(0).toString());
-					hql=allQuarterAllYearData; 
-					query =session.createSQLQuery(hql); 
-					query.setInteger("stcd", state);
-				//	query.setInteger("finyr", year);
-				//	query.setDate("quarter1", date1);
-				//	query.setDate("quarter2", date2);
-					
-				}
+			  if(year >24) {
+				  if(qtr==1) 
+				  	{
+				  		String qtr1="20"+year+"-04-01";
+						String qtr2="20"+year+"-07-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=firstQuarterofAboveYear;
+						query = session.createSQLQuery(hql);
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+						query.setDate("quarter1", date2);
+				  	}	
+					if(qtr==2) {
+						String qtr1= "20"+year+"-07-01";
+						String qtr2= "20"+year+"-10-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=secondQuarterofAboveYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+						query.setDate("quarter2", date2);
+					}
+					if(qtr==3) {
+						String qtr1= "20"+year+"-10-01";
+						String qtr2= "20"+(year+1)+"-01-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=thirdQuarterofAboveYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+						query.setDate("quarter3", date2);
+					}
+					if(qtr==4) {
+						String qtr1= "20"+(year+1)+"-01-01";
+						String qtr2= "20"+(year+1)+"-04-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=fourQuarterofAboveYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+						query.setDate("quarter4", date2);
+					}
+					if(year>0 && qtr==5) {
+						hql=allQuarterofAboveYearData; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+					}
+			  }else {
+				  if(qtr==1) 
+				  	{   int i=4, j=5, k=6;
+				  		String qtr1="20"+year+"-04-01";
+						String qtr2="20"+year+"-07-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=firstQuarterStartingYear;
+						query = session.createSQLQuery(hql);
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+					//	query.setDate("quarter1", date1);
+						query.setDate("quarter2", date2);
+					//	query.setInteger("im", i);
+					//	query.setInteger("jm", j);
+					//	query.setInteger("km", k);
+				  	}	
+					/*
+					 * if(qtr==1 && year > 22) {
+					 * 
+					 * int i=4, j=5, k=6; String qtr1= "20"+year+"-04-01"; String qtr2=
+					 * "20"+year+"-07-01"; Date date1=Date.valueOf(qtr1); Date
+					 * date2=Date.valueOf(qtr2); hql=firstQuarterStartingNextYear; query
+					 * =session.createSQLQuery(hql); // query.setInteger("stcd", state);
+					 * query.setInteger("finyr", year); query.setDate("quarter1", date1);
+					 * query.setDate("quarter2", date2); // query.setInteger("im", i); //
+					 * query.setInteger("jm", j); // query.setInteger("km", k);
+					 * 
+					 * }
+					 */
+					if(qtr==2) {
+						int i=7, j=8, k=9;
+						String qtr1= "20"+year+"-07-01";
+						String qtr2= "20"+year+"-10-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=secondQuarterStartingYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+					//	query.setDate("quarter1", date1);
+						query.setDate("quarter2", date2);
+					//	query.setInteger("im", i);
+					//	query.setInteger("jm", j);
+					//	query.setInteger("km", k);
+					}
+					if(qtr==3) {
+						int i=10, j=11, k=12;
+						String qtr1= "20"+year+"-10-01";
+						String qtr2= "20"+(year+1)+"-01-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=thirdQuarterStartingYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+					//	query.setDate("quarter1", date1);
+						query.setDate("quarter2", date2);
+					//	query.setInteger("im", i);
+					//	query.setInteger("jm", j);
+					//	query.setInteger("km", k);
+					}
+					if(qtr==4) {
+						int i=1, j=2, k=3;
+						String qtr1= "20"+(year+1)+"-01-01";
+						String qtr2= "20"+(year+1)+"-04-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(qtr2);
+						hql=fourQuarterStartingYear; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+					//	query.setDate("quarter1", date1);
+						query.setDate("quarter2", date2);
+					//	query.setInteger("im", i);
+					//	query.setInteger("jm", j);
+					//	query.setInteger("km", k);
+					}
+					if(year>0 && qtr==5) {
+						
+						List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop where fin_yr_cd="+year).list();
+						list.get(0).toString();
+						
+						String qtr1= "20"+year+"-04-01";
+						//String qtr2= "20"+(year+1)+"-04-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(list.get(0).toString());
+						hql=allQuarterofYearData; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+						query.setInteger("finyr", year);
+						//query.setDate("quarter1", date1);
+						//query.setDate("quarter2", date2);
+					}
+					if(year==0 && qtr==5) {
+						
+						List list = session.createSQLQuery("select max(quarter) from insert_ommf_diversified_nilsingto_doubmulcrop").list();
+						list.get(0).toString();
+						
+						String qtr1= "2022-04-01";
+						//String qtr2= "2024-01-01";
+						Date date1=Date.valueOf(qtr1);
+						Date date2=Date.valueOf(list.get(0).toString());
+						hql=allQuarterAllYearData; 
+						query =session.createSQLQuery(hql); 
+						query.setInteger("stcd", state);
+					//	query.setInteger("finyr", year);
+					//	query.setDate("quarter1", date1);
+					//	query.setDate("quarter2", date2);
+						
+					}
+			  }
+			  	
 				
 				query.setResultTransformer(Transformers.aliasToBean(TargetAchievementQuarterBean.class));
 				result = query.list();
@@ -467,7 +566,7 @@ return result;
 			  		String qtr2="20"+year+"-07-01";
 			  		Date date1=Date.valueOf(qtr1);
 			  		Date date2=Date.valueOf(qtr2);
-			  		hql=firstQuarterDistWiseStartingYear;
+			  		hql=year>24?firstQuarterDistWiseAboveYear:firstQuarterDistWiseStartingYear;
 			  		query = session.createSQLQuery(hql);
 			  		query.setInteger("stcd", state);
 			  		query.setInteger("finyr", year);
@@ -497,7 +596,7 @@ return result;
 					String qtr2= "20"+year+"-10-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=secondQuarterDistWiseStartingYear; 
+					hql=year>24?secondQuarterDistWiseAboveYear:secondQuarterDistWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("stcd", state);
 					query.setInteger("finyr", year);
@@ -515,7 +614,7 @@ return result;
 					String qtr2= "20"+(year+1)+"-01-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=thirdQuarterDistWiseStartingYear; 
+					hql=year>24?thirdQuarterDistWiseAboveYear:thirdQuarterDistWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("stcd", state);
 					query.setInteger("finyr", year);
@@ -533,7 +632,7 @@ return result;
 					String qtr2= "20"+(year+1)+"-04-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=fourQuarterDistWiseStartingYear; 
+					hql=year>24?fourQuarterDistWiseAboveYear:fourQuarterDistWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("stcd", state);
 					query.setInteger("finyr", year);
@@ -553,7 +652,7 @@ return result;
 					//String qtr2= "20"+(year+1)+"-04-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(list.get(0).toString());
-					hql=allQuarterDistWiseYearData; 
+					hql=year>24?allQuarterDistWiseAboveYearData:allQuarterDistWiseYearData; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("stcd", state);
 					query.setInteger("finyr", year);
@@ -679,7 +778,7 @@ return result;
 			  		String qtr2="20"+year+"-07-01";
 			  		Date date1=Date.valueOf(qtr1);
 			  		Date date2=Date.valueOf(qtr2);
-			  		hql=firstQuarterProjectWiseStartingYear;
+			  		hql=year>24?firstQuarterProjectWiseAboveYear:firstQuarterProjectWiseStartingYear;
 			  		query = session.createSQLQuery(hql);
 			  		query.setInteger("distcd", dist);
 			  		query.setInteger("finyr", year);
@@ -709,7 +808,7 @@ return result;
 					String qtr2= "20"+year+"-10-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=secondQuarterProjectWiseStartingYear; 
+					hql=year>24?secondQuarterProjectWiseAboveYear:secondQuarterProjectWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("distcd", dist);
 					query.setInteger("finyr", year);
@@ -727,7 +826,7 @@ return result;
 					String qtr2= "20"+(year+1)+"-01-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=thirdQuarterProjectWiseStartingYear; 
+					hql=year>24?thirdQuarterProjectWiseAboveYear:thirdQuarterProjectWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("distcd", dist);
 					query.setInteger("finyr", year);
@@ -745,7 +844,7 @@ return result;
 					String qtr2= "20"+(year+1)+"-04-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(qtr2);
-					hql=fourQuarterProjectWiseStartingYear; 
+					hql=year>24?fourQuarterProjectWiseAboveYear:fourQuarterProjectWiseStartingYear; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("distcd", dist);
 					query.setInteger("finyr", year);
@@ -765,7 +864,7 @@ return result;
 					//String qtr2= "20"+(year+1)+"-04-01";
 					Date date1=Date.valueOf(qtr1);
 					Date date2=Date.valueOf(list.get(0).toString());
-					hql=allQuarterProjectWiseYearData; 
+					hql=year>24?allQuarterProjectWiseAboveYearData:allQuarterProjectWiseYearData; 
 					query =session.createSQLQuery(hql); 
 					query.setInteger("distcd", dist);
 					query.setInteger("finyr", year);

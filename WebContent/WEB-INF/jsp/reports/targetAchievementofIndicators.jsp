@@ -276,7 +276,7 @@ function exportExcel(state, year, quarter){
            <td>
               <select name="year" id="year"  required="required" onchange="updateQuarterOptions()">
                		<!-- <option value="">--Select--</option> -->
-              		 <option value="0">--All---</option>
+              		 <option value="">--Select---</option>
 						  <c:if test="${not empty financialYear}">
                					<c:forEach items="${financialYear}" var="lists">
                					<c:if test="${lists.finYrCd eq year}">
@@ -337,6 +337,7 @@ function exportExcel(state, year, quarter){
 <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}','${year}','${quarter}')" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 </c:if>
+<c:if test="${year == null || year < 25}">
 <table id="tblReport" cellspacing="0" class="table" width="auto">
   <thead>
 	 <tr> 
@@ -364,13 +365,13 @@ function exportExcel(state, year, quarter){
       <th style="text-align:center" >Area of degraded land covered/Rainfed area developed</th>
       <th style="text-align:center" >Area covered with soil and moisture conservation activities</th>
       <th style="text-align:center" >Area brought under plantation (Afforestation/Horticulture)</th>
-      <th style="text-align:center" >No. of water harvesting structure (created/renovated)</th>
-      <th style="text-align:center" >No. of farmers benefited</th>
+      <th style="text-align:center" >Number of water harvesting structure (created/renovated)</th>
+      <th style="text-align:center" >Number of farmers benefited</th>
       <th style="text-align:center" >Area brought under protective irrigation (created/renovated)</th>
-      <th style="text-align:center" >No. of man-days generated</th>
+      <th style="text-align:center" >Number of man-days generated</th>
       <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
-      <th style="text-align:center" >Increase in cropped area</th>
+      <th style="text-align:center" >Increase in gross cropped area</th>
       <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>
       <th style="text-align:center" >% Area  developed under degraded/ rainfed </th>
       
@@ -575,7 +576,115 @@ function exportExcel(state, year, quarter){
     
   </tbody>
 </table>
-   
+</c:if>
+
+<c:if test="${year > 24}">
+<table id="tblReport" cellspacing="0" class="table" width="auto">
+  <thead>
+	 <tr> 
+	 	<th colspan="6" style="text-align:left; ">State : ${stName} &emsp; Financial Year : ${finName} &emsp; Quarter : ${quartename}  </th>
+		<th colspan="6" style="text-align:right; ">All Area in Ha.  </th>
+	</tr>
+    <tr>
+      <th style="text-align:center; vertical-align: middle;">S.No.</th>
+      <th style="text-align:center; vertical-align: middle;">State Name</th> 
+      <th style="text-align:center" >Area of degraded land covered/Rainfed area developed</th>
+      <th style="text-align:center" >Area covered with soil and moisture conservation activities</th>
+      <th style="text-align:center" >Area brought under plantation (Afforestation/Horticulture)</th>
+      <th style="text-align:center" >Number of water harvesting structure (created/renovated)</th>
+      <th style="text-align:center" >Number of farmers benefited</th>
+      <th style="text-align:center" >Area brought under protective irrigation (created/renovated)</th>
+      <th style="text-align:center" >Number of springs rejuvenated</th>
+      <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
+      <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
+      <th style="text-align:center" >Increase in gross cropped area</th>
+     </tr>
+  </thead>
+
+  <tbody>
+     <tr>
+		<th class="text-center">1</th>
+		<th class="text-center">2</th>
+		<th class="text-center">3</th>
+		<th class="text-center">4</th>
+		<th class="text-center">5</th>
+		<th class="text-center">6</th>
+		<th class="text-center">7</th>
+		<th class="text-center">8</th>
+		<th class="text-center">9</th>
+		<th class="text-center">10</th>
+		<th class="text-center">11</th>
+		<th class="text-center">12</th>
+		
+	</tr>
+	 
+	 <c:if test="${dataList != null}">
+		
+		<c:forEach items="${dataList}" var="dataV" varStatus="status">
+		<tr>	
+		
+			<td><c:out value='${dataV[0]}' /></td>
+			<td><a href="getDistWiseQuarterReport?state=${dataV[1]}&year=${year}&quarter=${quarter}&stName=<c:out value='${dataV[2]}' />&finName=${finName}&quartename=${quartename}"><c:out value='${dataV[2]}' /></a></td>
+		
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[16]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[4]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[6]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataV[8]}"/></td>
+			
+			<td align="right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataV[10]}"/></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[12]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataV[26]}"/></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[18]}' /></fmt:formatNumber></td>
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[20]}' /></fmt:formatNumber></td> 
+			
+			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[22]}' /></fmt:formatNumber></td>
+			
+		</tr>		
+		</c:forEach>
+		<c:if test="${dataListsize!=0}">
+	 	<c:forEach items="${dataListNetTotal}" var="netTotal" varStatus="seqTotal">
+			<tr>
+			<td class="table-primary"></td>
+				<td align="right" class="table-primary" ><b>Grand Total </b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[13]}' /></fmt:formatNumber> </b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[1]}' /></fmt:formatNumber> </b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[3]}' /></fmt:formatNumber> </b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${netTotal[5]}"/></b></td>
+				
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${netTotal[7]}"/></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[9]}' /></fmt:formatNumber> </b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${netTotal[23]}"/></b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[15]}' /></fmt:formatNumber></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[17]}' /></fmt:formatNumber></b></td>
+				
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[19]}' /></fmt:formatNumber></b></td>
+
+			</tr>
+	</c:forEach> 
+	</c:if>
+    </c:if>
+    	<c:if test="${dataListsize==0}">
+			<tr>
+				<td align="center" colspan="14" class="required" style="color:red;">Data Not Found</td>
+			</tr>
+		</c:if>
+    
+  </tbody>
+</table>
+</c:if>
+
 <br/>  
         </div>
         </div>

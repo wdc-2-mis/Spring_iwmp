@@ -156,16 +156,18 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
       <th style="text-align:center" >Area of degraded land covered/Rainfed area developed</th>
       <th style="text-align:center" >Area covered with soil and moisture conservation activities</th>
       <th style="text-align:center" >Area brought under plantation (Afforestation/Horticulture)</th>
-      <th style="text-align:center" >No. of water harvesting structure created/renovated</th>
+      <th style="text-align:center" >Number of water harvesting structure created/renovated</th>
     
-      <th style="text-align:center" >No. of farmers benefitted</th>
+      <th style="text-align:center" >Number of farmers benefitted</th>
       <th style="text-align:center" >Area brought under protective irrigation</th>
-      <th style="text-align:center" >No. of man-days generated</th>
+      <th style="text-align:center" ><c:out value ="${year > 24?'Number of springs rejuvenated': 'Number of man-days generated' }"/></th>
       <th style="text-align:center" >Additional area brought under diversified crops/change in cropping system</th>
       <th style="text-align:center" >Area brought from no crop/single crop to single/multiple crop</th>
-      <th style="text-align:center" >Increase in cropped area</th>
-      <th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
-      <th style="text-align:center" >% Area  developed under degraded/ rainfed</th>
+      <th style="text-align:center" >Increase in gross cropped area</th>
+      <c:if test = "${year <25}">
+      	<th style="text-align:center" >Average Increase in farmers income (<b>%</b>)</th>      
+      	<th style="text-align:center" >% Area  developed under degraded/ rainfed</th>
+      </c:if>
      </tr>
   
 
@@ -228,8 +230,10 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 		<th class="text-center">10</th>
 		<th class="text-center">11</th>
 		<th class="text-center">12</th>
-		<th class="text-center">13</th>
-		<th class="text-center">14</th>
+		<c:if test = "${year <25}">
+			<th class="text-center">13</th>
+			<th class="text-center">14</th>
+		</c:if>
 		<!-- <th class="text-center">15</th>
 		<th class="text-center">16</th>
 		<th class="text-center">17</th>
@@ -264,7 +268,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[12]}' /></fmt:formatNumber></td>
 			
-			<td align="right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${dataV[14]}"/></td>
+			<td align="right"><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${year>24?dataV[26]:dataV[14]}"/></td>
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[18]}' /></fmt:formatNumber></td>
 			
@@ -272,9 +276,12 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 			
 			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[22]}' /></fmt:formatNumber></td>
 			
-			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[24]}' /></fmt:formatNumber></td> 
+			<c:if test = "${year <25}">
 			
-			<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[25]}' /></fmt:formatNumber></td> 
+				<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[24]}' /></fmt:formatNumber></td> 
+			
+				<td align="right"><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${dataV[25]}' /></fmt:formatNumber></td> 
+			</c:if>
 			
 			<%-- <td><c:out value='${dataV[0]}' /></td>
 			<td><c:out value='${dataV[2]}' /></td>
@@ -329,18 +336,18 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${netTotal[7]}"/></b></td>
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[9]}' /></fmt:formatNumber> </b></td>
 				
-				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${netTotal[11]}"/></b></td>
+				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" maxFractionDigits="0" minFractionDigits="0" value="${year>24?netTotal[23]:netTotal[11]}"/></b></td>
 				
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[15]}' /></fmt:formatNumber> </b></td>
 				
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[17]}' /></fmt:formatNumber> </b></td>
 			
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[19]}' /></fmt:formatNumber> </b></td>
+				<c:if test = "${year <25}">
+					<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/noofdistrict}' /></fmt:formatNumber> </b></td> 
 				
-				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/noofdistrict}' /></fmt:formatNumber> </b></td> 
-				
-				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[22]/noofdistrict}' /></fmt:formatNumber> </b></td>
-				
+					<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[22]/noofdistrict}' /></fmt:formatNumber> </b></td>
+				</c:if>
 				
 				
 				<%-- <td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[12]}' /></fmt:formatNumber> </b></td> 
@@ -380,7 +387,7 @@ function exportExcel(state, year, quarter,stName,finName,quartename)
     </c:if>
     	<c:if test="${distWiseDataListsize==0}">
 			<tr>
-				<td align="center" colspan="14" class="required" style="color:red;">Data Not Found</td>
+				<td align="center" colspan=<c:out value ="${year>24?12:14}"/> class="required" style="color:red;">Data Not Found</td>
 			</tr>
 		</c:if>
     
