@@ -12,11 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
+import app.mahotsav.bean.InaugurationMahotsavBean;
+import app.mahotsav.service.WatershedMahotsavInaugurationService;
 import app.service.ProfileService;
 import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.service.WatershedYatraService;
@@ -32,12 +35,16 @@ public class WMInaugurationController {
 	@Autowired(required = true)
 	ProfileService profileService;
 	
+	@Autowired
+	WatershedMahotsavInaugurationService iSer;
+	
 	@RequestMapping(value="/registerInauguration", method = RequestMethod.GET)
 	public ModelAndView registerInauguration(HttpServletRequest request, HttpServletResponse response)
 	{
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
-		
+	//	long timeBasedId = System.currentTimeMillis();
+
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 				mav = new ModelAndView("mahotsav/mahotsavinauguration");
@@ -73,20 +80,27 @@ public class WMInaugurationController {
 	}
 	
 	
-	@RequestMapping(value = "/saveWMInaugurationDetails", method = RequestMethod.POST)
-	public ModelAndView saveInaugurationDetails(HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") InaugurationBean userfileup)
+	@RequestMapping(value = "/saveMahotsavInaugurationDetails", method = RequestMethod.POST)
+	public ModelAndView saveMahotsavInaugurationDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") InaugurationMahotsavBean userfileup)
 			throws Exception {
 
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		String result = "fail";
-
+		List<String> imageNames = new ArrayList<>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 
-				mav = new ModelAndView("WatershedYatra/inauguration");
+				mav = new ModelAndView("mahotsav/mahotsavinauguration");
 
+				/*
+				 * for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) { if
+				 * (!image.isEmpty()) { String fileName = image.getOriginalFilename();
+				 * System.out.println("kdy="+fileName); imageNames.add(fileName); } }
+				 * 
+				 */
+				
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 				String userType = session.getAttribute("userType").toString();
@@ -103,13 +117,13 @@ public class WMInaugurationController {
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
 				}
-
+				
 				mav.addObject("userType", userType);
 				// mav.addObject("distName",distName);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 
-//				result = iSer.saveInauguration(userfileup, session);
+				result = iSer.saveMahotsavInaugurationDetails(userfileup, session);
 
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
@@ -120,7 +134,7 @@ public class WMInaugurationController {
 				else {
 					redirectAttributes.addFlashAttribute("result1", "Data not saved Successfully!");
 				}
-				return new ModelAndView("redirect:/inaugurationLocation");
+				return new ModelAndView("redirect:/registerInauguration");
 			} else {
 				return new ModelAndView("redirect:/login");
 
