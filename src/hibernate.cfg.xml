@@ -105,6 +105,9 @@
         <mapping class="app.mahotsav.model.WatershedMahotsavMediaMaster" />
         <mapping class="app.mahotsav.model.WatershedMahotsavRegistration" />
         <mapping class="app.mahotsav.model.WatershedMahotsavVideoDetails" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavInauguarationActivityMaster" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavInauguaration" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavInauguarationActPhoto" />
         
         
 	</session-factory>
