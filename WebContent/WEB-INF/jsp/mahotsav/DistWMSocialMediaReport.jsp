@@ -19,7 +19,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 <div class="container mt-5">
     <c:if test="${not empty WMDList}">
         <div class="card shadow mt-4 p-4">
-            <h4 class="text-center text-primary mb-4">District-wise Social Media Information Report</h4>
+            <h4 class="text-center text-primary mb-4">District-wise Social Media Competition</h4>
             <div class="table-responsive">
             
                 <table class="table table-bordered table-striped">

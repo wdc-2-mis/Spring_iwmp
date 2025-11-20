@@ -45,7 +45,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
     <c:if test="${not empty WMList}">
         <div class="card shadow mt-4 p-4">
         
-            <h4 class="text-center text-primary mb-4">Social Media Information Report</h4>
+            <h4 class="text-center text-primary mb-4">State-wise Social Media Competition</h4>
 
             <div class="nav-item text-left mb-2">
             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel()"> Excel </button>
