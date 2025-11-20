@@ -24,23 +24,38 @@ public class InaugurationMahotsavBean {
     private Integer bhoomipoojan;
     private Integer no_works_bhoomipoojan;
     private List<MultipartFile> photos_bhoomipoojan;
+    private List<String> bhoomipoojan_lat;
+    private List<String> bhoomipoojan_lng;
+    private List<String> bhoomipoojan_time;
     
     private Integer lokarpan;
     private Integer no_works_lokarpan;
     private List<MultipartFile> photos_lokarpan;
+    private List<String> lokarpan_lat;
+    private List<String> lokarpan_lng;
+    private List<String> lokarpan_time;
     
     private Integer shramdaan;
     private Integer no_location_shramdaan;
     private Integer no_people_shramdaan;
     private List<MultipartFile> photos_shramdaan;
+    private List<String> shramdaan_lat;
+    private List<String> shramdaan_lng;
+    private List<String> shramdaan_time;
     
     private Integer forestry;
     private Integer area_plantation;
     private List<MultipartFile> photos_forestry;
+    private List<String> forestry_lat;
+    private List<String> forestry_lng;
+    private List<String> forestry_time;
     
     private Integer awarded;
     private Integer no_awards;
     private List<MultipartFile> photos_janbhagidari;
+    private List<String> janbhagidari_lat;
+    private List<String> janbhagidari_lng;
+    private List<String> janbhagidari_time;
     
     
     
@@ -217,6 +232,96 @@ public class InaugurationMahotsavBean {
 	}
 	public void setPhotos_janbhagidari(List<MultipartFile> photos_janbhagidari) {
 		this.photos_janbhagidari = photos_janbhagidari;
+	}
+	public List<String> getBhoomipoojan_lat() {
+		return bhoomipoojan_lat;
+	}
+	public void setBhoomipoojan_lat(List<String> bhoomipoojan_lat) {
+		this.bhoomipoojan_lat = bhoomipoojan_lat;
+	}
+	public List<String> getBhoomipoojan_lng() {
+		return bhoomipoojan_lng;
+	}
+	public void setBhoomipoojan_lng(List<String> bhoomipoojan_lng) {
+		this.bhoomipoojan_lng = bhoomipoojan_lng;
+	}
+	public List<String> getBhoomipoojan_time() {
+		return bhoomipoojan_time;
+	}
+	public void setBhoomipoojan_time(List<String> bhoomipoojan_time) {
+		this.bhoomipoojan_time = bhoomipoojan_time;
+	}
+	public List<String> getLokarpan_lat() {
+		return lokarpan_lat;
+	}
+	public void setLokarpan_lat(List<String> lokarpan_lat) {
+		this.lokarpan_lat = lokarpan_lat;
+	}
+	public List<String> getLokarpan_lng() {
+		return lokarpan_lng;
+	}
+	public void setLokarpan_lng(List<String> lokarpan_lng) {
+		this.lokarpan_lng = lokarpan_lng;
+	}
+	public List<String> getLokarpan_time() {
+		return lokarpan_time;
+	}
+	public void setLokarpan_time(List<String> lokarpan_time) {
+		this.lokarpan_time = lokarpan_time;
+	}
+	public List<String> getShramdaan_lat() {
+		return shramdaan_lat;
+	}
+	public void setShramdaan_lat(List<String> shramdaan_lat) {
+		this.shramdaan_lat = shramdaan_lat;
+	}
+	public List<String> getShramdaan_lng() {
+		return shramdaan_lng;
+	}
+	public void setShramdaan_lng(List<String> shramdaan_lng) {
+		this.shramdaan_lng = shramdaan_lng;
+	}
+	public List<String> getShramdaan_time() {
+		return shramdaan_time;
+	}
+	public void setShramdaan_time(List<String> shramdaan_time) {
+		this.shramdaan_time = shramdaan_time;
+	}
+	public List<String> getForestry_lat() {
+		return forestry_lat;
+	}
+	public void setForestry_lat(List<String> forestry_lat) {
+		this.forestry_lat = forestry_lat;
+	}
+	public List<String> getForestry_lng() {
+		return forestry_lng;
+	}
+	public void setForestry_lng(List<String> forestry_lng) {
+		this.forestry_lng = forestry_lng;
+	}
+	public List<String> getForestry_time() {
+		return forestry_time;
+	}
+	public void setForestry_time(List<String> forestry_time) {
+		this.forestry_time = forestry_time;
+	}
+	public List<String> getJanbhagidari_lat() {
+		return janbhagidari_lat;
+	}
+	public void setJanbhagidari_lat(List<String> janbhagidari_lat) {
+		this.janbhagidari_lat = janbhagidari_lat;
+	}
+	public List<String> getJanbhagidari_lng() {
+		return janbhagidari_lng;
+	}
+	public void setJanbhagidari_lng(List<String> janbhagidari_lng) {
+		this.janbhagidari_lng = janbhagidari_lng;
+	}
+	public List<String> getJanbhagidari_time() {
+		return janbhagidari_time;
+	}
+	public void setJanbhagidari_time(List<String> janbhagidari_time) {
+		this.janbhagidari_time = janbhagidari_time;
 	}
     
     

@@ -1,5 +1,6 @@
 package app.mahotsav.model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ public class WatershedMahotsavInauguarationActPhoto {
 	private Date updated_date;
     private String createdBy;
     private Date created_date;
+    private Timestamp photo_timestamp;
     
     public WatershedMahotsavInauguarationActPhoto() { }
     
@@ -146,6 +148,14 @@ public class WatershedMahotsavInauguarationActPhoto {
 
 	public void setCreated_date(Date created_date) {
 		this.created_date = created_date;
+	}
+	@Column(name="photo_timestamp")
+	public Timestamp getPhoto_timestamp() {
+		return photo_timestamp;
+	}
+
+	public void setPhoto_timestamp(Timestamp photo_timestamp) {
+		this.photo_timestamp = photo_timestamp;
 	}
     
     

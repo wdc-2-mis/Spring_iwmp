@@ -66,9 +66,9 @@ function addPhotoField1(btn) {
     div.innerHTML = `
         <input type="file" name="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat"/>
-        <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng"/>
-        <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time"/>
+        <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat[]"/>
+        <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng[]"/>
+        <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time[]"/>
     `;
 
     container.appendChild(div);
@@ -382,7 +382,7 @@ let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
 
 if (activityValue > 0 && totalPhotos < minPhotos) {
     errorDiv.innerHTML = `Please upload minimum ${minPhotos} photos.`;
-    alert(`Minimum ${minPhotos} photos required for this activity.`);
+    alert(`Minimum `+minPhotos+` photos required for this activity.`);
     allValid = false;
     return false;
 }
@@ -625,9 +625,9 @@ function getImageHash(file, callback) {
 			    <div class="photoContainer">
 			        <div class="d-flex align-items-center mb-1">
 			            <input type="file" name="photos_bhoomipoojan" id="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-			            <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat">
-		                <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng">
-		                <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time">
+			            <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat[]">
+		                <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng[]">
+		                <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time[]">
 			        </div>
 			    </div>
 			
