@@ -44,9 +44,9 @@ function addPhotoField(btn) {
     div.innerHTML = `
         <input type="file" name="photos_janbhagidari" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="janbhagidari_lat_${newIndex}" name="janbhagidari_lat" value="0"/>
-	    <input type="hidden" id="janbhagidari_lng_${newIndex}" name="janbhagidari_lng" value="0"/>
-	    <input type="hidden" id="janbhagidari_time_${newIndex}" name="janbhagidari_time" value="0"/>
+        <input type="hidden" id="photos_janbhagidari_lat" name="photos_janbhagidari_lat" value="0"/>
+	    <input type="hidden" id="photos_janbhagidari_lng" name="photos_janbhagidari_lng" value="0"/>
+	    <input type="hidden" id="photos_janbhagidari_time" name="photos_janbhagidari_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -68,9 +68,9 @@ function addPhotoField1(btn) {
     div.innerHTML = `
         <input type="file" name="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat"/>
-        <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng"/>
-        <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time"/>
+        <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value="0"/>
+        <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value="0"/>
+        <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -92,9 +92,9 @@ function addPhotoField2(btn) {
     div.innerHTML = `
         <input type="file" name="photos_lokarpan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="lokarpan_lat" name="lokarpan_lat"/>
-	    <input type="hidden" id="lokarpan_lng" name="lokarpan_lng"/>
-	    <input type="hidden" id="lokarpan_time" name="lokarpan_time"/>
+        <input type="hidden" id="photos_lokarpan_lat" name="photos_lokarpan_lat" value="0"/>
+	    <input type="hidden" id="photos_lokarpan_lng" name="photos_lokarpan_lng" value="0"/>
+	    <input type="hidden" id="photos_lokarpan_time" name="photos_lokarpan_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -116,9 +116,9 @@ function addPhotoField3(btn) {
     div.innerHTML = `
         <input type="file" name="photos_shramdaan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="shramdaan_lat" name="shramdaan_lat"/>
-	    <input type="hidden" id="shramdaan_lng" name="shramdaan_lng"/>
-	    <input type="hidden" id="shramdaan_time" name="shramdaan_time"/>
+        <input type="hidden" id="photos_shramdaan_lat" name="photos_shramdaan_lat" value="0"/>
+	    <input type="hidden" id="photos_shramdaan_lng" name="photos_shramdaan_lng" value="0"/>
+	    <input type="hidden" id="photos_shramdaan_time" name="photos_shramdaan_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -140,9 +140,9 @@ function addPhotoField4(btn) {
     div.innerHTML = `
         <input type="file" name="photos_forestry" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="forestry_lat" name="forestry_lat"/>
-	    <input type="hidden" id="forestry_lng" name="forestry_lng"/>
-	    <input type="hidden" id="forestry_time" name="forestry_time"/>
+        <input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value="0"/>
+	    <input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value="0"/>
+	    <input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -408,17 +408,20 @@ let imageRecords = {};
 
 // VALIDATE PHOTO
 function validatePhoto(input) {
-
+	let checkValid = true;
     const file = input.files[0];
     if (!file) return;
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
+  //  const requiredWidth = 300;
+  //  const requiredHeight = 400;
 
     // 1. Validate file type
     if (!allowedTypes.includes(file.type)) {
         alert("Invalid file type! Only JPEG or PNG images are allowed.");
         input.value = "";
+        checkValid = false;
         return;
     }
 
@@ -427,22 +430,40 @@ function validatePhoto(input) {
     if (sizeKB > maxSizeKB) {
         alert("Image size must be 300 KB or less.\nYour image size: " + Math.round(sizeKB) + " KB");
         input.value = "";
+        checkValid = false;
         return;
     }
+ // 3. Validate image dimensions
+    let reader = new FileReader();
+	reader.onload = function (e) {
+    let img = new Image();
+    img.onload = function () {
+        if (checkValid && (img.width !== requiredWidth || img.height !== requiredHeight)) {
+            alert(`Image dimensions must be ` +requiredWidth +` x `+ requiredHeight +` pixels.\nYour image: ` +img.width+` x `+img.height);
+            input.value = "";
+            checkValid = false;
+            return;
+        	}
+   	 	};
+    	img.src = e.target.result; // use base64 data URL from FileReader
+		};
+	reader.readAsDataURL(file);
 
-    // 3. Check duplicate image by hashing
+	 // 4. Check duplicate image by hashing
     getImageHash(file, function(hash) {
         if (imageRecords[file.name] === hash) {
             alert("This image is already uploaded! Please upload a different image.");
             input.value = "";
+            checkValid = false;
             return;
         }
-        imageRecords[file.name] = hash;
+        
 
         // 4. Check filename for special characters
         if (/[^\w.-]/.test(file.name)) {
             alert("Filename contains special characters! Please rename the file and upload again.");
             input.value = "";
+            checkValid = false;
             return;
         }
 
@@ -477,13 +498,17 @@ function validatePhoto(input) {
             if (lngInput) lngInput.value = longitude || "0";
             if (timeInput) timeInput.value = time || "0";
             
-           alert('kdy2='+latInput);
+          // alert('kdy2='+latInput);
            
             // 7. Warn if GPS or timestamp missing
             if (!latitude || !longitude || !time) {
                 if (!confirm("This photo does NOT contain GPS or timestamp information.\nDo you still want to upload?")) {
                     input.value = "";
+                    checkValid = false;
                 }
+            }
+            if(checkValid){
+            	imageRecords[file.name] = hash;
             }
         });
     });
@@ -697,9 +722,9 @@ function showPrevImage() {
     <div class="photoContainer">
         <div class="d-flex align-items-center mb-1">
             <input type="file" name="photos_lokarpan" id="photos_lokarpan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-            <input type="hidden" id="lokarpan_lat" name="lokarpan_lat">
-		    <input type="hidden" id="lokarpan_lng" name="lokarpan_lng">
-		    <input type="hidden" id="lokarpan_time" name="lokarpan_time">
+            <input type="hidden" id="photos_lokarpan_lat" name="photos_lokarpan_lat" value="0"/>
+		    <input type="hidden" id="photos_lokarpan_lng" name="photos_lokarpan_lng" value="0"/>
+		    <input type="hidden" id="photos_lokarpan_time" name="photos_lokarpan_time" value="0"/>
         </div>
     </div>
 
@@ -720,7 +745,7 @@ function showPrevImage() {
      		<td>Number of Locations<br><input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>No. of people participated<br><input type="text" id="no_people_shramdaan" name="no_people_shramdaan" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /><br/> <br/>
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
 			<!-- Number of Man Hours<br><input type="text" id="man" name="man" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /> --></td>
 			<td>
@@ -731,9 +756,9 @@ function showPrevImage() {
     <div class="photoContainer">
         <div class="d-flex align-items-center mb-1">
             <input type="file" name="photos_shramdaan" id="photos_shramdaan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-            <input type="hidden" id="shramdaan_lat" name="shramdaan_lat">
-		    <input type="hidden" id="shramdaan_lng" name="shramdaan_lng">
-		    <input type="hidden" id="shramdaan_time" name="shramdaan_time">
+            <input type="hidden" id="photos_shramdaan_lat" name="photos_shramdaan_lat" value="0"/>
+		    <input type="hidden" id="photos_shramdaan_lng" name="photos_shramdaan_lng" value="0"/>
+		    <input type="hidden" id="photos_shramdaan_time" name="photos_shramdaan_time" value="0"/>
         </div>
     </div>
 
@@ -761,9 +786,9 @@ function showPrevImage() {
     <div class="photoContainer">
         <div class="d-flex align-items-center mb-1">
             <input type="file" name="photos_forestry" id="photos_forestry" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-            <input type="hidden" id="forestry_lat" name="forestry_lat">
-		    <input type="hidden" id="forestry_lng" name="forestry_lng">
-		    <input type="hidden" id="forestry_time" name="forestry_time">
+            <input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value="0"/>
+		    <input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value="0"/>
+		    <input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value="0"/>
         </div>
     </div>
 
@@ -790,9 +815,9 @@ function showPrevImage() {
     <div class="photoContainer">
         <div class="d-flex align-items-center mb-1">
             <input type="file" name="photos_janbhagidari" id="photos_janbhagidari" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-            <input type="hidden" id="janbhagidari_lat" name="janbhagidari_lat">
-		    <input type="hidden" id="janbhagidari_lng" name="janbhagidari_lng">
-		    <input type="hidden" id="janbhagidari_time" name="janbhagidari_time">
+            <input type="hidden" id="photos_janbhagidari_lat" name="photos_janbhagidari_lat" value="0"/>
+		    <input type="hidden" id="photos_janbhagidari_lng" name="photos_janbhagidari_lng" value="0"/>
+		    <input type="hidden" id="photos_janbhagidari_time" name="photos_janbhagidari_time" value="0"/>
         </div>
     </div>
 

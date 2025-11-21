@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import app.common.CommonFunctions;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.dao.WatershedMahotsavInaugurationDao;
+import app.mahotsav.model.MahotsavPrabhatPheriPhoto;
 import app.mahotsav.model.WatershedMahotsavInauguaration;
 import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
@@ -103,7 +104,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			String ipAddr=inet.getHostAddress();
 			
 			WatershedMahotsavInauguaration data = new WatershedMahotsavInauguaration();
-			WatershedMahotsavInauguarationActPhoto photo= new WatershedMahotsavInauguarationActPhoto();
+			WatershedMahotsavInauguarationActPhoto photo1= new WatershedMahotsavInauguarationActPhoto();
 			
 			
 			IwmpState s= new IwmpState();
@@ -143,94 +144,215 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			String code=st_code.toString()+userfileup.getDistrict().toString()+userfileup.getBlock().toString();
 			//System.out.println("state="+code);
 			
-			
-			
-			for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) {
-		        if (!image.isEmpty()) {
-		        	photo.setWatershedMahotsavInauguaration(data);
-		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
-					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
-					photo.setRequestedIp(ipAddr);
-					photo.setLatitude(null);
-		        	commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getBhoomipoojan().toString(), sequence);
-		        	photo.setActId(userfileup.getBhoomipoojan());
-		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
-		           // String fileName = image.getOriginalFilename();
-		          //  System.out.println("kdy="+fileName);
-		        	sequence=sequence+1;
-		        }
-		        sess.save(photo);
-				sess.evict(photo);
-		    }
-			for (MultipartFile image1 : userfileup.getPhotos_lokarpan()) {
-		        if (!image1.isEmpty()) {
-		        	photo.setWatershedMahotsavInauguaration(data);
-		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
-					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
-					photo.setRequestedIp(ipAddr);
-		        	commonFunction.uploadFileMahotwavInauguration(image1, filePath, code, userfileup.getLokarpan().toString(), sequence);
-		        	photo.setActId(userfileup.getLokarpan());
-		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getLokarpan().toString()+sequence+"_"+image1.getOriginalFilename());
-		         
-		        	sequence=sequence+1;
-		        }
-		        sess.save(photo);
-				sess.evict(photo);
-		    }
-			
-			for (MultipartFile image2 : userfileup.getPhotos_shramdaan()) {
-		        if (!image2.isEmpty()) {
-		        	photo.setWatershedMahotsavInauguaration(data);
-		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
-					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
-					photo.setRequestedIp(ipAddr);
-		        	commonFunction.uploadFileMahotwavInauguration(image2, filePath, code, userfileup.getShramdaan().toString(), sequence);
-		        	photo.setActId(userfileup.getShramdaan());
-		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getShramdaan().toString()+sequence+"_"+image2.getOriginalFilename());
-		          
-		        	sequence=sequence+1;
-		        }
-		        sess.save(photo);
-				sess.evict(photo);
-		    }
-			for (MultipartFile image3 : userfileup.getPhotos_forestry()) {
-		        if (!image3.isEmpty()) {
-		        	photo.setWatershedMahotsavInauguaration(data);
-		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
-					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
-					photo.setRequestedIp(ipAddr);
-		        	commonFunction.uploadFileMahotwavInauguration(image3, filePath, code, userfileup.getForestry().toString(), sequence);
-		        	photo.setActId(userfileup.getForestry());
-		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image3.getOriginalFilename());
-		           
-		        	sequence=sequence+1;
-		        }
-		        sess.save(photo);
-				sess.evict(photo);
-		    }
-			for (MultipartFile image4 : userfileup.getPhotos_janbhagidari()) {
-		        if (!image4.isEmpty()) {
-		        	photo.setWatershedMahotsavInauguaration(data);
-		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
-					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
-					photo.setRequestedIp(ipAddr);
-		        	commonFunction.uploadFileMahotwavInauguration(image4, filePath, code, userfileup.getAwarded().toString(), sequence);
-		        	photo.setActId(userfileup.getAwarded());
-		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getAwarded().toString()+sequence+"_"+image4.getOriginalFilename());
-		         
-		        	sequence=sequence+1;
-		        }
-		        sess.save(photo);
-				sess.evict(photo);
-		    }
-			
-			
+			  List<MultipartFile> photos = userfileup.getPhotos_bhoomipoojan();
+		      List<String> latitudes = userfileup.getPhotos_bhoomipoojan_lat();
+		      List<String> longitudes = userfileup.getPhotos_bhoomipoojan_lng();
+		      List<String> timestamps = userfileup.getPhotos_bhoomipoojan_time();
+
+		         for (int i = 0; i < photos.size(); i++) 
+		         {
+		             MultipartFile image = photos.get(i);
+		             if (!image.isEmpty()) {
+		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
+		                photo.setWatershedMahotsavInauguaration(data);
+				        photo.setCreatedBy(session.getAttribute("loginID").toString());
+						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setRequestedIp(ipAddr);
+						if(latitudes.get(i).equalsIgnoreCase("0"))
+							photo.setLatitude(null);
+						else
+							photo.setLatitude(latitudes.get(i));
+						if(longitudes.get(i).equalsIgnoreCase("0"))
+							photo.setLongitute(null);
+						else
+							photo.setLongitute(longitudes.get(i));
+						
+		                if (timestamps.get(i).equalsIgnoreCase("0")) {
+		                	 photo.setPhoto_timestamp(null);
+		                }	 
+		                else {	
+		                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+				            java.util.Date parsedDate = sdf.parse(timestamps.get(i));
+				            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+		                    photo.setPhoto_timestamp(timestamp);
+		                }
+		                 // Upload the file
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getBhoomipoojan().toString(), sequence);
+		                 // Store URL
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
+
+		                 sess.save(photo);
+		                 sequence++;
+		             }
+		         }
+		         List<MultipartFile> photos_lokarpan=userfileup.getPhotos_lokarpan();
+		         List<String> lokarpan_lat = userfileup.getPhotos_lokarpan_lat();
+			     List<String> lokarpan_lng = userfileup.getPhotos_lokarpan_lng();
+			     List<String> lokarpan_time = userfileup.getPhotos_lokarpan_time();
+		         for (int i = 0; i < photos_lokarpan.size(); i++) 
+		         {
+		             MultipartFile image = photos_lokarpan.get(i);
+		             if (!image.isEmpty()) {
+		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
+		                photo.setWatershedMahotsavInauguaration(data);
+				        photo.setCreatedBy(session.getAttribute("loginID").toString());
+						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setRequestedIp(ipAddr);
+						if(lokarpan_lat.get(i).equalsIgnoreCase("0"))
+							photo.setLatitude(null);
+						else
+							photo.setLatitude(lokarpan_lat.get(i));
+						if(lokarpan_lng.get(i).equalsIgnoreCase("0"))
+							photo.setLongitute(null);
+						else
+							photo.setLongitute(lokarpan_lng.get(i));
+						
+		               if (lokarpan_time.get(i).equalsIgnoreCase("0")) {
+		                	 photo.setPhoto_timestamp(null);
+		               }	 
+		               else {	
+		                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+				            java.util.Date parsedDate = sdf.parse(lokarpan_time.get(i));
+				            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+		                    photo.setPhoto_timestamp(timestamp);
+		                }
+		                 // Upload the file
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getLokarpan().toString(), sequence);
+		                 // Store URL
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getLokarpan().toString()+sequence+"_"+image.getOriginalFilename());
+
+		                 sess.save(photo);
+		                 sequence++;
+		             }
+		         }
+		         List<MultipartFile> photos_shramdaan=userfileup.getPhotos_shramdaan();
+		         List<String> shramdaan_lat = userfileup.getPhotos_shramdaan_lat();
+			     List<String> shramdaan_lng = userfileup.getPhotos_shramdaan_lng();
+			     List<String> shramdaan_time = userfileup.getPhotos_shramdaan_time();
+		         for (int i = 0; i < photos_shramdaan.size(); i++) 
+		         {
+		             MultipartFile image = photos_shramdaan.get(i);
+		             if (!image.isEmpty()) {
+		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
+		                photo.setWatershedMahotsavInauguaration(data);
+				        photo.setCreatedBy(session.getAttribute("loginID").toString());
+						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setRequestedIp(ipAddr);
+						if(shramdaan_lat.get(i).equalsIgnoreCase("0"))
+							photo.setLatitude(null);
+						else
+							photo.setLatitude(shramdaan_lat.get(i));
+						if(shramdaan_lng.get(i).equalsIgnoreCase("0"))
+							photo.setLongitute(null);
+						else
+							photo.setLongitute(shramdaan_lng.get(i));
+						
+		                if (shramdaan_time.get(i).equalsIgnoreCase("0")) { 
+		                	 photo.setPhoto_timestamp(null);
+		                }	 
+		                else {	
+		                	
+		                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+				            java.util.Date parsedDate = sdf.parse(shramdaan_time.get(i));
+				            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+		                    photo.setPhoto_timestamp(timestamp);
+		                }
+		                 // Upload the file
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getShramdaan().toString(), sequence);
+		                 // Store URL
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getShramdaan().toString()+sequence+"_"+image.getOriginalFilename());
+
+		                 sess.save(photo);
+		                 sequence++;
+		             }
+		         }
+		         List<MultipartFile> photos_forestry=userfileup.getPhotos_forestry();
+		         List<String> forestry_lat = userfileup.getPhotos_forestry_lat();
+			     List<String> forestry_lng = userfileup.getPhotos_forestry_lng();
+			     List<String> forestry_time = userfileup.getPhotos_forestry_time();
+		         for (int i = 0; i < photos_forestry.size(); i++) 
+		         {
+		             MultipartFile image = photos_forestry.get(i);
+		             if (!image.isEmpty()) {
+		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
+		                photo.setWatershedMahotsavInauguaration(data);
+				        photo.setCreatedBy(session.getAttribute("loginID").toString());
+						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setRequestedIp(ipAddr);
+						if(forestry_lat.get(i).equalsIgnoreCase("0"))
+							photo.setLatitude(null);
+						else
+							photo.setLatitude(forestry_lat.get(i));
+						if(forestry_lng.get(i).equalsIgnoreCase("0"))
+							photo.setLongitute(null);
+						else
+							photo.setLongitute(forestry_lng.get(i));
+						
+		                if (forestry_time.get(i).equalsIgnoreCase("0")) {
+		                	 photo.setPhoto_timestamp(null);
+		                }
+		                else {	
+		                	
+		                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+				            java.util.Date parsedDate = sdf.parse(forestry_time.get(i));
+				            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+		                    photo.setPhoto_timestamp(timestamp);
+		                	
+		                }
+		                 // Upload the file
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getForestry().toString(), sequence);
+		                 // Store URL
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
+
+		                 sess.save(photo);
+		                 sequence++;
+		             }
+		         }
+		         List<MultipartFile> photos_janbhagidari=userfileup.getPhotos_janbhagidari();
+		         List<String> janbhagidari_lat = userfileup.getPhotos_janbhagidari_lat();
+			     List<String> janbhagidari_lng = userfileup.getPhotos_janbhagidari_lng();
+			     List<String> janbhagidari_time = userfileup.getPhotos_janbhagidari_time();
+		         for (int i = 0; i < photos_janbhagidari.size(); i++) 
+		         {
+		             MultipartFile image = photos_janbhagidari.get(i);
+		             if (!image.isEmpty()) {
+		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
+		                photo.setWatershedMahotsavInauguaration(data);
+				        photo.setCreatedBy(session.getAttribute("loginID").toString());
+						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setRequestedIp(ipAddr);
+						if(janbhagidari_lat.get(i).equalsIgnoreCase("0"))
+							photo.setLatitude(null);
+						else
+							photo.setLatitude(janbhagidari_lat.get(i));
+						if(janbhagidari_lng.get(i).equalsIgnoreCase("0"))
+							photo.setLongitute(null);
+						else
+							photo.setLongitute(janbhagidari_lng.get(i));
+						
+		                if (janbhagidari_time.get(i).equalsIgnoreCase("0")) {
+		                	 photo.setPhoto_timestamp(null);
+		                }
+		                else {	
+		                	
+		                	SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+				            java.util.Date parsedDate = sdf.parse(janbhagidari_time.get(i));
+				            Timestamp timestamp = new Timestamp(parsedDate.getTime());
+		                    photo.setPhoto_timestamp(timestamp);
+		                }
+		                 // Upload the file
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getForestry().toString(), sequence);
+		                 // Store URL
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
+
+		                 sess.save(photo);
+		                 sequence++;
+		             }
+		         }
 			
 			SQLQuery sqlQuery = sess.createSQLQuery("UPDATE watershed_mahotsav_inauguaration_sequence SET value_id=:aut");
 			sqlQuery.setInteger("aut", sequence);
 			sqlQuery.executeUpdate();
-			
-			
 			
 			res = "success";
 			sess.getTransaction().commit();

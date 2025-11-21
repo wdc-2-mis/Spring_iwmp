@@ -31,31 +31,31 @@ public class InaugurationMahotsavBean {
     private Integer lokarpan;
     private Integer no_works_lokarpan;
     private List<MultipartFile> photos_lokarpan;
-    private List<String> lokarpan_lat;
-    private List<String> lokarpan_lng;
-    private List<String> lokarpan_time;
+    private List<String> photos_lokarpan_lat;
+    private List<String> photos_lokarpan_lng;
+    private List<String> photos_lokarpan_time;
     
     private Integer shramdaan;
     private Integer no_location_shramdaan;
     private Integer no_people_shramdaan;
     private List<MultipartFile> photos_shramdaan;
-    private List<String> shramdaan_lat;
-    private List<String> shramdaan_lng;
-    private List<String> shramdaan_time;
+    private List<String> photos_shramdaan_lat;
+    private List<String> photos_shramdaan_lng;
+    private List<String> photos_shramdaan_time;
     
     private Integer forestry;
     private Integer area_plantation;
     private List<MultipartFile> photos_forestry;
-    private List<String> forestry_lat;
-    private List<String> forestry_lng;
-    private List<String> forestry_time;
+    private List<String> photos_forestry_lat;
+    private List<String> photos_forestry_lng;
+    private List<String> photos_forestry_time;
     
     private Integer awarded;
     private Integer no_awards;
     private List<MultipartFile> photos_janbhagidari;
-    private List<String> janbhagidari_lat;
-    private List<String> janbhagidari_lng;
-    private List<String> janbhagidari_time;
+    private List<String> photos_janbhagidari_lat;
+    private List<String> photos_janbhagidari_lng;
+    private List<String> photos_janbhagidari_time;
     
     private Integer inauguaration_id;
     private Integer st_code;
@@ -257,77 +257,78 @@ public class InaugurationMahotsavBean {
 	public void setPhotos_bhoomipoojan_time(List<String> photos_bhoomipoojan_time) {
 		this.photos_bhoomipoojan_time = photos_bhoomipoojan_time;
 	}
-	public List<String> getLokarpan_lat() {
-		return lokarpan_lat;
+	
+	public List<String> getPhotos_lokarpan_lat() {
+		return photos_lokarpan_lat;
 	}
-	public void setLokarpan_lat(List<String> lokarpan_lat) {
-		this.lokarpan_lat = lokarpan_lat;
+	public void setPhotos_lokarpan_lat(List<String> photos_lokarpan_lat) {
+		this.photos_lokarpan_lat = photos_lokarpan_lat;
 	}
-	public List<String> getLokarpan_lng() {
-		return lokarpan_lng;
+	public List<String> getPhotos_lokarpan_lng() {
+		return photos_lokarpan_lng;
 	}
-	public void setLokarpan_lng(List<String> lokarpan_lng) {
-		this.lokarpan_lng = lokarpan_lng;
+	public void setPhotos_lokarpan_lng(List<String> photos_lokarpan_lng) {
+		this.photos_lokarpan_lng = photos_lokarpan_lng;
 	}
-	public List<String> getLokarpan_time() {
-		return lokarpan_time;
+	public List<String> getPhotos_lokarpan_time() {
+		return photos_lokarpan_time;
 	}
-	public void setLokarpan_time(List<String> lokarpan_time) {
-		this.lokarpan_time = lokarpan_time;
+	public void setPhotos_lokarpan_time(List<String> photos_lokarpan_time) {
+		this.photos_lokarpan_time = photos_lokarpan_time;
 	}
-	public List<String> getShramdaan_lat() {
-		return shramdaan_lat;
+	public List<String> getPhotos_shramdaan_lat() {
+		return photos_shramdaan_lat;
 	}
-	public void setShramdaan_lat(List<String> shramdaan_lat) {
-		this.shramdaan_lat = shramdaan_lat;
+	public void setPhotos_shramdaan_lat(List<String> photos_shramdaan_lat) {
+		this.photos_shramdaan_lat = photos_shramdaan_lat;
 	}
-	public List<String> getShramdaan_lng() {
-		return shramdaan_lng;
+	public List<String> getPhotos_shramdaan_lng() {
+		return photos_shramdaan_lng;
 	}
-	public void setShramdaan_lng(List<String> shramdaan_lng) {
-		this.shramdaan_lng = shramdaan_lng;
+	public void setPhotos_shramdaan_lng(List<String> photos_shramdaan_lng) {
+		this.photos_shramdaan_lng = photos_shramdaan_lng;
 	}
-	public List<String> getShramdaan_time() {
-		return shramdaan_time;
+	public List<String> getPhotos_shramdaan_time() {
+		return photos_shramdaan_time;
 	}
-	public void setShramdaan_time(List<String> shramdaan_time) {
-		this.shramdaan_time = shramdaan_time;
+	public void setPhotos_shramdaan_time(List<String> photos_shramdaan_time) {
+		this.photos_shramdaan_time = photos_shramdaan_time;
 	}
-	public List<String> getForestry_lat() {
-		return forestry_lat;
+	public List<String> getPhotos_forestry_lat() {
+		return photos_forestry_lat;
 	}
-	public void setForestry_lat(List<String> forestry_lat) {
-		this.forestry_lat = forestry_lat;
+	public void setPhotos_forestry_lat(List<String> photos_forestry_lat) {
+		this.photos_forestry_lat = photos_forestry_lat;
 	}
-	public List<String> getForestry_lng() {
-		return forestry_lng;
+	public List<String> getPhotos_forestry_lng() {
+		return photos_forestry_lng;
 	}
-	public void setForestry_lng(List<String> forestry_lng) {
-		this.forestry_lng = forestry_lng;
+	public void setPhotos_forestry_lng(List<String> photos_forestry_lng) {
+		this.photos_forestry_lng = photos_forestry_lng;
 	}
-	public List<String> getForestry_time() {
-		return forestry_time;
+	public List<String> getPhotos_forestry_time() {
+		return photos_forestry_time;
 	}
-	public void setForestry_time(List<String> forestry_time) {
-		this.forestry_time = forestry_time;
+	public void setPhotos_forestry_time(List<String> photos_forestry_time) {
+		this.photos_forestry_time = photos_forestry_time;
 	}
-	public List<String> getJanbhagidari_lat() {
-		return janbhagidari_lat;
+	public List<String> getPhotos_janbhagidari_lat() {
+		return photos_janbhagidari_lat;
 	}
-	public void setJanbhagidari_lat(List<String> janbhagidari_lat) {
-		this.janbhagidari_lat = janbhagidari_lat;
+	public void setPhotos_janbhagidari_lat(List<String> photos_janbhagidari_lat) {
+		this.photos_janbhagidari_lat = photos_janbhagidari_lat;
 	}
-	public List<String> getJanbhagidari_lng() {
-		return janbhagidari_lng;
+	public List<String> getPhotos_janbhagidari_lng() {
+		return photos_janbhagidari_lng;
 	}
-	public void setJanbhagidari_lng(List<String> janbhagidari_lng) {
-		this.janbhagidari_lng = janbhagidari_lng;
+	public void setPhotos_janbhagidari_lng(List<String> photos_janbhagidari_lng) {
+		this.photos_janbhagidari_lng = photos_janbhagidari_lng;
 	}
-	public List<String> getJanbhagidari_time() {
-		return janbhagidari_time;
+	public List<String> getPhotos_janbhagidari_time() {
+		return photos_janbhagidari_time;
 	}
-	public void setJanbhagidari_time(List<String> janbhagidari_time) {
-		this.janbhagidari_time = janbhagidari_time;
+	public void setPhotos_janbhagidari_time(List<String> photos_janbhagidari_time) {
+		this.photos_janbhagidari_time = photos_janbhagidari_time;
 	}
 	public Integer getInauguaration_id() {
 		return inauguaration_id;

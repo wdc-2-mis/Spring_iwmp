@@ -106,7 +106,7 @@ public class WMInaugurationController {
 
 				mav = new ModelAndView("mahotsav/mahotsavinauguration");
 
-				for(String aa:userfileup.getPhotos_bhoomipoojan_lat()) {
+				for(String aa:userfileup.getPhotos_bhoomipoojan_time()) {
 					
 					System.out.println("lat =" +aa);
 				}
