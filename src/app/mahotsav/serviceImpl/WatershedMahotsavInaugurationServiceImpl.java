@@ -28,6 +28,24 @@ public class WatershedMahotsavInaugurationServiceImpl implements WatershedMahots
 		// TODO Auto-generated method stub
 		return dao.getregisterInaugurationDetails(stcd);
 	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getregisterInaugurationDetailsComp(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getregisterInaugurationDetailsComp(stcd);
+	}
+
+	@Override
+	public String deleteMahotsavInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteMahotsavInaugurationDetails(assetid, userid);
+	}
+
+	@Override
+	public String completeMahotsavInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.completeMahotsavInaugurationDetails(assetid, userid);
+	}
 	
 	
 	

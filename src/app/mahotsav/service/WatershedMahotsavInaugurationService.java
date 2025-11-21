@@ -15,5 +15,10 @@ public interface WatershedMahotsavInaugurationService {
 	public String saveMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session);
 	
 	public List<InaugurationMahotsavBean> getregisterInaugurationDetails(Integer stcd);
+	public List<InaugurationMahotsavBean> getregisterInaugurationDetailsComp(Integer stcd);
+	
+	String deleteMahotsavInaugurationDetails(List<Integer> assetid, String userid);
+	
+	String completeMahotsavInaugurationDetails(List<Integer> assetid, String userid);
 
 }

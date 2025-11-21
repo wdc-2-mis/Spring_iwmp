@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -65,9 +67,14 @@ public class WMInaugurationController {
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
 				}
-			//	data=iSer.getregisterInaugurationDetails(stcd);
+				data=iSer.getregisterInaugurationDetails(stcd);
 				mav.addObject("dataList",data);
 				mav.addObject("dataListSize",data.size());
+				
+				compdata=iSer.getregisterInaugurationDetailsComp(stcd);
+				mav.addObject("compdataList",compdata);
+				mav.addObject("compdataListSize",compdata.size());
+				
 				mav.addObject("userType", userType);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
@@ -92,17 +99,13 @@ public class WMInaugurationController {
 		ModelAndView mav = new ModelAndView();
 		String result = "fail";
 		List<String> imageNames = new ArrayList<>();
+		List<InaugurationMahotsavBean> data = new ArrayList<InaugurationMahotsavBean>();
+		List<InaugurationMahotsavBean> compdata = new ArrayList<InaugurationMahotsavBean>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 
 				mav = new ModelAndView("mahotsav/mahotsavinauguration");
 
-				/*
-				 * for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) { if
-				 * (!image.isEmpty()) { String fileName = image.getOriginalFilename();
-				 * System.out.println("kdy="+fileName); imageNames.add(fileName); } }
-				 * 
-				 */
 				for(String aa:userfileup.getPhotos_bhoomipoojan_lat()) {
 					
 					System.out.println("lat =" +aa);
@@ -128,8 +131,16 @@ public class WMInaugurationController {
 				// mav.addObject("distName",distName);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				data=iSer.getregisterInaugurationDetails(stcd);
+				mav.addObject("dataList",data);
+				mav.addObject("dataListSize",data.size());
+				
+				compdata=iSer.getregisterInaugurationDetailsComp(stcd);
+				mav.addObject("compdataList",compdata);
+				mav.addObject("compdataListSize",compdata.size());
 
-			//	result = iSer.saveMahotsavInaugurationDetails(userfileup, session);
+				result = iSer.saveMahotsavInaugurationDetails(userfileup, session);
 
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
@@ -159,6 +170,49 @@ public class WMInaugurationController {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+	
+	@RequestMapping(value="/deleteMahotsavInaugurationDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteMahotsavInaugurationDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=iSer.deleteMahotsavInaugurationDetails(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	
+	@RequestMapping(value="/completeMahotsavInaugurationDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeMahotsavInaugurationDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=iSer.completeMahotsavInaugurationDetails(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
 	}
 			
 }

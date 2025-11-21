@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
-<script src='<c:url value="/resources/js/inauguration.js" />'></script>
+<script src='<c:url value="/resources/js/mahotsavinauguration.js" />'></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 
@@ -493,6 +493,40 @@ function getImageHash(file, callback) {
     };
     reader.readAsArrayBuffer(file);
 }
+
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+  
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + imageSrc;			//PRD
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + imageSrc;	//TEST
+ 	document.getElementById('largeImage').src = 'resources/images/Inauguration/' + imageSrc;												//Local
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
+
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
 </script>
 </head>
 <body>
@@ -626,9 +660,9 @@ function getImageHash(file, callback) {
 			    <div class="photoContainer">
 			        <div class="d-flex align-items-center mb-1">
 			            <input type="file" name="photos_bhoomipoojan" id="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-			            <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat">
-		                <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng">
-		                <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time">
+			            <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat[]">
+		                <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng[]">
+		                <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time[]">
 			        </div>
 			    </div>
 			
@@ -799,7 +833,7 @@ function getImageHash(file, callback) {
 								<th rowspan="3">Location</th>
 								
 								<th colspan="9">Number of Participation</th>
-								<th colspan="6">Activities</th>
+								<th colspan="7">Activities</th>
 							</tr>
 							<tr>
 								<th colspan="2">Number of Participants</th>
@@ -828,11 +862,11 @@ function getImageHash(file, callback) {
 						</thead>
 						
  						<c:set var="st" value="" />
- 					<%-- 	<c:forEach items="${dataList}" var="data" varStatus="count">
+ 					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
 								<td> <c:out value="${data.date}" /></td>
- 								<c:choose>
+ 								<%-- <c:choose>
  									<c:when test="${st ne data.stname}">
  										<c:set var="st" value="${data.stname}" />
  										<td> <c:out value="${data.stname}" /></td>
@@ -840,11 +874,11 @@ function getImageHash(file, callback) {
  								<c:otherwise>
 <!--  										<td></td> -->
  								</c:otherwise>
- 								</c:choose>
+ 								</c:choose> --%>
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
-								<td class="text-left"> <c:out value="${data.remarks}" /></td>
+								
  								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
 								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
  								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
@@ -854,30 +888,26 @@ function getImageHash(file, callback) {
  								<td class="text-right"> <c:out value="${data.council_members}" /></td>
 								<td class="text-right"> <c:out value="${data.others}" /></td>
  								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
- 								<td class="text-left"> <c:out value="${data.gram_sabha == 'true' ? 'Yes' : 'No'}" /></td>
- 								<td class="text-left"> <c:out value="${data.prabhat_pheri == 'true' ? 'Yes' : 'No'}" /></td>
-								<td class="text-left"> <c:out value="${data.flagoff == 'true' ? 'Yes' : 'No'}" /></td>
- 								<td class="text-left"> <c:out value="${data.themesong == 'true' ? 'Yes' : 'No'}" /></td>
+ 								
 								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
- 								<td class="text-right"> <c:out value="${data.tot_works_bhoomipoojan}" /></td>
+ 								
  								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
-								<td class="text-right"> <c:out value="${data.tot_works_lokarpan}" /></td>
+								
  								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
 								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.man}" /></td>
- 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
-								<td class="text-right"> <c:out value="${data.no_plantation}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+								
  								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
- 								<td class="text-right"> <c:out value="${data.dept_stalls}" /></td>
- 								<td class="text-right"> <c:out value="${data.shg_fpo_stalls}" /></td>
- 								<td class="text-right"> <c:out value="${data.no_lakhpati_didi}" /></td>
+ 								
+ 								
 								<td class="text-right">
 									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
 					
- 						</c:forEach> --%>
+ 						</c:forEach> 
  						
  						<tr>
 								
@@ -885,6 +915,109 @@ function getImageHash(file, callback) {
 								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
 							</tr>
 						<c:if test="${dataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="16" ></td>
+							</tr>
+						</c:if>
+		</table>
+		
+		
+		</div>
+		</div>
+		
+		<div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Mahotsav - Inauguration Program Details</h5>
+	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th rowspan="3">S.No.</th> 
+								<th rowspan="3">Date</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="3">District Name</th>
+								<th rowspan="3">Block Name</th>
+								<th rowspan="3">Location</th>
+								
+								<th colspan="9">Number of Participation</th>
+								<th colspan="7">Activities</th>
+							</tr>
+							<tr>
+								<th colspan="2">Number of Participants</th>
+								<th colspan="2">Number of Ministers</th>
+								<th rowspan="2">Member of Parliament</th>
+								<th colspan="2">Number of Members</th>
+								<th rowspan="2">Number of other Public Representatives</th>
+								<th rowspan="2">Number of Government Officials</th>
+								<th rowspan="2">Number of Works for Bhoomi Poojan </th>
+								<th rowspan="2">Number of Works for Lokarpan</th>
+								<th colspan="2">Shramdaan</th>
+								<th rowspan="2">Agro forestry / Horticultural Plantation Number of Sapling </th>
+								<th rowspan="2">Number of Projects Awarded for Janbhagidari Cup 2025 </th>
+								<th rowspan="2">Photos</th>
+							</tr>
+							<tr>
+								<th>Male</th>
+								<th>Female</th>
+								<th>Central Level</th>
+								<th>State Level</th>
+								<th>Legislative Assembly</th>
+								<th>Legislative Council</th>
+								<th>No. of Locations</th>
+								<th>No. of people participated</th>
+							</tr>
+						</thead>
+						
+ 						<c:set var="st" value="" />
+ 					 	<c:forEach items="${compdataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /> &nbsp;</td>
+								<td> <c:out value="${data.date}" /></td>
+ 								<%-- <c:choose>
+ 									<c:when test="${st ne data.stname}">
+ 										<c:set var="st" value="${data.stname}" />
+ 										<td> <c:out value="${data.stname}" /></td>
+ 									</c:when>
+ 								<c:otherwise>
+<!--  										<td></td> -->
+ 								</c:otherwise>
+ 								</c:choose> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+								<td class="text-left"> <c:out value="${data.location}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.no_awards}" /></td>
+ 								
+ 								
+								<td class="text-right">
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
+					</tr>
+							
+					
+ 						</c:forEach> 
+ 						
+						<c:if test="${compdataListSize eq 0}">
 							<tr>
 								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
 								<td colspan="16" ></td>

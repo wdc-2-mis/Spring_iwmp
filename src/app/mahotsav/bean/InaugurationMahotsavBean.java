@@ -57,7 +57,13 @@ public class InaugurationMahotsavBean {
     private List<String> janbhagidari_lng;
     private List<String> janbhagidari_time;
     
-    
+    private Integer inauguaration_id;
+    private Integer st_code;
+    private String stname;
+    private String distname;
+    private String blockname;
+    private Integer forestry_horticulture;
+    private Integer image_count;
     
 	public Integer getDistrict() {
 		return district;
@@ -322,6 +328,48 @@ public class InaugurationMahotsavBean {
 	}
 	public void setJanbhagidari_time(List<String> janbhagidari_time) {
 		this.janbhagidari_time = janbhagidari_time;
+	}
+	public Integer getInauguaration_id() {
+		return inauguaration_id;
+	}
+	public void setInauguaration_id(Integer inauguaration_id) {
+		this.inauguaration_id = inauguaration_id;
+	}
+	public Integer getSt_code() {
+		return st_code;
+	}
+	public void setSt_code(Integer st_code) {
+		this.st_code = st_code;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	public String getDistname() {
+		return distname;
+	}
+	public void setDistname(String distname) {
+		this.distname = distname;
+	}
+	public String getBlockname() {
+		return blockname;
+	}
+	public void setBlockname(String blockname) {
+		this.blockname = blockname;
+	}
+	public Integer getForestry_horticulture() {
+		return forestry_horticulture;
+	}
+	public void setForestry_horticulture(Integer forestry_horticulture) {
+		this.forestry_horticulture = forestry_horticulture;
+	}
+	public Integer getImage_count() {
+		return image_count;
+	}
+	public void setImage_count(Integer image_count) {
+		this.image_count = image_count;
 	}
     
     

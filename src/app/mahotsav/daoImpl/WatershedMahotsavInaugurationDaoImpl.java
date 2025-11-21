@@ -1,5 +1,6 @@
 package app.mahotsav.daoImpl;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -46,8 +47,11 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 //	@Value("${getInaugurationDetails}")
 //	String getInaugurationDetails;
 	
-	@Value("${getInaugurationDetails}")
+	@Value("${getregisterInaugurationDraftDetails}")
 	String getregisterInaugurationDraftDetails;
+	
+	@Value("${getregisterInaugurationcompleteDetails}")
+	String getregisterInaugurationcompleteDetails;
 	
 	private Timestamp parseTimestamp(String dateTimeString) {
 	    DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
@@ -78,9 +82,9 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
 			String st_code=session.getAttribute("stateCode").toString();
 			
-		//	List list = sess.createQuery("SELECT iwmpState.stCode FROM WatershedYatraInauguaration where iwmpState.stCode=:villageCode").setInteger("villageCode", Integer.parseInt(session.getAttribute("stateCode").toString())).list();
-			//	result=Integer.parseInt(list.get(0).toString());
-		//	if(list.isEmpty()) {
+			List list = sess.createQuery("SELECT iwmpState.stCode FROM WatershedMahotsavInauguaration where iwmpState.stCode=:villageCode").setInteger("villageCode", Integer.parseInt(session.getAttribute("stateCode").toString())).list();
+			//result=Integer.parseInt(list.get(0).toString());
+			if(list.isEmpty()) {
 				
 			
 			
@@ -230,7 +234,11 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			
 			res = "success";
 			sess.getTransaction().commit();
-				
+			}
+			else {
+				res="failexist";
+				sess.getTransaction().commit();
+			}
 		}
 		catch (Exception ex) {
 			res = "fail";
@@ -251,7 +259,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
 				query.setInteger("statecd",stcd); 
-				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationMahotsavBean.class));
 				list = query.list();
 				session.getTransaction().commit();
 		} 
@@ -267,6 +275,167 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			ex.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getregisterInaugurationDetailsComp(Integer stcd) {
+		
+		String getReport=getregisterInaugurationcompleteDetails;
+		Session session = sessionFactory.getCurrentSession();
+		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationMahotsavBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public String deleteMahotsavInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<String>();
+		List<WatershedMahotsavInauguarationActPhoto> list = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+		
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			// WatershedMahotsavInauguaration data = new WatershedMahotsavInauguaration();
+			//WatershedMahotsavInauguarationActPhoto photo= new WatershedMahotsavInauguarationActPhoto();
+			 Query query1 = session.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				query1.setInteger("inaugid", assetid.get(i));
+				list = query1.list();
+			 }
+			 for (WatershedMahotsavInauguarationActPhoto photo : list) {
+				   
+				 imgList.add(photo.getPhotoUrl());
+			 }
+			 for (String photo : imgList) 
+			 {
+		            if (photo != null && !photo.isEmpty()) 
+		            {
+		                File file = new File(photo);
+		                if (file.exists()) 
+		                {
+		                    if (file.delete()) {
+		                        System.out.println("Deleted file: " + file.getAbsolutePath());
+		                    } else {
+		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+		                    }
+		                } 
+		                else {
+		                    System.out.println("File not found: " + file.getAbsolutePath());
+		                }
+		            }
+		     }
+			 
+			 SQLQuery query = session.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid");
+			 Date d= new Date();
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+			 SQLQuery query2 = session.createSQLQuery("delete from watershed_mahotsav_inauguaration where inauguaration_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query2.setInteger("nrmpkid", assetid.get(i));
+				 value=query2.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
+
+	@Override
+	public String completeMahotsavInaugurationDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("update watershed_mahotsav_inauguaration set status='C' where inauguaration_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
 	}
 	
 	
