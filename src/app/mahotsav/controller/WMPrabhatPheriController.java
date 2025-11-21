@@ -1,7 +1,9 @@
 package app.mahotsav.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,85 +11,171 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
+import app.mahotsav.bean.InaugurationMahotsavBean;
+import app.mahotsav.bean.WMPrabhatPheriBean;
+import app.mahotsav.service.WMPrabhatPheriService;
 import app.service.ProfileService;
-import app.watershedyatra.bean.PreYatraPreparationBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.service.WatershedYatraPIALevelService;
 import app.watershedyatra.service.WatershedYatraService;
 
-@Controller("wMPrabhatPheriController")
+@Controller
 public class WMPrabhatPheriController {
 
-HttpSession session;
+	HttpSession session;
 	
+    @Autowired
+    ProfileService profileService;
 
-@Autowired(required = true)
-ProfileService profileService;
+    @Autowired
+    WatershedYatraService ser;
 
-@Autowired
-WatershedYatraService  ser;
+    @Autowired
+    WatershedYatraPIALevelService serp;
+   
+    @Autowired
+    WMPrabhatPheriService wmService;
 
-@Autowired
-WatershedYatraPIALevelService  serp;
-	
-@RequestMapping(value = "/getWMPrabhatPheri", method = RequestMethod.GET)
-public ModelAndView getWMPrabhatPheri(HttpServletRequest request, HttpServletResponse response) {
-    HttpSession session = request.getSession(false); // Avoid unnecessary session creation
-    ModelAndView mav;
-    List<PreYatraPreparationBean> preyatracompletedata = new ArrayList<PreYatraPreparationBean>();
-    if (session != null && session.getAttribute("loginID") != null) {
-        mav = new ModelAndView("mahotsav/mahotsavPrabhatPheri");
-        Object regIdObj = session.getAttribute("regId");
-        Integer regId = (regIdObj != null) ? Integer.parseInt(regIdObj.toString()) : null;
-        List<PreYatraPreparationBean> preyatrasavedata = new ArrayList<PreYatraPreparationBean>();
-        Object stcdObj = session.getAttribute("stateCode");
-        Integer stcd = (stcdObj != null) ? Integer.parseInt(stcdObj.toString()) : null;
+    @GetMapping("/getWMPrabhatPheri")
+    public String getWMPrabhatPheri(HttpSession session, Map<String, Object> model) {
 
-        String userType = (session.getAttribute("userType") != null) ? session.getAttribute("userType").toString() : "";
-        List<ProfileBean> listm = profileService.getMapstate(regId, userType);
-
-        if (!listm.isEmpty()) {
-            ProfileBean bean = listm.get(0);
-            mav.addObject("stateName", bean.getStatename());
-            mav.addObject("distName", bean.getDistrictname());
-            mav.addObject("stCode", bean.getStatecode() != null ? bean.getStatecode() : 0);
-            mav.addObject("distCode", bean.getDistrictcode() != null ? bean.getDistrictcode() : 0);
+        if (session == null || session.getAttribute("loginID") == null) {
+            return "login"; 
         }
+//        List<WMPrabhatPheriBean> dlist = new ArrayList<WMPrabhatPheriBean>();
+//		List<WatershedYatraBean> comlist = new ArrayList<WatershedYatraBean>();
+        Integer regId = (Integer) session.getAttribute("regId");
+        Integer stCode = (Integer) session.getAttribute("stateCode");
+        String userType = (String) session.getAttribute("userType");
 
-        mav.addObject("userType", userType);
-        mav.addObject("distList", ser.getDistrictList(stcd));
+        profileService.getMapstate(regId, userType).stream().findFirst().ifPresent(bean -> {
+            model.put("stateName", bean.getStatename());
+            model.put("distName", bean.getDistrictname());
+            model.put("stCode", bean.getStatecode() != null ? bean.getStatecode() : 0);
+            model.put("distCode", bean.getDistrictcode() != null ? bean.getDistrictcode() : 0);
+        });
+
+        model.put("userType", userType);
+        model.put("distList", ser.getDistrictList(stCode));
+        model.put("blkList", serp.getBlockListpia(regId.toString()));
+        List<WMPrabhatPheriBean> dlist = wmService.getWatershedMahotsavDraftList(stCode);
+        model.put("dataDList", dlist);
+        model.put("dataDListSize", dlist != null ? dlist.size() : 0);
         
-        if(userType.equals("SL")){
-        preyatrasavedata=ser.getpreyatrasaveRecord(stcd);
-        }
-        else if(userType.equals("PI")){
-        preyatrasavedata=ser.getpreyatraPIAsaveRecord(stcd, session.getAttribute("loginID").toString());
-        }
-        
-        if(userType.equals("SL")){
-        preyatracompletedata=ser.getpreyatracompleteRecord(stcd);
-        }
-        else if(userType.equals("PI")){
-        preyatracompletedata=ser.getpreyatraPIAcompleteRecord(stcd, session.getAttribute("loginID").toString());
-        }
-		mav.addObject("records",preyatrasavedata);
-		mav.addObject("comprecords",preyatracompletedata);
-		mav.addObject("blkList", serp.getBlockListpia(regId.toString()));
-    
-    
-    
-    } else {
-        mav = new ModelAndView("login");
-        mav.addObject("login", new Login());
+        List<WMPrabhatPheriBean> comlist = wmService.getWatershedMahotsavCompleteList(stCode);
+        model.put("dataCList", comlist);
+        model.put("dataCListSize", comlist != null ? comlist.size() : 0);
+        return "mahotsav/mahotsavPrabhatPheri";
     }
 
-    return mav;
+    @RequestMapping(value = "/saveWMPrabhatPheri", method = RequestMethod.POST)
+	public ModelAndView saveWMPrabhatPheri(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WMPrabhatPheriBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		List<String> imageNames = new ArrayList<>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("mahotsav/mahotsavPrabhatPheri");
+				
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+			//	for (String latitude : userfileup.getLatitude()) {
+			//	    System.out.println("kdy"+latitude);
+			//	}
+
+				mav.addObject("userType", userType);
+				// mav.addObject("distName",distName);
+				mav.addObject("stateName", stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+
+				result = wmService.saveMahotsavPrabhatPheriDetails(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
+				} 
+				else if (result.equals("failexist")) {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved State Data already exist");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved Successfully!");
+				}
+				return new ModelAndView("redirect:/getWMPrabhatPheri");
+			} else {
+				return new ModelAndView("redirect:/login");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+    @RequestMapping(value="/completeWMPrabhatPheri", method = RequestMethod.POST)
+    @ResponseBody
+    public String completeWMPrabhatPheri(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="ppid") List<Integer> ppid)
+    {
+    	ModelAndView mav = new ModelAndView();
+    	String res="";
+    	session = request.getSession(true);
+    	if(session!=null && session.getAttribute("loginID")!=null) 
+    	{
+    		Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+    		String userType= session.getAttribute("userType").toString();
+    		res=wmService.completeWMPrabhatPheri(ppid, session.getAttribute("loginID").toString());
+    	
+    	 
+    	}else {
+    		mav = new ModelAndView("login");
+    		mav.addObject("login", new Login());
+    	}
+    	return res; 
+    }
+    
+    // Get blocks by district code
+    @GetMapping("/getBlocksByDistrict")
+    @ResponseBody
+    public List<Map<String, Object>> getBlocksByDistrict(@RequestParam("districtCode") Integer districtCode) {
+        return wmService.getBlockListByDistrict(districtCode); // return list of blocks
+    }
+
+    // Get villages by block code
+    @GetMapping("/getVillagesByBlock")
+    @ResponseBody
+    public List<Map<String, Object>> getVillagesByBlock(@RequestParam("blockCode") Integer blockCode) {
+        return wmService.getVillageListByBlock(blockCode); // return list of villages
+    }
+    
 }
 
-	
-}

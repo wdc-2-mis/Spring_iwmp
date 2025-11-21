@@ -34,6 +34,7 @@ import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 import app.watershedyatra.model.RoutePlanVanTravel;
+import app.mahotsav.model.MahotsavPrabhatPheri;
 import app.mahotsav.model.WatershedMahotsavInauguaration;
 
 /**
@@ -92,6 +93,7 @@ public class IwmpState implements java.io.Serializable {
 	private Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork = new HashSet<JanbhagidariPratiyogitaTypeofWork>(0);
 	private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
 	private Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration = new HashSet<WatershedMahotsavInauguaration>(0);
+	private Set<MahotsavPrabhatPheri> wmPrabhatPheri = new HashSet<MahotsavPrabhatPheri>(0);
      
 	public IwmpState() {
 	}
@@ -112,7 +114,7 @@ public class IwmpState implements java.io.Serializable {
 			Set<GetGoiReleaseToStateTreasury> getGoiReleaseToStateTreasury, Set<NodalOfficer> nodalOfficer, 
 			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation>preYatraPreparation,Set<RoutePlanVanTravel> routePlanVanTravel,
 			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails,
-			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration) {
+			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration,Set<MahotsavPrabhatPheri> wmPrabhatPheri) {
 		this.stCode = stCode;
 		this.iwmpApprovelLevels = iwmpApprovelLevels;
 		this.stName = stName;
@@ -155,6 +157,7 @@ public class IwmpState implements java.io.Serializable {
 	    this.janbhagidariPratiyogitaTypeofWork=janbhagidariPratiyogitaTypeofWork;
 	    this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
 	    this.watershedMahotsavInauguaration=watershedMahotsavInauguaration;
+	    this.wmPrabhatPheri=wmPrabhatPheri;
 	}
 
 	@Id
@@ -580,6 +583,14 @@ public class IwmpState implements java.io.Serializable {
 		this.watershedMahotsavInauguaration = watershedMahotsavInauguaration;
 	}
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpState")
+	public Set<MahotsavPrabhatPheri> getMahotsavPrabhatPheri() {
+		return wmPrabhatPheri;
+	}
+
+	public void setMahotsavPrabhatPheri(Set<MahotsavPrabhatPheri> wmPrabhatPheri) {
+		this.wmPrabhatPheri = wmPrabhatPheri;
+	}
 	
 	
     
