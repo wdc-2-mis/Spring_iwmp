@@ -36,15 +36,17 @@ function addPhotoField(btn) {
         return;
     }
     
+    let newIndex = inputs.length + 1;
+    
     let div = document.createElement("div");
     div.className = "d-flex align-items-center mb-1";
 
     div.innerHTML = `
         <input type="file" name="photos_janbhagidari" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="janbhagidari_lat" name="janbhagidari_lat"/>
-	    <input type="hidden" id="janbhagidari_lng" name="janbhagidari_lng"/>
-	    <input type="hidden" id="janbhagidari_time" name="janbhagidari_time"/>
+        <input type="hidden" id="janbhagidari_lat_${newIndex}" name="janbhagidari_lat" value="0"/>
+	    <input type="hidden" id="janbhagidari_lng_${newIndex}" name="janbhagidari_lng" value="0"/>
+	    <input type="hidden" id="janbhagidari_time_${newIndex}" name="janbhagidari_time" value="0"/>
     `;
 
     container.appendChild(div);
@@ -466,14 +468,17 @@ function validatePhoto(input) {
             let latitude = convert(lat, latRef);
             let longitude = convert(lng, lngRef);
             
-            // 6. Detect correct hidden fields dynamically
-            let prefix = input.name;   // e.g. "photos_bhoomipoojan"
+            let parentDiv = input.closest('div');
+            let latInput = parentDiv.querySelector('input[id$="_lat"]');
+            let lngInput = parentDiv.querySelector('input[id$="_lng"]');
+            let timeInput = parentDiv.querySelector('input[id$="_time"]');
+            
+            if (latInput) latInput.value = latitude || "0";
+            if (lngInput) lngInput.value = longitude || "0";
+            if (timeInput) timeInput.value = time || "0";
+            
+           alert('kdy2='+latInput);
            
-            document.getElementById(prefix+"_lat").value = latitude || "0";
-            document.getElementById(prefix+"_lng").value = longitude || "0";
-            document.getElementById(prefix+"_time").value = time || "0";
-            var aa=document.getElementById("photos_bhoomipoojan_lat").value;
-           alert('kdy2='+aa);
             // 7. Warn if GPS or timestamp missing
             if (!latitude || !longitude || !time) {
                 if (!confirm("This photo does NOT contain GPS or timestamp information.\nDo you still want to upload?")) {
@@ -660,9 +665,9 @@ function showPrevImage() {
 			    <div class="photoContainer">
 			        <div class="d-flex align-items-center mb-1">
 			            <input type="file" name="photos_bhoomipoojan" id="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-			            <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat[]">
-		                <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng[]">
-		                <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time[]">
+			            <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value="0"/>
+		                <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value="0"/>
+		                <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time" value="0"/>
 			        </div>
 			    </div>
 			
