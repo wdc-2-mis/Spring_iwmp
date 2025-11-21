@@ -64,6 +64,8 @@ public class InaugurationMahotsavBean {
     private String blockname;
     private Integer forestry_horticulture;
     private Integer image_count;
+    private Integer participants;
+    private Integer total_participation;
     
 	public Integer getDistrict() {
 		return district;
@@ -371,6 +373,18 @@ public class InaugurationMahotsavBean {
 	}
 	public void setImage_count(Integer image_count) {
 		this.image_count = image_count;
+	}
+	public Integer getParticipants() {
+		return participants;
+	}
+	public void setParticipants(Integer participants) {
+		this.participants = participants;
+	}
+	public Integer getTotal_participation() {
+		return total_participation;
+	}
+	public void setTotal_participation(Integer total_participation) {
+		this.total_participation = total_participation;
 	}
     
     
