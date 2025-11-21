@@ -177,5 +177,25 @@ public class WMPrabhatPheriController {
         return wmService.getVillageListByBlock(blockCode); // return list of villages
     }
     
+    @RequestMapping(value="/deleteWMPrabhatPheri", method = RequestMethod.POST)
+    @ResponseBody
+    public String deleteWMPrabhatPheri(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="ppid") List<Integer> ppid)
+    {
+    	ModelAndView mav = new ModelAndView();
+    	String res="";
+    	session = request.getSession(true);
+    	if(session!=null && session.getAttribute("loginID")!=null) 
+    	{
+    		Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+    		String userType= session.getAttribute("userType").toString();
+    		res=wmService.deleteWMPrabhatPheri(ppid, session.getAttribute("loginID").toString());
+    	
+    	 
+    	}else {
+    		mav = new ModelAndView("login");
+    		mav.addObject("login", new Login());
+    	}
+    	return res; 
+    }
 }
 

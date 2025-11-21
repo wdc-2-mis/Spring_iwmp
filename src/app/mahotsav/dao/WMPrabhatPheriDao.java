@@ -28,4 +28,5 @@ public interface WMPrabhatPheriDao {
 	List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer stCode);
 	
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
+	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
 }

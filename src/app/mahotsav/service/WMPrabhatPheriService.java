@@ -29,4 +29,6 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
 
+	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
+
 }

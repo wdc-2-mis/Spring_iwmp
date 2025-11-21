@@ -63,5 +63,10 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.completeWMPrabhatPheri(ppid, userid);
 	}
 
+	@Override
+	public String deleteWMPrabhatPheri(List<Integer> ppid, String userid) {
+		return dao.deleteWMPrabhatPheri(ppid, userid);
+	}
+
 
 }

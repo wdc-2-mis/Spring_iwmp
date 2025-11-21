@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -392,5 +393,81 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 		
 		return str;
 	}
+
+	@Override
+	public String deleteWMPrabhatPheri(List<Integer> ppid, String userid) {
+
+	    String str = "fail";
+	    Session session = sessionFactory.getCurrentSession();
+	    Transaction tx = null;
+
+	    try {
+	        tx = session.beginTransaction();
+
+	        // 1. Fetch parent records & photo paths
+	        Query<MahotsavPrabhatPheri> query1 = session.createQuery(
+	                "from MahotsavPrabhatPheri where prabhatpheriId IN (:ppidList)",
+	                MahotsavPrabhatPheri.class);
+	        query1.setParameterList("ppidList", ppid);
+
+	        List<MahotsavPrabhatPheri> recordList = query1.list();
+	        List<String> imgList = new ArrayList<>();
+
+	        for (MahotsavPrabhatPheri mp : recordList) {
+	            Set<MahotsavPrabhatPheriPhoto> photoSet = mp.getWmPrabhatPheriPhoto();
+
+	            if (photoSet != null && !photoSet.isEmpty()) {
+	                for (MahotsavPrabhatPheriPhoto photo : photoSet) {
+	                    if (photo.getPhotoUrl() != null && !photo.getPhotoUrl().trim().isEmpty()) {
+	                        imgList.add(photo.getPhotoUrl());
+	                    }
+	                }
+	            }
+	        }
+
+	        // 2. Delete child photos table first (avoid FK issue)
+	        SQLQuery deleteChildren = session.createSQLQuery(
+	                "DELETE FROM watershed_mahotsav_prabhatpheri_act_photo WHERE prabhatpheri_id IN (:ppid)");
+	        deleteChildren.setParameterList("ppid", ppid);
+	        deleteChildren.executeUpdate();
+
+	        // 3. Delete parent table record
+	        SQLQuery deleteParent = session.createSQLQuery(
+	                "DELETE FROM watershed_mahotsav_prabhatpheri WHERE prabhatpheri_id IN (:ppid)");
+	        deleteParent.setParameterList("ppid", ppid);
+
+	        int result = deleteParent.executeUpdate();
+	        if (result > 0) {
+	            str = "success";
+	        } else {
+	            tx.rollback();
+	            return "fail";
+	        }
+
+	        // 4. Delete image files physically
+	        for (String photoPath : imgList) {
+	            File file = new File(photoPath);
+	            if (file.exists()) {
+	                if (file.delete()) {
+	                    System.out.println("Deleted file: " + file.getAbsolutePath());
+	                } else {
+	                    System.out.println("Failed to delete file: " + file.getAbsolutePath());
+	                }
+	            } else {
+	                System.out.println("File not found: " + photoPath);
+	            }
+	        }
+
+	        tx.commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        if (tx != null) tx.rollback();
+	        str = "fail";
+	    }
+
+	    return str;
+	}
+
+
 
 }

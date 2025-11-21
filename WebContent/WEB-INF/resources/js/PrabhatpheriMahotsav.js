@@ -47,3 +47,51 @@ $(document).on('click', '#complete', function (e) {
         });
     }
 });
+
+
+//======================== Delete Prabhat Pheri ======================
+$(document).ready(function () {
+    $("#delete").click(function () {
+
+        var selectedIds = [];
+
+        $(".chkIndividualkd:checked").each(function () {
+            selectedIds.push($(this).val());
+        });
+
+        if (selectedIds.length === 0) {
+            alert("Please select at least one record to delete.");
+            return;
+        }
+
+        if (!confirm("Are you sure you want to delete selected records?")) {
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "deleteWMPrabhatPheri",
+            traditional: true,
+            data: { ppid: selectedIds },
+            success: function (response) {
+                alert(response);
+                location.reload();
+            },
+            error: function () {
+                alert("Error! Something went wrong.");
+            },
+			success: function (data) {
+			               console.log("Response: " + data);
+
+			               if (data === 'success') {
+			                   alert("Deleted Successfully.");
+			               } else {
+			                   alert("Something went wrong!");
+			               }
+
+			               // Refresh page
+			               window.location.href = "getWMPrabhatPheri";
+			           }
+        });
+    });
+});
