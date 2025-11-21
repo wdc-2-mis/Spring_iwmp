@@ -121,6 +121,33 @@ document.addEventListener("change", function(e) {
         // --- END: IMAGE VALIDATION ---
 
         var file = e.target.files[0];
+     // === NEW VALIDATIONS START ===
+
+     // Track uploaded filenames
+     if (!window.uploadedFiles) {
+         window.uploadedFiles = new Set();
+     }
+
+     var fileName = file.name;
+
+     // Check for special characters in filename
+     var invalidChars = /[^a-zA-Z0-9_.-]/;
+     if (invalidChars.test(fileName)) {
+         alert("Filename contains special characters! Please rename the file and upload again.");
+         e.target.value = ""; // reset file input
+         return;
+     }
+
+     // Check if this image already uploaded (duplicate)
+     if (window.uploadedFiles.has(fileName)) {
+         alert("This image is already uploaded! Please upload a different image.");
+         e.target.value = ""; // reset file input
+         return;
+     } else {
+         window.uploadedFiles.add(fileName); // Store filename
+     }
+
+
         var fileDiv = e.target.parentElement;
         var latInput = fileDiv.querySelector(".latitude");
         var lngInput = fileDiv.querySelector(".longitude");
@@ -403,10 +430,12 @@ document.addEventListener("change", function(e) {
  								
  							</tr>
  						</c:forEach>
+ 						<c:if test="${dataDListSize gt 0}">
                         <tr>
                                 
                                 <td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
                             </tr>
+                            </c:if>
                         <c:if test="${dataDListSize eq 0}">
                             <tr>
                                 <td align="center" colspan="8" class="required" style="color:red;">Data Not Found</td>
@@ -426,7 +455,7 @@ document.addEventListener("change", function(e) {
          <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
                         <thead class ="theadlist" id = "theadlist">
                             <tr>
-                                <th>S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+                                <th>S.No.</th>
                                 <th>Date</th>
                                 <th>District Name</th>
                                 <th>Block Name</th>
@@ -443,7 +472,8 @@ document.addEventListener("change", function(e) {
  							<tr>
  							
 <%--  								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  --%>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.prabhatpheri_id}"  name="${data.prabhatpheri_id}" value="${data.prabhatpheri_id}"/></td>
+<%-- 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.prabhatpheri_id}"  name="${data.prabhatpheri_id}" value="${data.prabhatpheri_id}"/></td> --%>
+								<td><c:out value='${count.count}' /> </td>
 								<td><c:out value="${data.date}" /></td>
  								<td><c:out value="${data.distname}" /></td>
  								<td><c:out value="${data.blockname}" /></td>

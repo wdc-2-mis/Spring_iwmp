@@ -238,8 +238,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	         sess.save(data);
 
-	         String code = st_code + userfileup.getDistrict1() + userfileup.getBlock1();
-
+	         String code = st_code +"_"+ userfileup.getDistrict1()+"_" + userfileup.getBlock1()+"_" + data.getPrabhatpheriId();
 	         // ------------------ Save Photos ------------------
 	         List<MultipartFile> photos = userfileup.getPhotos();
 	         List<String> latitudes = userfileup.getLatitude();
@@ -268,7 +267,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	                 commonFunction.uploadFilePrabhatPheriMahotsav(image, filePath, code, sequence);
 
 	                 // Store URL
-	                 photo.setPhotoUrl(filePath + "PP" + code +"_"+ sequence + "_" + image.getOriginalFilename());
+	                 photo.setPhotoUrl(filePath + "PP_" + code +"_"+ sequence + "_" + image.getOriginalFilename());
 
 	                 sess.save(photo);
 	                 sequence++;

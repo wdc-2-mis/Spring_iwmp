@@ -974,7 +974,7 @@ public class CommonFunctions {
 								|| (ext.compareToIgnoreCase("jpeg") == 0)
 								|| (ext.compareToIgnoreCase("png") == 0)) 
 							{
-								file_name = "PP"+code+seq+"_"+fileName;
+								file_name = "PP_"+code+"_"+seq+"_"+fileName;
 							//	file_name = file_name.concat(concatinate);
 								if (!file_name.equals("")) 
 								{
