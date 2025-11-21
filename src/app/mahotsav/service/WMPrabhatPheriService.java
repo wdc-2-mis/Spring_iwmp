@@ -31,4 +31,6 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
 
+	boolean checkVillageWMP(Integer vCode);
+
 }

@@ -197,5 +197,11 @@ public class WMPrabhatPheriController {
     	}
     	return res; 
     }
+    
+    @RequestMapping(value="/checkVillageWMP", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkVillageWMP(@RequestParam("vCode") Integer vCode) {
+        return wmService.checkVillageWMP(vCode);
+    }
 }
 

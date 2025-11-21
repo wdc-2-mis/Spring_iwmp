@@ -63,6 +63,9 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	
 	@Value("${getWMcompletedList}")
 	String getWMcompletedList;
+	
+	@Value("${checkWMPrabhatPheriVillage}")
+	String checkWMPrabhatPheriVillage;
 
     @Override
     public List<Map<String, Object>> getBlockListByDistrict(Integer districtCode) {
@@ -241,6 +244,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	         String code = st_code +"_"+ userfileup.getDistrict1()+"_" + userfileup.getBlock1()+"_" + data.getPrabhatpheriId();
 	         // ------------------ Save Photos ------------------
+	         
 	         List<MultipartFile> photos = userfileup.getPhotos();
 	         List<String> latitudes = userfileup.getLatitude();
 	         List<String> longitudes = userfileup.getLongitute();
@@ -255,15 +259,33 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	                 photo.setCreated_date(new Timestamp(new Date().getTime()));
 	                 photo.setRequestedIp(ipAddr);
 
-	                 // Set correct lat/lng per image
-	                 photo.setLatitude(latitudes.get(i));
-	                 photo.setLongitute(longitudes.get(i));
-	                 if (timestamps != null && timestamps.size() > i) {
-	                     // parse string to Timestamp
-//	                     photo.setPhoto_timestamp(Timestamp.valueOf(timestamps.get(i)));
-	                     photo.setPhoto_timestamp(Timestamp.valueOf(userfileup.getPhotoTimestamp().get(i)));
+	                 // Latitude & Longitude
+	                 photo.setLatitude((latitudes != null && latitudes.size() > i && !latitudes.get(i).trim().isEmpty()) 
+	                                   ? latitudes.get(i) 
+	                                   : null);
 
-	                 }
+	                 photo.setLongitute((longitudes != null && longitudes.size() > i && !longitudes.get(i).trim().isEmpty()) 
+	                                    ? longitudes.get(i) 
+	                                    : null);
+
+	                 // Photo timestamp
+	                 if (timestamps != null && timestamps.size() > i && timestamps.get(i) != null && !timestamps.get(i).trim().isEmpty()) {
+	                	    try {
+	                	        String dateStr = timestamps.get(i); // e.g., "2025-11-21 09:15:30" or "2025:11:21 09:15:30"
+	                	        // Replace ':' in date part if necessary
+	                	        dateStr = dateStr.replaceFirst("(\\d{4}):(\\d{2}):(\\d{2})", "$1-$2-$3"); 
+	                	        // Now dateStr = "2025-11-21 09:15:30"
+	                	        DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	                	        LocalDateTime dateTime = LocalDateTime.parse(dateStr, inputFormat);
+	                	        photo.setPhoto_timestamp(Timestamp.valueOf(dateTime));
+	                	    } catch (Exception e) {
+	                	        photo.setPhoto_timestamp(null); // save null if parsing fails
+	                	    }
+	                	} else {
+	                	    photo.setPhoto_timestamp(null);
+	                	}
+
+
 	                 // Upload the file
 	                 commonFunction.uploadFilePrabhatPheriMahotsav(image, filePath, code, sequence);
 
@@ -274,6 +296,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	                 sequence++;
 	             }
 	         }
+
+
 
 	         // ------------------ Update Sequence Table ------------------
 	         SQLQuery sqlQuery = sess.createSQLQuery(
@@ -467,6 +491,31 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	    return str;
 	}
+
+	@Override
+	public boolean checkVillageWMP(Integer vCode) {
+		Integer value = 0;
+	    Boolean status = false; // Default to false in case no results found
+	    
+	    try (Session session = sessionFactory.openSession()) {
+	        Transaction tx = session.beginTransaction();
+	        
+	        String sql = checkWMPrabhatPheriVillage;
+	        SQLQuery query = session.createSQLQuery(sql);
+	        query.setInteger("vCode", vCode);
+	        value = ((Number) query.uniqueResult()).intValue();
+
+	        if (value > 0) {
+	            status = true;
+	        }
+	        
+	        tx.commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace(); // Log exception for debugging
+	    }
+
+	    return status;
+}
 
 
 

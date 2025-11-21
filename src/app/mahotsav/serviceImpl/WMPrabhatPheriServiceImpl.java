@@ -68,5 +68,10 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.deleteWMPrabhatPheri(ppid, userid);
 	}
 
+	@Override
+	public boolean checkVillageWMP(Integer vCode) {
+		return dao.checkVillageWMP(vCode);
+	}
+
 
 }

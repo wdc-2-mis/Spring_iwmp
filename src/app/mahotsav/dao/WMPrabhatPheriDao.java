@@ -29,4 +29,5 @@ public interface WMPrabhatPheriDao {
 	
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
+	boolean checkVillageWMP(Integer vCode);
 }

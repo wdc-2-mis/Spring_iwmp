@@ -95,3 +95,23 @@ $(document).ready(function () {
         });
     });
 });
+
+
+	$(document).on('click', '#village1', function (e) {
+        var vCode = this.value;
+       
+        $.ajax({
+            url: 'checkVillageWMP',
+            type: 'POST',
+            data: {
+                vCode: vCode
+            },
+            success: function(exists) {
+                if (exists) {
+					alert('Village already exists. Please select a different Village. !');
+						$("select#village1")[0].selectedIndex = 0;
+					
+                }
+            }
+        });
+    });
