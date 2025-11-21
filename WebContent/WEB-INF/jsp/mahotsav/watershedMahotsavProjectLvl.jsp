@@ -47,9 +47,9 @@ function addPhotoField1(btn) {
     div.innerHTML = `
         <input type="file" name="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat"/>
-        <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng"/>
-        <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time"/>
+        <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = ""/>
+        <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/>
+        <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -71,9 +71,9 @@ function addPhotoField2(btn) {
     div.innerHTML = `
         <input type="file" name="photos_lokarpan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="lokarpan_lat" name="lokarpan_lat"/>
-	    <input type="hidden" id="lokarpan_lng" name="lokarpan_lng"/>
-	    <input type="hidden" id="lokarpan_time" name="lokarpan_time"/>
+        <input type="hidden" id="lokarpan_lat" name="lokarpan_lat" value = "0"/>
+	    <input type="hidden" id="lokarpan_lng" name="lokarpan_lng" value = "0"/>
+	    <input type="hidden" id="lokarpan_time" name="lokarpan_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -95,9 +95,9 @@ function addPhotoField3(btn) {
     div.innerHTML = `
         <input type="file" name="photos_shramdaan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="shramdaan_lat" name="shramdaan_lat"/>
-	    <input type="hidden" id="shramdaan_lng" name="shramdaan_lng"/>
-	    <input type="hidden" id="shramdaan_time" name="shramdaan_time"/>
+        <input type="hidden" id="shramdaan_lat" name="shramdaan_lat" value = "0"/>
+	    <input type="hidden" id="shramdaan_lng" name="shramdaan_lng" value = "0"/>
+	    <input type="hidden" id="shramdaan_time" name="shramdaan_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -119,9 +119,9 @@ function addPhotoField4(btn) {
     div.innerHTML = `
         <input type="file" name="photos_forestry" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="forestry_lat" name="forestry_lat"/>
-	    <input type="hidden" id="forestry_lng" name="forestry_lng"/>
-	    <input type="hidden" id="forestry_time" name="forestry_time"/>
+        <input type="hidden" id="forestry_lat" name="forestry_lat" value = "0"/>
+	    <input type="hidden" id="forestry_lng" name="forestry_lng" value = "0"/>
+	    <input type="hidden" id="forestry_time" name="forestry_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -222,11 +222,14 @@ function validatePhoto(input) {
             let longitude = convert(lng, lngRef);
             
             // 7. Detect correct hidden fields dynamically
-            let prefix = input.name;   // e.g. "photos_bhoomipoojan"
+            let parentDiv = input.closest('div');
+            let latInput = parentDiv.querySelector('input[name$="_lat"]');
+            let lngInput = parentDiv.querySelector('input[name$="_lng"]');
+            let timeInput = parentDiv.querySelector('input[name$="_time"]');
             
-            document.getElementById(prefix.replace("photos_", "") + "_lat").value = latitude || "";
-            document.getElementById(prefix.replace("photos_", "") + "_lng").value = longitude || "";
-            document.getElementById(prefix.replace("photos_", "") + "_time").value = time || "";
+            if (latInput) latInput.value = latitude || "0";
+            if (lngInput) lngInput.value = longitude || "0";
+            if (timeInput) timeInput.value = time || "0";
 //             alert('kdy_lat= '+document.getElementById("bhoomipoojan_lat").value +' kdy_lon= '+document.getElementById("bhoomipoojan_lng").value);
             // 8. Warn if GPS or timestamp missing
             
@@ -586,11 +589,9 @@ function validation()
 											<input type="file" name="photos_bhoomipoojan"
 												id="photos_bhoomipoojan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="bhoomipoojan_lat"
-												name="bhoomipoojan_lat"> <input type="hidden"
-												id="bhoomipoojan_lng" name="bhoomipoojan_lng"> <input
-												type="hidden" id="bhoomipoojan_time"
-												name="bhoomipoojan_time">
+											<input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat" value = "0"/> 
+											<input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng" value = "0"/> 
+											<input type="hidden" id="bhoomipoojan_time"	name="bhoomipoojan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -621,9 +622,9 @@ function validation()
 											<input type="file" name="photos_lokarpan"
 												id="photos_lokarpan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="lokarpan_lat" name="lokarpan_lat">
-											<input type="hidden" id="lokarpan_lng" name="lokarpan_lng">
-											<input type="hidden" id="lokarpan_time" name="lokarpan_time">
+											<input type="hidden" id="lokarpan_lat" name="lokarpan_lat" value = "0"/>
+											<input type="hidden" id="lokarpan_lng" name="lokarpan_lng" value = "0"/>
+											<input type="hidden" id="lokarpan_time" name="lokarpan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -660,10 +661,9 @@ function validation()
 											<input type="file" name="photos_shramdaan"
 												id="photos_shramdaan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="shramdaan_lat" name="shramdaan_lat">
-											<input type="hidden" id="shramdaan_lng" name="shramdaan_lng">
-											<input type="hidden" id="shramdaan_time"
-												name="shramdaan_time">
+											<input type="hidden" id="shramdaan_lat" name="shramdaan_lat" value = "0"/>
+											<input type="hidden" id="shramdaan_lng" name="shramdaan_lng" value = "0"/>
+											<input type="hidden" id="shramdaan_time" name="shramdaan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -692,9 +692,9 @@ function validation()
 											<input type="file" name="photos_forestry"
 												id="photos_forestry" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="forestry_lat" name="forestry_lat">
-											<input type="hidden" id="forestry_lng" name="forestry_lng">
-											<input type="hidden" id="forestry_time" name="forestry_time">
+											<input type="hidden" id="forestry_lat" name="forestry_lat" value = "0"/>
+											<input type="hidden" id="forestry_lng" name="forestry_lng" value = "0"/>
+											<input type="hidden" id="forestry_time" name="forestry_time" value = "0"/>
 										</div>
 									</div>
 
@@ -722,6 +722,213 @@ function validation()
      		
 		</form:form>
 	</div> 
+	
+	<div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Mahotsav at Project Level Details</h5>
+	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+								<th rowspan="3">Date</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="3">District Name</th>
+								<th rowspan="3">Block Name</th>
+								<th rowspan="3">Location</th>
+								
+								<th colspan="9">Number of Participation</th>
+								<th colspan="7">Activities</th>
+							</tr>
+							<tr>
+								<th colspan="2">Number of Participants</th>
+								<th colspan="2">Number of Ministers</th>
+								<th rowspan="2">Member of Parliament</th>
+								<th colspan="2">Number of Members</th>
+								<th rowspan="2">Number of other Public Representatives</th>
+								<th rowspan="2">Number of Government Officials</th>
+								<th rowspan="2">Number of Works for Bhoomi Poojan </th>
+								<th rowspan="2">Number of Works for Lokarpan</th>
+								<th colspan="2">Shramdaan</th>
+								<th rowspan="2">Agro forestry / Horticultural Plantation Number of Sapling </th>
+								<th rowspan="2">Photos</th>
+							</tr>
+							<tr>
+								<th>Male</th>
+								<th>Female</th>
+								<th>Central Level</th>
+								<th>State Level</th>
+								<th>Legislative Assembly</th>
+								<th>Legislative Council</th>
+								<th>No. of Locations</th>
+								<th>No. of people participated</th>
+							</tr>
+						</thead>
+						
+ 						<c:set var="st" value="" />
+ 					 	<c:forEach items="${dataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
+								<td> <c:out value="${data.date}" /></td>
+ 								<%-- <c:choose>
+ 									<c:when test="${st ne data.stname}">
+ 										<c:set var="st" value="${data.stname}" />
+ 										<td> <c:out value="${data.stname}" /></td>
+ 									</c:when>
+ 								<c:otherwise>
+<!--  										<td></td> -->
+ 								</c:otherwise>
+ 								</c:choose> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+								<td class="text-left"> <c:out value="${data.location}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+								
+ 								
+ 								
+								<td class="text-right">
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
+					</tr>
+							
+					
+ 						</c:forEach> 
+ 						
+ 						<tr>
+								
+								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
+								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
+							</tr>
+						<c:if test="${dataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="16" ></td>
+							</tr>
+						</c:if>
+		</table>
+		
+		
+		</div>
+		</div>
+		
+		<div class="form-row">
+	     <div class="form-group col">
+	     <hr/>
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Mahotsav at Project Level Details</h5>
+	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
+						<thead class ="theadlist" id = "theadlist">
+							<tr>
+								<th rowspan="3">S.No.</th> 
+								<th rowspan="3">Date</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="3">District Name</th>
+								<th rowspan="3">Block Name</th>
+								<th rowspan="3">Location</th>
+								
+								<th colspan="9">Number of Participation</th>
+								<th colspan="7">Activities</th>
+							</tr>
+							<tr>
+								<th colspan="2">Number of Participants</th>
+								<th colspan="2">Number of Ministers</th>
+								<th rowspan="2">Member of Parliament</th>
+								<th colspan="2">Number of Members</th>
+								<th rowspan="2">Number of other Public Representatives</th>
+								<th rowspan="2">Number of Government Officials</th>
+								<th rowspan="2">Number of Works for Bhoomi Poojan </th>
+								<th rowspan="2">Number of Works for Lokarpan</th>
+								<th colspan="2">Shramdaan</th>
+								<th rowspan="2">Agro forestry / Horticultural Plantation Number of Sapling </th>
+								<th rowspan="2">Photos</th>
+							</tr>
+							<tr>
+								<th>Male</th>
+								<th>Female</th>
+								<th>Central Level</th>
+								<th>State Level</th>
+								<th>Legislative Assembly</th>
+								<th>Legislative Council</th>
+								<th>No. of Locations</th>
+								<th>No. of people participated</th>
+							</tr>
+						</thead>
+						
+ 						<c:set var="st" value="" />
+ 					 	<c:forEach items="${compdataList}" var="data" varStatus="count">
+ 							<tr>
+								<td><c:out value='${count.count}' /> &nbsp;</td>
+								<td> <c:out value="${data.date}" /></td>
+ 								<%-- <c:choose>
+ 									<c:when test="${st ne data.stname}">
+ 										<c:set var="st" value="${data.stname}" />
+ 										<td> <c:out value="${data.stname}" /></td>
+ 									</c:when>
+ 								<c:otherwise>
+<!--  										<td></td> -->
+ 								</c:otherwise>
+ 								</c:choose> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+								<td class="text-left"> <c:out value="${data.location}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
+								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
+								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
+ 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
+								<td class="text-right"> <c:out value="${data.others}" /></td>
+ 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								
+								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
+ 								
+ 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
+								
+ 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+ 								
+								<td class="text-right">
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+								</td>
+					</tr>
+							
+					
+ 						</c:forEach> 
+ 						
+						<c:if test="${compdataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
+								<td colspan="16" ></td>
+							</tr>
+						</c:if>
+		</table>
+		
+		
+		</div>
+		</div>
+	
+	
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>

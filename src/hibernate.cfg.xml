@@ -110,6 +110,8 @@
         <mapping class="app.mahotsav.model.WatershedMahotsavInauguarationActPhoto" />
         <mapping class="app.mahotsav.model.MahotsavPrabhatPheri" />
         <mapping class="app.mahotsav.model.MahotsavPrabhatPheriPhoto" />
+         <mapping class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavProjectLvlPhoto" />
         
 	</session-factory>
 </hibernate-configuration>

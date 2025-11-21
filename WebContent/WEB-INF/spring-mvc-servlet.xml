@@ -189,5 +189,7 @@ p:basename="classpath:messages/messages">
 	<bean name="WatershedMahotsavInauguarationActPhoto" class="app.mahotsav.model.WatershedMahotsavInauguarationActPhoto" />
 	<bean name="MahotsavPrabhatPheri" class="app.mahotsav.model.MahotsavPrabhatPheri" />
 	<bean name="MahotsavPrabhatPheriPhoto" class="app.mahotsav.model.MahotsavPrabhatPheriPhoto" />
+	<bean name="WatershedMahotsavProjectLevel" class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
+	<bean name="WatershedMahotsavProjectLvlPhoto" class="app.mahotsav.model.WatershedMahotsavProjectLvlPhoto" />
 	
 </beans>
