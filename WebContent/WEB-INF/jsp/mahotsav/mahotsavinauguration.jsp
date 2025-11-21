@@ -414,12 +414,19 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-  //  const requiredWidth = 300;
-  //  const requiredHeight = 400;
+    const requiredWidth = 300;
+    const requiredHeight = 400;
 
     // 1. Validate file type
     if (!allowedTypes.includes(file.type)) {
         alert("Invalid file type! Only JPEG or PNG images are allowed.");
+        input.value = "";
+        checkValid = false;
+        return;
+    }
+    
+    if (checkValid && /[^\w.-]/.test(file.name)) {
+        alert("Filename contains special characters! Please rename the file and upload again.");
         input.value = "";
         checkValid = false;
         return;
@@ -433,20 +440,23 @@ function validatePhoto(input) {
         checkValid = false;
         return;
     }
+    
  // 3. Validate image dimensions
-    let reader = new FileReader();
-	reader.onload = function (e) {
-    let img = new Image();
-    img.onload = function () {
-        if (checkValid && (img.width !== requiredWidth || img.height !== requiredHeight)) {
-            alert(`Image dimensions must be ` +requiredWidth +` x `+ requiredHeight +` pixels.\nYour image: ` +img.width+` x `+img.height);
-            input.value = "";
-            checkValid = false;
-            return;
-        	}
-   	 	};
-    	img.src = e.target.result; // use base64 data URL from FileReader
-		};
+     var reader = new FileReader();
+    reader.onload = function(e) {
+        var img = new Image();
+        img.onload = function() {
+            var width = img.width;
+            var height = img.height;
+            if (width > maxWidth || height > maxHeight) {
+                alert('Image dimensions exceed allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
+                input.value = '';
+                document.getElementById(inputId).focus();
+                return false;
+            }
+        };
+        img.src = e.target.result;
+    };
 	reader.readAsDataURL(file);
 
 	 // 4. Check duplicate image by hashing
