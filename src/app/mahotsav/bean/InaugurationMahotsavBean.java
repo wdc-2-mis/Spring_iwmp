@@ -24,9 +24,9 @@ public class InaugurationMahotsavBean {
     private Integer bhoomipoojan;
     private Integer no_works_bhoomipoojan;
     private List<MultipartFile> photos_bhoomipoojan;
-    private List<String> bhoomipoojan_lat;
-    private List<String> bhoomipoojan_lng;
-    private List<String> bhoomipoojan_time;
+    private List<String> photos_bhoomipoojan_lat;
+    private List<String> photos_bhoomipoojan_lng;
+    private List<String> photos_bhoomipoojan_time;
     
     private Integer lokarpan;
     private Integer no_works_lokarpan;
@@ -233,23 +233,23 @@ public class InaugurationMahotsavBean {
 	public void setPhotos_janbhagidari(List<MultipartFile> photos_janbhagidari) {
 		this.photos_janbhagidari = photos_janbhagidari;
 	}
-	public List<String> getBhoomipoojan_lat() {
-		return bhoomipoojan_lat;
+	public List<String> getPhotos_bhoomipoojan_lat() {
+		return photos_bhoomipoojan_lat;
 	}
-	public void setBhoomipoojan_lat(List<String> bhoomipoojan_lat) {
-		this.bhoomipoojan_lat = bhoomipoojan_lat;
+	public void setPhotos_bhoomipoojan_lat(List<String> photos_bhoomipoojan_lat) {
+		this.photos_bhoomipoojan_lat = photos_bhoomipoojan_lat;
 	}
-	public List<String> getBhoomipoojan_lng() {
-		return bhoomipoojan_lng;
+	public List<String> getPhotos_bhoomipoojan_lng() {
+		return photos_bhoomipoojan_lng;
 	}
-	public void setBhoomipoojan_lng(List<String> bhoomipoojan_lng) {
-		this.bhoomipoojan_lng = bhoomipoojan_lng;
+	public void setPhotos_bhoomipoojan_lng(List<String> photos_bhoomipoojan_lng) {
+		this.photos_bhoomipoojan_lng = photos_bhoomipoojan_lng;
 	}
-	public List<String> getBhoomipoojan_time() {
-		return bhoomipoojan_time;
+	public List<String> getPhotos_bhoomipoojan_time() {
+		return photos_bhoomipoojan_time;
 	}
-	public void setBhoomipoojan_time(List<String> bhoomipoojan_time) {
-		this.bhoomipoojan_time = bhoomipoojan_time;
+	public void setPhotos_bhoomipoojan_time(List<String> photos_bhoomipoojan_time) {
+		this.photos_bhoomipoojan_time = photos_bhoomipoojan_time;
 	}
 	public List<String> getLokarpan_lat() {
 		return lokarpan_lat;

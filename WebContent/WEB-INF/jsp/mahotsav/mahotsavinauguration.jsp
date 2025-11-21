@@ -66,9 +66,9 @@ function addPhotoField1(btn) {
     div.innerHTML = `
         <input type="file" name="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat[]"/>
-        <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng[]"/>
-        <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time[]"/>
+        <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat"/>
+        <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng"/>
+        <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time"/>
     `;
 
     container.appendChild(div);
@@ -469,10 +469,11 @@ function validatePhoto(input) {
             // 6. Detect correct hidden fields dynamically
             let prefix = input.name;   // e.g. "photos_bhoomipoojan"
            
-            document.getElementById(prefix.replace("photos", "") + "_lat").value = latitude || "";
-            document.getElementById(prefix.replace("photos", "") + "_lng").value = longitude || "";
-            document.getElementById(prefix.replace("photos", "") + "_time").value = time || "";
-            alert('kdy='+document.getElementById("bhoomipoojan_lat").value);
+            document.getElementById(prefix+"_lat").value = latitude || "0";
+            document.getElementById(prefix+"_lng").value = longitude || "0";
+            document.getElementById(prefix+"_time").value = time || "0";
+            var aa=document.getElementById("photos_bhoomipoojan_lat").value;
+           alert('kdy2='+aa);
             // 7. Warn if GPS or timestamp missing
             if (!latitude || !longitude || !time) {
                 if (!confirm("This photo does NOT contain GPS or timestamp information.\nDo you still want to upload?")) {
@@ -625,9 +626,9 @@ function getImageHash(file, callback) {
 			    <div class="photoContainer">
 			        <div class="d-flex align-items-center mb-1">
 			            <input type="file" name="photos_bhoomipoojan" id="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
-			            <input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat[]">
-		                <input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng[]">
-		                <input type="hidden" id="bhoomipoojan_time" name="bhoomipoojan_time[]">
+			            <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat">
+		                <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng">
+		                <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time">
 			        </div>
 			    </div>
 			

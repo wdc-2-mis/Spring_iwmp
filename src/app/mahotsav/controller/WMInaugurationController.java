@@ -44,7 +44,8 @@ public class WMInaugurationController {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 	//	long timeBasedId = System.currentTimeMillis();
-
+		List<InaugurationMahotsavBean> data = new ArrayList<InaugurationMahotsavBean>();
+		List<InaugurationMahotsavBean> compdata = new ArrayList<InaugurationMahotsavBean>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 				mav = new ModelAndView("mahotsav/mahotsavinauguration");
@@ -64,7 +65,9 @@ public class WMInaugurationController {
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
 				}
-				
+			//	data=iSer.getregisterInaugurationDetails(stcd);
+				mav.addObject("dataList",data);
+				mav.addObject("dataListSize",data.size());
 				mav.addObject("userType", userType);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
@@ -100,7 +103,10 @@ public class WMInaugurationController {
 				 * System.out.println("kdy="+fileName); imageNames.add(fileName); } }
 				 * 
 				 */
-				
+				for(String aa:userfileup.getPhotos_bhoomipoojan_lat()) {
+					
+					System.out.println("lat =" +aa);
+				}
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 				String userType = session.getAttribute("userType").toString();
@@ -123,7 +129,7 @@ public class WMInaugurationController {
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 
-				result = iSer.saveMahotsavInaugurationDetails(userfileup, session);
+			//	result = iSer.saveMahotsavInaugurationDetails(userfileup, session);
 
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");

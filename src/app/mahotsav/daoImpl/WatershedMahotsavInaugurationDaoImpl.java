@@ -6,14 +6,18 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -27,6 +31,7 @@ import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
+import app.watershedyatra.bean.InaugurationBean;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
 @Repository("WatershedMahotsavInaugurationDao")
@@ -41,7 +46,8 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 //	@Value("${getInaugurationDetails}")
 //	String getInaugurationDetails;
 	
-	
+	@Value("${getInaugurationDetails}")
+	String getregisterInaugurationDraftDetails;
 	
 	private Timestamp parseTimestamp(String dateTimeString) {
 	    DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
@@ -132,12 +138,16 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			sess.save(data);
 			String code=st_code.toString()+userfileup.getDistrict().toString()+userfileup.getBlock().toString();
 			//System.out.println("state="+code);
+			
+			
+			
 			for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) {
 		        if (!image.isEmpty()) {
 		        	photo.setWatershedMahotsavInauguaration(data);
 		        	photo.setCreatedBy(session.getAttribute("loginID").toString());
 					photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 					photo.setRequestedIp(ipAddr);
+					photo.setLatitude(null);
 		        	commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getBhoomipoojan().toString(), sequence);
 		        	photo.setActId(userfileup.getBhoomipoojan());
 		        	photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
@@ -229,6 +239,34 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		}
 
 	return res;
+	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getregisterInaugurationDetails(Integer stcd) {
+		
+		String getReport=getregisterInaugurationDraftDetails;
+		Session session = sessionFactory.getCurrentSession();
+		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("statecd",stcd); 
+				query.setResultTransformer(Transformers.aliasToBean(InaugurationBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 	
 	

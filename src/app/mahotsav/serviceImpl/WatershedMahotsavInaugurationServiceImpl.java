@@ -1,5 +1,7 @@
 package app.mahotsav.serviceImpl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,12 @@ public class WatershedMahotsavInaugurationServiceImpl implements WatershedMahots
 	public String saveMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session) {
 		// TODO Auto-generated method stub
 		return dao.saveMahotsavInaugurationDetails(userfileup, session);
+	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getregisterInaugurationDetails(Integer stcd) {
+		// TODO Auto-generated method stub
+		return dao.getregisterInaugurationDetails(stcd);
 	}
 	
 	
