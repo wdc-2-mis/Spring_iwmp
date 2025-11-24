@@ -441,7 +441,7 @@ document.addEventListener("change", function(e) {
  						</c:forEach>
  						<c:if test="${dataDListSize gt 0}">
                         <tr>
-<!--                                 <td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td> -->
+                                <td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
                                 <td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
                             </tr>
                             </c:if>
