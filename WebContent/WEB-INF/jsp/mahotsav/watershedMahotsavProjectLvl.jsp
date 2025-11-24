@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
 <link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/phystyle.css" />">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
- <%-- <script src='<c:url value="/resources/js/VillageWatershed.js" />'></script>  --%>
+ <script src='<c:url value="/resources/js/mahotsavAtProjLvl.js" />'></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/exif-js/2.3.0/exif.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 
@@ -71,9 +71,9 @@ function addPhotoField2(btn) {
     div.innerHTML = `
         <input type="file" name="photos_lokarpan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="lokarpan_lat" name="lokarpan_lat" value = "0"/>
-	    <input type="hidden" id="lokarpan_lng" name="lokarpan_lng" value = "0"/>
-	    <input type="hidden" id="lokarpan_time" name="lokarpan_time" value = "0"/>
+        <input type="hidden" id="photos_lokarpan_lat" name="photos_lokarpan_lat" value = "0"/>
+	    <input type="hidden" id="photos_lokarpan_lng" name="photos_lokarpan_lng" value = "0"/>
+	    <input type="hidden" id="photos_lokarpan_time" name="photos_lokarpan_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -95,9 +95,9 @@ function addPhotoField3(btn) {
     div.innerHTML = `
         <input type="file" name="photos_shramdaan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="shramdaan_lat" name="shramdaan_lat" value = "0"/>
-	    <input type="hidden" id="shramdaan_lng" name="shramdaan_lng" value = "0"/>
-	    <input type="hidden" id="shramdaan_time" name="shramdaan_time" value = "0"/>
+        <input type="hidden" id="photos_shramdaan_lat" name="photos_shramdaan_lat" value = "0"/>
+	    <input type="hidden" id="photos_shramdaan_lng" name="photos_shramdaan_lng" value = "0"/>
+	    <input type="hidden" id="photos_shramdaan_time" name="photos_shramdaan_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -119,9 +119,9 @@ function addPhotoField4(btn) {
     div.innerHTML = `
         <input type="file" name="photos_forestry" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="forestry_lat" name="forestry_lat" value = "0"/>
-	    <input type="hidden" id="forestry_lng" name="forestry_lng" value = "0"/>
-	    <input type="hidden" id="forestry_time" name="forestry_time" value = "0"/>
+        <input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value = "0"/>
+	    <input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value = "0"/>
+	    <input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -143,7 +143,7 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-    const requiredWidth = 300;
+    const requiredWidth = 400;
     const requiredHeight = 400;
 
 
@@ -169,8 +169,8 @@ function validatePhoto(input) {
 	reader.onload = function (e) {
     let img = new Image();
     img.onload = function () {
-        if (checkValid && (img.width !== requiredWidth || img.height !== requiredHeight)) {
-            alert(`Image dimensions must be ` +requiredWidth +` x `+ requiredHeight +` pixels.\nYour image: ` +img.width+` x `+img.height);
+        if (checkValid && (img.width > requiredWidth || img.height > requiredHeight)) {
+            alert(`Image dimensions must be less than ` +requiredWidth +` x `+ requiredHeight +` pixels.\nYour image: ` +img.width+` x `+img.height);
             input.value = "";
             checkValid = false;
             return;
@@ -192,7 +192,7 @@ function validatePhoto(input) {
         }
 
         // 5. Check filename for special characters
-        if (checkValid && /[^\w.-]/.test(file.name)) {
+        if (checkValid && !/^[A-Za-z0-9]+$/.test(file.name.split(".")[0])) {
             alert("Filename contains special characters! Please rename the file and upload again.");
             input.value = "";
             checkValid = false;
@@ -223,9 +223,9 @@ function validatePhoto(input) {
             
             // 7. Detect correct hidden fields dynamically
             let parentDiv = input.closest('div');
-            let latInput = parentDiv.querySelector('input[name$="_lat"]');
-            let lngInput = parentDiv.querySelector('input[name$="_lng"]');
-            let timeInput = parentDiv.querySelector('input[name$="_time"]');
+            let latInput = parentDiv.querySelector('input[id$="_lat"]');
+            let lngInput = parentDiv.querySelector('input[id$="_lng"]');
+            let timeInput = parentDiv.querySelector('input[id$="_time"]');
             
             if (latInput) latInput.value = latitude || "0";
             if (lngInput) lngInput.value = longitude || "0";
@@ -269,15 +269,15 @@ function validation()
     $block = $('#block option:selected').val();
     $datetime = $('#datetime').val();
 	$location = $('#location').val();
-	$maleParticipants = $('#maleParticipants').val();
-	$femaleParticipants = $('#femaleParticipants').val();
-	$centralMinisters = $('#centralMinisters').val();
-	$stateMinisters = $('#stateMinisters').val();
-	$membersOfParliament = $('#membersOfParliament').val();
-	$legAssemblyMembers = $('#legAssemblyMembers').val();
-	$legCouncilMembers = $('#legCouncilMembers').val();
-	$publicReps = $('#publicReps').val();
-	$govOfficials = $('#govOfficials').val();
+	$maleParticipants = $('#maleparticipants').val();
+	$femaleParticipants = $('#femaleparticipants').val();
+	$centralMinisters = $('#centralministers').val();
+	$stateMinisters = $('#stateministers').val();
+	$membersOfParliament = $('#membersofparliament').val();
+	$legAssemblyMembers = $('#legassemblymembers').val();
+	$legCouncilMembers = $('#legcouncilmembers').val();
+	$publicReps = $('#publicreps').val();
+	$govOfficials = $('#govofficials').val();
 	$no_works_bhoomipoojan = $('#no_works_bhoomipoojan').val();
 	$bhoomipoojan_photo1 = $('#photos_bhoomipoojan').val();
 	
@@ -311,55 +311,55 @@ function validation()
 	}
 	if ($maleParticipants === '' || typeof $maleParticipants === 'undefined') {
 		alert('Please enter the Number Of Male Participants/Villagers');
-		$('#maleParticipants').focus();
+		$('#maleparticipants').focus();
 		allValid = false;
 		return false;
 	}
 	if ($femaleParticipants === '' || typeof $femaleParticipants === 'undefined') {
 		alert('Please enter the Number Of Female Participants/Villagers');
-		$('#femaleParticipants').focus();
+		$('#femaleparticipants').focus();
 		allValid = false;
 		return false;
 	}
 	if ($centralMinisters === '' || typeof $centralMinisters === 'undefined') {
 		alert('Please enter the Number of Central Ministers');
-		$('#centralMinisters').focus();
+		$('#centralministers').focus();
 		allValid = false;
 		return false;
 	}
 	if ($stateMinisters === '' || typeof $stateMinisters === 'undefined') {
 		alert('Please enter the Number of State Ministers');
-		$('#stateMinisters').focus();
+		$('#stateministers').focus();
 		allValid = false;
 		return false;
 	}
 	if ($membersOfParliament === '' || typeof $membersOfParliament === 'undefined') {
 		alert('Please enter the Number of Members of Parliament');
-		$('#membersOfParliament').focus();
+		$('#membersofparliament').focus();
 		allValid = false;
 		return false;
 	}
 	if ($legAssemblyMembers === '' || typeof $legAssemblyMembers === 'undefined') {
 		alert('Please enter the Number of Legislative Assembly Members');
-		$('#legAssemblyMembers').focus();
+		$('#legassemblymembers').focus();
 		allValid = false;
 		return false;
 	}
 	if ($legCouncilMembers === '' || typeof $legCouncilMembers === 'undefined') {
 		alert('Please enter the Number of Legislative Council Members');
-		$('#legCouncilMembers').focus();
+		$('#legcouncilmembers').focus();
 		allValid = false;
 		return false;
 	}
 	if ($publicReps === '' || typeof $publicReps === 'undefined') {
 		alert('Please enter the Number of other Public Representatives');
-		$('#publicReps').focus();
+		$('#publicreps').focus();
 		allValid = false;
 		return false;
 	}
 	if ($govOfficials === '' || typeof $govOfficials === 'undefined') {
 		alert('Please enter the Number of Government Officials');
-		$('#govOfficials').focus();
+		$('#govofficials').focus();
 		allValid = false;
 		return false;
 	}
@@ -471,6 +471,12 @@ function validation()
 //     document.getElementById("saveWatershed").submit();
 }
 
+function displaydata(){
+	document.saveWatershed.action="getWatershedMahotsavAtProjLvl";
+	document.saveWatershed.method="post";
+	document.saveWatershed.submit();
+}
+
 </script>
 
 
@@ -510,10 +516,15 @@ function validation()
     		<div class="form-group col-3">
     			<label for="activity">Block: </label>
       			<span class="activityError"></span>
-      			<select class="form-control activity" id="block" name="block" >
+      			<select class="form-control activity" id="block" name="block" onchange ="displaydata()" >
     				<option value="">--Select Block--</option>
     				<c:forEach items="${blkList}" var="dist"> 
-					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
+    				<c:if test ="${dist.key == blkcode}">
+						<option value="<c:out value="${dist.key}"/>" selected><c:out value="${dist.value}" /></option>
+					</c:if>
+					<c:if test ="${dist.key != blkcode}">
+						<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
+					</c:if>
 					</c:forEach>
     			</select>
     		</div>
@@ -535,38 +546,38 @@ function validation()
      	</tr>
      	<tr>
      		<td colspan=2>Number Of Participants/Villagers</td>
-     		<td>Male<br><input type="text" id="maleParticipants" name="maleParticipants" autocomplete="off"
+     		<td>Male<br><input type="text" id="maleparticipants" name="maleparticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Female<br><input type="text" id="femaleParticipants" name="femaleParticipants" autocomplete="off"
+     		<td>Female<br><input type="text" id="femaleparticipants" name="femaleparticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of Ministers</td>
-     		<td>Central Level<br><input type="text" id="centralMinisters" name="centralMinisters" autocomplete="off"
+     		<td>Central Level<br><input type="text" id="centralministers" name="centralministers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>State Level<br><input type="text" id="stateMinisters" name="stateMinisters" autocomplete="off"
+     		<td>State Level<br><input type="text" id="stateministers" name="stateministers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
      	<tr>
      		<td colspan=2>Number of Member of Parliament</td>
-     		<td colspan=2><input type="text" id="membersOfParliament" name="membersOfParliament" autocomplete="off"
+     		<td colspan=2><input type="text" id="membersofparliament" name="membersofparliament" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of Members</td>
-     		<td>Legislative Assembly<br><input type="text" id="legAssemblyMembers" name="legAssemblyMembers" autocomplete="off"
+     		<td>Legislative Assembly<br><input type="text" id="legassemblymembers" name="legassemblymembers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Legislative Council<br><input type="text" id="legCouncilMembers" name="legCouncilMembers" autocomplete="off"
+     		<td>Legislative Council<br><input type="text" id="legcouncilmembers" name="legcouncilmembers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td colspan=2>Number of other Public Representatives</td>
-     		<td colspan=2><input type="text" id="publicReps" name="publicReps" autocomplete="off"
+     		<td colspan=2><input type="text" id="publicreps" name="publicreps" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	<tr>
      		<td colspan=2>Number of Government Officials</td>
-     		<td colspan=2><input type="text" id="govOfficials" name="govOfficials" autocomplete="off"
+     		<td colspan=2><input type="text" id="govofficials" name="govofficials" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
@@ -589,9 +600,9 @@ function validation()
 											<input type="file" name="photos_bhoomipoojan"
 												id="photos_bhoomipoojan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="bhoomipoojan_lat" name="bhoomipoojan_lat" value = "0"/> 
-											<input type="hidden" id="bhoomipoojan_lng" name="bhoomipoojan_lng" value = "0"/> 
-											<input type="hidden" id="bhoomipoojan_time"	name="bhoomipoojan_time" value = "0"/>
+											<input type="hidden" id="bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = "0"/> 
+											<input type="hidden" id="bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/> 
+											<input type="hidden" id="bhoomipoojan_time"	name="photos_bhoomipoojan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -622,9 +633,9 @@ function validation()
 											<input type="file" name="photos_lokarpan"
 												id="photos_lokarpan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="lokarpan_lat" name="lokarpan_lat" value = "0"/>
-											<input type="hidden" id="lokarpan_lng" name="lokarpan_lng" value = "0"/>
-											<input type="hidden" id="lokarpan_time" name="lokarpan_time" value = "0"/>
+											<input type="hidden" id="photos_lokarpan_lat" name="photos_lokarpan_lat" value = "0"/>
+											<input type="hidden" id="photos_lokarpan_lng" name="photos_lokarpan_lng" value = "0"/>
+											<input type="hidden" id="photos_lokarpan_time" name="photos_lokarpan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -661,9 +672,9 @@ function validation()
 											<input type="file" name="photos_shramdaan"
 												id="photos_shramdaan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="shramdaan_lat" name="shramdaan_lat" value = "0"/>
-											<input type="hidden" id="shramdaan_lng" name="shramdaan_lng" value = "0"/>
-											<input type="hidden" id="shramdaan_time" name="shramdaan_time" value = "0"/>
+											<input type="hidden" id="photos_shramdaan_lat" name="photos_shramdaan_lat" value = "0"/>
+											<input type="hidden" id="photos_shramdaan_lng" name="photos_shramdaan_lng" value = "0"/>
+											<input type="hidden" id="photos_shramdaan_time" name="photos_shramdaan_time" value = "0"/>
 										</div>
 									</div>
 
@@ -679,9 +690,9 @@ function validation()
 						</tr>
 						<tr>
 							<td>Agro forestry / Horticultural Plantation - Number of Saplings <input type="hidden" name="forestry" id="forestry" value="4"/></td>
-							<td colspan=2><input type="text" id="area_plantation"
-								name="area_plantation" autocomplete="off"
-								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
+							<td colspan=2><input type="text" id="area_plantation"autocomplete="off"
+								pattern="^\d{10}$" maxlength="5"
+								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
 								<div class="photo-block" data-name="photos_forestry">
 
@@ -692,9 +703,9 @@ function validation()
 											<input type="file" name="photos_forestry"
 												id="photos_forestry" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="forestry_lat" name="forestry_lat" value = "0"/>
-											<input type="hidden" id="forestry_lng" name="forestry_lng" value = "0"/>
-											<input type="hidden" id="forestry_time" name="forestry_time" value = "0"/>
+											<input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value = "0"/>
+											<input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value = "0"/>
+											<input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value = "0"/>
 										</div>
 									</div>
 
@@ -710,12 +721,14 @@ function validation()
 						</tr>
 
 					</table>
+		<c:if test ="${!check}">
         <div class="form-row">
 				<div class="form-group col-8">
 				<label for="btnGetDetails"> &nbsp;</label>
      				<input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();"  value ="Save"/>
      			</div>
      		</div> 
+     	</c:if>
      </div>
 		</div>
 	<br/>
@@ -768,8 +781,8 @@ function validation()
  						<c:set var="st" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
-								<td> <c:out value="${data.date}" /></td>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.waterid}"  name="${data.waterid}" value="${data.waterid}"/></td>
+								<td> <c:out value="${data.datetime}" /></td>
  								<%-- <c:choose>
  									<c:when test="${st ne data.stname}">
  										<c:set var="st" value="${data.stname}" />
@@ -783,15 +796,15 @@ function validation()
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
-								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
- 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
-								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
- 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
- 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
- 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
-								<td class="text-right"> <c:out value="${data.others}" /></td>
- 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-right"> <c:out value="${data.maleparticipants}" /></td>
+								<td class="text-right"> <c:out value="${data.femaleparticipants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.centralministers}" /></td>
+								<td class="text-right"> <c:out value="${data.stateministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.membersofparliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.legassemblymembers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.legcouncilmembers}" /></td>
+								<td class="text-right"> <c:out value="${data.publicreps}" /></td>
+ 								<td class="text-right"> <c:out value="${data.govofficials}" /></td>
  								
 								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
  								
@@ -800,29 +813,30 @@ function validation()
  								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
 								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+ 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
 								
  								
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<c:out value="${data.image_count}" />
 								</td>
 					</tr>
 							
 					
  						</c:forEach> 
- 						
- 						<tr>
-								
-								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
-								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
-							</tr>
-						<c:if test="${dataListSize eq 0}">
+ 						<c:if test="${dataListSize eq 0}">
 							<tr>
 								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
 								<td colspan="16" ></td>
 							</tr>
 						</c:if>
+ 						<c:if test="${dataListSize ne 0 && dataListSize >0}">
+ 						<tr>
+<!-- 								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td> -->
+								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
+							</tr>
+						</c:if>
+						
 		</table>
 		
 		
@@ -875,29 +889,21 @@ function validation()
  					 	<c:forEach items="${compdataList}" var="data" varStatus="count">
  							<tr>
 								<td><c:out value='${count.count}' /> &nbsp;</td>
-								<td> <c:out value="${data.date}" /></td>
- 								<%-- <c:choose>
- 									<c:when test="${st ne data.stname}">
- 										<c:set var="st" value="${data.stname}" />
- 										<td> <c:out value="${data.stname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-<!--  										<td></td> -->
- 								</c:otherwise>
- 								</c:choose> --%>
+								<td> <c:out value="${data.datetime}" /></td>
+ 								
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.male_participants}" /></td>
-								<td class="text-right"> <c:out value="${data.female_participants}" /></td>
- 								<td class="text-right"> <c:out value="${data.central_ministers}" /></td>
-								<td class="text-right"> <c:out value="${data.state_ministers}" /></td>
- 								<td class="text-right"> <c:out value="${data.parliament}" /></td>
- 								<td class="text-right"> <c:out value="${data.assembly_members}" /></td>
- 								<td class="text-right"> <c:out value="${data.council_members}" /></td>
-								<td class="text-right"> <c:out value="${data.others}" /></td>
- 								<td class="text-right"> <c:out value="${data.gov_officials}" /></td>
+ 								<td class="text-right"> <c:out value="${data.maleparticipants}" /></td>
+								<td class="text-right"> <c:out value="${data.femaleparticipants}" /></td>
+ 								<td class="text-right"> <c:out value="${data.centralministers}" /></td>
+								<td class="text-right"> <c:out value="${data.stateministers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.membersofparliament}" /></td>
+ 								<td class="text-right"> <c:out value="${data.legassemblymembers}" /></td>
+ 								<td class="text-right"> <c:out value="${data.legcouncilmembers}" /></td>
+								<td class="text-right"> <c:out value="${data.publicreps}" /></td>
+ 								<td class="text-right"> <c:out value="${data.govofficials}" /></td>
  								
 								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
  								
@@ -906,10 +912,10 @@ function validation()
  								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
 								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.forestry_horticulture}" /></td>
+ 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<c:out value="${data.image_count}" /> 
 								</td>
 					</tr>
 							

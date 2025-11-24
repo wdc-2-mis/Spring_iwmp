@@ -12,4 +12,7 @@ public interface WatershedMahotsavProjLvlService {
 	public String saveMahotsavProjLvlDetails(WatershedMahotsavProjectLevelBean userfileup, HttpSession session);
 	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId);
 	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId);
+	String completeMahotsavProjLvlDetails(List<Integer> assetid, String userid);
+	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(List<Integer> dcode, String loginId);
+	String deleteMahotsavProjLvlDetails(List<Integer> assetid, String userid);
 }

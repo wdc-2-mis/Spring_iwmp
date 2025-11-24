@@ -14,15 +14,15 @@ public class WatershedMahotsavProjectLevelBean {
     private Integer block;
     private String location;
 
-    private Integer maleParticipants;
-    private Integer femaleParticipants;
-    private Integer centralMinisters;
-    private Integer stateMinisters;
-    private Integer membersOfParliament;
-    private Integer legAssemblyMembers;
-    private Integer legCouncilMembers;
-    private Integer publicReps;
-    private Integer govOfficials;
+    private Integer maleparticipants;
+    private Integer femaleparticipants;
+    private Integer centralministers;
+    private Integer stateministers;
+    private Integer membersofparliament;
+    private Integer legassemblymembers;
+    private Integer legcouncilmembers;
+    private Integer publicreps;
+    private Integer govofficials;
 
     private Integer bhoomipoojan;
     private Integer no_works_bhoomipoojan;
@@ -56,9 +56,8 @@ public class WatershedMahotsavProjectLevelBean {
     private String stname;
     private String distname;
     private String blockname;
-    
-    
-    
+    private Integer image_count;
+    private Character status;
 	public Integer getWaterid() {
 		return waterid;
 	}
@@ -89,59 +88,59 @@ public class WatershedMahotsavProjectLevelBean {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Integer getMaleParticipants() {
-		return maleParticipants;
+	public Integer getMaleparticipants() {
+		return maleparticipants;
 	}
-	public void setMaleParticipants(Integer maleParticipants) {
-		this.maleParticipants = maleParticipants;
+	public void setMaleparticipants(Integer maleparticipants) {
+		this.maleparticipants = maleparticipants;
 	}
-	public Integer getFemaleParticipants() {
-		return femaleParticipants;
+	public Integer getFemaleparticipants() {
+		return femaleparticipants;
 	}
-	public void setFemaleParticipants(Integer femaleParticipants) {
-		this.femaleParticipants = femaleParticipants;
+	public void setFemaleparticipants(Integer femaleparticipants) {
+		this.femaleparticipants = femaleparticipants;
 	}
-	public Integer getCentralMinisters() {
-		return centralMinisters;
+	public Integer getCentralministers() {
+		return centralministers;
 	}
-	public void setCentralMinisters(Integer centralMinisters) {
-		this.centralMinisters = centralMinisters;
+	public void setCentralministers(Integer centralministers) {
+		this.centralministers = centralministers;
 	}
-	public Integer getStateMinisters() {
-		return stateMinisters;
+	public Integer getStateministers() {
+		return stateministers;
 	}
-	public void setStateMinisters(Integer stateMinisters) {
-		this.stateMinisters = stateMinisters;
+	public void setStateministers(Integer stateministers) {
+		this.stateministers = stateministers;
 	}
-	public Integer getMembersOfParliament() {
-		return membersOfParliament;
+	public Integer getMembersofparliament() {
+		return membersofparliament;
 	}
-	public void setMembersOfParliament(Integer membersOfParliament) {
-		this.membersOfParliament = membersOfParliament;
+	public void setMembersofparliament(Integer membersofparliament) {
+		this.membersofparliament = membersofparliament;
 	}
-	public Integer getLegAssemblyMembers() {
-		return legAssemblyMembers;
+	public Integer getLegassemblymembers() {
+		return legassemblymembers;
 	}
-	public void setLegAssemblyMembers(Integer legAssemblyMembers) {
-		this.legAssemblyMembers = legAssemblyMembers;
+	public void setLegassemblymembers(Integer legassemblymembers) {
+		this.legassemblymembers = legassemblymembers;
 	}
-	public Integer getLegCouncilMembers() {
-		return legCouncilMembers;
+	public Integer getLegcouncilmembers() {
+		return legcouncilmembers;
 	}
-	public void setLegCouncilMembers(Integer legCouncilMembers) {
-		this.legCouncilMembers = legCouncilMembers;
+	public void setLegcouncilmembers(Integer legcouncilmembers) {
+		this.legcouncilmembers = legcouncilmembers;
 	}
-	public Integer getPublicReps() {
-		return publicReps;
+	public Integer getPublicreps() {
+		return publicreps;
 	}
-	public void setPublicReps(Integer publicReps) {
-		this.publicReps = publicReps;
+	public void setPublicreps(Integer publicreps) {
+		this.publicreps = publicreps;
 	}
-	public Integer getGovOfficials() {
-		return govOfficials;
+	public Integer getGovofficials() {
+		return govofficials;
 	}
-	public void setGovOfficials(Integer govOfficials) {
-		this.govOfficials = govOfficials;
+	public void setGovofficials(Integer govofficials) {
+		this.govofficials = govofficials;
 	}
 	public Integer getBhoomipoojan() {
 		return bhoomipoojan;
@@ -317,6 +316,21 @@ public class WatershedMahotsavProjectLevelBean {
 	public void setBlockname(String blockname) {
 		this.blockname = blockname;
 	}
+	public Integer getImage_count() {
+		return image_count;
+	}
+	public void setImage_count(Integer image_count) {
+		this.image_count = image_count;
+	}
+	public Character getStatus() {
+		return status;
+	}
+	public void setStatus(Character status) {
+		this.status = status;
+	}
+    
+    
+    
 	
     
 }

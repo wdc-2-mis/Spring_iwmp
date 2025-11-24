@@ -3,6 +3,7 @@ package app.mahotsav.controller;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.itextpdf.text.pdf.events.IndexEvents.Entry;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
@@ -61,6 +64,70 @@ HttpSession session;
 	public ModelAndView getWatershedMahotsavAtProjLvl(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
+		List<WatershedMahotsavProjectLevelBean> list = new ArrayList<WatershedMahotsavProjectLevelBean>();
+		List<WatershedMahotsavProjectLevelBean> dlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
+		List<WatershedMahotsavProjectLevelBean> comlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("mahotsav/watershedMahotsavProjectLvl");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+				List<Integer> blkcds = new ArrayList<>();
+				for(Map.Entry<Integer, String> map : serp.getBlockListpia(session.getAttribute("regId").toString()).entrySet()) {
+					blkcds.add(map.getKey());
+				}
+				
+//				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+//				map=ser.getCultActivity();
+//				mav.addObject("cultMap", map);
+				list = serProj.getBlksWiseWatershedMahotsavAtProjLvl(blkcds, session.getAttribute("loginID").toString());
+				for(WatershedMahotsavProjectLevelBean bean :list) {
+					if(bean.getStatus().equals('D')) {
+						dlist.add(bean);
+					}else {
+						comlist.add(bean);
+					}
+				}
+				mav.addObject("dataList",dlist);
+				mav.addObject("dataListSize",dlist.size());
+				
+				mav.addObject("compdataList",comlist);
+				mav.addObject("compdataListSize",comlist.size());
+				
+
+			} else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/getWatershedMahotsavAtProjLvl", method = RequestMethod.POST)
+	public ModelAndView getBlkWatershedMahotsavAtProjLvl(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		int bcode = Integer.parseInt(request.getParameter("block"));
 		List<WatershedMahotsavProjectLevelBean> dlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		List<WatershedMahotsavProjectLevelBean> comlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		try {
@@ -86,18 +153,29 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
+				mav.addObject("blkcode",bcode);
 				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
 				
 //				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 //				map=ser.getCultActivity();
 //				mav.addObject("cultMap", map);
-				dlist=serProj.getWatershedMahotsavAtProjLvl(stcd, session.getAttribute("loginID").toString());
+				dlist=serProj.getWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
+				Boolean check = false;
+				if(dlist.size()>0) {
+					check = true;
+					mav.addObject("result","Data already saved for this Block. Please select different Block Name.");
+				}
 				mav.addObject("dataList",dlist);
 				mav.addObject("dataListSize",dlist.size());
 				
-				comlist=serProj.getComWatershedMahotsavAtProjLvl(stcd, session.getAttribute("loginID").toString());
+				comlist=serProj.getComWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
+				if(comlist.size()>0) {
+					check = true;
+					mav.addObject("result","Data already Completed for this Block. Please select different Block Name.");
+				}
 				mav.addObject("compdataList",comlist);
 				mav.addObject("compdataListSize",comlist.size());
+				mav.addObject("check",check);
 				
 
 			} else {
@@ -160,12 +238,12 @@ HttpSession session;
 				if (result.equals("success")) {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 				} 
-				else if (result.equals("failexist")) {
+				else {
 					redirectAttributes.addFlashAttribute("result1", "Data not saved State Data already exist");
 				} 
-				else {
+				/*else {
 					redirectAttributes.addFlashAttribute("result1", "Data not saved!");
-				}
+				}*/
 				return new ModelAndView("redirect:/getWatershedMahotsavAtProjLvl");
 			} else {
 				return new ModelAndView("redirect:/login");
@@ -174,6 +252,48 @@ HttpSession session;
 			e.printStackTrace();
 		}
 		return mav;
+	}
+	
+	@RequestMapping(value="/completeMahotsavProjLvlDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeMahotsavProjLvlDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serProj.completeMahotsavProjLvlDetails(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	@RequestMapping(value="/deleteMahotsavProjLvlDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteMahotsavProjLvlDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serProj.deleteMahotsavProjLvlDetails(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
 	}
 
 }

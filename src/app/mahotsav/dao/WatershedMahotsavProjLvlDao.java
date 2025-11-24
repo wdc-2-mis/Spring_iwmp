@@ -12,5 +12,8 @@ public interface WatershedMahotsavProjLvlDao {
 	public String saveMahotsavProjLvlDetails(WatershedMahotsavProjectLevelBean userfileup, HttpSession session);
 	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId);
 	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId);
+	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(List<Integer> blkcds, String loginId);
+	String completeMahotsavProjLvlDetails(List<Integer> assetid, String userid);
+	String deleteMahotsavProjLvlDetails(List<Integer> assetid, String userid);
 
 }
