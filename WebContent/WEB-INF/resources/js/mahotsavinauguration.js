@@ -25,10 +25,24 @@ $(function() {
 					}
 				}
 			});
+			
+			$.ajax({
+			            url: 'checkMahotsavInaugurationExits',
+			            type: 'POST',
+			            data: {},
+			            success: function(exists) {
+			                if (exists) {
+								alert('State Data Already Exists. Only One Inauguration Program Entry Allow !');
+									$("select#district")[0].selectedIndex = 0;
+									$("select#block")[0].selectedIndex = 0;
+			                }
+			            }
+			});
+			
 		});
 
 
-		$(document).on('change', '#block', function(e) {
+		/*$(document).on('change', '#block', function(e) {
 			e.preventDefault();
 			$villageCode = $('#block option:selected').val();
 			$.ajax({
@@ -47,7 +61,7 @@ $(function() {
 
 				}
 			});
-	});
+	});*/
 $('#chkSelectAllkd').on('click', function() {
 		$chkValue = 0;
 		if (this.checked) {
@@ -155,9 +169,9 @@ $('#chkSelectAllkd').on('click', function() {
 							//						https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/
 							//						https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/
 							//PRD
-													list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+													list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 							//TEST
-							//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 							//Local
 	//						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 

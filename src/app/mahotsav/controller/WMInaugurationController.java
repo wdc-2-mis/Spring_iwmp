@@ -214,5 +214,13 @@ public class WMInaugurationController {
 		}
 		return res; 
 	}
+	
+	@RequestMapping(value="/checkMahotsavInaugurationExits", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkMahotsavInaugurationExits(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+        return iSer.checkMahotsavInaugurationExits(stcd);
+    }
 			
 }

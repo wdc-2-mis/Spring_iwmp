@@ -18,6 +18,7 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -558,6 +559,31 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		}
 		
 		return str;
+	}
+
+	@Override
+	public boolean checkMahotsavInaugurationExits(Integer stCode) {
+		
+		Integer value = 0;
+	    Boolean status = false; // Default to false in case no results found
+	    
+	    try (Session session = sessionFactory.openSession()) {
+	        Transaction tx = session.beginTransaction();
+	        
+	        SQLQuery query = session.createSQLQuery("select count(*) from watershed_mahotsav_inauguaration where st_code = :vCode");
+	        query.setInteger("vCode", stCode);
+	        value = ((Number) query.uniqueResult()).intValue();
+
+	        if (value > 0) {
+	            status = true;
+	        }
+	        
+	        tx.commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace(); // Log exception for debugging
+	    }
+
+	    return status;
 	}
 	
 	

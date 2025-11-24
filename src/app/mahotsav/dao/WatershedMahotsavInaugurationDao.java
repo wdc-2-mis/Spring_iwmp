@@ -15,5 +15,6 @@ public interface WatershedMahotsavInaugurationDao {
 	String deleteMahotsavInaugurationDetails(List<Integer> assetid, String userid);
 	
 	String completeMahotsavInaugurationDetails(List<Integer> assetid, String userid);
+	boolean checkMahotsavInaugurationExits(Integer stCode);
 
 }

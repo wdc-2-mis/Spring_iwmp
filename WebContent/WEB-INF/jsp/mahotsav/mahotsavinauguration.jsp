@@ -425,12 +425,20 @@ function validatePhoto(input) {
         return;
     }
     
-    if (checkValid && /[^\w.-]/.test(file.name)) {
+     var invalidChars = /[^a-zA-Z0-9_.]/;
+     if (checkValid && (invalidChars.test(file.name) || /^[._]/.test(file.name))) {
+         alert("Filename contains invalid characters! Please rename the file and upload again.");
+         input.value = "";
+         checkValid = false
+         return;
+     }
+    
+   /*   if (checkValid && /[^\w.-]/.test(file.name)) {
         alert("Filename contains special characters! Please rename the file and upload again.");
         input.value = "";
         checkValid = false;
         return;
-    }
+    } */
 
     // 2. Validate file size
     let sizeKB = file.size / 1024;
@@ -468,15 +476,6 @@ function validatePhoto(input) {
             return;
         }
         
-
-        // 4. Check filename for special characters
-        if (/[^\w.-]/.test(file.name)) {
-            alert("Filename contains special characters! Please rename the file and upload again.");
-            input.value = "";
-            checkValid = false;
-            return;
-        }
-
         // 5. Read EXIF metadata (GPS + timestamp)
         EXIF.getData(file, function () {
             let lat = EXIF.getTag(this, "GPSLatitude");
