@@ -19,7 +19,7 @@ function checkImage(input, inputId) {
     var fileType = file.type;
     var fileSize = file.size; // bytes
     var maxFileSize = 300 * 1024; // 300 KB
-    var maxWidth = 300; // pixels
+    var maxWidth = 400; // pixels
     var maxHeight = 400; // pixels
 
     // Check file type
@@ -55,6 +55,7 @@ function checkImage(input, inputId) {
         img.src = e.target.result;
     };
     reader.readAsDataURL(file);
+
 }
 
 // Convert EXIF DMS to decimal degrees
