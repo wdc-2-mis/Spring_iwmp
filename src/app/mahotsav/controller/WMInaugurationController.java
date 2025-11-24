@@ -146,7 +146,7 @@ public class WMInaugurationController {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 				} 
 				else if (result.equals("failexist")) {
-					redirectAttributes.addFlashAttribute("result1", "Data not saved State Data already exist");
+					redirectAttributes.addFlashAttribute("result1", "State "+stateName+" Data already exist");
 				} 
 				else {
 					redirectAttributes.addFlashAttribute("result1", "Data not saved Successfully!");

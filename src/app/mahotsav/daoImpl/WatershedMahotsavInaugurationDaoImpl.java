@@ -91,7 +91,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			
 				String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/Inauguration/";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/vanyatradoc/Inauguration/";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/Inauguration/";
 			
 		/*		
 			    upload = commonFunction.uploadFileforLMS(file, filePath, userfileup.getBlock(), act);
