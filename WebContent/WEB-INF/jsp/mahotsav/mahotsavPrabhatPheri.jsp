@@ -131,13 +131,21 @@ document.addEventListener("change", function(e) {
 
      var fileName = file.name;
 
-     // Check for special characters in filename
+//      // Check for special characters in filename
+//      var invalidChars = /[^a-zA-Z0-9_.-]/;
+//      if (invalidChars.test(fileName)) {
+//          alert("Filename contains special characters! Please rename the file and upload again.");
+//          e.target.value = ""; // reset file input
+//          return;
+//      }
+     
      var invalidChars = /[^a-zA-Z0-9_.-]/;
-     if (invalidChars.test(fileName)) {
-         alert("Filename contains special characters! Please rename the file and upload again.");
+     if (invalidChars.test(fileName) || /^[._]/.test(fileName)) {
+         alert("Filename contains invalid characters! Please rename the file and upload again.");
          e.target.value = ""; // reset file input
          return;
      }
+
 
      // Check if this image already uploaded (duplicate)
      if (window.uploadedFiles.has(fileName)) {
