@@ -73,5 +73,11 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.checkVillageWMP(vCode);
 	}
 
+	@Override
+	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
+		// TODO Auto-generated method stub
+		return dao.getWMPrabhatPheriVillage(bCode);
+	}
+
 
 }

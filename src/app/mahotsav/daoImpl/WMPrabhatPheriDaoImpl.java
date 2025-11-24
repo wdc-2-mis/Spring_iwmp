@@ -517,6 +517,40 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	    return status;
 }
 
+	@Override
+	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
+		// TODO Auto-generated method stub
+		List<IwmpVillage> bldList=new ArrayList<IwmpVillage>();
+	//	String hql=villageListWatershedyatra;
+		LinkedHashMap<String, Integer> blkMap=new LinkedHashMap<String, Integer>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from IwmpVillage where iwmpGramPanchayat.iwmpBlock.bcode=:gpscode order by villageName");
+			query.setInteger("gpscode", bCode);
+			bldList = query.list();
+			
+			for (IwmpVillage blk : bldList) {
+				blkMap.put( blk.getVillageName(), blk.getVcode());
+			//	System.out.println(district.getDcode()+" k "+district.getDistName());
+			}
+			
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+        return blkMap;
+	}
+
 
 
 }

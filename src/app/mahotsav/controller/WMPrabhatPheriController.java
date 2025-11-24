@@ -2,6 +2,7 @@ package app.mahotsav.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,9 @@ public class WMPrabhatPheriController {
 
         model.put("userType", userType);
         model.put("distList", ser.getDistrictList(stCode));
-        model.put("blkList", serp.getBlockListpia(regId.toString()));
+       // model.put("blkList", serp.getBlockListpia(regId.toString()));
+        
+        
         List<WMPrabhatPheriBean> dlist = wmService.getWatershedMahotsavDraftList(stCode);
         model.put("dataDList", dlist);
         model.put("dataDListSize", dlist != null ? dlist.size() : 0);
@@ -176,6 +179,15 @@ public class WMPrabhatPheriController {
     public List<Map<String, Object>> getVillagesByBlock(@RequestParam("blockCode") Integer blockCode) {
         return wmService.getVillageListByBlock(blockCode); // return list of villages
     }
+    
+    @RequestMapping(value = "/getWMPrabhatPheriVillage", method = RequestMethod.POST)
+	@ResponseBody
+	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(HttpServletRequest request, @RequestParam("bcode") int bCode) {
+		
+		return wmService.getWMPrabhatPheriVillage(bCode);
+	}
+    
+   
     
     @RequestMapping(value="/deleteWMPrabhatPheri", method = RequestMethod.POST)
     @ResponseBody

@@ -83,7 +83,7 @@ function getCurrentTimestamp() {
 
 $(document).ready(function() {
 
-    // Fetch blocks and villages (same as before)
+  /*   // Fetch blocks and villages (same as before)
     $('#district1').change(function() {
         var districtCode = $(this).val();
         var $block = $('#block1');
@@ -110,7 +110,7 @@ $(document).ready(function() {
                 });
             });
         }
-    });
+    }); */
 
  // EXTRACT GPS & PHOTO TIMESTAMP FROM IMAGE
 document.addEventListener("change", function(e) {

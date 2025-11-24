@@ -1,6 +1,7 @@
 package app.mahotsav.dao;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,4 +31,7 @@ public interface WMPrabhatPheriDao {
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
 	boolean checkVillageWMP(Integer vCode);
+	
+	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
+	
 }

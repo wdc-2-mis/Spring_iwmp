@@ -1,3 +1,75 @@
+$(function() {
+	
+	$(document).on('change', '#district1', function(e) {
+				e.preventDefault();
+				$stCode = $('#district1 option:selected').val();
+				$.ajax({
+					url: "getWatershedYatraBlock",
+					type: "post",
+					data: { stateCode: $stCode },
+					error: function(xhr, status, er) {
+						console.log(er);
+					},
+					success: function(data) {
+						$selectedDist = $('#district1').val();
+						$ddlDistrict = $('#block1');
+						$ddlDistrict.empty();
+						$ddlDistrict.append('<option value=""> --Select Block-- </option>');
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								if (data[key] == $selectedDist)
+									$ddlDistrict.append('<option value="' + data[key] + '" selected>' + key + '</option>');
+								else
+									$ddlDistrict.append('<option value="' + data[key] + '">' + key + '</option>');
+							}
+						}
+					}
+				});
+				
+				
+				
+			});
+			
+			
+			$(document).on('change', '#block1', function(e) {
+							e.preventDefault();
+							$gpsCode=$('#block1 option:selected').val();
+							$.ajax({  
+							        url:"getWMPrabhatPheriVillage",
+							        type: "post", 
+									data:{bcode:$gpsCode}, 
+							        error:function(xhr,status,er){
+							                console.log(er);
+							        },
+							        success:function(data) 
+									{
+										$selectedDist=$('#block1').val();
+										$ddlDistrict = $('#village1');
+										$ddlDistrict.empty();
+							        	$ddlDistrict.append('<option value=""> --Select Village Name-- </option>');
+										for ( var key in data) 
+										{
+											if (data.hasOwnProperty(key)) 
+											{
+												if(data[key]==$selectedDist)
+													$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
+												else
+													$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
+											}
+										}
+									}
+								});
+					});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 // ==================== SELECT ALL CHECKBOX ====================
 $(document).on('change', '#chkSelectAllkd', function () {
     $('.chkIndividualkd').prop('checked', $(this).prop('checked'));
@@ -115,3 +187,5 @@ $(document).ready(function () {
             }
         });
     });
+	
+	});	

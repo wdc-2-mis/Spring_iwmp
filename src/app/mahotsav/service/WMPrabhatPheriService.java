@@ -1,6 +1,7 @@
 package app.mahotsav.service;
 
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,5 +33,7 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
 
 	boolean checkVillageWMP(Integer vCode);
+	
+	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
 
 }
