@@ -414,7 +414,7 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-    const requiredWidth = 300;
+    const requiredWidth = 400;
     const requiredHeight = 400;
 
     // 1. Validate file type
@@ -442,7 +442,7 @@ function validatePhoto(input) {
     }
     
  // 3. Validate image dimensions
-     var reader = new FileReader();
+    var reader = new FileReader();
     reader.onload = function(e) {
         var img = new Image();
         img.onload = function() {
@@ -785,7 +785,7 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Agro forestry / Horticultural Plantation Number of Sapling <input type="hidden" name="forestry" id="forestry" value="4"/></td>
-     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td>
+     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
 			<td>
