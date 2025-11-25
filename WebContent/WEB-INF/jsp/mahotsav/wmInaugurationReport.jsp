@@ -1,24 +1,12 @@
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<c:choose>
-	<c:when test="${sessionScope.loginid eq null }">
-		<%@include file="/WEB-INF/jspf/header.jspf"%>
-	</c:when>
-	<c:otherwise>
-		<%@include file="/WEB-INF/jspf/header2.jspf"%>
-	</c:otherwise>
-</c:choose>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
 
 <title>Report WM1 - State-wise Watershed Mahotsav Inauguration Program</title>
 
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
 
 <script type="text/javascript">
 
@@ -43,22 +31,25 @@ function exportExcel(){
 </head>
 <body>
 <div class="maindiv">
-    <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h5>Report WM1 - Watershed Mahotsav Inauguration Program</h5>
-    </div>
-    <br>
-    <div class ="card">
-		<div class="table-responsive">
+    
+		<div class="card shadow mt-4 p-4">
+		
+		<div class="offset-md-3 col-6 formheading" style="text-align: center;">
+        	<h4 class="text-center text-primary mb-4">Report WM1 - Watershed Mahotsav Inauguration Program</h4>
+    	</div>
 			<br>
-    <c:if test="${not empty stateWMInaugurationList1}">
-		<button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-		<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
-	</c:if>
-    <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+
+    <div class="nav-item text-left mb-2">
+    	<c:if test="${not empty stateWMInaugurationList1}">
+    		<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()"> Excel </button>
+        	<button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
+        </c:if>   
+        <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+    </div>
         
         <form action="downloadExcelStMidProjEvoluation" name="getWMIDetails" id="getWMIDetails" method="post">
         
-                <table class="table" id="stWMI" >
+                <table class="table table-bordered table-striped" id="stWMI" >
                     <thead>
                         <tr>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>
@@ -101,20 +92,153 @@ function exportExcel(){
 								<td class="text-left"><c:out value="${sno.count}" /></td>
 								<td class="text-left"><c:out value="${dt.stname}" /></td>
 <%-- 								<td><a href = "distMidProjEvoluationRpt?stcd=${dt.st_code}&stName=${dt.st_name}"><c:out value='${dt.st_name}'/></a></td> --%>
- 								<td class="text-right"><c:out value="${dt.date}" /></td> 
-								<td class="text-right"><c:out value="${dt.male_participants}" /></td>
-								<td class="text-right"><c:out value="${dt.female_participants}" /></td>
-								<td class="text-right"><c:out value="${dt.participants}" /></td>
-								<td class="text-right"><c:out value="${dt.others}" /></td>
-								<td class="text-right"><c:out value="${dt.gov_officials}" /></td>
-								<td class="text-right"><c:out value="${dt.total_participation}" /></td>
-								<td class="text-right"><c:out value="${dt.no_works_bhoomipoojan}" /></td>
-								<td class="text-right"><c:out value="${dt.no_works_lokarpan}" /></td>
-								<td class="text-right"><c:out value="${dt.no_location_shramdaan}" /></td>
-								<td class="text-right"><c:out value="${dt.no_people_shramdaan}" /></td>
-								<td class="text-right"><c:out value="${dt.area_plantation}" /></td>
-								<td class="text-right"><c:out value="${dt.no_awards}" /></td>
-								<td class="text-right"><c:out value="${dt.image_count}" /></td>
+ 								<td><c:out value="${dt.date}" /></td> 
+<%-- 								<td class="text-end"><c:out value="${dt.male_participants}" /></td> --%>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.male_participants == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.male_participants}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.female_participants == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.female_participants}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.participants == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.participants}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.others == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.others}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.gov_officials == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.gov_officials}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.total_participation == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.total_participation}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.no_works_bhoomipoojan == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.no_works_bhoomipoojan}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.no_works_lokarpan == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.no_works_lokarpan}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.no_location_shramdaan == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.no_location_shramdaan}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.no_people_shramdaan == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.no_people_shramdaan}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.area_plantation == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.area_plantation}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.no_awards == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.no_awards}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-end">
+									<c:choose>
+										<c:when test="${dt.image_count == 0}">
+											<!-- blank -->
+										</c:when>
+										<c:otherwise>
+											<c:out value="${dt.image_count}" />
+										</c:otherwise>
+									</c:choose>
+								</td>
+								
+								
+								
+<%-- 								<td class="text-end"><c:out value="${dt.female_participants}" /></td> 
+								<td class="text-end"><c:out value="${dt.participants}" /></td>
+								<td class="text-end"><c:out value="${dt.others}" /></td>
+								<td class="text-end"><c:out value="${dt.gov_officials}" /></td>
+								<td class="text-end"><c:out value="${dt.total_participation}" /></td>
+								<td class="text-end"><c:out value="${dt.no_works_bhoomipoojan}" /></td>
+								<td class="text-end"><c:out value="${dt.no_works_lokarpan}" /></td>
+								<td class="text-end"><c:out value="${dt.no_location_shramdaan}" /></td>
+								<td class="text-end"><c:out value="${dt.no_people_shramdaan}" /></td>
+								<td class="text-end"><c:out value="${dt.area_plantation}" /></td>
+								<td class="text-end"><c:out value="${dt.no_awards}" /></td>
+								<td class="text-end"><c:out value="${dt.image_count}" /></td> --%>
 							</tr>
 							
  							<c:set var="totMale" value="${totMale + dt.male_participants}" /> 
@@ -133,21 +257,21 @@ function exportExcel(){
 							
 						</c:forEach>
 						<c:if test="${stateWMInaugurationListSize>0}">
-							<tr>
- 								<td colspan="3" align="right" class="table-primary"><b>Grand Total</b></td> 
-								<td align="right" class="table-primary"><b><c:out value="${totMale}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totFemale}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totParticipants}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totOthers}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totGov}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${total}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totBhoomiPoojan}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totLokarpan}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totShramdaanLoc}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totShramdaanPeople}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totPlantation}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totAwards}" /></b></td>
-								<td align="right" class="table-primary"><b><c:out value="${totImage}" /></b></td>
+							<tr class="table-secondary fw-bold">
+ 								<td colspan="3" class="text-end"><b>Grand Total</b></td> 
+								<td class="text-end"><b><c:out value="${totMale}" /></b></td>
+								<td class="text-end"><b><c:out value="${totFemale}" /></b></td>
+								<td class="text-end"><b><c:out value="${totParticipants}" /></b></td>
+								<td class="text-end"><b><c:out value="${totOthers}" /></b></td>
+								<td class="text-end"><b><c:out value="${totGov}" /></b></td>
+								<td class="text-end"><b><c:out value="${total}" /></b></td>
+								<td class="text-end"><b><c:out value="${totBhoomiPoojan}" /></b></td>
+								<td class="text-end"><b><c:out value="${totLokarpan}" /></b></td>
+								<td class="text-end"><b><c:out value="${totShramdaanLoc}" /></b></td>
+								<td class="text-end"><b><c:out value="${totShramdaanPeople}" /></b></td>
+								<td class="text-end"><b><c:out value="${totPlantation}" /></b></td>
+								<td class="text-end"><b><c:out value="${totAwards}" /></b></td>
+								<td class="text-end"><b><c:out value="${totImage}" /></b></td>
 							</tr>
 						</c:if>
 						<c:if test="${stateWMInaugurationListSize==0}">
@@ -161,10 +285,9 @@ function exportExcel(){
     </form>
     </div>
     </div>
-    </div>
 
-<footer class=" ">
-	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
+<footer class="text-center">
+	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
 </footer>
 
 </body>

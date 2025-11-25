@@ -2,27 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<style>
-.required { color: red; margin-left: 3px; }
-.error-text { color: red; font-size: 0.85em; display: none; margin-top: 4px; }
-body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
-.form-label { font-weight: 600; color: #0d6efd; }
-.table th { background-color: #0d6efd; color: white; text-align: center; }
-.table td { vertical-align: middle; }
-.pdf-gradient {
-    background: linear-gradient(45deg, #007bff, #00d4ff);
-    color: white;
-    border: none;
-}
-.pdf-gradient:hover {
-    opacity: 0.85;
-}
 
-</style>
 
 <script>
     function downloadPDF() {
@@ -142,4 +123,5 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 
 <br>
 <footer class="text-center">
+	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
 </footer>
