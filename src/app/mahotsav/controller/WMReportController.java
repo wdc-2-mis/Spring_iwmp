@@ -183,7 +183,7 @@ public class WMReportController {
 		cell.setCellStyle(style);
 		
 		cell = rowhead.createCell(13);
-		cell.setCellValue("Agro forestry / Horticulture Plantation (Area in Ha.)");
+		cell.setCellValue("Agro forestry / Horticulture Plantation (Number of Sapling)");
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
@@ -483,7 +483,7 @@ public class WMReportController {
 			CommonFunctions.insertCellHeader(table, "Number of Works for Bhoomi Poojan", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Number of Works for Lokarpan", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Shramdaan", Element.ALIGN_CENTER, 2, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Agro forestry / Horticulture Plantation (Area in Ha.)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Agro forestry / Horticulture Plantation (Number of Sapling)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Number of Projects Awarded for Janbhagidari Cup 2025", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "No of Photographs Uploaded", Element.ALIGN_CENTER, 1, 3, bf8Bold);
 			
@@ -537,7 +537,23 @@ public class WMReportController {
 				{
 					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getStname(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getDate()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDate() == null ? "" : String.valueOf(list.get(i).getDate()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getMale_participants() == 0 ? "" : String.valueOf(list.get(i).getMale_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getFemale_participants() == 0 ? "" : String.valueOf(list.get(i).getFemale_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getParticipants() == 0 ? "" : String.valueOf(list.get(i).getParticipants()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getOthers() == 0 ? "" : String.valueOf(list.get(i).getOthers()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getGov_officials() == 0 ? "" : String.valueOf(list.get(i).getGov_officials()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getTotal_participation() == 0 ? "" : String.valueOf(list.get(i).getTotal_participation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_works_bhoomipoojan() == 0 ? "" : String.valueOf(list.get(i).getNo_works_bhoomipoojan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_works_lokarpan() == 0 ? "" : String.valueOf(list.get(i).getNo_works_lokarpan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_location_shramdaan() == 0 ? "" : String.valueOf(list.get(i).getNo_location_shramdaan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_people_shramdaan() == 0 ? "" : String.valueOf(list.get(i).getNo_people_shramdaan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getArea_plantation() == 0 ? "" : String.valueOf(list.get(i).getArea_plantation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_awards() == 0 ? "" : String.valueOf(list.get(i).getNo_awards()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getImage_count() == 0 ? "" : String.valueOf(list.get(i).getImage_count()), Element.ALIGN_RIGHT, 1, 1, bf8);
+
+					
+/*					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getDate()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMale_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getFemale_participants()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getParticipants()), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -551,7 +567,7 @@ public class WMReportController {
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getArea_plantation()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getNo_awards()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getImage_count()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					
+*/					
 					totMale = totMale + list.get(i).getMale_participants();
 					totFemale = totFemale + list.get(i).getFemale_participants();
 					totParticipants = totParticipants + list.get(i).getParticipants();
