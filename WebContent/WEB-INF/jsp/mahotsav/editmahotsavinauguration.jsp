@@ -161,10 +161,6 @@ function validation()
 	
 	var allowedFiles = [".jpg", ".jpeg",".png"];
 	
-	$district = $('#district option:selected').val();
-	$block = $('#block option:selected').val();
-
-	$date = $('#date').val();
 	$location = $('#location').val();
 	$male_participants = $('#male_participants').val();
 	$female_participants = $('#female_participants').val();
@@ -192,24 +188,6 @@ function validation()
 	$no_awards = $('#no_awards').val();
 	$award_photo1 = $('#photos_janbhagidari').val();
 	
-	if ($date === '' || typeof $date === 'undefined') {
-		alert('Please select a Date');
-		$('#date').focus();
-		allValid = false;
-		return false;
-	}
-	if ($('#district option:selected').val() === '' || typeof $('#district option:selected').val() === 'undefined') {
-		alert('Please select District');
-		$('#district').focus();
-		allValid = false;
-		return false;
-	}
-	if ($block === '' || typeof $block === 'undefined') {
-		alert('Please select Block');
-		$('#block').focus();
-		allValid = false;
-		return false;
-	}
 	if ($location === '' || typeof $location === 'undefined') {
 		alert('Please enter Location');
 		$('#location').focus();
@@ -352,47 +330,52 @@ function validation()
 			document.getElementById('photos_janbhagidari').click();
 			allValid = false;
 			return false;
-		}
+		} $bhoomipoojan_photo1= $lokarpan_photo1= $shramdaan_photo1= $plantation_photo1= $award_photo1 = 
 	} */
-	document.querySelectorAll(".photo-block").forEach(block => {
-	    
-	    let container = block.querySelector(".photoContainer");
-	    let inputs = container.querySelectorAll("input[type='file']");
-	    let totalPhotos = 0;
-	    let errorDiv = block.querySelector(".photoError");
-
-	    errorDiv.innerHTML = ""; // clear old errors
-
-	    inputs.forEach(inp => {
-	        if (inp.files.length > 0) {
-	            totalPhotos++;
-	        }
-	    });
-
-	    // For activities with count value > 0, enforce minimum 2 photos
-	   let minPhotos = 2;  // default minimum
-
-let activityName = block.getAttribute("data-name");
-
-if (activityName === "photos_janbhagidari") {
-    minPhotos = 4;  // Minimum 4 photos for Janbhagidari
-}
-
-// Validate minimum photo count only if activity value > 0
-let activityInput = block.closest("tr").querySelector("input[type='text']");
-let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-
-if (activityValue > 0 && totalPhotos < minPhotos) {
-    errorDiv.innerHTML = `Please upload minimum ${minPhotos} photos.`;
-    alert(`Minimum `+minPhotos+` photos required for this activity.`);
-    allValid = false;
-    return false;
-}
-	});
+	if(($award_photo1 ==='' || typeof $award_photo1 ==='undefined') && ($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
+	{
+		alert('You can not selected any photos only data update! ');
+	}
+	else{
+		document.querySelectorAll(".photo-block").forEach(block => {
+		    
+		    let container = block.querySelector(".photoContainer");
+		    let inputs = container.querySelectorAll("input[type='file']");
+		    let totalPhotos = 0;
+		    let errorDiv = block.querySelector(".photoError");
+	
+		    errorDiv.innerHTML = ""; // clear old errors
+	
+		    inputs.forEach(inp => {
+		        if (inp.files.length > 0) {
+		            totalPhotos++;
+		        }
+		    });
+	
+		    // For activities with count value > 0, enforce minimum 2 photos
+		    let minPhotos = 2;  // default minimum
+	
+			let activityName = block.getAttribute("data-name");
+	
+			if (activityName === "photos_janbhagidari") {
+		    	minPhotos = 4;  // Minimum 4 photos for Janbhagidari
+			}
+			// Validate minimum photo count only if activity value > 0
+			let activityInput = block.closest("tr").querySelector("input[type='text']");
+			let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
+	
+			if (activityValue > 0 && totalPhotos < minPhotos) {
+			    errorDiv.innerHTML = `Please upload minimum ${minPhotos} photos.`;
+			    alert(`Minimum `+minPhotos+` photos required for this activity.`);
+			    allValid = false;
+			    return false;
+			}
+		});
+	}
 	if (allValid) {
-		if(confirm("Do you want to save Inauguration Program Details?")) {
+		if(confirm("Do you want to Update Inauguration Program Details?")) {
 		    formSubmitted = true; 
-			document.inauguration.action="saveMahotsavInaugurationDetails";
+			document.inauguration.action="updateMahotsavInaugurationDetails";
 			document.inauguration.method="post";
 			document.inauguration.submit();
 		}
@@ -404,9 +387,16 @@ if (activityValue > 0 && totalPhotos < minPhotos) {
 
 function editChangedata(inaugurationid){
 	
-	document.getElementById('inauguaration_id').value=inaugurationid
+	document.getElementById('inauguaration_id').value=inaugurationid;
     document.inauguration.action="getMahotsavInaugurationEdit";
 	document.inauguration.method="post";
+	document.inauguration.submit();
+}
+
+function editChancel(){
+	
+    document.inauguration.action="registerInauguration";
+	document.inauguration.method="get";
 	document.inauguration.submit();
 }
 
@@ -597,46 +587,38 @@ function showPrevImage() {
 		</label>
 <!-- 		<form name="inauguration" id="inauguration" modelAttribute="inauguration" action="saveInaugurationDetails" method="post" enctype="multipart/form-data"> -->
 		<!-- <form name="inauguration" id="inauguration" modelAttribute="WatershedYatraInauguaration" enctype="multipart/form-data"> -->
-		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="saveMahotsavInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
+		<form:form autocomplete="off" method="post" name="inauguration" id="inauguration" action="updateMahotsavInaugurationDetails" modelAttribute="useruploadign" enctype="multipart/form-data">
 			  <hr/>
-			  
-		<input type="hidden" name="inauguaration_id" id="inauguaration_id" />
+			 <c:forEach items="${dataList}" var="data" varStatus="count">
+				<input type="hidden" id="inauguaration_id" name="inauguaration_id" value="${data.inauguaration_id}"/>
+				<input type="hidden" id="date" name="date" value="${data.date}"/>
+				<input type="hidden" id="district" name="district" value="${data.district}"/>
+				<input type="hidden" id="block" name="block" value="${data.block}"/>
 			  
 			  <div class="row">
     			<div class="form-group col-3">
     			
-      		  <label for="date">Date: </label>
-      		  <input type="date" name="date" id="date" class="form-control activity" style="width: 100%;" />
+      		  	<label for="date">Date: &nbsp; <c:out value="${data.date}" /></label>
        		 
     		</div>
 			</div>
 			<div class="row">
 			<div class="form-group col-3">
-			<c:if test="${userType== 'SL' }"><br/>
-				 State Name: <br/>
-				<c:out value="${stateName}"></c:out>
-			</c:if>
+			State Name: &nbsp; <c:out value="${stateName}"></c:out>
 			</div>
     		<div class="form-group col-3">
       			<label for="district">District: </label>
-<!--       			<span class="projectError"></span> -->
-      			<select class="form-control district" id="district" name="district" >
-    				<option value="">--Select--</option>
-    				<c:forEach items="${distList}" var="dist"> 
-					<option value="<c:out value="${dist.key}"/>"><c:out value="${dist.value}" /></option>
-					</c:forEach>
-    			</select>
-    		</div>
-    		<div class="form-group col-3">
-    			<label for="block">Block: </label>
       			<span class="activityError"></span>
-      			<select class="form-control activity" id="block" name="block" >
-    				<option value="">--Select Block--</option>
-    			</select>
+      			 <c:out value="${data.distname}" />
     		</div>
     		<div class="form-group col-3">
-    			<label for="location">Location (Nearby/Milestone):</label>
-      			<input type="text" class="form-control activity" name="location" id="location" autocomplete="off" style="width: 100%; max-width: 800px;" />
+    			<label for="activity">Block: </label>
+      			<span class="activityError"></span>
+      			<c:out value="${data.blockname}" />
+    		</div>
+    		<div class="form-group col-3">
+    			<label for="activity">Location (Nearby/Milestone)</label>
+    			<input type="text" class="form-control activity" name="location" id="location" value="${data.location}" style="width: 100%; max-width: 800px;" />
     		</div>
     		
     		
@@ -651,39 +633,39 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Number of Participants</td>
-     		<td>Male<br><input type="text" id="male_participants" name="male_participants" autocomplete="off"
+     		<td>Male<br><input type="text" id="male_participants" name="male_participants" autocomplete="off" value="${data.male_participants}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Female<br><input type="text" id="female_participants" name="female_participants" autocomplete="off"
+     		<td>Female<br><input type="text" id="female_participants" name="female_participants" autocomplete="off" value="${data.female_participants}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Number of Ministers</td>
-     		<td>Central Level<br><input type="text" id="central_ministers" name="central_ministers" autocomplete="off"
+     		<td>Central Level<br><input type="text" id="central_ministers" name="central_ministers" autocomplete="off" value="${data.central_ministers}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>State Level<br><input type="text" id="stateMinisters" name="state_ministers" autocomplete="off"
+     		<td>State Level<br><input type="text" id="stateMinisters" name="state_ministers" autocomplete="off" value="${data.state_ministers}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
      	<tr>
      		<td>Number of Member of Parliament</td>
-     		<td colspan=2><input type="text" id="parliament" name="parliament" autocomplete="off"
+     		<td colspan=2><input type="text" id="parliament" name="parliament" autocomplete="off" value="${data.parliament}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Number of Members</td>
-     		<td>Legislative Assembly<br><input type="text" id="assembly_members" name="assembly_members" autocomplete="off"
+     		<td>Legislative Assembly<br><input type="text" id="assembly_members" name="assembly_members" autocomplete="off" value="${data.assembly_members}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Legislative Council<br><input type="text" id="council_members" name="council_members" autocomplete="off"
+     		<td>Legislative Council<br><input type="text" id="council_members" name="council_members" autocomplete="off" value="${data.council_members}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Number of other Public Representatives</td>
-     		<td colspan=2><input type="text" id="others" name="others" autocomplete="off"
+     		<td colspan=2><input type="text" id="others" name="others" autocomplete="off" value="${data.others}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
      		<td>Number of Government Officials</td>
-     		<td colspan=2><input type="text" id="gov_officials" name="gov_officials" autocomplete="off"
+     		<td colspan=2><input type="text" id="gov_officials" name="gov_officials" autocomplete="off" value="${data.gov_officials}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	
@@ -695,7 +677,7 @@ function showPrevImage() {
      	
      	<tr>
      		<td>Number of Works for Bhoomi Poojan <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
-     		<td colspan=2><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off"
+     		<td colspan=2><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off" value="${data.no_works_bhoomipoojan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<!-- <td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td> -->
@@ -727,7 +709,7 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Number of Works for Lokarpan <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
-     		<td colspan=2><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off"
+     		<td colspan=2><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off" value="${data.no_works_lokarpan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_lokarpan" name="tot_works_lokarpan" autocomplete="off"
 								onfocusin="decimalToFourPlace(event)" maxlength="10" required /></td> -->
@@ -759,9 +741,9 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Shramdaan <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
-     		<td>Number of Locations<br><input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off"
+     		<td>Number of Locations<br><input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off" value="${data.no_location_shramdaan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>No. of people participated<br><input type="text" id="no_people_shramdaan" name="no_people_shramdaan" autocomplete="off"
+     		<td>No. of people participated<br><input type="text" id="no_people_shramdaan" name="no_people_shramdaan" autocomplete="off" value="${data.no_people_shramdaan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
 			<!-- Number of Man Hours<br><input type="text" id="man" name="man" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /> --></td>
@@ -792,7 +774,8 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Agro forestry / Horticultural Plantation Number of Sapling <input type="hidden" name="forestry" id="forestry" value="4"/></td>
-     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" value="${data.no_awards}"
+     		pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->
 			<td>
@@ -822,7 +805,7 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Number of Projects Awarded for Janbhagidari Cup 2025 <input type="hidden" name="awarded" id="awarded" value="5"/></td>
-     		<td colspan=2><!-- Number of Watershed Margdarshaks<br> --><input type="text" id="no_awards" name="no_awards" autocomplete="off"
+     		<td colspan=2><input type="text" id="no_awards" name="no_awards" autocomplete="off" value="${data.no_awards}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>
 <div class="photo-block" data-name="photos_janbhagidari">
@@ -852,20 +835,19 @@ function showPrevImage() {
      	
      	<tr>
      		<td colspan=4 class="text-left">
-<!--      			<button class="btn btn-primary" type="submit">Save</button> -->
-<!--      			<input type="button" name="click" id="click" value="Save" class="btn btn-info" onclick="savedata();" /> -->
-     			<!-- <input type="button" name="click" id="click" value="Save" class="btn btn-info" onclick="validation();" /> -->
-     			<input type="button" class="btn btn-info" id="view" onclick="validation();" name="view" value='Save' />
+					<input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();"  value ="Update"/>
+     				<input type="button" class="btn btn-info" id="cancelbtn" name="cancelbtn" onclick="editChancel();"  value ="Cancel"/>
      		</td>
      	</tr>
      </table>
      </div>
-		</div>  	
+		</div>  
+		</c:forEach>
 		</form:form>
 		
 	</div>
 	
-	<div class="form-row">
+	<%-- <div class="form-row">
 	     <div class="form-group col">
 	     <hr/>
 	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Mahotsav - Inauguration Program Details</h5>
@@ -915,7 +897,7 @@ function showPrevImage() {
  							<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.inauguaration_id})"> Edit </button>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
 								<td> <c:out value="${data.date}" /></td>
- 								<%-- <c:choose>
+ 								<c:choose>
  									<c:when test="${st ne data.stname}">
  										<c:set var="st" value="${data.stname}" />
  										<td> <c:out value="${data.stname}" /></td>
@@ -923,7 +905,7 @@ function showPrevImage() {
  								<c:otherwise>
 <!--  										<td></td> -->
  								</c:otherwise>
- 								</c:choose> --%>
+ 								</c:choose>
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
@@ -1023,7 +1005,7 @@ function showPrevImage() {
  							<tr>
 								<td><c:out value='${count.count}' /> &nbsp;</td>
 								<td> <c:out value="${data.date}" /></td>
- 								<%-- <c:choose>
+ 								<c:choose>
  									<c:when test="${st ne data.stname}">
  										<c:set var="st" value="${data.stname}" />
  										<td> <c:out value="${data.stname}" /></td>
@@ -1031,7 +1013,7 @@ function showPrevImage() {
  								<c:otherwise>
 <!--  										<td></td> -->
  								</c:otherwise>
- 								</c:choose> --%>
+ 								</c:choose>
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
@@ -1076,7 +1058,7 @@ function showPrevImage() {
 		
 		
 		</div>
-		</div>
+		</div> --%>
 	
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>

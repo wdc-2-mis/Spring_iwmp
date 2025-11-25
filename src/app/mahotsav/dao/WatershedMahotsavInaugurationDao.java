@@ -16,5 +16,10 @@ public interface WatershedMahotsavInaugurationDao {
 	
 	String completeMahotsavInaugurationDetails(List<Integer> assetid, String userid);
 	boolean checkMahotsavInaugurationExits(Integer stCode);
+	public List<InaugurationMahotsavBean> getMahotsavInaugurationEditList(Integer inauguaration_id);
+	
+	public String updateMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session);
+	
+	
 
 }

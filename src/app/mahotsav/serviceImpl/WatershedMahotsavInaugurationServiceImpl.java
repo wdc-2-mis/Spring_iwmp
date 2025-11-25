@@ -52,6 +52,18 @@ public class WatershedMahotsavInaugurationServiceImpl implements WatershedMahots
 		// TODO Auto-generated method stub
 		return dao.checkMahotsavInaugurationExits(stCode);
 	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getMahotsavInaugurationEditList(Integer inauguaration_id) {
+		// TODO Auto-generated method stub
+		return dao.getMahotsavInaugurationEditList(inauguaration_id);
+	}
+
+	@Override
+	public String updateMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session) {
+		// TODO Auto-generated method stub
+		return dao.updateMahotsavInaugurationDetails(userfileup, session);
+	}
 	
 	
 	

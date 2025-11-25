@@ -1,6 +1,7 @@
 package app.mahotsav.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,7 @@ import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.service.WatershedMahotsavInaugurationService;
 import app.service.ProfileService;
 import app.watershedyatra.bean.InaugurationBean;
+import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.service.WatershedYatraService;
 
 @Controller("wMInaugurationController")
@@ -222,5 +224,118 @@ public class WMInaugurationController {
 		Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
         return iSer.checkMahotsavInaugurationExits(stcd);
     }
+	
+	@RequestMapping(value = "/getMahotsavInaugurationEdit", method = RequestMethod.POST)
+	public ModelAndView getMahotsavInaugurationEdit(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<InaugurationMahotsavBean> editlist = new ArrayList<InaugurationMahotsavBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("mahotsav/editmahotsavinauguration");
+				String inauguaration_id=request.getParameter("inauguaration_id");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("stateName",stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				editlist=iSer.getMahotsavInaugurationEditList(Integer.parseInt(inauguaration_id));
+				
+				mav.addObject("dataList",editlist);
+				mav.addObject("dataListSize",editlist.size());
+				
+				
+				
+
+			} else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/updateMahotsavInaugurationDetails", method = RequestMethod.POST)
+	public ModelAndView updateMahotsavInaugurationDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") InaugurationMahotsavBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		List<String> imageNames = new ArrayList<>();
+		List<InaugurationMahotsavBean> data = new ArrayList<InaugurationMahotsavBean>();
+		List<InaugurationMahotsavBean> compdata = new ArrayList<InaugurationMahotsavBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("mahotsav/mahotsavinauguration");
+
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+				
+				mav.addObject("userType", userType);
+				// mav.addObject("distName",distName);
+				mav.addObject("stateName", stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				data=iSer.getregisterInaugurationDetails(stcd);
+				mav.addObject("dataList",data);
+				mav.addObject("dataListSize",data.size());
+				
+				compdata=iSer.getregisterInaugurationDetailsComp(stcd);
+				mav.addObject("compdataList",compdata);
+				mav.addObject("compdataListSize",compdata.size());
+
+				result = iSer.updateMahotsavInaugurationDetails(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Update Successfully!");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result1", "Do not Update!");
+				}
+				return new ModelAndView("redirect:/registerInauguration");
+			} 
+			else {
+				return new ModelAndView("redirect:/login");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 			
 }
