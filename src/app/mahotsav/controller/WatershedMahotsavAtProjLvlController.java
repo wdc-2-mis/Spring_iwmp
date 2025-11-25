@@ -1,6 +1,8 @@
 package app.mahotsav.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +130,7 @@ HttpSession session;
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		int bcode = Integer.parseInt(request.getParameter("block"));
+		String dateTime = request.getParameter("datetime");
 		List<WatershedMahotsavProjectLevelBean> dlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		List<WatershedMahotsavProjectLevelBean> comlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		try {
@@ -149,6 +152,7 @@ HttpSession session;
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode()==null?0:bean.getStatecode();
 				}
+				mav.addObject("datetimeValue", dateTime);
 				mav.addObject("userType",userType);
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);

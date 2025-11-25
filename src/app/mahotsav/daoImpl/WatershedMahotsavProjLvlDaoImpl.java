@@ -354,6 +354,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 		return list;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public String deleteMahotsavProjLvlDetails(List<Integer> assetid, String userid) {
 		// TODO Auto-generated method stub
@@ -371,12 +372,10 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			 
 			// WatershedMahotsavInauguaration data = new WatershedMahotsavInauguaration();
 			//WatershedMahotsavInauguarationActPhoto photo= new WatershedMahotsavInauguarationActPhoto();
-			 Query query1 = session.createQuery("from WatershedMahotsavProjectLvlPhoto where watershedMahotsav.id = :id");
-			 for(int i=0;i<assetid.size(); i++)
-			 {
-				query1.setInteger("id", assetid.get(i));
-				list = query1.list();
-			 }
+			 @SuppressWarnings("rawtypes")
+			 Query query1 = session.createQuery("from WatershedMahotsavProjectLvlPhoto where watershedMahotsav.id in (:id)");
+			 query1.setParameterList("id", assetid);
+			 list =query1.list();
 			 for (WatershedMahotsavProjectLvlPhoto photo : list) {
 				   
 				 imgList.add(photo.getPhotoUrl());

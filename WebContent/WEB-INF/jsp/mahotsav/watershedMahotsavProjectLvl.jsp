@@ -439,6 +439,7 @@ function validation()
         let inputs = container.querySelectorAll("input[type='file']");
         let totalFiles = 0;
         let minPhotos = 2;
+        errorDiv.innerHTML = ""; // clear old errors
         inputs.forEach(inp => {
             if (inp.files.length > 0) {
                 totalFiles++;
@@ -498,7 +499,7 @@ function displaydata(){
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date and Time: </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%;" />
+       		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
     		</div>
 			</div>
 			<div class="row">
@@ -690,7 +691,7 @@ function displaydata(){
 						</tr>
 						<tr>
 							<td>Agro forestry / Horticultural Plantation - Number of Saplings <input type="hidden" name="forestry" id="forestry" value="4"/></td>
-							<td colspan=2><input type="text" id="area_plantation"autocomplete="off"
+							<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
@@ -832,7 +833,7 @@ function displaydata(){
 						</c:if>
  						<c:if test="${dataListSize ne 0 && dataListSize >0}">
  						<tr>
-<!-- 								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td> -->
+								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
 								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
 							</tr>
 						</c:if>
