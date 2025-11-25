@@ -1,6 +1,7 @@
 package app.mahotsav.bean;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -66,6 +67,26 @@ public class InaugurationMahotsavBean {
     private Integer image_count;
     private Integer participants;
     private Integer total_participation;
+    
+    
+    private BigInteger pr_male;
+    private BigInteger pr_female;
+    private BigInteger pr_total_male_female;
+    private BigInteger no_of_prabhat;
+    private BigInteger total_prabhat_photo;
+    private BigInteger no_of_projectlvl;
+    private BigInteger pl_male;
+    private BigInteger pl_female;
+    private BigInteger pl_total_male_female;
+    private BigInteger representatives;
+    private BigInteger govt_officials;
+    private BigInteger total_projlvl_photo;
+    private BigInteger bhoomi_poojan;
+    private BigInteger lokarpans;
+    private BigInteger shramdaan_location;
+    private BigInteger shramdaan_participated;
+    private BigInteger no_of_agro;
+    private BigInteger total_participations;
     
 	public Integer getDistrict() {
 		return district;
@@ -385,6 +406,114 @@ public class InaugurationMahotsavBean {
 	}
 	public void setTotal_participation(Integer total_participation) {
 		this.total_participation = total_participation;
+	}
+	public BigInteger getPr_male() {
+		return pr_male;
+	}
+	public void setPr_male(BigInteger pr_male) {
+		this.pr_male = pr_male;
+	}
+	public BigInteger getPr_female() {
+		return pr_female;
+	}
+	public void setPr_female(BigInteger pr_female) {
+		this.pr_female = pr_female;
+	}
+	public BigInteger getPr_total_male_female() {
+		return pr_total_male_female;
+	}
+	public void setPr_total_male_female(BigInteger pr_total_male_female) {
+		this.pr_total_male_female = pr_total_male_female;
+	}
+	public BigInteger getNo_of_prabhat() {
+		return no_of_prabhat;
+	}
+	public void setNo_of_prabhat(BigInteger no_of_prabhat) {
+		this.no_of_prabhat = no_of_prabhat;
+	}
+	public BigInteger getTotal_prabhat_photo() {
+		return total_prabhat_photo;
+	}
+	public void setTotal_prabhat_photo(BigInteger total_prabhat_photo) {
+		this.total_prabhat_photo = total_prabhat_photo;
+	}
+	public BigInteger getNo_of_projectlvl() {
+		return no_of_projectlvl;
+	}
+	public void setNo_of_projectlvl(BigInteger no_of_projectlvl) {
+		this.no_of_projectlvl = no_of_projectlvl;
+	}
+	public BigInteger getPl_male() {
+		return pl_male;
+	}
+	public void setPl_male(BigInteger pl_male) {
+		this.pl_male = pl_male;
+	}
+	public BigInteger getPl_female() {
+		return pl_female;
+	}
+	public void setPl_female(BigInteger pl_female) {
+		this.pl_female = pl_female;
+	}
+	public BigInteger getPl_total_male_female() {
+		return pl_total_male_female;
+	}
+	public void setPl_total_male_female(BigInteger pl_total_male_female) {
+		this.pl_total_male_female = pl_total_male_female;
+	}
+	public BigInteger getRepresentatives() {
+		return representatives;
+	}
+	public void setRepresentatives(BigInteger representatives) {
+		this.representatives = representatives;
+	}
+	public BigInteger getGovt_officials() {
+		return govt_officials;
+	}
+	public void setGovt_officials(BigInteger govt_officials) {
+		this.govt_officials = govt_officials;
+	}
+	public BigInteger getTotal_projlvl_photo() {
+		return total_projlvl_photo;
+	}
+	public void setTotal_projlvl_photo(BigInteger total_projlvl_photo) {
+		this.total_projlvl_photo = total_projlvl_photo;
+	}
+	public BigInteger getBhoomi_poojan() {
+		return bhoomi_poojan;
+	}
+	public void setBhoomi_poojan(BigInteger bhoomi_poojan) {
+		this.bhoomi_poojan = bhoomi_poojan;
+	}
+	public BigInteger getLokarpans() {
+		return lokarpans;
+	}
+	public void setLokarpans(BigInteger lokarpans) {
+		this.lokarpans = lokarpans;
+	}
+	public BigInteger getShramdaan_location() {
+		return shramdaan_location;
+	}
+	public void setShramdaan_location(BigInteger shramdaan_location) {
+		this.shramdaan_location = shramdaan_location;
+	}
+	public BigInteger getShramdaan_participated() {
+		return shramdaan_participated;
+	}
+	public void setShramdaan_participated(BigInteger shramdaan_participated) {
+		this.shramdaan_participated = shramdaan_participated;
+	}
+	public BigInteger getNo_of_agro() {
+		return no_of_agro;
+	}
+	public void setNo_of_agro(BigInteger no_of_agro) {
+		this.no_of_agro = no_of_agro;
+	}
+	public BigInteger getTotal_participations() {
+		return total_participations;
+	}
+	public void setTotal_participations(BigInteger total_participations) {
+		this.total_participations = total_participations;
 	}
     
     

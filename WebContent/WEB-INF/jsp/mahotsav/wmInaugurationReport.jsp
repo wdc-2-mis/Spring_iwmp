@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
+<%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
 
 <title>Report WM1 - State-wise Watershed Mahotsav Inauguration Program</title>
 
@@ -32,15 +32,15 @@ function exportExcel(){
 <body>
 <div class="maindiv">
     
-		<div class="card shadow mt-4 p-4">
+		 <div class="card shadow mt-1 p-5"> 
 		
 		<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        	<h4 class="text-center text-primary mb-4">Report WM1 - Watershed Mahotsav Inauguration Program</h4>
+        	<h4 class="text-center text-primary mb-4"><u>Report WM1 - Watershed Mahotsav Inauguration Program</u></h4>
     	</div>
-			<br>
+			<!-- <br> -->
 
     <div class="nav-item text-left mb-2">
-    	<c:if test="${not empty stateWMInaugurationList1}">
+    	<c:if test="${not empty stateWMInaugurationList}">
     		<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()"> Excel </button>
         	<button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
         </c:if>   
@@ -61,7 +61,7 @@ function exportExcel(){
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Number of Works for Bhoomi Poojan</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Number of Works for Lokarpan</th>
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Shramdaan</th>
-						<th rowspan="3" style="text-align:center; vertical-align: middle;">Agro forestry / Horticulture Plantation (Area in Ha.)</th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">Agro forestry / Horticulture Plantation no. of Saplings</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">Number of Projects Awarded for Janbhagidari Cup 2025</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">No of Photographs Uploaded</th>
 					</tr>

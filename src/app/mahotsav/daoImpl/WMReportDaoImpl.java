@@ -24,6 +24,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	@Value("${getWMInaugurationData}")
 	String getWMInaugurationDetails;
 
+	@Value("${getProjLvlWMPrgDetails}")
+	String getProjLvlWMPrgDetails;
+	
 	@Override
 	public List<InaugurationMahotsavBean> getStateWMInaugurationReport() {
 		List<InaugurationMahotsavBean> getWMInaugurationData = new ArrayList<InaugurationMahotsavBean>();
@@ -42,6 +45,26 @@ public class WMReportDaoImpl implements WMReportDao {
 		}
 			
 		return getWMInaugurationData;
+	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getProjLvlWMPrgReport() {
+		List<InaugurationMahotsavBean> getProjLvlWMPrgData = new ArrayList<InaugurationMahotsavBean>();
+		String hql = getProjLvlWMPrgDetails;
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(InaugurationMahotsavBean.class));
+			getProjLvlWMPrgData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getProjLvlWMPrgData;
 	}
 	
 	

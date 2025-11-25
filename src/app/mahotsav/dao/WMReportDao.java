@@ -7,5 +7,7 @@ import app.mahotsav.bean.InaugurationMahotsavBean;
 public interface WMReportDao {
 
 	List<InaugurationMahotsavBean> getStateWMInaugurationReport();
+
+	List<InaugurationMahotsavBean> getProjLvlWMPrgReport();
 	
 }

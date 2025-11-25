@@ -12,4 +12,6 @@ public interface WMReportService {
 	
 	List<InaugurationMahotsavBean> getStateWMInaugurationReport();
 
+	List<InaugurationMahotsavBean> getProjLvlWMPrgReport();
+
 }

@@ -20,6 +20,12 @@ public class WMReportServiceImpl implements WMReportService{
 	public List<InaugurationMahotsavBean> getStateWMInaugurationReport() {
 		return WMDao.getStateWMInaugurationReport();
 	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getProjLvlWMPrgReport() {
+		// TODO Auto-generated method stub
+		return WMDao.getProjLvlWMPrgReport();
+	}
 	
 
 }
