@@ -872,7 +872,7 @@ function showPrevImage() {
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="3">Action</th>
+								<!-- <th rowspan="3">Action</th> -->
 								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -912,7 +912,7 @@ function showPrevImage() {
  						<c:set var="st" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 							<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.inauguaration_id})"> Edit </button>
+ 							<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.inauguaration_id})"> Edit </button> --%>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
 								<td> <c:out value="${data.date}" /></td>
  								<%-- <c:choose>
