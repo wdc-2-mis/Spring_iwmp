@@ -1080,7 +1080,7 @@ display: none; /* Hidden by default */
  								
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.inauguaration_id}"  data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
@@ -1188,7 +1188,7 @@ display: none; /* Hidden by default */
  								
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.inauguaration_id}"  data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
