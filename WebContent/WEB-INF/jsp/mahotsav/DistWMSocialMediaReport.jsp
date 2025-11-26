@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
+<%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -18,8 +18,8 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 
 <div class="container mt-5">
     <c:if test="${not empty WMDList}">
-        <div class="card shadow mt-4 p-4">
-            <h4 class="text-center text-primary mb-4">District-wise Social Media Competition</h4>
+        <div class="card shadow mt-1 p-5">
+            <h4 class="text-center text-primary mb-4"><u>Report WM3 - District-wise Social Media Competition</u></h4>
             <div class="table-responsive">
             
                 <table class="table table-bordered table-striped">
@@ -100,5 +100,5 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 
 <br>
 <footer class="text-center">
-    <%-- <%@ include file="/WEB-INF/jspf/mahotsavfooter.jspf" %> --%>
+	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
 </footer>
