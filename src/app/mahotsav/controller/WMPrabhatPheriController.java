@@ -303,13 +303,15 @@ public class WMPrabhatPheriController {
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
 				
-				dlist=wmService.getWatershedMahotsavDraftList(stcd);
-				mav.addObject("dataDList",dlist);
-				mav.addObject("dataDListSize",dlist.size());
-				
-				comlist=wmService.getWatershedMahotsavCompleteList(stcd);
-				mav.addObject("dataCList",comlist);
-				mav.addObject("dataCListSize",comlist.size());
+				/*
+				 * dlist=wmService.getWatershedMahotsavDraftList(stcd);
+				 * mav.addObject("dataDList",dlist);
+				 * mav.addObject("dataDListSize",dlist.size());
+				 * 
+				 * comlist=wmService.getWatershedMahotsavCompleteList(stcd);
+				 * mav.addObject("dataCList",comlist);
+				 * mav.addObject("dataCListSize",comlist.size());
+				 */
 
 				result = wmService.updateWMPrabhatPheri(userfileup, session);
 

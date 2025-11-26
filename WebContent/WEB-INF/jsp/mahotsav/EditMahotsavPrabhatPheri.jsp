@@ -93,8 +93,13 @@ function getCurrentTimestamp() {
 }
 
 $(document).ready(function() {
-
+	$photo1 = $('#photos').val();
  // EXTRACT GPS & PHOTO TIMESTAMP FROM IMAGE
+ if($photo1 ==='' || typeof $photo1 ==='undefined'){
+	 
+	// alert('You can not selected any photos only data update! ');
+ }
+ else{
 document.addEventListener("change", function(e) {
     if (e.target.classList.contains("photo-input")) {
 
@@ -191,7 +196,7 @@ document.addEventListener("change", function(e) {
     }
 });
 
-
+ }
     // Add photo input field
     window.addPhotoField = function() {
         var container = document.getElementById("photoContainer");
@@ -336,7 +341,7 @@ document.addEventListener("change", function(e) {
 
                         <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
-                                <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
+                                <input type="file" name="photos" id="photos"  class="form-control photo-input" accept="image/*" required/>
                                 <input type="hidden" name="latitude[]" class="latitude">
                                 <input type="hidden" name="longitute[]" class="longitude">
                                 <input type="hidden" name="photoTimestamp[]" class="photoTimestamp">

@@ -412,8 +412,8 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-    const requiredWidth = 400;
-    const requiredHeight = 400;
+    const requiredWidth = 600;
+    const requiredHeight = 600;
 
     // 1. Validate file type
     if (!allowedTypes.includes(file.type)) {
@@ -448,7 +448,7 @@ function validatePhoto(input) {
     }
     
  // 3. Validate image dimensions
-    var reader = new FileReader();
+ /*    var reader = new FileReader();
     reader.onload = function(e) {
         var img = new Image();
         img.onload = function() {
@@ -463,7 +463,7 @@ function validatePhoto(input) {
         };
         img.src = e.target.result;
     };
-	reader.readAsDataURL(file);
+	reader.readAsDataURL(file); */
 
 	 // 4. Check duplicate image by hashing
     getImageHash(file, function(hash) {
@@ -581,7 +581,7 @@ function showPrevImage() {
 	</script> 
 </c:if>
 <div class="maindiv">
-		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Mahotsav - Inauguration Program</h4> </div>
+		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Mahotsav - Updation of Inauguration Program</h4> </div>
 		<label>
 			<span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label>
@@ -774,7 +774,7 @@ function showPrevImage() {
      	</tr>
      	<tr>
      		<td>Agro forestry / Horticultural Plantation Number of Sapling <input type="hidden" name="forestry" id="forestry" value="4"/></td>
-     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" value="${data.no_awards}"
+     		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" value="${data.forestry_horticulture}"
      		pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td> -->

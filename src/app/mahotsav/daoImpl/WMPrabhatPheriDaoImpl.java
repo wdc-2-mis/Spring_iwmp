@@ -612,10 +612,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	        // ------------------ GET EXISTING RECORD ------------------
 	        MahotsavPrabhatPheri oldData = sess.get(MahotsavPrabhatPheri.class, userfileup.getPrabhatpheri_id());
-	        if (oldData == null) return "fail";
 
-	        // ------------------ IF NO NEW PHOTOS, ONLY UPDATE COUNTS ------------------
-	        if (userfileup.getPhotos() == null || userfileup.getPhotos().size() <= 1) {
+	        if ( userfileup.getPhotos().size() == 1) {
 	            oldData.setMaleParticipants(userfileup.getMale_participants());
 	            oldData.setFemaleParticipants(userfileup.getFemale_participants());
 	            oldData.setUpdatedOn(new Date());
@@ -623,7 +621,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	            sess.getTransaction().commit();
 	            return "success";
 	        }
-
+	        else {
 	        // ------------------ DELETE OLD PHOTOS ------------------
 	        List<MahotsavPrabhatPheriPhoto> oldPhotoList = sess.createQuery(
 	                        "from MahotsavPrabhatPheriPhoto where wmPrabhatPheri.prabhatpheriId = :ppid",
@@ -634,7 +632,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	        for (MahotsavPrabhatPheriPhoto p : oldPhotoList) {
 	            if (p.getPhotoUrl() != null) {
 	                File f = new File(p.getPhotoUrl());
-	                if (f.exists()) f.delete();
+	                if (f.exists()) 
+	                	f.delete();
 	            }
 	        }
 
@@ -730,6 +729,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	                    // Save path
 	                    photo.setPhotoUrl(filePath + "PP_" + code + "_" + sequence + "_" + image.getOriginalFilename());
 	                    sess.save(photo);
+	                    sess.evict(photo);
 	                    sequence++;
 	                }
 	            }
@@ -742,6 +742,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	        sess.getTransaction().commit();
 	        res = "success";
+	        }
 
 	    } catch (Exception ex) {
 	        ex.printStackTrace();
