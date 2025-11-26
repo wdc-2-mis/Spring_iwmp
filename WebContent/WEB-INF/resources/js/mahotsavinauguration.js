@@ -151,11 +151,11 @@ $('#chkSelectAllkd').on('click', function() {
 
 
 		$(document).on('click', '.showImage', function(e) {
-			//var inaugId = $('#inaugId').val();
+			
 			$inaugId = e.target.getAttribute('data-id');
 			$.ajax({
 				type: 'POST',
-			//	url: "getImageByInaugurationId",
+				url: "getImageMahotsavInaugurationId",
 				data: { inaugId: $inaugId },
 				error: function(xhr, status, er) {
 					console.log(er);
@@ -165,15 +165,14 @@ $('#chkSelectAllkd').on('click', function() {
 					imageContainer.empty();
 					let list = '<ul>';
 					for (let i = 0; i < data.length; i++) {
-						if (data[i] != null) {
-							//						https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/
-							//						https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/
-							//PRD
-													list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
-							//TEST
-							//						list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
-							//Local
-	//						list += '<li><img src="resources/images/watershedyatra/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						if (data[i] != null) 
+						{
+						//PRD
+						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						//TEST
+						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						//Local
+							list += '<li><img src="resources/images/inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 
 						}
 					}

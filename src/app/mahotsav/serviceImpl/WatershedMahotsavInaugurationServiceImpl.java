@@ -64,6 +64,12 @@ public class WatershedMahotsavInaugurationServiceImpl implements WatershedMahots
 		// TODO Auto-generated method stub
 		return dao.updateMahotsavInaugurationDetails(userfileup, session);
 	}
+
+	@Override
+	public List<String> getImageMahotsavInaugurationId(Integer inaugId) {
+		// TODO Auto-generated method stub
+		return dao.getImageMahotsavInaugurationId(inaugId);
+	}
 	
 	
 	

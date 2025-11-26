@@ -422,8 +422,8 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-    const requiredWidth = 400;
-    const requiredHeight = 400;
+    const requiredWidth = 600;
+    const requiredHeight = 600;
 
     // 1. Validate file type
     if (!allowedTypes.includes(file.type)) {
@@ -458,7 +458,7 @@ function validatePhoto(input) {
     }
     
  // 3. Validate image dimensions
-    var reader = new FileReader();
+   /*  var reader = new FileReader();
     reader.onload = function(e) {
         var img = new Image();
         img.onload = function() {
@@ -473,7 +473,7 @@ function validatePhoto(input) {
         };
         img.src = e.target.result;
     };
-	reader.readAsDataURL(file);
+	reader.readAsDataURL(file); */
 
 	 // 4. Check duplicate image by hashing
     getImageHash(file, function(hash) {
@@ -547,9 +547,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + imageSrc;			//PRD
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + imageSrc;	//TEST
- 	document.getElementById('largeImage').src = 'resources/images/Inauguration/' + imageSrc;												//Local
+//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + imageSrc;
+ 	document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -575,6 +575,135 @@ function showPrevImage() {
 	}
 }
 </script>
+
+
+<style>
+
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 300px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Large image */
+#largeImage {
+  width: 100%; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+</style>
+
 </head>
 <body>
 <c:if test="${not empty result}">
@@ -872,7 +1001,7 @@ function showPrevImage() {
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<!-- <th rowspan="3">Action</th> -->
+								<th rowspan="3">Action</th> 
 								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -912,7 +1041,7 @@ function showPrevImage() {
  						<c:set var="st" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 							<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.inauguaration_id})"> Edit </button> --%>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.inauguaration_id})"> Edit </button>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.inauguaration_id}"  name="${data.inauguaration_id}" value="${data.inauguaration_id}"/></td>
 								<td> <c:out value="${data.date}" /></td>
  								<%-- <c:choose>
@@ -1077,6 +1206,34 @@ function showPrevImage() {
 		
 		</div>
 		</div>
+		<!-- Show Image Modal HTML -->
+	<div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
+
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+		
+	</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+$(".sidebar-btn").click(function(){
+$(".wrapper").toggleClass("collapse");
+	});
+	});
+
+
+</script>
 	
 	<footer class=" text-center">
 	<%@include file="/WEB-INF/jspf/footer2.jspf"%>

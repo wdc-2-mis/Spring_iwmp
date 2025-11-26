@@ -35,6 +35,7 @@ import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
 import app.watershedyatra.bean.InaugurationBean;
+import app.watershedyatra.model.WatershedYatVill;
 import app.watershedyatra.model.WatershedYatraInauguaration;
 
 @Repository("WatershedMahotsavInaugurationDao")
@@ -158,6 +159,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getBhoomipoojan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -185,6 +187,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -198,6 +201,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getLokarpan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -225,6 +229,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getLokarpan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -238,6 +243,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getShramdaan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -266,6 +272,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getShramdaan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -279,6 +286,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getForestry());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -308,6 +316,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -321,6 +330,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getAwarded());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -344,11 +354,12 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                    photo.setPhoto_timestamp(timestamp);
 		                }
 		                 // Upload the file
-		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getForestry().toString(), sequence);
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getAwarded().toString(), sequence);
 		                 // Store URL
-		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getAwarded().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -635,19 +646,17 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		try {
 			sess.beginTransaction();
 			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			//System.out.println("datefrom"+userfileup.getDate());
+			
 			Date inaugurationDate = formatter.parse(userfileup.getDate());
 			String st_code=session.getAttribute("stateCode").toString();
-			System.out.println("datefrom"+inaugurationDate);
+			
 			List<MultipartFile> photos_bhoomipoojanu=userfileup.getPhotos_bhoomipoojan();
 			List<MultipartFile> photos_lokarpanu=userfileup.getPhotos_lokarpan();
 			List<MultipartFile> photos_shramdaanu=userfileup.getPhotos_shramdaan();
 			List<MultipartFile> photos_forestryu=userfileup.getPhotos_forestry();
 			List<MultipartFile> photos_janbhagidariu=userfileup.getPhotos_janbhagidari();
 			
-			
 			System.out.println("photos_bhoomipoojanu="+photos_bhoomipoojanu.size());
-			
 			
 			if(photos_bhoomipoojanu.size()==1 && photos_lokarpanu.size()==1 && photos_shramdaanu.size()==1 && photos_forestryu.size()==1 && photos_janbhagidariu.size()==1) 
 			{
@@ -682,8 +691,6 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 				String filePath="D:\\Inauguration\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/Inauguration/";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/Inauguration/";
-			
-		
 			
 			List list1 = sess.createSQLQuery("select value_id from watershed_mahotsav_inauguaration_sequence").list();
 			sequence=Integer.parseInt(list1.get(0).toString());
@@ -772,7 +779,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			String code=st_code.toString()+userfileup.getDistrict().toString()+userfileup.getBlock().toString();
 			//System.out.println("state="+code);
 			
-			  List<MultipartFile> photos = userfileup.getPhotos_bhoomipoojan();
+			 List<MultipartFile> photos = userfileup.getPhotos_bhoomipoojan();
 		      List<String> latitudes = userfileup.getPhotos_bhoomipoojan_lat();
 		      List<String> longitudes = userfileup.getPhotos_bhoomipoojan_lng();
 		      List<String> timestamps = userfileup.getPhotos_bhoomipoojan_time();
@@ -783,6 +790,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getBhoomipoojan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -810,6 +818,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -823,6 +832,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getLokarpan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -850,6 +860,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getLokarpan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -863,6 +874,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getShramdaan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -891,6 +903,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getShramdaan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -904,6 +917,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getForestry());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -933,6 +947,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -946,6 +961,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		             if (!image.isEmpty()) {
 		            	WatershedMahotsavInauguarationActPhoto photo = new WatershedMahotsavInauguarationActPhoto();
 		                photo.setWatershedMahotsavInauguaration(data);
+		                photo.setActId(userfileup.getAwarded());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
@@ -969,11 +985,12 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                    photo.setPhoto_timestamp(timestamp);
 		                }
 		                 // Upload the file
-		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getForestry().toString(), sequence);
+		                commonFunction.uploadFileMahotwavInauguration(image, filePath, code, userfileup.getAwarded().toString(), sequence);
 		                 // Store URL
-		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
+		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getAwarded().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
+		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
@@ -994,6 +1011,37 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		}
 		
 		return res;
+	}
+
+	@Override
+	public List<String> getImageMahotsavInaugurationId(Integer inaugId) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedMahotsavInauguarationActPhoto> list = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugrationId");
+			query.setInteger("inaugrationId", inaugId);
+			list = query.list();
+			for (WatershedMahotsavInauguarationActPhoto photo : list) 
+			{
+				//server
+				//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 	
 	

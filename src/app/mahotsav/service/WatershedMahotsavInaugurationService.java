@@ -27,6 +27,8 @@ public interface WatershedMahotsavInaugurationService {
 	
 	public String updateMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session);
 	
+	List<String> getImageMahotsavInaugurationId(Integer inaugId);
+	
 	
 
 }

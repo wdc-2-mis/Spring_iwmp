@@ -20,6 +20,8 @@ public interface WatershedMahotsavInaugurationDao {
 	
 	public String updateMahotsavInaugurationDetails(InaugurationMahotsavBean userfileup, HttpSession session);
 	
+	List<String> getImageMahotsavInaugurationId(Integer inaugId);
+	
 	
 
 }

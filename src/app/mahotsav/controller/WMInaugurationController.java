@@ -337,5 +337,20 @@ public class WMInaugurationController {
 		}
 		return mav;
 	}
+	
+	@RequestMapping(value = "/getImageMahotsavInaugurationId", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageMahotsavInaugurationId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("inaugId") Integer inaugId){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = iSer.getImageMahotsavInaugurationId(inaugId);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
 			
 }
