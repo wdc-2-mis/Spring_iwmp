@@ -57,8 +57,8 @@ function exportExcel(){
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">No. of Works for Bhoomi Poojan</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">No. of Works for Lokarpan</th>
 						<th colspan="2" style="text-align:center; vertical-align: middle;">Shramdaan</th>
-						<th rowspan="3" style="text-align:center; vertical-align: middle;">Agro Forestry/ Horticulture Plantation no. of Saplings </th>
-						<th rowspan="3" style="text-align:center; vertical-align: middle;">No of Photographs Uploaded</th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">Agro Forestry/ Horticulture Plantation(Number of Saplings) </th>
+						<th rowspan="3" style="text-align:center; vertical-align: middle;">No. of Photographs Uploaded</th>
 					</tr>
 					<tr>
 					    <th rowspan="2" style="text-align:center; vertical-align: middle;">No. of Prabhat Pheri Organized</th>

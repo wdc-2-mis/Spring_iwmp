@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
+<%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
 
 
 
@@ -24,9 +24,9 @@
     <form name="getRpt">
 
     <c:if test="${not empty WMList}">
-        <div class="card shadow mt-4 p-4">
+        <div class="card shadow mt-1 p-5">
         
-            <h4 class="text-center text-primary mb-4">State-wise Social Media Competition</h4>
+            <h4 class="text-center text-primary mb-4"><u>Report WM3 - State-wise Social Media Competition</u></h4>
 
             <div class="nav-item text-left mb-2">
             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel()"> Excel </button>

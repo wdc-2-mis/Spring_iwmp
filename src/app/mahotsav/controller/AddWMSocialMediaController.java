@@ -205,7 +205,7 @@ public class AddWMSocialMediaController {
 			Paragraph paragraph3 = null; 
 			
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-				paragraph3 = new Paragraph("State-wise Social Media Competition ", f3);
+				paragraph3 = new Paragraph("Report WM3 - State-wise Social Media Competition ", f3);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
 			paragraph2.setSpacingAfter(10);
@@ -322,7 +322,7 @@ public class AddWMSocialMediaController {
 		
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("State-wise Social Media Competition");   
+			Sheet sheet = workbook.createSheet("Report WM3 - State-wise Social Media Competition");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 			
