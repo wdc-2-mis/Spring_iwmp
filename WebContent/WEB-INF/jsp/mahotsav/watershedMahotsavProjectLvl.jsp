@@ -143,8 +143,8 @@ function validatePhoto(input) {
 
     const maxSizeKB = 300; // 300 KB limit
     const allowedTypes = ["image/jpeg", "image/png"];
-    const requiredWidth = 400;
-    const requiredHeight = 400;
+    const requiredWidth = 600;
+    const requiredHeight = 600;
 
 
     // 1. Validate file type
@@ -165,20 +165,20 @@ function validatePhoto(input) {
     }
     
  // 3. Validate image dimensions
-    let reader = new FileReader();
-	reader.onload = function (e) {
-    let img = new Image();
-    img.onload = function () {
-        if (checkValid && (img.width > requiredWidth || img.height > requiredHeight)) {
-            alert(`Image dimensions must be less than ` +requiredWidth +` x `+ requiredHeight +` pixels.\nYour image: ` +img.width+` x `+img.height);
-            input.value = "";
-            checkValid = false;
-            return;
-        	}
-   	 	};
-    	img.src = e.target.result; // use base64 data URL from FileReader
-		};
-	reader.readAsDataURL(file);
+//     let reader = new FileReader();
+// 	reader.onload = function (e) {
+//     let img = new Image();
+//     img.onload = function () {
+//         if (checkValid && (img.width > requiredWidth || img.height > requiredHeight)) {
+//             alert(`Image dimensions must be less than ` +requiredWidth +` x `+ requiredHeight +` pixels.\n But Your image: ` +img.width+` x `+img.height+` pixels.`);
+//             input.value = "";
+//             checkValid = false;
+//             return;
+//         	}
+//    	 	};
+//     	img.src = e.target.result; // use base64 data URL from FileReader
+// 		};
+// 	reader.readAsDataURL(file);
 
 
 
@@ -478,6 +478,14 @@ function displaydata(){
 	document.saveWatershed.submit();
 }
 
+function editChangedata(waterid){
+	
+	document.getElementById('waterid').value=waterid;
+    document.saveWatershed.action="getWatershedMahotsavProjLvlEdit";
+	document.saveWatershed.method="post";
+	document.saveWatershed.submit();
+}
+
 </script>
 
 
@@ -744,6 +752,7 @@ function displaydata(){
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
+								<th rowspan="3">Action</th>
 								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="3">Date</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -782,6 +791,7 @@ function displaydata(){
  						<c:set var="st" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.waterid})"> Edit </button>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.waterid}"  name="${data.waterid}" value="${data.waterid}"/></td>
 								<td> <c:out value="${data.datetime}" /></td>
  								<%-- <c:choose>
