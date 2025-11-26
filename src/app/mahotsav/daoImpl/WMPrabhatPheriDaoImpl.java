@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.hibernate.Transaction;
 
 import app.common.CommonFunctions;
+import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.WMPrabhatPheriBean;
 import app.mahotsav.dao.WMPrabhatPheriDao;
 import app.mahotsav.model.MahotsavPrabhatPheri;
@@ -67,6 +68,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	@Value("${checkWMPrabhatPheriVillage}")
 	String checkWMPrabhatPheriVillage;
 
+	@Value("${getMahotsavPPeditList}")
+	String getMahotsavPPeditList;
     @Override
     public List<Map<String, Object>> getBlockListByDistrict(Integer districtCode) {
         List<IwmpBlock> blockList = new ArrayList<>();
@@ -551,6 +554,203 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
         return blkMap;
 	}
 
+	@Override
+	public List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId) {
+		String getReport=getMahotsavPPeditList;
+		Session session = sessionFactory.getCurrentSession();
+		List<WMPrabhatPheriBean> list = new ArrayList<WMPrabhatPheriBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setInteger("wcdcid",prabhatpheriId); 
+				query.setResultTransformer(Transformers.aliasToBean(WMPrabhatPheriBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+			//session.flush();
+		//session.close();
+		}
+		return list;
+		
+	}
+
+	@Override
+	public String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session) {
+	    Session sess = sessionFactory.getCurrentSession();
+	    String res = "fail";
+	    int sequence = 0;
+
+	    try {
+	        sess.beginTransaction();
+
+	        // ------------------ PARSE DATE ------------------
+	        Date prabhatpheriDate = null;
+	        try {
+	            if (userfileup.getDate1() != null && !userfileup.getDate1().trim().isEmpty()) {
+	                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	                prabhatpheriDate = formatter.parse(userfileup.getDate1().trim());
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        String st_code = session.getAttribute("stateCode").toString();
+	        String filePath = "D:\\WatershedMahotsav\\";
+
+	        // ------------------ GET EXISTING RECORD ------------------
+	        MahotsavPrabhatPheri oldData = sess.get(MahotsavPrabhatPheri.class, userfileup.getPrabhatpheri_id());
+	        if (oldData == null) return "fail";
+
+	        // ------------------ IF NO NEW PHOTOS, ONLY UPDATE COUNTS ------------------
+	        if (userfileup.getPhotos() == null || userfileup.getPhotos().size() <= 1) {
+	            oldData.setMaleParticipants(userfileup.getMale_participants());
+	            oldData.setFemaleParticipants(userfileup.getFemale_participants());
+	            oldData.setUpdatedOn(new Date());
+	            sess.update(oldData);
+	            sess.getTransaction().commit();
+	            return "success";
+	        }
+
+	        // ------------------ DELETE OLD PHOTOS ------------------
+	        List<MahotsavPrabhatPheriPhoto> oldPhotoList = sess.createQuery(
+	                        "from MahotsavPrabhatPheriPhoto where wmPrabhatPheri.prabhatpheriId = :ppid",
+	                        MahotsavPrabhatPheriPhoto.class)
+	                .setParameter("ppid", userfileup.getPrabhatpheri_id())
+	                .list();
+
+	        for (MahotsavPrabhatPheriPhoto p : oldPhotoList) {
+	            if (p.getPhotoUrl() != null) {
+	                File f = new File(p.getPhotoUrl());
+	                if (f.exists()) f.delete();
+	            }
+	        }
+
+	        sess.createSQLQuery("DELETE FROM watershed_mahotsav_prabhatpheri_act_photo WHERE prabhatpheri_id = :id")
+	                .setParameter("id", userfileup.getPrabhatpheri_id())
+	                .executeUpdate();
+	        sess.createSQLQuery("DELETE FROM watershed_mahotsav_prabhatpheri WHERE prabhatpheri_id = :id")
+	                .setParameter("id", userfileup.getPrabhatpheri_id())
+	                .executeUpdate();
+
+	        // ------------------ GET SEQUENCE ------------------
+	        Object seqObj = sess.createSQLQuery("SELECT value_id FROM watershed_mahotsav_prabhatpheri_sequence").uniqueResult();
+	        if (seqObj != null) {
+	            if (seqObj instanceof BigDecimal) sequence = ((BigDecimal) seqObj).intValue();
+	            else if (seqObj instanceof BigInteger) sequence = ((BigInteger) seqObj).intValue();
+	            else sequence = Integer.parseInt(seqObj.toString());
+	        }
+
+	        InetAddress inet = InetAddress.getLocalHost();
+	        String ipAddr = inet.getHostAddress();
+
+	        // ------------------ INSERT FRESH MAIN RECORD ------------------
+	        MahotsavPrabhatPheri data = new MahotsavPrabhatPheri();
+
+	        IwmpState s = new IwmpState();
+	         s.setStCode(Integer.parseInt(st_code));
+
+	         IwmpDistrict d = new IwmpDistrict();
+	         d.setDcode(userfileup.getDistrict1());
+
+	         IwmpBlock b = new IwmpBlock();
+	         b.setBcode(userfileup.getBlock1());
+
+	         IwmpVillage v = new IwmpVillage();
+	         v.setVcode(userfileup.getVillage1());
+
+	         data.setIwmpState(s);
+	         data.setIwmpDistrict(d);
+	         data.setIwmpBlock(b);
+	         data.setIwmpVillage(v);
+
+	        data.setCreatedBy(session.getAttribute("loginID").toString());
+	        data.setCreatedOn(new Timestamp(new Date().getTime()));
+	        data.setRequestIp(ipAddr);
+	        data.setStatus('D');
+	        data.setPrabhatpheriDate(prabhatpheriDate);
+	        data.setMaleParticipants(userfileup.getMale_participants());
+	        data.setFemaleParticipants(userfileup.getFemale_participants());
+
+	        sess.save(data);
+
+	        String code = st_code + "_" +
+	                      (userfileup.getDistrict1() != null ? userfileup.getDistrict1() : "0") + "_" +
+	                      (userfileup.getBlock1() != null ? userfileup.getBlock1() : "0") + "_" +
+	                      data.getPrabhatpheriId();
+
+	        // ------------------ SAVE NEW PHOTOS ------------------
+	        List<MultipartFile> photos = userfileup.getPhotos();
+	        List<String> latitudes = userfileup.getLatitude();
+	        List<String> longitudes = userfileup.getLongitute();
+	        List<String> timestamps = userfileup.getPhotoTimestamp();
+
+	        if (photos != null) {
+	            for (int i = 0; i < photos.size(); i++) {
+	                MultipartFile image = photos.get(i);
+	                if (image != null && !image.isEmpty()) {
+	                    MahotsavPrabhatPheriPhoto photo = new MahotsavPrabhatPheriPhoto();
+	                    photo.setWmPrabhatPheri(data);
+	                    photo.setCreatedBy(session.getAttribute("loginID").toString());
+	                    photo.setCreated_date(new Timestamp(new Date().getTime()));
+	                    photo.setRequestedIp(ipAddr);
+
+	                    // Latitude
+	                    photo.setLatitude((latitudes != null && latitudes.size() > i) ? latitudes.get(i) : null);
+	                    // Longitude
+	                    photo.setLongitute((longitudes != null && longitudes.size() > i) ? longitudes.get(i) : null);
+
+	                    // Timestamp
+	                    try {
+	                        String dateStr = (timestamps != null && timestamps.size() > i) ? timestamps.get(i) : null;
+	                        if(dateStr != null && !dateStr.isEmpty()) {
+	                            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	                            LocalDateTime dt = LocalDateTime.parse(dateStr, fmt);
+	                            photo.setPhoto_timestamp(Timestamp.valueOf(dt));
+	                        } else photo.setPhoto_timestamp(null);
+	                    } catch (Exception e) {
+	                        photo.setPhoto_timestamp(null);
+	                    }
+
+	                    // Upload file
+	                    commonFunction.uploadFilePrabhatPheriMahotsav(image, filePath, code, sequence);
+
+	                    // Save path
+	                    photo.setPhotoUrl(filePath + "PP_" + code + "_" + sequence + "_" + image.getOriginalFilename());
+	                    sess.save(photo);
+	                    sequence++;
+	                }
+	            }
+	        }
+
+	        // ------------------ UPDATE SEQUENCE ------------------
+	        sess.createSQLQuery("UPDATE watershed_mahotsav_prabhatpheri_sequence SET value_id = :seq")
+	                .setParameter("seq", sequence)
+	                .executeUpdate();
+
+	        sess.getTransaction().commit();
+	        res = "success";
+
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        sess.getTransaction().rollback();
+	        res = "fail";
+	    }
+
+	    return res;
+	}
 
 
 }

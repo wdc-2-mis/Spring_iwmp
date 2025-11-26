@@ -57,6 +57,9 @@ public class MahotsavPrabhatPheri implements java.io.Serializable {
 
     @Column(name = "created_by", length = 25)
     private String createdBy;
+    
+    @Column(name = "updated_by", length = 25)
+    private String updatedBy;
 
     @Column(name = "status")
     private Character status;
@@ -162,8 +165,16 @@ public class MahotsavPrabhatPheri implements java.io.Serializable {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
+    
+    public String getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public Character getStatus() {
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Character getStatus() {
         return status;
     }
 

@@ -36,4 +36,8 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 	
 	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
 
+	String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session);
+
+	List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId);
+
 }

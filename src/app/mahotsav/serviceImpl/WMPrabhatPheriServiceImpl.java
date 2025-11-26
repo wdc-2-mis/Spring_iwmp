@@ -75,8 +75,17 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 
 	@Override
 	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
-		// TODO Auto-generated method stub
 		return dao.getWMPrabhatPheriVillage(bCode);
+	}
+
+	@Override
+	public String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session) {
+		return dao.updateWMPrabhatPheri(userfileup, session);
+	}
+
+	@Override
+	public List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId) {
+		return dao.getWMPrabhatPheriEdit(prabhatpheriId);
 	}
 
 

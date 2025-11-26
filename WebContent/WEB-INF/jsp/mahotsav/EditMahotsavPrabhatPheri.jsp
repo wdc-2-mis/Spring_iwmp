@@ -1,7 +1,10 @@
-<%@ include file="/WEB-INF/jspf/header2.jspf" %>
+<%@include file="/WEB-INF/jspf/header2.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/phystyle.css'/>">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css">
@@ -10,13 +13,15 @@
 <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 
 <script type="text/javascript">
-function editChangedata(prabhatpheri_id){
+function editCancel(){
 	
-	document.getElementById('prabhatpheri_id').value=prabhatpheri_id
-    document.mahotsav.action="getWMPrabhatPheriEdit";
-	document.mahotsav.method="post";
+	
+    document.mahotsav.action="getWMPrabhatPheri";
+	document.mahotsav.method="get";
 	document.mahotsav.submit();
 }
+
+
 //IMAGE VALIDATION FUNCTION
 function checkImage(input, inputId) {
     var file = input.files[0];
@@ -88,35 +93,6 @@ function getCurrentTimestamp() {
 }
 
 $(document).ready(function() {
-
-  /*   // Fetch blocks and villages (same as before)
-    $('#district1').change(function() {
-        var districtCode = $(this).val();
-        var $block = $('#block1');
-        var $village = $('#village1');
-        $block.empty().append('<option value="">--Select Block--</option>');
-        $village.empty().append('<option value="">--Select Village Name--</option>');
-        if (districtCode) {
-            $.get('<c:url value="/getBlocksByDistrict"/>', {districtCode: districtCode}, function(data) {
-                $.each(data, function(i, item) {
-                    $block.append('<option value="'+item.key+'">'+item.value+'</option>');
-                });
-            });
-        }
-    });
-
-    $('#block1').change(function() {
-        var blockCode = $(this).val();
-        var $village = $('#village1');
-        $village.empty().append('<option value="">--Select Village Name--</option>');
-        if (blockCode) {
-            $.get('<c:url value="/getVillagesByBlock"/>', {blockCode: blockCode}, function(data) {
-                $.each(data, function(i, item) {
-                    $village.append('<option value="'+item.key+'">'+item.value+'</option>');
-                });
-            });
-        }
-    }); */
 
  // EXTRACT GPS & PHOTO TIMESTAMP FROM IMAGE
 document.addEventListener("change", function(e) {
@@ -242,36 +218,6 @@ document.addEventListener("change", function(e) {
 
     // Validation
     window.validation = function() {
-    	var dateField = document.getElementById("date1").value;
-        if (!dateField) {
-            alert("Please select a date for Prabhat Pheri.");
-            document.getElementById("date1").focus();
-            return false;
-        }
-
-        // 2. District validation
-        var district = document.getElementById("district1").value;
-        if (!district) {
-            alert("Please select a district.");
-            document.getElementById("district1").focus();
-            return false;
-        }
-
-        // 3. Block validation
-        var block = document.getElementById("block1").value;
-        if (!block) {
-            alert("Please select a block.");
-            document.getElementById("block1").focus();
-            return false;
-        }
-
-        // 4. Village validation
-        var village = document.getElementById("village1").value;
-        if (!village) {
-            alert("Please select a village.");
-            document.getElementById("village1").focus();
-            return false;
-        }
 
         // 5. Male participants validation
         var male = document.getElementById("male_participants").value;
@@ -316,76 +262,78 @@ document.addEventListener("change", function(e) {
 </script>
 
 <body>
+
 <div class="maindiv">
+
     <div class="col formheading">
         <h4><u>Watershed Mahotsav - Promotional Activity (Prabhat Pheri)</u></h4>
     </div>
-    <label>
-        <span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
-    </label>
+
+    <label><span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span></label>
 
     <c:if test="${not empty result}">
         <script>alert("${result}");</script>
     </c:if>
 
-    <form:form autocomplete="off" name="mahotsav" id="mahotsav"
-               action="saveWMPrabhatPheri" method="post"
-               enctype="multipart/form-data">
-<input type="hidden" id="prabhatpheri_id" name="prabhatpheri_id" />
-        <div class="card-body">
-            <div class="form-group col-3">
-                <label for="date"><b>Date:</b> </label>
-                <input type="date" name="date1" id="date1" class="form-control" required/>
-            </div>
+<form:form autocomplete="off" method="post" name="mahotsav" id="mahotsav" action="updateWMPrabhatPheri" modelAttribute="useruploadign" enctype="multipart/form-data">
+        <hr/>
+        <c:forEach items="${dataList}" var="data" varStatus="count">
+            <!-- Hidden fields -->
+            <input type="hidden" name="prabhatpheri_id" value="${data.prabhatpheri_id}"/>
+            <input type="hidden" name="date1" value="${data.date}"/>
+            <input type="hidden" name="district1" value="${data.district1}"/>
+            <input type="hidden" name="block1" value="${data.block1}"/>
+            <input type="hidden" name="village1" value="${data.village1}"/>
 
-            <div class="form-row">
+            <div class="row mt-3">
                 <div class="form-group col-3">
-                    <label for="state"><b>State Name:</b></label><br/>
-                    <c:out value="${stateName}"/>
-                    <input type="hidden" name="stCode" value="${stCode}" />
-                </div>
-
-                <div class="form-group col-3">
-                    <label for="district"><b>District:</b></label>
-                    <select class="form-control" id="district1" name="district1" required>
-                        <option value="">--Select District--</option>
-                        <c:forEach items="${distList}" var="dist">
-                            <option value="<c:out value='${dist.key}'/>"><c:out value="${dist.value}"/></option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <div class="form-group col-3">
-                    <label for="block"><b>Block:</b></label>
-                    <select class="form-control" id="block1" name="block1">
-                        <option value="">--Select Block--</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-3">
-                    <label for="village"><b>Village Name:</b></label>
-                    <select class="form-control" id="village1" name="village1" required>
-                        <option value="">--Select Village Name--</option>
-                    </select>
+                    <label>Date:</label> <c:out value="${data.date}" />
                 </div>
             </div>
 
+            <div class="row">
+                <div class="form-group col-3">
+                    <label>State:</label> <c:out value="${stateName}"/>
+                </div>
+
+                <div class="form-group col-3">
+                    <label>District:</label> <c:out value="${data.distname}"/>
+                </div>
+
+                <div class="form-group col-3">
+                    <label>Block:</label> <c:out value="${data.blockname}"/>
+                </div>
+
+                <div class="form-group col-3">
+                    <label>Village:</label> <c:out value="${data.villagename}"/>
+                </div>
+            </div>
+
+            <!-- TABLE -->
             <table id="tblReport" class="table">
+
                 <tr>
                     <th colspan="4" class="text-left">Participation :</th>
                 </tr>
+
                 <tr>
                     <td>Number of Participants</td>
+
                     <td>Male<br>
-                        <input type="text" id="male_participants" name="male_participants" autocomplete="off"
-                               maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
+                        <input type="text" id="male_participants" name="male_participants"
+                               value="${data.male_participants}" maxlength="5"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
                     </td>
+
                     <td>Female<br>
-                        <input type="text" id="female_participants" name="female_participants" autocomplete="off"
-                               maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
+                        <input type="text" id="female_participants" name="female_participants"
+                               value="${data.female_participants}" maxlength="5"
+                               oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
                     </td>
+
                     <td>
                         <label><b>Upload Photographs (Minimum 2, Maximum 6):</b></label>
+
                         <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
@@ -394,129 +342,28 @@ document.addEventListener("change", function(e) {
                                 <input type="hidden" name="photoTimestamp[]" class="photoTimestamp">
                             </div>
                         </div>
-                        <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button>
+
+                        <button type="button" id="addPhotoBtn"
+                                class="btn btn-sm btn-primary mt-2" style="display:none;"
+                                onclick="addPhotoField()">Add More</button>
+
                         <small class="text-danger" id="photoError"></small>
                     </td>
                 </tr>
-            </table>
-        </div>
 
-        <div class="form-group text-left">
-            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Submit"/>
-        </div>
+            </table>
+				<div class="form-group text-left">
+            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Update"/>
+            <input type="button" class="btn btn-info" onclick="editCancel();" value="Cancel"/>
+       		 </div>
+        </c:forEach>
 
     </form:form>
 </div>
-<div class="form-row">
-         <div class="form-group col">
-         <hr/>
-         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Mahotsav - Promotional Activity (Prabhat Pheri) Details</h5>
-         <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
-                        <thead class ="theadlist" id = "theadlist">
-                            <tr>
-<!--                             	<th>Action</th> -->
-                                <th>S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
-                                <th>Date</th>
-                                <th>District Name</th>
-                                <th>Block Name</th>
-                                <th>Village Name</th>
-                                <th>No. of Male Participants</th>
-                                <th>No. of Female Participants</th>
-                                <th>No. of Photos</th>
-                            </tr>
-                          
-                        </thead>
-                        
-                        <c:set var="st" value="" />
- 						<c:forEach items="${dataDList}" var="data" varStatus="count">
- 							<tr>
-<%--  								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.prabhatpheri_id})"> Edit </button>  --%>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.prabhatpheri_id}"  name="${data.prabhatpheri_id}" value="${data.prabhatpheri_id}"/></td>
-								<td><c:out value="${data.date}" /></td>
- 								<td><c:out value="${data.distname}" /></td>
- 								<td><c:out value="${data.blockname}" /></td>
- 								<td><c:out value="${data.villagename}" /></td>
- 								<td class="text-right"><c:out value="${data.male_participants}" /></td>
-								<td class="text-right"><c:out value="${data.female_participants}" /></td>
-								<td class="text-right"><c:out value="${data.photo_count}" /></td>
-<!-- 								<td class="text-right"> -->
-<%-- 									<a href="#" data-id="${data.prabhatpheri_id}" class="showImage" style="color:blue;"><c:out value="${data.photo_count}" /></a>  --%>
-<!-- 								</td> -->
- 								
- 							</tr>
- 						</c:forEach>
- 						<c:if test="${dataDListSize gt 0}">
-                        <tr>
-                                <td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
-                                <td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
-                            </tr>
-                            </c:if>
-                        <c:if test="${dataDListSize eq 0}">
-                            <tr>
-                                <td align="center" colspan="8" class="required" style="color:red;">Data Not Found</td>
-<!--                                 <td colspan="16" ></td> -->
-                            </tr>
-                        </c:if>
-        </table>
-        
-        
-        </div>
-        </div>
-        
-        <div class="form-row">
-         <div class="form-group col">
-         <hr/>
-         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Completed List of Watershed Mahotsav - Promotional Activity (Prabhat Pheri) Details</h5>
-         <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
-                        <thead class ="theadlist" id = "theadlist">
-                            <tr>
-                                <th>S.No.</th>
-                                <th>Date</th>
-                                <th>District Name</th>
-                                <th>Block Name</th>
-                                <th>Village Name</th>
-                                <th>No. of Male Participants</th>
-                                <th>No. of Female Participants</th>
-                                <th>No. of Photos</th>
-                            </tr>
-                          
-                        </thead>
-                        
-                        <c:set var="st" value="" />
- 						<c:forEach items="${dataCList}" var="data" varStatus="count">
- 							<tr>
- 							
-<%--  								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.watershed_yatra_id})"> Edit </button>  --%>
-<%-- 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.prabhatpheri_id}"  name="${data.prabhatpheri_id}" value="${data.prabhatpheri_id}"/></td> --%>
-								<td><c:out value='${count.count}' /> </td>
-								<td><c:out value="${data.date}" /></td>
- 								<td><c:out value="${data.distname}" /></td>
- 								<td><c:out value="${data.blockname}" /></td>
- 								<td><c:out value="${data.villagename}" /></td>
- 								<td class="text-right"><c:out value="${data.male_participants}" /></td>
-								<td class="text-right"><c:out value="${data.female_participants}" /></td>
-								<td class="text-right"><c:out value="${data.photo_count}" /></td>
-<!-- 								<td class="text-right"> -->
-<%-- 									<a href="#" data-id="${data.prabhatpheri_id}" class="showImage" style="color:blue;"><c:out value="${data.photo_count}" /></a>  --%>
-<!-- 								</td> -->
- 								
- 							</tr>
- 						</c:forEach>
-                        <tr>
-                                
-                            </tr>
-                        <c:if test="${dataCListSize eq 0}">
-                            <tr>
-                                <td align="center" colspan="8" class="required" style="color:red;">Data Not Found</td>
-<!--                                 <td colspan="8" ></td> -->
-                            </tr>
-                        </c:if>
-        </table>
-        
-        
-        </div>
-        </div>
+
 <footer class="text-center">
     <%@ include file="/WEB-INF/jspf/footer2.jspf" %>
 </footer>
+
 </body>
+</html>
