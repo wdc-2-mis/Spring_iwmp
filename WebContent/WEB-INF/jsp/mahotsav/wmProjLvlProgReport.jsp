@@ -10,15 +10,15 @@
 <script type="text/javascript">
 
 function downloadPDF(){
-		document.getWMIDetails.action="downloadPDFStWMInauguration";
-		document.getWMIDetails.method="post";
-		document.getWMIDetails.submit();
+		document.getWMProjLvlDetails.action="downloadPDFProjLvlProgram";
+		document.getWMProjLvlDetails.method="post";
+		document.getWMProjLvlDetails.submit();
 }
 
 function exportExcel(){
-		document.getWMIDetails.action="downloadExcelStWMInauguration";
-		document.getWMIDetails.method="post";
-		document.getWMIDetails.submit();
+		document.getWMProjLvlDetails.action="downloadExcelProjLvlProgram";
+		document.getWMProjLvlDetails.method="post";
+		document.getWMProjLvlDetails.submit();
 }
 
 </script>
@@ -37,22 +37,21 @@ function exportExcel(){
     	</div>
     	
     <div class="nav-item text-left mb-2">
-    	<c:if test="${not empty stateWMInaugurationList1}">
+    	<c:if test="${not empty projLvlWMPrgListSize}">
     		<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()"> Excel </button>
         	<button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
         </c:if>   
         <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
     </div>
         
-        <form action="downloadExcelStMidProjEvoluation" name="getWMIDetails" id="getWMIDetails" method="post">
+        <form action="downloadExcelStMidProjEvoluation" name="getWMProjLvlDetails" id="getWMProjLvlDetails" method="post">
         
                 <table class="table table-bordered table-striped" id="stWMI" >
                     <thead>
                         <tr>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">S.No.</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">State Name</th>
-						<th colspan="4" style="text-align:center; vertical-align: middle;">Prabhat Pheri</th>
-						<th rowspan="3" style="text-align:center; vertical-align: middle;">No of Photographs Uploaded</th>
+						<th colspan="5" style="text-align:center; vertical-align: middle;">Prabhat Pheri</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">No. of Project Level Watershed Mahotsav Organized</th>
 						<th colspan="6" style="text-align:center; vertical-align: middle;">No. of Participation in Project Level Waterhshed Mahotsav</th>
 						<th rowspan="3" style="text-align:center; vertical-align: middle;">No. of Works for Bhoomi Poojan</th>
@@ -64,10 +63,11 @@ function exportExcel(){
 					<tr>
 					    <th rowspan="2" style="text-align:center; vertical-align: middle;">No. of Prabhat Pheri Organized</th>
 						<th colspan="3" style="text-align:center; vertical-align: middle;">Participants/Villagers</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">No of Photographs Uploaded</th>
 						<th colspan="3" style="text-align:center; vertical-align: middle;">Participants/Villagers</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Public Representatives</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Government Officials</th>
-						<th rowspan="2" style="text-align:center; vertical-align: middle;">Total Participation (6+10+11+12)</th>
+						<th rowspan="2" style="text-align:center; vertical-align: middle;">Total Participation (6+11+12+13)</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">Number of Locations</th>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">No. of people participated</th>
 
@@ -289,9 +289,9 @@ function exportExcel(){
 							<c:set var="totPLMFParticipants" value="${totPLMFParticipants + dt.pl_total_male_female}" />
 							<c:set var="totPLRepresentatives" value="${totPLRepresentatives + dt.representatives}" />
 							<c:set var="totPLGoverment" value="${totPLGoverment + dt.govt_officials}" />
-							<c:set var="totPLParticipants" value="${totPLParticipants + dt.total_participation}" />
+							<c:set var="totPLParticipants" value="${totPLParticipants + dt.total_participations}" />
 							<c:set var="totPLBhoomiPoojan" value="${totPLBhoomiPoojan + dt.bhoomi_poojan}" />
-							<c:set var="totPLLokarpan" value="${totPLLokarpan + dt.lokarpan}" />
+							<c:set var="totPLLokarpan" value="${totPLLokarpan + dt.lokarpans}" />
 							<c:set var="totPLShramdaanLoc" value="${totPLShramdaanLoc + dt.shramdaan_location}" />
 							<c:set var="totPLShramdaanPeople" value="${totPLShramdaanPeople + dt.shramdaan_participated}" />
 							<c:set var="totPLPlantation" value="${totPLPlantation + dt.no_of_agro}" />
