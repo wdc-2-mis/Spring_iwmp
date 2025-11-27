@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
-
+<title>Report WM3 - District-wise Total Video Uploaded for the Social Media Competition</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -32,7 +32,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                             <th>No. of YouTube</th>
                             <th>No. of Instagram</th>
                             <th>No. of Twitter</th>
-                            <th>No. of Linked In</th>
+                            <th>No. of LinkedIn</th>
                         </tr>
                          <tr>
                             <th>1</th>

@@ -2,9 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
 
-
-
-
+<title>Report WM3 - State-wise Total Video Uploaded for the Social Media Competition</title>
 <script>
     function downloadPDF() {
         document.getRpt.action = "downloadWMSocialMediaReportPDF";
@@ -47,7 +45,7 @@
                             <th>No. of YouTube</th>
                             <th>No. of Instagram</th>
                             <th>No. of Twitter</th>
-                            <th>No. of Linked In</th>
+                            <th>No. of LinkedIn</th>
                         </tr>
                         <tr>
                             <th>1</th>
