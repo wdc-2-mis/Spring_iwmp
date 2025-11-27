@@ -453,12 +453,12 @@ $(document).ready(function() {
 
                 <div class="col-md-4 mt-3">
                     <label>Longitude</label>
-                    <input type="text" name="longitude" class="form-control" placeholder="Enter Longitude">
+                    <input type="text" name="longitude" class="form-control" placeholder="Enter Longitude" autocomplete="off">
                 </div>
 
                 <div class="col-md-4 mt-3">
                     <label>Latitude</label>
-                    <input type="text" name="latitude" class="form-control" placeholder="Enter Latitude">
+                    <input type="text" name="latitude" class="form-control" placeholder="Enter Latitude" autocomplete="off">
                 </div>
             </div>
 
