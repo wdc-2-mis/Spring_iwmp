@@ -214,8 +214,8 @@ public class AddWMSocialMediaController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			
-				table = new PdfPTable(8);
-				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5});
+				table = new PdfPTable(9);
+				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5});
 				table.setWidthPercentage(70);
 			
 				table.setWidthPercentage(100);
@@ -224,6 +224,7 @@ public class AddWMSocialMediaController {
 				table.setHeaderRows(3);
 				
 				BigInteger totvidupl= BigInteger.valueOf(0);
+				BigInteger totreguser= BigInteger.valueOf(0);
 				BigInteger nofb= BigInteger.valueOf(0);
 				BigInteger noyt= BigInteger.valueOf(0);
 				BigInteger noinsta= BigInteger.valueOf(0);
@@ -232,6 +233,7 @@ public class AddWMSocialMediaController {
 				
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Registered User", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Total Video Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of YouTube", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -247,6 +249,7 @@ public class AddWMSocialMediaController {
 				CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				int k=1;
 				if(list.size()!=0)
@@ -255,6 +258,7 @@ public class AddWMSocialMediaController {
 
 						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getStname() , Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_registered_user().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getTotal_video_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_facebook().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_youtube().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -264,6 +268,7 @@ public class AddWMSocialMediaController {
 						
 
 						k=k+1;
+						totreguser=totreguser.add(list.get(i).getTotal_registered_user()==null?BigInteger.ZERO:list.get(i).getTotal_registered_user());
 						totvidupl=totvidupl.add(list.get(i).getTotal_video_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_video_uploaded());
 						nofb=nofb.add(list.get(i).getNo_facebook()==null?BigInteger.ZERO:list.get(i).getNo_facebook());
 						noyt=noyt.add(list.get(i).getNo_youtube()==null?BigInteger.ZERO:list.get(i).getNo_youtube());
@@ -273,6 +278,7 @@ public class AddWMSocialMediaController {
 						
 					}
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totreguser), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totvidupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nofb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noyt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
