@@ -28,6 +28,8 @@
 </style>
 
 <script type="text/javascript">
+
+
 function showChangedata(){
     document.mohotsav.action="registerMahotsav";
     document.mohotsav.method="post";
@@ -390,16 +392,31 @@ $(document).ready(function() {
             <input type="hidden" name="regNo" value="${regNo}">
 
             <div class="row mb-3">
+            
+            
                 <div class="col-md-4">
-                    <label>State <span class="required">*</span></label>
-                    <select name="state" id="state" class="form-select">
-                        <option value="">--Select State--</option>
-                        <c:forEach items="${stateList}" var="lists">
-                            <option value="${lists.key}" ${lists.key eq state ? 'selected' : ''}>${lists.value}</option>
-                        </c:forEach>
-                    </select>
-                    <div id="stateError" class="error-text">Please select state</div>
+                <label>State <span class="required">*</span></label>
+                  <select name="state" id="state" class="form-select">
+                  <option value="">--Select State--</option>
+                     <c:forEach items="${stateList}" var="lists">
+                  <option value="${lists.key}" ${lists.key eq state ? 'selected' : ''}>${lists.value}</option>
+                   </c:forEach>
+                 </select>
+              <div id="stateError" class="error-text">Please select state</div>
                 </div>
+
+               <c:if test="${not empty regNo}">
+                   <script>
+                       $(document).ready(function () {
+                           $('#state').css({
+                               "pointer-events": "none",   // block click
+                               "background-color": "#e9ecef" // grey background
+                           });
+                            $('#state').attr("readonly", true);
+                       });
+                   </script>
+              </c:if>
+                
 
                 <div class="col-md-4">
                     <label>District <span class="required">*</span></label>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import app.mahotsav.model.WatershedMahotsavRegistration;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.mahotsav.service.WatershedMahotsavService;
 import app.service.StateMasterService;
 import app.service.reports.WatershedYatraReportService;
@@ -178,18 +179,31 @@ public class WatershedMahotsavController {
 	public ModelAndView uploadAnotherVideo(HttpServletRequest request, HttpServletResponse response, @RequestParam("regNo") String regNo)
 	{
 		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regNo);
+		Integer stCode = 0;
+		String stName = null;
 		if (registration == null) {
-	        // fallback if regNo invalid
 	        return new ModelAndView("redirect:/registerMahotsav");
 	    }
 
-	    ModelAndView mav = new ModelAndView("mahotsav/mahotsavOtherDtl");
+		for(WatershedMahotsavVideoDetails v : registration.getWatershedMahotsavVideoDetails()) {
+			stCode = v.getIwmpState().getStCode();
+			//stName = v.getIwmpState().getStName();
+		}
+	    
+		ModelAndView mav = new ModelAndView("mahotsav/mahotsavOtherDtl");
+		
+		if(stCode!=null  && stCode != 0) {
+ 			districtList = ser.getDistrictList(stCode);
+ 			mav.addObject("districtList", districtList);}
+		
 	    mav.addObject("name", registration.getRegName());
 	    mav.addObject("phone", registration.getPhno());
 	    mav.addObject("email", registration.getEmail());
 	    mav.addObject("address", registration.getAddress());
 	    mav.addObject("stateList", stateMasterService.getAllState());
-	    mav.addObject("regNo", regNo);  // optional to show in next JSP
+	    mav.addObject("regNo", regNo);  
+	    mav.addObject("state", stCode);
+	    
 	    return mav;
 	}
 	
@@ -250,11 +264,6 @@ public class WatershedMahotsavController {
 
     }
 
-
-
-
-	
-	
 	
 }
 	

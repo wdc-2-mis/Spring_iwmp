@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import app.mahotsav.dao.WatershedMahotsavDao;
@@ -23,6 +24,9 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 
 	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Value("${getMahotsavUserDtl}")
+	String getMahotsavUserDtl;
 	
 	public static String getClientIpAddr(HttpServletRequest request) {  
 	    String ip = request.getHeader("X-Forwarded-For");  
@@ -193,13 +197,14 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
          public WatershedMahotsavRegistration findByRegNo(String regNo) {
              Session session = sessionFactory.getCurrentSession();
              WatershedMahotsavRegistration registration = null;
+
              try {
                  session.beginTransaction();
 
                  registration = (WatershedMahotsavRegistration) session
-                     .createQuery("FROM WatershedMahotsavRegistration WHERE user_reg_no = :regNo")
-                     .setParameter("regNo", regNo)
-                     .uniqueResult();
+                         .createQuery(getMahotsavUserDtl)
+                         .setParameter("regNo", regNo)
+                         .uniqueResult();
 
                  session.getTransaction().commit();
              } catch (Exception e) {
@@ -211,6 +216,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 
              return registration;
          }
+
 
          @Override
          public boolean emailAlreadyExists(String email) {
