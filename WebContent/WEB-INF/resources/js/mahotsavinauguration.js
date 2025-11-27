@@ -168,11 +168,11 @@ $('#chkSelectAllkd').on('click', function() {
 						if (data[i] != null) 
 						{
 						//PRD
-						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//TEST
 						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//Local
-							list += '<li><img src="resources/images/inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						//	list += '<li><img src="resources/images/inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 
 						}
 					}

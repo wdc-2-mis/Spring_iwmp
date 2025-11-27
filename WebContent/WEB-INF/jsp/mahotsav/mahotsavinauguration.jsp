@@ -547,9 +547,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + imageSrc;
- 	document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
+ 	//document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;

@@ -351,7 +351,6 @@ function validation()
 		            totalPhotos++;
 		        }
 		    });
-	
 		    // For activities with count value > 0, enforce minimum 2 photos
 		    let minPhotos = 2;  // default minimum
 	
@@ -537,9 +536,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + imageSrc;			//PRD
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/vanyatradoc/Inauguration/' + imageSrc;			//PRD
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/vanyatradoc/Inauguration/' + imageSrc;	//TEST
- 	document.getElementById('largeImage').src = 'resources/images/Inauguration/' + imageSrc;												//Local
+ //	document.getElementById('largeImage').src = 'resources/images/Inauguration/' + imageSrc;												//Local
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
