@@ -299,5 +299,110 @@ HttpSession session;
 		}
 		return res; 
 	}
+	
+	
+	@RequestMapping(value = "/getWatershedMahotsavProjLvlEdit", method = RequestMethod.POST)
+	public ModelAndView getWatershedMahotsavProjLvlEdit(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedMahotsavProjectLevelBean> editlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("mahotsav/updateWatershedMahotsavProjLvl");
+				String waterid=request.getParameter("waterid");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("stateName",stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				editlist=serProj.getWatershedMahotsavProjLvlDtlForEdit(Integer.parseInt(waterid));
+				
+				mav.addObject("dataList",editlist);
+				mav.addObject("dataListSize",editlist.size());
+				
+				
+				
+
+			} else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/updateWatershedMahotsavProjLvlDetails", method = RequestMethod.POST)
+	public ModelAndView updateWatershedMahotsavProjLvlDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedMahotsavProjectLevelBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("mahotsav/watershedMahotsavProjectLvl");
+				
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+				
+				mav.addObject("userType", userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+
+				result = serProj.updateMahotsavProjLvlDetails(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data Updated Successfully");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result", "Data Updation failed!");
+				} 
+				/*else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved!");
+				}*/
+				return new ModelAndView("redirect:/getWatershedMahotsavAtProjLvl");
+			} else {
+				return new ModelAndView("redirect:/login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 }

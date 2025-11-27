@@ -55,4 +55,16 @@ public class WatershedMahotsavProjLvlServiceImpl implements WatershedMahotsavPro
 		return dao.deleteMahotsavProjLvlDetails(assetid, userid);
 	}
 
+	@Override
+	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavProjLvlDtlForEdit(Integer id) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedMahotsavProjLvlDtlForEdit(id);
+	}
+
+	@Override
+	public String updateMahotsavProjLvlDetails(WatershedMahotsavProjectLevelBean userfileup, HttpSession session) {
+		// TODO Auto-generated method stub
+		return dao.updateMahotsavProjLvlDetails(userfileup, session);
+	}
+
 }

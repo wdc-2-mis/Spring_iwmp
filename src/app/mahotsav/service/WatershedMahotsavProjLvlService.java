@@ -15,4 +15,6 @@ public interface WatershedMahotsavProjLvlService {
 	String completeMahotsavProjLvlDetails(List<Integer> assetid, String userid);
 	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(List<Integer> dcode, String loginId);
 	String deleteMahotsavProjLvlDetails(List<Integer> assetid, String userid);
+	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavProjLvlDtlForEdit(Integer id);
+	public String updateMahotsavProjLvlDetails(WatershedMahotsavProjectLevelBean userfileup, HttpSession session);
 }
