@@ -334,7 +334,7 @@ function validation()
 	} */
 	if(($award_photo1 ==='' || typeof $award_photo1 ==='undefined') && ($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
 	{
-		alert('You can not selected any photos only data update! ');
+		alert('You did not select any photos, only data will update! ');
 	}
 	else{
 		document.querySelectorAll(".photo-block").forEach(block => {
@@ -343,9 +343,9 @@ function validation()
 		    let inputs = container.querySelectorAll("input[type='file']");
 		    let totalPhotos = 0;
 		    let errorDiv = block.querySelector(".photoError");
-	
+
 		    errorDiv.innerHTML = ""; // clear old errors
-	
+
 		    inputs.forEach(inp => {
 		        if (inp.files.length > 0) {
 		            totalPhotos++;
@@ -353,16 +353,14 @@ function validation()
 		    });
 		    // For activities with count value > 0, enforce minimum 2 photos
 		    let minPhotos = 2;  // default minimum
-	
 			let activityName = block.getAttribute("data-name");
-	
 			if (activityName === "photos_janbhagidari") {
-		    	minPhotos = 4;  // Minimum 4 photos for Janbhagidari
+			    minPhotos = 4;  // Minimum 4 photos for Janbhagidari
 			}
 			// Validate minimum photo count only if activity value > 0
 			let activityInput = block.closest("tr").querySelector("input[type='text']");
 			let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-	
+			
 			if (activityValue > 0 && totalPhotos < minPhotos) {
 			    errorDiv.innerHTML = `Please upload minimum ${minPhotos} photos.`;
 			    alert(`Minimum `+minPhotos+` photos required for this activity.`);
@@ -616,7 +614,7 @@ function showPrevImage() {
       			<c:out value="${data.blockname}" />
     		</div>
     		<div class="form-group col-3">
-    			<label for="activity">Location (Nearby/Milestone)</label>
+    			<label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
     			<input type="text" class="form-control activity" name="location" id="location" value="${data.location}" style="width: 100%; max-width: 800px;" />
     		</div>
     		
@@ -631,14 +629,14 @@ function showPrevImage() {
      		<th colspan=3 class="text-left">Participation :</th>
      	</tr>
      	<tr>
-     		<td>Number of Participants</td>
+     		<td>Number of Participants<span style="color: red;">*</span></td>
      		<td>Male<br><input type="text" id="male_participants" name="male_participants" autocomplete="off" value="${data.male_participants}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Female<br><input type="text" id="female_participants" name="female_participants" autocomplete="off" value="${data.female_participants}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td>Number of Ministers</td>
+     		<td>Number of Ministers<span style="color: red;">*</span></td>
      		<td>Central Level<br><input type="text" id="central_ministers" name="central_ministers" autocomplete="off" value="${data.central_ministers}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>State Level<br><input type="text" id="stateMinisters" name="state_ministers" autocomplete="off" value="${data.state_ministers}"
@@ -646,24 +644,24 @@ function showPrevImage() {
      	</tr>
      	
      	<tr>
-     		<td>Number of Member of Parliament</td>
+     		<td>Number of Member of Parliament<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="parliament" name="parliament" autocomplete="off" value="${data.parliament}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td>Number of Members</td>
+     		<td>Number of Members<span style="color: red;">*</span></td>
      		<td>Legislative Assembly<br><input type="text" id="assembly_members" name="assembly_members" autocomplete="off" value="${data.assembly_members}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Legislative Council<br><input type="text" id="council_members" name="council_members" autocomplete="off" value="${data.council_members}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td>Number of other Public Representatives</td>
+     		<td>Number of other Public Representatives<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="others" name="others" autocomplete="off" value="${data.others}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td>Number of Government Officials</td>
+     		<td>Number of Government Officials<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="gov_officials" name="gov_officials" autocomplete="off" value="${data.gov_officials}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
@@ -675,7 +673,7 @@ function showPrevImage() {
      	</tr>
      	
      	<tr>
-     		<td>Number of Works for Bhoomi Poojan <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
+     		<td>Number of Works for Bhoomi Poojan<span style="color: red;">*</span> <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
      		<td colspan=2><input type="text" id="no_works_bhoomipoojan" name="no_works_bhoomipoojan" autocomplete="off" value="${data.no_works_bhoomipoojan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<!-- <td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_bhoomipoojan" name="tot_works_bhoomipoojan" autocomplete="off"
@@ -707,7 +705,7 @@ function showPrevImage() {
 
      	</tr>
      	<tr>
-     		<td>Number of Works for Lokarpan <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
+     		<td>Number of Works for Lokarpan<span style="color: red;">*</span> <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
      		<td colspan=2><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off" value="${data.no_works_lokarpan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>Cost of Total works (in Lakh)<br><input type="text" id="tot_works_lokarpan" name="tot_works_lokarpan" autocomplete="off"
@@ -739,7 +737,7 @@ function showPrevImage() {
 
      	</tr>
      	<tr>
-     		<td>Shramdaan <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
+     		<td>Shramdaan<span style="color: red;">*</span> <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
      		<td>Number of Locations<br><input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off" value="${data.no_location_shramdaan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>No. of people participated<br><input type="text" id="no_people_shramdaan" name="no_people_shramdaan" autocomplete="off" value="${data.no_people_shramdaan}"
@@ -772,7 +770,7 @@ function showPrevImage() {
 </td>
      	</tr>
      	<tr>
-     		<td>Agro forestry / Horticultural Plantation Number of Sapling <input type="hidden" name="forestry" id="forestry" value="4"/></td>
+     		<td>Agro forestry / Horticultural Plantation Number of Sapling <span style="color: red;">*</span><input type="hidden" name="forestry" id="forestry" value="4"/></td>
      		<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" value="${data.forestry_horticulture}"
      		pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<!-- <td>No. of Agro forestry / Horticultural Plants (No. of Sapling)<br><input type="text" id="noPlantation" name="no_plantation" autocomplete="off"
@@ -803,7 +801,7 @@ function showPrevImage() {
 </td>
      	</tr>
      	<tr>
-     		<td>Number of Projects Awarded for Janbhagidari Cup 2025 <input type="hidden" name="awarded" id="awarded" value="5"/></td>
+     		<td>Number of Projects Awarded for Janbhagidari Cup 2025<span style="color: red;">*</span> <input type="hidden" name="awarded" id="awarded" value="5"/></td>
      		<td colspan=2><input type="text" id="no_awards" name="no_awards" autocomplete="off" value="${data.no_awards}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 			<td>
