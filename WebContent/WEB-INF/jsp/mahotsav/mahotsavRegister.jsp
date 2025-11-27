@@ -56,6 +56,7 @@
     <h4 class="text-center mb-4 text-primary">Registration Form</h4>
     
      <form id="registrationForm" action="registerMahotsav" method="post" novalidate>
+     <input type="hidden" name="regNo" value="">
         <!-- Full Name -->
         <div class="mb-3">
             <label for="name" class="form-label">Full Name<span class="required">*</span></label>
