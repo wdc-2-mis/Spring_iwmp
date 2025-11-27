@@ -11,6 +11,7 @@ public class SocialMediaReport {
 	private BigInteger no_twitter;
 	private BigInteger no_linkedin;
 	private BigInteger total_registered_user;
+	private BigInteger total_video_uploaded;
 	private String dist_name;
 	private Integer dcode;
 	
@@ -44,6 +45,13 @@ public class SocialMediaReport {
 	}
 	public void setTotal_registered_user(BigInteger total_registered_user) {
 		this.total_registered_user = total_registered_user;
+	}
+	
+	public BigInteger getTotal_video_uploaded() {
+		return total_video_uploaded;
+	}
+	public void setTotal_video_uploaded(BigInteger total_video_uploaded) {
+		this.total_video_uploaded = total_video_uploaded;
 	}
 	public BigInteger getNo_facebook() {
 		return no_facebook;

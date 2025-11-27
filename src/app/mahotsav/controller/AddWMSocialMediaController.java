@@ -205,7 +205,7 @@ public class AddWMSocialMediaController {
 			Paragraph paragraph3 = null; 
 			
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
-				paragraph3 = new Paragraph("Report WM3 - State-wise Social Media Competition ", f3);
+				paragraph3 = new Paragraph("Report WM3 - State-wise Total Video Uploaded for the Social Media Competition ", f3);
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 			paragraph3.setAlignment(Element.ALIGN_CENTER);
 			paragraph2.setSpacingAfter(10);
@@ -223,7 +223,7 @@ public class AddWMSocialMediaController {
 				table.setSpacingAfter(0f);
 				table.setHeaderRows(3);
 				
-				BigInteger regUser= BigInteger.valueOf(0);
+				BigInteger totvidupl= BigInteger.valueOf(0);
 				BigInteger nofb= BigInteger.valueOf(0);
 				BigInteger noyt= BigInteger.valueOf(0);
 				BigInteger noinsta= BigInteger.valueOf(0);
@@ -232,7 +232,7 @@ public class AddWMSocialMediaController {
 				
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-				CommonFunctions.insertCellHeader(table, "Total Registered User", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Video Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of YouTube", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Instagram", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -255,7 +255,7 @@ public class AddWMSocialMediaController {
 
 						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getStname() , Element.ALIGN_LEFT, 1, 1, bf8);
-						CommonFunctions.insertCell(table, list.get(i).getTotal_registered_user().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_video_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_facebook().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_youtube().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_instagram().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -264,7 +264,7 @@ public class AddWMSocialMediaController {
 						
 
 						k=k+1;
-						regUser=regUser.add(list.get(i).getTotal_registered_user()==null?BigInteger.ZERO:list.get(i).getTotal_registered_user());
+						totvidupl=totvidupl.add(list.get(i).getTotal_video_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_video_uploaded());
 						nofb=nofb.add(list.get(i).getNo_facebook()==null?BigInteger.ZERO:list.get(i).getNo_facebook());
 						noyt=noyt.add(list.get(i).getNo_youtube()==null?BigInteger.ZERO:list.get(i).getNo_youtube());
 						noinsta=noinsta.add(list.get(i).getNo_instagram()==null?BigInteger.ZERO:list.get(i).getNo_instagram());
@@ -273,7 +273,7 @@ public class AddWMSocialMediaController {
 						
 					}
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
-					CommonFunctions.insertCell3(table, String.valueOf(regUser), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totvidupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nofb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noyt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noinsta), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
@@ -295,7 +295,7 @@ public class AddWMSocialMediaController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Mahotsav-Report.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=MahotsavSocialMediaReport.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
@@ -322,11 +322,11 @@ public class AddWMSocialMediaController {
 		
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report WM3 - State-wise Social Media Competition");   
+			Sheet sheet = workbook.createSheet("Report WM3 - State-wise Total Video Uploaded for the Social Media Competition");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 			
-			String rptName = "Social Media Competition";
+			String rptName = "Report WM3 - State-wise Total Video Uploaded for the Social Media Competition";
 			
 			
 			String areaAmtValDetail = "";
@@ -346,7 +346,7 @@ public class AddWMSocialMediaController {
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(2);
-			cell.setCellValue("Total Registered User");  
+			cell.setCellValue("Total Video Uploaded");  
 			cell.setCellStyle(style);
 				
 			cell = rowhead.createCell(3);
@@ -378,7 +378,7 @@ public class AddWMSocialMediaController {
 			}
 	        int sno = 1;
 	        int rowno  = 7;
-	        BigInteger regUser= BigInteger.valueOf(0);
+	        BigInteger totvideoup= BigInteger.valueOf(0);
 			BigInteger nofb= BigInteger.valueOf(0);
 			BigInteger noyt= BigInteger.valueOf(0);
 			BigInteger noinsta= BigInteger.valueOf(0);
@@ -389,14 +389,14 @@ public class AddWMSocialMediaController {
 	        	Row row = sheet.createRow(rowno);
 	        	row.createCell(0).setCellValue(sno); 
 	        	row.createCell(1).setCellValue(bean.getStname());
-	        	row.createCell(2).setCellValue(bean.getTotal_registered_user().doubleValue());
+	        	row.createCell(2).setCellValue(bean.getTotal_video_uploaded().doubleValue());
 	        	row.createCell(3).setCellValue(bean.getNo_facebook().doubleValue());
 				row.createCell(4).setCellValue(bean.getNo_youtube().doubleValue());
 	        	row.createCell(5).setCellValue(bean.getNo_instagram().doubleValue());
 	        	row.createCell(6).setCellValue(bean.getNo_twitter().doubleValue());
 	        	row.createCell(7).setCellValue(bean.getNo_linkedin().doubleValue());
 	        	
-	        	regUser = regUser.add(bean.getTotal_registered_user() == null ? BigInteger.ZERO : bean.getTotal_registered_user());
+	        	totvideoup = totvideoup.add(bean.getTotal_video_uploaded() == null ? BigInteger.ZERO : bean.getTotal_video_uploaded());
 	        	nofb = nofb.add(bean.getNo_facebook() == null ? BigInteger.ZERO : bean.getNo_facebook());
 	        	noyt = noyt.add(bean.getNo_youtube() == null ? BigInteger.ZERO : bean.getNo_youtube());
 	        	noinsta = noinsta.add(bean.getNo_instagram() == null ? BigInteger.ZERO : bean.getNo_instagram());
@@ -428,7 +428,7 @@ public class AddWMSocialMediaController {
 	        cell.setCellStyle(style1);
 	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 	        cell = row.createCell(2);
-	        cell.setCellValue(regUser.doubleValue());
+	        cell.setCellValue(totvideoup.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(3);
 	        cell.setCellValue(nofb.doubleValue());
@@ -447,7 +447,7 @@ public class AddWMSocialMediaController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
-	        String fileName = "attachment; filename=Report Mahotsav.xlsx";
+	        String fileName = "attachment; filename=Report SocialMedia.xlsx";
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		
 		return "/mahotsav/WMSocialMediaReport";

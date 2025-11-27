@@ -46,20 +46,20 @@ function checkImage(input, inputId) {
 
     // Check dimensions
     var reader = new FileReader();
-    reader.onload = function(e) {
-        var img = new Image();
-        img.onload = function() {
-            var width = img.width;
-            var height = img.height;
-            if (width > maxWidth || height > maxHeight) {
-                alert('Image dimensions exceed allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
-                input.value = '';
-                document.getElementById(inputId).focus();
-                return false;
-            }
-        };
-        img.src = e.target.result;
-    };
+//     reader.onload = function(e) {
+//         var img = new Image();
+//         img.onload = function() {
+//             var width = img.width;
+//             var height = img.height;
+//             if (width > maxWidth || height > maxHeight) {
+//                 alert('Image dimensions exceed allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
+//                 input.value = '';
+//                 document.getElementById(inputId).focus();
+//                 return false;
+//             }
+//         };
+//         img.src = e.target.result;
+//     };
     reader.readAsDataURL(file);
 
 }
@@ -89,34 +89,6 @@ function getCurrentTimestamp() {
 
 $(document).ready(function() {
 
-  /*   // Fetch blocks and villages (same as before)
-    $('#district1').change(function() {
-        var districtCode = $(this).val();
-        var $block = $('#block1');
-        var $village = $('#village1');
-        $block.empty().append('<option value="">--Select Block--</option>');
-        $village.empty().append('<option value="">--Select Village Name--</option>');
-        if (districtCode) {
-            $.get('<c:url value="/getBlocksByDistrict"/>', {districtCode: districtCode}, function(data) {
-                $.each(data, function(i, item) {
-                    $block.append('<option value="'+item.key+'">'+item.value+'</option>');
-                });
-            });
-        }
-    });
-
-    $('#block1').change(function() {
-        var blockCode = $(this).val();
-        var $village = $('#village1');
-        $village.empty().append('<option value="">--Select Village Name--</option>');
-        if (blockCode) {
-            $.get('<c:url value="/getVillagesByBlock"/>', {blockCode: blockCode}, function(data) {
-                $.each(data, function(i, item) {
-                    $village.append('<option value="'+item.key+'">'+item.value+'</option>');
-                });
-            });
-        }
-    }); */
 
  // EXTRACT GPS & PHOTO TIMESTAMP FROM IMAGE
 document.addEventListener("change", function(e) {
@@ -137,13 +109,6 @@ document.addEventListener("change", function(e) {
 
      var fileName = file.name;
 
-//      // Check for special characters in filename
-//      var invalidChars = /[^a-zA-Z0-9_.-]/;
-//      if (invalidChars.test(fileName)) {
-//          alert("Filename contains special characters! Please rename the file and upload again.");
-//          e.target.value = ""; // reset file input
-//          return;
-//      }
      
      var invalidChars = /[^a-zA-Z0-9_.-]/;
      if (invalidChars.test(fileName) || /^[._]/.test(fileName)) {

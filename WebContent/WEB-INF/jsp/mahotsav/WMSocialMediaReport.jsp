@@ -26,7 +26,7 @@
     <c:if test="${not empty WMList}">
         <div class="card shadow mt-1 p-5">
         
-            <h4 class="text-center text-primary mb-4"><u>Report WM3 - State-wise Social Media Competition</u></h4>
+            <h4 class="text-center text-primary mb-4"><u>Report WM3 - State-wise Total Video Uploaded for the Social Media Competition</u></h4>
 
             <div class="nav-item text-left mb-2">
             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel()"> Excel </button>
@@ -41,7 +41,7 @@
                         <tr>
                             <th>S.No.</th>
                             <th>State Name</th>
-                            <th>Total Registered User</th>
+                            <th>Total Video Uploaded</th>
                             <th>No. of Facebook</th>
                             <th>No. of YouTube</th>
                             <th>No. of Instagram</th>
@@ -62,7 +62,7 @@
                     <tbody>
 
                         <!-- Initialize totals -->
-                        <c:set var="totalRegistered" value="0" scope="page" />
+                        <c:set var="totalVideoUploaded" value="0" scope="page" />
                         <c:set var="totalFacebook" value="0" scope="page" />
                         <c:set var="totalYoutube" value="0" scope="page" />
                         <c:set var="totalInstagram" value="0" scope="page" />
@@ -77,7 +77,7 @@
                                         <c:out value="${row.stname}" />
                                     </a>
                                 </td>
-                                <td class="text-end">${row.total_registered_user}</td>
+                                <td class="text-end">${row.total_video_uploaded}</td>
                                 <td class="text-end">${row.no_facebook}</td>
                                 <td class="text-end">${row.no_youtube}</td>
                                 <td class="text-end">${row.no_instagram}</td>
@@ -86,7 +86,7 @@
                             </tr>
 
                             <!-- Sum totals -->
-                            <c:set var="totalRegistered" value="${totalRegistered + row.total_registered_user}" />
+                            <c:set var="totalVideoUploaded" value="${totalVideoUploaded + row.total_video_uploaded}" />
                             <c:set var="totalFacebook" value="${totalFacebook + row.no_facebook}" />
                             <c:set var="totalYoutube" value="${totalYoutube + row.no_youtube}" />
                             <c:set var="totalInstagram" value="${totalInstagram + row.no_instagram}" />
@@ -97,7 +97,7 @@
                         <!-- Grand total row -->
                         <tr class="table-secondary fw-bold">
                             <td colspan="2" class="text-center">Grand Total</td>
-                            <td class="text-end">${totalRegistered}</td>
+                            <td class="text-end">${totalVideoUploaded}</td>
                             <td class="text-end">${totalFacebook}</td>
                             <td class="text-end">${totalYoutube}</td>
                             <td class="text-end">${totalInstagram}</td>
