@@ -156,6 +156,132 @@ let formSubmitted = false;
 
 function validation() {
     let isValid = true;
+    
+    $district = $('#district option:selected').val();
+	$block = $('#block option:selected').val();
+
+	$date = $('#date').val();
+	$location = $('#location').val();
+	$male_participants = $('#male_participants').val();
+	$female_participants = $('#female_participants').val();
+	$central_ministers = $('#central_ministers').val();
+	$stateMinisters = $('#stateMinisters').val();
+	$parliament = $('#parliament').val();
+	$assembly_members = $('#assembly_members').val();
+	$council_members = $('#council_members').val();
+	$others = $('#others').val();
+	$gov_officials = $('#gov_officials').val();
+	
+	$no_works_bhoomipoojan = $('#no_works_bhoomipoojan').val();
+	$no_works_lokarpan = $('#no_works_lokarpan').val();
+	$no_location_shramdaan = $('#no_location_shramdaan').val();
+	$no_people_shramdaan = $('#no_people_shramdaan').val();
+	$area_plantation = $('#area_plantation').val();
+	$no_awards = $('#no_awards').val();
+	
+	if ($location === '' || typeof $location === 'undefined') {
+		alert('Please enter Location');
+		$('#location').focus();
+		allValid = false;
+		return false;
+	}
+		
+	if ($male_participants === '' || typeof $male_participants === 'undefined') {
+		alert('Please enter the Number of Male Participants/Villagers');
+		$('#male_participants').focus();
+		allValid = false;
+		return false;
+	}
+	if ($female_participants === '' || typeof $female_participants === 'undefined') {
+		alert('Please enter the Number of Female Participants/Villagers');
+		$('#female_participants').focus();
+		allValid = false;
+		return false;
+	}
+	if ($central_ministers === '' || typeof $central_ministers === 'undefined') {
+		alert('Please enter the Number of Central Ministers');
+		$('#central_ministers').focus();
+		allValid = false;
+		return false;
+	}
+	if ($stateMinisters === '' || typeof $stateMinisters === 'undefined') {
+		alert('Please enter the Number of State Ministers');
+		$('#stateMinisters').focus();
+		allValid = false;
+		return false;
+	}
+	if ($parliament === '' || typeof $parliament === 'undefined') {
+		alert('Please enter the Number of Members of Parliament');
+		$('#parliament').focus();
+		allValid = false;
+		return false;
+	}
+	if ($assembly_members === '' || typeof $assembly_members === 'undefined') {
+		alert('Please enter the Number of Legislative Assembly Members');
+		$('#assembly_members').focus();
+		allValid = false;
+		return false;
+	}
+	if ($council_members === '' || typeof $council_members === 'undefined') {
+		alert('Please enter the Number of Legislative Council Members');
+		$('#council_members').focus();
+		allValid = false;
+		return false;
+	}
+	if ($others === '' || typeof $others === 'undefined') {
+		alert('Please enter the Number of other Public Representatives');
+		$('#others').focus();
+		allValid = false;
+		return false;
+	}
+	if ($gov_officials === '' || typeof $gov_officials === 'undefined') {
+		alert('Please enter the Number of Government Officials');
+		$('#gov_officials').focus();
+		allValid = false;
+		return false;
+	}	
+	
+	if ($no_works_bhoomipoojan === '' || typeof $no_works_bhoomipoojan === 'undefined') {
+		alert('Please enter Number of Works of Bhoomi Poojan');
+		$('#no_works_bhoomipoojan').focus();
+		allValid = false;
+		return false;
+	}
+	 
+	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
+		alert('Please enter the Number of Works of Lokarpan');
+		$('#no_works_lokarpan').focus();
+		allValid = false;
+		return false;
+	}
+	 
+	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
+		alert('Please enter the Number of Locations of Shramdaan');
+		$('#no_location_shramdaan').focus();
+		allValid = false;
+		return false;
+	}
+	if ($no_people_shramdaan === '' || typeof $no_people_shramdaan === 'undefined') {
+		alert('Please enter No of people participated in Shramdaan');
+		$('#no_people_shramdaan').focus();
+		allValid = false;
+		return false;
+	}
+	
+	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
+		alert('Please enter the Plantation Area in hectares');
+		$('#area_plantation').focus();
+		allValid = false;
+		return false;
+	}
+	
+	if ($no_awards === '' || typeof $no_awards === 'undefined') {
+		alert('Please enter the Number of Award Distribution');
+		$('#no_awards').focus();
+		allValid = false;
+		return false;
+	}
+	 
 
     $(".photo-block").each(function () {
         let container = $(this).find(".photoContainer");
@@ -181,7 +307,7 @@ function validation() {
             }
 
             if (uploaded < min || uploaded > max) {
-                alert(label + "\nPlease upload between " + min + " and " + max + " photos.");
+                alert(label + "\nPlease upload minimum " + min + " photos required for this activity.");
                 isValid = false;
                 return false; // break loop
             }

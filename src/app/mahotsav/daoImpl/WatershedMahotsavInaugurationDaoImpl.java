@@ -698,67 +698,10 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			InetAddress inet=InetAddress.getLocalHost();
 			String ipAddr=inet.getHostAddress();
 			
-			List<String> imgList = new ArrayList<String>();
-			List<WatershedMahotsavInauguarationActPhoto> listd = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+			String code=st_code.toString()+userfileup.getDistrict().toString()+userfileup.getBlock().toString();
+			//System.out.println("state="+code);
 			
-			WatershedMahotsavInauguaration data = new WatershedMahotsavInauguaration();
-			WatershedMahotsavInauguarationActPhoto photo1= new WatershedMahotsavInauguarationActPhoto();
-			
-			 Query query1 = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid");
-				query1.setInteger("inaugid", userfileup.getInauguaration_id());
-				//List<WatershedMahotsavInauguarationActPhoto> tempList = query1.list();
-			    // list.addAll(tempList); 
-				listd = query1.list();
-			 
-			 for (WatershedMahotsavInauguarationActPhoto photo : listd) {
-				   
-				 imgList.add(photo.getPhotoUrl());
-			 }
-			 for (String photo : imgList) 
-			 {
-		            if (photo != null && !photo.isEmpty()) 
-		            {
-		                File file = new File(photo);
-		                if (file.exists()) 
-		                {
-		                    if (file.delete()) {
-		                        System.out.println("Deleted file: " + file.getAbsolutePath());
-		                    } else {
-		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
-		                    }
-		                } 
-		                else {
-		                    System.out.println("File not found: " + file.getAbsolutePath());
-		                }
-		            }
-		     }
-			 
-			 SQLQuery query = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid");
-				 query.setInteger("nrmpkid", userfileup.getInauguaration_id());
-				 query.executeUpdate();
-				 
-			 SQLQuery query2 = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration where inauguaration_id=:nrmpkid");
-				 query2.setInteger("nrmpkid", userfileup.getInauguaration_id());
-				 query2.executeUpdate();
-				 
-			
-			IwmpState s= new IwmpState();
-			s.setStCode(Integer.parseInt(session.getAttribute("stateCode").toString()));
-			IwmpDistrict dd= new IwmpDistrict();
-			dd.setDcode(userfileup.getDistrict());
-			IwmpBlock b= new IwmpBlock();
-			b.setBcode(userfileup.getBlock()); 
-			
-			data.setIwmpState(s);
-			data.setIwmpDistrict(dd);
-			data.setIwmpBlock(b);
-			
-			data.setCreatedBy(session.getAttribute("loginID").toString());
-			data.setCreatedOn(new Timestamp(new java.util.Date().getTime()));
-			data.setRequestIp(ipAddr);
-			data.setStatus('D');
-			
-			data.setInauguarationDate(inaugurationDate);
+			WatershedMahotsavInauguaration data = (WatershedMahotsavInauguaration) sess.get(WatershedMahotsavInauguaration.class, userfileup.getInauguaration_id());
 			data.setInauguarationLocation(userfileup.getLocation());
 			data.setMaleParticipants(userfileup.getMale_participants());
 			data.setFemaleParticipants(userfileup.getFemale_participants());
@@ -775,15 +718,49 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			data.setShramdaanParticipate(userfileup.getNo_people_shramdaan());
 			data.setForestryHorticulture(userfileup.getArea_plantation());
 			data.setAwardedJanbhagidari(userfileup.getNo_awards());
-			sess.save(data);
-			String code=st_code.toString()+userfileup.getDistrict().toString()+userfileup.getBlock().toString();
-			//System.out.println("state="+code);
+			data.setUpdatedOn(new java.util.Date());
+			sess.update(data);
 			
-			 List<MultipartFile> photos = userfileup.getPhotos_bhoomipoojan();
+			  List<MultipartFile> photos = userfileup.getPhotos_bhoomipoojan();
 		      List<String> latitudes = userfileup.getPhotos_bhoomipoojan_lat();
 		      List<String> longitudes = userfileup.getPhotos_bhoomipoojan_lng();
 		      List<String> timestamps = userfileup.getPhotos_bhoomipoojan_time();
 
+		      if(photos.size()>1) {
+		    	  List<String> imgList = new ArrayList<String>();
+		    	  
+		    	  List<WatershedMahotsavInauguarationActPhoto> listbhoomi = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+		    	  Query querybhoomi = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid and actId=:act");
+				  querybhoomi.setInteger("inaugid", userfileup.getInauguaration_id());
+				  querybhoomi.setInteger("act", userfileup.getBhoomipoojan());
+				  listbhoomi = querybhoomi.list();
+				 for (WatershedMahotsavInauguarationActPhoto photo : listbhoomi) {
+					   
+					 imgList.add(photo.getPhotoUrl());
+				 }
+				 for (String photo : imgList) 
+				 {
+			            if (photo != null && !photo.isEmpty()) 
+			            {
+			                File file = new File(photo);
+			                if (file.exists()) 
+			                {
+			                    if (file.delete()) {
+			                        System.out.println("Deleted file: " + file.getAbsolutePath());
+			                    } else {
+			                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+			                    }
+			                } 
+			                else {
+			                    System.out.println("File not found: " + file.getAbsolutePath());
+			                }
+			            }
+			     }
+				 SQLQuery querybhoomip = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid and act_id=:actId");
+				 querybhoomip.setInteger("nrmpkid", userfileup.getInauguaration_id());
+				 querybhoomip.setInteger("actId", userfileup.getBhoomipoojan());
+				 querybhoomip.executeUpdate();
+		      
 		         for (int i = 0; i < photos.size(); i++) 
 		         {
 		             MultipartFile image = photos.get(i);
@@ -793,6 +770,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setActId(userfileup.getBhoomipoojan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setUpdated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						if(latitudes.get(i).equalsIgnoreCase("0"))
 							photo.setLatitude(null);
@@ -818,14 +796,51 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getBhoomipoojan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
-		                 sess.evict(photo);
+		                 
 		                 sequence++;
 		             }
 		         }
+		      }
 		         List<MultipartFile> photos_lokarpan=userfileup.getPhotos_lokarpan();
 		         List<String> lokarpan_lat = userfileup.getPhotos_lokarpan_lat();
 			     List<String> lokarpan_lng = userfileup.getPhotos_lokarpan_lng();
 			     List<String> lokarpan_time = userfileup.getPhotos_lokarpan_time();
+			     
+			     if(photos_lokarpan.size()>1) {
+			    	  List<String> imgList = new ArrayList<String>();
+			    	  
+			    	  List<WatershedMahotsavInauguarationActPhoto> listlokarpan = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+			    	  Query querylokarpan = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid and actId=:act");
+					  querylokarpan.setInteger("inaugid", userfileup.getInauguaration_id());
+					  querylokarpan.setInteger("act", userfileup.getLokarpan());
+					  listlokarpan = querylokarpan.list();
+					 for (WatershedMahotsavInauguarationActPhoto photo : listlokarpan) {
+						   
+						 imgList.add(photo.getPhotoUrl());
+					 }
+					 for (String photo : imgList) 
+					 {
+				            if (photo != null && !photo.isEmpty()) 
+				            {
+				                File file = new File(photo);
+				                if (file.exists()) 
+				                {
+				                    if (file.delete()) {
+				                        System.out.println("Deleted file: " + file.getAbsolutePath());
+				                    } else {
+				                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+				                    }
+				                } 
+				                else {
+				                    System.out.println("File not found: " + file.getAbsolutePath());
+				                }
+				            }
+				     }
+					 SQLQuery querybhoomip = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid and act_id=:actId");
+					 querybhoomip.setInteger("nrmpkid", userfileup.getInauguaration_id());
+					 querybhoomip.setInteger("actId", userfileup.getLokarpan());
+					 querybhoomip.executeUpdate();
+			     
 		         for (int i = 0; i < photos_lokarpan.size(); i++) 
 		         {
 		             MultipartFile image = photos_lokarpan.get(i);
@@ -835,6 +850,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setActId(userfileup.getLokarpan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setUpdated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						if(lokarpan_lat.get(i).equalsIgnoreCase("0"))
 							photo.setLatitude(null);
@@ -860,14 +876,51 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getLokarpan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
-		                 sess.evict(photo);
+		                
 		                 sequence++;
 		             }
 		         }
+			     }
 		         List<MultipartFile> photos_shramdaan=userfileup.getPhotos_shramdaan();
 		         List<String> shramdaan_lat = userfileup.getPhotos_shramdaan_lat();
 			     List<String> shramdaan_lng = userfileup.getPhotos_shramdaan_lng();
 			     List<String> shramdaan_time = userfileup.getPhotos_shramdaan_time();
+			     
+			     if(photos_shramdaan.size()>1) {
+			    	  List<String> imgList = new ArrayList<String>();
+			    	  
+			    	  List<WatershedMahotsavInauguarationActPhoto> listshramdaan = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+			    	  Query queryshramdaan = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid and actId=:act");
+					  queryshramdaan.setInteger("inaugid", userfileup.getInauguaration_id());
+					  queryshramdaan.setInteger("act", userfileup.getShramdaan());
+					  listshramdaan = queryshramdaan.list();
+					 for (WatershedMahotsavInauguarationActPhoto photo : listshramdaan) {
+						   
+						 imgList.add(photo.getPhotoUrl());
+					 }
+					 for (String photo : imgList) 
+					 {
+				            if (photo != null && !photo.isEmpty()) 
+				            {
+				                File file = new File(photo);
+				                if (file.exists()) 
+				                {
+				                    if (file.delete()) {
+				                        System.out.println("Deleted file: " + file.getAbsolutePath());
+				                    } else {
+				                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+				                    }
+				                } 
+				                else {
+				                    System.out.println("File not found: " + file.getAbsolutePath());
+				                }
+				            }
+				     }
+					 SQLQuery querybhoomip = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid and act_id=:actId");
+					 querybhoomip.setInteger("nrmpkid", userfileup.getInauguaration_id());
+					 querybhoomip.setInteger("actId", userfileup.getShramdaan());
+					 querybhoomip.executeUpdate();
+			     
 		         for (int i = 0; i < photos_shramdaan.size(); i++) 
 		         {
 		             MultipartFile image = photos_shramdaan.get(i);
@@ -877,6 +930,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setActId(userfileup.getShramdaan());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setUpdated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						if(shramdaan_lat.get(i).equalsIgnoreCase("0"))
 							photo.setLatitude(null);
@@ -903,14 +957,50 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getShramdaan().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
-		                 sess.evict(photo);
 		                 sequence++;
 		             }
 		         }
+			     }
 		         List<MultipartFile> photos_forestry=userfileup.getPhotos_forestry();
 		         List<String> forestry_lat = userfileup.getPhotos_forestry_lat();
 			     List<String> forestry_lng = userfileup.getPhotos_forestry_lng();
 			     List<String> forestry_time = userfileup.getPhotos_forestry_time();
+			     
+			     if(photos_forestry.size()>1) {
+			    	  List<String> imgList = new ArrayList<String>();
+			    	  
+			    	  List<WatershedMahotsavInauguarationActPhoto> listforestry = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+			    	  Query queryforestry = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid and actId=:act");
+					  queryforestry.setInteger("inaugid", userfileup.getInauguaration_id());
+					  queryforestry.setInteger("act", userfileup.getForestry());
+					  listforestry = queryforestry.list();
+					 for (WatershedMahotsavInauguarationActPhoto photo : listforestry) {
+						   
+						 imgList.add(photo.getPhotoUrl());
+					 }
+					 for (String photo : imgList) 
+					 {
+				            if (photo != null && !photo.isEmpty()) 
+				            {
+				                File file = new File(photo);
+				                if (file.exists()) 
+				                {
+				                    if (file.delete()) {
+				                        System.out.println("Deleted file: " + file.getAbsolutePath());
+				                    } else {
+				                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+				                    }
+				                } 
+				                else {
+				                    System.out.println("File not found: " + file.getAbsolutePath());
+				                }
+				            }
+				     }
+					 SQLQuery querybhoomip = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid and act_id=:actId");
+					 querybhoomip.setInteger("nrmpkid", userfileup.getInauguaration_id());
+					 querybhoomip.setInteger("actId", userfileup.getForestry());
+					 querybhoomip.executeUpdate();
+			     
 		         for (int i = 0; i < photos_forestry.size(); i++) 
 		         {
 		             MultipartFile image = photos_forestry.get(i);
@@ -920,6 +1010,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setActId(userfileup.getForestry());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setUpdated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						if(forestry_lat.get(i).equalsIgnoreCase("0"))
 							photo.setLatitude(null);
@@ -947,14 +1038,52 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getForestry().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
-		                 sess.evict(photo);
+		                
 		                 sequence++;
 		             }
 		         }
+			     }
 		         List<MultipartFile> photos_janbhagidari=userfileup.getPhotos_janbhagidari();
 		         List<String> janbhagidari_lat = userfileup.getPhotos_janbhagidari_lat();
 			     List<String> janbhagidari_lng = userfileup.getPhotos_janbhagidari_lng();
 			     List<String> janbhagidari_time = userfileup.getPhotos_janbhagidari_time();
+			     
+			     if(photos_janbhagidari.size()>1) {
+			    	  List<String> imgList = new ArrayList<String>();
+			    	  
+			    	  List<WatershedMahotsavInauguarationActPhoto> listjanbhagidari = new ArrayList<WatershedMahotsavInauguarationActPhoto>();
+			    	  Query queryjanbhagidari = sess.createQuery("from WatershedMahotsavInauguarationActPhoto where watershedMahotsavInauguaration.inauguarationId = :inaugid and actId=:act");
+					  queryjanbhagidari.setInteger("inaugid", userfileup.getInauguaration_id());
+					  queryjanbhagidari.setInteger("act", userfileup.getAwarded());
+					  listjanbhagidari = queryjanbhagidari.list();
+					 for (WatershedMahotsavInauguarationActPhoto photo : listjanbhagidari) {
+						   
+						 imgList.add(photo.getPhotoUrl());
+					 }
+					 for (String photo : imgList) 
+					 {
+				            if (photo != null && !photo.isEmpty()) 
+				            {
+				                File file = new File(photo);
+				                if (file.exists()) 
+				                {
+				                    if (file.delete()) {
+				                        System.out.println("Deleted file: " + file.getAbsolutePath());
+				                    } else {
+				                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+				                    }
+				                } 
+				                else {
+				                    System.out.println("File not found: " + file.getAbsolutePath());
+				                }
+				            }
+				     }
+					 SQLQuery querybhoomip = sess.createSQLQuery("delete from watershed_mahotsav_inauguaration_act_photo where inauguaration_id=:nrmpkid and act_id=:actId");
+					 querybhoomip.setInteger("nrmpkid", userfileup.getInauguaration_id());
+					 querybhoomip.setInteger("actId", userfileup.getAwarded());
+					 querybhoomip.executeUpdate();
+			     
+					 
 		         for (int i = 0; i < photos_janbhagidari.size(); i++) 
 		         {
 		             MultipartFile image = photos_janbhagidari.get(i);
@@ -964,6 +1093,7 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setActId(userfileup.getAwarded());
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
+						photo.setUpdated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						if(janbhagidari_lat.get(i).equalsIgnoreCase("0"))
 							photo.setLatitude(null);
@@ -990,11 +1120,11 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 		                photo.setPhotoUrl(filePath+"I"+code+userfileup.getAwarded().toString()+sequence+"_"+image.getOriginalFilename());
 
 		                 sess.save(photo);
-		                 sess.evict(photo);
+		                 
 		                 sequence++;
 		             }
 		         }
-			
+			     }
 			SQLQuery sqlQuery = sess.createSQLQuery("UPDATE watershed_mahotsav_inauguaration_sequence SET value_id=:aut");
 			sqlQuery.setInteger("aut", sequence);
 			sqlQuery.executeUpdate();
