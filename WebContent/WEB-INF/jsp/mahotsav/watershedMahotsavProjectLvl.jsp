@@ -506,7 +506,7 @@ function editChangedata(waterid){
 			<hr/>
 			  <div class="row">
     			<div class="form-group col-3">
-      		  <label for="datetime">Date and Time: </label>
+      		  <label for="datetime">Date and Time:<span style="color: red;">*</span> </label>
        		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
     		</div>
 			</div>
@@ -523,7 +523,7 @@ function editChangedata(waterid){
       			
     		</div>
     		<div class="form-group col-3">
-    			<label for="activity">Block: </label>
+    			<label for="activity">Block:<span style="color: red;">*</span> </label>
       			<span class="activityError"></span>
       			<select class="form-control activity" id="block" name="block" onchange ="displaydata()" >
     				<option value="">--Select Block--</option>
@@ -539,7 +539,7 @@ function editChangedata(waterid){
     		</div>
     		
     		<div class="form-group col-3">
-    <label for="activity">Location (Nearby/Milestone)</label>
+    <label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
     <input type="text" class="form-control activity" name="location" id="location" onblur="myOverFunction(this)" style="width: 100%; max-width: 800px;" />
 </div>
 
@@ -554,14 +554,14 @@ function editChangedata(waterid){
      		<th colspan=4 class="text-left">Participation :</th>
      	</tr>
      	<tr>
-     		<td colspan=2>Number Of Participants/Villagers</td>
+     		<td colspan=2>Number Of Participants/Villagers<span style="color: red;">*</span></td>
      		<td>Male<br><input type="text" id="maleparticipants" name="maleparticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Female<br><input type="text" id="femaleparticipants" name="femaleparticipants" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of Ministers</td>
+     		<td colspan=2>Number of Ministers<span style="color: red;">*</span></td>
      		<td>Central Level<br><input type="text" id="centralministers" name="centralministers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>State Level<br><input type="text" id="stateministers" name="stateministers" autocomplete="off"
@@ -569,23 +569,23 @@ function editChangedata(waterid){
      	</tr>
      	
      	<tr>
-     		<td colspan=2>Number of Member of Parliament</td>
+     		<td colspan=2>Number of Member of Parliament<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="membersofparliament" name="membersofparliament" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of Members</td>
+     		<td colspan=2>Number of Members<span style="color: red;">*</span></td>
      		<td>Legislative Assembly<br><input type="text" id="legassemblymembers" name="legassemblymembers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Legislative Council<br><input type="text" id="legcouncilmembers" name="legcouncilmembers" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of other Public Representatives</td>
+     		<td colspan=2>Number of other Public Representatives<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="publicreps" name="publicreps" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	<tr>
-     		<td colspan=2>Number of Government Officials</td>
+     		<td colspan=2>Number of Government Officials<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="govofficials" name="govofficials" autocomplete="off"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
@@ -594,7 +594,7 @@ function editChangedata(waterid){
      		<th colspan=4 class="text-left">Activities :</th>
      	</tr>
 						<tr>
-							<td>Number of Works for Bhoomi Poojan <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
+							<td>Number of Works for Bhoomi Poojan<span style="color: red;">*</span> <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
 							<td colspan=2><input type="text" id="no_works_bhoomipoojan"
 								name="no_works_bhoomipoojan" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5"
@@ -627,7 +627,7 @@ function editChangedata(waterid){
 
 						</tr>
 						<tr>
-							<td>Number of Works for Lokarpan <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
+							<td>Number of Works for Lokarpan<span style="color: red;">*</span> <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
 							<td colspan=2><input type="text" id="no_works_lokarpan"
 								name="no_works_lokarpan" autocomplete="off" pattern="^\d{10}$"
 								maxlength="5"
@@ -660,7 +660,7 @@ function editChangedata(waterid){
 
 						</tr>
 						<tr>
-							<td>Shramdaan <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
+							<td>Shramdaan<span style="color: red;">*</span> <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
 							<td>Number of Locations<br>
 							<input type="text" id="no_location_shramdaan"
 								name="no_location_shramdaan" autocomplete="off"
@@ -698,7 +698,7 @@ function editChangedata(waterid){
 							</td>
 						</tr>
 						<tr>
-							<td>Agro forestry / Horticultural Plantation - Number of Saplings <input type="hidden" name="forestry" id="forestry" value="4"/></td>
+							<td>Agro forestry / Horticultural Plantation - Number of Saplings<span style="color: red;">*</span> <input type="hidden" name="forestry" id="forestry" value="4"/></td>
 							<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
@@ -830,6 +830,7 @@ function editChangedata(waterid){
  								
 								<td class="text-right">
 									<c:out value="${data.image_count}" />
+<%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> --%>
 								</td>
 					</tr>
 							
@@ -927,6 +928,7 @@ function editChangedata(waterid){
  								
 								<td class="text-right">
 									<c:out value="${data.image_count}" /> 
+<%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /> </a> --%>
 								</td>
 					</tr>
 							

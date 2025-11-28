@@ -570,15 +570,50 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 				List<String> imgList = new ArrayList<String>();
 				List<WatershedMahotsavProjectLvlPhoto> list = new ArrayList<WatershedMahotsavProjectLvlPhoto>();
 
-				WatershedMahotsavProjectLevel data = new WatershedMahotsavProjectLevel();
 
 				InetAddress inet = InetAddress.getLocalHost();
 				String ipAddr = inet.getHostAddress();
-
+				
+				WatershedMahotsavProjectLevel data = sess.get(WatershedMahotsavProjectLevel.class, userfileup.getWaterid());
+				
+				data.setMahotsavLocation(userfileup.getLocation());
+				data.setMaleParticipants(userfileup.getMaleparticipants());
+				data.setFemaleParticipants(userfileup.getFemaleparticipants());
+				data.setCentralMinister(userfileup.getCentralministers());
+				data.setStateMinister(userfileup.getStateministers());
+				data.setParliamentMembers(userfileup.getMembersofparliament());
+				data.setLegislativeAssemblyMembers(userfileup.getLegassemblymembers());
+				data.setLegislativeCouncilMembers(userfileup.getLegcouncilmembers());
+				data.setOtherPublicRepresentatives(userfileup.getPublicreps());
+				data.setGovOfficials(userfileup.getGovofficials());
+				data.setBhoomiPoojanNoOfWorks(userfileup.getNo_works_bhoomipoojan());
+				data.setLokarpanNoOfWorks(userfileup.getNo_works_lokarpan());
+				data.setShramdaanNoOfLocation(userfileup.getNo_location_shramdaan());
+				data.setShramdaanNoOfParticipatedPeople(userfileup.getNo_people_shramdaan());
+				data.setNoOfAgroForsetry(userfileup.getArea_plantation());
+				data.setUpdatedDate(new java.util.Date());
+				data.setUpdatedBy(loginId);
+				sess.update(data);
+				
+				List<Integer> activityId = new ArrayList<>();
+				
+				List<MultipartFile> bphotos = userfileup.getPhotos_bhoomipoojan();
+				List<MultipartFile> lphotos = userfileup.getPhotos_lokarpan();
+				List<MultipartFile> sphotos = userfileup.getPhotos_shramdaan();
+				List<MultipartFile> fphotos = userfileup.getPhotos_forestry();
+				if(bphotos.size()>1)
+					activityId.add(userfileup.getBhoomipoojan());
+				if(lphotos.size()>1)
+					activityId.add(userfileup.getLokarpan());
+				if(sphotos.size()>1)
+					activityId.add(userfileup.getShramdaan());
+				if(fphotos.size()>1)
+					activityId.add(userfileup.getShramdaan());
+				
 				@SuppressWarnings("rawtypes")
-				Query query1 = sess
-						.createQuery("from WatershedMahotsavProjectLvlPhoto where watershedMahotsav.id = :id");
+				Query query1 = sess.createQuery("from WatershedMahotsavProjectLvlPhoto where watershedMahotsav.id = :id and activity.actId in (:actid)");
 				query1.setInteger("id", userfileup.getWaterid());
+				query1.setParameterList("actid", activityId);
 				list = query1.list();
 				for (WatershedMahotsavProjectLvlPhoto photo : list) {
 					imgList.add(photo.getPhotoUrl());
@@ -599,197 +634,171 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 				}
 
 				SQLQuery query = sess.createSQLQuery(
-						"delete from watershed_mahotsav_project_lvl_photo where watershed_mahotsav_id=:nrmpkid");
+						"delete from watershed_mahotsav_project_lvl_photo where watershed_mahotsav_id=:nrmpkid and act_id in (:actid) ");
 				query.setInteger("nrmpkid", userfileup.getWaterid());
+				query.setParameterList("actid", activityId);
 				query.executeUpdate();
 
-				SQLQuery query2 = sess.createSQLQuery(
-						"delete from watershed_mahotsav_project_level where watershed_mahotsav_id=:nrmpkid");
-				query2.setInteger("nrmpkid", userfileup.getWaterid());
-				query2.executeUpdate();
-
-				IwmpState s = new IwmpState();
-				s.setStCode(Integer.parseInt(st_code));
-				IwmpDistrict d = new IwmpDistrict();
-				d.setDcode(userfileup.getDistrict());
-				IwmpBlock b = new IwmpBlock();
-				b.setBcode(userfileup.getBlock());
-
-				data.setState(s);
-				data.setDistrict(d);
-				data.setBlock(b);
-
-				data.setCreatedBy(loginId);
-				data.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-				data.setRequestedIp(ipAddr);
-				data.setStatus('D');
-
-				data.setMahotsavDate(mahotsavDate);
-				data.setMahotsavLocation(userfileup.getLocation());
-				data.setMaleParticipants(userfileup.getMaleparticipants());
-				data.setFemaleParticipants(userfileup.getFemaleparticipants());
-				data.setCentralMinister(userfileup.getCentralministers());
-				data.setStateMinister(userfileup.getStateministers());
-				data.setParliamentMembers(userfileup.getMembersofparliament());
-				data.setLegislativeAssemblyMembers(userfileup.getLegassemblymembers());
-				data.setLegislativeCouncilMembers(userfileup.getLegcouncilmembers());
-				data.setOtherPublicRepresentatives(userfileup.getPublicreps());
-				data.setGovOfficials(userfileup.getGovofficials());
-				data.setBhoomiPoojanNoOfWorks(userfileup.getNo_works_bhoomipoojan());
-				data.setLokarpanNoOfWorks(userfileup.getNo_works_lokarpan());
-				data.setShramdaanNoOfLocation(userfileup.getNo_location_shramdaan());
-				data.setShramdaanNoOfParticipatedPeople(userfileup.getNo_people_shramdaan());
-				data.setNoOfAgroForsetry(userfileup.getArea_plantation());
-				sess.save(data);
 				String code = st_code.toString() + "_" + data.getId();
 
 //					for(String lang : userfileup.getPhotos_bhoomipoojan_lat()) {
 //						System.out.println("yogesh = "+lang);
 //					}
-				List<String> bhoomiLat = userfileup.getPhotos_bhoomipoojan_lat();
-				List<String> bhoomiLng = userfileup.getPhotos_bhoomipoojan_lng();
-				List<String> bhoomiTime = userfileup.getPhotos_bhoomipoojan_time();
-				sequence = 1;
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
-				for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) {
-					WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
-					if (!image.isEmpty()) {
-						photo.setWatershedMahotsav(data);
-						photo.setCreatedBy(loginId);
-						photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-						photo.setRequestedIp(ipAddr);
-						commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
-								userfileup.getBhoomipoojan().toString(), sequence);
-						WatershedMahotsavInauguarationActivityMaster actId = sess
-								.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getBhoomipoojan());
-						photo.setActivity(actId);
-						photo.setPhotoUrl(filePath + "I" + code + userfileup.getBhoomipoojan().toString() + sequence
-								+ "_" + image.getOriginalFilename());
-						// Set GPS/time metadata (aligned by index)
-						int i = sequence - 1;
-						if (bhoomiLat != null && i < bhoomiLat.size())
-							photo.setLatitude(bhoomiLat.get(i));
-						if (bhoomiLng != null && i < bhoomiLng.size())
-							photo.setLongitude(bhoomiLng.get(i));
-						if (bhoomiTime.get(i).equalsIgnoreCase("0")) {
-							photo.setPhototimestamp(null);
-						} else {
-							java.util.Date parsedDate = sdf.parse(bhoomiTime.get(i));
-							Timestamp timestamp = new Timestamp(parsedDate.getTime());
-							if (bhoomiTime != null && i < bhoomiTime.size())
-								photo.setPhototimestamp(timestamp);
+				if(bphotos.size()>1) {
+					List<String> bhoomiLat = userfileup.getPhotos_bhoomipoojan_lat();
+					List<String> bhoomiLng = userfileup.getPhotos_bhoomipoojan_lng();
+					List<String> bhoomiTime = userfileup.getPhotos_bhoomipoojan_time();
+					sequence = 1;
+					
+					for (MultipartFile image : userfileup.getPhotos_bhoomipoojan()) {
+						WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
+						if (!image.isEmpty()) {
+							photo.setWatershedMahotsav(data);
+							photo.setCreatedBy(loginId);
+							photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+							photo.setRequestedIp(ipAddr);
+							commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
+									userfileup.getBhoomipoojan().toString(), sequence);
+							WatershedMahotsavInauguarationActivityMaster actId = sess
+									.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getBhoomipoojan());
+							photo.setActivity(actId);
+							photo.setPhotoUrl(filePath + "I" + code + userfileup.getBhoomipoojan().toString() + sequence
+									+ "_" + image.getOriginalFilename());
+							// Set GPS/time metadata (aligned by index)
+							int i = sequence - 1;
+							if (bhoomiLat != null && i < bhoomiLat.size())
+								photo.setLatitude(bhoomiLat.get(i));
+							if (bhoomiLng != null && i < bhoomiLng.size())
+								photo.setLongitude(bhoomiLng.get(i));
+							if (bhoomiTime.get(i).equalsIgnoreCase("0")) {
+								photo.setPhototimestamp(null);
+							} else {
+								java.util.Date parsedDate = sdf.parse(bhoomiTime.get(i));
+								Timestamp timestamp = new Timestamp(parsedDate.getTime());
+								if (bhoomiTime != null && i < bhoomiTime.size())
+									photo.setPhototimestamp(timestamp);
+							}
+
+							sequence = sequence + 1;
+							sess.save(photo);
+						}
+					}
+				}
+				if(lphotos.size()>1) {
+					sequence = 1;
+					List<String> lokarpanLat = userfileup.getPhotos_lokarpan_lat();
+					List<String> lokarpanLng = userfileup.getPhotos_lokarpan_lng();
+					List<String> lokarpanTime = userfileup.getPhotos_lokarpan_time();
+					for (MultipartFile image : userfileup.getPhotos_lokarpan()) {
+						WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
+						if (!image.isEmpty()) {
+							photo.setWatershedMahotsav(data);
+							photo.setCreatedBy(loginId);
+							photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+							photo.setRequestedIp(ipAddr);
+							commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
+									userfileup.getLokarpan().toString(), sequence);
+							WatershedMahotsavInauguarationActivityMaster actId = sess
+									.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getLokarpan());
+							photo.setActivity(actId);
+							photo.setPhotoUrl(filePath + "I" + code + userfileup.getLokarpan().toString() + sequence + "_"
+									+ image.getOriginalFilename());
+							int i = sequence - 1;
+							if (lokarpanLat != null && i < lokarpanLat.size())
+								photo.setLatitude(lokarpanLat.get(i));
+							if (lokarpanLng != null && i < lokarpanLng.size())
+								photo.setLongitude(lokarpanLng.get(i));
+							if (lokarpanTime.get(i).equalsIgnoreCase("0")) {
+								photo.setPhototimestamp(null);
+							} else {
+								java.util.Date parsedDate = sdf.parse(lokarpanTime.get(i));
+								Timestamp timestamp = new Timestamp(parsedDate.getTime());
+								if (lokarpanTime != null && i < lokarpanTime.size())
+									photo.setPhototimestamp(timestamp);
+							}
+							sequence = sequence + 1;
+							sess.save(photo);
+						}
+					}
+				}
+				if(sphotos.size()>1) {
+					sequence = 1;
+					List<String> shramLat = userfileup.getPhotos_shramdaan_lat();
+					List<String> shramLng = userfileup.getPhotos_shramdaan_lng();
+					List<String> shramTime = userfileup.getPhotos_shramdaan_time();
+					for (MultipartFile image : userfileup.getPhotos_shramdaan()) {
+						WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
+						if (!image.isEmpty()) {
+							photo.setWatershedMahotsav(data);
+							photo.setCreatedBy(loginId);
+							photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+							photo.setRequestedIp(ipAddr);
+							commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
+									userfileup.getShramdaan().toString(), sequence);
+							WatershedMahotsavInauguarationActivityMaster actId = sess
+									.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getShramdaan());
+							photo.setActivity(actId);
+							photo.setPhotoUrl(filePath + "I" + code + userfileup.getShramdaan().toString() + sequence + "_"
+									+ image.getOriginalFilename());
+							int i = sequence - 1;
+							if (shramLat != null && i < shramLat.size())
+								photo.setLatitude(shramLat.get(i));
+							if (shramLng != null && i < shramLng.size())
+								photo.setLongitude(shramLng.get(i));
+							if (shramTime.get(i).equalsIgnoreCase("0")) {
+								photo.setPhototimestamp(null);
+							} else {
+								java.util.Date parsedDate = sdf.parse(shramTime.get(i));
+								Timestamp timestamp = new Timestamp(parsedDate.getTime());
+								if (shramTime != null && i < shramTime.size())
+									photo.setPhototimestamp(timestamp);
+							}
+							sequence = sequence + 1;
+							sess.save(photo);
+						}
+					}
+				}
+				if(fphotos.size()>1) {
+					sequence = 1;
+					List<String> forestLat = userfileup.getPhotos_forestry_lat();
+					List<String> forestLng = userfileup.getPhotos_forestry_lng();
+					List<String> forestTime = userfileup.getPhotos_forestry_time();
+					for (MultipartFile image : userfileup.getPhotos_forestry()) {
+						WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
+						if (!image.isEmpty()) {
+							photo.setWatershedMahotsav(data);
+							photo.setCreatedBy(loginId);
+							photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
+							photo.setRequestedIp(ipAddr);
+							commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
+									userfileup.getForestry().toString(), sequence);
+							WatershedMahotsavInauguarationActivityMaster actId = sess
+									.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getForestry());
+							photo.setActivity(actId);
+							photo.setPhotoUrl(filePath + "I" + code + userfileup.getForestry().toString() + sequence + "_"
+									+ image.getOriginalFilename());
+							int i = sequence - 1;
+							if (forestLat != null && i < forestLat.size())
+								photo.setLatitude(forestLat.get(i));
+							if (forestLng != null && i < forestLng.size())
+								photo.setLongitude(forestLng.get(i));
+							if (forestTime.get(i).equalsIgnoreCase("0")) {
+								photo.setPhototimestamp(null);
+							} else {
+								java.util.Date parsedDate = sdf.parse(forestTime.get(i));
+								Timestamp timestamp = new Timestamp(parsedDate.getTime());
+								if (forestTime != null && i < forestTime.size())
+									photo.setPhototimestamp(timestamp);
+							}
+							sequence = sequence + 1;
+							sess.save(photo);
 						}
 
-						sequence = sequence + 1;
-						sess.save(photo);
 					}
 				}
-				sequence = 1;
-				List<String> lokarpanLat = userfileup.getPhotos_lokarpan_lat();
-				List<String> lokarpanLng = userfileup.getPhotos_lokarpan_lng();
-				List<String> lokarpanTime = userfileup.getPhotos_lokarpan_time();
-				for (MultipartFile image : userfileup.getPhotos_lokarpan()) {
-					WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
-					if (!image.isEmpty()) {
-						photo.setWatershedMahotsav(data);
-						photo.setCreatedBy(loginId);
-						photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-						photo.setRequestedIp(ipAddr);
-						commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
-								userfileup.getLokarpan().toString(), sequence);
-						WatershedMahotsavInauguarationActivityMaster actId = sess
-								.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getLokarpan());
-						photo.setActivity(actId);
-						photo.setPhotoUrl(filePath + "I" + code + userfileup.getLokarpan().toString() + sequence + "_"
-								+ image.getOriginalFilename());
-						int i = sequence - 1;
-						if (lokarpanLat != null && i < lokarpanLat.size())
-							photo.setLatitude(lokarpanLat.get(i));
-						if (lokarpanLng != null && i < lokarpanLng.size())
-							photo.setLongitude(lokarpanLng.get(i));
-						if (lokarpanTime.get(i).equalsIgnoreCase("0")) {
-							photo.setPhototimestamp(null);
-						} else {
-							java.util.Date parsedDate = sdf.parse(lokarpanTime.get(i));
-							Timestamp timestamp = new Timestamp(parsedDate.getTime());
-							if (lokarpanTime != null && i < lokarpanTime.size())
-								photo.setPhototimestamp(timestamp);
-						}
-						sequence = sequence + 1;
-						sess.save(photo);
-					}
-				}
-				sequence = 1;
-				List<String> shramLat = userfileup.getPhotos_shramdaan_lat();
-				List<String> shramLng = userfileup.getPhotos_shramdaan_lng();
-				List<String> shramTime = userfileup.getPhotos_shramdaan_time();
-				for (MultipartFile image : userfileup.getPhotos_shramdaan()) {
-					WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
-					if (!image.isEmpty()) {
-						photo.setWatershedMahotsav(data);
-						photo.setCreatedBy(loginId);
-						photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-						photo.setRequestedIp(ipAddr);
-						commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
-								userfileup.getShramdaan().toString(), sequence);
-						WatershedMahotsavInauguarationActivityMaster actId = sess
-								.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getShramdaan());
-						photo.setActivity(actId);
-						photo.setPhotoUrl(filePath + "I" + code + userfileup.getShramdaan().toString() + sequence + "_"
-								+ image.getOriginalFilename());
-						int i = sequence - 1;
-						if (shramLat != null && i < shramLat.size())
-							photo.setLatitude(shramLat.get(i));
-						if (shramLng != null && i < shramLng.size())
-							photo.setLongitude(shramLng.get(i));
-						if (shramTime.get(i).equalsIgnoreCase("0")) {
-							photo.setPhototimestamp(null);
-						} else {
-							java.util.Date parsedDate = sdf.parse(shramTime.get(i));
-							Timestamp timestamp = new Timestamp(parsedDate.getTime());
-							if (shramTime != null && i < shramTime.size())
-								photo.setPhototimestamp(timestamp);
-						}
-						sequence = sequence + 1;
-						sess.save(photo);
-					}
-				}
-				sequence = 1;
-				List<String> forestLat = userfileup.getPhotos_forestry_lat();
-				List<String> forestLng = userfileup.getPhotos_forestry_lng();
-				List<String> forestTime = userfileup.getPhotos_forestry_time();
-				for (MultipartFile image : userfileup.getPhotos_forestry()) {
-					WatershedMahotsavProjectLvlPhoto photo = new WatershedMahotsavProjectLvlPhoto();
-					if (!image.isEmpty()) {
-						photo.setWatershedMahotsav(data);
-						photo.setCreatedBy(loginId);
-						photo.setCreatedDate(new Timestamp(new java.util.Date().getTime()));
-						photo.setRequestedIp(ipAddr);
-						commonFunction.uploadFileMahotwavInauguration(image, filePath, code,
-								userfileup.getForestry().toString(), sequence);
-						WatershedMahotsavInauguarationActivityMaster actId = sess
-								.get(WatershedMahotsavInauguarationActivityMaster.class, userfileup.getForestry());
-						photo.setActivity(actId);
-						photo.setPhotoUrl(filePath + "I" + code + userfileup.getForestry().toString() + sequence + "_"
-								+ image.getOriginalFilename());
-						int i = sequence - 1;
-						if (forestLat != null && i < forestLat.size())
-							photo.setLatitude(forestLat.get(i));
-						if (forestLng != null && i < forestLng.size())
-							photo.setLongitude(forestLng.get(i));
-						if (forestTime.get(i).equalsIgnoreCase("0")) {
-							photo.setPhototimestamp(null);
-						} else {
-							java.util.Date parsedDate = sdf.parse(forestTime.get(i));
-							Timestamp timestamp = new Timestamp(parsedDate.getTime());
-							if (forestTime != null && i < forestTime.size())
-								photo.setPhototimestamp(timestamp);
-						}
-						sequence = sequence + 1;
-						sess.save(photo);
-					}
-
-				}
+				
+				
 				sess.flush();
 				sess.clear();
 

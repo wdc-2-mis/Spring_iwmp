@@ -261,11 +261,35 @@ let formSubmitted = false;
 let allValid = true;
 function validation() 
 {
-	if (formSubmitted) return false;
 	allValid = true;
 	
-	var allowedFiles = [".jpg", ".jpeg",".png"];
-
+	$(".photo-block").each(function () {
+        let container = $(this).find(".photoContainer");
+        let photos = container.find("input[type='file']");
+        let errorDiv = $(this).find(".photoError");
+        let uploaded = 0;
+     // clear old errors
+        errorDiv.html("");
+        photos.each(function () {
+            if ($(this).val() !== "") {
+                uploaded++;
+            }
+        });
+        // If user uploaded photos then validate min/max
+        if (uploaded > 0) {
+            let label = $(this).find("label").text();
+            let min = 2
+            if (uploaded < min) {
+            	errorDiv.html("Please upload minimum " + min + " photos.");
+            	alert(`Minimum `+min+` photos required for this activity. Please add more photos`);
+            	$(this).data("name")==="photos_bhoomipoojan"?$('#photos_bhoomipoojan').focus():$(this).data("name")==="photos_lokarpan"?$('#photos_lokarpan').focus():
+            		$(this).data("name")==="photos_shramdaan"?$('#photos_shramdaan').focus():$('#photos_forestry').focus()
+                allValid = false;
+                return false; // break loop
+            }
+        }
+    });
+	
 	$location = $('#location').val();
 	$maleParticipants = $('#maleparticipants').val();
 	$femaleParticipants = $('#femaleparticipants').val();
@@ -417,42 +441,42 @@ function validation()
 // 			return false;
 // 		}
 // 	}
-	if(($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
-	{
-		alert('If you choose not to upload any new photos, your previously uploaded images will remain unchanged!');
-	}
-	else{
+
+// 	if(($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
+// 	{
+// 		alert('If you choose not to upload any new photos, your previously uploaded images will remain unchanged!');
+// 	}
+// 	else{
 	
-	// For each activity block
-    document.querySelectorAll(".photo-block").forEach(block => {
+// 	// For each activity block
+//     document.querySelectorAll(".photo-block").forEach(block => {
 
-        let container = block.querySelector(".photoContainer");
-        let errorDiv = block.querySelector(".photoError");
-        let inputs = container.querySelectorAll("input[type='file']");
-        let totalFiles = 0;
-        let minPhotos = 2;
-        errorDiv.innerHTML = ""; // clear old errors
-        inputs.forEach(inp => {
-            if (inp.files.length > 0) {
-                totalFiles++;
-            }
-        });
+//         let container = block.querySelector(".photoContainer");
+//         let errorDiv = block.querySelector(".photoError");
+//         let inputs = container.querySelectorAll("input[type='file']");
+//         let totalFiles = 0;
+//         let minPhotos = 2;
+//         errorDiv.innerHTML = ""; // clear old errors
+//         inputs.forEach(inp => {
+//             if (inp.files.length > 0) {
+//                 totalFiles++;
+//             }
+//         });
 
-        let activityInput = block.closest("tr").querySelector("input[type='text']");
-        let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-        if (activityValue > 0 && totalFiles < minPhotos) {
-            errorDiv.innerHTML = "Please upload minimum " +minPhotos+" photos.";
-            alert(`Minimum `+minPhotos+` photos required for this activity.`);
-            allValid = false;
-            return false;
-        }
+//         let activityInput = block.closest("tr").querySelector("input[type='text']");
+//         let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
+//         if (activityValue > 0 && totalFiles < minPhotos) {
+//             errorDiv.innerHTML = "Please upload minimum " +minPhotos+" photos.";
+//             alert(`Minimum `+minPhotos+` photos required for this activity.`);
+//             allValid = false;
+//             return false;
+//         }
 
-    });
-	}
+//     });
+// 	}
 
 	if (allValid) {
 		if(confirm("Do you want to update Watershed Mahotsav at Project Level?")) {
-	    formSubmitted = true; 
 		document.saveWatershed.action="updateWatershedMahotsavProjLvlDetails";
 		document.saveWatershed.method="post";
 		document.saveWatershed.submit();
@@ -513,7 +537,7 @@ function editChancel(){
       			<c:out value="${data.blockname}" />
     		</div>
     		<div class="form-group col-3">
-    			<label for="activity">Location (Nearby/Milestone)</label>
+    			<label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
     			<input type="text" class="form-control activity" name="location" id="location" value="${data.location}" style="width: 100%; max-width: 800px;" />
     		</div>
     		</div>
@@ -526,14 +550,14 @@ function editChancel(){
      		<th colspan=4 class="text-left">Participation :</th>
      	</tr>
      	<tr>
-     		<td colspan=2>Number Of Participants/Villagers</td>
+     		<td colspan=2>Number Of Participants/Villagers<span style="color: red;">*</span></td>
      		<td>Male<br><input type="text" id="maleparticipants" name="maleparticipants" autocomplete="off" value="${data.maleparticipants}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Female<br><input type="text" id="femaleparticipants" name="femaleparticipants" autocomplete="off" value="${data.femaleparticipants}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of Ministers</td>
+     		<td colspan=2>Number of Ministers<span style="color: red;">*</span></td>
      		<td>Central Level<br><input type="text" id="centralministers" name="centralministers" autocomplete="off" value="${data.centralministers}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>State Level<br><input type="text" id="stateministers" name="stateministers" autocomplete="off" value="${data.stateministers}"
@@ -541,23 +565,23 @@ function editChancel(){
      	</tr>
      	
      	<tr>
-     		<td colspan=2>Number of Member of Parliament</td>
+     		<td colspan=2>Number of Member of Parliament<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="membersofparliament" name="membersofparliament" autocomplete="off" value="${data.membersofparliament}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of Members</td>
+     		<td colspan=2>Number of Members<span style="color: red;">*</span></td>
      		<td>Legislative Assembly<br><input type="text" id="legassemblymembers" name="legassemblymembers" autocomplete="off" value="${data.legassemblymembers}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      		<td>Legislative Council<br><input type="text" id="legcouncilmembers" name="legcouncilmembers" autocomplete="off" value="${data.legcouncilmembers}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
      	<tr>
-     		<td colspan=2>Number of other Public Representatives</td>
+     		<td colspan=2>Number of other Public Representatives<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="publicreps" name="publicreps" autocomplete="off" value="${data.publicreps}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	<tr>
-     		<td colspan=2>Number of Government Officials</td>
+     		<td colspan=2>Number of Government Officials<span style="color: red;">*</span></td>
      		<td colspan=2><input type="text" id="govofficials" name="govofficials" autocomplete="off" value="${data.govofficials}"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
      	</tr>
@@ -566,7 +590,7 @@ function editChancel(){
      		<th colspan=4 class="text-left">Activities :</th>
      	</tr>
 						<tr>
-							<td>Number of Works for Bhoomi Poojan <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
+							<td>Number of Works for Bhoomi Poojan<span style="color: red;">*</span> <input type="hidden" name="bhoomipoojan" id="bhoomipoojan" value="1"/></td>
 							<td colspan=2><input type="text" id="no_works_bhoomipoojan"
 								name="no_works_bhoomipoojan" autocomplete="off" value="${data.no_works_bhoomipoojan}"
 								pattern="^\d{10}$" maxlength="5"
@@ -599,7 +623,7 @@ function editChancel(){
 
 						</tr>
 						<tr>
-							<td>Number of Works for Lokarpan <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
+							<td>Number of Works for Lokarpan<span style="color: red;">*</span> <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
 							<td colspan=2><input type="text" id="no_works_lokarpan" name="no_works_lokarpan" autocomplete="off" value="${data.no_works_lokarpan}"
 							pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
@@ -630,7 +654,7 @@ function editChancel(){
 
 						</tr>
 						<tr>
-							<td>Shramdaan <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
+							<td>Shramdaan<span style="color: red;">*</span> <input type="hidden" name="shramdaan" id="shramdaan" value="3"/></td>
 							<td>Number of Locations<br>
 							<input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off" value="${data.no_location_shramdaan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
@@ -664,7 +688,7 @@ function editChancel(){
 							</td>
 						</tr>
 						<tr>
-							<td>Agro forestry / Horticultural Plantation - Number of Saplings <input type="hidden" name="forestry" id="forestry" value="4"/></td>
+							<td>Agro forestry / Horticultural Plantation - Number of Saplings<span style="color: red;">*</span> <input type="hidden" name="forestry" id="forestry" value="4"/></td>
 							<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off" value="${data.area_plantation}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
