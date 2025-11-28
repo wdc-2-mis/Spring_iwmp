@@ -153,234 +153,56 @@ function removePhotoField(btn) {
 }
 
 let formSubmitted = false;
-let allValid = true;
-function validation() 
-{
-	if (formSubmitted) return false;
-	allValid = true;
-	
-	var allowedFiles = [".jpg", ".jpeg",".png"];
-	
-	$location = $('#location').val();
-	$male_participants = $('#male_participants').val();
-	$female_participants = $('#female_participants').val();
-	$central_ministers = $('#central_ministers').val();
-	$stateMinisters = $('#stateMinisters').val();
-	$parliament = $('#parliament').val();
-	$assembly_members = $('#assembly_members').val();
-	$council_members = $('#council_members').val();
-	$others = $('#others').val();
-	$gov_officials = $('#gov_officials').val();
-	
-	$no_works_bhoomipoojan = $('#no_works_bhoomipoojan').val();
-	$bhoomipoojan_photo1 = $('#photos_bhoomipoojan').val();
-	
-	$no_works_lokarpan = $('#no_works_lokarpan').val();
-	$lokarpan_photo1 = $('#photos_lokarpan').val();
-	
-	$no_location_shramdaan = $('#no_location_shramdaan').val();
-	$no_people_shramdaan = $('#no_people_shramdaan').val();
-	$shramdaan_photo1 = $('#photos_shramdaan').val();
-	
-	$area_plantation = $('#area_plantation').val();
-	$plantation_photo1 = $('#photos_forestry').val();
-	
-	$no_awards = $('#no_awards').val();
-	$award_photo1 = $('#photos_janbhagidari').val();
-	
-	if ($location === '' || typeof $location === 'undefined') {
-		alert('Please enter Location');
-		$('#location').focus();
-		allValid = false;
-		return false;
-	}
-		
-	if ($male_participants === '' || typeof $male_participants === 'undefined') {
-		alert('Please enter the Number of Male Participants/Villagers');
-		$('#male_participants').focus();
-		allValid = false;
-		return false;
-	}
-	if ($female_participants === '' || typeof $female_participants === 'undefined') {
-		alert('Please enter the Number of Female Participants/Villagers');
-		$('#female_participants').focus();
-		allValid = false;
-		return false;
-	}
-	if ($central_ministers === '' || typeof $central_ministers === 'undefined') {
-		alert('Please enter the Number of Central Ministers');
-		$('#central_ministers').focus();
-		allValid = false;
-		return false;
-	}
-	if ($stateMinisters === '' || typeof $stateMinisters === 'undefined') {
-		alert('Please enter the Number of State Ministers');
-		$('#stateMinisters').focus();
-		allValid = false;
-		return false;
-	}
-	if ($parliament === '' || typeof $parliament === 'undefined') {
-		alert('Please enter the Number of Members of Parliament');
-		$('#parliament').focus();
-		allValid = false;
-		return false;
-	}
-	if ($assembly_members === '' || typeof $assembly_members === 'undefined') {
-		alert('Please enter the Number of Legislative Assembly Members');
-		$('#assembly_members').focus();
-		allValid = false;
-		return false;
-	}
-	if ($council_members === '' || typeof $council_members === 'undefined') {
-		alert('Please enter the Number of Legislative Council Members');
-		$('#council_members').focus();
-		allValid = false;
-		return false;
-	}
-	if ($others === '' || typeof $others === 'undefined') {
-		alert('Please enter the Number of other Public Representatives');
-		$('#others').focus();
-		allValid = false;
-		return false;
-	}
-	if ($gov_officials === '' || typeof $gov_officials === 'undefined') {
-		alert('Please enter the Number of Government Officials');
-		$('#gov_officials').focus();
-		allValid = false;
-		return false;
-	}	
-	
-	if ($no_works_bhoomipoojan === '' || typeof $no_works_bhoomipoojan === 'undefined') {
-		alert('Please enter Number of Works of Bhoomi Poojan');
-		$('#no_works_bhoomipoojan').focus();
-		allValid = false;
-		return false;
-	}
-	/* if ($no_works_bhoomipoojan > 0) {
-		if ($bhoomipoojan_photo1 === '' || typeof $bhoomipoojan_photo1 === 'undefined') {
-			alert('Please upload photo for Bhoomi Poojan');
-//	 		$('#bhoomipoojan_photo1').focus();
-			document.getElementById('photos_bhoomipoojan').click();
-			allValid = false;
-			return false;
-		}
-	} */
-	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
-		alert('Please enter the Number of Works of Lokarpan');
-		$('#no_works_lokarpan').focus();
-		allValid = false;
-		return false;
-	}
-	/* if ($no_works_lokarpan > 0) {
-		if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
-			alert('Please upload photo for Lokarpan');
-//	 		$('#lokarpan_photo1').focus();
-			document.getElementById('photos_lokarpan').click();
-			allValid = false;
-			return false;
-		}
-	} */
-	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
-		alert('Please enter the Number of Locations of Shramdaan');
-		$('#no_location_shramdaan').focus();
-		allValid = false;
-		return false;
-	}
-	if ($no_people_shramdaan === '' || typeof $no_people_shramdaan === 'undefined') {
-		alert('Please enter No of people participated in Shramdaan');
-		$('#no_people_shramdaan').focus();
-		allValid = false;
-		return false;
-	}
-	/* if ($no_location_shramdaan > 0) {
-		if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
-			alert('Please upload photo for Shramdaan');
-//	 		$('#shramdaan_photo1').focus();
-			document.getElementById('photos_shramdaan').click();
-			allValid = false;
-			return false;
-		}
-	} */
-	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
-		alert('Please enter the Plantation Area in hectares');
-		$('#area_plantation').focus();
-		allValid = false;
-		return false;
-	}
-	/* if ($area_plantation > 0) {
-		if ($plantation_photo1 === '' || typeof $plantation_photo1 === 'undefined') {
-			alert('Please upload photo for Plantation');
-//	 		$('#plantation_photo1').focus();
-			document.getElementById('photos_forestry').click();
-			allValid = false;
-			return false;
-		}
-	} */
-	
-	if ($no_awards === '' || typeof $no_awards === 'undefined') {
-		alert('Please enter the Number of Award Distribution');
-		$('#no_awards').focus();
-		allValid = false;
-		return false;
-	}
-	/* if ($no_awards > 0) {
-		if ($award_photo1 === '' || typeof $award_photo1 === 'undefined') {
-			alert('Please upload photo for Award Distribution');
-//	 		$('#award_photo1').focus();
-			document.getElementById('photos_janbhagidari').click();
-			allValid = false;
-			return false;
-		} $bhoomipoojan_photo1= $lokarpan_photo1= $shramdaan_photo1= $plantation_photo1= $award_photo1 = 
-	} */
-	if(($award_photo1 ==='' || typeof $award_photo1 ==='undefined') && ($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
-	{
-		alert('You did not select any photos, only data will update! ');
-	}
-	else{
-		document.querySelectorAll(".photo-block").forEach(block => {
-		    
-		    let container = block.querySelector(".photoContainer");
-		    let inputs = container.querySelectorAll("input[type='file']");
-		    let totalPhotos = 0;
-		    let errorDiv = block.querySelector(".photoError");
 
-		    errorDiv.innerHTML = ""; // clear old errors
+function validation() {
+    let isValid = true;
 
-		    inputs.forEach(inp => {
-		        if (inp.files.length > 0) {
-		            totalPhotos++;
-		        }
-		    });
-		    // For activities with count value > 0, enforce minimum 2 photos
-		    let minPhotos = 2;  // default minimum
-			let activityName = block.getAttribute("data-name");
-			if (activityName === "photos_janbhagidari") {
-			    minPhotos = 4;  // Minimum 4 photos for Janbhagidari
-			}
-			// Validate minimum photo count only if activity value > 0
-			let activityInput = block.closest("tr").querySelector("input[type='text']");
-			let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-			
-			if (activityValue > 0 && totalPhotos < minPhotos) {
-			    errorDiv.innerHTML = `Please upload minimum ${minPhotos} photos.`;
-			    alert(`Minimum `+minPhotos+` photos required for this activity.`);
-			    allValid = false;
-			    return false;
-			}
-		});
-	}
-	if (allValid) {
-		if(confirm("Do you want to Update Inauguration Program Details?")) {
-		    formSubmitted = true; 
-			document.inauguration.action="updateMahotsavInaugurationDetails";
-			document.inauguration.method="post";
-			document.inauguration.submit();
-		}
-		return true;
-	}
+    $(".photo-block").each(function () {
+        let container = $(this).find(".photoContainer");
+        let photos = container.find("input[type='file']");
+        let uploaded = 0;
 
-    return false;
+        photos.each(function () {
+            if ($(this).val() !== "") {
+                uploaded++;
+            }
+        });
+
+        // If user uploaded photos then validate min/max
+        if (uploaded > 0) {
+            let label = $(this).find("label").text();
+
+            let min = 2, max = 6;
+
+            // Janbhagidari rule: min 4 max 10
+            if ($(this).data("name") === "photos_janbhagidari") {
+                min = 4;
+                max = 10;
+            }
+
+            if (uploaded < min || uploaded > max) {
+                alert(label + "\nPlease upload between " + min + " and " + max + " photos.");
+                isValid = false;
+                return false; // break loop
+            }
+        }
+    });
+
+    if (!isValid) return false;
+
+    // Prevent double submission
+    if (formSubmitted) return false;
+
+    if (confirm("Do you want to Update Inauguration Program Details?")) {
+        formSubmitted = true;
+        document.inauguration.action = "updateMahotsavInaugurationDetails";
+        document.inauguration.method = "post";
+        document.inauguration.submit();
+    }
+
+    return true;
 }
+
 
 function editChangedata(inaugurationid){
 	
@@ -428,15 +250,7 @@ function validatePhoto(input) {
          return;
      }
     
-   /*   if (checkValid && /[^\w.-]/.test(file.name)) {
-        alert("Filename contains special characters! Please rename the file and upload again.");
-        input.value = "";
-        checkValid = false;
-        return;
-    } */
-
-    // 2. Validate file size
-    let sizeKB = file.size / 1024;
+      let sizeKB = file.size / 1024;
     if (sizeKB > maxSizeKB) {
         alert("Image size must be 300 KB or less.\nYour image size: " + Math.round(sizeKB) + " KB");
         input.value = "";
@@ -444,25 +258,7 @@ function validatePhoto(input) {
         return;
     }
     
- // 3. Validate image dimensions
- /*    var reader = new FileReader();
-    reader.onload = function(e) {
-        var img = new Image();
-        img.onload = function() {
-            var width = img.width;
-            var height = img.height;
-            if (width > maxWidth || height > maxHeight) {
-                alert('Image dimensions exceed allowed size of ' + maxWidth + 'x' + maxHeight + ' pixels.');
-                input.value = '';
-                document.getElementById(inputId).focus();
-                return false;
-            }
-        };
-        img.src = e.target.result;
-    };
-	reader.readAsDataURL(file); */
-
-	 // 4. Check duplicate image by hashing
+ 
     getImageHash(file, function(hash) {
         if (imageRecords[file.name] === hash) {
             alert("This image is already uploaded! Please upload a different image.");
