@@ -340,7 +340,7 @@ document.addEventListener("change", function(e) {
                     <th colspan="4" class="text-left">Participation :</th>
                 </tr>
                 <tr>
-                    <td>Number of Participants</td>
+                    <td>Number of Participants<span style="color:red;">*</span></td>
                     <td>Male<br>
                         <input type="text" id="male_participants" name="male_participants" autocomplete="off"
                                maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
@@ -379,7 +379,7 @@ document.addEventListener("change", function(e) {
          <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
                         <thead class ="theadlist" id = "theadlist">
                             <tr>
-<!--                             	<th>Action</th> -->
+                            	<th>Action</th>
                                 <th>S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
                                 <th>Date</th>
                                 <th>District Name</th>
@@ -395,7 +395,7 @@ document.addEventListener("change", function(e) {
                         <c:set var="st" value="" />
  						<c:forEach items="${dataDList}" var="data" varStatus="count">
  							<tr>
-<%--  								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.prabhatpheri_id})"> Edit </button>  --%>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.prabhatpheri_id})"> Edit </button> 
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.prabhatpheri_id}"  name="${data.prabhatpheri_id}" value="${data.prabhatpheri_id}"/></td>
 								<td><c:out value="${data.date}" /></td>
  								<td><c:out value="${data.distname}" /></td>

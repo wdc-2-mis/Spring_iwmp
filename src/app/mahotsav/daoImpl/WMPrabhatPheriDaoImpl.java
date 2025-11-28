@@ -34,21 +34,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.hibernate.Transaction;
 
 import app.common.CommonFunctions;
-import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.WMPrabhatPheriBean;
 import app.mahotsav.dao.WMPrabhatPheriDao;
 import app.mahotsav.model.MahotsavPrabhatPheri;
 import app.mahotsav.model.MahotsavPrabhatPheriPhoto;
-import app.mahotsav.model.WatershedMahotsavInauguaration;
-import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
-import app.model.master.IwmpGramPanchayat;
 import app.model.master.IwmpVillage;
-import app.watershedyatra.bean.WatershedYatraBean;
-import app.watershedyatra.model.MCulturalActivity;
-import app.watershedyatra.model.WatershedYatVill;
 
 @Repository("WMPrabhatPheriDao")
 public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
@@ -125,75 +118,6 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
     }
 
 	 @Override
-	    public String savePrabhatPheri(Integer stCode, Integer distCode, Integer blockCode, Integer villageCode,
-	                                   Date prabhatpheriDate, Integer maleParticipants, Integer femaleParticipants,
-	                                   List<MultipartFile> photos, String requestIp, String createdBy) {
-
-	        try {
-	            Session session = sessionFactory.getCurrentSession();
-
-	            // Create main MahotsavPrabhatPheri object
-	            MahotsavPrabhatPheri prabhatPheri = new MahotsavPrabhatPheri();
-
-	            // Load State, District, Block, Village objects
-	            IwmpState state = session.get(IwmpState.class, stCode);
-	            IwmpDistrict district = session.get(IwmpDistrict.class, distCode);
-	            IwmpBlock block = session.get(IwmpBlock.class, blockCode);
-	            IwmpVillage village = session.get(IwmpVillage.class, villageCode);
-
-	            prabhatPheri.setIwmpState(state);
-	            prabhatPheri.setIwmpDistrict(district);
-	            prabhatPheri.setIwmpBlock(block);
-	            prabhatPheri.setIwmpVillage(village);
-
-	            prabhatPheri.setPrabhatpheriDate(prabhatpheriDate);
-	            prabhatPheri.setMaleParticipants(maleParticipants);
-	            prabhatPheri.setFemaleParticipants(femaleParticipants);
-	            prabhatPheri.setCreatedOn(new Date());
-	            prabhatPheri.setUpdatedOn(new Date());
-	            prabhatPheri.setRequestIp(requestIp);
-	            prabhatPheri.setCreatedBy(createdBy);
-	            prabhatPheri.setStatus('D');
-
-	            session.save(prabhatPheri);
-
-	            // Save photos
-	            if (photos != null && !photos.isEmpty()) {
-	                String uploadDir = "D:/WatershedMahotsav"; // Change to your folder
-	                File dir = new File(uploadDir);
-	                if (!dir.exists()) dir.mkdirs();
-
-	                for (MultipartFile file : photos) {
-	                    if (!file.isEmpty()) {
-	                        MahotsavPrabhatPheriPhoto photo = new MahotsavPrabhatPheriPhoto();
-	                        photo.setWmPrabhatPheri(prabhatPheri);
-
-	                        // Save file to server folder
-	                        String fileName = new Date().getTime() + "_" + file.getOriginalFilename();
-	                        File serverFile = new File(dir, fileName);
-	                        try (OutputStream os = new FileOutputStream(serverFile)) {
-	                            os.write(file.getBytes());
-	                        }
-
-	                        photo.setPhotoUrl(fileName); // You can prepend folder path if needed
-	                        photo.setCreatedBy(createdBy);
-	                        photo.setCreated_date(new Date());
-	                        photo.setRequestedIp(requestIp);
-
-	                        session.save(photo);
-	                    }
-	                }
-	            }
-
-	            return "Saved successfully";
-
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return "Error while saving: " + e.getMessage();
-	        }
-	    }
-
-	 @Override
 	 public String saveMahotsavPrabhatPheriDetails(WMPrabhatPheriBean userfileup, HttpSession session) {
 	     Session sess = sessionFactory.getCurrentSession();
 	     String res = "fail";
@@ -206,7 +130,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	         Date prabhatpheriDate = formatter.parse(userfileup.getDate1());
 	         String st_code = session.getAttribute("stateCode").toString();
 	         String filePath = "D:\\WatershedMahotsav\\";
-
+	      // String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/prabhatpheri/";
+				// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/prabhatpheri/";
 	         // Get sequence
 	         Object seqObj = sess.createSQLQuery("SELECT value_id FROM watershed_mahotsav_prabhatpheri_sequence")
 	                 .uniqueResult();
@@ -609,6 +534,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	        String st_code = session.getAttribute("stateCode").toString();
 	        String filePath = "D:\\WatershedMahotsav\\";
+	     // String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/prabhatpheri/";
+	     // String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/prabhatpheri/";
 
 	        // ------------------ GET EXISTING RECORD ------------------
 	        MahotsavPrabhatPheri oldData = sess.get(MahotsavPrabhatPheri.class, userfileup.getPrabhatpheri_id());

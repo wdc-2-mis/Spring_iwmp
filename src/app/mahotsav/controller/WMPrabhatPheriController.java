@@ -57,8 +57,6 @@ public class WMPrabhatPheriController {
         if (session == null || session.getAttribute("loginID") == null) {
             return "login"; 
         }
-//        List<WMPrabhatPheriBean> dlist = new ArrayList<WMPrabhatPheriBean>();
-//		List<WatershedYatraBean> comlist = new ArrayList<WatershedYatraBean>();
         Integer regId = (Integer) session.getAttribute("regId");
         Integer stCode = (Integer) session.getAttribute("stateCode");
         String userType = (String) session.getAttribute("userType");
@@ -115,9 +113,6 @@ public class WMPrabhatPheriController {
 					stateName = bean.getStatename();
 					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
 				}
-			//	for (String latitude : userfileup.getLatitude()) {
-			//	    System.out.println("kdy"+latitude);
-			//	}
 
 				mav.addObject("userType", userType);
 				// mav.addObject("distName",distName);
@@ -302,21 +297,11 @@ public class WMPrabhatPheriController {
 				// mav.addObject("distName",distName);
 				mav.addObject("stateName", stateName);
 				mav.addObject("distList", ser.getDistrictList(stcd));
-				
-				/*
-				 * dlist=wmService.getWatershedMahotsavDraftList(stcd);
-				 * mav.addObject("dataDList",dlist);
-				 * mav.addObject("dataDListSize",dlist.size());
-				 * 
-				 * comlist=wmService.getWatershedMahotsavCompleteList(stcd);
-				 * mav.addObject("dataCList",comlist);
-				 * mav.addObject("dataCListSize",comlist.size());
-				 */
 
 				result = wmService.updateWMPrabhatPheri(userfileup, session);
 
 				if (result.equals("success")) {
-					redirectAttributes.addFlashAttribute("result", "Update Successfully!");
+					redirectAttributes.addFlashAttribute("result", "Updated Successfully!");
 				} 
 				else {
 					redirectAttributes.addFlashAttribute("result1", "Do not Update!");

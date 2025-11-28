@@ -35,13 +35,6 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.getVillageListByBlock(blockCode);
 	}
 
-	@Override
-	@Transactional
-	public String savePrabhatPheri(Integer stCode, Integer distCode, Integer blockCode, Integer villageCode,
-			Date prabhatpheriDate, Integer maleParticipants, Integer femaleParticipants, List<MultipartFile> photos,
-			String requestIp, String createdBy) {
-		return dao.savePrabhatPheri(stCode, distCode, blockCode, villageCode, prabhatpheriDate, maleParticipants, femaleParticipants, photos, requestIp, createdBy);
-	}
 
 	@Override
 	public String saveMahotsavPrabhatPheriDetails(WMPrabhatPheriBean userfileup, HttpSession session) {
