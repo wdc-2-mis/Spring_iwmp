@@ -102,12 +102,19 @@ function validatePhoto(input) {
     
     // HASH GENERATION
     getHash(file, function(hash) {
+    	  let fileName = file.name;
 
-        if (Object.values(imageHashRecord).includes(hash)) {
-            alert("This image is already uploaded! Please upload a different image.");
-            input.value = "";
-            return;
-        }
+    	    // 1️⃣ BLOCK IF SAME FILE NAME EXISTS (regardless of hash)
+    	    if (imageHashRecord[fileName]) {
+    	        alert("This image is already uploaded! Please upload a different image.");
+    	        input.value = "";
+    	        return;
+    	    }
+//         if (Object.values(imageHashRecord).includes(hash)) {
+//             alert("This image is already uploaded! Please upload a different image.");
+//             input.value = "";
+//             return;
+//         }
 
         // EXIF extraction
         EXIF.getData(file, function() {

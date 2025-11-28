@@ -318,6 +318,19 @@ public class WMPrabhatPheriController {
 		return mav;
 	}
     
-    
+    @RequestMapping(value = "/getImageMahotsavPrabhatPheriId", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageMahotsavPrabhatPheriId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("ppId") Integer ppId){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = wmService.getImageMahotsavPrabhatPheriId(ppId);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
 }
 

@@ -25,5 +25,8 @@ public interface WMPrabhatPheriDao {
 	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
 	String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session);
 	List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId);
+
+	List<String> getImageMahotsavPrabhatPheriId(Integer ppId);
+	
 	
 }

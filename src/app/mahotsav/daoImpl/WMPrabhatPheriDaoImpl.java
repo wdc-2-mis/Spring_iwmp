@@ -38,6 +38,7 @@ import app.mahotsav.bean.WMPrabhatPheriBean;
 import app.mahotsav.dao.WMPrabhatPheriDao;
 import app.mahotsav.model.MahotsavPrabhatPheri;
 import app.mahotsav.model.MahotsavPrabhatPheriPhoto;
+import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
@@ -678,6 +679,35 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	    }
 
 	    return res;
+	}
+
+	@Override
+	public List<String> getImageMahotsavPrabhatPheriId(Integer ppId) {
+		Session session = sessionFactory.getCurrentSession();
+		List<MahotsavPrabhatPheriPhoto> list = new ArrayList<MahotsavPrabhatPheriPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from MahotsavPrabhatPheriPhoto where wmPrabhatPheri.prabhatpheriId = :prabhatpheriId");
+			query.setInteger("prabhatpheriId", ppId);
+			list = query.list();
+			for (MahotsavPrabhatPheriPhoto photo : list) 
+			{
+				//server
+//				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				System.out.println(" uc= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 
 

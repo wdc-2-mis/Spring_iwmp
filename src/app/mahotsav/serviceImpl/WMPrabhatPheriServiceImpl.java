@@ -81,5 +81,10 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.getWMPrabhatPheriEdit(prabhatpheriId);
 	}
 
+	@Override
+	public List<String> getImageMahotsavPrabhatPheriId(Integer ppId) {
+		return dao.getImageMahotsavPrabhatPheriId(ppId);
+	}
+
 
 }

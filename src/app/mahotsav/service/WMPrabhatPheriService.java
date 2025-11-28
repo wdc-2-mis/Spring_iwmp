@@ -32,4 +32,6 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 
 	List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId);
 
+	List<String> getImageMahotsavPrabhatPheriId(Integer ppId);
+
 }
