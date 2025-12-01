@@ -15,6 +15,17 @@ public class SocialMediaReport {
 	private String dist_name;
 	private Integer dcode;
 	
+	private String user_reg_no; 
+	private String reg_name;
+	private String phno;
+	private Integer media;
+	private String media_url;
+	private String facebook_urls;
+	private String youtube_urls;
+	private String instagram_urls;
+	private String twitter_urls;
+	private String linkedin_urls;
+	
 	public Integer getDcode() {
 		return dcode;
 	}
@@ -83,7 +94,66 @@ public class SocialMediaReport {
 	public void setNo_linkedin(BigInteger no_linkedin) {
 		this.no_linkedin = no_linkedin;
 	}
-	
+	public String getUser_reg_no() {
+		return user_reg_no;
+	}
+	public void setUser_reg_no(String user_reg_no) {
+		this.user_reg_no = user_reg_no;
+	}
+	public String getReg_name() {
+		return reg_name;
+	}
+	public void setReg_name(String reg_name) {
+		this.reg_name = reg_name;
+	}
+	public String getPhno() {
+		return phno;
+	}
+	public void setPhno(String phno) {
+		this.phno = phno;
+	}
+	public Integer getMedia() {
+		return media;
+	}
+	public void setMedia(Integer media) {
+		this.media = media;
+	}
+	public String getMedia_url() {
+		return media_url;
+	}
+	public void setMedia_url(String media_url) {
+		this.media_url = media_url;
+	}
+	public String getFacebook_urls() {
+		return facebook_urls;
+	}
+	public void setFacebook_urls(String facebook_urls) {
+		this.facebook_urls = facebook_urls;
+	}
+	public String getYoutube_urls() {
+		return youtube_urls;
+	}
+	public void setYoutube_urls(String youtube_urls) {
+		this.youtube_urls = youtube_urls;
+	}
+	public String getInstagram_urls() {
+		return instagram_urls;
+	}
+	public void setInstagram_urls(String instagram_urls) {
+		this.instagram_urls = instagram_urls;
+	}
+	public String getTwitter_urls() {
+		return twitter_urls;
+	}
+	public void setTwitter_urls(String twitter_urls) {
+		this.twitter_urls = twitter_urls;
+	}
+	public String getLinkedin_urls() {
+		return linkedin_urls;
+	}
+	public void setLinkedin_urls(String linkedin_urls) {
+		this.linkedin_urls = linkedin_urls;
+	}
 	
 
 }
