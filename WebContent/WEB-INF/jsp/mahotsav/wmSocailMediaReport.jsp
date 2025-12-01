@@ -1,14 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Report WM4 - Watershed Mahotsav Social Media</title>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf"%>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
-<title>Report WM4 - Watershed Mahotsav Social Media</title>
-
-<html>
-<head>
-
 
 <script type="text/javascript">
 
@@ -74,7 +77,8 @@ $(document).ready(function() {
     });
 }); 
 
-//paging
+function dataAvailableFunction() {
+
 $(document).ready(function () {
     $('#stWMR').DataTable({
     	 "paging": true,          // Enable pagination
@@ -86,6 +90,7 @@ $(document).ready(function () {
          "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
     });
 });
+}
 
 function downloadPDF(){
 		document.mohotsavRpt.action="downloadPDFStWMInauguration";
@@ -199,20 +204,13 @@ function exportExcel(){
 
 			<table class="table table-bordered table-striped" id="stWMR" >
                     <thead>
-                        <tr>
+                     <tr>
 						<th style="text-align:center; vertical-align: middle;">S.No.</th>
 						<th style="text-align:center; vertical-align: middle;">Registration Number</th>
 						<th style="text-align:center; vertical-align: middle;">Name</th>
 						<th style="text-align:center; vertical-align: middle;">Contact Number</th>
 						<th style="text-align:center; vertical-align: middle;">List of Uploaded Videos</th>
 					</tr>
-<!-- 					<tr> 
-						<th style="text-align:center; vertical-align: middle;">Facebook</th>
-						<th style="text-align:center; vertical-align: middle;">YouTube</th>
-						<th style="text-align:center; vertical-align: middle;">Instagram</th>
-						<th style="text-align:center; vertical-align: middle;">Twitter</th>
-						<th style="text-align:center; vertical-align: middle;">LinkedIn</th>
-					</tr> -->
 
 					<tr>
 						<% for (int i = 1; i <= 5; i++) { %>
@@ -231,7 +229,6 @@ function exportExcel(){
 						<c:forEach items="${stateWMSocailMediaList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-<%-- 								<td><a href = "distMidProjEvoluationRpt?stcd=${dt.st_code}&stName=${dt.st_name}"><c:out value='${dt.st_name}'/></a></td> --%>
 								<td>
 									<c:if test="${dt.user_reg_no ne regNo}">
         								<c:out value="${dt.user_reg_no}" />
@@ -252,13 +249,6 @@ function exportExcel(){
         								<a href="${dt.media_url}" target="_blank">${dt.media_url}</a>
    	 								</c:if>
 								</td>
-<%-- 								<td><a href="${dt.facebook_urls}" target="_blank">${dt.facebook_urls}</a></td> 
-								
- 							<td class="text-left"><c:out value="${dt.facebook_urls}" /></td> 
-							<td class="text-left"><c:out value="${dt.youtube_urls}" /></td>
-							<td class="text-left"><c:out value="${dt.instagram_urls}" /></td>
-							<td class="text-left"><c:out value="${dt.twitter_urls}" /></td>
-							<td class="text-left"><c:out value="${dt.linkedin_urls}" /></td> --%>
 							
 							</tr>
 							
@@ -274,8 +264,16 @@ function exportExcel(){
 								<td align="center" colspan="5" class="required" style="color: red;"><b>Data Not Found</b></td>
 							</tr>
 						</c:if>
-						
-						</tbody>
+					<c:if test="${stateWMSocailMediaListSize !=0}">
+
+						<script>
+							// Call the function automatically when page loads
+							dataAvailableFunction();
+						</script>
+
+					</c:if>
+
+				</tbody>
                  </table>
 
 		</div>
