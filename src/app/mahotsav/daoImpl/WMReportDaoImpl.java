@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import app.mahotsav.bean.InaugurationMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.WMReportDao;
-import app.projectevaluation.bean.ProjectEvaluationBean;
 
 @Repository("WMReportDao")
 public class WMReportDaoImpl implements WMReportDao {
@@ -26,6 +26,9 @@ public class WMReportDaoImpl implements WMReportDao {
 
 	@Value("${getProjLvlWMPrgDetails}")
 	String getProjLvlWMPrgDetails;
+	
+	@Value("${getWMSocailMediaReportData}")
+	String getWMSocailMediaReportDetails;
 	
 	@Override
 	public List<InaugurationMahotsavBean> getStateWMInaugurationReport() {
@@ -65,6 +68,28 @@ public class WMReportDaoImpl implements WMReportDao {
 		}
 			
 		return getProjLvlWMPrgData;
+	}
+
+	@Override
+	public List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode) {
+		List<SocialMediaReport> getWMSocailMediaReport = new ArrayList<>();
+		String hql = getWMSocailMediaReportDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setInteger("dcode", dcode);
+			query.setInteger("bcode", bcode);
+			query.setInteger("vcode", vcode);
+			query.setResultTransformer(Transformers.aliasToBean(SocialMediaReport.class));
+			getWMSocailMediaReport = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return getWMSocailMediaReport;
 	}
 	
 	

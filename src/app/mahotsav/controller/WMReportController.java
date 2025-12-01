@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.service.WMReportService;
+import app.mahotsav.service.WatershedMahotsavService;
+import app.service.StateMasterService;
+import app.service.reports.WatershedYatraReportService;
 
 
 
@@ -53,7 +58,42 @@ public class WMReportController {
 	MenuController menuController;
 	
 	@Autowired
+	StateMasterService stateMasterService;
+	
+	@Autowired(required = true)
+	WatershedYatraReportService ser;
+	
+	@Autowired
 	WMReportService WMSerice;
+	
+	private Map<Integer, String> stateList;
+	
+	private Map<String, String> districtList;
+	
+	private Map<String, String> blockList;
+	
+	private Map<String, String> villageList;
+	
+	
+	
+	@RequestMapping(value = "/getDistrictsByState", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> getDistrictsByState(int state) {
+        return ser.getDistrictList(state);
+    }
+
+    @RequestMapping(value = "/getBlocksByDistrict", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> getBlocksByDistrict(int state, int district) {
+        return ser.getblockList(state, district);
+    }
+
+    @RequestMapping(value = "/getVillagesByBlock", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> getVillagesByBlock(int block) {
+        return ser.getmahotsavvillageList(block);
+    }
+
 
 	@RequestMapping(value = "/stateWMInaugurationReport", method = RequestMethod.GET)
 	public ModelAndView getInaugurationReport(HttpServletRequest request, HttpServletResponse response)
@@ -69,6 +109,78 @@ public class WMReportController {
 		
 		mav.addObject("stateWMInaugurationList",list);
 		mav.addObject("stateWMInaugurationListSize",list.size());
+		
+		return mav; 
+	}
+	
+	@RequestMapping(value = "/wmSocailMediaReport", method = RequestMethod.GET)
+	public ModelAndView wmSocailMediaReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView();
+		
+		mav = new ModelAndView("mahotsav/wmSocailMediaReport");
+		
+		stateList = stateMasterService.getAllState();
+		mav.addObject("stateList", stateList);
+		
+		Integer stcd=0;
+		Integer dcode=0;
+		Integer bcode=0;
+		Integer vcode=0;
+		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+		
+		list = WMSerice.getWMSocailMediaReport(stcd, dcode, bcode, vcode);
+		
+		mav.addObject("stateWMSocailMediaList",list);
+		mav.addObject("stateWMSocailMediaListSize",list.size());
+		
+		return mav; 
+	}
+	
+	@RequestMapping(value = "/wmSocailMediaReport", method = RequestMethod.POST)
+	public ModelAndView wmSocailMediaReportData(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView();
+		
+		mav = new ModelAndView("mahotsav/wmSocailMediaReport");
+		
+		String userState= request.getParameter("state"); 
+        String district= request.getParameter("district");
+        String block= request.getParameter("block");
+        String village= request.getParameter("village");
+        
+        stateList = stateMasterService.getAllState();
+        mav.addObject("stateList", stateList);
+		 mav.addObject("state", userState);
+		 
+        if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+			districtList = ser.getDistrictList(Integer.parseInt(userState));
+			mav.addObject("districtList", districtList);}
+			mav.addObject("district", district);
+		
+		if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+			blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+			mav.addObject("blockList", blockList);}
+			mav.addObject("blkd", block);
+			
+		if( block!=null && !block.equalsIgnoreCase("") && !block.equals("0")) {
+			villageList = ser.getmahotsavvillageList(Integer.parseInt(block));
+			mav.addObject("villageList", villageList);}
+			mav.addObject("vlg", village);	
+				
+		 mav.addObject("stateList", stateList);
+		
+		 List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+		
+		 int stcd = (userState != null && !userState.trim().isEmpty()) ? Integer.parseInt(userState) : 0;
+		 int dcode = (district != null && !district.trim().isEmpty()) ? Integer.parseInt(district) : 0;
+		 int bcode = (block != null && !block.trim().isEmpty()) ? Integer.parseInt(block) : 0;
+		 int vcode = (village != null && !village.trim().isEmpty()) ? Integer.parseInt(village) : 0;
+
+		 list = WMSerice.getWMSocailMediaReport(stcd, dcode, bcode, vcode);
+		 
+		 mav.addObject("stateWMSocailMediaList",list);
+		 mav.addObject("stateWMSocailMediaListSize",list.size());
 		
 		return mav; 
 	}
