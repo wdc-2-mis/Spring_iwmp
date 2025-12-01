@@ -404,5 +404,20 @@ HttpSession session;
 		}
 		return mav;
 	}
+	
+	@RequestMapping(value = "/getImageMahotsavProjLvlId", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageMahotsavProjLvlId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("waterId") Integer waterId){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = serProj.getImageMahotsavProjLvl(waterId);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
 
 }

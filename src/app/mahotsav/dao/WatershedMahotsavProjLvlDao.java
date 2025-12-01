@@ -17,5 +17,6 @@ public interface WatershedMahotsavProjLvlDao {
 	String deleteMahotsavProjLvlDetails(List<Integer> assetid, String userid);
 	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavProjLvlDtlForEdit(Integer id);
 	public String updateMahotsavProjLvlDetails(WatershedMahotsavProjectLevelBean userfileup, HttpSession session);
+	List<String> getImageMahotsavProjLvl(Integer id);
 
 }

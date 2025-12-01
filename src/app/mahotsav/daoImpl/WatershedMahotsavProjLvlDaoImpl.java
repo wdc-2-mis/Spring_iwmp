@@ -818,4 +818,35 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 		return res;
 	}
 
+	@Override
+	public List<String> getImageMahotsavProjLvl(Integer id) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedMahotsavProjectLvlPhoto> list = new ArrayList<WatershedMahotsavProjectLvlPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedMahotsavProjectLvlPhoto where watershedMahotsav.id = :id");
+			query.setInteger("id", id);
+			list = query.list();
+			for (WatershedMahotsavProjectLvlPhoto photo : list) 
+			{
+				//server
+				//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+
 }

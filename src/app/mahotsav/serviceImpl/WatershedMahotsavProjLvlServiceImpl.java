@@ -67,4 +67,10 @@ public class WatershedMahotsavProjLvlServiceImpl implements WatershedMahotsavPro
 		return dao.updateMahotsavProjLvlDetails(userfileup, session);
 	}
 
+	@Override
+	public List<String> getImageMahotsavProjLvl(Integer id) {
+		// TODO Auto-generated method stub
+		return dao.getImageMahotsavProjLvl(id);
+	}
+
 }
