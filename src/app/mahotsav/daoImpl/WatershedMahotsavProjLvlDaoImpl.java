@@ -533,7 +533,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			List<MultipartFile> photos_shramdaanu=userfileup.getPhotos_shramdaan();
 			List<MultipartFile> photos_forestryu=userfileup.getPhotos_forestry();
 			
-			System.out.println("photos_bhoomipoojanu="+photos_bhoomipoojanu.size());
+//			System.out.println("photos_bhoomipoojanu="+photos_bhoomipoojanu.size());
 			
 			if(photos_bhoomipoojanu.size()==1 && photos_lokarpanu.size()==1 && photos_shramdaanu.size()==1 && photos_forestryu.size()==1) 
 			{
@@ -837,7 +837,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 				
 				//local
 				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 			}
 			
 			session.getTransaction().commit();
