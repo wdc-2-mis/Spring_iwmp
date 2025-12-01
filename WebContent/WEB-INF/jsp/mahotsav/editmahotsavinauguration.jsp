@@ -287,7 +287,8 @@ function validation() {
         let container = $(this).find(".photoContainer");
         let photos = container.find("input[type='file']");
         let uploaded = 0;
-
+        let errorDiv = $(this).find(".photoError");
+        errorDiv.html("");
         photos.each(function () {
             if ($(this).val() !== "") {
                 uploaded++;
@@ -307,6 +308,7 @@ function validation() {
             }
 
             if (uploaded < min || uploaded > max) {
+            	errorDiv.html("Please upload minimum " + min + " photos.");
                 alert(label + "\nPlease upload minimum " + min + " photos required for this activity.");
                 isValid = false;
                 return false; // break loop
