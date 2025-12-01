@@ -394,7 +394,6 @@ function validation()
 		}
 		return true;
 	}
-
     return false;
 }
 
@@ -543,9 +542,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
+//	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + imageSrc;
- 	//document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
+ 	document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -604,20 +603,18 @@ display: none; /* Hidden by default */
 /* Close button */
 .close {
   color: #aaa;
+  float: right;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
 }
+
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+
 
 
 /* Image list */
@@ -652,7 +649,7 @@ display: none; /* Hidden by default */
 /*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
   padding: 20px;
   width: 80%; /* Set a width, but limit it to 80% of the screen */
-  max-width: 1000px; /* Max width of the popup */
+  max-width: 1500px; /* Max width of the popup */
   border-radius: 10px;
 }
 
@@ -669,6 +666,23 @@ display: none; /* Hidden by default */
   justify-content: center; /* Center the image horizontally */
   align-items: center; /* Center the image vertically */
   position: relative;
+}
+
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* Large image */
@@ -1067,7 +1081,7 @@ display: none; /* Hidden by default */
  								
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}"  data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
  						</c:forEach> 
@@ -1172,7 +1186,7 @@ display: none; /* Hidden by default */
  								
  								
 								<td class="text-right">
-									<a href="#" data-id="${data.inauguaration_id}"  data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
