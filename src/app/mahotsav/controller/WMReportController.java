@@ -45,10 +45,7 @@ import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.service.WMReportService;
-import app.mahotsav.service.WatershedMahotsavService;
 import app.service.StateMasterService;
-import app.service.reports.WatershedYatraReportService;
-
 
 
 @Controller("WMReportController")
@@ -59,10 +56,7 @@ public class WMReportController {
 	
 	@Autowired
 	StateMasterService stateMasterService;
-	
-	@Autowired(required = true)
-	WatershedYatraReportService ser;
-	
+		
 	@Autowired
 	WMReportService WMSerice;
 	
@@ -79,19 +73,19 @@ public class WMReportController {
 	@RequestMapping(value = "/getDistrictsByState", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> getDistrictsByState(int state) {
-        return ser.getDistrictList(state);
+        return WMSerice.getDistrictList(state);
     }
 
     @RequestMapping(value = "/getBlocksByDistrict", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> getBlocksByDistrict(int state, int district) {
-        return ser.getblockList(state, district);
+        return WMSerice.getblockList(state, district);
     }
 
     @RequestMapping(value = "/getVillagesByBlock", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> getVillagesByBlock(int block) {
-        return ser.getmahotsavvillageList(block);
+        return WMSerice.getmahotsavvillageList(block);
     }
 
 
@@ -154,17 +148,17 @@ public class WMReportController {
 		 mav.addObject("state", userState);
 		 
         if(userState!=null && !userState.equals("") && !userState.equals("0")) {
-			districtList = ser.getDistrictList(Integer.parseInt(userState));
+			districtList = WMSerice.getDistrictList(Integer.parseInt(userState));
 			mav.addObject("districtList", districtList);}
 			mav.addObject("district", district);
 		
 		if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
-			blockList = ser.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
+			blockList = WMSerice.getblockList(Integer.parseInt(userState), Integer.parseInt(district));
 			mav.addObject("blockList", blockList);}
 			mav.addObject("blkd", block);
 			
 		if( block!=null && !block.equalsIgnoreCase("") && !block.equals("0")) {
-			villageList = ser.getmahotsavvillageList(Integer.parseInt(block));
+			villageList = WMSerice.getmahotsavvillageList(Integer.parseInt(block));
 			mav.addObject("villageList", villageList);}
 			mav.addObject("vlg", village);	
 				

@@ -24,7 +24,7 @@ $(document).ready(function() {
             success: function(data) {
                 $('#district').empty().append('<option value="0">--All District--</option>');
                 $.each(data, function(key, value) {
-                    $('#district').append('<option value="'+key+'">'+value+'</option>');
+                    $('#district').append('<option value="'+value+'">'+key+'</option>');
                 });
                 $('#block').html('<option value="0">--All Block--</option>');
                 $('#village').html('<option value="0">--All Village--</option>');
@@ -43,7 +43,7 @@ $(document).ready(function() {
             success: function(data) {
                 $('#block').empty().append('<option value="0">--All Block--</option>');
                 $.each(data, function(key, value) {
-                    $('#block').append('<option value="'+key+'">'+value+'</option>');
+                    $('#block').append('<option value="'+value+'">'+key+'</option>');
                 });
                 $('#village').html('<option value="0">--All Village--</option>');
             }
@@ -60,7 +60,7 @@ $(document).ready(function() {
             success: function(data) {
                 $('#village').empty().append('<option value="0">--All Village--</option>');
                 $.each(data, function(key, value) {
-                    $('#village').append('<option value="'+key+'">'+value+'</option>');
+                    $('#village').append('<option value="'+value+'">'+key+'</option>');
                 });
             }
         });
@@ -160,8 +160,8 @@ function exportExcel(){
 							name="district" id="district" class="form-select">
 							<option value="0">--All District--</option>
 							<c:forEach items="${districtList}" var="lists">
-								<option value="${lists.key}"
-									${lists.key eq district ? 'selected' : ''}>${lists.value}</option>
+								<option value="${lists.value}"
+									${lists.value eq district ? 'selected' : ''}>${lists.key}</option>
 							</c:forEach>
 						</select>
 						<div id="districtError" class="error-text">Please select
@@ -173,8 +173,8 @@ function exportExcel(){
 							name="block" id="block" class="form-select">
 							<option value="0">--All Block--</option>
 							<c:forEach items="${blockList}" var="lists">
-								<option value="${lists.key}"
-									${lists.key eq blkd ? 'selected' : ''}>${lists.value}</option>
+								<option value="${lists.value}"
+									${lists.value eq blkd ? 'selected' : ''}>${lists.key}</option>
 							</c:forEach>
 						</select>
 						<div id="blockError" class="error-text">Please select block</div>
@@ -185,8 +185,8 @@ function exportExcel(){
 							name="village" id="village" class="form-select">
 							<option value="0">--All Village--</option>
 							<c:forEach items="${villageList}" var="lists">
-								<option value="${lists.key}"
-									${lists.key eq vlg ? 'selected' : ''}>${lists.value}</option>
+								<option value="${lists.value}"
+									${lists.value eq vlg ? 'selected' : ''}>${lists.key}</option>
 							</c:forEach>
 						</select>
 						<div id="villageError" class="error-text">Please select
@@ -205,7 +205,6 @@ function exportExcel(){
 						<th style="text-align:center; vertical-align: middle;">Name</th>
 						<th style="text-align:center; vertical-align: middle;">Contact Number</th>
 						<th style="text-align:center; vertical-align: middle;">List of Uploaded Videos</th>
-<!-- 						<th rowspan="2" colspan="5" style="text-align:center; vertical-align: middle;">List of Uploaded Videos</th> -->
 					</tr>
 <!-- 					<tr> 
 						<th style="text-align:center; vertical-align: middle;">Facebook</th>

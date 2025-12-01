@@ -1,6 +1,7 @@
 package app.mahotsav.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -16,5 +17,9 @@ public interface WMReportService {
 	List<InaugurationMahotsavBean> getProjLvlWMPrgReport();
 
 	List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode);
+	
+	Map<String, String> getDistrictList(int stateCode);
+	Map<String, String> getblockList(Integer userState, Integer district);
+	Map<String, String> getmahotsavvillageList(int block);
 
 }

@@ -3,6 +3,7 @@ package app.mahotsav.daoImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,12 +15,24 @@ import org.springframework.stereotype.Repository;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.WMReportDao;
+import app.model.IwmpDistrict;
+import app.model.master.IwmpBlock;
+import app.model.master.IwmpVillage;
 
 @Repository("WMReportDao")
 public class WMReportDaoImpl implements WMReportDao {
 
 	@Autowired
 	protected SessionFactory sessionFactory;
+	
+	@Value("${districtListByStateCode}") 
+	String distlist;
+	
+	@Value("${blocklistbydistcdwatershed}") 
+	String blklist;
+	
+	@Value("${getMahotVillageList}") 
+	String villlist;
 	
 	@Value("${getWMInaugurationData}")
 	String getWMInaugurationDetails;
@@ -29,6 +42,86 @@ public class WMReportDaoImpl implements WMReportDao {
 	
 	@Value("${getWMSocailMediaReportData}")
 	String getWMSocailMediaReportDetails;
+	
+	@Override
+	public List<IwmpDistrict> getDistrictList(int stateCode) {
+		
+		List<IwmpDistrict> result=new ArrayList<IwmpDistrict>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=distlist;
+			result = ses.createQuery(hql).setParameter("stCode", stateCode).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+
+	@Override
+	public List<IwmpBlock> getBlockList(int stateCode, int dist) {
+		// TODO Auto-generated method stub
+		List<IwmpBlock> result=new ArrayList<IwmpBlock>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=blklist;
+			result = ses.createQuery(hql).setParameter("distcod", dist).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+	
+	@Override
+	public List<IwmpVillage> getVillageList(int block) {
+		List<IwmpVillage> result=new ArrayList<IwmpVillage>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=villlist;
+			result = ses.createQuery(hql).setParameter("block", block).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
 	
 	@Override
 	public List<InaugurationMahotsavBean> getStateWMInaugurationReport() {
@@ -91,6 +184,7 @@ public class WMReportDaoImpl implements WMReportDao {
 		}
 		return getWMSocailMediaReport;
 	}
+	
 	
 	
 }
