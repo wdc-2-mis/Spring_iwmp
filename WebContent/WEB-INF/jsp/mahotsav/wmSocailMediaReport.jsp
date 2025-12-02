@@ -255,19 +255,18 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 				<tbody id="tbodyWMSocialMediaRpt">
 
+					<c:set var="sno" value="0" />
 					<c:set var="regNo" value="" />
 					<c:set var="name" value="" />
 					<c:set var="phno" value="" />
-					<c:set var="fburl" value="" />
-					<c:set var="yturl" value="" />
-					<c:set var="igurl" value="" />
-					<c:set var="xurl" value="" />
-					<c:set var="liurl" value="" />
 
-					<c:forEach items="${stateWMSocialMediaList}" var="dt"
-						varStatus="sno">
+					<c:forEach items="${stateWMSocialMediaList}" var="dt">
 						<tr>
-							<td class="text-left"><c:out value="${sno.count}" /></td>
+							<td class="text-left">
+							<c:if test="${dt.user_reg_no ne regNo}">
+							<c:set var="sno" value="${sno + 1}" />
+							<c:out value="${sno}" /> 
+							</c:if></td>
 							<td><c:if test="${dt.user_reg_no ne regNo}">
 									<c:out value="${dt.user_reg_no}" />
 								</c:if></td>
@@ -329,11 +328,6 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 						<c:set var="regNo" value="${dt.user_reg_no}" />
 						<c:set var="name" value="${dt.reg_name}" />
 						<c:set var="phno" value="${dt.phno}" />
-						<c:set var="fburl" value="${dt.facebook_urls}" />
-						<c:set var="yturl" value="${dt.youtube_urls}" />
-						<c:set var="igurl" value="${dt.instagram_urls}" />
-						<c:set var="xurl" value="${dt.twitter_urls}" />
-						<c:set var="liurl" value="${dt.linkedin_urls}" />
 
 
 					</c:forEach>
