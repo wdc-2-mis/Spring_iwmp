@@ -1157,12 +1157,12 @@ public class WatershedMahotsavInaugurationDaoImpl implements WatershedMahotsavIn
 			for (WatershedMahotsavInauguarationActPhoto photo : list) 
 			{
 				//server
-				//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 				
 				//local
-				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			//	imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			//	System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 			}
 			
 			session.getTransaction().commit();

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf" %>
-
+<script src='<c:url value="/resources/js/mahotsavinauguration.js" />'></script>
 <title>Report WM1 - State-wise Watershed Mahotsav Inauguration Program</title>
 
 <html>
@@ -9,6 +9,8 @@
 
 
 <script type="text/javascript">
+
+
 
 function downloadPDF(){
 		document.getWMIDetails.action="downloadPDFStWMInauguration";
@@ -22,12 +24,201 @@ function exportExcel(){
 		document.getWMIDetails.submit();
 }
 
+
+function getImageHash(file, callback) {
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        let wordArray = CryptoJS.lib.WordArray.create(e.target.result);
+        let hash = CryptoJS.SHA256(wordArray).toString();
+        callback(hash);
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+  
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + imageSrc;
+ //	document.getElementById('largeImage').src = 'resources/images/inauguration/' + imageSrc;											
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
+
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
+
 </script>
 
 <%
     response.setHeader("Cache-Control", "public, max-age=600");
     response.setHeader("Pragma", "public");
 %>
+
+
+<style>
+
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 300px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1500px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Large image */
+#largeImage {
+  width: auto; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+
+</style>
 </head>
 <body>
 <div class="maindiv">
@@ -216,13 +407,15 @@ function exportExcel(){
 								</td>
 								<td class="text-end">
 									<c:choose>
-										<c:when test="${dt.image_count == 0}">
+										<c:when test="${dt.image_count eq 0}">
 											<!-- blank -->
 										</c:when>
 										<c:otherwise>
-											<c:out value="${dt.image_count}" />
+										<a href="#" data-id="${dt.inauguaration_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${dt.image_count}" /></a>
+											<%-- <c:out value="${dt.image_count}" /> --%>
 										</c:otherwise>
 									</c:choose>
+									
 								</td>
 								
 								
@@ -285,7 +478,23 @@ function exportExcel(){
     </form>
     </div>
     </div>
+	<!-- Show Image Modal HTML -->
+	<div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
 
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+		
+	</div>
 <footer class="text-center">
 	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
 </footer>
