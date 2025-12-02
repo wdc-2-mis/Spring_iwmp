@@ -22,4 +22,6 @@ public interface WMReportService {
 	Map<String, String> getblockList(Integer userState, Integer district);
 	Map<String, String> getmahotsavvillageList(int block);
 
+	List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType);
+
 }

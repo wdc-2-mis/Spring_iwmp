@@ -69,6 +69,12 @@ public class WMReportServiceImpl implements WMReportService{
 		}
 		return villageList;
 	}
+
+	@Override
+	public List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType) {
+		// TODO Auto-generated method stub
+		return WMDao.getImageMahotsavProjAtStLVL(stCode, imgType);
+	}
 	
 
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,7 +54,7 @@ public class WMProjectLevelReportController {
 	MenuController menuController;
 	
 	@Autowired
-	WMReportService WMSerice;
+	WMReportService WMService;
 	
 	@RequestMapping(value = "/projectWMProgramReport", method = RequestMethod.GET)
 	public ModelAndView getprojectWMProgramReport(HttpServletRequest request, HttpServletResponse response)
@@ -65,12 +66,27 @@ public class WMProjectLevelReportController {
 		
 		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
 		
-		list = WMSerice.getProjLvlWMPrgReport();
+		list = WMService.getProjLvlWMPrgReport();
 		
 		mav.addObject("projLvlWMPrgList",list);
 		mav.addObject("projLvlWMPrgListSize",list.size());
 		
 		return mav; 
+	}
+	
+	@RequestMapping(value = "/getImageMahotProgRpt", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageMahotProgRpt(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("stCode") Integer stCode, @RequestParam("imgType") String imgType){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = WMService.getImageMahotsavProjAtStLVL(stCode, imgType);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 	
 	@RequestMapping(value = "/downloadExcelProjLvlProgram", method = RequestMethod.POST)
@@ -80,7 +96,7 @@ public class WMProjectLevelReportController {
 		
 		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
 		
-		list = WMSerice.getProjLvlWMPrgReport();
+		list = WMService.getProjLvlWMPrgReport();
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
@@ -527,7 +543,7 @@ public class WMProjectLevelReportController {
 		
 		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
 		
-		list = WMSerice.getProjLvlWMPrgReport();
+		list = WMService.getProjLvlWMPrgReport();
 		
 		try {
 			

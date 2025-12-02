@@ -19,5 +19,7 @@ public interface WMReportDao {
 	List<IwmpDistrict> getDistrictList(int stateCode);
 	List<IwmpBlock> getBlockList(int stateCode, int dist);
 	List<IwmpVillage> getVillageList(int block);
+
+	List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType);
 	
 }

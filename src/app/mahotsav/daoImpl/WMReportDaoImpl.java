@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.WMReportDao;
+import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpVillage;
@@ -183,6 +185,41 @@ public class WMReportDaoImpl implements WMReportDao {
 			session.getTransaction().rollback();
 		}
 		return getWMSocialMediaReport;
+	}
+
+	public List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType) {
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedMahotsavProjectLvlPhoto> list = new ArrayList<WatershedMahotsavProjectLvlPhoto>();
+		List<String> imgList = new ArrayList<>();
+		Query query = null;
+		try {
+			session.beginTransaction();
+			if(imgType == "projectlvl") {
+			 query = session.createQuery("SELECT p FROM WatershedMahotsavProjectLvlPhoto p JOIN p.watershedMahotsav l WHERE l.state.stCode = :stCode");
+			}
+			else {
+			 query = session.createQuery("select p from MahotsavPrabhatPheriPhoto p join p.wmPrabhatPheri l where l.state.stCode = :stCode"); 
+			}
+			query.setInteger("stCode", stCode);
+			list = query.list();
+			for (WatershedMahotsavProjectLvlPhoto photo : list) 
+			{
+				//server
+				//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 	
 	

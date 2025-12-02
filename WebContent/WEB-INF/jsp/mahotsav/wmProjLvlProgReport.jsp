@@ -21,12 +21,222 @@ function exportExcel(){
 		document.getWMProjLvlDetails.submit();
 }
 
+$(document).on('click', '.showImage', function(e) {
+	
+	let stCode = $(this).data('id');
+	let imgType = $(this).data('type');
+	$.ajax({
+		type: 'POST',
+		url: "getImageMahotProgRpt",
+		data: { stCode: stCode, imgType: imgType },
+		error: function(xhr, status, er) {
+			console.log(er);
+		},
+		success: function(data) {
+//			var imageContainer = $('.image-container');
+//			imageContainer.empty();
+			let list = '<ul>';
+			for (let i = 0; i < data.length; i++) {
+				if (data[i] != null) 
+				{
+				//PRD
+//					list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				//TEST
+				//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				//Local
+					list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
+				}
+			}
+			list += '</ul>';
+			document.getElementById('imageList').innerHTML = list;
+			document.getElementById('imagePopup').style.display = 'block';
+		}
+	});
+});
+
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+  
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + imageSrc;
+ 	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
+
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
+
 </script>
 
 <%
     response.setHeader("Cache-Control", "public, max-age=600");
     response.setHeader("Pragma", "public");
 %>
+
+<style>
+
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 300px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1500px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Large image */
+#largeImage {
+  width: 100%; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+</style>
 </head>
 <body>
 <div class="maindiv">
@@ -139,7 +349,7 @@ function exportExcel(){
 											<!-- blank -->
 										</c:when>
 										<c:otherwise>
-											<c:out value="${dt.total_prabhat_photo}" />
+											<a href="#" data-id="${dt.st_code}" data-type="prabhat" class="showImage" data-toggle="modal" style ="color: blue;"> <c:out value="${dt.total_prabhat_photo}" /></a>
 										</c:otherwise>
 									</c:choose>
 								</td>
@@ -266,12 +476,11 @@ function exportExcel(){
 								<td class="text-end">
 									<c:choose>
 										<c:when test="${dt.total_projlvl_photo == 0}">
-											<!-- blank -->
 										</c:when>
 										<c:otherwise>
-											<c:out value="${dt.total_projlvl_photo}" />
+										<a href="#" data-id="${dt.st_code}" data-type="projectlvl" class="showImage" data-toggle="modal" style ="color: blue;">	<c:out value="${dt.total_projlvl_photo}" /></a>
 										</c:otherwise>
-									</c:choose>
+										</c:choose>
 								</td>
 								
 						
@@ -333,7 +542,22 @@ function exportExcel(){
     </form>
     </div>
     </div>
-   
+ <div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
+
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+		
+	</div>  
 
 <footer class=" ">
 	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
