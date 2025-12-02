@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.WMReportDao;
+import app.mahotsav.model.MahotsavPrabhatPheriPhoto;
 import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
@@ -188,38 +189,50 @@ public class WMReportDaoImpl implements WMReportDao {
 	}
 
 	public List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType) {
-		Session session = sessionFactory.getCurrentSession();
-		List<WatershedMahotsavProjectLvlPhoto> list = new ArrayList<WatershedMahotsavProjectLvlPhoto>();
-		List<String> imgList = new ArrayList<>();
-		Query query = null;
-		try {
-			session.beginTransaction();
-			if(imgType.equals("projectlvl")) {
-			 query = session.createQuery("SELECT p FROM WatershedMahotsavProjectLvlPhoto p JOIN p.watershedMahotsav l WHERE l.state.stCode = :stCode");
-			}
-			else {
-			 query = session.createQuery("select p from MahotsavPrabhatPheriPhoto p join p.wmPrabhatPheri l where l.state.stCode = :stCode"); 
-			}
-			query.setInteger("stCode", stCode);
-			list = query.list();
-			for (WatershedMahotsavProjectLvlPhoto photo : list) 
-			{
-				//server
-				//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
-				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
-				
-				//local
-				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-			}
-			
-			session.getTransaction().commit();
-		}
-		catch(Exception ex) {
-			session.getTransaction().rollback();
-			ex.printStackTrace();
-		}
-		return imgList;
+	    Session session = sessionFactory.getCurrentSession();
+	    List<String> imgList = new ArrayList<>();
+	    Query query = null;
+
+	    try {
+	        session.beginTransaction();
+
+	        if ("projectlvl".equals(imgType)) {
+	            query = session.createQuery(
+	                "SELECT p FROM WatershedMahotsavProjectLvlPhoto p " +
+	                "JOIN p.watershedMahotsav l WHERE l.state.stCode = :stCode and l.status = 'C' "
+	            );
+	            query.setInteger("stCode", stCode);
+	            List<WatershedMahotsavProjectLvlPhoto> list = query.list();
+
+	            for (WatershedMahotsavProjectLvlPhoto photo : list) {
+	                String fileName = photo.getPhotoUrl()
+	                                      .substring(photo.getPhotoUrl().lastIndexOf("/") + 1)
+	                                      .replaceAll(".*\\\\", "");
+	                imgList.add(fileName);
+	                System.out.println(" kdy= " + fileName);
+	            }
+	        } else {
+	            query = session.createQuery(
+	                "SELECT p FROM MahotsavPrabhatPheriPhoto p WHERE p.wmPrabhatPheri.prabhatpheriId in(select prabhatpheriId from MahotsavPrabhatPheri where iwmpState.stCode = :stCode and status='C')");
+	            query.setInteger("stCode", stCode);
+	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
+
+	            for (MahotsavPrabhatPheriPhoto photo : list1) {
+	                String fileName = photo.getPhotoUrl()
+	                                      .substring(photo.getPhotoUrl().lastIndexOf("/") + 1)
+	                                      .replaceAll(".*\\\\", "");
+	                imgList.add(fileName);
+//	                System.out.println(" kdy= " + fileName);
+	            }
+	        }
+
+	        session.getTransaction().commit();
+	    } catch (Exception ex) {
+	        session.getTransaction().rollback();
+	        ex.printStackTrace();
+	    }
+
+	    return imgList;
 	}
 	
 	
