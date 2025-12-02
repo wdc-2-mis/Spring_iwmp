@@ -194,7 +194,7 @@ public class WMReportDaoImpl implements WMReportDao {
 		Query query = null;
 		try {
 			session.beginTransaction();
-			if(imgType == "projectlvl") {
+			if(imgType.equals("projectlvl")) {
 			 query = session.createQuery("SELECT p FROM WatershedMahotsavProjectLvlPhoto p JOIN p.watershedMahotsav l WHERE l.state.stCode = :stCode");
 			}
 			else {
