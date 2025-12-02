@@ -69,10 +69,10 @@ $(document).ready(function() {
             return;
         }
         
-        const fbPattern = /^(https?:\/\/)?(www\.)?facebook\.com\/.+$/i;
+        const fbPattern = /^https:\/\/www\.facebook\.com\/.+$/i;
         if (!fbPattern.test(facebook)) {
             $('#fbError')
-                .text("Please enter a valid Facebook URL (facebook.com/...)")
+                .text("Please enter a valid Facebook URL (https://www.facebook.com/...)")
                 .show();
             fbValid = false;
             return;
@@ -111,10 +111,10 @@ $(document).ready(function() {
             return;
         }
         
-        const ytPattern = /^(https?:\/\/)?(www\.)?youtube\.com\/.+$/i;
+        const ytPattern = /^https:\/\/www\.(youtube\.com|youtu\.be)\/.+$/i;
         if (!ytPattern.test(youtube)) {
             $('#ytError')
-                .text("Please enter a valid Youtube URL (youtube.com/...)")
+                .text("Please enter a valid Youtube URL (https://www.youtube.com/...)")
                 .show();
             ytValid = false;
             return;
@@ -155,10 +155,10 @@ $(document).ready(function() {
             return;
         }
         
-        const igPattern = /^(https?:\/\/)?(www\.)?instagram\.com\/.+$/i;
+        const igPattern = /^https:\/\/www\.instagram\.com\/.+$/i;
         if (!igPattern.test(instagram)) {
             $('#igError')
-                .text("Please enter a valid Instagram URL (instagram.com/...)")
+                .text("Please enter a valid Instagram URL (https://www.instagram.com/...)")
                 .show();
             igValid = false;
             return;
@@ -199,10 +199,10 @@ $(document).ready(function() {
             return;
         }
         
-        const xPattern = /^(https?:\/\/)?(www\.)?x\.com\/.+$/i;
+        const xPattern = /^https:\/\/www\.x\.com\/.+$/i;
         if (!xPattern.test(twitter)) {
             $('#xError')
-                .text("Please enter a valid X URL (x.com/...)")
+                .text("Please enter a valid X URL (https://www.x.com/...)")
                 .show();
             xValid = false;
             return;
@@ -243,10 +243,10 @@ $(document).ready(function() {
             return;
         }
         
-        const liPattern = /^(https?:\/\/)?(www\.)?linkedin\.com\/.+$/i;
+        const liPattern = /^https:\/\/www\.linkedin\.com\/.+$/i;
         if (!liPattern.test(linkedin)) {
             $('#liError')
-                .text("Please enter a valid linkedin URL (linkedin.com/...)")
+                .text("Please enter a valid linkedin URL (https://www.linkedin.com/...)")
                 .show();
             liValid = false;
             return;
@@ -318,19 +318,19 @@ $(document).ready(function() {
 
         // Domain-specific validation
         if (facebook && !fbPattern.test(facebook)) {
-            $('#videoAlert').text("Please enter a valid Facebook URL (facebook.com/...)").show();
+            $('#videoAlert').text("Please enter a valid Facebook URL (https://www.facebook.com/...)").show();
             valid = false;
         } else if (youtube && !ytPattern.test(youtube)) {
-            $('#videoAlert').text("Please enter a valid YouTube URL (youtube.com/...)").show();
+            $('#videoAlert').text("Please enter a valid YouTube URL (https://www.youtube.com/...)").show();
             valid = false;
         } else if (instagram && !igPattern.test(instagram)) {
-            $('#videoAlert').text("Please enter a valid Instagram URL (instagram.com/...)").show();
+            $('#videoAlert').text("Please enter a valid Instagram URL (https://www.instagram.com/...)").show();
             valid = false;
         } else if (twitter && !twPattern.test(twitter)) {
-            $('#videoAlert').text("Please enter a valid Twitter URL (x.com/...)").show();
+            $('#videoAlert').text("Please enter a valid Twitter URL (https://www.x.com/...)").show();
             valid = false;
         } else if (linkedin && !liPattern.test(linkedin)) {
-            $('#videoAlert').text("Please enter a valid LinkedIn URL (linkedin.com/...)").show();
+            $('#videoAlert').text("Please enter a valid LinkedIn URL (https://www.linkedin.com/...)").show();
             valid = false;
         }
         
@@ -467,7 +467,7 @@ $(document).ready(function() {
             <div class="mb-3"><label>1. Facebook </label><div id="fbError" class="error-text text-left"></div><input type="url" name="facebook" id="facebook" class="form-control" placeholder="Enter Facebook video URL" autocomplete="off"></div>
             <div class="mb-3"><label>2. YouTube</label><div id="ytError" class="error-text text-left"></div><input type="url" name="youtube" id = "youtube" class="form-control" placeholder="Enter YouTube video URL" autocomplete="off"></div>
             <div class="mb-3"><label>3. Instagram</label><div id="igError" class="error-text text-left"></div><input type="url" name="instagram" id="instagram" class="form-control" placeholder="Enter Instagram video URL" autocomplete="off"></div>
-            <div class="mb-3"><label>4. Twitter</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL" autocomplete="off"></div>
+            <div class="mb-3"><label>4. X</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL" autocomplete="off"></div>
             <div class="mb-3"><label>5. LinkedIn</label><div id="liError" class="error-text text-left"></div><input type="url" name="linkedin" id="linkedin" class="form-control" placeholder="Enter LinkedIn video URL" autocomplete="off"></div>
 
             <div class="form-check mb-4 mt-3">
