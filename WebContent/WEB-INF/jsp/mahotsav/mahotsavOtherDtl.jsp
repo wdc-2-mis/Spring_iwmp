@@ -25,10 +25,23 @@
         font-weight: 600;
         color: #0d6efd;
     }
+    .upload-type-box {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-bottom: 20px;
+        font-size: 17px;
+    }
+    .upload-type-box input[type="radio"] {
+        transform: scale(1.3);
+        margin-right: 5px;
+        cursor: pointer;
+    }
 </style>
 
 <script type="text/javascript">
-
+// initial numbering
+	
 
 function showChangedata(){
     document.mohotsav.action="registerMahotsav";
@@ -37,6 +50,53 @@ function showChangedata(){
 }
 
 $(document).ready(function() {
+	function updateNumbering() {
+        let count = 1;
+        $('.platform-row:visible label span.number').each(function () {
+            $(this).text(count + ".");
+            count++;
+        });
+    }
+
+    function setVideoPlaceholders() {
+        $("#facebook").attr("placeholder", "Enter Facebook video URL");
+        $("#youtube").attr("placeholder", "Enter YouTube video URL");
+        $("#instagram").attr("placeholder", "Enter Instagram video URL");
+        $("#twitter").attr("placeholder", "Enter X video URL");
+        $("#linkedin").attr("placeholder", "Enter LinkedIn video URL");
+    }
+
+    function setImagePlaceholders() {
+        $("#facebook").attr("placeholder", "Enter Facebook Photo URL");
+        $("#instagram").attr("placeholder", "Enter Instagram Photo URL");
+        $("#twitter").attr("placeholder", "Enter X Photo URL");
+        $("#linkedin").attr("placeholder", "Enter LinkedIn Photo URL");
+    }
+
+    $('input[name="uploadType"]').change(function () {
+        let type = $(this).val();
+
+        if (type === "image") {
+            $("#youtubeRow").hide();
+            $("#youtube").val(""); // clear old input
+            setImagePlaceholders();
+            $("#consentText").text(
+                "Winning entries once submitted (Reels/Photographs) on designated portal, will have the copyright of the DoLR and may be utilized by DoLR and or State Department for any publicity, educational purposes."
+            );
+        } else {
+            $("#youtubeRow").show();
+            setVideoPlaceholders();
+            $("#consentText").text(
+                "I give consent to DoLR / State Agency to use my pictures or reels for publicity or educational purpose. Winners give consent to agency for publicity."
+            );
+        }
+
+        updateNumbering();
+    });
+
+    setVideoPlaceholders();
+    updateNumbering();
+
 
     // Reset dependent dropdowns
     $('#state').on('change', function() {
@@ -377,6 +437,7 @@ $(document).ready(function() {
          $('#confirmationModal').modal('hide');
     });
 
+
 });
 </script>
 
@@ -463,19 +524,54 @@ $(document).ready(function() {
             </div>
 
             <h4 class="text-center text-primary mb-3">List of URL's</h4>
-            <div id="videoAlert" class="error-text text-left"></div>
-            <div class="mb-3"><label>1. Facebook </label><div id="fbError" class="error-text text-left"></div><input type="url" name="facebook" id="facebook" class="form-control" placeholder="Enter Facebook video URL" autocomplete="off"></div>
-            <div class="mb-3"><label>2. YouTube</label><div id="ytError" class="error-text text-left"></div><input type="url" name="youtube" id = "youtube" class="form-control" placeholder="Enter YouTube video URL" autocomplete="off"></div>
-            <div class="mb-3"><label>3. Instagram</label><div id="igError" class="error-text text-left"></div><input type="url" name="instagram" id="instagram" class="form-control" placeholder="Enter Instagram video URL" autocomplete="off"></div>
-            <div class="mb-3"><label>4. X</label><div id="xError" class="error-text text-left"></div><input type="url" name="twitter" id="twitter" class="form-control" placeholder="Enter X video URL" autocomplete="off"></div>
-            <div class="mb-3"><label>5. LinkedIn</label><div id="liError" class="error-text text-left"></div><input type="url" name="linkedin" id="linkedin" class="form-control" placeholder="Enter LinkedIn video URL" autocomplete="off"></div>
+            <div class="upload-type-box">
+    <label>
+        <input type="radio" name="uploadType" value="video" checked> Video
+    </label>
+    <label>
+        <input type="radio" name="uploadType" value="image"> Photo
+    </label>
+</div>
 
-            <div class="form-check mb-4 mt-3">
-                <input class="form-check-input" type="checkbox" id="consentCheck">
-                <label class="form-check-label" for="consentCheck">
-                    I give consent to DoLR / State Agency to use my pictures or reels for publicity or educational purpose. Winners give consent to agency for publicity.
-                </label>
-            </div>
+            
+            <div id="videoAlert" class="error-text text-left"></div>
+            <div class="mb-3 platform-row" id="facebookRow">
+    <label><span class="number">1.</span> Facebook</label>
+    <div id="fbError" class="error-text text-left"></div>
+    <input type="url" name="facebook" id="facebook" class="form-control" autocomplete="off">
+</div>
+
+<div class="mb-3 platform-row" id="youtubeRow">
+    <label><span class="number">2.</span> YouTube</label>
+    <div id="ytError" class="error-text text-left"></div>
+    <input type="url" name="youtube" id="youtube" class="form-control" autocomplete="off">
+</div>
+
+<div class="mb-3 platform-row" id="instagramRow">
+    <label><span class="number">3.</span> Instagram</label>
+    <div id="igError" class="error-text text-left"></div>
+    <input type="url" name="instagram" id="instagram" class="form-control" autocomplete="off">
+</div>
+
+<div class="mb-3 platform-row" id="twitterRow">
+    <label><span class="number">4.</span> X</label>
+    <div id="xError" class="error-text text-left"></div>
+    <input type="url" name="twitter" id="twitter" class="form-control" autocomplete="off">
+</div>
+
+<div class="mb-3 platform-row" id="linkedinRow">
+    <label><span class="number">5.</span> LinkedIn</label>
+    <div id="liError" class="error-text text-left"></div>
+    <input type="url" name="linkedin" id="linkedin" class="form-control" autocomplete="off">
+</div>
+
+<div class="form-check mb-4 mt-3">
+    <input class="form-check-input" type="checkbox" id="consentCheck">
+    <label class="form-check-label" id="consentText">
+        I give consent to DoLR / State Agency to use my pictures or reels for publicity or educational purpose. Winners give consent to agency for publicity.
+    </label>
+</div>
+
 
             <div class="text-center">
                 <button type="button" id="submitBtn" class="btn btn-success px-5">Submit</button>
