@@ -36,4 +36,9 @@ public class AddWMSocialMediaServiceImpl implements AddWMSocialMediaService {
 		return addWMSocialMediaDao.getDistWMSocialMediaReport(stcd);
 	}
 
+	@Override
+	public WatershedMahotsavRegistration findByUserRegNoAndEmail(String regNo, String email) {
+		return addWMSocialMediaDao.findByUserRegNoAndEmail(regNo, email);
+	}
+
 }

@@ -11,4 +11,5 @@ public interface AddWMSocialMediaDao {
 	List<SocialMediaReport> getSocialMediaReport(String stateCode, String districtCode);
 	List<SocialMediaReport> getWMSocialMediaReport();
 	List<SocialMediaReport> getDistWMSocialMediaReport(Integer stcd);
+	WatershedMahotsavRegistration findByUserRegNoAndEmail(String regNo, String email);
 }

@@ -142,4 +142,36 @@ public class AddWMSocialMediaDaoImpl implements  AddWMSocialMediaDao{
 			}
 			return listD;
 		}
+
+		
+		@Override
+		public WatershedMahotsavRegistration findByUserRegNoAndEmail(String regNo, String email) {
+
+		    Session session = sessionFactory.getCurrentSession();
+		    WatershedMahotsavRegistration registration = null;
+
+		    try {
+		        session.beginTransaction();
+
+		        registration = (WatershedMahotsavRegistration) session.createQuery(
+		                "FROM WatershedMahotsavRegistration r " +
+		                "WHERE r.user_reg_no = :regNo AND r.email = :email")
+		                .setParameter("regNo", regNo)
+		                .setParameter("email", email)
+		                .uniqueResult();
+
+		        session.getTransaction().commit();
+
+		    } catch (Exception e) {
+
+		        if (session.getTransaction().isActive()) {
+		            session.getTransaction().rollback();
+		        }
+
+		        e.printStackTrace();
+		    }
+
+		    return registration;
+		}
+
 }

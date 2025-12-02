@@ -117,12 +117,15 @@ public class AddWMSocialMediaController {
     
     @PostMapping("/verifyRegistration")
     @ResponseBody
-    public String verifyRegistration(@RequestParam("regNo") String regNo, HttpSession session) {
+    public String verifyRegistration(@RequestParam("regNo") String regNo,
+                                     @RequestParam("email") String email,
+                                     HttpSession session) {
         try {
-            WatershedMahotsavRegistration reg = addWMSocialMediaService.findByUserRegNo(regNo);
+            WatershedMahotsavRegistration reg =
+                    addWMSocialMediaService.findByUserRegNoAndEmail(regNo, email);
 
             if (reg == null) {
-                return "invalidReg";
+                return "invalid";   // reg no + email not matching
             }
 
             // store regNo in session
@@ -134,6 +137,7 @@ public class AddWMSocialMediaController {
                     reg.getPhno(),
                     reg.getEmail(),
                     reg.getAddress());
+
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
