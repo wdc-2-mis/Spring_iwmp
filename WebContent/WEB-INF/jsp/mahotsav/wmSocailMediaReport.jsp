@@ -1,17 +1,17 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 
 <title>Report WM4 - Watershed Mahotsav Social Media</title>
 
+<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf"%>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script
+	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript">
 
@@ -71,7 +71,7 @@ $(document).ready(function() {
 
     // Submit report
     $('#submitBtn').on('click', function() {
-        document.mohotsavRpt.action = "wmSocailMediaReport";
+        document.mohotsavRpt.action = "wmSocialMediaReport";
         document.mohotsavRpt.method = "post";
         document.mohotsavRpt.submit();
     });
@@ -107,17 +107,17 @@ function exportExcel(){
 </script>
 
 <style>
-    /* Add margin above the DataTables controls */
-    div.dataTables_wrapper div.dataTables_length,
-    div.dataTables_wrapper div.dataTables_filter {
-        margin-bottom: 15px;   /* gap between controls and table */
-    }
+/* Add margin above the DataTables controls */
+div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter
+	{
+	margin-bottom: 15px; /* gap between controls and table */
+}
 
-    /* Add margin above the pagination/info section */
-    div.dataTables_wrapper div.dataTables_info,
-    div.dataTables_wrapper div.dataTables_paginate {
-        margin-top: 15px;      /* gap between table and pagination */
-    }
+/* Add margin above the pagination/info section */
+div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate
+	{
+	margin-top: 15px; /* gap between table and pagination */
+}
 </style>
 
 <%
@@ -126,25 +126,43 @@ function exportExcel(){
 %>
 </head>
 <body>
+
+	<c:if test="${stateWMSocialMediaListSize !=0}">
+
+		<script>
+			// Call the function automatically when page loads
+			dataAvailableFunction();
+		</script>
+
+	</c:if>
+
 	<div class="maindiv">
 
 		<div class="card shadow mt-1 p-5">
 
-			<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-				<h4 class="text-center text-primary mb-4"><u>Report WM4 - Watershed Mahotsav Social Media</u></h4>
+			<div class="offset-md-3 col-6 formheading"
+				style="text-align: center;">
+				<h4 class="text-center text-primary mb-4">
+					<u>Report WM4 - Watershed Mahotsav Social Media</u>
+				</h4>
 			</div>
 
 			<div class="nav-item text-left mb-2">
 				<c:if test="${not empty stateWMInaugurationList1}">
-					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
-					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
+					<button type="button" name="exportExcel" id="exportExcel"
+						class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
+					<button type="button" name="exportPDF" id="exportPDF"
+						class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
 				</c:if>
-				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
+				<p align="right">
+					Report as on:
+					<%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			</div>
-			
-			<form name="mohotsavRpt" id="mohotsavReport" action="wmSocailMediaReport" method="post">
-			
-				
+
+			<form name="mohotsavRpt" id="mohotsavReport"
+				action="wmSocialMediaReport" method="post">
+
+
 				<div class="row mb-3">
 
 					<div class="col-md-2">
@@ -199,82 +217,136 @@ function exportExcel(){
 					</div>
 					<div class="col-md-2 d-flex align-items-end">
 						<button type="button" id="submitBtn" class="btn btn-primary px-5">Get</button>
-				</div></div>
+					</div>
+				</div>
 			</form>
 
-			<table class="table table-bordered table-striped" id="stWMR" >
-                    <thead>
-                     <tr>
-						<th style="text-align:center; vertical-align: middle;">S.No.</th>
-						<th style="text-align:center; vertical-align: middle;">Registration Number</th>
-						<th style="text-align:center; vertical-align: middle;">Name</th>
-						<th style="text-align:center; vertical-align: middle;">Contact Number</th>
-						<th style="text-align:center; vertical-align: middle;">List of Uploaded Videos</th>
+			<table class="table table-bordered table-striped" id="stWMR">
+				<thead>
+					<tr>
+						<th rowspan="2"
+							style="text-align: center; vertical-align: middle;">S.No.</th>
+						<th rowspan="2"
+							style="text-align: center; vertical-align: middle;">Registration
+							Number</th>
+						<th rowspan="2"
+							style="text-align: center; vertical-align: middle;">Name</th>
+						<th rowspan="2"
+							style="text-align: center; vertical-align: middle;">Contact
+							Number</th>
+						<th colspan="5"
+							style="text-align: center; vertical-align: middle;">List of
+							Uploaded Videos</th>
+					</tr>
+					<tr>
+						<th style="text-align: center; vertical-align: middle;">Facebook</th>
+						<th style="text-align: center; vertical-align: middle;">YouTube</th>
+						<th style="text-align: center; vertical-align: middle;">Instagram</th>
+						<th style="text-align: center; vertical-align: middle;">Twitter</th>
+						<th style="text-align: center; vertical-align: middle;">LinkedIn</th>
 					</tr>
 
 					<tr>
-						<% for (int i = 1; i <= 5; i++) { %>
+						<% for (int i = 1; i <= 9; i++) { %>
 						<th class="text-center"><%= i %></th>
 						<% } %>
 					</tr>
-                    </thead>
-                    
-                    <tbody id="tbodyWMSocailMediaRpt">
-                    
-                    	<c:set var="regNo" value="" />
-                    	<c:set var="name" value="" />
-                    	<c:set var="phno" value="" />
-                    	<c:set var="url" value="" />
-                    	
-						<c:forEach items="${stateWMSocailMediaList}" var="dt" varStatus="sno">
-							<tr>
-								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td>
-									<c:if test="${dt.user_reg_no ne regNo}">
-        								<c:out value="${dt.user_reg_no}" />
-   	 								</c:if>
-								</td>
-								<td>
-									<c:if test="${dt.reg_name ne name}">
-        								<c:out value="${dt.reg_name}" />
-   	 								</c:if>
-								</td>
-								<td class="text-center">
-									<c:if test="${dt.phno ne phno}">
-        								<c:out value="${dt.phno}" />
-   	 								</c:if>
-								</td>
-								<td class="text-center">
-									<c:if test="${dt.media_url ne url}">
-        								<a href="${dt.media_url}" target="_blank">${dt.media_url}</a>
-   	 								</c:if>
-								</td>
-							
-							</tr>
-							
-							<c:set var="regNo" value="${dt.user_reg_no}" />
-							<c:set var="name" value="${dt.reg_name}" />
-							<c:set var="phno" value="${dt.phno}" />
-							<c:set var="url" value="${dt.media_url}" />
-							
-						</c:forEach>
-						
-						<c:if test="${stateWMSocailMediaListSize==0}">
-							<tr>
-								<td align="center" colspan="5" class="required" style="color: red;"><b>Data Not Found</b></td>
-							</tr>
-						</c:if>
-					<c:if test="${stateWMSocailMediaListSize !=0}">
+				</thead>
 
-						<script>
-							// Call the function automatically when page loads
-							dataAvailableFunction();
-						</script>
+				<tbody id="tbodyWMSocialMediaRpt">
 
+					<c:set var="regNo" value="" />
+					<c:set var="name" value="" />
+					<c:set var="phno" value="" />
+					<c:set var="fburl" value="" />
+					<c:set var="yturl" value="" />
+					<c:set var="igurl" value="" />
+					<c:set var="xurl" value="" />
+					<c:set var="liurl" value="" />
+
+					<c:forEach items="${stateWMSocialMediaList}" var="dt"
+						varStatus="sno">
+						<tr>
+							<td class="text-left"><c:out value="${sno.count}" /></td>
+							<td><c:if test="${dt.user_reg_no ne regNo}">
+									<c:out value="${dt.user_reg_no}" />
+								</c:if></td>
+							<td><c:if test="${dt.reg_name ne name or dt.user_reg_no ne regNo}"> 
+									<c:out value="${dt.reg_name}" />
+								</c:if></td>
+
+							<td class="text-center"><c:if test="${dt.phno ne phno or dt.user_reg_no ne regNo}">
+									<c:out value="${dt.phno}" />
+								</c:if></td>
+							<td class="text-center"><c:choose>
+									<c:when test="${fn:startsWith(dt.facebook_urls, 'http')}">
+										<a href="${dt.facebook_urls}" target="_blank">${dt.facebook_urls}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="https://${dt.facebook_urls}" target="_blank">${dt.facebook_urls}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${fn:startsWith(dt.youtube_urls, 'http')}">
+										<a href="${dt.youtube_urls}" target="_blank">${dt.youtube_urls}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="https://${dt.youtube_urls}" target="_blank">${dt.youtube_urls}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${fn:startsWith(dt.instagram_urls, 'http')}">
+										<a href="${dt.instagram_urls}" target="_blank">${dt.instagram_urls}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="https://${dt.instagram_urls}" target="_blank">${dt.instagram_urls}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${fn:startsWith(dt.twitter_urls, 'http')}">
+										<a href="${dt.twitter_urls}" target="_blank">${dt.twitter_urls}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="https://${dt.twitter_urls}" target="_blank">${dt.twitter_urls}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td class="text-center"><c:choose>
+									<c:when test="${fn:startsWith(dt.linkedin_urls, 'http')}">
+										<a href="${dt.linkedin_urls}" target="_blank">${dt.linkedin_urls}</a>
+									</c:when>
+									<c:otherwise>
+										<a href="https://${dt.linkedin_urls}" target="_blank">${dt.linkedin_urls}</a>
+									</c:otherwise>
+								</c:choose>
+							</td>
+						</tr>
+
+
+						<c:set var="regNo" value="${dt.user_reg_no}" />
+						<c:set var="name" value="${dt.reg_name}" />
+						<c:set var="phno" value="${dt.phno}" />
+						<c:set var="fburl" value="${dt.facebook_urls}" />
+						<c:set var="yturl" value="${dt.youtube_urls}" />
+						<c:set var="igurl" value="${dt.instagram_urls}" />
+						<c:set var="xurl" value="${dt.twitter_urls}" />
+						<c:set var="liurl" value="${dt.linkedin_urls}" />
+
+
+					</c:forEach>
+
+					<c:if test="${stateWMSocialMediaListSize==0}">
+						<tr>
+							<td align="center" colspan="9" class="required"
+								style="color: red;"><b>Data Not Found</b></td>
+						</tr>
 					</c:if>
 
 				</tbody>
-                 </table>
+			</table>
 
 		</div>
 	</div>

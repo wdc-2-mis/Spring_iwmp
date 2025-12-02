@@ -14,7 +14,7 @@ public interface WMReportDao {
 
 	List<InaugurationMahotsavBean> getProjLvlWMPrgReport();
 
-	List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode);
+	List<SocialMediaReport> getWMSocialMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode);
 	
 	List<IwmpDistrict> getDistrictList(int stateCode);
 	List<IwmpBlock> getBlockList(int stateCode, int dist);

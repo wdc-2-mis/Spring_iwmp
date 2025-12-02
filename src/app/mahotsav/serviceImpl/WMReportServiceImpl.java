@@ -34,8 +34,8 @@ public class WMReportServiceImpl implements WMReportService{
 	}
 
 	@Override
-	public List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode) {
-		return WMDao.getWMSocailMediaReport(stcd, dcode, bcode, vcode);
+	public List<SocialMediaReport> getWMSocialMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode) {
+		return WMDao.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
 	}
 	
 	@Override

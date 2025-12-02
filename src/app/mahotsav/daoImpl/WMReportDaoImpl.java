@@ -40,8 +40,8 @@ public class WMReportDaoImpl implements WMReportDao {
 	@Value("${getProjLvlWMPrgDetails}")
 	String getProjLvlWMPrgDetails;
 	
-	@Value("${getWMSocailMediaReportData}")
-	String getWMSocailMediaReportDetails;
+	@Value("${getWMSocialMediaReportData}")
+	String getWMSocialMediaReportDetails;
 	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -164,9 +164,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	}
 
 	@Override
-	public List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode) {
-		List<SocialMediaReport> getWMSocailMediaReport = new ArrayList<>();
-		String hql = getWMSocailMediaReportDetails;
+	public List<SocialMediaReport> getWMSocialMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode) {
+		List<SocialMediaReport> getWMSocialMediaReport = new ArrayList<>();
+		String hql = getWMSocialMediaReportDetails;
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
@@ -176,13 +176,13 @@ public class WMReportDaoImpl implements WMReportDao {
 			query.setInteger("bcode", bcode);
 			query.setInteger("vcode", vcode);
 			query.setResultTransformer(Transformers.aliasToBean(SocialMediaReport.class));
-			getWMSocailMediaReport = query.list();
+			getWMSocialMediaReport = query.list();
 			session.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		return getWMSocailMediaReport;
+		return getWMSocialMediaReport;
 	}
 	
 	

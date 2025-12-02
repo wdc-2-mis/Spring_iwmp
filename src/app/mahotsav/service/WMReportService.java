@@ -16,7 +16,7 @@ public interface WMReportService {
 
 	List<InaugurationMahotsavBean> getProjLvlWMPrgReport();
 
-	List<SocialMediaReport> getWMSocailMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode);
+	List<SocialMediaReport> getWMSocialMediaReport(Integer stcd, Integer dcode, Integer bcode, Integer vcode);
 	
 	Map<String, String> getDistrictList(int stateCode);
 	Map<String, String> getblockList(Integer userState, Integer district);

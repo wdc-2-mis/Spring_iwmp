@@ -107,8 +107,8 @@ public class WMReportController {
 		return mav; 
 	}
 	
-	@RequestMapping(value = "/wmSocailMediaReport", method = RequestMethod.GET)
-	public ModelAndView wmSocailMediaReport(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/wmSocialMediaReport", method = RequestMethod.GET)
+	public ModelAndView wmSocialMediaReport(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView mav = new ModelAndView();
 		
@@ -123,16 +123,16 @@ public class WMReportController {
 		Integer vcode=0;
 		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
 		
-		list = WMSerice.getWMSocailMediaReport(stcd, dcode, bcode, vcode);
+		list = WMSerice.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
 		
-		mav.addObject("stateWMSocailMediaList",list);
-		mav.addObject("stateWMSocailMediaListSize",list.size());
+		mav.addObject("stateWMSocialMediaList",list);
+		mav.addObject("stateWMSocialMediaListSize",list.size());
 		
 		return mav; 
 	}
 	
-	@RequestMapping(value = "/wmSocailMediaReport", method = RequestMethod.POST)
-	public ModelAndView wmSocailMediaReportData(HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/wmSocialMediaReport", method = RequestMethod.POST)
+	public ModelAndView wmSocialMediaReportData(HttpServletRequest request, HttpServletResponse response)
 	{
 		ModelAndView mav = new ModelAndView();
 		
@@ -171,10 +171,10 @@ public class WMReportController {
 		 int bcode = (block != null && !block.trim().isEmpty()) ? Integer.parseInt(block) : 0;
 		 int vcode = (village != null && !village.trim().isEmpty()) ? Integer.parseInt(village) : 0;
 
-		 list = WMSerice.getWMSocailMediaReport(stcd, dcode, bcode, vcode);
+		 list = WMSerice.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
 		 
-		 mav.addObject("stateWMSocailMediaList",list);
-		 mav.addObject("stateWMSocailMediaListSize",list.size());
+		 mav.addObject("stateWMSocialMediaList",list);
+		 mav.addObject("stateWMSocialMediaListSize",list.size());
 		
 		return mav; 
 	}
