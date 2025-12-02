@@ -21,8 +21,7 @@ public interface WMPrabhatPheriDao {
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);
 	boolean checkVillageWMP(Integer vCode);
-	
-	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
+	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid);
 	String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session);
 	List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId);
 

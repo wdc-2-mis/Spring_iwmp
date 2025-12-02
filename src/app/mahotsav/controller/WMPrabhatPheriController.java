@@ -71,7 +71,8 @@ public class WMPrabhatPheriController {
         model.put("userType", userType);
         model.put("distList", ser.getDistrictList(stCode));
        // model.put("blkList", serp.getBlockListpia(regId.toString()));
-        
+//        mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+        model.put("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
         
         List<WMPrabhatPheriBean> dlist = wmService.getWatershedMahotsavDraftList(stCode);
         model.put("dataDList", dlist);
@@ -175,15 +176,53 @@ public class WMPrabhatPheriController {
         return wmService.getVillageListByBlock(blockCode); // return list of villages
     }
     
+//    @RequestMapping(value = "/getWMPrabhatPheriVillage", method = RequestMethod.POST)
+//	@ResponseBody
+//	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(HttpServletRequest request, @RequestParam("bcode") int bCode) {
+//		
+//		return wmService.getWMPrabhatPheriVillage(bCode);
+//	}
+    
     @RequestMapping(value = "/getWMPrabhatPheriVillage", method = RequestMethod.POST)
 	@ResponseBody
 	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(HttpServletRequest request, @RequestParam("bcode") int bCode) {
 		
-		return wmService.getWMPrabhatPheriVillage(bCode);
+		session = request.getSession(true);
+		
+		return wmService.getWMPrabhatPheriVillage(bCode, session.getAttribute("regId").toString());
 	}
-    
-   
-    
+//    @RequestMapping(value = "/getWMPrabhatPheriVillage", method = RequestMethod.POST)
+//    @ResponseBody
+//    public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(
+//            HttpServletRequest request,
+//            @RequestParam("bcode") Integer bCode) {
+//
+//        HttpSession session = request.getSession(false);
+//        if (session == null || session.getAttribute("regId") == null) {
+//            return new LinkedHashMap<>(); // avoids 400
+//        }
+//
+//        String userid = session.getAttribute("regId").toString();
+//        return wmService.getWMPrabhatPheriVillage(bCode, userid);
+//    }
+
+//    @RequestMapping(value = "/getWMPrabhatPheriVillage", method = RequestMethod.POST)
+//    @ResponseBody
+//    public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(
+//            HttpServletRequest request,
+//            @RequestParam("bcode") Integer bCode) {
+//
+//        HttpSession session = request.getSession(false);
+//
+//        if (session == null || session.getAttribute("regId") == null) {
+//            return new LinkedHashMap<>(); // avoids 400 error
+//        }
+//
+//        String userid = session.getAttribute("regId").toString();
+//
+//        return wmService.getWMPrabhatPheriVillage(bCode, userid);
+//    }
+
     @RequestMapping(value="/deleteWMPrabhatPheri", method = RequestMethod.POST)
     @ResponseBody
     public String deleteWMPrabhatPheri(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="ppid") List<Integer> ppid)

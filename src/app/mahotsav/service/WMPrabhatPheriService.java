@@ -26,12 +26,13 @@ List<Map<String, Object>> getBlockListByDistrict(Integer districtCode);
 
 	boolean checkVillageWMP(Integer vCode);
 	
-	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode);
 
 	String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session);
 
 	List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId);
 
 	List<String> getImageMahotsavPrabhatPheriId(Integer ppId);
+
+	LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid);
 
 }

@@ -66,10 +66,7 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 		return dao.checkVillageWMP(vCode);
 	}
 
-	@Override
-	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
-		return dao.getWMPrabhatPheriVillage(bCode);
-	}
+	
 
 	@Override
 	public String updateWMPrabhatPheri(WMPrabhatPheriBean userfileup, HttpSession session) {
@@ -84,6 +81,12 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 	@Override
 	public List<String> getImageMahotsavPrabhatPheriId(Integer ppId) {
 		return dao.getImageMahotsavPrabhatPheriId(ppId);
+	}
+
+
+	@Override
+	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid) {
+		return dao.getWMPrabhatPheriVillage(bCode, userid);
 	}
 
 

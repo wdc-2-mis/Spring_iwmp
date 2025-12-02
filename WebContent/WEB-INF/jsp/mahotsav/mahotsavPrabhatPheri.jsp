@@ -278,8 +278,167 @@ document.addEventListener("change", function(e) {
     }
 
 });
-</script>
 
+function closePopup() {
+    document.getElementById('imagePopup').style.display = 'none';
+  }
+  
+function openLargeImage(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/prabhatpheri/' + imageSrc;
+ 	document.getElementById('largeImage').src = 'resources/images/prabhatpheri/' + imageSrc;											
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
+
+function closeLargeImagePopup() {
+	document.getElementById('largeImagePopup').style.display = 'none';
+}
+
+function showNextImage() {
+	if (currentIndex < totalImages - 1) {
+		currentIndex++;
+		let nextImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = nextImageSrc;
+	}
+}
+
+function showPrevImage() {
+	if (currentIndex > 0) {
+		currentIndex--;
+		let prevImageSrc = $('.image-container img')[currentIndex].src;
+		document.getElementById('largeImage').src = prevImageSrc;
+	}
+}
+</script>
+<style>
+
+#imagePopup {
+display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+/* Popup content */
+.popup-content {
+  background-color: #fefefe;
+  margin-left: 300px;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px; /* Increased max-width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+/* Close button */
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+}
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* Image list */
+.image-container ul {
+  list-style-type: none;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust minmax values as needed */
+  gap: 10px; /* Adds equal space between images */
+}
+
+.image-container li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1000px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Large image */
+#largeImage {
+  width: 100%; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+#prevImage {
+  left: 20px;
+}
+
+#nextImage {
+  right: 20px;
+}
+
+</style>
 <body>
 <div class="maindiv">
     <div class="col formheading">
@@ -299,7 +458,7 @@ document.addEventListener("change", function(e) {
 <input type="hidden" id="prabhatpheri_id" name="prabhatpheri_id" />
         <div class="card-body">
             <div class="form-group col-3">
-                <label for="date"><b>Date:</b> </label>
+                <label for="date"><b>Date:</b><span style="color: red;">*</span> </label>
                 <input type="date" name="date1" id="date1" class="form-control" required/>
             </div>
 
@@ -309,26 +468,49 @@ document.addEventListener("change", function(e) {
                     <c:out value="${stateName}"/>
                     <input type="hidden" name="stCode" value="${stCode}" />
                 </div>
+                
+                 <div class="form-group col-3">
+      			<label for="district"><b>District: </b></label><br/><c:out value="${distName}"></c:out>
+      			
+      		<input type="hidden" id="district1" name="district1" value="${distCode}">
+      			
+    		</div>
+
+<!--                 <div class="form-group col-3"> -->
+<!--                     <label for="district"><b>District:</b></label> -->
+<!--                     <select class="form-control" id="district1" name="district1" required> -->
+<!--                         <option value="">--Select District--</option> -->
+<%--                         <c:forEach items="${distList}" var="dist"> --%>
+<%--                             <option value="<c:out value='${dist.key}'/>"><c:out value="${dist.value}"/></option> --%>
+<%--                         </c:forEach> --%>
+<!--                     </select> -->
+<!--                 </div> -->
+
+<!--                 <div class="form-group col-3"> -->
+<!--                     <label for="block"><b>Block:</b></label> -->
+<!--                     <select class="form-control" id="block1" name="block1"> -->
+<!--                         <option value="">--Select Block--</option> -->
+<!--                     </select> -->
+<!--                 </div> -->
+
+<div class="form-group col-3">
+    			<label for="activity"><b>Block:</b><span style="color: red;">*</span> </label>
+      			<span class="activityError"></span>
+      			<select class="form-control activity" id="block1" name="block1" >
+    				<option value="">--Select Block--</option>
+    				<c:forEach items="${blkList}" var="dist"> 
+    				<c:if test ="${dist.key == blkcode}">
+						<option value="<c:out value="${dist.key}"/>" selected><c:out value="${dist.value}" /></option>
+					</c:if>
+					<c:if test ="${dist.key != blkcode}">
+						<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
+					</c:if>
+					</c:forEach>
+    			</select>
+    		</div>
 
                 <div class="form-group col-3">
-                    <label for="district"><b>District:</b></label>
-                    <select class="form-control" id="district1" name="district1" required>
-                        <option value="">--Select District--</option>
-                        <c:forEach items="${distList}" var="dist">
-                            <option value="<c:out value='${dist.key}'/>"><c:out value="${dist.value}"/></option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <div class="form-group col-3">
-                    <label for="block"><b>Block:</b></label>
-                    <select class="form-control" id="block1" name="block1">
-                        <option value="">--Select Block--</option>
-                    </select>
-                </div>
-
-                <div class="form-group col-3">
-                    <label for="village"><b>Village Name:</b></label>
+                    <label for="village"><b>Village Name:</b><span style="color:red;">*</span></label>
                     <select class="form-control" id="village1" name="village1" required>
                         <option value="">--Select Village Name--</option>
                     </select>
@@ -473,7 +655,6 @@ document.addEventListener("change", function(e) {
                         <c:if test="${dataCListSize eq 0}">
                             <tr>
                                 <td align="center" colspan="8" class="required" style="color:red;">Data Not Found</td>
-<!--                                 <td colspan="8" ></td> -->
                             </tr>
                         </c:if>
         </table>
@@ -481,6 +662,34 @@ document.addEventListener("change", function(e) {
         
         </div>
         </div>
+        		<!-- Show Image Modal HTML -->
+	<div id="imagePopup" class="popup" style="display:none;">
+		<div class="popup-content">
+			<span class="close" onclick="closePopup()">&times;</span>
+			<div id="imageList" class="image-container"></div>
+		</div>
+	</div>
+
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
+			<img id="largeImage" src="" alt="Large Image" />
+			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
+		</div>
+		
+	</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+$(".sidebar-btn").click(function(){
+$(".wrapper").toggleClass("collapse");
+	});
+	});
+
+
+</script>
 <footer class="text-center">
     <%@ include file="/WEB-INF/jspf/footer2.jspf" %>
 </footer>

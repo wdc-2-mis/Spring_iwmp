@@ -30,39 +30,40 @@ $(function() {
 				
 			});
 			
-			
+	
 			$(document).on('change', '#block1', function(e) {
-							e.preventDefault();
-							$gpsCode=$('#block1 option:selected').val();
-							$.ajax({  
-							        url:"getWMPrabhatPheriVillage",
-							        type: "post", 
-									data:{bcode:$gpsCode}, 
-							        error:function(xhr,status,er){
-							                console.log(er);
-							        },
-							        success:function(data) 
-									{
-										$selectedDist=$('#block1').val();
-										$ddlDistrict = $('#village1');
-										$ddlDistrict.empty();
-							        	$ddlDistrict.append('<option value=""> --Select Village Name-- </option>');
-										for ( var key in data) 
-										{
-											if (data.hasOwnProperty(key)) 
-											{
-												if(data[key]==$selectedDist)
-													$ddlDistrict.append('<option value="'+data[key]+'" selected>' +key + '</option>');
-												else
-													$ddlDistrict.append('<option value="'+data[key]+'">' +key+ '</option>');
-											}
-										}
-									}
-								});
-					});
-	
-	
-	
+			    e.preventDefault();
+
+			    let bcode = $('#block1').val().trim();
+
+			    // Reset village dropdown if no block selected
+			    if (!bcode) {
+			        $('#village1').html('<option value="">--Select Village Name--</option>');
+			        return;
+			    }
+
+			    $.ajax({
+			        url: "getWMPrabhatPheriVillage",
+			        type: "POST",
+			        data: { bcode: bcode },
+			        success: function(data) {
+			            let $villageDropdown = $('#village1');
+			            $villageDropdown.empty();
+			            $villageDropdown.append('<option value="">--Select Village Name--</option>');
+
+			            // Populate with returned map (villageName -> villageCode)
+			            $.each(data, function(villageName, villageCode) {
+			                $villageDropdown.append('<option value="' + villageCode + '">' + villageName + '</option>');
+			            });
+			        },
+			        error: function(xhr, status, er) {
+			            console.error("AJAX Error:", er);
+			            console.log("Response:", xhr.responseText);
+			        }
+			    });
+			});
+
+		
 	
 	
 	
@@ -188,4 +189,37 @@ $(document).ready(function () {
         });
     });
 	
+	
+	$(document).on('click', '.showImage', function(e) {
+				
+				$ppId = e.target.getAttribute('data-id');
+				$.ajax({
+					type: 'POST',
+					url: "getImageMahotsavPrabhatPheriId",
+					data: { ppId: $ppId },
+					error: function(xhr, status, er) {
+						console.log(er);
+					},
+					success: function(data) {
+						var imageContainer = $('.image-container');
+						imageContainer.empty();
+						let list = '<ul>';
+						for (let i = 0; i < data.length; i++) {
+							if (data[i] != null) 
+							{
+							//PRD
+								list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							//TEST
+							//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							//Local
+//								list += '<li><img src="resources/images/prabhatpheri/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
+							}
+						}
+						list += '</ul>';
+						document.getElementById('imageList').innerHTML = list;
+						document.getElementById('imagePopup').style.display = 'block';
+					}
+				});
+			});
 	});	

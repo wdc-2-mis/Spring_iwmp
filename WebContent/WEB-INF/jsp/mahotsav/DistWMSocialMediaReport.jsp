@@ -5,7 +5,23 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<script>
+    function downloadPDF(stcd, stName){
+	    document.getElementById("stcd").value=stcd;
+	    document.getElementById("stName").value=stName;
+        document.getRpt.action = "downloadDistWiseWMSocialMediaReportPDF";
+        document.getRpt.method = "post";
+        document.getRpt.submit();
+    }
+    
+    function downloadExcel(stcd, stName){
+	    document.getElementById("stcd").value=stcd;
+	    document.getElementById("stName").value=stName;
+        document.getRpt.action = "downloadExcelDistWMSocialMediaReport";
+        document.getRpt.method = "post";
+        document.getRpt.submit();
+    }
+</script>
 <style>
 .required { color: red; margin-left: 3px; }
 .error-text { color: red; font-size: 0.85em; display: none; margin-top: 4px; }
@@ -17,9 +33,19 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 
 
 <div class="container mt-5">
+ <form name="getRpt">
+   			<input type="hidden" name="stcd" id="stcd" value="" />
+	        <input type="hidden" name="stName" id="stName" value="" />
     <c:if test="${not empty WMDList}">
         <div class="card shadow mt-1 p-5">
             <h4 class="text-center text-primary mb-4"><u>Report WM3 - District-wise Total Video Uploaded for the Social Media Competition of State  '<c:out value="${stName}"/>'</u></h4>
+             <div class="nav-item text-left mb-2">
+<%--             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel('${stcd}','${stName}')"> Excel </button> --%>
+<%--             <button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF('${stcd}','${stName}')">PDF</button> --%>
+            
+            <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
+            </div>
+            
             <div class="table-responsive">
             
                 <table class="table table-bordered table-striped">
@@ -96,6 +122,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
             No data found for selected filters.
         </div>
     </c:if>
+    </form>
 </div>
 
 <br>

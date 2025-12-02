@@ -445,25 +445,109 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	    return status;
 }
+	
+//	@Override
+//	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid) {
+//
+//	    List<IwmpVillage> villList = new ArrayList<>();
+//	    LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+//
+//	    String hql =
+//	        "select village from IwmpVillage village " +
+//	        "where village.vcode in (" +
+//	        "   select distinct pl.iwmpVillage.vcode from IwmpProjectLocation pl " +
+//	        "   where pl.iwmpMProject.projectId in (" +
+//	        "       select upm.iwmpMProject.projectId from IwmpUserProjectMap upm " +
+//	        "       where upm.userReg.regId = :userid" +
+//	        "   )" +
+//	        ") " +
+//	        "and village.iwmpGramPanchayat.iwmpBlock.bcode = :gpscode " +
+//	        "order by village.villageName";
+//
+//	    Session session = sessionFactory.getCurrentSession();
+//
+//	    try {
+//	        session.beginTransaction();
+//
+//	        Query<IwmpVillage> query = session.createQuery(hql, IwmpVillage.class);
+//	        query.setParameter("userid", Integer.parseInt(userid));
+//	        query.setParameter("gpscode", bCode);
+//
+//	        villList = query.list();
+//
+//	        for (IwmpVillage vill : villList) {
+//	            map.put(vill.getVillageName(), vill.getVcode());
+//	        }
+//
+//	        session.getTransaction().commit();
+//	    } 
+//	    catch (Exception e) {
+//	        e.printStackTrace();
+//	        session.getTransaction().rollback();
+//	    }
+//
+//	    return map;
+//	}
 
+//	@Override
+//	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid) {
+//
+//	    LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+//	    Session session = sessionFactory.getCurrentSession();
+//
+//	    String hql = "select village from IwmpVillage village " +
+//	                 "where village.vcode in (" +
+//	                 "   select distinct pl.iwmpVillage.vcode from IwmpProjectLocation pl " +
+//	                 "   where pl.iwmpMProject.projectId in (" +
+//	                 "       select upm.iwmpMProject.projectId from IwmpUserProjectMap upm " +
+//	                 "       where upm.userReg.regId = :userid" +
+//	                 "   )" +
+//	                 ") " +
+//	                 "and village.iwmpGramPanchayat.iwmpBlock.bcode = :gpscode " +
+//	                 "order by village.villageName";
+//
+//	    try {
+//	        session.beginTransaction();
+//	        Query<IwmpVillage> query = session.createQuery(hql, IwmpVillage.class);
+//	        query.setParameter("userid", Integer.parseInt(userid));
+//	        query.setParameter("gpscode", bCode);
+//
+//	        List<IwmpVillage> villList = query.list();
+//
+//	        for (IwmpVillage vill : villList) {
+//	            map.put(vill.getVillageName(), vill.getVcode());
+//	        }
+//
+//	        session.getTransaction().commit();
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        session.getTransaction().rollback();
+//	    }
+//
+//	    return map;
+//	}
+
+	
+	
 	@Override
-	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
+	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode, String userid) {
 		// TODO Auto-generated method stub
-		List<IwmpVillage> bldList=new ArrayList<IwmpVillage>();
-	//	String hql=villageListWatershedyatra;
-		LinkedHashMap<String, Integer> blkMap=new LinkedHashMap<String, Integer>();
+		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId in(select iwmpMProject.projectId from IwmpUserProjectMap where userReg.regId=:userid)) and village.iwmpGramPanchayat.iwmpBlock.bcode=:gpscode order by village.villageName";
+		LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from IwmpVillage where iwmpGramPanchayat.iwmpBlock.bcode=:gpscode order by villageName");
+			Query query = session.createQuery(hql);
+			query.setInteger("userid", Integer.parseInt(userid));
 			query.setInteger("gpscode", bCode);
-			bldList = query.list();
-			
-			for (IwmpVillage blk : bldList) {
-				blkMap.put( blk.getVillageName(), blk.getVcode());
-			//	System.out.println(district.getDcode()+" k "+district.getDistName());
+			villList = query.list();
+		
+			for (IwmpVillage vill : villList) {
+				map.put(vill.getVillageName(), vill.getVcode());
+		
 			}
-			
+			session.getTransaction().commit();
 		} 
 		catch (HibernateException e) {
 			System.err.print("Hibernate error");
@@ -475,10 +559,45 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 			ex.printStackTrace();
 		}
 		finally {
-			session.getTransaction().commit();
+			//session.getTransaction().commit();
 		}
-        return blkMap;
+        return map;
 	}
+	
+//	@Override
+//	public LinkedHashMap<String, Integer> getWMPrabhatPheriVillage(Integer bCode) {
+//		// TODO Auto-generated method stub
+//		List<IwmpVillage> bldList=new ArrayList<IwmpVillage>();
+//	//	String hql=villageListWatershedyatra;
+//		LinkedHashMap<String, Integer> blkMap=new LinkedHashMap<String, Integer>();
+//		Session session = sessionFactory.getCurrentSession();
+//		try {
+//			session.beginTransaction();
+//			Query query = session.createQuery("select distinct v from IwmpVillage v where v.vcode in (select distinct pl.iwmpVillage.vcode from IwmpProjectLocation pl) and v.iwmpGramPanchayat.iwmpBlock.bcode = :gpscode order by v.villageName");
+////			Query query = session.createQuery("select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId in(select iwmpMProject.projectId from IwmpUserProjectMap where userReg.regId=:userid)) and village.iwmpGramPanchayat.gcode=:gpCode order by village.villageName");
+//			query.setInteger("gpscode", bCode);
+//			bldList = query.list();
+//			
+//			for (IwmpVillage blk : bldList) {
+//				blkMap.put( blk.getVillageName(), blk.getVcode());
+//			//	System.out.println(district.getDcode()+" k "+district.getDistName());
+//			}
+//			
+//		} 
+//		catch (HibernateException e) {
+//			System.err.print("Hibernate error");
+//			e.printStackTrace();
+//			session.getTransaction().rollback();
+//		} 
+//		catch(Exception ex){
+//			session.getTransaction().rollback();
+//			ex.printStackTrace();
+//		}
+//		finally {
+//			session.getTransaction().commit();
+//		}
+//        return blkMap;
+//	}
 
 	@Override
 	public List<WMPrabhatPheriBean> getWMPrabhatPheriEdit(Integer prabhatpheriId) {
@@ -688,8 +807,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 		List<String> imgList = new ArrayList<>();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from MahotsavPrabhatPheriPhoto where wmPrabhatPheri.prabhatpheriId = :prabhatpheriId");
-			query.setInteger("prabhatpheriId", ppId);
+			Query query = session.createQuery("from MahotsavPrabhatPheriPhoto where wmPrabhatPheri.prabhatpheriId = :ppId");
+			query.setInteger("ppId", ppId);
 			list = query.list();
 			for (MahotsavPrabhatPheriPhoto photo : list) 
 			{
@@ -698,7 +817,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 				
 				//local
 				imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-				System.out.println(" uc= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//				System.out.println(" uc= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 			}
 			
 			session.getTransaction().commit();
@@ -709,6 +828,8 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 		}
 		return imgList;
 	}
+
+	
 
 
 }
