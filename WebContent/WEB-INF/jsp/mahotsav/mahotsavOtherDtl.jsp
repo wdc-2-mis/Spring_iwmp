@@ -429,7 +429,7 @@ $(document).ready(function() {
    $('#yesBtn').click(function() {
 	   let selected = $('input[name="uploadType"]:checked').val(); // image / video
        if (selected === "image") {
-           $('#urlType').val("I");
+           $('#urlType').val("P");
        } else {
            $('#urlType').val("V");
        }
