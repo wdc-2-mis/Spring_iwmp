@@ -148,13 +148,15 @@ public class WatershedMahotsavController {
         String twitter = request.getParameter("twitter");
         String linkedin = request.getParameter("linkedin");
         String regNoParam = request.getParameter("regNo");
+        String mediaType = request.getParameter("urlType");
+        
         
         ModelAndView mv = new ModelAndView("mahotsav/registrationSuccess");
         try {
             String regNo = watershedMahotsavService.saveMahotsaveData(name, phone, email, address,
                     Integer.parseInt(state), Integer.parseInt(district), Integer.parseInt(block),
                     Integer.parseInt(village), longitude, latitude, facebook, youtube, instagram, twitter,
-                    linkedin, regNoParam, request);
+                    linkedin, regNoParam, mediaType, request);
 
             if (regNo != null && !regNo.trim().isEmpty()) {
             mv.setViewName("mahotsav/registrationSuccess");

@@ -69,7 +69,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	@Override
 	public String saveMahotsaveData(String name, String phone, String email, String address, int state, int district,
 	        int block, int village, String longitude, String latitude, String facebook, String youtube,
-	        String instagram, String twitter, String linkedin, String regNoParam, HttpServletRequest request) {
+	        String instagram, String twitter, String linkedin, String regNoParam, String mediaType, HttpServletRequest request) {
 
 	    String regNo = "";
 	    Session ses = sessionFactory.getCurrentSession();
@@ -117,11 +117,11 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	            ses.save(registration);
 	        }
 
-	        saveVideoIfPresent(ses, facebook, "Facebook", 1, state, district, block, village, longitude, latitude, registration);
-	        saveVideoIfPresent(ses, youtube, "YouTube", 2, state, district, block, village, longitude, latitude, registration);
-	        saveVideoIfPresent(ses, instagram, "Instagram", 3, state, district, block, village, longitude, latitude, registration);
-	        saveVideoIfPresent(ses, twitter, "Twitter", 4, state, district, block, village, longitude, latitude, registration);
-	        saveVideoIfPresent(ses, linkedin, "LinkedIn", 5, state, district, block, village, longitude, latitude, registration);
+	        saveVideoIfPresent(ses, facebook, "Facebook", 1, state, district, block, village, longitude, latitude, registration, mediaType);
+	        saveVideoIfPresent(ses, youtube, "YouTube", 2, state, district, block, village, longitude, latitude, registration, mediaType);
+	        saveVideoIfPresent(ses, instagram, "Instagram", 3, state, district, block, village, longitude, latitude, registration, mediaType);
+	        saveVideoIfPresent(ses, twitter, "Twitter", 4, state, district, block, village, longitude, latitude, registration, mediaType);
+	        saveVideoIfPresent(ses, linkedin, "LinkedIn", 5, state, district, block, village, longitude, latitude, registration, mediaType);
 
 	        ses.getTransaction().commit();
 
@@ -146,7 +146,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	
 	private void saveVideoIfPresent(Session ses, String url, String platform, int mediaId, int state, int district,
             int block, int village, String longitude, String latitude,
-            WatershedMahotsavRegistration registration) {
+            WatershedMahotsavRegistration registration, String mediaType) {
           if (url != null && !url.trim().isEmpty()) {
 
        if (!isValidPlatformUrl(platform, url)) {
@@ -159,6 +159,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
        video.setLongitute(longitude);
        video.setCreatedDate(new Date());
        video.setStatus("PENDING");
+       video.setMedia_type(mediaType.charAt(0));
        video.setRequestedIp(registration.getRequestedIp());
        video.setMahotsavReg(registration);
 

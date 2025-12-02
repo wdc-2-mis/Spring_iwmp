@@ -427,6 +427,12 @@ $(document).ready(function() {
     });
 
    $('#yesBtn').click(function() {
+	   let selected = $('input[name="uploadType"]:checked').val(); // image / video
+       if (selected === "image") {
+           $('#urlType').val("I");
+       } else {
+           $('#urlType').val("V");
+       }
         $('#confirmationModal').modal('hide');
         document.mohotsav.action = "submitRegistration";
         document.mohotsav.method = "post";
@@ -437,7 +443,7 @@ $(document).ready(function() {
          $('#confirmationModal').modal('hide');
     });
 
-
+   
 });
 </script>
 
@@ -451,7 +457,8 @@ $(document).ready(function() {
             <input type="hidden" name="email" value="${email}">
             <input type="hidden" name="address" value="${address}">
             <input type="hidden" name="regNo" value="${regNo}">
-
+            <input type="hidden" id="urlType" name="urlType">
+            
             <div class="row mb-3">
             
             

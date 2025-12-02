@@ -24,6 +24,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
     private Date updatedDate;
     private String createdBy;
     private Date createdDate;
+    private Character media_type;
     
     private IwmpState iwmpState;
     private IwmpDistrict iwmpDistrict;
@@ -42,7 +43,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
 
     public WatershedMahotsavVideoDetails(Integer videoDetailId, String longitute, String latitude, String mediaUrl, String status, String requestedIp, 
     		String updatedBy, Date updatedDate, String createdBy, Date createdDate, IwmpState iwmpState, IwmpDistrict iwmpDistrict, IwmpBlock iwmpBlock, 
-    		IwmpVillage iwmpVillage, WatershedMahotsavMediaMaster mediaMaster, WatershedMahotsavRegistration mahotsavReg) 
+    		IwmpVillage iwmpVillage, WatershedMahotsavMediaMaster mediaMaster, WatershedMahotsavRegistration mahotsavReg, Character media_type) 
     {
     	this.videoDetailId = videoDetailId;
     	this.longitute = longitute;
@@ -60,6 +61,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
         this.iwmpVillage = iwmpVillage;
         this.mediaMaster = mediaMaster;
         this.mahotsavReg = mahotsavReg;
+        this.media_type = media_type;
     }
     
     
@@ -161,7 +163,16 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
         this.mediaUrl = mediaUrl;
     }
 
-    @Column(name = "status", length = 50)
+    @Column(name = "media_type", length = 1)
+    public Character getMedia_type() {
+		return media_type;
+	}
+
+	public void setMedia_type(Character media_type) {
+		this.media_type = media_type;
+	}
+
+	@Column(name = "status", length = 50)
     public String getStatus() {
         return this.status;
     }

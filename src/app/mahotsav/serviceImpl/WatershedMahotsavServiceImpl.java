@@ -18,9 +18,9 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 	@Override
 	public String saveMahotsaveData(String name, String phone, String email, String address, int state, int district,
 			int block, int village, String longitude, String latitude, String facebook, String youtube,
-			String instagram, String twitter, String linkedin, String regNoParam, HttpServletRequest request) {
+			String instagram, String twitter, String linkedin, String regNoParam, String mediaType, HttpServletRequest request) {
 		
-		return watershedMahotsavDao.saveMahotsaveData(name, phone, email, address, state, district, block, village, longitude, latitude, facebook, youtube, instagram, twitter, linkedin, regNoParam, request);
+		return watershedMahotsavDao.saveMahotsaveData(name, phone, email, address, state, district, block, village, longitude, latitude, facebook, youtube, instagram, twitter, linkedin, regNoParam, mediaType, request);
 	}
 
 	@Override
