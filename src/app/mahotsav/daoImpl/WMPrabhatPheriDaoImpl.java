@@ -222,6 +222,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	                 photo.setPhotoUrl(filePath + "PP_" + code +"_"+ sequence + "_" + image.getOriginalFilename());
 
 	                 sess.save(photo);
+	                 sess.evict(photo);
 	                 sequence++;
 	             }
 	         }
