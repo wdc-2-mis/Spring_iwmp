@@ -285,9 +285,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/prabhatpheri/' + imageSrc;
- 	document.getElementById('largeImage').src = 'resources/images/prabhatpheri/' + imageSrc;											
+//  	document.getElementById('largeImage').src = 'resources/images/prabhatpheri/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -344,20 +344,18 @@ display: none; /* Hidden by default */
 /* Close button */
 .close {
   color: #aaa;
+  float: right;
   font-size: 28px;
   font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 3;
 }
+
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
+
 
 
 /* Image list */
@@ -392,7 +390,7 @@ display: none; /* Hidden by default */
 /*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
   padding: 20px;
   width: 80%; /* Set a width, but limit it to 80% of the screen */
-  max-width: 1000px; /* Max width of the popup */
+  max-width: 1500px; /* Max width of the popup */
   border-radius: 10px;
 }
 
@@ -410,7 +408,22 @@ display: none; /* Hidden by default */
   align-items: center; /* Center the image vertically */
   position: relative;
 }
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
 
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
 /* Large image */
 #largeImage {
   width: 100%; /* Ensure it fits inside the popup */
@@ -642,10 +655,10 @@ display: none; /* Hidden by default */
  								<td><c:out value="${data.villagename}" /></td>
  								<td class="text-right"><c:out value="${data.male_participants}" /></td>
 								<td class="text-right"><c:out value="${data.female_participants}" /></td>
-								<td class="text-right"><c:out value="${data.photo_count}" /></td>
-<!-- 								<td class="text-right"> -->
-<%-- 									<a href="#" data-id="${data.prabhatpheri_id}" class="showImage" style="color:blue;"><c:out value="${data.photo_count}" /></a>  --%>
-<!-- 								</td> -->
+<%-- 								<td class="text-right"><c:out value="${data.photo_count}" /></td> --%>
+								<td class="text-right">
+									<a href="#" data-id="${data.prabhatpheri_id}" class="showImage" style="color:blue;"><c:out value="${data.photo_count}" /></a> 
+								</td>
  								
  							</tr>
  						</c:forEach>
