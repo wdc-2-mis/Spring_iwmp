@@ -436,6 +436,13 @@ function validatePhoto(input) {
          return;
      }
     
+     // 5. Check filename for special characters
+     if (checkValid && !/^[A-Za-z0-9]+\.(jpg|jpeg|png)$/i.test(file.name)) {
+         alert("Filename contains special characters or file extension name is incorrect! Please rename the file and upload again.");
+         input.value = "";
+         checkValid = false;
+         return;
+     }
    /*   if (checkValid && /[^\w.-]/.test(file.name)) {
         alert("Filename contains special characters! Please rename the file and upload again.");
         input.value = "";
@@ -516,7 +523,6 @@ function validatePhoto(input) {
             if (!latitude || !longitude || !time) {
                 if (!confirm("This photo does NOT contain GPS or timestamp information.\nDo you still want to upload?")) {
                     input.value = "";
-                    checkValid = false;
                 }
             }
             if(checkValid){
@@ -687,7 +693,7 @@ display: none; /* Hidden by default */
 
 /* Large image */
 #largeImage {
-  width: 100%; /* Ensure it fits inside the popup */
+  width: auto; /* Ensure it fits inside the popup */
   height: auto;
   max-height: 80vh; /* Restrict height to 80% of the viewport height */
   object-fit: contain; /* Ensure the aspect ratio is maintained */

@@ -100,6 +100,11 @@ function validatePhoto(input) {
         return;
     }
     
+    if ( !/^[A-Za-z0-9]+\.(jpg|jpeg|png)$/i.test(fileName)) {
+        alert("Filename contains special characters or file extension name is incorrect! Please rename the file and upload again.");
+        input.value = "";
+        return;
+    }
     // HASH GENERATION
     getHash(file, function(hash) {
     	  let fileName = file.name;

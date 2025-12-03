@@ -117,7 +117,12 @@ document.addEventListener("change", function(e) {
          return;
      }
 
-
+     // 5. Check filename for special characters
+     if ( !/^[A-Za-z0-9]+\.(jpg|jpeg|png)$/i.test(fileName)) {
+         alert("Filename contains special characters or file extension name is incorrect! Please rename the file and upload again.");
+         e.target.value = "";
+         return;
+     }
      // Check if this image already uploaded (duplicate)
      if (window.uploadedFiles.has(fileName)) {
          alert("This image is already uploaded! Please upload a different image.");
