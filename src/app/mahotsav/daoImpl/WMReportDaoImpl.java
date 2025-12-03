@@ -205,11 +205,15 @@ public class WMReportDaoImpl implements WMReportDao {
 	            List<WatershedMahotsavProjectLvlPhoto> list = query.list();
 
 	            for (WatershedMahotsavProjectLvlPhoto photo : list) {
-	                String fileName = photo.getPhotoUrl()
-	                                      .substring(photo.getPhotoUrl().lastIndexOf("/") + 1)
-	                                      .replaceAll(".*\\\\", "");
-	                imgList.add(fileName);
-	                System.out.println(" kdy= " + fileName);
+	              
+	                //server
+					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					
+					//local
+					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+
 	            }
 	        } else {
 	            query = session.createQuery(
@@ -218,11 +222,13 @@ public class WMReportDaoImpl implements WMReportDao {
 	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
 
 	            for (MahotsavPrabhatPheriPhoto photo : list1) {
-	                String fileName = photo.getPhotoUrl()
-	                                      .substring(photo.getPhotoUrl().lastIndexOf("/") + 1)
-	                                      .replaceAll(".*\\\\", "");
-	                imgList.add(fileName);
-//	                System.out.println(" kdy= " + fileName);
+	            	//server
+					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					
+					//local
+					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				
 	            }
 	        }
 

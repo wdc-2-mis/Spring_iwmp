@@ -154,7 +154,7 @@ public class WatershedMahotsavVideoDetails implements java.io.Serializable {
         this.latitude = latitude;
     }
 
-    @Column(name = "media_url", length = 100)
+    @Column(name = "media_url")
     public String getMediaUrl() {
         return this.mediaUrl;
     }
