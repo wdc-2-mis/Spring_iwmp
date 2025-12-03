@@ -192,8 +192,8 @@ function validatePhoto(input) {
         }
 
         // 5. Check filename for special characters
-        if (checkValid && !/^[A-Za-z0-9]+$/.test(file.name.split(".")[0])) {
-            alert("Filename contains special characters! Please rename the file and upload again.");
+        if (checkValid && !/^[A-Za-z0-9]+\.(jpg|jpeg|png)$/i.test(file.name)) {
+            alert("Filename contains special characters or file extension name is incorrect! Please rename the file and upload again.");
             input.value = "";
             checkValid = false;
             return;
@@ -236,7 +236,6 @@ function validatePhoto(input) {
             if (checkValid && (!latitude || !longitude || !time)) {
                 if (!confirm("This photo does NOT contain GPS or timestamp information.\nDo you still want to upload?")) {
                     input.value = "";
-                    checkValid = false;
                 }
             }
             if(checkValid){
