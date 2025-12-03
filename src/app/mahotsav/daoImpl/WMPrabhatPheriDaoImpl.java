@@ -171,7 +171,7 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	         sess.save(data);
 
-	         String code = st_code +"_"+ userfileup.getDistrict1()+"_" + userfileup.getBlock1()+"_" + data.getPrabhatpheriId();
+	         String code = st_code +"_"+ userfileup.getDistrict1()+"_" + userfileup.getBlock1()+"_"+ userfileup.getVillage1()+"_"+ data.getPrabhatpheriId();
 	         // ------------------ Save Photos ------------------
 	         
 	         List<MultipartFile> photos = userfileup.getPhotos();
@@ -732,10 +732,11 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 
 	        sess.save(data);
 
-	        String code = st_code + "_" +
-	                      (userfileup.getDistrict1() != null ? userfileup.getDistrict1() : "0") + "_" +
-	                      (userfileup.getBlock1() != null ? userfileup.getBlock1() : "0") + "_" +
-	                      data.getPrabhatpheriId();
+//	        String code = st_code + "_" +
+//	                      (userfileup.getDistrict1() != null ? userfileup.getDistrict1() : "0") + "_" +
+//	                      (userfileup.getBlock1() != null ? userfileup.getBlock1() : "0") + "_" +
+//	                      data.getPrabhatpheriId();
+	        String code = st_code +"_"+ userfileup.getDistrict1()+"_" + userfileup.getBlock1()+"_"+ userfileup.getVillage1()+"_"+ data.getPrabhatpheriId();
 
 	        // ------------------ SAVE NEW PHOTOS ------------------
 	        List<MultipartFile> photos = userfileup.getPhotos();
