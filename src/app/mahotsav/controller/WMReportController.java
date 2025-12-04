@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -142,6 +143,7 @@ public class WMReportController {
         String district= request.getParameter("district");
         String block= request.getParameter("block");
         String village= request.getParameter("village");
+        String mediaType = request.getParameter("mediaType");
         
         stateList = stateMasterService.getAllState();
         mav.addObject("stateList", stateList);
@@ -173,9 +175,17 @@ public class WMReportController {
 
 		 list = WMSerice.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
 		 
+		 if (mediaType != null && !"ALL".equalsIgnoreCase(mediaType)) {
+		        list = list.stream()
+		                   .filter(r -> r.getMedia_type() != null && String.valueOf(r.getMedia_type().charAt(0)).equalsIgnoreCase(mediaType))
+		                   .collect(Collectors.toList());
+		    }
+
+		 
 		 mav.addObject("stateWMSocialMediaList",list);
 		 mav.addObject("stateWMSocialMediaListSize",list.size());
-		
+		 mav.addObject("selectedMediaType", mediaType);
+		 
 		return mav; 
 	}
 	

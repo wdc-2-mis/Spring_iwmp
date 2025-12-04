@@ -1,6 +1,7 @@
 package app.mahotsav.daoImpl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import app.mahotsav.bean.WatershedMahotsavBean;
 import app.mahotsav.dao.WatershedMahotsavDao;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
@@ -271,6 +273,13 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
                 session.close();
             }
             return exists;
+		}
+
+		@Override
+		public List<WatershedMahotsavBean> getWatershedMahotsavVideoDetails(String reqno) {
+			
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 

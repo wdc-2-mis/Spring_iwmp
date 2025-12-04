@@ -215,6 +215,25 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 						<div id="villageError" class="error-text">Please select
 							village</div>
 					</div>
+						<div class="col-md-2">
+							<label>Media Type<span class="required">*</span></label><br>
+
+							<c:choose>
+								<c:when test="${empty selectedMediaType}">
+									<input type="radio" name="mediaType" value="ALL" checked> All
+                					<input type="radio" name="mediaType" value="P"> Photo
+                					<input type="radio" name="mediaType" value="V"> Video
+            					</c:when>
+
+								<c:otherwise>
+									<input type="radio" name="mediaType" value="ALL" ${selectedMediaType eq 'ALL' ? 'checked' : ''}> All
+                						<input type="radio" name="mediaType" value="P" ${selectedMediaType eq 'P' ? 'checked' : ''}> Photo
+                						<input type="radio" name="mediaType" value="V" ${selectedMediaType eq 'V' ? 'checked' : ''}> Video
+            					</c:otherwise>
+							</c:choose>
+						</div>
+
+
 					<div class="col-md-2 d-flex align-items-end">
 						<button type="button" id="submitBtn" class="btn btn-primary px-5">Get</button>
 					</div>

@@ -20,6 +20,7 @@ public class SocialMediaReport {
 	private String user_reg_no; 
 	private String reg_name;
 	private String phno;
+	private String media_type;
 	private String facebook_urls;
 	private String youtube_urls;
 	private String instagram_urls;
@@ -138,6 +139,12 @@ public class SocialMediaReport {
 	}
 	public void setPhno(String phno) {
 		this.phno = phno;
+	}
+	public String getMedia_type() {
+		return media_type;
+	}
+	public void setMedia_type(String media_type) {
+		this.media_type = media_type;
 	}
 	public String getFacebook_urls() {
 		return facebook_urls;
