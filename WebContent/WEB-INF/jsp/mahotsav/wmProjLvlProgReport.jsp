@@ -40,11 +40,17 @@ $(document).on('click', '.showImage', function(e) {
 				if (data[i] != null) 
 				{
 				//PRD
-//					list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				if(imgType === 'prabhat'){	
+					
+				list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + data[i] + '" alt="Image" onclick="openLargeImage1(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				}
+				else{
+					list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				}
 				//TEST
 				//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 				//Local
-					list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				//	list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 
 				}
 			}
@@ -61,14 +67,24 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + imageSrc;		
+	let imgType = $(this).data('type');
+ 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + imageSrc;
- 	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
+// 	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
 }
-
+function openLargeImage1(imageSrc, index, total) {
+	document.getElementById('imagePopup').style.display = 'none';
+	let imgType = $(this).data('type');
+ 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + imageSrc;
+// 	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
+	document.getElementById('largeImagePopup').style.display = 'block';
+	currentIndex = index;
+	totalImages = total;
+}
 function closeLargeImagePopup() {
 	document.getElementById('largeImagePopup').style.display = 'none';
 }
@@ -98,30 +114,29 @@ function showPrevImage() {
 
 <style>
 
-#imagePopup {
-display: none; /* Hidden by default */
+#imagePopup, #largeImagePopup {
+  display: none;
   position: fixed;
-  top: 50%; /* Center the popup vertically */
-  left: 50%; /* Center the popup horizontally */
-  transform: translate(-50%, -50%); /* Correct centering */
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 100%;
+  background: rgba(0,0,0,0.6);
   z-index: 1000;
-/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
-  padding: 20px;
-  width: 80%; /* Set a width, but limit it to 80% of the screen */
-  max-width: 1000px; /* Max width of the popup */
-  border-radius: 10px;
+  overflow: auto;   /* <---- IMPORTANT: allows popup to resize & dropdown to show */
+  padding: 40px 0;
 }
 
-/* Popup content */
-.popup-content {
-  background-color: #fefefe;
-  margin-left: 300px;
+.popup-content, .large-image-popup-content {
+  background: #fff;
+  margin: auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 600px; /* Increased max-width */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  width: auto;
+  max-width: 95%;   /* <---- Popup width expands with image */
+  max-height: 90%;  /* <---- Popup height expands with image */
+  overflow: auto;   /* <---- Allows scrolling if very large */
 }
 
 /* Close button */
@@ -135,11 +150,8 @@ display: none; /* Hidden by default */
 .close:hover,
 .close:focus {
   color: black;
-  text-decoration: none;
   cursor: pointer;
 }
-
-
 
 /* Image list */
 .image-container ul {
@@ -153,7 +165,7 @@ display: none; /* Hidden by default */
 .image-container li {
   display: flex;
   justify-content: center;
-  align-items: center;
+ 
 }
 
 .image-container img {
@@ -163,58 +175,28 @@ display: none; /* Hidden by default */
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
-#largeImagePopup {
-  display: none; /* Hidden by default */
-  position: fixed;
-  top: 50%; /* Center the popup vertically */
-  left: 50%; /* Center the popup horizontally */
-  transform: translate(-50%, -50%); /* Correct centering */
-  z-index: 1000;
-/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
-  padding: 20px;
-  width: 80%; /* Set a width, but limit it to 80% of the screen */
-  max-width: 1500px; /* Max width of the popup */
-  border-radius: 10px;
-}
 
 
-/* Popup content */
-.large-image-popup-content {
-  background-color: #fefefe;
-  width: 100%;
-  height: auto;
-  max-height: 80vh; /* Set a max height to avoid overflowing */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center; /* Center the image horizontally */
-  align-items: center; /* Center the image vertically */
-  position: relative;
-}
 
 /* Adjust close button position for large image pop-up */
 .large-image-popup-content .close {
   position: absolute; /* Change from float to absolute */
   top: 10px; /* Adjust as needed */
   right: 10px; /* Adjust as needed */
-  color: #aaa;
-  font-size: 28px;
-  font-weight: bold;
+  
 }
 
-.large-image-popup-content .close:hover,
-.large-image-popup-content .close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 
 /* Large image */
 #largeImage {
-  width: 100%; /* Ensure it fits inside the popup */
+  width: auto;
   height: auto;
-  max-height: 80vh; /* Restrict height to 80% of the viewport height */
-  object-fit: contain; /* Ensure the aspect ratio is maintained */
+  max-width: 100%;   /* Fit inside popup */
+  max-height: 85vh;  /* Fit inside screen */
+  object-fit: contain;
+  display: block;
+  margin: auto;
 }
 
 .nav-arrow {
