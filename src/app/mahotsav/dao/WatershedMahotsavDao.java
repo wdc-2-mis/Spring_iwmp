@@ -1,10 +1,7 @@
 package app.mahotsav.dao;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
-import app.mahotsav.bean.WatershedMahotsavBean;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 
 public interface WatershedMahotsavDao {
@@ -21,6 +18,6 @@ public interface WatershedMahotsavDao {
 
 	boolean mediaAlreadyExists(String media);
 	
-	List<WatershedMahotsavBean> getWatershedMahotsavVideoDetails(String reqno);
+
 	
 }
