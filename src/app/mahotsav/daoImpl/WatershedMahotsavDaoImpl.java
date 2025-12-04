@@ -1,6 +1,7 @@
 package app.mahotsav.daoImpl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -159,7 +160,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
        video.setLongitute(longitude);
        video.setCreatedDate(new Date());
        video.setStatus("PENDING");
-       video.setMedia_type(mediaType.charAt(0));
+       video.setMedia_type(mediaType);
        video.setRequestedIp(registration.getRequestedIp());
        video.setMahotsavReg(registration);
 
@@ -272,6 +273,48 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
             }
             return exists;
 		}
+
+		@Override 
+		  public List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo()
+		  { 
+			  Session session = sessionFactory.openSession(); 
+			  return session.createQuery("FROM WatershedMahotsavVideoDetails", WatershedMahotsavVideoDetails.class ).getResultList(); 
+		  }
+		 
+
+		/*
+		 * @Override public List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo()
+		 * {
+		 * 
+		 * Session session = sessionFactory.getCurrentSession();
+		 * session.beginTransaction(); List<WatershedMahotsavVideoDetails> list = new
+		 * ArrayList<WatershedMahotsavVideoDetails>(); try { list = session
+		 * .createQuery("FROM WatershedMahotsavVideoDetails where media_type is null",
+		 * WatershedMahotsavVideoDetails.class) .list();
+		 * 
+		 * for (WatershedMahotsavVideoDetails item : list) {
+		 * 
+		 * String url = item.getMediaUrl(); String detectedType =
+		 * MediaTypeDetector.detectMediaType(url); // VIDEO / IMAGE / NA
+		 * 
+		 * String dbMediaType = item.getMedia_type();
+		 * 
+		 * // Only update when NULL/Empty if (dbMediaType == null ||
+		 * dbMediaType.trim().isEmpty()) {
+		 * 
+		 * if ("Video".equalsIgnoreCase(detectedType)) { item.setMedia_type("VB"); //
+		 * Video → VB session.update(item);
+		 * 
+		 * } else if ("Image".equalsIgnoreCase(detectedType)) {
+		 * item.setMedia_type("PB"); // Image → PB session.update(item);
+		 * 
+		 * }
+		 * 
+		 * } } session.getTransaction().commit(); }
+		 * 
+		 * catch (Exception e) { e.printStackTrace();
+		 * session.getTransaction().rollback(); } return list; }
+		 */
 
 
 	

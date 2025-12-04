@@ -1,10 +1,13 @@
 package app.mahotsav.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
 import app.mahotsav.model.WatershedMahotsavRegistration;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 
 @Service("watershedMahotsavService")
 public interface WatershedMahotsavService {
@@ -20,6 +23,8 @@ public interface WatershedMahotsavService {
 	boolean phoneAlreadyExists(String phone);
 
 	boolean mediaAlreadyExists(String media);
+
+	List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo();
 
 	
 	

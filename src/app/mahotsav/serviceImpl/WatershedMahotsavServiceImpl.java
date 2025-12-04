@@ -1,5 +1,7 @@
 package app.mahotsav.serviceImpl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import app.mahotsav.dao.WatershedMahotsavDao;
 import app.mahotsav.model.WatershedMahotsavRegistration;
+import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.mahotsav.service.WatershedMahotsavService;
 
 @Service("watershedMahotsavService")
@@ -44,6 +47,12 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 	public boolean mediaAlreadyExists(String media) {
 		// TODO Auto-generated method stub
 		return watershedMahotsavDao.mediaAlreadyExists(media);
+	}
+
+	@Override
+	public List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo() {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.findAllMahotsaveVideo();
 	}
 
 	

@@ -1,13 +1,16 @@
 package app.mahotsav.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +22,8 @@ import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.mahotsav.service.WatershedMahotsavService;
 import app.service.StateMasterService;
 import app.service.reports.WatershedYatraReportService;
+import app.util.MediaTypeDetector;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -161,15 +166,15 @@ public class WatershedMahotsavController {
             if (regNo != null && !regNo.trim().isEmpty()) {
             mv.setViewName("mahotsav/registrationSuccess");
             mv.addObject("regNo", regNo);
-            mv.addObject("message", "Your registration number is " + regNo + ". Do you want to upload another video?");
+            mv.addObject("message", "Your registration number is " + regNo + ". Do you want to upload another video or image?");
             }
             else {
             	 mv.setViewName("mahotsav/registrationSuccess");
-            	 mv.addObject("errorMessage", "An error occurred during registration. Please try again later.");
+            	 mv.addObject("errorMessage", "An error occurred during registration. Please try again later  or call 9990133538");
             }
         
         } catch (Exception e) {
-            mv.addObject("errorMessage", "An error occurred during registration. Please try again later.");
+            mv.addObject("errorMessage", "An error occurred during registration. Please try again later  or call 9990133538");
             e.printStackTrace();  // Log the stack trace for debugging purposes
         }
 
@@ -265,6 +270,35 @@ public class WatershedMahotsavController {
         }
 
     }
+
+    @RequestMapping("/mediaReport")
+    public String mediaReport(Model model) {
+
+        List<WatershedMahotsavVideoDetails> list = watershedMahotsavService.findAllMahotsaveVideo();
+
+        for (WatershedMahotsavVideoDetails item : list) {
+            String type = MediaTypeDetector.detectMediaType(item.getMediaUrl()); // VIDEO / IMAGE / NA
+
+            String mediaStr; // now String, not Character
+            switch (type.toUpperCase()) {
+                case "VIDEO":
+                    mediaStr = "VB";  // Video → VB
+                    break;
+                case "IMAGE":
+                    mediaStr = "PB";  // Image → PB
+                    break;
+                default:
+                    mediaStr = "";    // NA → leave blank
+            }
+
+            item.setMedia_type(mediaStr); 
+        }
+
+        model.addAttribute("mediaList", list);
+        return "mahotsav/mediaReport";
+    }
+
+
 
 	
 }
