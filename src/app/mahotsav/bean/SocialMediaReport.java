@@ -26,6 +26,21 @@ public class SocialMediaReport {
 	private String twitter_urls;
 	private String linkedin_urls;
 	
+	private BigInteger total_media_uploaded;
+	private BigInteger total_photo_uploaded;
+	
+	public BigInteger getTotal_media_uploaded() {
+		return total_media_uploaded;
+	}
+	public void setTotal_media_uploaded(BigInteger total_media_uploaded) {
+		this.total_media_uploaded = total_media_uploaded;
+	}
+	public BigInteger getTotal_photo_uploaded() {
+		return total_photo_uploaded;
+	}
+	public void setTotal_photo_uploaded(BigInteger total_photo_uploaded) {
+		this.total_photo_uploaded = total_photo_uploaded;
+	}
 	public Integer getDcode() {
 		return dcode;
 	}

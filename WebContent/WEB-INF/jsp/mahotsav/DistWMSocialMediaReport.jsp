@@ -41,7 +41,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
             <h4 class="text-center text-primary mb-4"><u>Report WM3 - District-wise Total Video Uploaded for the Social Media Competition of State  '<c:out value="${stName}"/>'</u></h4>
              <div class="nav-item text-left mb-2">
 <%--             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel('${stcd}','${stName}')"> Excel </button> --%>
-<%--             <button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF('${stcd}','${stName}')">PDF</button> --%>
+            <button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF('${stcd}','${stName}')">PDF</button>
             
             <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
             </div>
@@ -53,7 +53,9 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                         <tr>
                             <th>S.No.</th>
                             <th>District Name</th>
+                            <th>Total Media Uploaded</th>
                             <th>Total Video Uploaded</th>
+                            <th>Total Photo Uploaded</th>
                             <th>No. of Facebook</th>
                             <th>No. of YouTube</th>
                             <th>No. of Instagram</th>
@@ -69,11 +71,15 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                             <th>6</th>
                             <th>7</th>
                             <th>8</th>
+                            <th>9</th>
+                            <th>10</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Initialize totals -->
+                        <c:set var="totalMediaUploaded" value="0" scope="page" />
                         <c:set var="totalVideoUploaded" value="0" scope="page" />
+                        <c:set var="totalPhotoUploaded" value="0" scope="page" />
                         <c:set var="totalFacebook" value="0" scope="page" />
                         <c:set var="totalYoutube" value="0" scope="page" />
                         <c:set var="totalInstagram" value="0" scope="page" />
@@ -84,7 +90,9 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                             <tr>
                                 <td>${status.index + 1}</td>
                                 <td>${row.dist_name}</td>
+                                <td class="text-end">${row.total_media_uploaded}</td>
                                 <td class="text-end">${row.total_video_uploaded}</td>
+                                <td class="text-end">${row.total_photo_uploaded}</td>
 								<td class="text-end">${row.no_facebook}</td>
 								<td class="text-end">${row.no_youtube}</td>
 								<td class="text-end">${row.no_instagram}</td>
@@ -94,7 +102,9 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                             </tr>
 
                             <!-- Sum totals -->
+                            <c:set var="totalMediaUploaded" value="${totalMediaUploaded + row.total_media_uploaded}" />
                             <c:set var="totalVideoUploaded" value="${totalVideoUploaded + row.total_video_uploaded}" />
+                            <c:set var="totalPhotoUploaded" value="${totalPhotoUploaded + row.total_photo_uploaded}" />
                             <c:set var="totalFacebook" value="${totalFacebook + row.no_facebook}" />
                             <c:set var="totalYoutube" value="${totalYoutube + row.no_youtube}" />
                             <c:set var="totalInstagram" value="${totalInstagram + row.no_instagram}" />
@@ -105,7 +115,9 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
                         <!-- Grand total row -->
                         <tr class="table-secondary fw-bold">
                             <td colspan="2" class="text-center">Grand Total</td>
+                            <td class="text-end">${totalMediaUploaded}</td>
                             <td class="text-end">${totalVideoUploaded}</td>
+                            <td class="text-end">${totalPhotoUploaded}</td>
                             <td class="text-end">${totalFacebook}</td>
                             <td class="text-end">${totalYoutube}</td>
                             <td class="text-end">${totalInstagram}</td>

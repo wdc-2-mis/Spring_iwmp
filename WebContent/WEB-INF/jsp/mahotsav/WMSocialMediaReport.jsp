@@ -40,7 +40,9 @@
                             <th>S.No.</th>
                             <th>State Name</th>
                             <th>Total Registered User</th>
+                            <th>Total Media Uploaded</th>
                             <th>Total Video Uploaded</th>
+                            <th>Total Photo Uploaded</th>
                             <th>No. of Facebook</th>
                             <th>No. of YouTube</th>
                             <th>No. of Instagram</th>
@@ -57,13 +59,17 @@
                             <th>7</th>
                             <th>8</th>
                             <th>9</th>
+                            <th>10</th>
+                            <th>11</th>
                         </tr>
                     </thead>
                     <tbody>
 
                         <!-- Initialize totals -->
                         <c:set var="totalregUser" value="0" scope="page" />
+                        <c:set var="totalMediaUploaded" value="0" scope="page" />
                         <c:set var="totalVideoUploaded" value="0" scope="page" />
+                        <c:set var="totalPhotoUploaded" value="0" scope="page" />
                         <c:set var="totalFacebook" value="0" scope="page" />
                         <c:set var="totalYoutube" value="0" scope="page" />
                         <c:set var="totalInstagram" value="0" scope="page" />
@@ -79,7 +85,9 @@
                                     </a>
                                 </td>
                                 <td class="text-end">${row.total_registered_user}</td>
+                                <td class="text-end">${row.total_media_uploaded}</td>
                                 <td class="text-end">${row.total_video_uploaded}</td>
+                                <td class="text-end">${row.total_photo_uploaded}</td>
                                 <td class="text-end">${row.no_facebook}</td>
                                 <td class="text-end">${row.no_youtube}</td>
                                 <td class="text-end">${row.no_instagram}</td>
@@ -89,7 +97,9 @@
 
                             <!-- Sum totals -->
                             <c:set var="totalregUser" value="${totalregUser + row.total_registered_user}" />
+                            <c:set var="totalMediaUploaded" value="${totalMediaUploaded + row.total_media_uploaded}" />
                             <c:set var="totalVideoUploaded" value="${totalVideoUploaded + row.total_video_uploaded}" />
+                            <c:set var="totalPhotoUploaded" value="${totalPhotoUploaded + row.total_photo_uploaded}" />
                             <c:set var="totalFacebook" value="${totalFacebook + row.no_facebook}" />
                             <c:set var="totalYoutube" value="${totalYoutube + row.no_youtube}" />
                             <c:set var="totalInstagram" value="${totalInstagram + row.no_instagram}" />
@@ -101,7 +111,9 @@
                         <tr class="table-secondary fw-bold">
                             <td colspan="2" class="text-center">Grand Total</td>
                             <td class="text-end">${totalregUser}</td>
+                            <td class="text-end">${totalMediaUploaded}</td>
                             <td class="text-end">${totalVideoUploaded}</td>
+                            <td class="text-end">${totalPhotoUploaded}</td>
                             <td class="text-end">${totalFacebook}</td>
                             <td class="text-end">${totalYoutube}</td>
                             <td class="text-end">${totalInstagram}</td>

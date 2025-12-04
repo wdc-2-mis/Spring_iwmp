@@ -218,8 +218,8 @@ public class AddWMSocialMediaController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			
-				table = new PdfPTable(9);
-				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5});
+				table = new PdfPTable(11);
+				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 				table.setWidthPercentage(70);
 			
 				table.setWidthPercentage(100);
@@ -227,7 +227,9 @@ public class AddWMSocialMediaController {
 				table.setSpacingAfter(0f);
 				table.setHeaderRows(3);
 				
+				BigInteger totmediaupl= BigInteger.valueOf(0);
 				BigInteger totvidupl= BigInteger.valueOf(0);
+				BigInteger totphotoupl= BigInteger.valueOf(0);
 				BigInteger totreguser= BigInteger.valueOf(0);
 				BigInteger nofb= BigInteger.valueOf(0);
 				BigInteger noyt= BigInteger.valueOf(0);
@@ -238,7 +240,9 @@ public class AddWMSocialMediaController {
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Total Registered User", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Media Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Total Video Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Photo Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of YouTube", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Instagram", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -254,6 +258,8 @@ public class AddWMSocialMediaController {
 				CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				int k=1;
 				if(list.size()!=0)
@@ -263,7 +269,9 @@ public class AddWMSocialMediaController {
 						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getStname() , Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getTotal_registered_user().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_media_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getTotal_video_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_photo_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_facebook().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_youtube().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_instagram().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -273,7 +281,9 @@ public class AddWMSocialMediaController {
 
 						k=k+1;
 						totreguser=totreguser.add(list.get(i).getTotal_registered_user()==null?BigInteger.ZERO:list.get(i).getTotal_registered_user());
+						totmediaupl=totmediaupl.add(list.get(i).getTotal_media_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_media_uploaded());
 						totvidupl=totvidupl.add(list.get(i).getTotal_video_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_video_uploaded());
+						totphotoupl=totphotoupl.add(list.get(i).getTotal_photo_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_photo_uploaded());
 						nofb=nofb.add(list.get(i).getNo_facebook()==null?BigInteger.ZERO:list.get(i).getNo_facebook());
 						noyt=noyt.add(list.get(i).getNo_youtube()==null?BigInteger.ZERO:list.get(i).getNo_youtube());
 						noinsta=noinsta.add(list.get(i).getNo_instagram()==null?BigInteger.ZERO:list.get(i).getNo_instagram());
@@ -283,14 +293,16 @@ public class AddWMSocialMediaController {
 					}
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totreguser), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totmediaupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totvidupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totphotoupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nofb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noyt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noinsta), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(notwit), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nolinkedin), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					if(list.size()==0) 
-					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
 					
 						
 		document.add(table);
@@ -321,159 +333,352 @@ public class AddWMSocialMediaController {
 	
 	return null;
 }
-	
-	@RequestMapping(value = "/downloadExcelWMSocialMediaReport", method = RequestMethod.POST)
-	@ResponseBody
-	public String downloadExcelWMSocialMediaReport(HttpServletRequest request, HttpServletResponse response) 
-	{
-		String stcd=request.getParameter("stcode"); 
-		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
-    	list = addWMSocialMediaService.getWMSocialMediaReport();
-		
-			Workbook workbook = new XSSFWorkbook();  
-			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report WM3 - State-wise Total Video Uploaded for the Social Media Competition");   
-			
-			CellStyle style = CommonFunctions.getStyle(workbook);
-			
-			String rptName = "Report WM3 - State-wise Total Video Uploaded for the Social Media Competition";
-			
-			
-			String areaAmtValDetail = "";
-			
-			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-			
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
-			
-			mergedRegion = new CellRangeAddress(list.size()+7,list.size()+7,0,1);
-			sheet.addMergedRegion(mergedRegion);
-	        
-			Row rowhead = sheet.createRow(5); 
-			
-			Cell cell = rowhead.createCell(0);
-			cell.setCellValue("S.No.");
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(1);
-			cell.setCellValue("State Name");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(2);
-			cell.setCellValue("Total Registered User");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(3);
-			cell.setCellValue("Total Video Uploaded");  
-			cell.setCellStyle(style);
-				
-			cell = rowhead.createCell(4);
-			cell.setCellValue("No. of Facebook");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(5);
-			cell.setCellValue("No. of YouTube");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(6);
-			cell.setCellValue("No. of Instagram");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(7);
-			cell.setCellValue("No. of Twitter");  
-			cell.setCellStyle(style);
-			
-			cell = rowhead.createCell(8);
-			cell.setCellValue("No. of LinkedIn");  
-			cell.setCellStyle(style);
-			
-			Row rowhead1 = sheet.createRow(6);
-			for(int i=0;i<9;i++)
-			{
-				cell =rowhead1.createCell(i);
-				cell.setCellValue(i+1);
-				cell.setCellStyle(style);
-			}
-	        int sno = 1;
-	        int rowno  = 7;
-	        BigInteger totreguser= BigInteger.valueOf(0);
-	        BigInteger totvideoup= BigInteger.valueOf(0);
-			BigInteger nofb= BigInteger.valueOf(0);
-			BigInteger noyt= BigInteger.valueOf(0);
-			BigInteger noinsta= BigInteger.valueOf(0);
-			BigInteger notwit= BigInteger.valueOf(0);
-			BigInteger nolinkedin = BigInteger.valueOf(0);
-	        
-	        for(SocialMediaReport bean: list) {
-	        	Row row = sheet.createRow(rowno);
-	        	row.createCell(0).setCellValue(sno); 
-	        	row.createCell(1).setCellValue(bean.getStname());
-	        	row.createCell(2).setCellValue(bean.getTotal_registered_user().doubleValue());
-	        	row.createCell(3).setCellValue(bean.getTotal_video_uploaded().doubleValue());
-	        	row.createCell(4).setCellValue(bean.getNo_facebook().doubleValue());
-				row.createCell(5).setCellValue(bean.getNo_youtube().doubleValue());
-	        	row.createCell(6).setCellValue(bean.getNo_instagram().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getNo_twitter().doubleValue());
-	        	row.createCell(8).setCellValue(bean.getNo_linkedin().doubleValue());
-	        	
-	        	totreguser = totreguser.add(bean.getTotal_registered_user() == null ? BigInteger.ZERO : bean.getTotal_registered_user());
-	        	totvideoup = totvideoup.add(bean.getTotal_video_uploaded() == null ? BigInteger.ZERO : bean.getTotal_video_uploaded());
-	        	nofb = nofb.add(bean.getNo_facebook() == null ? BigInteger.ZERO : bean.getNo_facebook());
-	        	noyt = noyt.add(bean.getNo_youtube() == null ? BigInteger.ZERO : bean.getNo_youtube());
-	        	noinsta = noinsta.add(bean.getNo_instagram() == null ? BigInteger.ZERO : bean.getNo_instagram());
-	        	notwit = notwit.add(bean.getNo_twitter() == null ? BigInteger.ZERO : bean.getNo_twitter());
-	        	nolinkedin = nolinkedin.add(bean.getNo_linkedin() == null ? BigInteger.ZERO : bean.getNo_linkedin());
-	        	sno++;
-	        	rowno++;
-	        }
-	        CellStyle style1 = workbook.createCellStyle();
-	        style1.setBorderTop(BorderStyle.THIN); 
-			style1.setBorderBottom(BorderStyle.THIN);
-			style1.setBorderLeft(BorderStyle.THIN);
-			style1.setBorderRight(BorderStyle.THIN);
-	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
-	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
-			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
-			font1.setFontHeightInPoints((short) 12);
-			font1.setBold(true);
-//			font1.setColor(IndexedColors.WHITE.getIndex());
-			style1.setFont(font1);
-			
-	        Row row = sheet.createRow(list.size()+7);
-	        cell = row.createCell(0);
-			cell.setCellValue("Grand Total");
-			cell.setCellStyle(style1);
-			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
-			cell = row.createCell(1);
-			cell.setCellStyle(style1);
-	        cell = row.createCell(2);
-	        cell.setCellValue(totreguser.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(3);
-	        cell.setCellValue(totvideoup.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(4);
-	        cell.setCellValue(nofb.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(5);
-	        cell.setCellValue(noyt.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(6);
-	        cell.setCellValue(noinsta.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(7);
-	        cell.setCellValue(notwit.doubleValue());
-	        cell.setCellStyle(style1);
-	        cell = row.createCell(8);
-	        cell.setCellValue(nolinkedin.doubleValue());
-	        cell.setCellStyle(style1);
-	        
-	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
-	        String fileName = "attachment; filename=Report SocialMedia.xlsx";
-	        CommonFunctions.downloadExcel(response, workbook, fileName);
-		
-		return "/mahotsav/WMSocialMediaReport";
-		
-	}
+    @RequestMapping(value = "/downloadExcelWMSocialMediaReport", method = RequestMethod.POST)
+    @ResponseBody
+    public String downloadExcelWMSocialMediaReport(HttpServletRequest request, HttpServletResponse response) {
+
+        String stcd = request.getParameter("stcode");
+
+        List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+        list = addWMSocialMediaService.getWMSocialMediaReport();
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("Report WM3 - State-wise Social Media Upload");
+
+        CellStyle style = CommonFunctions.getStyle(workbook);
+
+        String rptName = "Report WM3 - State-wise Total Media Uploaded for the Social Media Competition";
+
+        String areaAmtValDetail = "";
+
+        CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+
+        // ***** increased column size to 10 *****
+        CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 10, areaAmtValDetail, workbook);
+
+        mergedRegion = new CellRangeAddress(list.size()+7, list.size()+7, 0, 1);
+        sheet.addMergedRegion(mergedRegion);
+
+        Row rowhead = sheet.createRow(5);
+
+        Cell cell = rowhead.createCell(0);
+        cell.setCellValue("S.No.");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(1);
+        cell.setCellValue("State Name");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(2);
+        cell.setCellValue("Total Registered User");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(3);
+        cell.setCellValue("Total Media Uploaded");
+        cell.setCellStyle(style);
+        
+        cell = rowhead.createCell(4);
+        cell.setCellValue("Total Video Uploaded");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(5);
+        cell.setCellValue("Total Photo Uploaded");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(6);
+        cell.setCellValue("No. of Facebook");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(7);
+        cell.setCellValue("No. of YouTube");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(8);
+        cell.setCellValue("No. of Instagram");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(9);
+        cell.setCellValue("No. of Twitter");
+        cell.setCellStyle(style);
+
+        cell = rowhead.createCell(10);
+        cell.setCellValue("No. of LinkedIn");
+        cell.setCellStyle(style);
+
+
+        Row rowhead1 = sheet.createRow(6);
+        for (int i = 0; i <= 10; i++) {
+            cell = rowhead1.createCell(i);
+            cell.setCellValue(i + 1);
+            cell.setCellStyle(style);
+        }
+
+        int sno = 1;
+        int rowno = 7;
+
+        BigInteger totreguser = BigInteger.valueOf(0);
+        BigInteger totvideoup = BigInteger.valueOf(0);
+        BigInteger totmediaup = BigInteger.valueOf(0);     
+        BigInteger totphotoup = BigInteger.valueOf(0);     
+
+        BigInteger nofb = BigInteger.valueOf(0);
+        BigInteger noyt = BigInteger.valueOf(0);
+        BigInteger noinsta = BigInteger.valueOf(0);
+        BigInteger notwit = BigInteger.valueOf(0);
+        BigInteger nolinkedin = BigInteger.valueOf(0);
+
+        for (SocialMediaReport bean : list) {
+
+            Row row = sheet.createRow(rowno);
+
+            row.createCell(0).setCellValue(sno);
+            row.createCell(1).setCellValue(bean.getStname());
+            row.createCell(2).setCellValue(bean.getTotal_registered_user().doubleValue());
+            row.createCell(3).setCellValue(bean.getTotal_media_uploaded().doubleValue());
+            row.createCell(4).setCellValue(bean.getTotal_video_uploaded().doubleValue());
+            row.createCell(5).setCellValue(bean.getTotal_photo_uploaded().doubleValue());
+
+            row.createCell(6).setCellValue(bean.getNo_facebook().doubleValue());
+            row.createCell(7).setCellValue(bean.getNo_youtube().doubleValue());
+            row.createCell(8).setCellValue(bean.getNo_instagram().doubleValue());
+            row.createCell(9).setCellValue(bean.getNo_twitter().doubleValue());
+            row.createCell(10).setCellValue(bean.getNo_linkedin().doubleValue());
+
+            totreguser = totreguser.add(bean.getTotal_registered_user() == null ? BigInteger.ZERO : bean.getTotal_registered_user());
+            totvideoup = totvideoup.add(bean.getTotal_video_uploaded() == null ? BigInteger.ZERO : bean.getTotal_video_uploaded());
+            totmediaup = totmediaup.add(bean.getTotal_media_uploaded() == null ? BigInteger.ZERO : bean.getTotal_media_uploaded());  // ✅
+            totphotoup = totphotoup.add(bean.getTotal_photo_uploaded() == null ? BigInteger.ZERO : bean.getTotal_photo_uploaded());  // ✅
+
+            nofb = nofb.add(bean.getNo_facebook() == null ? BigInteger.ZERO : bean.getNo_facebook());
+            noyt = noyt.add(bean.getNo_youtube() == null ? BigInteger.ZERO : bean.getNo_youtube());
+            noinsta = noinsta.add(bean.getNo_instagram() == null ? BigInteger.ZERO : bean.getNo_instagram());
+            notwit = notwit.add(bean.getNo_twitter() == null ? BigInteger.ZERO : bean.getNo_twitter());
+            nolinkedin = nolinkedin.add(bean.getNo_linkedin() == null ? BigInteger.ZERO : bean.getNo_linkedin());
+
+            sno++;
+            rowno++;
+        }
+
+        CellStyle style1 = workbook.createCellStyle();
+        style1.setBorderTop(BorderStyle.THIN);
+        style1.setBorderBottom(BorderStyle.THIN);
+        style1.setBorderLeft(BorderStyle.THIN);
+        style1.setBorderRight(BorderStyle.THIN);
+        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+        font1.setFontHeightInPoints((short) 12);
+        font1.setBold(true);
+        style1.setFont(font1);
+
+
+        Row row = sheet.createRow(list.size() + 7);
+
+        cell = row.createCell(0);
+        cell.setCellValue("Grand Total");
+        cell.setCellStyle(style1);
+        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+
+        cell = row.createCell(1);
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(2);
+        cell.setCellValue(totreguser.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(3);
+        cell.setCellValue(totmediaup.doubleValue());
+        cell.setCellStyle(style1);
+        
+        cell = row.createCell(4);
+        cell.setCellValue(totvideoup.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(5);
+        cell.setCellValue(totphotoup.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(6);
+        cell.setCellValue(nofb.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(7);
+        cell.setCellValue(noyt.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(8);
+        cell.setCellValue(noinsta.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(9);
+        cell.setCellValue(notwit.doubleValue());
+        cell.setCellStyle(style1);
+
+        cell = row.createCell(10);
+        cell.setCellValue(nolinkedin.doubleValue());
+        cell.setCellStyle(style1);
+
+        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+
+        String fileName = "attachment; filename=Report_SocialMedia.xlsx";
+        CommonFunctions.downloadExcel(response, workbook, fileName);
+
+        return "/mahotsav/WMSocialMediaReport";
+    }
+
+//	@RequestMapping(value = "/downloadExcelWMSocialMediaReport", method = RequestMethod.POST)
+//	@ResponseBody
+//	public String downloadExcelWMSocialMediaReport(HttpServletRequest request, HttpServletResponse response) 
+//	{
+//		String stcd=request.getParameter("stcode"); 
+//		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+//    	list = addWMSocialMediaService.getWMSocialMediaReport();
+//		
+//			Workbook workbook = new XSSFWorkbook();  
+//			//invoking creatSheet() method and passing the name of the sheet to be created   
+//			Sheet sheet = workbook.createSheet("Report WM3 - State-wise Total Video Uploaded for the Social Media Competition");   
+//			
+//			CellStyle style = CommonFunctions.getStyle(workbook);
+//			
+//			String rptName = "Report WM3 - State-wise Total Video Uploaded for the Social Media Competition";
+//			
+//			
+//			String areaAmtValDetail = "";
+//			
+//			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+//			
+//			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 8, areaAmtValDetail, workbook);
+//			
+//			mergedRegion = new CellRangeAddress(list.size()+7,list.size()+7,0,1);
+//			sheet.addMergedRegion(mergedRegion);
+//	        
+//			Row rowhead = sheet.createRow(5); 
+//			
+//			Cell cell = rowhead.createCell(0);
+//			cell.setCellValue("S.No.");
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(1);
+//			cell.setCellValue("State Name");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(2);
+//			cell.setCellValue("Total Registered User");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(3);
+//			cell.setCellValue("Total Video Uploaded");  
+//			cell.setCellStyle(style);
+//				
+//			cell = rowhead.createCell(4);
+//			cell.setCellValue("No. of Facebook");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(5);
+//			cell.setCellValue("No. of YouTube");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(6);
+//			cell.setCellValue("No. of Instagram");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(7);
+//			cell.setCellValue("No. of Twitter");  
+//			cell.setCellStyle(style);
+//			
+//			cell = rowhead.createCell(8);
+//			cell.setCellValue("No. of LinkedIn");  
+//			cell.setCellStyle(style);
+//			
+//			Row rowhead1 = sheet.createRow(6);
+//			for(int i=0;i<9;i++)
+//			{
+//				cell =rowhead1.createCell(i);
+//				cell.setCellValue(i+1);
+//				cell.setCellStyle(style);
+//			}
+//	        int sno = 1;
+//	        int rowno  = 7;
+//	        BigInteger totreguser= BigInteger.valueOf(0);
+//	        BigInteger totvideoup= BigInteger.valueOf(0);
+//			BigInteger nofb= BigInteger.valueOf(0);
+//			BigInteger noyt= BigInteger.valueOf(0);
+//			BigInteger noinsta= BigInteger.valueOf(0);
+//			BigInteger notwit= BigInteger.valueOf(0);
+//			BigInteger nolinkedin = BigInteger.valueOf(0);
+//	        
+//	        for(SocialMediaReport bean: list) {
+//	        	Row row = sheet.createRow(rowno);
+//	        	row.createCell(0).setCellValue(sno); 
+//	        	row.createCell(1).setCellValue(bean.getStname());
+//	        	row.createCell(2).setCellValue(bean.getTotal_registered_user().doubleValue());
+//	        	row.createCell(3).setCellValue(bean.getTotal_video_uploaded().doubleValue());
+//	        	row.createCell(4).setCellValue(bean.getNo_facebook().doubleValue());
+//				row.createCell(5).setCellValue(bean.getNo_youtube().doubleValue());
+//	        	row.createCell(6).setCellValue(bean.getNo_instagram().doubleValue());
+//	        	row.createCell(7).setCellValue(bean.getNo_twitter().doubleValue());
+//	        	row.createCell(8).setCellValue(bean.getNo_linkedin().doubleValue());
+//	        	
+//	        	totreguser = totreguser.add(bean.getTotal_registered_user() == null ? BigInteger.ZERO : bean.getTotal_registered_user());
+//	        	totvideoup = totvideoup.add(bean.getTotal_video_uploaded() == null ? BigInteger.ZERO : bean.getTotal_video_uploaded());
+//	        	nofb = nofb.add(bean.getNo_facebook() == null ? BigInteger.ZERO : bean.getNo_facebook());
+//	        	noyt = noyt.add(bean.getNo_youtube() == null ? BigInteger.ZERO : bean.getNo_youtube());
+//	        	noinsta = noinsta.add(bean.getNo_instagram() == null ? BigInteger.ZERO : bean.getNo_instagram());
+//	        	notwit = notwit.add(bean.getNo_twitter() == null ? BigInteger.ZERO : bean.getNo_twitter());
+//	        	nolinkedin = nolinkedin.add(bean.getNo_linkedin() == null ? BigInteger.ZERO : bean.getNo_linkedin());
+//	        	sno++;
+//	        	rowno++;
+//	        }
+//	        CellStyle style1 = workbook.createCellStyle();
+//	        style1.setBorderTop(BorderStyle.THIN); 
+//			style1.setBorderBottom(BorderStyle.THIN);
+//			style1.setBorderLeft(BorderStyle.THIN);
+//			style1.setBorderRight(BorderStyle.THIN);
+//	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+//	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+//			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+//			font1.setFontHeightInPoints((short) 12);
+//			font1.setBold(true);
+////			font1.setColor(IndexedColors.WHITE.getIndex());
+//			style1.setFont(font1);
+//			
+//	        Row row = sheet.createRow(list.size()+7);
+//	        cell = row.createCell(0);
+//			cell.setCellValue("Grand Total");
+//			cell.setCellStyle(style1);
+//			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+//			cell = row.createCell(1);
+//			cell.setCellStyle(style1);
+//	        cell = row.createCell(2);
+//	        cell.setCellValue(totreguser.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(3);
+//	        cell.setCellValue(totvideoup.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(4);
+//	        cell.setCellValue(nofb.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(5);
+//	        cell.setCellValue(noyt.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(6);
+//	        cell.setCellValue(noinsta.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(7);
+//	        cell.setCellValue(notwit.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        cell = row.createCell(8);
+//	        cell.setCellValue(nolinkedin.doubleValue());
+//	        cell.setCellStyle(style1);
+//	        
+//	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 7);
+//	        String fileName = "attachment; filename=Report SocialMedia.xlsx";
+//	        CommonFunctions.downloadExcel(response, workbook, fileName);
+//		
+//		return "/mahotsav/WMSocialMediaReport";
+//		
+//	}
 	
 	@RequestMapping(value = "/downloadDistWiseWMSocialMediaReportPDF", method = RequestMethod.POST)
 	public ModelAndView downloadDistWiseWMSocialMediaReportPDF( HttpServletRequest request, HttpServletResponse response)
@@ -516,8 +721,8 @@ public class AddWMSocialMediaController {
 			document.add(paragraph2);
 			document.add(paragraph3);
 			
-				table = new PdfPTable(8);
-				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5});
+				table = new PdfPTable(10);
+				table.setWidths(new int[] { 2, 8, 5, 5, 5, 5, 5, 5, 5, 5});
 				table.setWidthPercentage(70);
 			
 				table.setWidthPercentage(100);
@@ -525,7 +730,9 @@ public class AddWMSocialMediaController {
 				table.setSpacingAfter(0f);
 				table.setHeaderRows(3);
 				
+				BigInteger totmediaupl= BigInteger.valueOf(0);
 				BigInteger totvidupl= BigInteger.valueOf(0);
+				BigInteger totphotoupl= BigInteger.valueOf(0);
 				BigInteger totreguser= BigInteger.valueOf(0);
 				BigInteger nofb= BigInteger.valueOf(0);
 				BigInteger noyt= BigInteger.valueOf(0);
@@ -535,7 +742,9 @@ public class AddWMSocialMediaController {
 				
 				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Media Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "Total Video Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Total Photo Uploaded", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of YouTube", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Instagram", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -550,6 +759,8 @@ public class AddWMSocialMediaController {
 				CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				
 				int k=1;
 				if(list.size()!=0)
@@ -558,7 +769,9 @@ public class AddWMSocialMediaController {
 
 						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getDist_name() , Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_media_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getTotal_video_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getTotal_photo_uploaded().toString() , Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_facebook().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_youtube().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
 						CommonFunctions.insertCell(table, list.get(i).getNo_instagram().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
@@ -567,7 +780,9 @@ public class AddWMSocialMediaController {
 						
 
 						k=k+1;
+						totmediaupl=totmediaupl.add(list.get(i).getTotal_media_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_media_uploaded());
 						totvidupl=totvidupl.add(list.get(i).getTotal_video_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_video_uploaded());
+						totphotoupl=totphotoupl.add(list.get(i).getTotal_photo_uploaded()==null?BigInteger.ZERO:list.get(i).getTotal_photo_uploaded());
 						nofb=nofb.add(list.get(i).getNo_facebook()==null?BigInteger.ZERO:list.get(i).getNo_facebook());
 						noyt=noyt.add(list.get(i).getNo_youtube()==null?BigInteger.ZERO:list.get(i).getNo_youtube());
 						noinsta=noinsta.add(list.get(i).getNo_instagram()==null?BigInteger.ZERO:list.get(i).getNo_instagram());
@@ -576,14 +791,16 @@ public class AddWMSocialMediaController {
 						
 					}
 					CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totmediaupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(totvidupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+					CommonFunctions.insertCell3(table, String.valueOf(totphotoupl), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nofb), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noyt), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(noinsta), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(notwit), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					CommonFunctions.insertCell3(table, String.valueOf(nolinkedin), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 					if(list.size()==0) 
-					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 8, 1, bf8);
+					CommonFunctions.insertCell(table, " Data not found", Element.ALIGN_CENTER, 10, 1, bf8);
 					
 						
 		document.add(table);
