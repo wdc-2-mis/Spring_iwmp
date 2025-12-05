@@ -853,7 +853,7 @@ public class AddWMSocialMediaController {
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
 			
-			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 7, areaAmtValDetail, workbook);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 9, areaAmtValDetail, workbook);
 			
 			mergedRegion = new CellRangeAddress(list.size()+7,list.size()+7,0,1);
 			sheet.addMergedRegion(mergedRegion);
@@ -868,36 +868,40 @@ public class AddWMSocialMediaController {
 			cell.setCellValue("District Name");  
 			cell.setCellStyle(style);
 			
-//			cell = rowhead.createCell(2);
-//			cell.setCellValue("Total Registered User");  
-//			cell.setCellStyle(style);
-			
 			cell = rowhead.createCell(2);
-			cell.setCellValue("Total Video Uploaded");  
+			cell.setCellValue("Total Media Uploaded");  
 			cell.setCellStyle(style);
-				
+			
 			cell = rowhead.createCell(3);
-			cell.setCellValue("No. of Facebook");  
+			cell.setCellValue("Total Video Uploaded");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(4);
-			cell.setCellValue("No. of YouTube");  
+			cell.setCellValue("Total Photo Uploaded");  
 			cell.setCellStyle(style);
-			
+				
 			cell = rowhead.createCell(5);
-			cell.setCellValue("No. of Instagram");  
+			cell.setCellValue("No. of Facebook");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(6);
-			cell.setCellValue("No. of Twitter");  
+			cell.setCellValue("No. of YouTube");  
 			cell.setCellStyle(style);
 			
 			cell = rowhead.createCell(7);
+			cell.setCellValue("No. of Instagram");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("No. of Twitter");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(9);
 			cell.setCellValue("No. of LinkedIn");  
 			cell.setCellStyle(style);
 			
 			Row rowhead1 = sheet.createRow(6);
-			for(int i=0;i<8;i++)
+			for(int i=0;i<10;i++)
 			{
 				cell =rowhead1.createCell(i);
 				cell.setCellValue(i+1);
@@ -905,7 +909,8 @@ public class AddWMSocialMediaController {
 			}
 	        int sno = 1;
 	        int rowno  = 7;
-//	        BigInteger totreguser= BigInteger.valueOf(0);
+	        BigInteger totmediaupl= BigInteger.valueOf(0);
+	        BigInteger totphotoupl= BigInteger.valueOf(0);
 	        BigInteger totvideoup= BigInteger.valueOf(0);
 			BigInteger nofb= BigInteger.valueOf(0);
 			BigInteger noyt= BigInteger.valueOf(0);
@@ -917,16 +922,18 @@ public class AddWMSocialMediaController {
 	        	Row row = sheet.createRow(rowno);
 	        	row.createCell(0).setCellValue(sno); 
 	        	row.createCell(1).setCellValue(bean.getDist_name());
-//	        	row.createCell(2).setCellValue(bean.getTotal_registered_user().doubleValue());
-	        	row.createCell(2).setCellValue(bean.getTotal_video_uploaded().doubleValue());
-	        	row.createCell(3).setCellValue(bean.getNo_facebook().doubleValue());
-				row.createCell(4).setCellValue(bean.getNo_youtube().doubleValue());
-	        	row.createCell(5).setCellValue(bean.getNo_instagram().doubleValue());
-	        	row.createCell(6).setCellValue(bean.getNo_twitter().doubleValue());
-	        	row.createCell(7).setCellValue(bean.getNo_linkedin().doubleValue());
+	        	row.createCell(2).setCellValue(bean.getTotal_media_uploaded().doubleValue());
+	        	row.createCell(3).setCellValue(bean.getTotal_video_uploaded().doubleValue());
+	        	row.createCell(4).setCellValue(bean.getTotal_photo_uploaded().doubleValue());
+	        	row.createCell(5).setCellValue(bean.getNo_facebook().doubleValue());
+				row.createCell(6).setCellValue(bean.getNo_youtube().doubleValue());
+	        	row.createCell(7).setCellValue(bean.getNo_instagram().doubleValue());
+	        	row.createCell(8).setCellValue(bean.getNo_twitter().doubleValue());
+	        	row.createCell(9).setCellValue(bean.getNo_linkedin().doubleValue());
 	        	
-//	        	totreguser = totreguser.add(bean.getTotal_registered_user() == null ? BigInteger.ZERO : bean.getTotal_registered_user());
+	        	totmediaupl = totmediaupl.add(bean.getTotal_media_uploaded() == null ? BigInteger.ZERO : bean.getTotal_media_uploaded());
 	        	totvideoup = totvideoup.add(bean.getTotal_video_uploaded() == null ? BigInteger.ZERO : bean.getTotal_video_uploaded());
+	        	totphotoupl = totphotoupl.add(bean.getTotal_photo_uploaded() == null ? BigInteger.ZERO : bean.getTotal_photo_uploaded());
 	        	nofb = nofb.add(bean.getNo_facebook() == null ? BigInteger.ZERO : bean.getNo_facebook());
 	        	noyt = noyt.add(bean.getNo_youtube() == null ? BigInteger.ZERO : bean.getNo_youtube());
 	        	noinsta = noinsta.add(bean.getNo_instagram() == null ? BigInteger.ZERO : bean.getNo_instagram());
@@ -955,25 +962,28 @@ public class AddWMSocialMediaController {
 			CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
 			cell = row.createCell(1);
 			cell.setCellStyle(style1);
-//	        cell = row.createCell(2);
-//	        cell.setCellValue(totreguser.doubleValue());
-//	        cell.setCellStyle(style1);
 	        cell = row.createCell(2);
-	        cell.setCellValue(totvideoup.doubleValue());
+	        cell.setCellValue(totmediaupl.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(3);
-	        cell.setCellValue(nofb.doubleValue());
+	        cell.setCellValue(totvideoup.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(4);
-	        cell.setCellValue(noyt.doubleValue());
+	        cell.setCellValue(totphotoupl.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(5);
-	        cell.setCellValue(noinsta.doubleValue());
+	        cell.setCellValue(nofb.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(6);
-	        cell.setCellValue(notwit.doubleValue());
+	        cell.setCellValue(noyt.doubleValue());
 	        cell.setCellStyle(style1);
 	        cell = row.createCell(7);
+	        cell.setCellValue(noinsta.doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(8);
+	        cell.setCellValue(notwit.doubleValue());
+	        cell.setCellStyle(style1);
+	        cell = row.createCell(9);
 	        cell.setCellValue(nolinkedin.doubleValue());
 	        cell.setCellStyle(style1);
 	        

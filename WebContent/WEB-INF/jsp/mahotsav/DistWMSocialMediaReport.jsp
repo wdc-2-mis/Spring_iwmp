@@ -40,7 +40,7 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
         <div class="card shadow mt-1 p-5">
             <h4 class="text-center text-primary mb-4"><u>Report WM3 - District-wise Total Video Uploaded for the Social Media Competition of State  '<c:out value="${stName}"/>'</u></h4>
              <div class="nav-item text-left mb-2">
-<%--             <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel('${stcd}','${stName}')"> Excel </button> --%>
+            <button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="downloadExcel('${stcd}','${stName}')"> Excel </button>
             <button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF('${stcd}','${stName}')">PDF</button>
             
             <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
