@@ -50,6 +50,18 @@ public class WMReportDaoImpl implements WMReportDao {
 	@Value("${getDistWMProjLvlDetails}")
 	String getDistWMProjLvlDetails;
 	
+	@Value("${getStWiseProjLvlPhoto}")
+	String getStWiseProjLvlPhoto;
+	
+	@Value("${getStWiseProjLvlPPPhoto}")
+	String getStWiseProjLvlPPPhoto;
+	
+	@Value("${getDistWiseProjLvlPhoto}")
+	String getDistWiseProjLvlPhoto;
+	
+	@Value("${getDistWiseProjLvlPPPhoto}")
+	String getDistWiseProjLvlPPPhoto;
+	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -196,15 +208,14 @@ public class WMReportDaoImpl implements WMReportDao {
 	    Session session = sessionFactory.getCurrentSession();
 	    List<String> imgList = new ArrayList<>();
 	    Query query = null;
-
+        String hql = getStWiseProjLvlPhoto;
+        String hql1 = getStWiseProjLvlPPPhoto;
+	    
 	    try {
 	        session.beginTransaction();
 
 	        if ("projectlvl".equals(imgType)) {
-	            query = session.createQuery(
-	                "SELECT p FROM WatershedMahotsavProjectLvlPhoto p " +
-	                "JOIN p.watershedMahotsav l WHERE l.state.stCode = :stCode and l.status = 'C' "
-	            );
+	            query = session.createQuery(hql);
 	            query.setInteger("stCode", stCode);
 	            List<WatershedMahotsavProjectLvlPhoto> list = query.list();
 
@@ -220,8 +231,7 @@ public class WMReportDaoImpl implements WMReportDao {
 
 	            }
 	        } else {
-	            query = session.createQuery(
-	                "SELECT p FROM MahotsavPrabhatPheriPhoto p WHERE p.wmPrabhatPheri.prabhatpheriId in(select prabhatpheriId from MahotsavPrabhatPheri where iwmpState.stCode = :stCode and status='C')");
+	            query = session.createQuery(hql1);
 	            query.setInteger("stCode", stCode);
 	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
 
@@ -272,15 +282,14 @@ public class WMReportDaoImpl implements WMReportDao {
 		Session session = sessionFactory.getCurrentSession();
 	    List<String> imgList = new ArrayList<>();
 	    Query query = null;
-
+	    String hql = getDistWiseProjLvlPhoto;
+        String hql1 = getDistWiseProjLvlPPPhoto;	
+	    
 	    try {
 	        session.beginTransaction();
 
 	        if ("projectlvl".equals(imgType)) {
-	            query = session.createQuery(
-	                "SELECT p FROM WatershedMahotsavProjectLvlPhoto p " +
-	                "JOIN p.watershedMahotsav l WHERE l.district.dcode = :distCode and l.status = 'C' "
-	            );
+	            query = session.createQuery(hql);
 	            query.setInteger("distCode", distCode);
 	            List<WatershedMahotsavProjectLvlPhoto> list = query.list();
 
@@ -295,8 +304,7 @@ public class WMReportDaoImpl implements WMReportDao {
 					
 	            }
 	        } else {
-	            query = session.createQuery(
-	                "SELECT p FROM MahotsavPrabhatPheriPhoto p WHERE p.wmPrabhatPheri.prabhatpheriId in(select prabhatpheriId from MahotsavPrabhatPheri where iwmpDistrict.dcode = :distCode and status='C')");
+	            query = session.createQuery(hql1);
 	            query.setInteger("distCode", distCode);
 	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
 
