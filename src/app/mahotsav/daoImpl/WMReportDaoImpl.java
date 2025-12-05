@@ -21,6 +21,7 @@ import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpVillage;
+import app.projectevaluation.bean.ProjectEvaluationBean;
 
 @Repository("WMReportDao")
 public class WMReportDaoImpl implements WMReportDao {
@@ -45,6 +46,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	
 	@Value("${getWMSocialMediaReportData}")
 	String getWMSocialMediaReportDetails;
+	
+	@Value("${getDistWMProjLvlDetails}")
+	String getDistWMProjLvlDetails;
 	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -219,6 +223,79 @@ public class WMReportDaoImpl implements WMReportDao {
 	            query = session.createQuery(
 	                "SELECT p FROM MahotsavPrabhatPheriPhoto p WHERE p.wmPrabhatPheri.prabhatpheriId in(select prabhatpheriId from MahotsavPrabhatPheri where iwmpState.stCode = :stCode and status='C')");
 	            query.setInteger("stCode", stCode);
+	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
+
+	            for (MahotsavPrabhatPheriPhoto photo : list1) {
+	            	//server
+					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					
+					//local
+					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				
+	            }
+	        }
+
+	        session.getTransaction().commit();
+	    } catch (Exception ex) {
+	        session.getTransaction().rollback();
+	        ex.printStackTrace();
+	    }
+
+	    return imgList;
+	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getdistWMProjLvlProgRpt(int stcd) {
+		List<InaugurationMahotsavBean> getDistWMProjLvlData = new ArrayList<InaugurationMahotsavBean>();
+		String hql = getDistWMProjLvlDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(InaugurationMahotsavBean.class));
+			getDistWMProjLvlData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getDistWMProjLvlData;
+	}
+
+	@Override
+	public List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType) {
+		Session session = sessionFactory.getCurrentSession();
+	    List<String> imgList = new ArrayList<>();
+	    Query query = null;
+
+	    try {
+	        session.beginTransaction();
+
+	        if ("projectlvl".equals(imgType)) {
+	            query = session.createQuery(
+	                "SELECT p FROM WatershedMahotsavProjectLvlPhoto p " +
+	                "JOIN p.watershedMahotsav l WHERE l.district.dcode = :distCode and l.status = 'C' "
+	            );
+	            query.setInteger("distCode", distCode);
+	            List<WatershedMahotsavProjectLvlPhoto> list = query.list();
+
+	            for (WatershedMahotsavProjectLvlPhoto photo : list) {
+	              
+	                //server
+					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					
+					//local
+					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					
+	            }
+	        } else {
+	            query = session.createQuery(
+	                "SELECT p FROM MahotsavPrabhatPheriPhoto p WHERE p.wmPrabhatPheri.prabhatpheriId in(select prabhatpheriId from MahotsavPrabhatPheri where iwmpDistrict.dcode = :distCode and status='C')");
+	            query.setInteger("distCode", distCode);
 	            List<MahotsavPrabhatPheriPhoto> list1 = query.list();
 
 	            for (MahotsavPrabhatPheriPhoto photo : list1) {

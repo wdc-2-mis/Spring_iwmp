@@ -24,4 +24,8 @@ public interface WMReportService {
 
 	List<String> getImageMahotsavProjAtStLVL(Integer stCode, String imgType);
 
+	List<InaugurationMahotsavBean> getdistWMProjLvlProgRpt(int stcd);
+
+	List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType);
+
 }

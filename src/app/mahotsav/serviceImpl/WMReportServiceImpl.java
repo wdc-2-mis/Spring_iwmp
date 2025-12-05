@@ -75,6 +75,18 @@ public class WMReportServiceImpl implements WMReportService{
 		// TODO Auto-generated method stub
 		return WMDao.getImageMahotsavProjAtStLVL(stCode, imgType);
 	}
+
+	@Override
+	public List<InaugurationMahotsavBean> getdistWMProjLvlProgRpt(int stcd) {
+		// TODO Auto-generated method stub
+		return WMDao.getdistWMProjLvlProgRpt(stcd);
+	}
+
+	@Override
+	public List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType) {
+		// TODO Auto-generated method stub
+		return WMDao.getImageMahotsavProjAtDistLVL(distCode, imgType);
+	}
 	
 
 }

@@ -46,6 +46,7 @@ import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.service.WMReportService;
+import app.projectevaluation.bean.ProjectEvaluationBean;
 
 @Controller("wMProjectLevelReportController")
 public class WMProjectLevelReportController {
@@ -89,6 +90,41 @@ public class WMProjectLevelReportController {
 		return imgList;
 	}
 	
+	@RequestMapping(value = "/getDistImageMahotProgRpt", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getDistImageMahotProgRpt(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("distCode") Integer distCode, @RequestParam("imgType") String imgType){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = WMService.getImageMahotsavProjAtDistLVL(distCode, imgType);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+	
+	@RequestMapping(value = "/distWMProjLvlProgRpt", method = RequestMethod.GET)
+	public ModelAndView distWMProjLvlProgRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
+		
+		ModelAndView mav = new ModelAndView("mahotsav/wmProjLvlProgReport");
+		
+		list = WMService.getdistWMProjLvlProgRpt(Integer.parseInt(stcd));
+		
+		mav.addObject("stcd",stcd);
+		mav.addObject("stName",stName);
+		mav.addObject("distWMProjList",list);
+		mav.addObject("distWMProjListSize",list.size());
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/downloadExcelProjLvlProgram", method = RequestMethod.POST)
 	@ResponseBody
 	public String downloadExcelProjLvlProgram(HttpServletRequest request, HttpServletResponse response)
@@ -100,11 +136,11 @@ public class WMProjectLevelReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report WM2 - Project Level Watershed Mahotsav Program");
+		Sheet sheet = workbook.createSheet("Report WM2 - State Wise Project Level Watershed Mahotsav Program");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report WM2 - Project Level Watershed Mahotsav Program";
+		String rptName = "Report WM2 - State Wise Project Level Watershed Mahotsav Program";
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -567,7 +603,7 @@ public class WMProjectLevelReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report WM2 - Project Level Watershed Mahotsav Program", f3);
+			paragraph3 = new Paragraph("Report WM2 - State Wise Project Level Watershed Mahotsav Program", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -742,7 +778,228 @@ public class WMProjectLevelReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report WM1- State.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM2- State.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadDistPDFProjLvlProgram", method = RequestMethod.POST)
+	public ModelAndView downloadDistPDFProjLvlProgram(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
+		String stcd = request.getParameter("stcd");
+		list = WMService.getdistWMProjLvlProgRpt(Integer.parseInt(stcd));
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 14, 14, 0);
+			document.addTitle("WM2 - WMProjectLevelReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report WM2 - District Level Project Level Watershed Mahotsav Program", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(14);
+		    paragraph3.setSpacingAfter(14);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(20);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Prabhat Pheri", Element.ALIGN_CENTER, 5, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Project Level Watershed Mahotsav Organized", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Participation in Project Level Watershed Mahotsav", Element.ALIGN_CENTER, 6, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Works for Bhoomi Poojan", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Works for Lokarpan", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Shramdaan", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Agro forestry / Horticulture Plantation (Number of Sapling)", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No of Photographs Uploaded", Element.ALIGN_CENTER, 1, 3, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Numbers of Prabhat Pheri Organized", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Participants/Villagers", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of Photographs Uploaded", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Participants/Villagers", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Public Representatives", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Government Officials", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Participation (7+11+12+13)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Locations", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of people participated", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Male", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Female", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total (4+5)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Male", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Female", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total (8+9)", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "14", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "15", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "16", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "17", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "18", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "19", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "20", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			int k = 1;
+			BigInteger totPPOrganized = BigInteger.ZERO;
+			BigInteger totPPMale = BigInteger.ZERO;
+			BigInteger totPPFemale = BigInteger.ZERO;
+			BigInteger totPPParticipants = BigInteger.ZERO;
+			BigInteger totPPPhoto = BigInteger.ZERO;
+			
+			BigInteger totPLOrganized = BigInteger.ZERO;
+			BigInteger totPLMale = BigInteger.ZERO;
+			BigInteger totPLFemale = BigInteger.ZERO;
+			BigInteger totPLMFParticipants = BigInteger.ZERO;
+			BigInteger totPLRepresentatives = BigInteger.ZERO;
+			BigInteger totPLGoverment = BigInteger.ZERO;
+			BigInteger totPLParticipants = BigInteger.ZERO;
+			BigInteger totPLBhoomiPoojan = BigInteger.ZERO;
+			BigInteger totPLLokarpan = BigInteger.ZERO;
+			BigInteger totPLShramdaanLoc = BigInteger.ZERO;
+			BigInteger totPLShramdaanPeople = BigInteger.ZERO;
+			BigInteger totPLPlantation = BigInteger.ZERO;
+			BigInteger totPLImage = BigInteger.ZERO;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_of_prabhat() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getNo_of_prabhat()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPr_male() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPr_male()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPr_female() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPr_female()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getPr_total_male_female() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPr_total_male_female()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getTotal_prabhat_photo() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getTotal_prabhat_photo()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        
+			        CommonFunctions.insertCell(table, list.get(i).getNo_of_projectlvl() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getNo_of_projectlvl()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getPl_male() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPl_male()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getPl_female() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPl_female()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getPl_total_male_female() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getPl_total_male_female()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getRepresentatives() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getRepresentatives()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getGovt_officials() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getGovt_officials()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getTotal_participations() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getTotal_participations()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getBhoomi_poojan() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getBhoomi_poojan()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getLokarpans() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getLokarpans()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getShramdaan_location() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getShramdaan_location()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getShramdaan_participated() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getShramdaan_participated()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_of_agro() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getNo_of_agro()), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getTotal_projlvl_photo() == BigInteger.ZERO ? "" : String.valueOf(list.get(i).getTotal_projlvl_photo()), Element.ALIGN_RIGHT, 1, 1, bf8);
+
+					
+			        totPPOrganized = totPPOrganized.add(list.get(i).getNo_of_prabhat());
+			        totPPMale = totPPMale.add(list.get(i).getPr_male());
+			        totPPFemale = totPPFemale.add(list.get(i).getPr_female());
+			        totPPParticipants = totPPParticipants.add(list.get(i).getPr_total_male_female());
+			        totPPPhoto = totPPPhoto.add(list.get(i).getTotal_prabhat_photo());
+			        
+			        totPLOrganized = totPLOrganized.add(list.get(i).getNo_of_projectlvl());
+			        totPLMale = totPLMale.add(list.get(i).getPl_male());
+			        totPLFemale = totPLFemale.add(list.get(i).getPl_female());
+			        totPLMFParticipants = totPLMFParticipants.add(list.get(i).getPl_total_male_female());
+			        totPLRepresentatives = totPLRepresentatives.add(list.get(i).getRepresentatives());
+			        totPLGoverment = totPLGoverment.add(list.get(i).getGovt_officials());
+			        totPLParticipants = totPLParticipants.add(list.get(i).getTotal_participations());
+			        totPLBhoomiPoojan = totPLBhoomiPoojan.add(list.get(i).getBhoomi_poojan());
+			        totPLLokarpan = totPLLokarpan.add(list.get(i).getLokarpans());
+			        totPLShramdaanLoc = totPLShramdaanLoc.add(list.get(i).getShramdaan_location());
+			        totPLShramdaanPeople = totPLShramdaanPeople.add(list.get(i).getShramdaan_participated());
+			        totPLPlantation = totPLPlantation.add(list.get(i).getNo_of_agro());
+			        totPLImage = totPLImage.add(list.get(i).getTotal_projlvl_photo());
+			        		
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPPOrganized), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPPMale), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPPFemale), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPPParticipants), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPPPhoto), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				CommonFunctions.insertCell3(table, String.valueOf(totPLOrganized), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLMale), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLFemale), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLMFParticipants), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLRepresentatives), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLGoverment), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLParticipants), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLBhoomiPoojan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLLokarpan), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLShramdaanLoc), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLShramdaanPeople), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLPlantation), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totPLImage), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 20, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM1- District.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
