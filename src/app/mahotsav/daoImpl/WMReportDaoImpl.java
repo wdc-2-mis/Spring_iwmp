@@ -211,12 +211,12 @@ public class WMReportDaoImpl implements WMReportDao {
 	            for (WatershedMahotsavProjectLvlPhoto photo : list) {
 	              
 	                //server
-					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					
 					//local
-					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
-					System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					
 
 	            }
 	        } else {
@@ -227,11 +227,11 @@ public class WMReportDaoImpl implements WMReportDao {
 
 	            for (MahotsavPrabhatPheriPhoto photo : list1) {
 	            	//server
-					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					
 					//local
-					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 				
 	            }
 	        }
@@ -244,6 +244,8 @@ public class WMReportDaoImpl implements WMReportDao {
 
 	    return imgList;
 	}
+	
+
 
 	@Override
 	public List<InaugurationMahotsavBean> getdistWMProjLvlProgRpt(int stcd) {
@@ -285,11 +287,11 @@ public class WMReportDaoImpl implements WMReportDao {
 	            for (WatershedMahotsavProjectLvlPhoto photo : list) {
 	              
 	                //server
-					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					
 					//local
-					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+					//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 					
 	            }
 	        } else {
@@ -300,11 +302,11 @@ public class WMReportDaoImpl implements WMReportDao {
 
 	            for (MahotsavPrabhatPheriPhoto photo : list1) {
 	            	//server
-					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
 					
 					//local
-					imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+				//	imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
 				
 	            }
 	        }
