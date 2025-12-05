@@ -176,6 +176,7 @@ function showPrevImage() {
 
 .popup-content, .large-image-popup-content {
   background: #fff;
+  position: relative;
   margin: auto;
   padding: 20px;
   border-radius: 10px;
@@ -254,7 +255,7 @@ function showPrevImage() {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 2;
+  z-index: 5;
 }
 
 #prevImage {
@@ -886,13 +887,14 @@ function showPrevImage() {
 
 	<div id="largeImagePopup" class="popup" style="display: none;">
 		<div class="large-image-popup-content">
-			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
-			<div class="nav-arrow" id="prevImage" onclick="showPrevImage()">&#10094;</div>
-			<img id="largeImage" src="" alt="Large Image" />
-			<div class="nav-arrow" id="nextImage" onclick="showNextImage()">&#10095;</div>
-		</div>
-		
-	</div>  
+    <span class="close" onclick="closeLargeImagePopup()">&times;</span>
+    
+    <span id="prevImage" class="nav-arrow" onclick="showPrevImage()">&#10094;</span>
+    <img id="largeImage" src="" alt="Large Image">
+    <span id="nextImage" class="nav-arrow" onclick="showNextImage()">&#10095;</span>
+</div>
+</div>
+
 
 <footer class=" ">
 	<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
