@@ -28,6 +28,13 @@ function downloadDPDF(stcd){
 	document.getWMProjLvlDetails.submit();
 }
 
+function exportDExcel(stcd){
+	document.getElementById("stcd").value=stcd;
+	document.getWMProjLvlDetails.action="downloadDistExcelProjLvlProgram";
+	document.getWMProjLvlDetails.method="post";
+	document.getWMProjLvlDetails.submit();
+}
+
 $(document).on('click', '.showImage', function(e) {
 	
 	let stCode = $(this).data('id');
@@ -289,7 +296,7 @@ function showPrevImage() {
         </c:if>
         
         <c:if test="${not empty distWMProjListSize}">
-    		<!-- <button type="button" name="exportDExcel" id="exportDExcel" class="btn pdf-gradient" onclick="exportDExcel()"> Excel </button> -->
+    	    <button type="button" name="exportDExcel" id="exportDExcel" class="btn pdf-gradient" onclick="exportDExcel('${stcd}')"> Excel </button> 
         	<button type="button"  name="exportDPDF" id="exportDPDF" class="btn pdf-gradient" onclick="downloadDPDF('${stcd}')">PDF</button>
         </c:if>   
         <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>

@@ -999,7 +999,7 @@ public class WMProjectLevelReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report WM1- District.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM2- District.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
@@ -1013,5 +1013,453 @@ public class WMProjectLevelReportController {
 		}
 		
 		return null;
+	}
+	
+	@RequestMapping(value = "/downloadDistExcelProjLvlProgram", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadDistExcelProjLvlProgram(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<InaugurationMahotsavBean> list = new ArrayList<InaugurationMahotsavBean>();
+		String stcd = request.getParameter("stcd");
+		list = WMService.getdistWMProjLvlProgRpt(Integer.parseInt(stcd));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report WM2 - District Wise Project Level Watershed Mahotsav Program");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report WM2 - District Wise Project Level Watershed Mahotsav Program";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 19, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,2,6);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,7,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,8,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,14,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,15,15);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,16,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,18,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,7,19,19);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,6,6);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,8,10);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,11,11);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,12,12);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,13,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,16,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,17,17);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowhead = sheet.createRow(5);
+		
+		Cell cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Prabhat Pheri");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=3;i<7;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(7);
+		cell.setCellValue("No. of Project Level Watershed Mahotsav Organized");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("No. of Participation in Project Level Waterhshed Mahotsav");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=9;i<14;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead.createCell(14);
+		cell.setCellValue("Number of Works for Bhoomi Poojan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Number of Works for Lokarpan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(16);
+		cell.setCellValue("Shramdaan");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(17);
+		cell.setCellStyle(style);
+		
+		cell = rowhead.createCell(18);
+		cell.setCellValue("Agro forestry / Horticulture Plantation (Number of Sapling)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(19);
+		cell.setCellValue("No of Photographs Uploaded");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(6);
+		
+		for(int i=0;i<2;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(2);
+		cell.setCellValue("No. of Prabhat Pheri Organized");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(3);
+		cell.setCellValue("Participants/Villagers");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(6);
+		cell.setCellValue("No of Photographs Uploaded");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(7);
+		cell.setCellStyle(style);
+		
+		cell = rowhead1.createCell(8);
+		cell.setCellValue("Participants/Villagers");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=9;i<11;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(11);
+		cell.setCellValue("Public Representatives");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(12);
+		cell.setCellValue("Government Officials");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(13);
+		cell.setCellValue("Total Participation (6+11+12+13)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=14;i<16;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead1.createCell(16);
+		cell.setCellValue("Number of Locations");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead1.createCell(17);
+		cell.setCellValue("No. of people participated");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=18;i<20;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(7);
+		
+		for(int i=0;i<2;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(2);
+		cell.setCellValue("No. of Prabhat Pheri Organized");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(3);
+		cell.setCellValue("Male");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(4);
+		cell.setCellValue("Female");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(5);
+		cell.setCellValue("Total (4+5)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=6;i<8;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		cell = rowhead2.createCell(8);
+		cell.setCellValue("Male");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(9);
+		cell.setCellValue("Female");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead2.createCell(10);
+		cell.setCellValue("Total (8+9)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=11;i<20;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead3 = sheet.createRow(8);
+		
+		for(int i=0;i<20;i++)
+		{
+			cell =rowhead3.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 9;
+		BigInteger totPPOrganized = BigInteger.ZERO;
+		BigInteger totPPMale = BigInteger.ZERO;
+		BigInteger totPPFemale = BigInteger.ZERO;
+		BigInteger totPPParticipants = BigInteger.ZERO;
+		BigInteger totPPPhoto = BigInteger.ZERO;
+		
+		BigInteger totPLOrganized = BigInteger.ZERO;
+		BigInteger totPLMale = BigInteger.ZERO;
+		BigInteger totPLFemale = BigInteger.ZERO;
+		BigInteger totPLMFParticipants = BigInteger.ZERO;
+		BigInteger totPLRepresentatives = BigInteger.ZERO;
+		BigInteger totPLGoverment = BigInteger.ZERO;
+		BigInteger totPLParticipants = BigInteger.ZERO;
+		BigInteger totPLBhoomiPoojan = BigInteger.ZERO;
+		BigInteger totPLLokarpan = BigInteger.ZERO;
+		BigInteger totPLShramdaanLoc = BigInteger.ZERO;
+		BigInteger totPLShramdaanPeople = BigInteger.ZERO;
+		BigInteger totPLPlantation = BigInteger.ZERO;
+		BigInteger totPLImage = BigInteger.ZERO;
+		
+		
+	    for(InaugurationMahotsavBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getDistname());
+	    	row.createCell(2).setCellValue(bean.getNo_of_prabhat().doubleValue());
+	    	row.createCell(3).setCellValue(bean.getPr_male().doubleValue());
+	    	row.createCell(4).setCellValue(bean.getPr_female().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getPr_total_male_female().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getTotal_prabhat_photo().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getNo_of_projectlvl().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getPl_male().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getPl_female().doubleValue());
+	    	row.createCell(10).setCellValue(bean.getPl_total_male_female().doubleValue());
+	    	row.createCell(11).setCellValue(bean.getRepresentatives().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getGovt_officials().doubleValue());
+	    	row.createCell(13).setCellValue(bean.getTotal_participations().doubleValue());
+	    	row.createCell(14).setCellValue(bean.getBhoomi_poojan().doubleValue());
+	    	row.createCell(15).setCellValue(bean.getLokarpans().doubleValue());
+	    	row.createCell(16).setCellValue(bean.getShramdaan_location().doubleValue());
+	    	row.createCell(17).setCellValue(bean.getShramdaan_participated().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getNo_of_agro().doubleValue());
+	    	row.createCell(19).setCellValue(bean.getTotal_projlvl_photo().doubleValue());
+	    	
+	    	
+	    	totPPOrganized = totPPOrganized.add(bean.getNo_of_prabhat());
+			totPPMale = totPPMale.add(bean.getPr_male());
+			totPPFemale = totPPFemale.add(bean.getPr_female());
+			totPPParticipants = totPPParticipants.add(bean.getPr_total_male_female());
+			totPPPhoto = totPPPhoto.add(bean.getTotal_prabhat_photo());
+			
+			totPLOrganized = totPLOrganized.add(bean.getNo_of_projectlvl());
+			totPLMale = totPLMale.add(bean.getPl_male());
+			totPLFemale = totPLFemale.add(bean.getPl_female());
+			totPLMFParticipants = totPLMFParticipants.add(bean.getPl_total_male_female());
+			totPLRepresentatives = totPLRepresentatives.add(bean.getRepresentatives());
+			totPLGoverment = totPLGoverment.add(bean.getGovt_officials());
+			totPLParticipants = totPLParticipants.add(bean.getTotal_participations());
+			totPLBhoomiPoojan = totPLBhoomiPoojan.add(bean.getBhoomi_poojan());
+			totPLLokarpan = totPLLokarpan.add(bean.getLokarpans());
+			totPLShramdaanLoc = totPLShramdaanLoc.add(bean.getShramdaan_location());
+			totPLShramdaanPeople = totPLShramdaanPeople.add(bean.getShramdaan_participated());
+			totPLPlantation = totPLPlantation.add(bean.getNo_of_agro());
+			totPLImage = totPLImage.add(bean.getTotal_projlvl_photo());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totPPOrganized.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totPPMale.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totPPFemale.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totPPParticipants.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totPPPhoto.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totPLOrganized.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(totPLMale.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totPLFemale.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totPLMFParticipants.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totPLRepresentatives.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totPLGoverment.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totPLParticipants.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(totPLBhoomiPoojan.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(totPLLokarpan.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(totPLShramdaanLoc.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue(totPLShramdaanPeople.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(18);
+		cell.setCellValue(totPLPlantation.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(19);
+		cell.setCellValue(totPLImage.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 19);
+	    String fileName = "attachment; filename=Report WM2- District.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "mahotsav/wmProjLvlProgReport";
 	}
 }
