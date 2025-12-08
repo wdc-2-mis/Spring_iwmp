@@ -8,10 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf"%>
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
-<script
-	src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <script type="text/javascript">
 
@@ -77,6 +76,7 @@ $(document).ready(function() {
     });
 }); 
 
+
 function dataAvailableFunction() {
 
 $(document).ready(function () {
@@ -91,6 +91,147 @@ $(document).ready(function () {
     });
 });
 }
+
+
+function validateUrl(url) {
+    if (!url) return "about:blank"; // fallback if empty
+
+    // Trim spaces and remove accidental "%20" encodings
+    url = url.trim().replace(/%20/g, "");
+
+    // Fix malformed "https//" (missing colon)
+    url = url.replace(/https\/\//gi, "https://");
+
+    // Remove duplicate "https://" at the start
+    url = url.replace(/^(https:\/\/)+/i, "https://");
+
+    // Ensure proper protocol (only http/https allowed)
+    if (!/^https?:\/\//i.test(url)) {
+        url = "https://" + url;
+    }
+
+    return url;
+}
+
+function openCenteredPopup(url, name, width, height) {
+    // Get screen dimensions
+    const screenWidth = window.screen.availWidth;
+    const screenHeight = window.screen.availHeight;
+    
+    // Ensure width/height don't exceed screen size
+    width = Math.min(width, screenWidth - 100);
+    height = Math.min(height, screenHeight - 100);
+    
+    // Calculate center position
+    const left = Math.max(0, (screenWidth - width) / 2);
+    const top = Math.max(0, (screenHeight - height) / 2);
+    
+    // Enhanced features
+    const features = `
+        width=${width},
+        height=${height},
+        top=${top},
+        left=${left},
+        screenX=${left},
+        screenY=${top},
+        resizable=yes,
+        scrollbars=yes,
+        toolbar=yes,
+        menubar=no,
+        location=yes,
+        status=yes,
+        directories=no,
+        fullscreen=no
+    `.replace(/\s+/g, ''); // Remove whitespace
+    
+    // Open the popup
+    const popup = window.open(url, name, features);
+    
+    // Focus the popup
+    if (popup) {
+        popup.focus();
+        
+        // Add a small delay and try to resize/move to ensure it's positioned correctly
+        setTimeout(() => {
+            try {
+                popup.resizeTo(width, height);
+                popup.moveTo(left, top);
+            } catch(e) {
+                // Ignore cross-origin errors
+            }
+        }, 100);
+    }
+    
+    // Fallback if popup is blocked
+    if (!popup || popup.closed || typeof popup.closed == 'undefined') {
+        alert('Popup blocked! Please allow popups for this site.');
+        // Open in new tab as fallback
+        window.open(url, '_blank');
+    }
+    
+    return popup;
+}
+
+function openVideoPlayer(url) {
+    // Ensure URL has proper protocol
+    url = validateUrl(url);
+    
+    let embedUrl = url;
+    let popupName = "";
+    
+    // YouTube Shorts
+    if (url.includes("youtube.com/shorts/")) {
+        const videoId = url.split("/shorts/")[1].split("?")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        popupName = "ytPopup";
+    }
+    // YouTube Watch
+    else if (url.includes("youtube.com/watch?v=")) {
+        const videoId = url.split("v=")[1].split("&")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        popupName = "ytPopup";
+    }
+    // youtu.be short URLs
+    else if (url.includes("youtu.be/")) {
+        const videoId = url.split("youtu.be/")[1].split("?")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        popupName = "ytPopup";
+    }
+    // Facebook
+    else if (url.includes("facebook.com")) {
+        embedUrl = url;
+        popupName = "fbPopup";
+    }
+    // Instagram
+    else if (url.includes("instagram.com")) {
+        embedUrl = url;
+        popupName = "igPopup";
+    }
+    // Twitter/X
+    else if (url.includes("twitter.com") || url.includes("x.com")) {
+        embedUrl = url;
+        popupName = "twPopup";
+    }
+    // LinkedIn
+    else if (url.includes("linkedin.com")) {
+        embedUrl = url;
+        popupName = "liPopup";
+    }
+    // Direct MP4 or other video files
+    else if (url.match(/\.(mp4|webm|ogg|mov|avi|wmv|flv)$/i)) {
+        embedUrl = url;
+        popupName = "videoPopup";
+    }
+    // Default
+    else {
+        embedUrl = "about:blank";
+        popupName = "popup";
+    }
+    
+    // Open the popup with unique name to prevent overwriting
+    openCenteredPopup(embedUrl, popupName + "_" + Date.now(), 800, 600);
+}
+
 
 function downloadPDF(){
 		document.mohotsavRpt.action="downloadPDFStWMInauguration";
@@ -110,13 +251,13 @@ function exportExcel(){
 /* Add margin above the DataTables controls */
 div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter
 	{
-	margin-bottom: 15px; /* gap between controls and table */
+	margin-bottom: 20px; /* gap between controls and table */
 }
 
 /* Add margin above the pagination/info section */
 div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate
 	{
-	margin-top: 15px; /* gap between table and pagination */
+	margin-top: 20px; /* gap between table and pagination */
 }
 </style>
 
@@ -140,27 +281,19 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 		<div class="card shadow mt-1 p-5">
 
-			<div class="offset-md-3 col-6 formheading"
-				style="text-align: center;">
-				<h4 class="text-center text-primary mb-4">
-					<u>Report WM4 - Watershed Mahotsav Social Media</u>
-				</h4>
+			<div class="offset-md-3 col-6 formheading" style="text-align: center;">
+				<h4 class="text-center text-primary mb-4 text-decoration-underline">Report WM4 - Watershed Mahotsav Social Media</h4>
 			</div>
 
 			<div class="nav-item text-left mb-2">
 				<c:if test="${not empty stateWMInaugurationList1}">
-					<button type="button" name="exportExcel" id="exportExcel"
-						class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
-					<button type="button" name="exportPDF" id="exportPDF"
-						class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
+					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
+					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
 				</c:if>
-				<p align="right">
-					Report as on:
-					<%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
+				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			</div>
 
-			<form name="mohotsavRpt" id="mohotsavReport"
-				action="wmSocialMediaReport" method="post">
+			<form name="mohotsavRpt" id="mohotsavReport" action="wmSocialMediaReport" method="post">
 
 
 				<div class="row mb-3">
@@ -237,38 +370,42 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 					<div class="col-md-2 d-flex align-items-end">
 						<button type="button" id="submitBtn" class="btn btn-primary px-5">Get</button>
 					</div>
-				</div>
+				</div><br>
 			</form>
 
 			<table class="table table-bordered table-striped" id="stWMR">
 				<thead>
 					<tr>
-						<th rowspan="2"
-							style="text-align: center; vertical-align: middle;">S.No.</th>
-						<th rowspan="2"
-							style="text-align: center; vertical-align: middle;">Registration
-							Number</th>
-						<th rowspan="2"
-							style="text-align: center; vertical-align: middle;">Name</th>
-						<th rowspan="2"
-							style="text-align: center; vertical-align: middle;">Contact
-							Number</th>
-						<th colspan="5"
-							style="text-align: center; vertical-align: middle;">List of
-							Uploaded Videos</th>
+						<th rowspan="2" style="text-align: center; vertical-align: middle;">S.No.</th>
+						<th rowspan="2" style="text-align: center; vertical-align: middle;">Registration Number</th>
+						<th rowspan="2" style="text-align: center; vertical-align: middle;">Name</th>
+						<th rowspan="2" style="text-align: center; vertical-align: middle;">Contact Number</th>
+						<th colspan="${selectedMediaType eq 'P' ? 4 : 5}" style="text-align: center; vertical-align: middle;">
+							<c:choose>
+								<c:when test="${selectedMediaType eq 'P'}">List of Uploaded Photos</c:when>
+								<c:otherwise>List of Uploaded Videos</c:otherwise>
+							</c:choose>
+						</th>
 					</tr>
 					<tr>
-						<th style="text-align: center; vertical-align: middle;">Facebook</th>
-						<th style="text-align: center; vertical-align: middle;">YouTube</th>
-						<th style="text-align: center; vertical-align: middle;">Instagram</th>
-						<th style="text-align: center; vertical-align: middle;">Twitter</th>
-						<th style="text-align: center; vertical-align: middle;">LinkedIn</th>
+						<th style="text-align: center; vertical-align: middle;"><i class="fab fa-facebook" style="color: white; background-color: #1877f2; padding: 5px; border-radius: 50%; margin-right: 5px;"></i>Facebook</th>
+						<c:if test="${selectedMediaType ne 'P'}">						
+						<th style="text-align: center; vertical-align: middle;"><i class="fab fa-youtube" style="color: white; background-color: #1877f2; padding: 5px; border-radius: 50%; margin-right: 5px;"></i>YouTube</th>
+						</c:if>
+						<th style="text-align: center; vertical-align: middle;"><i class="fab fa-instagram" style="color: white; background-color: #1877f2; padding: 5px; border-radius: 50%; margin-right: 5px;"></i>Instagram</th>
+						<th style="text-align: center; vertical-align: middle;"><i class="fab fa-twitter" style="color: white; background-color: #1877f2; padding: 5px; border-radius: 50%; margin-right: 5px;"></i>Twitter</th>
+						<th style="text-align: center; vertical-align: middle;"><i class="fab fa-linkedin" style="color: white; background-color: #1877f2; padding: 5px; border-radius: 50%; margin-right: 5px;"></i>LinkedIn</th>
 					</tr>
 
 					<tr>
-						<% for (int i = 1; i <= 9; i++) { %>
-						<th class="text-center"><%= i %></th>
-						<% } %>
+						<%
+						int maxCols = "P".equals(request.getAttribute("selectedMediaType")) ? 8 : 9;
+						for (int i = 1; i <= maxCols; i++) {
+						%>
+						<th class="text-center"><%=i%></th>
+						<%
+						}
+						%>
 					</tr>
 				</thead>
 
@@ -282,65 +419,49 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 					<c:forEach items="${stateWMSocialMediaList}" var="dt">
 						<tr>
 							<td class="text-left">
-							<c:if test="${dt.user_reg_no ne regNo}">
-							<c:set var="sno" value="${sno + 1}" />
-							<c:out value="${sno}" /> 
-							</c:if></td>
+								<c:if test="${dt.user_reg_no ne regNo}">
+									<c:set var="sno" value="${sno + 1}" />
+									<c:out value="${sno}" /> 
+								</c:if>
+							</td>
+							
 							<td><c:if test="${dt.user_reg_no ne regNo}">
 									<c:out value="${dt.user_reg_no}" />
-								</c:if></td>
+								</c:if>
+							</td>
+							
 							<td><c:if test="${dt.reg_name ne name or dt.user_reg_no ne regNo}"> 
 									<c:out value="${dt.reg_name}" />
-								</c:if></td>
+								</c:if>
+							</td>
 
 							<td class="text-center"><c:if test="${dt.phno ne phno or dt.user_reg_no ne regNo}">
 									<c:out value="${dt.phno}" />
-								</c:if></td>
-							<td class="text-center"><c:choose>
-									<c:when test="${fn:startsWith(dt.facebook_urls, 'http')}">
-										<a href="${dt.facebook_urls}" target="_blank">${dt.facebook_urls}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="https://${dt.facebook_urls}" target="_blank">${dt.facebook_urls}</a>
-									</c:otherwise>
-								</c:choose>
+								</c:if>
 							</td>
-							<td class="text-center"><c:choose>
-									<c:when test="${fn:startsWith(dt.youtube_urls, 'http')}">
-										<a href="${dt.youtube_urls}" target="_blank">${dt.youtube_urls}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="https://${dt.youtube_urls}" target="_blank">${dt.youtube_urls}</a>
-									</c:otherwise>
-								</c:choose>
+
+							<td class="text-center">
+								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.facebook_urls}')">${dt.facebook_urls}</a>
 							</td>
-							<td class="text-center"><c:choose>
-									<c:when test="${fn:startsWith(dt.instagram_urls, 'http')}">
-										<a href="${dt.instagram_urls}" target="_blank">${dt.instagram_urls}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="https://${dt.instagram_urls}" target="_blank">${dt.instagram_urls}</a>
-									</c:otherwise>
-								</c:choose>
+							
+							<c:if test="${selectedMediaType ne 'P'}">
+							<td class="text-center">
+								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.youtube_urls}')">${dt.youtube_urls}</a>
 							</td>
-							<td class="text-center"><c:choose>
-									<c:when test="${fn:startsWith(dt.twitter_urls, 'http')}">
-										<a href="${dt.twitter_urls}" target="_blank">${dt.twitter_urls}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="https://${dt.twitter_urls}" target="_blank">${dt.twitter_urls}</a>
-									</c:otherwise>
-								</c:choose>
+							</c:if>
+							
+							<td class="text-center">
+								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.instagram_urls}')">${dt.instagram_urls}</a>
 							</td>
-							<td class="text-center"><c:choose>
-									<c:when test="${fn:startsWith(dt.linkedin_urls, 'http')}">
-										<a href="${dt.linkedin_urls}" target="_blank">${dt.linkedin_urls}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="https://${dt.linkedin_urls}" target="_blank">${dt.linkedin_urls}</a>
-									</c:otherwise>
-								</c:choose>
+
+							<td class="text-center">
+								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.twitter_urls}')">${dt.twitter_urls}</a>
 							</td>
+							
+							<td class="text-center">
+								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.linkedin_urls}')">${dt.linkedin_urls}</a>
+							</td>
+							
 						</tr>
 
 
@@ -353,8 +474,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 					<c:if test="${stateWMSocialMediaListSize==0}">
 						<tr>
-							<td align="center" colspan="9" class="required"
-								style="color: red;"><b>Data Not Found</b></td>
+							<td align="center" colspan="9" class="required" style="color: red;"><b>Data Not Found</b></td>
 						</tr>
 					</c:if>
 
