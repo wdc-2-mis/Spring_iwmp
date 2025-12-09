@@ -179,22 +179,9 @@ function openVideoPlayer(url) {
     let embedUrl = url;
     let popupName = "";
     
-    // YouTube Shorts
-    if (url.includes("youtube.com/shorts/")) {
-        const videoId = url.split("/shorts/")[1].split("?")[0];
-        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
-        popupName = "ytPopup";
-    }
-    // YouTube Watch
-    else if (url.includes("youtube.com/watch?v=")) {
-        const videoId = url.split("v=")[1].split("&")[0];
-        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
-        popupName = "ytPopup";
-    }
-    // youtu.be short URLs
-    else if (url.includes("youtu.be/")) {
-        const videoId = url.split("youtu.be/")[1].split("?")[0];
-        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+ 	// YouTube
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+        embedUrl = url;
         popupName = "ytPopup";
     }
     // Facebook
