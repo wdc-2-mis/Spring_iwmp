@@ -172,6 +172,15 @@ function openCenteredPopup(url, name, width, height) {
     return popup;
 }
 
+function tryEmbedWithFallback(embedUrl, directUrl, popupName) {
+    const popup = openCenteredPopup(embedUrl, popupName + "_" + Date.now(), 800, 600);
+    if (popup) {
+        popup.onerror = () => {
+            openCenteredPopup(directUrl, popupName + "_direct_" + Date.now(), 800, 600);
+        };
+    }
+}
+
 function openVideoPlayer(url) {
     // Ensure URL has proper protocol
     url = validateUrl(url);
@@ -179,8 +188,29 @@ function openVideoPlayer(url) {
     let embedUrl = url;
     let popupName = "";
     
- 	// YouTube
-    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    // YouTube Shorts
+    if (url.includes("youtube.com/shorts/")) {
+        const videoId = url.split("/shorts/")[1].split("?")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        tryEmbedWithFallback(embedUrl, url, "ytShorts");
+        return;
+    }
+    // YouTube Watch
+    else if (url.includes("youtube.com/watch?v=")) {
+        const videoId = url.split("v=")[1].split("&")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        tryEmbedWithFallback(embedUrl, url, "ytVideo");
+        return;
+    }
+    // youtu.be short URLs
+    else if (url.includes("youtu.be/")) {
+        const videoId = url.split("youtu.be/")[1].split("?")[0];
+        embedUrl = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+        tryEmbedWithFallback(embedUrl, url, "ytVideo");
+        return;
+    }
+ 	// YouTube (any type: video, shorts, playlist, channel, live)
+    else if (url.includes("youtube.com") || url.includes("youtu.be")) {
         embedUrl = url;
         popupName = "ytPopup";
     }
