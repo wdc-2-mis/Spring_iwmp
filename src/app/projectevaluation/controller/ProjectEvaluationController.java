@@ -5225,12 +5225,11 @@ public class ProjectEvaluationController {
 						//}
 					}
 					
-					Map<String, String> gradeMapping = Map.of(
-						    "E", "Excellent",
-						    "G", "Very Good",
-						    "S", "Satisfactory",
-						    "A", "Average"
-						);
+					Map<String, String> gradeMapping = new HashMap<>();
+					gradeMapping.put("E", "Excellent");
+					gradeMapping.put("G", "Very Good");
+					gradeMapping.put("S", "Satisfactory");
+					gradeMapping.put("A", "Average");
 
 					
 					CommonFunctions.insertCellHeader(table, "", Element.ALIGN_LEFT, 6, 1, bf8Bold);
