@@ -749,4 +749,393 @@ public class WMReportController {
 	}
 	
 	
+	@RequestMapping(value = "/downloadExcelSocialMediaReport", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelSocialMediaReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+
+		String userState = request.getParameter("state");
+	    String district = request.getParameter("district");
+	    String block = request.getParameter("block");
+	    String village = request.getParameter("village");
+	    String mediaType = request.getParameter("mediaType");
+	    
+
+	    int stcd = (userState != null && !userState.trim().isEmpty()) ? Integer.parseInt(userState) : 0;
+	    int dcode = (district != null && !district.trim().isEmpty()) ? Integer.parseInt(district) : 0;
+	    int bcode = (block != null && !block.trim().isEmpty()) ? Integer.parseInt(block) : 0;
+	    int vcode = (village != null && !village.trim().isEmpty()) ? Integer.parseInt(village) : 0;
+	    
+
+	    list = WMSerice.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
+		
+	    if (mediaType != null && !"ALL".equalsIgnoreCase(mediaType)) {
+	        list = list.stream()
+	                   .filter(r -> r.getMedia_type() != null && String.valueOf(r.getMedia_type().charAt(0)).equalsIgnoreCase(mediaType))
+	                   .collect(Collectors.toList());
+	    }
+	    
+
+	    String stName = request.getParameter("stName");
+	    String dName = request.getParameter("distName");
+	    String bName = request.getParameter("blkName");
+	    String vName = request.getParameter("vlgName");
+	    String mName = request.getParameter("media");
+	    int maxCols = (mediaType.equals("P")) ? 7 : 8;
+	    
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report WM4 - Watershed Mahotsav Social Media");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report WM4 - Watershed Mahotsav Social Media";
+		String areaAmtValDetail ="";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, maxCols, areaAmtValDetail, workbook);
+		
+
+		mergedRegion = new CellRangeAddress(5,5,0,maxCols);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,3,3);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,4,maxCols);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State : "+ stName+"     District : "+dName+"     Block : "+bName+"     Village : "+vName+"     Media Type : "+mName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<=maxCols;i++)
+		{
+			cell =rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Registration Number");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Contact Number");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(4);
+		if (mediaType.equals("P")) {
+		    cell.setCellValue("List of Uploaded Photos");
+		} else {
+		    cell.setCellValue("List of Uploaded Videos");
+		}
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=5;i<=maxCols;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<4;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+				
+		int colIndex = 4;
+
+		cell = rowhead1.createCell(colIndex++);
+		cell.setCellValue("Facebook");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		if (!mediaType.equals("P")) {
+		    cell = rowhead1.createCell(colIndex++);
+		    cell.setCellValue("YouTube");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		}
+
+		String[] platforms = {"Instagram", "Twitter", "LinkedIn"};
+		for (String platform : platforms) {
+		    cell = rowhead1.createCell(colIndex++);
+		    cell.setCellValue(platform);
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		}
+
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<=maxCols;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		int sno = 1;
+		int rowno  = 9;
+		String regNo = "";
+		String name = "";
+		String phno = "";
+		
+	    for(SocialMediaReport bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+
+	    	if (!bean.getUser_reg_no().equals(regNo)) {
+	            row.createCell(0).setCellValue(sno);
+	            sno++;
+	        } else {
+	            row.createCell(0).setCellValue("");
+	        }
+
+	        row.createCell(1).setCellValue(!bean.getUser_reg_no().equals(regNo) ? bean.getUser_reg_no() : "");
+
+	        row.createCell(2).setCellValue(
+	            (!bean.getReg_name().equals(name) || !bean.getUser_reg_no().equals(regNo)) 
+	            ? bean.getReg_name() 
+	            : ""
+	        );
+
+	        row.createCell(3).setCellValue(
+	            (!bean.getPhno().equals(phno) || !bean.getUser_reg_no().equals(regNo)) 
+	            ? bean.getPhno() 
+	            : ""
+	        );
+
+	    	int col = 4;
+
+	        row.createCell(col++).setCellValue(bean.getFacebook_urls());
+
+	        if (!mediaType.equals("P")) {
+	            row.createCell(col++).setCellValue(bean.getYoutube_urls());
+	        }
+
+	        row.createCell(col++).setCellValue(bean.getInstagram_urls());
+	        row.createCell(col++).setCellValue(bean.getTwitter_urls());
+	        row.createCell(col++).setCellValue(bean.getLinkedin_urls());
+
+
+	        regNo = bean.getUser_reg_no();
+	        name = bean.getReg_name();
+	        phno = bean.getPhno();
+
+	    	rowno++;
+	    }
+	    
+	    
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), maxCols);
+	    String fileName = "attachment; filename=Report WM4.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "mahotsav/wmSocailMediaReport";
+	}
+
+	@RequestMapping(value = "/downloadPDFSocialMediaReport", method = RequestMethod.POST)
+	public ModelAndView downloadPDFSocialMediaReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+
+		String userState = request.getParameter("state");
+	    String district = request.getParameter("district");
+	    String block = request.getParameter("block");
+	    String village = request.getParameter("village");
+	    String mediaType = request.getParameter("mediaType");
+	    
+
+	    int stcd = (userState != null && !userState.trim().isEmpty()) ? Integer.parseInt(userState) : 0;
+	    int dcode = (district != null && !district.trim().isEmpty()) ? Integer.parseInt(district) : 0;
+	    int bcode = (block != null && !block.trim().isEmpty()) ? Integer.parseInt(block) : 0;
+	    int vcode = (village != null && !village.trim().isEmpty()) ? Integer.parseInt(village) : 0;
+	    
+
+	    list = WMSerice.getWMSocialMediaReport(stcd, dcode, bcode, vcode);
+		
+	    if (mediaType != null && !"ALL".equalsIgnoreCase(mediaType)) {
+	        list = list.stream()
+	                   .filter(r -> r.getMedia_type() != null && String.valueOf(r.getMedia_type().charAt(0)).equalsIgnoreCase(mediaType))
+	                   .collect(Collectors.toList());
+	    }
+	    
+
+	    String stName = request.getParameter("stName");
+	    String dName = request.getParameter("distName");
+	    String bName = request.getParameter("blkName");
+	    String vName = request.getParameter("vlgName");
+	    String mName = request.getParameter("media");
+	    int maxCols = (mediaType.equals("P")) ? 8 : 9;
+	    
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 14, 14, 0);
+			document.addTitle("WM4 - WMSocialMediaReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report WM4 - Watershed Mahotsav Social Media", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(14);
+		    paragraph3.setSpacingAfter(14);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    
+		    // For Photos (P) → 8 columns
+		    int[] widthsPhotos = {2, 8, 5, 5, 5, 5, 5, 5};
+
+		    // For Videos (V) → 9 columns
+		    int[] widthsVideos = {2, 8, 5, 5, 5, 5, 5, 5, 5};
+
+		    table = new PdfPTable(maxCols);
+		    table.setWidths(mediaType.equals("P") ? widthsPhotos : widthsVideos);
+		    
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    
+		    CommonFunctions.insertCellHeader(table, "State : "+ stName+"     District : "+dName+"     Block : "+bName+"     Village : "+vName+"     "
+		    		+ "Media Type : "+mName, Element.ALIGN_LEFT, maxCols, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Registration Number", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Contact Number", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, mediaType.equals("P") ? "List of Uploaded Photos" : "List of Uploaded Videos", Element.ALIGN_CENTER, maxCols, 1, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			if (!mediaType.equals("P"))
+				CommonFunctions.insertCellHeader(table, "Youtube", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Instagram", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Twitter", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "LinkedIn", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			for(int i=1; i<=maxCols; i++)
+				CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			
+			int k = 1;
+			String regNo = "";
+			String name = "";
+			String phno = "";
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, !list.get(i).getUser_reg_no().equals(regNo) ? String.valueOf(k) : "", Element.ALIGN_LEFT, 1, 1, bf8);
+					
+					if (!list.get(i).getUser_reg_no().equals(regNo)) k++;
+					
+					CommonFunctions.insertCell(table, !list.get(i).getUser_reg_no().equals(regNo) ? list.get(i).getUser_reg_no() : "", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (!list.get(i).getReg_name().equals(name) || !list.get(i).getUser_reg_no().equals(regNo)) ? list.get(i).getReg_name() : "", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, (!list.get(i).getPhno().equals(phno) || !list.get(i).getUser_reg_no().equals(regNo)) ? list.get(i).getPhno() : "", Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getFacebook_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
+					if (!mediaType.equals("P"))
+						CommonFunctions.insertCell(table, list.get(i).getYoutube_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
+					
+			        CommonFunctions.insertCell(table, list.get(i).getInstagram_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getTwitter_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getLinkedin_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
+
+					
+			        regNo = list.get(i).getUser_reg_no();
+			        name = list.get(i).getReg_name();
+			        phno = list.get(i).getPhno();
+				}
+				
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, maxCols, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM4.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
 }

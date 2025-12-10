@@ -250,16 +250,47 @@ function openVideoPlayer(url) {
 }
 
 
-function downloadPDF(){
-		document.mohotsavRpt.action="downloadPDFStWMInauguration";
-		document.mohotsavRpt.method="post";
-		document.mohotsavRpt.submit();
+function downloadPDF()
+{
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var vlgName = document.getElementById("village").options[document.getElementById("village").selectedIndex].text;
+    var media = document.querySelector('input[name="mediaType"]:checked').value;
+    var mediaText = document.querySelector('input[name="mediaType"]:checked').nextSibling.textContent.trim();
+
+    
+	document.getElementById("stName").value = stName;
+    document.getElementById("distName").value = distName;
+    document.getElementById("blkName").value = blkName;
+    document.getElementById("vlgName").value = vlgName;
+    document.getElementById("media").value = mediaText;
+	
+    document.mohotsavRpt.action="downloadPDFSocialMediaReport";
+	document.mohotsavRpt.method="post";
+	document.mohotsavRpt.submit();
 }
 
-function exportExcel(){
-		document.mohotsavRpt.action="downloadExcelStWMInauguration";
-		document.mohotsavRpt.method="post";
-		document.mohotsavRpt.submit();
+function exportExcel()
+{
+	
+	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
+    var blkName = document.getElementById("block").options[document.getElementById("block").selectedIndex].text;
+    var vlgName = document.getElementById("village").options[document.getElementById("village").selectedIndex].text;
+    var media = document.querySelector('input[name="mediaType"]:checked').value;
+    var mediaText = document.querySelector('input[name="mediaType"]:checked').nextSibling.textContent.trim();
+    
+    
+    document.getElementById("stName").value = stName;
+    document.getElementById("distName").value = distName;
+    document.getElementById("blkName").value = blkName;
+    document.getElementById("vlgName").value = vlgName;
+    document.getElementById("media").value = mediaText;
+    
+	document.mohotsavRpt.action="downloadExcelSocialMediaReport";
+	document.mohotsavRpt.method="post";
+	document.mohotsavRpt.submit();
 }
 
 </script>
@@ -302,15 +333,14 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 				<h4 class="text-center text-primary mb-4 text-decoration-underline">Report WM4 - Watershed Mahotsav Social Media</h4>
 			</div>
 
-			<div class="nav-item text-left mb-2">
-				<c:if test="${not empty stateWMInaugurationList1}">
-					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
-					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
-				</c:if>
-				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
-			</div>
 
 			<form name="mohotsavRpt" id="mohotsavReport" action="wmSocialMediaReport" method="post">
+			
+			<input type="hidden" name="stName" id="stName" value="" />
+			<input type="hidden" name="distName" id="distName" value="" />
+			<input type="hidden" name="blkName" id="blkName" value="" />
+			<input type="hidden" name="vlgName" id="vlgName" value="" />
+			<input type="hidden" name="media" id="media" value="" />
 
 
 				<div class="row mb-3">
@@ -389,6 +419,14 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 					</div>
 				</div><br>
 			</form>
+			
+			<div class="nav-item text-left mb-2">
+				<c:if test="${not empty stateWMSocialMediaList}">
+					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button>
+					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
+				</c:if>
+				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
+			</div>
 
 			<table class="table table-bordered table-striped" id="stWMR">
 				<thead>
