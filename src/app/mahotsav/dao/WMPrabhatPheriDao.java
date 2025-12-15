@@ -14,9 +14,9 @@ public interface WMPrabhatPheriDao {
     
     String saveMahotsavPrabhatPheriDetails(WMPrabhatPheriBean userfileup, HttpSession session);
 
-    List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer stCode);
+    List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer regId);
 
-	List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer stCode);
+	List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer regId);
 	
 	String completeWMPrabhatPheri(List<Integer> ppid, String userid);
 	String deleteWMPrabhatPheri(List<Integer> ppid, String userid);

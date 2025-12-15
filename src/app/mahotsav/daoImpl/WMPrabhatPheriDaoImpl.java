@@ -248,14 +248,14 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	 }
 
 	@Override
-	public List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer stCode) {
+	public List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer regId) {
 		String getReport=getWMdraftList;
 		Session session = sessionFactory.getCurrentSession();
 		List<WMPrabhatPheriBean> list = new ArrayList<WMPrabhatPheriBean>();
 		try {
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
-				query.setInteger("stcode",stCode); 
+				query.setInteger("stcode",regId); 
 				query.setResultTransformer(Transformers.aliasToBean(WMPrabhatPheriBean.class));
 				list = query.list();
 				session.getTransaction().commit();
@@ -277,14 +277,14 @@ public class WMPrabhatPheriDaoImpl implements WMPrabhatPheriDao {
 	}
 
 	@Override
-	public List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer stCode) {
+	public List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer regId) {
 		String getReport=getWMcompletedList;
 		Session session = sessionFactory.getCurrentSession();
 		List<WMPrabhatPheriBean> list = new ArrayList<WMPrabhatPheriBean>();
 		try {
 				session.beginTransaction();
 				Query query= session.createSQLQuery(getReport);
-				query.setInteger("stcode",stCode); 
+				query.setInteger("stcode",regId); 
 				query.setResultTransformer(Transformers.aliasToBean(WMPrabhatPheriBean.class));
 				list = query.list();
 				session.getTransaction().commit();

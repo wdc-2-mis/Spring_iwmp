@@ -74,11 +74,11 @@ public class WMPrabhatPheriController {
 //        mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
         model.put("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
         
-        List<WMPrabhatPheriBean> dlist = wmService.getWatershedMahotsavDraftList(stCode);
+        List<WMPrabhatPheriBean> dlist = wmService.getWatershedMahotsavDraftList(regId);
         model.put("dataDList", dlist);
         model.put("dataDListSize", dlist != null ? dlist.size() : 0);
         
-        List<WMPrabhatPheriBean> comlist = wmService.getWatershedMahotsavCompleteList(stCode);
+        List<WMPrabhatPheriBean> comlist = wmService.getWatershedMahotsavCompleteList(regId);
         model.put("dataCList", comlist);
         model.put("dataCListSize", comlist != null ? comlist.size() : 0);
         return "mahotsav/mahotsavPrabhatPheri";

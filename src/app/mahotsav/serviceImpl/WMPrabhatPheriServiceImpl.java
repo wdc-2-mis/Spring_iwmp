@@ -42,13 +42,13 @@ public class WMPrabhatPheriServiceImpl implements WMPrabhatPheriService{
 	}
 
 	@Override
-	public List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer stCode) {
-		return dao.getWatershedMahotsavDraftList(stCode);
+	public List<WMPrabhatPheriBean> getWatershedMahotsavDraftList(Integer regId) {
+		return dao.getWatershedMahotsavDraftList(regId);
 	}
 
 	@Override
-	public List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer stCode) {
-		return dao.getWatershedMahotsavCompleteList(stCode);
+	public List<WMPrabhatPheriBean> getWatershedMahotsavCompleteList(Integer regId) {
+		return dao.getWatershedMahotsavCompleteList(regId);
 	}
 
 	@Override
