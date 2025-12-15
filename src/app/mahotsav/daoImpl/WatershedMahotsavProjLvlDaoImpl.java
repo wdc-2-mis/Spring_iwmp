@@ -264,7 +264,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			session.beginTransaction();
 			Query query= session.createSQLQuery(getWatershedMahotsavProjLvlData);
 			query.setInteger("stcode",stcode);
-//			query.setString("loginid", loginId);
+			query.setString("loginid", loginId);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();
@@ -284,7 +284,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			session.beginTransaction();
 			Query query= session.createSQLQuery(getComWatershedMahotsavProjLvlData);
 			query.setInteger("stcode",stcode);
-//			query.setString("loginid", loginId);
+			query.setString("loginid", loginId);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();
@@ -347,7 +347,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			session.beginTransaction();
 			Query query= session.createSQLQuery(hql);
 			query.setParameterList("bcode",bcode);
-//			query.setString("loginid", loginId);
+			query.setString("loginid", loginId);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();

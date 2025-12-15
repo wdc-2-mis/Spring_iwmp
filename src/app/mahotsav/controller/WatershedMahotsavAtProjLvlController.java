@@ -131,6 +131,7 @@ HttpSession session;
 		ModelAndView mav = new ModelAndView();
 		int bcode = Integer.parseInt(request.getParameter("block"));
 		String dateTime = request.getParameter("datetime");
+		String location = request.getParameter("location");
 		List<WatershedMahotsavProjectLevelBean> dlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		List<WatershedMahotsavProjectLevelBean> comlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		try {
@@ -153,6 +154,7 @@ HttpSession session;
 					stCode = bean.getStatecode()==null?0:bean.getStatecode();
 				}
 				mav.addObject("datetimeValue", dateTime);
+				mav.addObject("location",location);
 				mav.addObject("userType",userType);
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
@@ -163,19 +165,22 @@ HttpSession session;
 //				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
 //				map=ser.getCultActivity();
 //				mav.addObject("cultMap", map);
-				dlist=serProj.getWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
 				Boolean check = false;
-				if(dlist.size()>0) {
-					check = true;
-					mav.addObject("result","Data already saved for this Block. Please select different Block Name.");
+				dlist=serProj.getWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
+				if(!location.equals("") && location != null && !check)
+					check = dlist.stream().anyMatch(d -> d.getLocation().substring(0, 3).equalsIgnoreCase(location.substring(0, 3)));
+				
+				if(dlist.size()>0 && check) {
+					mav.addObject("result","Data already saved for this Block and Location. Please select different Block Name or Location.");
 				}
 				mav.addObject("dataList",dlist);
 				mav.addObject("dataListSize",dlist.size());
 				
 				comlist=serProj.getComWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
-				if(comlist.size()>0) {
-					check = true;
-					mav.addObject("result","Data already Completed for this Block. Please select different Block Name.");
+				if(!location.equals("") && location != null && !check)
+					check = comlist.stream().anyMatch(d -> d.getLocation().substring(0, 3).equalsIgnoreCase(location.substring(0, 3)));
+				if(comlist.size()>0 && check) {
+					mav.addObject("result","Data already Completed for this Block and Location. Please select different Block Name or Location.");
 				}
 				mav.addObject("compdataList",comlist);
 				mav.addObject("compdataListSize",comlist.size());

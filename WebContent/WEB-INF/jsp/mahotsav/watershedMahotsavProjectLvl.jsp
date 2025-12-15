@@ -700,7 +700,7 @@ display: none; /* Hidden by default */
     		<div class="form-group col-3">
     			<label for="activity">Block:<span style="color: red;">*</span> </label>
       			<span class="activityError"></span>
-      			<select class="form-control activity" id="block" name="block" onchange ="displaydata()" >
+      			<select class="form-control activity" id="block" name="block">
     				<option value="">--Select Block--</option>
     				<c:forEach items="${blkList}" var="dist"> 
     				<c:if test ="${dist.key == blkcode}">
@@ -715,7 +715,7 @@ display: none; /* Hidden by default */
     		
     		<div class="form-group col-3">
     <label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
-    <input type="text" class="form-control activity" name="location" id="location" onblur="myOverFunction(this)" style="width: 100%; max-width: 800px;" />
+    <input type="text" class="form-control activity" name="location" id="location" onblur="displaydata()" style="width: 100%; max-width: 800px;" value="${location}" />
 </div>
 
     		
@@ -784,9 +784,9 @@ display: none; /* Hidden by default */
 											<input type="file" name="photos_bhoomipoojan"
 												id="photos_bhoomipoojan" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = "0"/> 
-											<input type="hidden" id="bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/> 
-											<input type="hidden" id="bhoomipoojan_time"	name="photos_bhoomipoojan_time" value = "0"/>
+											<input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = "0"/> 
+											<input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/> 
+											<input type="hidden" id="photos_bhoomipoojan_time"	name="photos_bhoomipoojan_time" value = "0"/>
 										</div>
 									</div>
 
