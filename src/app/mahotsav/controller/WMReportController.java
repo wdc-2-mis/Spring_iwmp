@@ -783,7 +783,7 @@ public class WMReportController {
 	    String bName = request.getParameter("blkName");
 	    String vName = request.getParameter("vlgName");
 	    String mName = request.getParameter("media");
-	    int maxCols = (mediaType.equals("P")) ? 7 : 8;
+	    int maxCols = (mediaType.equals("P")) ? 6 : 7;
 	    
 			
 		Workbook workbook = new XSSFWorkbook();
@@ -807,9 +807,9 @@ public class WMReportController {
 		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(6,7,2,2);
 		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(6,7,3,3);
-		sheet.addMergedRegion(mergedRegion);
-		mergedRegion = new CellRangeAddress(6,6,4,maxCols);
+//		mergedRegion = new CellRangeAddress(6,7,3,3);
+//		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,maxCols);
 		sheet.addMergedRegion(mergedRegion);
 		
 		
@@ -845,13 +845,13 @@ public class WMReportController {
 		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(3);
-		cell.setCellValue("Contact Number");
-		cell.setCellStyle(style);
-		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
-		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+//		cell = rowhead.createCell(3);
+//		cell.setCellValue("Contact Number");
+//		cell.setCellStyle(style);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+//		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		cell = rowhead.createCell(4);
+		cell = rowhead.createCell(3);
 		if (mediaType.equals("P")) {
 		    cell.setCellValue("List of Uploaded Photos");
 		} else {
@@ -860,7 +860,7 @@ public class WMReportController {
 		cell.setCellStyle(style);
 		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
 		
-		for(int i=5;i<=maxCols;i++)
+		for(int i=4;i<=maxCols;i++)
 		{
 			cell =rowhead.createCell(i);
 			cell.setCellStyle(style);
@@ -869,13 +869,13 @@ public class WMReportController {
 		
 		Row rowhead1 = sheet.createRow(7);
 		
-		for(int i=0;i<4;i++)
+		for(int i=0;i<3;i++)
 		{
 			cell =rowhead1.createCell(i);
 			cell.setCellStyle(style);
 		}
 				
-		int colIndex = 4;
+		int colIndex = 3;
 
 		cell = rowhead1.createCell(colIndex++);
 		cell.setCellValue("Facebook");
@@ -915,7 +915,7 @@ public class WMReportController {
 		int rowno  = 9;
 		String regNo = "";
 		String name = "";
-		String phno = "";
+//		String phno = "";
 		
 	    for(SocialMediaReport bean: list)
 	    {
@@ -936,13 +936,13 @@ public class WMReportController {
 	            : ""
 	        );
 
-	        row.createCell(3).setCellValue(
-	            (!bean.getPhno().equals(phno) || !bean.getUser_reg_no().equals(regNo)) 
-	            ? bean.getPhno() 
-	            : ""
-	        );
+//	        row.createCell(3).setCellValue(
+//	            (!bean.getPhno().equals(phno) || !bean.getUser_reg_no().equals(regNo)) 
+//	            ? bean.getPhno() 
+//	            : ""
+//	        );
 
-	    	int col = 4;
+	    	int col = 3;
 
 	        row.createCell(col++).setCellValue(bean.getFacebook_urls());
 
@@ -957,7 +957,7 @@ public class WMReportController {
 
 	        regNo = bean.getUser_reg_no();
 	        name = bean.getReg_name();
-	        phno = bean.getPhno();
+//	        phno = bean.getPhno();
 
 	    	rowno++;
 	    }
@@ -1005,7 +1005,7 @@ public class WMReportController {
 	    String bName = request.getParameter("blkName");
 	    String vName = request.getParameter("vlgName");
 	    String mName = request.getParameter("media");
-	    int maxCols = (mediaType.equals("P")) ? 8 : 9;
+	    int maxCols = (mediaType.equals("P")) ? 7 : 8;
 	    
 		
 		try {
@@ -1040,11 +1040,11 @@ public class WMReportController {
 		    document.add(paragraph2);
 		    document.add(paragraph3);
 		    
-		    // For Photos (P) → 8 columns
-		    int[] widthsPhotos = {2, 8, 5, 5, 5, 5, 5, 5};
+		    // For Photos (P) → 7 columns
+		    int[] widthsPhotos = {2, 8, 5, 5, 5, 5, 5};
 
-		    // For Videos (V) → 9 columns
-		    int[] widthsVideos = {2, 8, 5, 5, 5, 5, 5, 5, 5};
+		    // For Videos (V) → 8 columns
+		    int[] widthsVideos = {2, 8, 5, 5, 5, 5, 5, 5};
 
 		    table = new PdfPTable(maxCols);
 		    table.setWidths(mediaType.equals("P") ? widthsPhotos : widthsVideos);
@@ -1061,7 +1061,7 @@ public class WMReportController {
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Registration Number", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Contact Number", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+//			CommonFunctions.insertCellHeader(table, "Contact Number", Element.ALIGN_CENTER, 1, 2, bf8Bold);
 			CommonFunctions.insertCellHeader(table, mediaType.equals("P") ? "List of Uploaded Photos" : "List of Uploaded Videos", Element.ALIGN_CENTER, maxCols, 1, bf8Bold);
 			
 			CommonFunctions.insertCellHeader(table, "Facebook", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1078,7 +1078,7 @@ public class WMReportController {
 			int k = 1;
 			String regNo = "";
 			String name = "";
-			String phno = "";
+//			String phno = "";
 				
 			if(list.size()!=0)
 				for(int i=0;i<list.size();i++)
@@ -1089,7 +1089,7 @@ public class WMReportController {
 					
 					CommonFunctions.insertCell(table, !list.get(i).getUser_reg_no().equals(regNo) ? list.get(i).getUser_reg_no() : "", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, (!list.get(i).getReg_name().equals(name) || !list.get(i).getUser_reg_no().equals(regNo)) ? list.get(i).getReg_name() : "", Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, (!list.get(i).getPhno().equals(phno) || !list.get(i).getUser_reg_no().equals(regNo)) ? list.get(i).getPhno() : "", Element.ALIGN_CENTER, 1, 1, bf8);
+//					CommonFunctions.insertCell(table, (!list.get(i).getPhno().equals(phno) || !list.get(i).getUser_reg_no().equals(regNo)) ? list.get(i).getPhno() : "", Element.ALIGN_CENTER, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getFacebook_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
 					if (!mediaType.equals("P"))
 						CommonFunctions.insertCell(table, list.get(i).getYoutube_urls(), Element.ALIGN_CENTER, 1, 1, bf8);
@@ -1101,7 +1101,7 @@ public class WMReportController {
 					
 			        regNo = list.get(i).getUser_reg_no();
 			        name = list.get(i).getReg_name();
-			        phno = list.get(i).getPhno();
+//			        phno = list.get(i).getPhno();
 				}
 				
 				
