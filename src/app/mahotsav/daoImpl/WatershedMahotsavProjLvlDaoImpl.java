@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -32,8 +33,10 @@ import app.mahotsav.model.WatershedMahotsavInauguarationActivityMaster;
 import app.mahotsav.model.WatershedMahotsavProjectLevel;
 import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
 import app.model.IwmpDistrict;
+import app.model.IwmpMProject;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
+import app.model.master.IwmpVillage;
 
 @Repository("WatershedMahotsavProjLvlDao")
 public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvlDao {
@@ -86,11 +89,14 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			s.setStCode(Integer.parseInt(st_code));
 			IwmpDistrict d= new IwmpDistrict();
 			d.setDcode(userfileup.getDistrict());
+			IwmpMProject p = new IwmpMProject();
+			p.setProjectId(userfileup.getProject());
 			IwmpBlock b= new IwmpBlock();
 			b.setBcode(userfileup.getBlock()); 
 			
 			data.setState(s);
 			data.setDistrict(d);
+			data.setProject(p);
 			data.setBlock(b);
 			
 			data.setCreatedBy(loginId);
@@ -256,7 +262,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId, Integer projid) {
 		List<WatershedMahotsavProjectLevelBean> list = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		String hql = getWatershedMahotsavProjLvlData;
 		Session session = sessionFactory.getCurrentSession();
@@ -264,7 +270,8 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			session.beginTransaction();
 			Query query= session.createSQLQuery(getWatershedMahotsavProjLvlData);
 			query.setInteger("stcode",stcode);
-			query.setString("loginid", loginId);
+			query.setInteger("loginid", Integer.parseInt(loginId));
+			query.setInteger("projid", projid);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();
@@ -276,7 +283,7 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId, Integer projid) {
 		List<WatershedMahotsavProjectLevelBean> list = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		String hql = getComWatershedMahotsavProjLvlData;
 		Session session = sessionFactory.getCurrentSession();
@@ -284,7 +291,8 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			session.beginTransaction();
 			Query query= session.createSQLQuery(getComWatershedMahotsavProjLvlData);
 			query.setInteger("stcode",stcode);
-			query.setString("loginid", loginId);
+			query.setInteger("loginid", Integer.parseInt(loginId));
+			query.setInteger("projid", projid);
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();
@@ -338,16 +346,14 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(List<Integer> bcode,
-			String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(String regid) {
 		List<WatershedMahotsavProjectLevelBean> list = new ArrayList<WatershedMahotsavProjectLevelBean>();
 		String hql = getAllWatershedMahotsavProjLvlData;
 		Session session = sessionFactory.getCurrentSession();
 		try {
 			session.beginTransaction();
 			Query query= session.createSQLQuery(hql);
-			query.setParameterList("bcode",bcode);
-			query.setString("loginid", loginId);
+			query.setInteger("loginid", Integer.parseInt(regid));
 			query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavProjectLevelBean.class));
 			list = query.list();
 			session.getTransaction().commit();
@@ -476,6 +482,8 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 				 bean.setStname(lvl.getState().getStName());
 				 bean.setDistrict(lvl.getDistrict().getDcode());
 				 bean.setDistname(lvl.getDistrict().getDistName());
+				 bean.setProject(lvl.getProject().getProjectId());
+				 bean.setProjname(lvl.getProject().getProjName());
 				 bean.setBlock(lvl.getBlock().getBcode());
 				 bean.setBlockname(lvl.getBlock().getBlockName());
 				 bean.setLocation(lvl.getMahotsavLocation());
@@ -847,6 +855,40 @@ public class WatershedMahotsavProjLvlDaoImpl implements WatershedMahotsavProjLvl
 			ex.printStackTrace();
 		}
 		return imgList;
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getBlockbyProjId(Integer projid) {
+		// TODO Auto-generated method stub
+		List<IwmpVillage> villList = new ArrayList<IwmpVillage>();
+		String hql="select village from IwmpVillage village where village.vcode in(select distinct iwmpVillage.vcode from IwmpProjectLocation where iwmpMProject.projectId =:projid)";
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(hql);
+			query.setInteger("projid", projid);
+			villList = query.list();
+		
+			for (IwmpVillage vill : villList) {
+				map.put(vill.getIwmpGramPanchayat().getIwmpBlock().getBcode(), vill.getIwmpGramPanchayat().getIwmpBlock().getBlockName());
+		
+			}
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			//session.getTransaction().commit();
+		}
+        return map;
 	}
 
 }

@@ -1,5 +1,6 @@
 package app.mahotsav.serviceImpl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,15 +26,15 @@ public class WatershedMahotsavProjLvlServiceImpl implements WatershedMahotsavPro
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getWatershedMahotsavAtProjLvl(Integer stcode, String loginId, Integer projid) {
 		// TODO Auto-generated method stub
-		return dao.getWatershedMahotsavAtProjLvl(stcode,loginId);
+		return dao.getWatershedMahotsavAtProjLvl(stcode,loginId, projid);
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getComWatershedMahotsavAtProjLvl(Integer stcode, String loginId, Integer projid) {
 		// TODO Auto-generated method stub
-		return dao.getComWatershedMahotsavAtProjLvl(stcode, loginId);
+		return dao.getComWatershedMahotsavAtProjLvl(stcode, loginId, projid);
 	}
 
 	@Override
@@ -43,10 +44,9 @@ public class WatershedMahotsavProjLvlServiceImpl implements WatershedMahotsavPro
 	}
 
 	@Override
-	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(List<Integer> dcode,
-			String loginId) {
+	public List<WatershedMahotsavProjectLevelBean> getBlksWiseWatershedMahotsavAtProjLvl(String loginId) {
 		// TODO Auto-generated method stub
-		return dao.getBlksWiseWatershedMahotsavAtProjLvl(dcode, loginId);
+		return dao.getBlksWiseWatershedMahotsavAtProjLvl(loginId);
 	}
 
 	@Override
@@ -71,6 +71,12 @@ public class WatershedMahotsavProjLvlServiceImpl implements WatershedMahotsavPro
 	public List<String> getImageMahotsavProjLvl(Integer id) {
 		// TODO Auto-generated method stub
 		return dao.getImageMahotsavProjLvl(id);
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getBlockbyProjId(Integer projid) {
+		// TODO Auto-generated method stub
+		return dao.getBlockbyProjId(projid);
 	}
 
 }

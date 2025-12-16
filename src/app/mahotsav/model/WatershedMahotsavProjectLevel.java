@@ -1,7 +1,6 @@
 package app.mahotsav.model;
 
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import app.model.IwmpDistrict;
+import app.model.IwmpMProject;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
 
@@ -37,6 +37,10 @@ public class WatershedMahotsavProjectLevel {
     @ManyToOne
     @JoinColumn(name = "bcode", referencedColumnName = "bcode")
     private IwmpBlock block;
+    
+    @ManyToOne
+    @JoinColumn(name = "proj_id", referencedColumnName = "proj_id")
+    private IwmpMProject project;
 
     @Column(name = "mahotsav_date")
     private Date mahotsavDate;
@@ -106,7 +110,7 @@ public class WatershedMahotsavProjectLevel {
     
     
 
-	public WatershedMahotsavProjectLevel(Integer id, IwmpState state, IwmpDistrict district, IwmpBlock block,
+	public WatershedMahotsavProjectLevel(Integer id, IwmpState state, IwmpDistrict district, IwmpBlock block, IwmpMProject project,
 			Date mahotsavDate, String mahotsavLocation, Integer maleParticipants, Integer femaleParticipants,
 			Integer centralMinister, Integer stateMinister, Integer parliamentMembers,
 			Integer legislativeAssemblyMembers, Integer legislativeCouncilMembers, Integer otherPublicRepresentatives,
@@ -119,6 +123,7 @@ public class WatershedMahotsavProjectLevel {
 		this.state = state;
 		this.district = district;
 		this.block = block;
+		this.project = project;
 		this.mahotsavDate = mahotsavDate;
 		this.mahotsavLocation = mahotsavLocation;
 		this.maleParticipants = maleParticipants;
@@ -177,6 +182,14 @@ public class WatershedMahotsavProjectLevel {
 
 	public void setBlock(IwmpBlock block) {
 		this.block = block;
+	}
+
+	public IwmpMProject getProject() {
+		return project;
+	}
+
+	public void setProject(IwmpMProject project) {
+		this.project = project;
 	}
 
 	public Date getMahotsavDate() {

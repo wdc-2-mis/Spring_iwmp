@@ -164,24 +164,6 @@ function validatePhoto(input) {
         return false;
     }
     
- // 3. Validate image dimensions
-//     let reader = new FileReader();
-// 	reader.onload = function (e) {
-//     let img = new Image();
-//     img.onload = function () {
-//         if (checkValid && (img.width > requiredWidth || img.height > requiredHeight)) {
-//             alert(`Image dimensions must be less than ` +requiredWidth +` x `+ requiredHeight +` pixels.\n But Your image: ` +img.width+` x `+img.height+` pixels.`);
-//             input.value = "";
-//             checkValid = false;
-//             return;
-//         	}
-//    	 	};
-//     	img.src = e.target.result; // use base64 data URL from FileReader
-// 		};
-// 	reader.readAsDataURL(file);
-
-
-
     // 4. Check duplicate image by hashing
     getImageHash(file, function(hash) {
         if (checkValid && imageRecords[file.name] === hash) {
@@ -380,30 +362,14 @@ function validation()
 		allValid = false;
 		return false;
 	}
-// 	if ($no_works_bhoomipoojan > 0) {
-// 		if ($bhoomipoojan_photo1 === '' || typeof $bhoomipoojan_photo1 === 'undefined') {
-// 			alert('Please upload photo for Bhoomi Poojan');
-// //	 		$('#bhoomipoojan_photo1').focus();
-// 			document.getElementById('photos_bhoomipoojan').click();
-// 			allValid = false;
-// 			return false;
-// 		}
-// 	}
+
 	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
 		alert('Please enter the Number of Works of Lokarpan');
 		$('#no_works_lokarpan').focus();
 		allValid = false;
 		return false;
 	}
-// 	if ($no_works_lokarpan > 0) {
-// 		if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
-// 			alert('Please upload photo for Lokarpan');
-// //	 		$('#lokarpan_photo1').focus();
-// 			document.getElementById('photos_lokarpan').click();
-// 			allValid = false;
-// 			return false;
-// 		}
-// 	}
+
 	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
 		alert('Please enter the Number of Locations of Shramdaan');
 		$('#no_location_shramdaan').focus();
@@ -416,64 +382,13 @@ function validation()
 		allValid = false;
 		return false;
 	}
-// 	if ($no_location_shramdaan > 0) {
-// 		if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
-// 			alert('Please upload photo for Shramdaan');
-// //	 		$('#shramdaan_photo1').focus();
-// 			document.getElementById('photos_shramdaan').click();
-// 			allValid = false;
-// 			return false;
-// 		}
-// 	}
+
 	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
 		alert('Please enter the Plantation Area in hectares');
 		$('#area_plantation').focus();
 		allValid = false;
 		return false;
 	}
-// 	if ($area_plantation > 0) {
-// 		if ($plantation_photo1 === '' || typeof $plantation_photo1 === 'undefined') {
-// 			alert('Please upload photo for Plantation');
-// //	 		$('#plantation_photo1').focus();
-// 			document.getElementById('photos_forestry').click();
-// 			allValid = false;
-// 			return false;
-// 		}
-// 	}
-
-// 	if(($plantation_photo1 ==='' || typeof $plantation_photo1 ==='undefined') && ($shramdaan_photo1 ==='' || typeof $shramdaan_photo1 ==='undefined') && ($lokarpan_photo1 ==='' || typeof $lokarpan_photo1 ==='undefined') && ($bhoomipoojan_photo1 ==='' || typeof $bhoomipoojan_photo1 ==='undefined'))
-// 	{
-// 		alert('If you choose not to upload any new photos, your previously uploaded images will remain unchanged!');
-// 	}
-// 	else{
-	
-// 	// For each activity block
-//     document.querySelectorAll(".photo-block").forEach(block => {
-
-//         let container = block.querySelector(".photoContainer");
-//         let errorDiv = block.querySelector(".photoError");
-//         let inputs = container.querySelectorAll("input[type='file']");
-//         let totalFiles = 0;
-//         let minPhotos = 2;
-//         errorDiv.innerHTML = ""; // clear old errors
-//         inputs.forEach(inp => {
-//             if (inp.files.length > 0) {
-//                 totalFiles++;
-//             }
-//         });
-
-//         let activityInput = block.closest("tr").querySelector("input[type='text']");
-//         let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-//         if (activityValue > 0 && totalFiles < minPhotos) {
-//             errorDiv.innerHTML = "Please upload minimum " +minPhotos+" photos.";
-//             alert(`Minimum `+minPhotos+` photos required for this activity.`);
-//             allValid = false;
-//             return false;
-//         }
-
-//     });
-// 	}
-
 	if (allValid) {
 		if(confirm("Do you want to update Watershed Mahotsav at Project Level?")) {
 		document.saveWatershed.action="updateWatershedMahotsavProjLvlDetails";
@@ -484,7 +399,6 @@ function validation()
 	}else{
 		return false;
 	}
-//     document.getElementById("saveWatershed").submit();
 }
 
 function editChancel(){
@@ -515,6 +429,7 @@ function editChancel(){
 				<input type="hidden" id="waterid" name="waterid" value="${data.waterid}"/>
 				<input type="hidden" id="datetime" name="datetime" value="${data.datetime}"/>
 				<input type="hidden" id="district" name="district" value="${data.district}"/>
+				<input type="hidden" id="project" name="project" value="${data.project}"/>
 				<input type="hidden" id="block" name="block" value="${data.block}"/>
 				<div class="row">
 					<div class="form-group col-3">
@@ -522,20 +437,25 @@ function editChancel(){
 					</div>
 				</div>
 				<div class="row">
-			<div class="form-group col-3">
+			<div class="form-group col-2">
 			State Name: &nbsp; <c:out value="${stateName}"></c:out>
 			</div>
-    		<div class="form-group col-3">
+    		<div class="form-group col-2">
       			<label for="district">District: </label>
-      			<span class="activityError"></span>
+      			<span class="districtError"></span>
       			 <c:out value="${data.distname}" />
     		</div>
     		<div class="form-group col-3">
-    			<label for="activity">Block: </label>
-      			<span class="activityError"></span>
+    			<label for="project">Project: </label>
+      			<span class="projectError"></span>
+      			<c:out value="${data.projname}" />
+    		</div>
+    		<div class="form-group col-2">
+    			<label for="block">Block: </label>
+      			<span class="blockError"></span>
       			<c:out value="${data.blockname}" />
     		</div>
-    		<div class="form-group col-3">
+    		<div class="form-group col-2">
     			<label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
     			<input type="text" class="form-control activity" name="location" id="location" value="${data.location}" style="width: 100%; max-width: 800px;" />
     		</div>

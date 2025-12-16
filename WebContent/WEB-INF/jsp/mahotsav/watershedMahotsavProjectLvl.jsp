@@ -472,9 +472,38 @@ function validation()
 }
 
 function displaydata(){
-	document.saveWatershed.action="getWatershedMahotsavAtProjLvl";
-	document.saveWatershed.method="post";
-	document.saveWatershed.submit();
+	allValid = true;
+	$datetime = $('#datetime').val();
+	$projId = $('#project').val();
+	$block = $('#block').val();
+	
+	if ($datetime === '' || typeof $datetime === 'undefined') {
+		alert('Please Select the Date and Time');
+		$('#datetime').focus();
+		allValid = false;
+		return false;
+	}
+	if ($projId === '' || typeof $projId === 'undefined') {
+		alert('Please Select the Project');
+		$('#project').focus();
+		allValid = false;
+		return false;
+	}
+	if ($block === '' || typeof $block === 'undefined') {
+		alert('Please Select the Block');
+		$('#block').focus();
+		allValid = false;
+		return false;
+	}
+	if(allValid){
+		document.saveWatershed.action="getWatershedMahotsavAtProjLvl";
+		document.saveWatershed.method="post";
+		document.saveWatershed.submit();
+		return true;
+	}else{
+		return false;
+	}
+	
 }
 
 function editChangedata(waterid){
@@ -686,20 +715,32 @@ display: none; /* Hidden by default */
     		</div>
 			</div>
 			<div class="row">
-			<div class="form-group col-3">
+			<div class="form-group col-2">
 			
 				State Name:</br> <c:out value="${stateName}"></c:out>
 			
 			</div>
-    		<div class="form-group col-3">
+    		<div class="form-group col-2">
       			District: </br> <c:out value="${distName}"></c:out>
       			
       		<input type="hidden" id="district" name="district" value="${distCode}">
       			
     		</div>
-    		<div class="form-group col-3">
-    			<label for="activity">Block:<span style="color: red;">*</span> </label>
-      			<span class="activityError"></span>
+				<div class="form-group col-2">
+					<label for="project">Projects:<span style="color: red;">*</span> </label> <select	class="form-control project" id="project" name="project">
+						<option value="">--Select Project--</option>
+						<c:forEach items="${projectList}" var="proj">
+							<c:if test="${proj.key == project}">
+								<option value="${proj.key}" selected>${proj.value}</option>
+							</c:if>
+							<c:if test="${proj.key != project}">
+								<option value="${proj.key}">${proj.value}</option>
+							</c:if>
+						</c:forEach>
+					</select>
+				</div>
+				<div class="form-group col-2">
+    			<label for="block">Block:<span style="color: red;">*</span> </label>
       			<select class="form-control activity" id="block" name="block">
     				<option value="">--Select Block--</option>
     				<c:forEach items="${blkList}" var="dist"> 
@@ -713,8 +754,8 @@ display: none; /* Hidden by default */
     			</select>
     		</div>
     		
-    		<div class="form-group col-3">
-    <label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
+    		<div class="form-group col-2">
+    <label for="location">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
     <input type="text" class="form-control activity" name="location" id="location" onblur="displaydata()" style="width: 100%; max-width: 800px;" value="${location}" />
 </div>
 

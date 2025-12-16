@@ -32,6 +32,7 @@ import app.mahotsav.bean.WatershedMahotsavProjectLevelBean;
 import app.mahotsav.model.WatershedMahotsavProjectLevel;
 import app.mahotsav.service.WatershedMahotsavProjLvlService;
 import app.service.ProfileService;
+import app.service.outcome.BaseLineOutcomeService;
 import app.watershedyatra.bean.WatershedYatraBean;
 import app.watershedyatra.service.WatershedYatraPIALevelService;
 import app.watershedyatra.service.WatershedYatraService;
@@ -44,6 +45,9 @@ HttpSession session;
 	
 	@Autowired
 	WatershedYatraPIALevelService  serp;
+	
+	@Autowired(required = true)
+	BaseLineOutcomeService baseLineOutcomeService;
 	
 	@Autowired
 	WatershedMahotsavProjLvlService  serProj;
@@ -90,16 +94,9 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
-				List<Integer> blkcds = new ArrayList<>();
-				for(Map.Entry<Integer, String> map : serp.getBlockListpia(session.getAttribute("regId").toString()).entrySet()) {
-					blkcds.add(map.getKey());
-				}
+				mav.addObject("projectList",baseLineOutcomeService.getProjectByRegId(regId));
 				
-//				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
-//				map=ser.getCultActivity();
-//				mav.addObject("cultMap", map);
-				list = serProj.getBlksWiseWatershedMahotsavAtProjLvl(blkcds, session.getAttribute("loginID").toString());
+				list = serProj.getBlksWiseWatershedMahotsavAtProjLvl(regId.toString());
 				for(WatershedMahotsavProjectLevelBean bean :list) {
 					if(bean.getStatus().equals('D')) {
 						dlist.add(bean);
@@ -129,6 +126,7 @@ HttpSession session;
 	public ModelAndView getBlkWatershedMahotsavAtProjLvl(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
+		int projid = Integer.parseInt(request.getParameter("project"));
 		int bcode = Integer.parseInt(request.getParameter("block"));
 		String dateTime = request.getParameter("datetime");
 		String location = request.getParameter("location");
@@ -159,16 +157,15 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
+				mav.addObject("project",projid);
 				mav.addObject("blkcode",bcode);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+				mav.addObject("projectList",baseLineOutcomeService.getProjectByRegId(regId));
+				mav.addObject("blkList", serProj.getBlockbyProjId(projid));
 				
-//				LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
-//				map=ser.getCultActivity();
-//				mav.addObject("cultMap", map);
 				Boolean check = false;
-				dlist=serProj.getWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
+				dlist=serProj.getWatershedMahotsavAtProjLvl(bcode, regId.toString(), projid);
 				if(!location.equals("") && location != null && !check)
-					check = dlist.stream().anyMatch(d -> d.getLocation().substring(0, 3).equalsIgnoreCase(location.substring(0, 3)));
+					check = dlist.stream().anyMatch(d -> d.getLocation().trim().equalsIgnoreCase(location.trim()));
 				
 				if(dlist.size()>0 && check) {
 					mav.addObject("result","Data already saved for this Block and Location. Please select different Block Name or Location.");
@@ -176,9 +173,9 @@ HttpSession session;
 				mav.addObject("dataList",dlist);
 				mav.addObject("dataListSize",dlist.size());
 				
-				comlist=serProj.getComWatershedMahotsavAtProjLvl(bcode, session.getAttribute("loginID").toString());
+				comlist=serProj.getComWatershedMahotsavAtProjLvl(bcode, regId.toString().toString(), projid);
 				if(!location.equals("") && location != null && !check)
-					check = comlist.stream().anyMatch(d -> d.getLocation().substring(0, 3).equalsIgnoreCase(location.substring(0, 3)));
+					check = comlist.stream().anyMatch(d -> d.getLocation().trim().equalsIgnoreCase(location.trim()));
 				if(comlist.size()>0 && check) {
 					mav.addObject("result","Data already Completed for this Block and Location. Please select different Block Name or Location.");
 				}
@@ -197,13 +194,11 @@ HttpSession session;
 		return mav;
 	}
 	
-	@RequestMapping(value = "/getWatershedMahotsavAtBlockLvl", method = RequestMethod.POST)
+	@RequestMapping(value = "/getBlockListFrmProj", method = RequestMethod.POST)
 	@ResponseBody
-	public LinkedHashMap<String, Integer> getWatershedMahotsavAtBlockLvl(HttpServletRequest request, @RequestParam("blkCode") int blkCode) {
-		
+	public LinkedHashMap<Integer, String> getBlockListFrmProj(HttpServletRequest request, @RequestParam("projid") int projid) {
 		session = request.getSession(true);
-		
-		return serp.getWatershedYatraAtPiaGPs(blkCode, session.getAttribute("regId").toString());
+		return serProj.getBlockbyProjId(projid);
 	}
 	
 	@RequestMapping(value = "/saveWatershedMahotsavProjLvlDetails", method = RequestMethod.POST)
@@ -218,7 +213,7 @@ HttpSession session;
 			if (session != null && session.getAttribute("loginID") != null) {
 
 				mav = new ModelAndView("mahotsav/watershedMahotsavProjectLvl");
-				
+				int projid = Integer.parseInt(request.getParameter("project"));
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 				String userType = session.getAttribute("userType").toString();
@@ -240,7 +235,7 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+				mav.addObject("blkList", serProj.getBlockbyProjId(projid));
 
 				result = serProj.saveMahotsavProjLvlDetails(userfileup, session);
 
@@ -365,7 +360,7 @@ HttpSession session;
 			if (session != null && session.getAttribute("loginID") != null) {
 
 				mav = new ModelAndView("mahotsav/watershedMahotsavProjectLvl");
-				
+				int projid = Integer.parseInt(request.getParameter("project"));
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
 				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
 				String userType = session.getAttribute("userType").toString();
@@ -387,7 +382,7 @@ HttpSession session;
 				mav.addObject("distName",distName);
 				mav.addObject("distCode",distCode);
 				mav.addObject("stateName",stateName);
-				mav.addObject("blkList", serp.getBlockListpia(session.getAttribute("regId").toString()));
+				mav.addObject("blkList", serProj.getBlockbyProjId(projid));
 
 				result = serProj.updateMahotsavProjLvlDetails(userfileup, session);
 

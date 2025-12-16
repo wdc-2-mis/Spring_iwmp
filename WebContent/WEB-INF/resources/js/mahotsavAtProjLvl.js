@@ -1,4 +1,33 @@
-$(function() {
+
+	
+	$(document).on( 'change', '#project', function (e) {
+		$('#loading').show();
+		$projId = $('#project').val();
+//		alert('check '+$projId);
+			$.ajax({
+				url: "getBlockListFrmProj",
+				type: "post",
+				data: {projid: $projId},
+				error: function(xhr, status, er) {
+					console.log(er);
+					$('.error').append(' There is some error please try again !');
+				},
+				success: function(data) {
+					console.log(data);
+					$('#loading').hide();
+					$ddlblock = $('#block');
+					$ddlblock.empty();
+					$ddlblock.append("<option value=''>---Select Block---</option>");
+					if (Object.keys(data).length > 0) {
+						for (var key in data) {
+							if (data.hasOwnProperty(key)) {
+								$ddlblock.append("<option value='" + key + "'>" + data[key] + "</option>");
+							}
+						}
+					}
+				}
+			});
+	});
 	
 $('#chkSelectAllkd').on('click', function() {
 		$chkValue = 0;
@@ -84,7 +113,7 @@ $(document).on('click', '#complete', function(e) {
 		}
 	});
 	
-});
+
 
 $(document).on('click', '.showImage', function(e) {
 			

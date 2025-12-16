@@ -56,6 +56,8 @@ public class WatershedMahotsavProjectLevelBean {
     private String stname;
     private String distname;
     private String blockname;
+    private String projname;
+    private Integer project;
     private Integer image_count;
     private Character status;
 	public Integer getWaterid() {
@@ -315,6 +317,18 @@ public class WatershedMahotsavProjectLevelBean {
 	}
 	public void setBlockname(String blockname) {
 		this.blockname = blockname;
+	}
+	public String getProjname() {
+		return projname;
+	}
+	public void setProjname(String projname) {
+		this.projname = projname;
+	}
+	public Integer getProject() {
+		return project;
+	}
+	public void setProject(Integer project) {
+		this.project = project;
 	}
 	public Integer getImage_count() {
 		return image_count;
