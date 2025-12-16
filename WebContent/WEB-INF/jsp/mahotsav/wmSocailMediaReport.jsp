@@ -434,7 +434,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 						<th rowspan="2" style="text-align: center; vertical-align: middle;">S.No.</th>
 						<th rowspan="2" style="text-align: center; vertical-align: middle;">Registration Number</th>
 						<th rowspan="2" style="text-align: center; vertical-align: middle;">Name</th>
-						<th rowspan="2" style="text-align: center; vertical-align: middle;">Contact Number</th>
+						<!-- <th rowspan="2" style="text-align: center; vertical-align: middle;">Contact Number</th> -->
 						<th colspan="${selectedMediaType eq 'P' ? 4 : 5}" style="text-align: center; vertical-align: middle;">
 							<c:choose>
 								<c:when test="${selectedMediaType eq 'P'}">List of Uploaded Photos</c:when>
@@ -454,7 +454,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 					<tr>
 						<%
-						int maxCols = "P".equals(request.getAttribute("selectedMediaType")) ? 8 : 9;
+						int maxCols = "P".equals(request.getAttribute("selectedMediaType")) ? 7 : 8;
 						for (int i = 1; i <= maxCols; i++) {
 						%>
 						<th class="text-center"><%=i%></th>
@@ -490,10 +490,10 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 								</c:if>
 							</td>
 
-							<td class="text-center"><c:if test="${dt.phno ne phno or dt.user_reg_no ne regNo}">
+							<%-- <td class="text-center"><c:if test="${dt.phno ne phno or dt.user_reg_no ne regNo}">
 									<c:out value="${dt.phno}" />
 								</c:if>
-							</td>
+							</td> --%>
 
 							<td class="text-center">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.facebook_urls}')">${dt.facebook_urls}</a>
