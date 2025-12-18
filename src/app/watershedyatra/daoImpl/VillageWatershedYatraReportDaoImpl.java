@@ -46,6 +46,12 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 		
 		@Value("${getWorkStatusReportActivity}")
 		String getWorkStatusReportActivity;
+		
+		@Value("${getActivityNRMWorkReport}")
+		String getActivityNRMWorkReport;
+		
+		@Value("${getActivityNRMWorkjalsakti}")
+		String getActivityNRMWorkjalsakti;
 
 		@Override
 		public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
@@ -161,6 +167,76 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 						query.setResultTransformer(Transformers.aliasToBean(NRSCWorksBean.class));
 						list = query.list();
 					}
+					
+					session.getTransaction().commit();
+			} 
+			catch (HibernateException e) 
+			{
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex)
+			{
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return list;
+		}
+
+
+		@Override
+		public List<NRSCWorksBean> getActivityNRMWorkReportPost(Integer State, Integer district, Integer finyr, Integer activity) {
+			// TODO Auto-generated method stub
+			
+			
+			Date yadate =null;
+			Date yadateto =null;
+			Query query;
+			String sqla=getActivityNRMWorkReport;
+			Session session = sessionFactory.getCurrentSession();
+			List<NRSCWorksBean> list = new ArrayList<NRSCWorksBean>();
+			try {
+				
+					session.beginTransaction();
+					query= session.createSQLQuery(sqla);
+					query.setInteger("stcd",State); 
+					query.setInteger("distcd",district); 
+					query.setInteger("finyr",finyr);
+					query.setInteger("actcd",activity);
+					query.setResultTransformer(Transformers.aliasToBean(NRSCWorksBean.class));
+					list = query.list();
+					
+					session.getTransaction().commit();
+			} 
+			catch (HibernateException e) 
+			{
+				System.err.print("Hibernate error");
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			} 
+			catch(Exception ex)
+			{
+				session.getTransaction().rollback();
+				ex.printStackTrace();
+			}
+			return list;
+		}
+
+
+		@Override
+		public List<NRSCWorksBean> getActivityNRMWorkJalSakati() {
+			
+			String sqla=getActivityNRMWorkjalsakti;
+			Session session = sessionFactory.getCurrentSession();
+			List<NRSCWorksBean> list = new ArrayList<NRSCWorksBean>();
+			Query query;
+			
+			try {
+					session.beginTransaction();
+					query= session.createSQLQuery(sqla);
+					query.setResultTransformer(Transformers.aliasToBean(NRSCWorksBean.class));
+					list = query.list();
 					
 					session.getTransaction().commit();
 			} 

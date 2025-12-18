@@ -1,5 +1,6 @@
 package app.dao;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import app.model.IwmpState;
 import app.model.UserReg;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.model.master.IwmpMPhyActivity;
 
 public interface UserDao {
 
@@ -25,6 +27,6 @@ public interface UserDao {
 	List<IwmpMFinYear> getCurrentFinYear();
 	List<IwmpMMonth> getnotcompletedmonth();
 	List<IwmpMProject> getMidTermProjList(int district);
-	
-	
+	List<IwmpMPhyActivity> getActList(int hCode);
+	LinkedHashMap<Integer, String> getHead();
 }

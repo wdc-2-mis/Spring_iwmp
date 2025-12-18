@@ -1,5 +1,6 @@
 package app.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,8 @@ public interface UserService {
 	Map<Integer, String> getnotcompletedmonth();
 	Map<String, String> getMidTermProjList(int district);
 	
-	
+	Map<String, String> getActivityList(int hCode);
+	LinkedHashMap<Integer, String> getHead();
 	//public void saveProfile(UserReg userReg);
 	
 }

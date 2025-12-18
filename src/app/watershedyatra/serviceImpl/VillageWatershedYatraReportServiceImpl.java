@@ -29,4 +29,16 @@ public class VillageWatershedYatraReportServiceImpl implements VillageWatershedY
 		return dao.getWorkStatusReport(State, userdate, userdateto);
 	}
 
+	@Override
+	public List<NRSCWorksBean> getActivityNRMWorkReportPost(Integer State, Integer district, Integer finyr, Integer activity) {
+		// TODO Auto-generated method stub
+		return dao.getActivityNRMWorkReportPost(State, district, finyr, activity);
+	}
+
+	@Override
+	public List<NRSCWorksBean> getActivityNRMWorkJalSakati() {
+		// TODO Auto-generated method stub
+		return dao.getActivityNRMWorkJalSakati();
+	}
+
 }

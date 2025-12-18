@@ -162,6 +162,8 @@ function downloadExcel(state, userdate, dateto){
 				</c:if>  
     		</select>
           </td>
+          
+          
           <td><b>From Date :  <span style="color: red;">*</span></b></td>
            <td>
                <input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" />

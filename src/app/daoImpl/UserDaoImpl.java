@@ -14,8 +14,11 @@ import app.model.IwmpState;
 
 import app.model.UserMap;
 import app.model.UserReg;
+import app.model.master.IwmpMPhyActivity;
+import app.model.master.IwmpMPhyHeads;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -339,6 +342,63 @@ public class UserDaoImpl implements UserDao{
 		}
         return result;
 	}
+	@Override
+	public List<IwmpMPhyActivity> getActList(int hCode) {
+		
+		List<IwmpMPhyActivity> result=new ArrayList<IwmpMPhyActivity>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			result = ses.createQuery("from IwmpMPhyActivity WHERE iwmpMPhyHeads.headCode=:hCode order by activityDesc").setParameter("hCode", hCode).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+	@Override
+	public LinkedHashMap<Integer, String> getHead() {
+		
+		List<IwmpMPhyHeads> list = new ArrayList<IwmpMPhyHeads>();
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<Integer, String>();
+		
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from IwmpMPhyHeads where headCode in(4,5) order by seqNo");
+			list = query.list();
+			for(IwmpMPhyHeads head:list) {
+				map.put(head.getHeadCode(),head.getHeadDesc());
+			}
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return map;
+	}
+	
+	
+	
+	
 	
 	
 	

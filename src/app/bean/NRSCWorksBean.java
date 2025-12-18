@@ -51,6 +51,24 @@ public class NRSCWorksBean {
 	private BigDecimal aseq_no;
 	private String unitname;
 	
+	private BigDecimal area_proposed;
+	private BigDecimal project_cost;
+	private BigInteger projcount;
+	
+	private String statename;
+	private BigInteger row_number;
+	private BigInteger farmponds;
+	private BigInteger checkdams;
+	private BigInteger nallahbunds;
+	private BigInteger percolationtanks;
+	private BigInteger groundwaterrechargestructure;
+	private BigInteger gullyplugs;
+	private BigInteger others;
+	private BigInteger amritsarovar;
+	
+	
+	
+	
 	public String getSt_name() {
 		return st_name;
 	}
@@ -316,6 +334,85 @@ public class NRSCWorksBean {
 	public void setUnitname(String unitname) {
 		this.unitname = unitname;
 	}
+	public BigDecimal getArea_proposed() {
+		return area_proposed;
+	}
+	public void setArea_proposed(BigDecimal area_proposed) {
+		this.area_proposed = area_proposed;
+	}
+	public BigDecimal getProject_cost() {
+		return project_cost;
+	}
+	public void setProject_cost(BigDecimal project_cost) {
+		this.project_cost = project_cost;
+	}
+	public BigInteger getProjcount() {
+		return projcount;
+	}
+	public void setProjcount(BigInteger projcount) {
+		this.projcount = projcount;
+	}
+	public String getStatename() {
+		return statename;
+	}
+	public void setStatename(String statename) {
+		this.statename = statename;
+	}
+	public BigInteger getRow_number() {
+		return row_number;
+	}
+	public void setRow_number(BigInteger row_number) {
+		this.row_number = row_number;
+	}
+	public BigInteger getFarmponds() {
+		return farmponds;
+	}
+	public void setFarmponds(BigInteger farmponds) {
+		this.farmponds = farmponds;
+	}
+	public BigInteger getCheckdams() {
+		return checkdams;
+	}
+	public void setCheckdams(BigInteger checkdams) {
+		this.checkdams = checkdams;
+	}
+	public BigInteger getNallahbunds() {
+		return nallahbunds;
+	}
+	public void setNallahbunds(BigInteger nallahbunds) {
+		this.nallahbunds = nallahbunds;
+	}
+	public BigInteger getPercolationtanks() {
+		return percolationtanks;
+	}
+	public void setPercolationtanks(BigInteger percolationtanks) {
+		this.percolationtanks = percolationtanks;
+	}
+	public BigInteger getGroundwaterrechargestructure() {
+		return groundwaterrechargestructure;
+	}
+	public void setGroundwaterrechargestructure(BigInteger groundwaterrechargestructure) {
+		this.groundwaterrechargestructure = groundwaterrechargestructure;
+	}
+	public BigInteger getGullyplugs() {
+		return gullyplugs;
+	}
+	public void setGullyplugs(BigInteger gullyplugs) {
+		this.gullyplugs = gullyplugs;
+	}
+	public BigInteger getOthers() {
+		return others;
+	}
+	public void setOthers(BigInteger others) {
+		this.others = others;
+	}
+	public BigInteger getAmritsarovar() {
+		return amritsarovar;
+	}
+	public void setAmritsarovar(BigInteger amritsarovar) {
+		this.amritsarovar = amritsarovar;
+	}
+	
 	
 	
 	

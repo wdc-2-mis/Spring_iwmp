@@ -101,6 +101,7 @@ public class WorkStatusDateWiseReportController {
 			
 		//	String st_code=session.getAttribute("stateCode").toString();
 			ModelAndView mav = new ModelAndView();
+			
 			String userState= request.getParameter("state");
 			String userdate= request.getParameter("userdate");
 			String userdateto= request.getParameter("userdateto");

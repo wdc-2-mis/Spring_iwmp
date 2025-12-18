@@ -26,6 +26,8 @@ import app.model.UserMap;
 import app.model.UserReg;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpGramPanchayat;
+import app.model.master.IwmpMPhyActivity;
+import app.model.master.IwmpMPhyHeads;
 import app.service.UserService;
 
 @Service("userService")
@@ -146,6 +148,22 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return getprojList;
+	}
+
+	@Override
+	public Map<String, String> getActivityList(int hCode) {
+		
+		Map<String, String> hList=new LinkedHashMap<String, String>();
+		for (IwmpMPhyActivity temp : userDao.getActList(hCode)) {
+			hList.put(temp.getActivityCode()+"", temp.getActivityDesc());
+		}
+		return hList ;
+	}
+
+	@Override
+	public LinkedHashMap<Integer, String> getHead() {
+		// TODO Auto-generated method stub
+		return userDao.getHead();
 	}
 
 	

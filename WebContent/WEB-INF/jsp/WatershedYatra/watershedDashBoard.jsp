@@ -43,6 +43,20 @@
 	height: 150px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.field-containercircle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* centers content vertically */
+    align-items: center;       /* centers content horizontally */
+    background-color: white;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 50%;        /* makes it a circle */
+    width: 210px;              /* equal width */
+    height: 210px;             /* equal height */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}  
 
 .component-field {
 	margin-left: 10px;
