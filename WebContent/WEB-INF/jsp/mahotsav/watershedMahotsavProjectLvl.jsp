@@ -479,18 +479,21 @@ function displaydata(){
 	
 	if ($datetime === '' || typeof $datetime === 'undefined') {
 		alert('Please Select the Date and Time');
+		$('#location').val('');
 		$('#datetime').focus();
 		allValid = false;
 		return false;
 	}
 	if ($projId === '' || typeof $projId === 'undefined') {
 		alert('Please Select the Project');
+		$('#location').val('');
 		$('#project').focus();
 		allValid = false;
 		return false;
 	}
 	if ($block === '' || typeof $block === 'undefined') {
 		alert('Please Select the Block');
+		$('#location').val('');
 		$('#block').focus();
 		allValid = false;
 		return false;
