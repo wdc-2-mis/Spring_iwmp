@@ -23,6 +23,7 @@
 	border: 1px solid gray;
 	border-radius: 10px;
 	width: 1870px;
+	height:370px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -133,8 +134,9 @@
 }  
 .component-field {
 	margin-left: 10px;
-	color: Green;
+	color: red;
 	align-self: center;
+	
 }
 
 .field-title {
@@ -328,37 +330,151 @@
 }
 
 }
-  
+ 
+ .circle-container {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #0d6efd;
+}
+
+.circle-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+} 
+
+.rounded-circle {
+  border-radius: 50% !important;
+  margin: 50px;
+}
   
 </style>
 </head>
 <body>
 
-<h2 class="panel-title" style ="text-align: center; margin: 10px;">Watershed Mahotsav Dashboard</h2>
+<h2 class="panel-title" style ="text-align: center; margin: 10px; color: red;">Watershed Mahotsav Dashboard</h2>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
  $(document).ready(function(){
 	 $('#loading').hide();
  });
  </script>
- <div class="panel-body" style ="text-align: center; margin: 20px;"></div>
+ <!-- <div class="panel-body" style ="text-align: center; margin: 20px;"></div> -->
  <p style ="text-align: right; margin: 20px; font-weight: bold;">As on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 <div>
-	<div class="component-container">
-	
-		<h3 class ="component-field">Social Media Competition</h3>
-			<!-- <div class="field-row">
+
+		<c:forEach var="entry" items="${map}">
+        	<c:if test ="${entry.key eq 'all'}">
+        	<div class="component-container">
+            <!-- <h3 class ="component-field">Watershed Mahotsav Program</h3> -->
+          <!--   <div class="panel-underline"></div> -->
+            <div class="field-row">
+                <c:forEach var="bean" items="${entry.value}">
+               
+                 <c:forEach var="entry" items="${lists}">
+                 
+                 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px; ">
+    					<img src="<c:url value="/resources/images/mahotsav/register.png" />" class="w-100 h-100" style="object-fit:cover;">
+    				<b> No. of People Participating : ${entry.total_registered_user}</b> 
+				</div>
+                 </c:forEach> 
+                 
+                 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
+    					<img src="<c:url value="/resources/images/mahotsav/inauguration.png" />" class="w-100 h-100" style="object-fit:cover;">
+    				<b> No. of States Inauguration Program : ${bean.ignaugstate}</b>
+				</div>
 				
-             </div> -->
-	      
-                    <div class="piechart-container">
-                    <c:forEach var="entry" items="${lists}">
+				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
+    					<img src="<c:url value="/resources/images/mahotsav/janbhagidaricup.png" />" class="w-100 h-100" style="object-fit:cover;">
+    				<b> No. of Watershed Janbhagidari Cup : ${bean.awarddistribution}</b>
+				</div>
+				
+				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
+    					<img src="<c:url value="/resources/images/mahotsav/prapheri.png" />" class="w-100 h-100" style="object-fit:cover;">
+    				<b> No. of Prabhat Pheri Organized : ${bean.prapheriorg}</b>
+				</div>
+				
+				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
+    					<img src="<c:url value="/resources/images/mahotsav/projectlvl.png" />" class="w-100 h-100" style="object-fit:cover;">
+    				<b> No. of States Project Level Program : ${bean.totprojstates}</b>
+				</div>
+                 
+               
+                    
+                </c:forEach>
+            </div>
+             </div>
+            </c:if>
+       
+    </c:forEach>  
+
+
+<%-- 
+
+		<c:forEach var="entry" items="${map}">
+        	<c:if test ="${entry.key eq 'all'}">
+        	<div class="component-container">
+            <h3 class ="component-field">Watershed Mahotsav Program</h3>
+          <!--   <div class="panel-underline"></div> -->
+            <div class="field-row">
+                <c:forEach var="bean" items="${entry.value}">
+                
+                 <c:forEach var="entry" items="${lists}">
 					<div class="field-containercircle">
                         <div class="field-title">No. of People Participating (Register) </div>
                         <div class="field-value">${entry.total_registered_user}
                         </div>
                     </div>
-                    </c:forEach> 
+                 </c:forEach> 
+                 <div class="field-containercircle1">
+                        <div class="field-title">No. of States Inauguration Program</div>
+                        <div class="field-value"><a href="stateWMInaugurationReport" target="_blank" >${bean.ignaugstate}</a>  ${bean.ignaugstate} </div>
+                    </div>
+                    <div class="field-containercircle3">
+                        <div class="field-title">No. of Watershed Janbhagidari Cup</div>
+                        <div class="field-value">${bean.awarddistribution}</div>
+                    </div>
+                     <div class="field-containercircle4">
+                        <div class="field-title"> No. of Prabhat Pheri Organized</div>
+                        <div class="field-value">${bean.prapheriorg}</div>
+                    </div>
+                    <div class ="pie-items">
+						<div class ="pie-div5pp">
+							<canvas id="wtrPieChartpp"></canvas>
+						</div>
+					</div>
+                    <div class="field-containercircle2">
+                        <div class="field-title">No. of People Participated in Prabhat Pheri </div>
+                        <div class="field-value">${bean.prapheriparticipant}</div>
+                    </div>
+                    <div class="field-containercircle5">
+                        <div class="field-title">No. of States Project Level Program </div>
+                        <div class="field-value">
+                        <a href="projectWMProgramReport" target="_blank" >${bean.totprojstates}</a>   ${bean.totprojstates}
+                        </div>
+                    </div>
+                 
+                    
+                </c:forEach>
+            </div>
+             </div>
+            </c:if>
+       
+    </c:forEach>  
+ --%>
+
+
+	<div>
+	
+	<!-- 	<h3 class ="component-field">Social Media Competition</h3>
+			<div class="field-row">
+				
+             </div> -->
+	      
+                    <div class="piechart-container">
+                   
 						<div class ="pie-items">
 							<div class ="pie-div1">
 								<canvas id="prticpntsChrt"></canvas>
@@ -372,6 +488,11 @@
 						<div class ="pie-items">
 							<div class ="pie-div3">
 								<canvas id="plntPieChart"></canvas>
+							</div>
+						</div>
+						<div class ="pie-items">
+							<div class ="pie-div5pp">
+								<canvas id="wtrPieChartpp"></canvas>
 							</div>
 						</div>
 						<%-- <div class ="pie-items">
@@ -522,44 +643,7 @@
     
 	</div>
 	
-   <c:forEach var="entry" items="${map}">
-        	<c:if test ="${entry.key eq 'all'}">
-        	<div class="component-container">
-            <h3 class ="component-field">Watershed Mahotsav Program</h3>
-          <!--   <div class="panel-underline"></div> -->
-            <div class="field-row">
-                <c:forEach var="bean" items="${entry.value}">
-                
-                 <div class="field-containercircle1">
-                        <div class="field-title">No. of States Inauguration Program</div>
-                        <div class="field-value"><a href="stateWMInaugurationReport" target="_blank" >${bean.ignaugstate}</a></div>
-                    </div>
-                    <div class="field-containercircle3">
-                        <div class="field-title">No. of Watershed Janbhagidari Cup</div>
-                        <div class="field-value">${bean.awarddistribution}</div>
-                    </div>
-                     <div class="field-containercircle4">
-                        <div class="field-title"> No. of Prabhat Pheri Organized</div>
-                        <div class="field-value">${bean.prapheriorg}</div>
-                    </div>
-                    <div class="field-containercircle2">
-                        <div class="field-title">No. of People Participated in Prabhat Pheri </div>
-                        <div class="field-value">${bean.prapheriparticipant}</div>
-                    </div>
-                    <div class="field-containercircle5">
-                        <div class="field-title">No. of States Project Level Program </div>
-                        <div class="field-value">
-                        <a href="projectWMProgramReport" target="_blank" >${bean.totprojstates}</a>
-                        </div>
-                    </div>
-                 
-                    
-                </c:forEach>
-            </div>
-             </div>
-            </c:if>
-       
-    </c:forEach>  
+   
     
    
     
@@ -880,11 +964,7 @@ function closeDPopup() {
 				<canvas id="wtrPieChart"></canvas>
 			</div>
 		</div>
-		<div class ="pie-items">
-			<div class ="pie-div5pp">
-				<canvas id="wtrPieChartpp"></canvas>
-			</div>
-		</div>
+		
 		<div class ="pie-items">
 			<div class ="pie-div6">
 				<canvas id="shrmPieChart"></canvas>
