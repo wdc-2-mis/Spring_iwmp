@@ -377,7 +377,7 @@
                  
                  <div class="rounded-circle overflow-hidden" style="width:200px;height:200px; ">
     					<img src="<c:url value="/resources/images/mahotsav/register.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> No. of People Participating : ${entry.total_registered_user}</b> 
+    				<b> People Participating in Social Media : ${entry.total_registered_user}</b> 
 				</div>
                  </c:forEach> 
                  
