@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import app.mahotsav.bean.WMMediaViewsDetailsBean;
+import app.mahotsav.bean.WatershedMahotsavBean;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
 
@@ -25,6 +27,12 @@ public interface WatershedMahotsavService {
 	boolean mediaAlreadyExists(String media);
 
 	List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo();
+	
+	public List<WatershedMahotsavBean> getWatershedMahotsavVideoDetails(String regno);
+	
+	String saveWMMediaViewDetails(WMMediaViewsDetailsBean bean, HttpServletRequest request);
+	
+	List<WMMediaViewsDetailsBean> getWMMediaViewsDetails(String regno, Integer videoid);
 
 	
 	

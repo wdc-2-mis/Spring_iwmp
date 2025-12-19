@@ -112,6 +112,7 @@
         <mapping class="app.mahotsav.model.MahotsavPrabhatPheriPhoto" />
          <mapping class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
         <mapping class="app.mahotsav.model.WatershedMahotsavProjectLvlPhoto" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavVideoViewDetails"/>
         
 	</session-factory>
 </hibernate-configuration>

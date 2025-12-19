@@ -1,5 +1,6 @@
 package app.mahotsav.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import app.bean.ProfileBean;
+import app.mahotsav.bean.WMMediaViewsDetailsBean;
+import app.mahotsav.bean.WatershedMahotsavBean;
+import app.mahotsav.bean.WatershedMahotsavProjectLevelBean;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.mahotsav.service.WatershedMahotsavService;
@@ -28,6 +34,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.ServletContext;
@@ -298,7 +305,76 @@ public class WatershedMahotsavController {
         return "mahotsav/mediaReport";
     }
 
+    @RequestMapping(value="/viewWMMediaUrlDetails", method = RequestMethod.GET)
+	public ModelAndView viewWMMediaUrlDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam("regno") String regNo)
+	{
+    	List<WatershedMahotsavBean> list = new ArrayList<WatershedMahotsavBean>();
+		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regNo);
+		if (registration == null) {
+	        return new ModelAndView("redirect:/registerMahotsav");
+	    }
+		list = watershedMahotsavService.getWatershedMahotsavVideoDetails(regNo);
+	    
+		ModelAndView mav = new ModelAndView("mahotsav/viewWMSocialMediaDetails");
+		
+	    mav.addObject("WMList", list);
+	    mav.addObject("regno", regNo);  
+	    
+	    return mav;
+	}
+    
+    @RequestMapping(value="/addMediaViewDetais", method = RequestMethod.GET)
+	public ModelAndView addMediaViewDetais(HttpServletRequest request, HttpServletResponse response)
+	{
+		String regNo = request.getParameter("regno");
+		Integer videoid = Integer.parseInt(request.getParameter("videoid"));
+		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regNo);
+		if (registration == null) {
+	        return new ModelAndView("redirect:/registerMahotsav");
+	    }
+		ModelAndView mav = new ModelAndView("mahotsav/addMediaViewDetails");
+		mav.addObject("regno", regNo);
+		mav.addObject("videoid", videoid);
 
+		return mav;
+	}
+    
+    @RequestMapping(value = "/saveSocialMediaViewsDetails", method = RequestMethod.POST)
+	public ModelAndView saveSocialMediaViewsDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadsl") WMMediaViewsDetailsBean userfileup)
+			throws Exception {
+
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(userfileup.getRegno());
+		if (registration == null) {
+	        return new ModelAndView("redirect:/registerMahotsav");
+	    }
+		try {
+
+				mav = new ModelAndView("mahotsav/addMediaViewDetails");
+				mav.addObject("regno", userfileup.getRegno());
+				mav.addObject("videoid", userfileup.getVideoid());
+				
+				result =  watershedMahotsavService.saveWMMediaViewDetails(userfileup, request);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved");
+				} 
+				redirectAttributes.addAttribute("regno", userfileup.getRegno());
+				redirectAttributes.addAttribute("videoid", userfileup.getVideoid());
+
+				return new ModelAndView("redirect:/addMediaViewDetais");
+				
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 	
 }

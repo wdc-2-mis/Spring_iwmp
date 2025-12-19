@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.mahotsav.bean.WMMediaViewsDetailsBean;
+import app.mahotsav.bean.WatershedMahotsavBean;
 import app.mahotsav.dao.WatershedMahotsavDao;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
@@ -53,6 +55,24 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 	public List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo() {
 		// TODO Auto-generated method stub
 		return watershedMahotsavDao.findAllMahotsaveVideo();
+	}
+
+	@Override
+	public List<WatershedMahotsavBean> getWatershedMahotsavVideoDetails(String regno) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.getWatershedMahotsavVideoDetails(regno);
+	}
+
+	@Override
+	public String saveWMMediaViewDetails(WMMediaViewsDetailsBean bean, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.saveWMMediaViewDetails(bean, request);
+	}
+
+	@Override
+	public List<WMMediaViewsDetailsBean> getWMMediaViewsDetails(String regno, Integer videoid) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.getWMMediaViewsDetails(regno, videoid);
 	}
 
 	

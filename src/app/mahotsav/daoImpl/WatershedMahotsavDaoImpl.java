@@ -1,20 +1,29 @@
 package app.mahotsav.daoImpl;
 
+import java.io.File;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import app.common.CommonFunctions;
+import app.mahotsav.bean.WMMediaViewsDetailsBean;
+import app.mahotsav.bean.WatershedMahotsavBean;
 import app.mahotsav.dao.WatershedMahotsavDao;
 import app.mahotsav.model.WatershedMahotsavRegistration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
+import app.mahotsav.model.WatershedMahotsavVideoViewDetails;
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
@@ -28,6 +37,12 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 	
 	@Value("${getMahotsavUserDtl}")
 	String getMahotsavUserDtl;
+	
+	@Value("${getWatershedMahotsavVideoDetails}")
+	String getWatershedMahotsavVideoDetails;
+	
+	@Autowired
+	CommonFunctions commonFunction;
 	
 	public static String getClientIpAddr(HttpServletRequest request) {  
 	    String ip = request.getHeader("X-Forwarded-For");  
@@ -280,7 +295,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 			  Session session = sessionFactory.openSession(); 
 			  return session.createQuery("FROM WatershedMahotsavVideoDetails", WatershedMahotsavVideoDetails.class ).getResultList(); 
 		  }
-		 
+
 
 		/*
 		 * @Override public List<WatershedMahotsavVideoDetails> findAllMahotsaveVideo()
@@ -315,7 +330,126 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 		 * catch (Exception e) { e.printStackTrace();
 		 * session.getTransaction().rollback(); } return list; }
 		 */
+		
+		
+		@Override
+		public List<WatershedMahotsavBean> getWatershedMahotsavVideoDetails(String regno) {
+			List<WatershedMahotsavBean> list = new ArrayList<WatershedMahotsavBean>();
+			String hql = getWatershedMahotsavVideoDetails;
+			Session session = sessionFactory.openSession();
+			try {
+				session.beginTransaction();
+				Query query = session.createSQLQuery(hql);
+				query.setParameter("regno", regno);
+				query.setResultTransformer(Transformers.aliasToBean(WatershedMahotsavBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+			}catch(Exception e) {
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return list;
+		}
 
+		@Override
+		public String saveWMMediaViewDetails(WMMediaViewsDetailsBean bean, HttpServletRequest request) {
+			String result = "fail";
+			String filePath="D:\\wmMediaViewsScreenshot\\";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/wmMediaViewsScreenshot/";
+			
+			Session session = sessionFactory.openSession();
+			try {
+				session.beginTransaction();
+				System.out.println("check video id: "+bean.getVideoid());
+				WatershedMahotsavVideoDetails mvd =  session.load(WatershedMahotsavVideoDetails.class, bean.getVideoid());
+				
+				if(mvd != null) {
+					WatershedMahotsavVideoViewDetails vvd =  session.get(WatershedMahotsavVideoViewDetails.class,mvd.getVideoDetailId());
+					if(vvd != null) {
+						if (vvd.getMediaViewUrl() != null && !vvd.getMediaViewUrl().isEmpty()) 
+			            {
+			                File file = new File(vvd.getMediaViewUrl());
+			                if (file.exists()) 
+			                {
+			                    if (file.delete()) {
+			                        System.out.println("Deleted file: " + file.getAbsolutePath());
+			                    } else {
+			                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+			                    }
+			                } 
+			                else {
+			                    System.out.println("File not found: " + file.getAbsolutePath());
+			                }
+			            }
+						commonFunction.uploadFileMahotwavInauguration(bean.getPhotos_screenshot(), filePath, "", "", bean.getVideoid());
+						vvd.setMediaViewUrl(filePath+"I"+""+""+bean.getVideoid()+"_"+bean.getPhotos_screenshot().getOriginalFilename());
+						vvd.setNoOfLikes(bean.getNo_of_likes());
+						vvd.setNoOfSubscribers(bean.getNo_of_subscriber());
+						vvd.setNoOfViews(bean.getNo_of_views());
+						vvd.setUpdatedDate(LocalDate.now());
+						vvd.setRequestedIp(getClientIpAddr(request));
+						session.saveOrUpdate(vvd);
+					}else {
+						vvd = new WatershedMahotsavVideoViewDetails();
+						commonFunction.uploadFileMahotwavInauguration(bean.getPhotos_screenshot(), filePath, "", "", bean.getVideoid());
+						vvd.setVideoDetailId(mvd.getVideoDetailId());
+						vvd.setVideoDetails(mvd);
+						vvd.setMediaViewUrl(filePath+"I"+""+""+bean.getVideoid()+"_"+bean.getPhotos_screenshot().getOriginalFilename());
+						vvd.setNoOfLikes(bean.getNo_of_likes());
+						vvd.setNoOfSubscribers(bean.getNo_of_subscriber());
+						vvd.setNoOfViews(bean.getNo_of_views());
+						vvd.setStatus('D');
+						vvd.setCreatedDate(LocalDate.now());
+						vvd.setRequestedIp(getClientIpAddr(request));
+						session.save(vvd);
+						
+					}
+					
+				}
+				session.getTransaction().commit();
+				result = "success";
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				session.getTransaction().rollback();
+				result = "fail";
+			}
+			return result;
+		}
+
+		@SuppressWarnings("deprecation")
+		@Override
+		public List<WMMediaViewsDetailsBean> getWMMediaViewsDetails(String regno, Integer videoid) {
+			List<WMMediaViewsDetailsBean> list = new ArrayList<WMMediaViewsDetailsBean>();
+			List<WatershedMahotsavVideoViewDetails> listDtl = new ArrayList<WatershedMahotsavVideoViewDetails>();
+			Session session = sessionFactory.openSession();
+			try {
+				session.beginTransaction();
+				Query query = session.createQuery("from WatershedMahotsavVideoViewDetails where videoDetailId = :videoid");
+				query.setParameter("videoid", videoid);
+				listDtl = query.list();
+				
+				session.getTransaction().commit();
+				if(listDtl.size()>0) {
+					listDtl.forEach(s->{
+						WMMediaViewsDetailsBean bean = new WMMediaViewsDetailsBean();
+						bean.setRegno(regno);
+						bean.setVideoid(videoid);
+						bean.setNo_of_likes(s.getNoOfLikes());
+						bean.setNo_of_subscriber(s.getNoOfSubscribers());
+						bean.setNo_of_views(s.getNoOfViews());
+						bean.setStatus(s.getStatus());
+						list.add(bean);
+					});
+				}
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				session.getTransaction().rollback();
+			}
+			return list;
+		}
 
 	
 }
