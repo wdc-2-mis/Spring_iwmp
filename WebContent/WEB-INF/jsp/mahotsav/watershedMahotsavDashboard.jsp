@@ -570,7 +570,7 @@
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Total Social Media Reels',
+                        text: 'Social Media Reels',
                         font: {
                             size: 30 // Adjust this value to increase or decrease the font size
                         }
@@ -585,7 +585,7 @@
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
             totalElement.style.fontSize = '20px';
-            totalElement.innerHTML = `<strong>Social Media Reels: 
+            totalElement.innerHTML = `<strong>Total Social Media Reels: 
             	<c:out value ="${lists[0].fbv + lists[0].ytv + lists[0].igv + lists[0].xv + lists[0].liv}"/></strong>`;
             container.appendChild(totalElement);
         } else {
