@@ -31,4 +31,8 @@ public interface WatershedMahotsavDao {
 	
 	List<WMMediaViewsDetailsBean> getWMMediaViewsDetails(String regno, Integer videoid);
 	
+	String comWMMediaViewDetails(String regno, Integer videoid);
+	
+	List<String> getWMMediaScrnshtUrl(Integer videoid);
+	
 }

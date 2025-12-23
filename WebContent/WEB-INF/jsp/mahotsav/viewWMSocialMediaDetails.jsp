@@ -7,8 +7,8 @@
     function addMediaViewDetails(regno,videoid){
     	document.getElementById('regno').value=regno;
     	document.getElementById('videoid').value=videoid;
-        document.mohotsav.action="addMediaViewDetais";
-    	document.mohotsav.method="get";
+        document.mohotsav.action="addMediaViewDetails";
+    	document.mohotsav.method="post";
     	document.mohotsav.submit();
     }
 </script>

@@ -75,6 +75,20 @@ public class WatershedMahotsavServiceImpl implements WatershedMahotsavService{
 		return watershedMahotsavDao.getWMMediaViewsDetails(regno, videoid);
 	}
 
+	@Override
+	public String comWMMediaViewDetails(String regno, Integer videoid) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.comWMMediaViewDetails(regno, videoid);
+	}
+
+	@Override
+	public List<String> getWMMediaScrnshtUrl(Integer videoid) {
+		// TODO Auto-generated method stub
+		return watershedMahotsavDao.getWMMediaScrnshtUrl(videoid);
+	}
+	
+	
+
 	
 	
 	

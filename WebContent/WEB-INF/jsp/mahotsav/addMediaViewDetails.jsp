@@ -84,7 +84,7 @@ function validation()
 	}
 	
 	if (allValid) {
-		if(confirm("Do you want to save Social Media Views Details?")) {
+		if(confirm("Do you want to Save/Update Social Media Views Details?")) {
 		document.mohotsav.action="saveSocialMediaViewsDetails";
 		document.mohotsav.method="post";
 		document.mohotsav.submit();
@@ -94,9 +94,98 @@ function validation()
 		return false;
 	}
 }
-   
-   
+
+
+function editChangedata(){
+	
+	if (confirm("Do you want to Complete Social Media Views Details?")) {
+			document.mohotsav.action = "comSocialMediaViewsDetails";
+			document.mohotsav.method = "post";
+			document.mohotsav.submit();
+		}
+	}
+
+	function closeLargeImagePopup() {
+		document.getElementById('largeImagePopup').style.display = 'none';
+	}
+
+	function showimage(file) {
+
+		// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
+		// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/wmMediaViewsScreenshot/' + file;
+
+		//local				
+		document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'
+				+ file;
+		document.getElementById('largeImagePopup').style.display = 'block';
+	}
 </script>
+<style>
+
+#largeImagePopup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%; /* Center the popup vertically */
+  left: 50%; /* Center the popup horizontally */
+  transform: translate(-50%, -50%); /* Correct centering */
+  z-index: 1000;
+/*   background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent overlay for the background */ */
+  padding: 20px;
+  width: 80%; /* Set a width, but limit it to 80% of the screen */
+  max-width: 1500px; /* Max width of the popup */
+  border-radius: 10px;
+}
+
+
+/* Popup content */
+.large-image-popup-content {
+  background-color: #fefefe;
+  width: 100%;
+  height: auto;
+  max-height: 80vh; /* Set a max height to avoid overflowing */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  position: relative;
+}
+
+/* Adjust close button position for large image pop-up */
+.large-image-popup-content .close {
+  position: absolute; /* Change from float to absolute */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.large-image-popup-content .close:hover,
+.large-image-popup-content .close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Large image */
+#largeImage {
+  width: 100%; /* Ensure it fits inside the popup */
+  height: auto;
+  max-height: 80vh; /* Restrict height to 80% of the viewport height */
+  object-fit: contain; /* Ensure the aspect ratio is maintained */
+}
+.nav-arrow {
+  color: black;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+</style>
 </head>
 <body>
 <c:if test="${result != null}">
@@ -109,9 +198,9 @@ function validation()
     <form:form autocomplete="off" method="post" name="mohotsav" id="mohotsav" action="saveSocialMediaViewsDetails" modelAttribute="useruploadsl" enctype="multipart/form-data">
 		<input type="hidden" name="regno" id="regno" value="${regno}"/>
 		<input type="hidden" name="videoid" id="videoid" value="${videoid}"/>
-    
+    	<c:if test = "${empty viewsList}">
         <div class="card shadow mt-1 p-5">
-        
+        	
             <h4 class="text-center text-primary mb-4"><u>Add the Social Media Views Details</u></h4>
 			<label> <span style="color: blue;">Note:- The Image size must be under 300KB.</span></label>
 			<div class="table-responsive">
@@ -169,9 +258,138 @@ function validation()
      			</div> 
             </div>
         </div>
+        </c:if>
+        
+        <c:if test = "${not empty viewsList}">
+        <div class="card shadow mt-1 p-5">
+					<c:choose>
+						<c:when test="${status eq 'D'}">
+							<h4 class="text-center text-primary mb-4">
+								<u>Draft Wise Social Media Views Details</u>
+							</h4>
+							<label> <span style="color: blue;">Note:- The
+									Image size must be under 300KB.</span></label>
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped">
+									<tbody>
+										<tr>
+											<td>Upload Screenshot of Social Media Photos/Videos
+												Details <span style="color: red;">*</span>
+											</td>
+											<td>
+												<div class="photo-block" data-name="photos_screenshot">
+
+													<label><b>Upload Screenshot</b></label>
+
+													<div class="photoContainer">
+														<div class="d-flex align-items-center mb-1">
+															<input type="file" name="photos_screenshot"	id="photos_screenshot" class="form-control photo-input"
+																accept="image/*" onchange="validatePhoto(this)" required />
+														</div>
+													</div>
+													<small class="text-danger photoError"></small>
+
+												</div>
+											</td>
+
+										</tr>
+										<tr>
+											<td>Number of Views<span style="color: red;">*</span></td>
+											<td colspan=2><input type="text" id="no_of_views" name="no_of_views" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofview}" required /></td>
+
+
+										</tr>
+										<tr>
+											<td>Number of Subscriber<span style="color: red;">*</span></td>
+											<td><input type="text" id="no_of_subscriber"
+												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" required /></td>
+
+										</tr>
+										<tr>
+											<td>Number of Likes<span style="color: red;">*</span>
+											</td>
+											<td colspan=2><input type="text" id="no_of_likes" name="no_of_likes" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${nooflikes}" required /></td>
+
+										</tr>
+									</tbody>
+
+								</table>
+								<div class="form-row">
+									<div class="form-group col-8">
+										<label for="btnGetDetails"> &nbsp;</label> <input
+											type="button" class="btn btn-info" id="submitbtn"
+											name="submitbtn" onclick="validation();" value="Update" />
+											<input type="button" class="btn btn-info" id="complete" name="complete" value="Complete" onclick="editChangedata()" />
+									</div>
+								</div>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<h4 class="text-center text-primary mb-4">
+								<u>Completed Social Media Views Details</u>
+							</h4>
+							<div class="table-responsive">
+								<table class="table table-bordered table-striped">
+									<tbody>
+										<tr>
+											<td>Screenshot of Social Media Photos/Videos Details</td>
+											<td class="text-right">
+												<a href="#" data-id="${data.waterid}" class="showImage" data-toggle="modal" style ="color: blue;" onclick ="showimage('${file}')">Screenshot</a> 
+											</td>
+
+										</tr>
+										<tr>
+											<td>Number of Views</td>
+											<td colspan=2><input type="text" id="no_of_views" name="no_of_views" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofview}" disabled/></td>
+
+
+										</tr>
+										<tr>
+											<td>Number of Subscriber</td>
+											<td><input type="text" id="no_of_subscriber"
+												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" disabled/></td>
+
+										</tr>
+										<tr>
+											<td>Number of Likes	</td>
+											<td colspan=2><input type="text" id="no_of_likes" name="no_of_likes" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${nooflikes}" disabled/></td>
+
+										</tr>
+									</tbody>
+
+								</table>
+								
+							</div>
+						</c:otherwise>
+					</c:choose>
+
+
+
+				</div>
+        </c:if>
    </form:form> 
+   
 
 </div>
+<!-- 	<div id="imagePopup" class="popup" style="display:none;"> -->
+<!-- 		<div class="popup-content"> -->
+<!-- 			<span class="close" onclick="closePopup()">&times;</span> -->
+<!-- 			<div id="imageList" class="image-container"></div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+	<div id="largeImagePopup" class="popup" style="display: none;">
+		<div class="large-image-popup-content">
+			<span class="close" onclick="closeLargeImagePopup()">&times;</span>
+			<img id="largeImage" src="" alt="Large Image" />
+		</div>
+		
+	</div>
 
 <br>
 <footer class="text-center">

@@ -33,6 +33,10 @@ public interface WatershedMahotsavService {
 	String saveWMMediaViewDetails(WMMediaViewsDetailsBean bean, HttpServletRequest request);
 	
 	List<WMMediaViewsDetailsBean> getWMMediaViewsDetails(String regno, Integer videoid);
+	
+	String comWMMediaViewDetails(String regno, Integer videoid);
+	
+	List<String> getWMMediaScrnshtUrl(Integer videoid);
 
 	
 	

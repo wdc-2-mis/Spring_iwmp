@@ -323,7 +323,8 @@ public class WatershedMahotsavController {
 	    return mav;
 	}
     
-    @RequestMapping(value="/addMediaViewDetais", method = RequestMethod.GET)
+    @SuppressWarnings("null")
+	@RequestMapping(value="/addMediaViewDetails", method = RequestMethod.POST)
 	public ModelAndView addMediaViewDetais(HttpServletRequest request, HttpServletResponse response)
 	{
 		String regNo = request.getParameter("regno");
@@ -333,6 +334,16 @@ public class WatershedMahotsavController {
 	        return new ModelAndView("redirect:/registerMahotsav");
 	    }
 		ModelAndView mav = new ModelAndView("mahotsav/addMediaViewDetails");
+		List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(regNo, videoid);
+		if(list!=null && list.size()>0) {
+			mav.addObject("nooflikes", list.get(0).getNo_of_likes());
+			mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+			mav.addObject("noofview", list.get(0).getNo_of_views());
+			mav.addObject("status", list.get(0).getStatus().toString());
+			mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(videoid).get(0));
+			mav.addObject("viewsList", list);
+			mav.addObject("viewsListSize", list.size());
+		}
 		mav.addObject("regno", regNo);
 		mav.addObject("videoid", videoid);
 
@@ -350,24 +361,30 @@ public class WatershedMahotsavController {
 		if (registration == null) {
 	        return new ModelAndView("redirect:/registerMahotsav");
 	    }
-		try {
-
+		try {	
+			result =  watershedMahotsavService.saveWMMediaViewDetails(userfileup, request);
 				mav = new ModelAndView("mahotsav/addMediaViewDetails");
+				List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(userfileup.getRegno(), userfileup.getVideoid());
+				if(list!=null && list.size()>0) {
+					mav.addObject("nooflikes", list.get(0).getNo_of_likes());
+					mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+					mav.addObject("noofview", list.get(0).getNo_of_views());
+					mav.addObject("status", list.get(0).getStatus().toString());
+					mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(userfileup.getVideoid()).get(0));
+					mav.addObject("viewsList", list);
+					mav.addObject("viewsListSize", list.size());
+				}
 				mav.addObject("regno", userfileup.getRegno());
 				mav.addObject("videoid", userfileup.getVideoid());
-				
-				result =  watershedMahotsavService.saveWMMediaViewDetails(userfileup, request);
 
 				if (result.equals("success")) {
-					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
-				} 
+					mav.addObject("result", "Data saved Successfully");
+				}else if (result.equals("updated")) {
+					mav.addObject("result", "Data Updated Successfully");
+				}
 				else {
-					redirectAttributes.addFlashAttribute("result1", "Data not saved");
+					mav.addObject("result", "Data not saved");
 				} 
-				redirectAttributes.addAttribute("regno", userfileup.getRegno());
-				redirectAttributes.addAttribute("videoid", userfileup.getVideoid());
-
-				return new ModelAndView("redirect:/addMediaViewDetais");
 				
 				
 		} catch (Exception e) {
@@ -375,6 +392,48 @@ public class WatershedMahotsavController {
 		}
 		return mav;
 	}
+    
+    
+    @RequestMapping(value = "/comSocialMediaViewsDetails", method = RequestMethod.POST)
+   	public ModelAndView comSocialMediaViewsDetails(HttpServletRequest request, HttpServletResponse response,
+   			RedirectAttributes redirectAttributes)
+   			throws Exception {
+
+   		ModelAndView mav = new ModelAndView();
+   		String regno = request.getParameter("regno");
+   		Integer videoid = Integer.parseInt(request.getParameter("videoid"));
+   		String result = "fail";
+   		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regno);
+   		if (registration == null) {
+   	        return new ModelAndView("redirect:/registerMahotsav");
+   	    }
+   		try {
+   			result =  watershedMahotsavService.comWMMediaViewDetails(regno, videoid);
+   				mav = new ModelAndView("mahotsav/addMediaViewDetails");
+   				List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(regno, videoid);
+				if(list!=null && list.size()>0) {
+					mav.addObject("nooflikes", list.get(0).getNo_of_likes());
+					mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+					mav.addObject("noofview", list.get(0).getNo_of_views());
+					mav.addObject("status", list.get(0).getStatus().toString());
+					mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(videoid).get(0));
+					mav.addObject("viewsList", list);
+					mav.addObject("viewsListSize", list.size());
+				}
+   				mav.addObject("regno", regno);
+   				mav.addObject("videoid", videoid);
+   				if (result.equals("success")) {
+   					mav.addObject("result", "Data Completed Successfully");
+   				} 
+   				else {
+   					mav.addObject("result1", "Data not Completed");
+   				} 
+   				
+   		} catch (Exception e) {
+   			e.printStackTrace();
+   		}
+   		return mav;
+   	}
 
 	
 }
