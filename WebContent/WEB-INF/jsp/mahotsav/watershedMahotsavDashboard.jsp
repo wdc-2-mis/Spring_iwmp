@@ -354,7 +354,7 @@
 </head>
 <body>
 
-<h2 class="panel-title" style ="text-align: center; margin: 10px; color: red;">Watershed Mahotsav Dashboard</h2>
+<h2 class="panel-title" style ="text-align: center; margin: 10px; color: blue;">Watershed Mahotsav Dashboard</h2>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
  $(document).ready(function(){
@@ -539,7 +539,7 @@
         var totalElement = document.createElement('div');
         totalElement.style.textAlign = 'center';
         totalElement.style.marginTop = '20px';
-        totalElement.style.fontSize = '20px';
+        totalElement.style.fontSize = '16px';
         totalElement.innerHTML = `<strong>Total No. of Media Uploaded: 
         	<c:out value ="${lists[0].total_video_uploaded + lists[0].total_photo_uploaded}"/></strong>`;
         container.appendChild(totalElement);
@@ -584,7 +584,7 @@
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
-            totalElement.style.fontSize = '20px';
+            totalElement.style.fontSize = '16px';
             totalElement.innerHTML = `<strong>Total Social Media Reels: 
             	<c:out value ="${lists[0].fbv + lists[0].ytv + lists[0].igv + lists[0].xv + lists[0].liv}"/></strong>`;
             container.appendChild(totalElement);
@@ -630,7 +630,7 @@
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
-            totalElement.style.fontSize = '20px';
+            totalElement.style.fontSize = '16px';
             totalElement.innerHTML = `<strong>Total Social Media Photo : 
             	<c:out value ="${lists[0].fbp + lists[0].ytp + lists[0].igp + lists[0].xp + lists[0].lip}"/></strong>`;
             container.appendChild(totalElement);
@@ -1021,7 +1021,7 @@ function closeDPopup() {
         var totalElement = document.createElement('div');
         totalElement.style.textAlign = 'center';
         totalElement.style.marginTop = '20px';
-        totalElement.style.fontSize = '20px';
+        totalElement.style.fontSize = '16px';
         totalElement.innerHTML = `<strong>Participants : 
         	<c:out value ="${listpart[0].malei + listpart[0].memberi + listpart[0].otheri + listpart[0].officialsi}"/></strong>`;
         container.appendChild(totalElement);
@@ -1063,7 +1063,7 @@ function closeDPopup() {
         var totalElement = document.createElement('div');
         totalElement.style.textAlign = 'center';
         totalElement.style.marginTop = '20px';
-        totalElement.style.fontSize = '20px';
+        totalElement.style.fontSize = '16px';
         totalElement.innerHTML = `<strong>Participants : 
         	<c:out value ="${listpart[0].malepr + listpart[0].femalepr}"/></strong>`;
         container.appendChild(totalElement);
@@ -1108,7 +1108,7 @@ function closeDPopup() {
         var totalElement = document.createElement('div');
         totalElement.style.textAlign = 'center';
         totalElement.style.marginTop = '20px';
-        totalElement.style.fontSize = '20px';
+        totalElement.style.fontSize = '16px';
         totalElement.innerHTML = `<strong>Participants : 
         	<c:out value ="${listpart[0].malep + listpart[0].memberp + listpart[0].otherp + listpart[0].officialsp}"/></strong>`;
         container.appendChild(totalElement);
@@ -1126,11 +1126,11 @@ function closeDPopup() {
 	</div> --%>
 
 <script type="text/javascript">
-    var ibhumipujan = ${listpart[0].ibhumipujan};
-    var ilokarpan = ${listpart[0].ilokarpan};
-    var ishramdannlocation = ${listpart[0].ishramdannlocation};
-    var ishramdanparticipate = ${listpart[0].ishramdanparticipate};
-    var iplantation = ${listpart[0].iplantation};
+var ibhumipujan = Number("${listpart[0].ibhumipujan}");
+var ilokarpan = Number("${listpart[0].ilokarpan}");
+var ishramdannlocation = Number("${listpart[0].ishramdannlocation}");
+var ishramdanparticipate = Number("${listpart[0].ishramdanparticipate}");
+var iplantation = Number("${listpart[0].iplantation}");
     
     var pbhumipujan = ${listpart[0].pbhumipujan};
     var plokarpan = ${listpart[0].plokarpan};
@@ -1146,7 +1146,7 @@ function closeDPopup() {
         new Chart(document.getElementById('locationChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
+            labels: ['Bhoomi Poojan Works1', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
             datasets: [{
               data: locData,
               backgroundColor: ['#4caf50', '#f44336', '#4BC0C0', '#9966FF', '#FF9F40'],
@@ -1167,18 +1167,34 @@ function closeDPopup() {
           }
         });
         
+        var totalInaugurationActivities =
+            ibhumipujan +
+            ilokarpan +
+            ishramdannlocation +
+            ishramdanparticipate +
+            iplantation;
+
+        var totalProjectActivities =
+            pbhumipujan +
+            plokarpan +
+            pshramdannlocation +
+            pshramdanparticipate +
+            pplantation;
+        
         var container = document.querySelector('.chart-div1');
+        
+
         if (container) {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
-            totalElement.style.fontSize = '20px';
-            totalElement.innerHTML = `<strong></strong>`;
+            totalElement.style.fontSize = '16px';
+            totalElement.innerHTML = `<strong>Total Activities : \${totalInaugurationActivities}</strong>`;
             container.appendChild(totalElement);
-        } 
-        else {
-            console.error("Container element '.piechart-container' not found.");
+        } else {
+            console.error("Container element '.chart-div1' not found.");
         }
+
 
         // Activity Gauge Chart
         new Chart(document.getElementById('activityChart'), {
@@ -1210,8 +1226,8 @@ function closeDPopup() {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
-            totalElement.style.fontSize = '20px';
-            totalElement.innerHTML = `<strong></strong>`;
+            totalElement.style.fontSize = '16px';
+            totalElement.innerHTML = `<strong>Total Activities : \${totalProjectActivities}</strong>`;
             container.appendChild(totalElement);
         } else {
             console.error("Container element '.piechart-container' not found.");
@@ -1297,7 +1313,7 @@ function closeDPopup() {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
-            totalElement.style.fontSize = '20px';
+            totalElement.style.fontSize = '16px';
             totalElement.innerHTML = `<strong>Total Participants: 
             	<c:out value ="${pList[0].maleparticipants + pList[0].femaleparticipants + pList[0].centralminister + pList[0].stateminister + pList[0].parliamentmembers 
             		+ pList[0].legislativeassemblymembers + pList[0].legislativecouncilmembers + pList[0].otherpublicrepresentatives + pList[0].govofficials}"/></strong>`;
