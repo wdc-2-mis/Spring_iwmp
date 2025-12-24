@@ -40,6 +40,18 @@ public class DashboardMahotsavServicesImpl implements DashboardMahotsavServices{
 		return dao.getStateWiseParticipants();
 	}
 
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavDashboardData() {
+		// TODO Auto-generated method stub
+		return dao.getStWiseWatershedMahotsavDashboardData();
+	}
+
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData() {
+		// TODO Auto-generated method stub
+		return dao.getStWiseWatershedMahotsavProjectLevelData();
+	}
+
 	
 
 }

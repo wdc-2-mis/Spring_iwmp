@@ -65,6 +65,16 @@ public class DashboardMahotsavBean {
 	private BigInteger malepr;
 	private BigInteger femalepr;
 	
+	private Integer stcode; 
+	private Integer total_participants; 
+	private Integer bhoomi_poojan; 
+	private Integer lokarpan; 
+	private Integer shramdaan; 
+	private Integer shramdaan_participate; 
+	private Integer plantation; 
+	private Integer award_janbhagidari;
+	private Integer total_locations;
+	
 	
 	
 	
@@ -373,6 +383,60 @@ public class DashboardMahotsavBean {
 	}
 	public void setSt_name(String st_name) {
 		this.st_name = st_name;
+	}
+	public Integer getStcode() {
+		return stcode;
+	}
+	public void setStcode(Integer stcode) {
+		this.stcode = stcode;
+	}
+	public Integer getTotal_participants() {
+		return total_participants;
+	}
+	public void setTotal_participants(Integer total_participants) {
+		this.total_participants = total_participants;
+	}
+	public Integer getBhoomi_poojan() {
+		return bhoomi_poojan;
+	}
+	public void setBhoomi_poojan(Integer bhoomi_poojan) {
+		this.bhoomi_poojan = bhoomi_poojan;
+	}
+	public Integer getLokarpan() {
+		return lokarpan;
+	}
+	public void setLokarpan(Integer lokarpan) {
+		this.lokarpan = lokarpan;
+	}
+	public Integer getShramdaan() {
+		return shramdaan;
+	}
+	public void setShramdaan(Integer shramdaan) {
+		this.shramdaan = shramdaan;
+	}
+	public Integer getShramdaan_participate() {
+		return shramdaan_participate;
+	}
+	public void setShramdaan_participate(Integer shramdaan_participate) {
+		this.shramdaan_participate = shramdaan_participate;
+	}
+	public Integer getPlantation() {
+		return plantation;
+	}
+	public void setPlantation(Integer plantation) {
+		this.plantation = plantation;
+	}
+	public Integer getAward_janbhagidari() {
+		return award_janbhagidari;
+	}
+	public void setAward_janbhagidari(Integer award_janbhagidari) {
+		this.award_janbhagidari = award_janbhagidari;
+	}
+	public Integer getTotal_locations() {
+		return total_locations;
+	}
+	public void setTotal_locations(Integer total_locations) {
+		this.total_locations = total_locations;
 	}
 	
 	

@@ -44,6 +44,12 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 	@Value("${getStatemahotsavData}")
 	String getStatemahotsavData;
 	
+	@Value("${getWatershedMahotsavIngDashboard}")
+	String getWatershedMahotsavIngDashboard;
+	
+	@Value("${getWatershedMahotsavProjDashboard}")
+	String getWatershedMahotsavProjDashboard;
+	
 	@Override
 	public Map<String, List<DashboardMahotsavBean>> getMahotsavInagrtnYtraAtVillData() {
 		
@@ -170,6 +176,58 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 		}
 			
 		return getStatep;
+	}
+
+
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavDashboardData() {
+		// TODO Auto-generated method stub
+		String hql = getWatershedMahotsavIngDashboard;  // getWatershedMahotsavProjDashboard
+		List<DashboardMahotsavBean> list = new ArrayList<DashboardMahotsavBean>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(DashboardMahotsavBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
+
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData() {
+		// TODO Auto-generated method stub
+		String hql = getWatershedMahotsavProjDashboard;  
+		List<DashboardMahotsavBean> list = new ArrayList<DashboardMahotsavBean>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(DashboardMahotsavBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
 	}
 
 

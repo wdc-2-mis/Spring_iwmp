@@ -119,8 +119,8 @@ public class MahotsavDashboardController {
 		List<WatershedYatraDashboardChartBean> ParticipantList = new ArrayList<>();
 		List<WatershedYatraDashboardChartBean> CoveredLocations = new ArrayList<>();
         List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
-        List<WatrshdInagrtnPreYtraDashBean> data = dashBoardService.getStWisePreYatraData();
-        List<WatrshdInagrtnPreYtraDashBean> data1 = dashBoardService.getStWiseWatershedYatraDashboardData();
+        List<DashboardMahotsavBean> data = ser.getStWiseWatershedMahotsavProjectLevelData();
+        List<DashboardMahotsavBean> data1 = ser.getStWiseWatershedMahotsavDashboardData();
         
         stateList=stateMasterService.getAllState();
 		mav.addObject("stateList", stateList);

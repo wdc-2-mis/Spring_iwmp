@@ -370,41 +370,44 @@
         	<div class="component-container">
             <!-- <h3 class ="component-field">Watershed Mahotsav Program</h3> -->
           <!--   <div class="panel-underline"></div> -->
-            <div class="field-row">
+             <div class="field-row">
                 <c:forEach var="bean" items="${entry.value}">
                
                  <c:forEach var="entry" items="${lists}">
                  
                  <div class="rounded-circle overflow-hidden" style="width:200px;height:200px; ">
     					<img src="<c:url value="/resources/images/mahotsav/register.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> People Participating in Social Media : ${entry.total_registered_user}</b> 
+    				<p align="center"> <b>  People Participating in Social Media : ${entry.total_registered_user} </b> </p> 
 				</div>
                  </c:forEach> 
                  
                  <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/inauguration.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> No. of States Inauguration Program : ${bean.ignaugstate}</b>
+    			<p align="center"><b> No. of States Inauguration Program : <a href="javascript:void(0);" onclick="showWyPopup()"> ${bean.ignaugstate}</a> </b></p> 
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/janbhagidaricup.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> No. of Watershed Janbhagidari Cup : ${bean.awarddistribution}</b>
+    				<p align="center"><b> No. of Watershed Janbhagidari Cup : ${bean.awarddistribution}</b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/prapheri.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> No. of Prabhat Pheri Organized : ${bean.prapheriorg}</b>
+    				<p align="center"><b> No. of Prabhat Pheri Organized : ${bean.prapheriorg}</b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/projectlvl.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<b> No. of States Project Level Program : ${bean.totprojstates}</b>
+    				<p align="center"> <b> No. of States Project Level Program : <a href="javascript:void(0);" onclick="showPopup()"> ${bean.totprojstates}</a> </b>
+    					
+    				</p>
 				</div>
                  
                
                     
                 </c:forEach>
             </div>
+
              </div>
             </c:if>
        
@@ -654,21 +657,19 @@
 <!--         <button onclick="closeWyPopup()">Close</button> -->
          <span onclick="closeWyPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
     </div>
-    <h3 style="text-align: center;">State Wise Watershed Yatra Activities Data</h3>
+    <h3 style="text-align: center;">State Wise Watershed Mahotsav Inauguration Program Data</h3>
     <table border="1" style="width:100%; border-collapse:collapse;">
         <thead>
             <tr>
                 <th>S.No.</th>
                 <th>State Name</th>
-                <th>Total Number of People Participated</th>
-                <th>Total Numbers of Works for BHOOMI POOJAN</th>
-                <th>Total Numbers of Works for LOKARPAN</th>
-                <th>Shramdaan on Total Location</th>
-                <th>Total Award Distribution</th>
-                <th>Total Number of Yatra Location</th>
-                <th>Total Number of AR Experienced People</th>
-                <th>Total Number of People Participated in Quiz</th>
-                <th>Total Number of Sapling Planted</th>
+                <th>Total No. of People Participated</th>
+                <th>Total No. of Works for Bhoomi Poojan</th>
+                <th>Total No. of Works for Lokarpan</th>
+                <th>Total No. of Shramdaan Location</th>
+                <th>Total No. of Shramdaan Participants</th>
+                <th>Total No. of Sapling Planted</th>
+                <th>Total No. of Awarded for Janbhagidari Cup 2025</th>
             </tr>
         </thead>
         <tbody>
@@ -676,50 +677,47 @@
         	<c:set var ="bhoomipoojan" value ="0"/>
         	<c:set var ="tlokarpan" value ="0"/>
         	<c:set var ="tshramdaan" value ="0"/>
+        	<c:set var ="tshramdaanpart" value ="0"/>
         	<c:set var ="awarddistribution" value ="0"/>
-        	<c:set var ="totallocations" value ="0"/>
-        	<c:set var ="arexp" value ="0"/>
-        	<c:set var ="quizparticipants" value ="0"/>
         	<c:set var ="tplantation" value ="0"/>
             <c:forEach var="data1" items="${bean1}" varStatus="count">
                 <tr>
                     <td><c:out value='${count.count}' />
-                    <td><a href="javascript:void(0);" onclick="showDWyPopup(${data1.stcode})">${data1.st_name}</a></td>
+                    <%-- <td><a href="javascript:void(0);" onclick="showDWyPopup(${data1.stcode})">${data1.st_name}</a></td> --%>
+                    <td>${data1.st_name}</td>
                     <td class="text-right">${data1.total_participants}</td>
                     <td class="text-right">${data1.bhoomi_poojan}</td>
                     <td class="text-right">${data1.lokarpan}</td>
                     <td class="text-right">${data1.shramdaan}</td>
-                    <td class="text-right">${data1.award_distribution}</td>
-                    <td class="text-right">${data1.total_locations}</td>
-                    <td class="text-right">${data1.ar_exp}</td>
-                    <td class="text-right">${data1.quiz_participants}</td>
+                    <td class="text-right">${data1.shramdaan_participate}</td>
                     <td class="text-right">${data1.plantation}</td>
+                    <td class="text-right">${data1.award_janbhagidari}</td>
+                    
                 </tr>
             <c:set var ="totalparticipants" value ="${totalparticipants + data1.total_participants}"/>
         	<c:set var ="bhoomipoojan" value ="${bhoomipoojan + data1.bhoomi_poojan}"/>
         	<c:set var ="tlokarpan" value ="${tlokarpan + data1.lokarpan}"/>
         	<c:set var ="tshramdaan" value ="${tshramdaan + data1.shramdaan}"/>
-        	<c:set var ="awarddistribution" value ="${awarddistribution + data1.award_distribution}"/>
-        	<c:set var ="totallocations" value ="${totallocations + data1.total_locations}"/>
-        	<c:set var ="arexp" value ="${arexp + data1.ar_exp}"/>
-        	<c:set var ="quizparticipants" value ="${quizparticipants + data1.quiz_participants}"/>
+        	<c:set var ="tshramdaanpart" value ="${tshramdaanpart + data1.shramdaan_participate}"/>
         	<c:set var ="tplantation" value ="${tplantation + data1.plantation}"/>
+        	<c:set var ="awarddistribution" value ="${awarddistribution + data1.award_janbhagidari}"/>
+        	
             </c:forEach>
             <tr>
-            	<th colspan ="2" style="text-align: center">Total</th>
+            	<th colspan ="2" style="text-align: center">Grand Total</th>
             	<th style="text-align: right;">${totalparticipants}</th>
             	<th style="text-align: right;">${bhoomipoojan}</th>
             	<th style="text-align: right;">${tlokarpan}</th>
             	<th style="text-align: right;">${tshramdaan}</th>
-            	<th style="text-align: right;">${awarddistribution}</th>
-            	<th style="text-align: right;">${totallocations}</th>
-            	<th style="text-align: right;">${arexp}</th>
-            	<th style="text-align: right;">${quizparticipants}</th>
+            	<th style="text-align: right;">${tshramdaanpart}</th>
             	<th style="text-align: right;">${tplantation}</th>
+            	<th style="text-align: right;">${awarddistribution}</th>
             </tr>
         </tbody>
     </table>
 </div>
+
+
 
 <!-- PopDup Modal -->
 <div id="popDwyup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000;overflow:auto; height:100vh;">
@@ -817,47 +815,70 @@
     <div style="text-align:right;">
         <span onclick="closePopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
     </div>
-    <h3 style="text-align: center;">State Wise Pre Yatra Details Data</h3>
+    <h3 style="text-align: center;">State Wise Watershed Mahotsav Project Level Program Data</h3>
     <table border="1" style="width:100%; border-collapse:collapse;">
         <thead>
             <tr>
                 <th>S.No.</th>
                 <th>State Name</th>
-                <th>Total Gram Sabhas</th>
-                <th>Gram Sabha Participants</th>
-                <th>Total Prabhat Pheris</th>
-                <th>Prabhat Pheri Participants</th>
+                <th>Total No. of Location Cover</th>
+               	<th>Total No. of People Participated</th>
+                <th>Total No. of Works for Bhoomi Poojan</th>
+                <th>Total No. of Works for Lokarpan</th>
+                <th>Total No. of Shramdaan Location</th>
+                <th>Total No. of Shramdaan Participants</th>
+                <th>Total No. of Sapling Planted</th>
             </tr>
         </thead>
         <tbody>
-        	<c:set var ="totGram" value ="0"/>
-        	<c:set var ="gramPrticpnts" value ="0"/>
-        	<c:set var ="totPrbhtphri" value ="0"/>
-        	<c:set var ="prbhtPhriPrticpnts" value ="0"/>
+        
+        	<c:set var ="totalparticipants" value ="0"/>
+        	<c:set var ="bhoomipoojan" value ="0"/>
+        	<c:set var ="tlokarpan" value ="0"/>
+        	<c:set var ="tshramdaan" value ="0"/>
+        	<c:set var ="tshramdaanpart" value ="0"/>
+        	<c:set var ="nolocation" value ="0"/>
+        	<c:set var ="tplantation" value ="0"/>
+
             <c:forEach var="data" items="${bean}" varStatus="count">
                 <tr>
                     <td><c:out value='${count.count}' />
-                    <td><a href="javascript:void(0);" onclick="showDPopup(${data.stcode})">${data.stname}</a></td>
-                    <td align="right">${data.totgrabsabha}</td>
-                    <td align="right">${data.gramsabha_participants}</td>
-                    <td align="right">${data.totprabhatpheri}</td>
-                    <td align="right">${data.prabhatpheri_participants}</td>
+                    <%-- <td><a href="javascript:void(0);" onclick="showDPopup(${data.stcode})">${data.stname}</a></td> --%>
+                    <td>${data.st_name}</td>
+                    <td class="text-right">${data.total_locations}</td>
+                    <td class="text-right">${data.total_participants}</td>
+                    <td class="text-right">${data.bhoomi_poojan}</td>
+                    <td class="text-right">${data.lokarpan}</td>
+                    <td class="text-right">${data.shramdaan}</td>
+                    <td class="text-right">${data.shramdaan_participate}</td>
+                    <td class="text-right">${data.plantation}</td>
+                    
+
                 </tr>
-                <c:set var ="totGram" value ="${totGram + data.totgrabsabha}"/>
-        	<c:set var ="gramPrticpnts" value ="${gramPrticpnts + data.gramsabha_participants}"/>
-        	<c:set var ="totPrbhtphri" value ="${totPrbhtphri + data.totprabhatpheri}"/>
-        	<c:set var ="prbhtPhriPrticpnts" value ="${prbhtPhriPrticpnts + data.prabhatpheri_participants}"/>
+                <c:set var ="totalparticipants" value ="${totalparticipants + data.total_participants}"/>
+	        	<c:set var ="bhoomipoojan" value ="${bhoomipoojan + data.bhoomi_poojan}"/>
+	        	<c:set var ="tlokarpan" value ="${tlokarpan + data.lokarpan}"/>
+	        	<c:set var ="tshramdaan" value ="${tshramdaan + data.shramdaan}"/>
+	        	<c:set var ="tshramdaanpart" value ="${tshramdaanpart + data.shramdaan_participate}"/>
+	        	<c:set var ="tplantation" value ="${tplantation + data.plantation}"/>
+	        	<c:set var ="nolocation" value ="${nolocation + data.total_locations}"/>
+
             </c:forEach>
             <tr>
-            	<th colspan ="2" style="text-align: center">Total</th>
-            	<th style="text-align: right;">${totGram}</th>
-            	<th style="text-align: right;">${gramPrticpnts}</th>
-            	<th style="text-align: right;">${totPrbhtphri}</th>
-            	<th style="text-align: right;">${prbhtPhriPrticpnts}</th>
+            	<th colspan ="2" style="text-align: center">Grand Total</th>
+            	<th style="text-align: right;">${nolocation}</th>
+            	<th style="text-align: right;">${totalparticipants}</th>
+            	<th style="text-align: right;">${bhoomipoojan}</th>
+            	<th style="text-align: right;">${tlokarpan}</th>
+            	<th style="text-align: right;">${tshramdaan}</th>
+            	<th style="text-align: right;">${tshramdaanpart}</th>
+            	<th style="text-align: right;">${tplantation}</th>
+            	
             </tr>
         </tbody>
     </table>
 </div>
+
 
 <!-- PopDup Modal -->
 <div id="popDup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;" >
@@ -1146,7 +1167,7 @@ var iplantation = Number("${listpart[0].iplantation}");
         new Chart(document.getElementById('locationChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Bhoomi Poojan Works1', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
+            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
             datasets: [{
               data: locData,
               backgroundColor: ['#4caf50', '#f44336', '#4BC0C0', '#9966FF', '#FF9F40'],

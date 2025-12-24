@@ -19,6 +19,10 @@ public interface DashboardMahotsavServices {
 	
 	List<DashboardMahotsavBean> getStateWiseParticipants();
 	
+	List<DashboardMahotsavBean> getStWiseWatershedMahotsavDashboardData();
+	
+	List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData();
+	
 	
 	
 
