@@ -4,9 +4,10 @@
 
 <title>View the Social Media Url Details</title>
 <script>
-    function addMediaViewDetails(regno,videoid){
+    function addMediaViewDetails(regno,videoid,mediatype){
     	document.getElementById('regno').value=regno;
     	document.getElementById('videoid').value=videoid;
+    	document.getElementById('mediatype').value=mediatype;
         document.mohotsav.action="addMediaViewDetails";
     	document.mohotsav.method="post";
     	document.mohotsav.submit();
@@ -18,7 +19,7 @@
     <form name="mohotsav" id="mohotsav" >
 		<input type="hidden" name="regno" id="regno" value="${regno}"/>
 		<input type="hidden" name="videoid" id="videoid" value= ""/>
-<!--        	<input type="hidden" id="urlType" name="urlType"/> -->
+       	<input type="hidden" id="mediatype" name="mediatype" value=""/>
     
         <div class="card shadow mt-1 p-5">
         
@@ -56,13 +57,13 @@
                             <tr>
                                 <td>${status.index + 1}</td>
                                 <td><c:out value="${row.stname}" /></td>
-                                <td class="text-end">${row.distname}</td>
-                                <td class="text-end">${row.blkname}</td>
-                                <td class="text-end">${row.villname}</td>
-                                <td class="text-end">${row.mediaurl}</td>
-                                <td class="text-end">${row.longitude}</td>
-                                <td class="text-end">${row.latitude}</td>
-                                <td ><button class="btn btn-warning btn-sm" onclick="addMediaViewDetails('${row.regno}','${row.videoid}')"> Add Views Details </button></td>
+                                <td class="text-center">${row.distname}</td>
+                                <td class="text-center">${row.blkname}</td>
+                                <td class="text-center">${row.villname}</td>
+                                <td class="text-center">${row.mediaurl}</td>
+                                <td class="text-center">${row.longitude}</td>
+                                <td class="text-center">${row.latitude}</td>
+                                <td ><button class="btn btn-warning btn-sm" onclick="addMediaViewDetails('${row.regno}','${row.videoid}','${row.mediatype}')"> Add Views Details </button></td>
                             </tr>
 
                         </c:forEach>

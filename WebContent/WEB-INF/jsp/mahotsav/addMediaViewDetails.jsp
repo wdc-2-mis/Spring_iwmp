@@ -198,6 +198,7 @@ function editChangedata(){
     <form:form autocomplete="off" method="post" name="mohotsav" id="mohotsav" action="saveSocialMediaViewsDetails" modelAttribute="useruploadsl" enctype="multipart/form-data">
 		<input type="hidden" name="regno" id="regno" value="${regno}"/>
 		<input type="hidden" name="videoid" id="videoid" value="${videoid}"/>
+       	<input type="hidden" id="mediatype" name="mediatype" value="${mediatype}"/>
     	<c:if test = "${empty viewsList}">
         <div class="card shadow mt-1 p-5">
         	
@@ -207,8 +208,21 @@ function editChangedata(){
                 <table class="table table-bordered table-striped">
                     <tbody>
                         <tr>
-							<td>Upload Screenshot of Social Media Photos/Videos Details <span style="color: red;">*</span></td>
 							<td>
+								<c:choose>
+										<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
+            								Upload Screenshot of Social Media Image Details 
+           									 <span style="color: red;">*</span>
+										</c:when>
+										<c:otherwise>
+            								Upload Screenshot of Social Media Video Details 
+            								<span style="color: red;">*</span>
+										</c:otherwise>
+									</c:choose>
+							</td>
+									
+
+									<td>
 								<div class="photo-block" data-name="photos_screenshot">
 
 									<label><b>Upload Screenshot</b></label>
@@ -273,9 +287,16 @@ function editChangedata(){
 								<table class="table table-bordered table-striped">
 									<tbody>
 										<tr>
-											<td>Upload Screenshot of Social Media Photos/Videos
-												Details <span style="color: red;">*</span>
-											</td>
+											<td><c:choose>
+													<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
+            								Upload Screenshot of Social Media Image Details 
+           									 <span style="color: red;">*</span>
+													</c:when>
+													<c:otherwise>
+            								Upload Screenshot of Social Media Video Details 
+            								<span style="color: red;">*</span>
+													</c:otherwise>
+												</c:choose></td>
 											<td>
 												<div class="photo-block" data-name="photos_screenshot">
 
@@ -301,7 +322,7 @@ function editChangedata(){
 
 										</tr>
 										<tr>
-											<td>Number of Subscriber<span style="color: red;">*</span></td>
+											<td>Number of Subscribers<span style="color: red;">*</span></td>
 											<td><input type="text" id="no_of_subscriber"
 												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
 												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" required /></td>
@@ -322,9 +343,56 @@ function editChangedata(){
 										<label for="btnGetDetails"> &nbsp;</label> <input
 											type="button" class="btn btn-info" id="submitbtn"
 											name="submitbtn" onclick="validation();" value="Update" />
-											<input type="button" class="btn btn-info" id="complete" name="complete" value="Complete" onclick="editChangedata()" />
 									</div>
 								</div>
+
+
+									<h4 class="text-center text-primary mb-4">
+										<u>Complete the Social Media Url View Details</u>
+									</h4>
+									<div class="table-responsive">
+										<table class="table table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>Number of Views</th>
+													<th>Number of Subscribers</th>
+													<th>Number of Likes</th>
+												<th><c:choose>
+														<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
+            												Screenshot of Social Media Image Details 
+           									 				<span style="color: red;">*</span>
+														</c:when>
+														<c:otherwise>
+            												Screenshot of Social Media Video Details 
+            												<span style="color: red;">*</span>
+														</c:otherwise>
+													</c:choose></th>
+												<th>Action</th>
+												</tr>
+												<tr>
+													<th>1</th>
+													<th>2</th>
+													<th>3</th>
+													<th>4</th>
+													<th>5</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="text-center"><c:out value="${noofview}" /></td>
+													<td class="text-center"><c:out value="${noofsubs}" /></td>
+													<td class="text-center"><c:out value="${nooflikes}" /></td>
+													<td class="text-center"><a href="#" class="showImage"
+														data-toggle="modal" style="color: blue;"
+														onclick="showimage('${file}')">Screenshot</a></td>
+													<td><input type="button" class="btn btn-info"
+														id="complete" name="complete" value="Complete"
+														onclick="editChangedata()" /></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+
 							</div>
 						</c:when>
 						<c:otherwise>
@@ -335,9 +403,18 @@ function editChangedata(){
 								<table class="table table-bordered table-striped">
 									<tbody>
 										<tr>
-											<td>Screenshot of Social Media Photos/Videos Details</td>
+											<td><c:choose>
+													<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
+            											Screenshot of Social Media Image Details 
+           									 			<span style="color: red;">*</span>
+													</c:when>
+													<c:otherwise>
+            											Screenshot of Social Media Video Details 
+            											<span style="color: red;">*</span>
+													</c:otherwise>
+												</c:choose></td>
 											<td class="text-right">
-												<a href="#" data-id="${data.waterid}" class="showImage" data-toggle="modal" style ="color: blue;" onclick ="showimage('${file}')">Screenshot</a> 
+												<a href="#" class="showImage" data-toggle="modal" style ="color: blue;" onclick ="showimage('${file}')">Screenshot</a> 
 											</td>
 
 										</tr>
@@ -349,7 +426,7 @@ function editChangedata(){
 
 										</tr>
 										<tr>
-											<td>Number of Subscriber</td>
+											<td>Number of Subscribers</td>
 											<td><input type="text" id="no_of_subscriber"
 												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
 												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" disabled/></td>

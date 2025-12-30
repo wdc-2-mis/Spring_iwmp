@@ -329,6 +329,7 @@ public class WatershedMahotsavController {
 	{
 		String regNo = request.getParameter("regno");
 		Integer videoid = Integer.parseInt(request.getParameter("videoid"));
+		String mediatype = request.getParameter("mediatype");
 		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regNo);
 		if (registration == null) {
 	        return new ModelAndView("redirect:/registerMahotsav");
@@ -346,6 +347,7 @@ public class WatershedMahotsavController {
 		}
 		mav.addObject("regno", regNo);
 		mav.addObject("videoid", videoid);
+		mav.addObject("mediatype", mediatype);
 
 		return mav;
 	}
@@ -376,6 +378,7 @@ public class WatershedMahotsavController {
 				}
 				mav.addObject("regno", userfileup.getRegno());
 				mav.addObject("videoid", userfileup.getVideoid());
+				mav.addObject("mediatype", userfileup.getMediatype());
 
 				if (result.equals("success")) {
 					mav.addObject("result", "Data saved Successfully");
@@ -402,6 +405,7 @@ public class WatershedMahotsavController {
    		ModelAndView mav = new ModelAndView();
    		String regno = request.getParameter("regno");
    		Integer videoid = Integer.parseInt(request.getParameter("videoid"));
+   		String mediatype = request.getParameter("mediatype");
    		String result = "fail";
    		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regno);
    		if (registration == null) {
@@ -422,6 +426,7 @@ public class WatershedMahotsavController {
 				}
    				mav.addObject("regno", regno);
    				mav.addObject("videoid", videoid);
+   				mav.addObject("mediatype", mediatype);
    				if (result.equals("success")) {
    					mav.addObject("result", "Data Completed Successfully");
    				} 

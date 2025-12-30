@@ -17,6 +17,8 @@ public class WMMediaViewsDetailsBean {
     private Long no_of_likes;
     
     private Character status;
+    
+    private String mediatype;
 
 	public String getRegno() {
 		return regno;
@@ -72,6 +74,14 @@ public class WMMediaViewsDetailsBean {
 
 	public void setStatus(Character status) {
 		this.status = status;
+	}
+
+	public String getMediatype() {
+		return mediatype;
+	}
+
+	public void setMediatype(String mediatype) {
+		this.mediatype = mediatype;
 	}
 
     
