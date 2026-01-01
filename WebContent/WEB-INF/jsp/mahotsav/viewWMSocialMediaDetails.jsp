@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="/WEB-INF/jspf/mahotsavheader.jspf"%>
+<%@include file="/WEB-INF/jspf/mahotsavOtherheader.jspf"%>
 
 <title>Details of the Social Media URLs </title>
 <script>

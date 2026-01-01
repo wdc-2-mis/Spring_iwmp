@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@include file="/WEB-INF/jspf/mahotsavheader.jspf"%>
+<%@include file="/WEB-INF/jspf/mahotsavOtherheader.jspf"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
@@ -111,12 +111,12 @@ function editChangedata(){
 
 	function showimage(file) {
 
-		// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
+		 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
 		// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/wmMediaViewsScreenshot/' + file;
 
 		//local				
-		document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'
-				+ file;
+		//document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'
+			//	+ file;
 		document.getElementById('largeImagePopup').style.display = 'block';
 	}
 </script>
