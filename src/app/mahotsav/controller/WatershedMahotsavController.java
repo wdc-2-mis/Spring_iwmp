@@ -305,7 +305,7 @@ public class WatershedMahotsavController {
         return "mahotsav/mediaReport";
     }
 
-    @RequestMapping(value="/viewWMMediaUrlDetails", method = RequestMethod.GET)
+    @RequestMapping(value="/viewWMMediaUrlDetails", method = RequestMethod.POST)
 	public ModelAndView viewWMMediaUrlDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam("regno") String regNo)
 	{
     	List<WatershedMahotsavBean> list = new ArrayList<WatershedMahotsavBean>();
