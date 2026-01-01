@@ -348,7 +348,7 @@ function editChangedata(){
 
 
 									<h4 class="text-center text-primary mb-4">
-										<u>Complete the Social Media Url View Details</u>
+										<u>Complete the Social Media Views Details</u>
 									</h4>
 									<div class="table-responsive">
 										<table class="table table-bordered table-striped">
@@ -360,11 +360,9 @@ function editChangedata(){
 												<th><c:choose>
 														<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
             												Screenshot of Social Media Image Details 
-           									 				<span style="color: red;">*</span>
 														</c:when>
 														<c:otherwise>
             												Screenshot of Social Media Video Details 
-            												<span style="color: red;">*</span>
 														</c:otherwise>
 													</c:choose></th>
 												<th>Action</th>
@@ -406,11 +404,9 @@ function editChangedata(){
 											<td><c:choose>
 													<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
             											Screenshot of Social Media Image Details 
-           									 			<span style="color: red;">*</span>
 													</c:when>
 													<c:otherwise>
             											Screenshot of Social Media Video Details 
-            											<span style="color: red;">*</span>
 													</c:otherwise>
 												</c:choose></td>
 											<td class="text-right">
