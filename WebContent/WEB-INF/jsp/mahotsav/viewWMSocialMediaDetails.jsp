@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="/WEB-INF/jspf/mahotsavheader.jspf"%>
 
-<title>View the Social Media Url Details</title>
+<title>Details of the Social Media URLs </title>
 <script>
     function addMediaViewDetails(regno,videoid,mediatype){
     	document.getElementById('regno').value=regno;
@@ -23,7 +23,7 @@
     
         <div class="card shadow mt-1 p-5">
         
-            <h4 class="text-center text-primary mb-4"><u>View the Social Media Url Details</u></h4>
+            <h4 class="text-center text-primary mb-4"><u>Details of the Social Media URLs</u></h4>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead>
