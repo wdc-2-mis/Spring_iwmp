@@ -62,7 +62,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				else
 					monaddi=3;
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getOOMFCurrentStatusReport;
@@ -110,7 +110,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				else
 					monaddi=3;
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getDistOOMFCurrentStatusReport;
@@ -185,7 +185,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				@SuppressWarnings("unused")
 				Transaction tx = session.beginTransaction(); 
 				
-				List list = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list.get(0).toString());
 				
 				List list1 = session.createSQLQuery("select month_name from iwmp_m_month where month_id="+month).list();
@@ -224,7 +224,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
 				int finyr= Integer.parseInt(list.get(0).toString());
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getOOMFBeforePrayashData;
@@ -265,7 +265,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
 				int finyr= Integer.parseInt(list.get(0).toString());
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getDistOOMFBeforePrayashData;
@@ -307,7 +307,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				List list = session.createSQLQuery("select min(fin_yr_cd) from iwmp_m_fin_year where achiev_status is null").list();
 				int finyr= Integer.parseInt(list.get(0).toString());
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getProjOOMFBeforePrayashData;
@@ -354,7 +354,7 @@ public class OOMFDaoImpl implements OOMFDao{
 				else
 					monaddi=3;
 				
-				List list1 = session.createSQLQuery("SELECT min(month_id) FROM iwmp_m_month WHERE((fin_month_id >= 1 AND fin_month_id <= CASE WHEN EXTRACT(MONTH FROM NOW()) >= 4 THEN EXTRACT(MONTH FROM NOW()) - 3 ELSE EXTRACT(MONTH FROM NOW()) + 9 END)) and achiev_status is null").list();
+				List list1 = session.createSQLQuery("select month_id FROM iwmp_m_month WHERE achiev_status is null order by fin_month_id limit 1").list();
 				int month= Integer.parseInt(list1.get(0).toString());
 				
 				hql=getProjOOMFCurrentStatusReport;
