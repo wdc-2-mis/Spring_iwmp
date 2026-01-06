@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.mahotsav.bean.DashboardMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.DashboardMahotsavDao;
 import app.mahotsav.service.DashboardMahotsavServices;
 
@@ -50,6 +51,11 @@ public class DashboardMahotsavServicesImpl implements DashboardMahotsavServices{
 	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData() {
 		// TODO Auto-generated method stub
 		return dao.getStWiseWatershedMahotsavProjectLevelData();
+	}
+
+	@Override
+	public List<SocialMediaReport> getSocialpDashboardData() {
+		return dao.getSocialpDashboardData();
 	}
 
 	

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.mahotsav.bean.DashboardMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 
 @Service("DashboardMahotsavServices")
 public interface DashboardMahotsavServices {
@@ -22,6 +23,8 @@ public interface DashboardMahotsavServices {
 	List<DashboardMahotsavBean> getStWiseWatershedMahotsavDashboardData();
 	
 	List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData();
+
+	List<SocialMediaReport> getSocialpDashboardData();
 	
 	
 	

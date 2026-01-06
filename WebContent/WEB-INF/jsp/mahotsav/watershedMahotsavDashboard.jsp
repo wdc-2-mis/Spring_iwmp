@@ -377,7 +377,7 @@
                  
                  <div class="rounded-circle overflow-hidden" style="width:200px;height:200px; ">
     					<img src="<c:url value="/resources/images/mahotsav/register.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<p align="center"> <b>  People Participating in Social Media : ${entry.total_registered_user} </b> </p> 
+    				<p align="center"> <b>  People Participating in Social Media :  <a href="javascript:void(0);" onclick="showSMPopup()"> ${entry.total_registered_user} </a></b> </p> 
 				</div>
                  </c:forEach> 
                  
@@ -739,6 +739,13 @@
     function closeWyPopup() {
         document.getElementById('popwyup').style.display = 'none';
     }
+    function showSMPopup() {
+        document.getElementById('smpopup').style.display = 'block';
+    }
+
+    function closeSMPopup() {
+        document.getElementById('smpopup').style.display = 'none';
+    }
     function showDWyPopup(stcode) {
 
         document.getElementById('popDwyup').style.display = 'block';
@@ -879,7 +886,100 @@
     </table>
 </div>
 
+<!-- Popup Modal -->
+<div id="smpopup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;">
+    <div style="text-align:right;">
+        <span onclick="closeSMPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
+    </div>
+    <h3 style="text-align: center;">State-wise Total Video Uploaded for the Social Media Competition</h3>
+       <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>State Name</th>
+                            <th>Total Registered User</th>
+                            <th>Total Media Uploaded</th>
+                            <th>Total Video Uploaded</th>
+                            <th>Total Photo Uploaded</th>
+                            <th>No. of Facebook</th>
+                            <th>No. of YouTube</th>
+                            <th>No. of Instagram</th>
+                            <th>No. of Twitter</th>
+                            <th>No. of LinkedIn</th>
+                        </tr>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>10</th>
+                            <th>11</th>
+                        </tr>
+                        
+                        
+                    </thead>
+                    <tbody>
 
+                        <!-- Initialize totals -->
+                        <c:set var="totalregUser" value="0" scope="page" />
+                        <c:set var="totalMediaUploaded" value="0" scope="page" />
+                        <c:set var="totalVideoUploaded" value="0" scope="page" />
+                        <c:set var="totalPhotoUploaded" value="0" scope="page" />
+                        <c:set var="totalFacebook" value="0" scope="page" />
+                        <c:set var="totalYoutube" value="0" scope="page" />
+                        <c:set var="totalInstagram" value="0" scope="page" />
+                        <c:set var="totalTwitter" value="0" scope="page" />
+                        <c:set var="totalLinkedin" value="0" scope="page" />
+
+                        <c:forEach items="${socialp}" var="row" varStatus="status">
+                            <tr>
+                                <td>${status.index + 1}</td>
+                                <td class="text-end">${row.stname}</td>
+                                <td class="text-end">${row.total_registered_user}</td>
+                                <td class="text-end">${row.total_media_uploaded}</td>
+                                <td class="text-end">${row.total_video_uploaded}</td>
+                                <td class="text-end">${row.total_photo_uploaded}</td>
+                                <td class="text-end">${row.no_facebook}</td>
+                                <td class="text-end">${row.no_youtube}</td>
+                                <td class="text-end">${row.no_instagram}</td>
+                                <td class="text-end">${row.no_twitter}</td>
+                                <td class="text-end">${row.no_linkedin}</td>
+                            </tr>
+
+                            <!-- Sum totals -->
+                            <c:set var="totalregUser" value="${totalregUser + row.total_registered_user}" />
+                            <c:set var="totalMediaUploaded" value="${totalMediaUploaded + row.total_media_uploaded}" />
+                            <c:set var="totalVideoUploaded" value="${totalVideoUploaded + row.total_video_uploaded}" />
+                            <c:set var="totalPhotoUploaded" value="${totalPhotoUploaded + row.total_photo_uploaded}" />
+                            <c:set var="totalFacebook" value="${totalFacebook + row.no_facebook}" />
+                            <c:set var="totalYoutube" value="${totalYoutube + row.no_youtube}" />
+                            <c:set var="totalInstagram" value="${totalInstagram + row.no_instagram}" />
+                            <c:set var="totalTwitter" value="${totalTwitter + row.no_twitter}" />
+                            <c:set var="totalLinkedin" value="${totalLinkedin + row.no_linkedin}" />
+                        </c:forEach>
+
+                        <!-- Grand total row -->
+                        <tr>
+                            <td colspan="2" class="text-center"><b>Grand Total</b></td>
+                            <td class="text-end"><b>${totalregUser}</b></td>
+                            <td class="text-end"><b>${totalMediaUploaded}</b></td>
+                            <td class="text-end"><b>${totalVideoUploaded}</b></td>
+                            <td class="text-end"><b>${totalPhotoUploaded}</b></td>
+                            <td class="text-end"><b>${totalFacebook}</b></td>
+                            <td class="text-end"><b>${totalYoutube}</b></td>
+                            <td class="text-end"><b>${totalInstagram}</b></td>
+                            <td class="text-end"><b>${totalTwitter}</b></td>
+                            <td class="text-end"><b>${totalLinkedin}</b></td>
+                        </tr>
+
+                    </tbody>
+    </table>
+</div>
 <!-- PopDup Modal -->
 <div id="popDup" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; height:100vh; overflow:auto;" >
 		<div style="text-align: right;">

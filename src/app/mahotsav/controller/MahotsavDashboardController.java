@@ -21,6 +21,7 @@ import app.bean.WatershedYatraDashboardChartBean;
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.controllers.IndexCircleDataController;
 import app.mahotsav.bean.DashboardMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.service.DashboardMahotsavServices;
 import app.service.CommonService;
 import app.service.DashBoardService;
@@ -121,6 +122,7 @@ public class MahotsavDashboardController {
         List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
         List<DashboardMahotsavBean> data = ser.getStWiseWatershedMahotsavProjectLevelData();
         List<DashboardMahotsavBean> data1 = ser.getStWiseWatershedMahotsavDashboardData();
+        List<SocialMediaReport> socialp = ser.getSocialpDashboardData();
         
         stateList=stateMasterService.getAllState();
 		mav.addObject("stateList", stateList);
@@ -164,6 +166,7 @@ public class MahotsavDashboardController {
 		model.addAttribute("bean1", data1);
 		model.addAttribute("listpart", listpart);
 		model.addAttribute("stateWiseData", statePEData);
+		model.addAttribute("socialp", socialp);
 
 		} 
 		catch (Exception e) {

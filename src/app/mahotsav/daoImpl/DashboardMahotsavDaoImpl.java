@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import app.bean.WatrshdInagrtnPreYtraDashBean;
 import app.mahotsav.bean.DashboardMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 import app.mahotsav.dao.DashboardMahotsavDao;
 import app.projectevaluation.bean.ProjectEvaluationBean;
 
@@ -50,6 +51,8 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 	@Value("${getWatershedMahotsavProjDashboard}")
 	String getWatershedMahotsavProjDashboard;
 	
+	@Value("${getWMSocialMediaReport}")
+	String getWMSocialMediaReport;
 	@Override
 	public Map<String, List<DashboardMahotsavBean>> getMahotsavInagrtnYtraAtVillData() {
 		
@@ -216,6 +219,31 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 			session.beginTransaction();
 			query = session.createSQLQuery(hql);
 			query.setResultTransformer(Transformers.aliasToBean(DashboardMahotsavBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+
+
+	@Override
+	public List<SocialMediaReport> getSocialpDashboardData() {
+		String hql = getWMSocialMediaReport;  
+		List<SocialMediaReport> list = new ArrayList<SocialMediaReport>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(SocialMediaReport.class));
 			list = query.list();
 			session.getTransaction().commit();
 		}

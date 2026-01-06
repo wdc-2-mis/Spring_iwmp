@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import app.mahotsav.bean.DashboardMahotsavBean;
+import app.mahotsav.bean.SocialMediaReport;
 
 public interface DashboardMahotsavDao {
 	
@@ -18,6 +19,8 @@ public interface DashboardMahotsavDao {
 	List<DashboardMahotsavBean> getStWiseWatershedMahotsavDashboardData();
 	
 	List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData();
+	
+	List<SocialMediaReport> getSocialpDashboardData();
 	
 
 }
