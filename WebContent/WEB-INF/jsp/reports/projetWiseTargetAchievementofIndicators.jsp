@@ -308,7 +308,7 @@ function exportExcel(dcode, year, quarter, stName, finName, quartename, distname
 				<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[19]}' /></fmt:formatNumber> </b></td>
 				
 				<c:if test = "${year <25}">
-					<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/noofdistrict}' /></fmt:formatNumber> </b></td> 
+					<td align="right" class="table-primary" ><b><fmt:formatNumber type="number" minFractionDigits="4"><c:out value='${netTotal[21]/noofdistrictproj}' /></fmt:formatNumber> </b></td> 
 				</c:if> 
 				
 				
