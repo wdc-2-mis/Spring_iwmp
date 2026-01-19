@@ -52,6 +52,9 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 		
 		@Value("${getActivityNRMWorkjalsakti}")
 		String getActivityNRMWorkjalsakti;
+		
+		@Value("${getActivityNRMWorkjalsaktiFinYr}")
+		String getActivityNRMWorkjalsaktiFinYr;
 
 		@Override
 		public List<WatershedYatraBean> showWatershedYatraVillageReport(Integer State, Integer district, Integer block,
@@ -225,9 +228,9 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 
 
 		@Override
-		public List<NRSCWorksBean> getActivityNRMWorkJalSakati() {
+		public List<NRSCWorksBean> getActivityNRMWorkJalSakati(Integer finyr) {
 			
-			String sqla=getActivityNRMWorkjalsakti;
+			String sqla = finyr==0?getActivityNRMWorkjalsakti:getActivityNRMWorkjalsaktiFinYr;
 			Session session = sessionFactory.getCurrentSession();
 			List<NRSCWorksBean> list = new ArrayList<NRSCWorksBean>();
 			Query query;
@@ -235,6 +238,8 @@ public class VillageWatershedYatraReportDaoImpl implements  VillageWatershedYatr
 			try {
 					session.beginTransaction();
 					query= session.createSQLQuery(sqla);
+					if(finyr!=0) 
+						query.setInteger("finyr", finyr);
 					query.setResultTransformer(Transformers.aliasToBean(NRSCWorksBean.class));
 					list = query.list();
 					

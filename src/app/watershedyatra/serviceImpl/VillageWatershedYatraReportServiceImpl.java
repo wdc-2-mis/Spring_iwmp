@@ -36,9 +36,9 @@ public class VillageWatershedYatraReportServiceImpl implements VillageWatershedY
 	}
 
 	@Override
-	public List<NRSCWorksBean> getActivityNRMWorkJalSakati() {
+	public List<NRSCWorksBean> getActivityNRMWorkJalSakati(Integer finyr) {
 		// TODO Auto-generated method stub
-		return dao.getActivityNRMWorkJalSakati();
+		return dao.getActivityNRMWorkJalSakati(finyr);
 	}
 
 }

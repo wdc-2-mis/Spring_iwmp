@@ -493,12 +493,12 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 				for (WatershedMahotsavVideoViewDetails photo : list) 
 				{
 					//server
-					//imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
-					//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+					//imgList.add(photo.getMediaViewUrl().substring(photo.getMediaViewUrl().lastIndexOf("/")+1));
+					//System.out.println(" kdy= "+photo.getMediaViewUrl().substring(photo.getMediaViewUrl().lastIndexOf("/")+1));
 					
 					//local
 					imgList.add(photo.getMediaViewUrl().replaceAll(".*\\\\", ""));
-//					System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//					System.out.println(" kdy= "+photo.getMediaViewUrl().replaceAll(".*\\\\", ""));
 				}
 				
 				session.getTransaction().commit();

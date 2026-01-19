@@ -13,6 +13,6 @@ public interface VillageWatershedYatraReportDao {
 	
 	List<NRSCWorksBean> getActivityNRMWorkReportPost(Integer State, Integer district, Integer finyr, Integer activity);
 	
-	List<NRSCWorksBean> getActivityNRMWorkJalSakati();
+	List<NRSCWorksBean> getActivityNRMWorkJalSakati(Integer finyr);
 
 }

@@ -16,33 +16,33 @@
 <script type="text/javascript">
 function showReport(e)
 {
+	var finyear = $('#finyear').val();
+// 	var state = $('#state').val();
+// 	var district = $('#district').val();
+// 	var activity = $('#activity').val();
+// 	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
+// 	document.getElementById("stName").value=stName;
 	
-	var state = $('#state').val();
-	var district = $('#district').val();
-	var activity = $('#activity').val();
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-	document.getElementById("stName").value=stName;
+// 	if(state==='')
+// 	{
+// 		alert('Please select state ');
+// 		$('#state').focus();
+// 		e.preventDefault();
+// 	}
 	
-	if(state==='')
-	{
-		alert('Please select state ');
-		$('#state').focus();
-		e.preventDefault();
-	}
-	
-	if(district==='')
-	{
-		$('#district').val('');
-		alert('Please select district ');
-		$('#district').focus();
-		e.preventDefault();
-	}
-	if(activity==='')
-	{
-		alert('Please select activity ');
-		$('#activity').focus();
-		e.preventDefault();
-	}
+// 	if(district==='')
+// 	{
+// 		$('#district').val('');
+// 		alert('Please select district ');
+// 		$('#district').focus();
+// 		e.preventDefault();
+// 	}
+// 	if(activity==='')
+// 	{
+// 		alert('Please select activity ');
+// 		$('#activity').focus();
+// 		e.preventDefault();
+// 	}
 	
 	/* if(userdateto!='')
 	{
@@ -66,37 +66,31 @@ function showReport(e)
 			$('#userdateto').val('');
 		}  
 	} */
+	if(finyear ===''){
+		alert('Please select Financial Year');
+		$('#finyear').focus();
+		e.preventDefault();
+	}
 	else{
 		
-		document.workstatusr.action="getActivityNRMWorkReportPost";
+		document.workstatusr.action="getActivityNRMWorkJalSakati";
 		document.workstatusr.method="post";
 		document.workstatusr.submit();
 	}
 	return false;
 } 
 
-function downloadPDF(state, userdate, dateto){
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-  
-    document.getElementById("stName").value=stName;
-    document.getElementById("userdate1").value=userdate;
-    document.getElementById("userdate2").value=dateto;
+function downloadPDF(){
 	
-    document.workstatusr.action="downloadWorkStatusReportPDF";
+    document.workstatusr.action="getActivityNRMWorkJalSakatiPDF";
 	document.workstatusr.method="post";
 	document.workstatusr.submit();
 }
 
 
-function downloadExcel(state, userdate, dateto){
+function downloadExcel(){
 	
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-  
-    document.getElementById("stName").value=stName;
-    document.getElementById("userdate1").value=userdate;
-    document.getElementById("userdate2").value=dateto;
-	
-    document.workstatusr.action="downloadExcelWorkStatusReport";
+    document.workstatusr.action="getActivityNRMWorkJalSakatiExcel";
 	document.workstatusr.method="post";
 	document.workstatusr.submit();
 }
@@ -128,8 +122,8 @@ function downloadExcel(state, userdate, dateto){
 		<input type="hidden" name="headname" id="headname" value="" />
 		<input type="hidden" name="actname" id="actname" value="" />
 		
-     <%--  <table style="width:100%; align-content: center;" >
-        <tr align="center" >
+      <table style="width:100%; align-content: center;" >
+     <%--    <tr align="center" >
         
           <td><b>State <span style="color: red;">*</span></b></td>
           <td>
@@ -163,8 +157,8 @@ function downloadExcel(state, userdate, dateto){
 						</c:forEach>
 				</c:if>  
     		</select>
-          </td>
-          
+          </td></tr> --%>
+          <tr align="center" >
           <td><b>Financial Year <span style="color: red;">*</span></b></td>
           <td>
              <select class="form-control finyear" id="finyear" name="finyear" required="required">
@@ -181,8 +175,9 @@ function downloadExcel(state, userdate, dateto){
 				</c:if>  
     		</select>
           </td>
+          <td align="left"> &nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);"  name="view" value='Get Report' /> </td>
           </tr>
-          <tr align="center" >
+       <%--     <tr align="center" >
           <td><b>Head<span style="color: red;">*</span></b></td>
           <td>
              <select class="form-control head" id="head" name="head"  onchange="this.form.submit();" required="required">
@@ -216,11 +211,10 @@ function downloadExcel(state, userdate, dateto){
 						</c:forEach>
 				</c:if>  
     		</select>
-          </td>
+          </td> --%>
         
-           <td align="left"> &nbsp; &nbsp;&nbsp;&nbsp;<input type="button" class="btn btn-info" id="view" onclick="showReport(this);"  name="view" value='Get Report' /> </td>
-       </tr>
-      </table> --%>
+           
+      </table>
       <div id="previewDiv" class="hiddenDivStyle" align="center"
 			style="position: absolute; top: 100px; left: 25px; display: none; width: 300px; height: 50px; vertical-scrol: auto; background-color: gray;">
 			<table align="center">
@@ -244,12 +238,12 @@ function downloadExcel(state, userdate, dateto){
 	<div class="row">
 	<div class="col-1" ></div>
 	<div class="col-10"  id="exportHtmlToPdf">
-<%-- <c:if test="${not empty dataList}">
+<c:if test="${not empty dataList}">
 
-<button name="exportExcel" id="exportExcel" onclick="downloadExcel('${state}','${userdate}', '${dateto}')" class="btn btn-info">Excel</button>
-<button name="exportPDF" id="exportPDF" onclick="downloadPDF('${state}', '${userdate}', '${dateto}')" class="btn btn-info">PDF</button>
+<button name="exportExcel" id="exportExcel" onclick="downloadExcel()" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
 
-</c:if> --%>
+</c:if>
 
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 <br/>
@@ -297,19 +291,20 @@ function downloadExcel(state, userdate, dateto){
 	 
 	 			<c:if test="${dataList != null}">
 		 			<c:set var="stname" value="" />
+		 			<c:set var="sno" value="1" />
 						<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 							<td><c:out value='${count.count}' /></td>
+ 							
 	 							<c:choose>
 									<c:when test="${stname ne data.statename}">
 										<c:set var="stname" value="${data.statename}" />
-										<%-- <td><c:out value='${count}' /></td> --%>
+										<td><c:out value='${sno}' /></td>
 										<td><c:out value='${stname}' /></td>
-										<%-- <c:set var="count" value="${count+1}" /> --%>
+										<c:set var="sno" value="${sno+1}" />
 									</c:when>	
 									<c:otherwise>
 										<td></td>
-										<!-- <td></td> -->
+										<td></td>
 									</c:otherwise>
 								</c:choose>
 								

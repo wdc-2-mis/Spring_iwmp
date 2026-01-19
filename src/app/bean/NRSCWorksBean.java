@@ -2,6 +2,7 @@ package app.bean;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 
 public class NRSCWorksBean {
 
@@ -65,10 +66,17 @@ public class NRSCWorksBean {
 	private BigInteger gullyplugs;
 	private BigInteger others;
 	private BigInteger amritsarovar;
+	private Date date;
 	
 	
 	
 	
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
 	public String getSt_name() {
 		return st_name;
 	}
