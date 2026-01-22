@@ -45,11 +45,14 @@ public class WatershedMahotsavVideoViewDetails {
     @Column(name = "no_of_views")
     private Long noOfViews;
 
-    @Column(name = "no_of_subscribers")
-    private Long noOfSubscribers;
+    @Column(name = "no_of_comments")
+    private Long noOfComments;
 
     @Column(name = "no_of_likes")
     private Long noOfLikes;
+    
+    @Column(name = "no_of_shares")
+    private Long noOfShares;
 
     // Relationship mapping to watershed_mahotsav_video_details
     @OneToOne
@@ -131,12 +134,12 @@ public class WatershedMahotsavVideoViewDetails {
         this.noOfViews = noOfViews;
     }
 
-    public Long getNoOfSubscribers() {
-        return noOfSubscribers;
+    public Long getNoOfComments() {
+        return noOfComments;
     }
 
-    public void setNoOfSubscribers(Long noOfSubscribers) {
-        this.noOfSubscribers = noOfSubscribers;
+    public void setNoOfComments(Long noOfComments) {
+        this.noOfComments = noOfComments;
     }
 
     public Long getNoOfLikes() {
@@ -147,7 +150,15 @@ public class WatershedMahotsavVideoViewDetails {
         this.noOfLikes = noOfLikes;
     }
 
-    public WatershedMahotsavVideoDetails getVideoDetails() {
+    public Long getNoOfShares() {
+		return noOfShares;
+	}
+
+	public void setNoOfShares(Long noOfShares) {
+		this.noOfShares = noOfShares;
+	}
+
+	public WatershedMahotsavVideoDetails getVideoDetails() {
         return videoDetails;
     }
 

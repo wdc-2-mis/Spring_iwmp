@@ -306,22 +306,24 @@ public class WatershedMahotsavController {
     }
 
     @RequestMapping(value="/viewWMMediaUrlDetails", method = RequestMethod.POST)
-	public ModelAndView viewWMMediaUrlDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam("regno") String regNo)
-	{
-    	List<WatershedMahotsavBean> list = new ArrayList<WatershedMahotsavBean>();
-		WatershedMahotsavRegistration registration = watershedMahotsavService.findByRegNo(regNo);
-		if (registration == null) {
-	        return new ModelAndView("redirect:/registerMahotsav");
-	    }
-		list = watershedMahotsavService.getWatershedMahotsavVideoDetails(regNo);
-	    
-		ModelAndView mav = new ModelAndView("mahotsav/viewWMSocialMediaDetails");
-		
-	    mav.addObject("WMList", list);
-	    mav.addObject("regno", regNo);  
-	    
-	    return mav;
-	}
+    public String viewWMMediaUrlDetails(HttpServletRequest request,
+                                        @RequestParam("regno") String regNo) {
+        request.getSession().setAttribute("regno", regNo);
+        return "redirect:/viewWMMediaUrlDetails";
+    }
+
+    @RequestMapping(value="/viewWMMediaUrlDetails", method = RequestMethod.GET)
+    public ModelAndView showWMMediaUrlDetails(HttpServletRequest request) {
+        String regNo = (String) request.getSession().getAttribute("regno");
+        if (regNo == null) {
+            return new ModelAndView("redirect:/registerMahotsav");
+        }
+        List<WatershedMahotsavBean> list = watershedMahotsavService.getWatershedMahotsavVideoDetails(regNo);
+        ModelAndView mav = new ModelAndView("mahotsav/viewWMSocialMediaDetails");
+        mav.addObject("WMList", list);
+        mav.addObject("regno", regNo);
+        return mav;
+    }
     
     @SuppressWarnings("null")
 	@RequestMapping(value="/addMediaViewDetails", method = RequestMethod.POST)
@@ -338,8 +340,9 @@ public class WatershedMahotsavController {
 		List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(regNo, videoid);
 		if(list!=null && list.size()>0) {
 			mav.addObject("nooflikes", list.get(0).getNo_of_likes());
-			mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+			mav.addObject("noofcmnts", list.get(0).getNo_of_comments());
 			mav.addObject("noofview", list.get(0).getNo_of_views());
+			mav.addObject("noofshares", list.get(0).getNo_of_shares());
 			mav.addObject("status", list.get(0).getStatus().toString());
 			mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(videoid).get(0));
 			mav.addObject("viewsList", list);
@@ -369,8 +372,9 @@ public class WatershedMahotsavController {
 				List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(userfileup.getRegno(), userfileup.getVideoid());
 				if(list!=null && list.size()>0) {
 					mav.addObject("nooflikes", list.get(0).getNo_of_likes());
-					mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+					mav.addObject("noofcmnts", list.get(0).getNo_of_comments());
 					mav.addObject("noofview", list.get(0).getNo_of_views());
+					mav.addObject("noofshares", list.get(0).getNo_of_shares());
 					mav.addObject("status", list.get(0).getStatus().toString());
 					mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(userfileup.getVideoid()).get(0));
 					mav.addObject("viewsList", list);
@@ -417,8 +421,9 @@ public class WatershedMahotsavController {
    				List<WMMediaViewsDetailsBean> list = watershedMahotsavService.getWMMediaViewsDetails(regno, videoid);
 				if(list!=null && list.size()>0) {
 					mav.addObject("nooflikes", list.get(0).getNo_of_likes());
-					mav.addObject("noofsubs", list.get(0).getNo_of_subscriber());
+					mav.addObject("noofcmnts", list.get(0).getNo_of_comments());
 					mav.addObject("noofview", list.get(0).getNo_of_views());
+					mav.addObject("noofshares", list.get(0).getNo_of_shares());
 					mav.addObject("status", list.get(0).getStatus().toString());
 					mav.addObject("file", watershedMahotsavService.getWMMediaScrnshtUrl(videoid).get(0));
 					mav.addObject("viewsList", list);

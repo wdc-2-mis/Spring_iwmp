@@ -385,8 +385,9 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 						commonFunction.uploadFileMahotwavInauguration(bean.getPhotos_screenshot(), filePath, "", "", bean.getVideoid());
 						vvd.setMediaViewUrl(filePath+"I"+""+""+bean.getVideoid()+"_"+bean.getPhotos_screenshot().getOriginalFilename());
 						vvd.setNoOfLikes(bean.getNo_of_likes());
-						vvd.setNoOfSubscribers(bean.getNo_of_subscriber());
+						vvd.setNoOfComments(bean.getNo_of_comments());
 						vvd.setNoOfViews(bean.getNo_of_views());
+						vvd.setNoOfShares(bean.getNo_of_shares());
 						vvd.setUpdatedDate(LocalDate.now());
 						vvd.setRequestedIp(getClientIpAddr(request));
 						session.saveOrUpdate(vvd);
@@ -399,8 +400,9 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 						vvd.setVideoDetails(mvd);
 						vvd.setMediaViewUrl(filePath+"I"+""+""+bean.getVideoid()+"_"+bean.getPhotos_screenshot().getOriginalFilename());
 						vvd.setNoOfLikes(bean.getNo_of_likes());
-						vvd.setNoOfSubscribers(bean.getNo_of_subscriber());
+						vvd.setNoOfComments(bean.getNo_of_comments());
 						vvd.setNoOfViews(bean.getNo_of_views());
+						vvd.setNoOfShares(bean.getNo_of_shares());
 						vvd.setStatus('D');
 						vvd.setCreatedDate(LocalDate.now());
 						vvd.setRequestedIp(getClientIpAddr(request));
@@ -438,8 +440,9 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 						bean.setRegno(regno);
 						bean.setVideoid(videoid);
 						bean.setNo_of_likes(s.getNoOfLikes());
-						bean.setNo_of_subscriber(s.getNoOfSubscribers());
+						bean.setNo_of_comments(s.getNoOfComments());
 						bean.setNo_of_views(s.getNoOfViews());
+						bean.setNo_of_shares(s.getNoOfShares());
 						bean.setStatus(s.getStatus());
 						list.add(bean);
 					});

@@ -52,9 +52,11 @@ function validation()
 	
 	$no_of_views = $('#no_of_views').val();
 	
-	$no_of_subscriber = $('#no_of_subscriber').val();
+	$no_of_comments = $('#no_of_comments').val();
 	
 	$no_of_likes = $('#no_of_likes').val();
+	
+	$no_of_shares = $('#no_of_shares').val();
 	
 	
 		if ($photos_screenshot === '' || typeof $photos_screenshot === 'undefined') {
@@ -70,15 +72,21 @@ function validation()
 		allValid = false;
 		return false;
 	}
-	if ($no_of_subscriber === '' || typeof $no_of_subscriber === 'undefined') {
-		alert('Please enter the Number of Subscriber');
-		$('#no_of_subscriber').focus();
+	if ($no_of_comments === '' || typeof $no_of_comments === 'undefined') {
+		alert('Please enter the Number of Comments');
+		$('#no_of_comments').focus();
 		allValid = false;
 		return false;
 	}
 	if ($no_of_likes === '' || typeof $no_of_likes === 'undefined') {
 		alert('Please enter the Number of Likes');
 		$('#no_of_likes').focus();
+		allValid = false;
+		return false;
+	}
+	if ($no_of_shares === '' || typeof $no_of_shares === 'undefined') {
+		alert('Please enter the Number of Shares');
+		$('#no_of_shares').focus();
 		allValid = false;
 		return false;
 	}
@@ -111,12 +119,11 @@ function editChangedata(){
 
 	function showimage(file) {
 
-		 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
+// 		 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
 		// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/wmMediaViewsScreenshot/' + file;
 
 		//local				
-		//document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'
-			//	+ file;
+		document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'	+ file;
 		document.getElementById('largeImagePopup').style.display = 'block';
 	}
 </script>
@@ -249,15 +256,21 @@ function editChangedata(){
 
 						</tr>
 						<tr>
-							<td>Number of Subscriber<span style="color: red;">*</span></td>
-							<td><input type="text" id="no_of_subscriber"
-								name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
+							<td>Number of Comments<span style="color: red;">*</span></td>
+							<td><input type="text" id="no_of_comments"
+								name="no_of_comments" autocomplete="off" pattern="^\d{10}$"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							
 						</tr>
 						<tr>
 							<td>Number of Likes<span style="color: red;">*</span> </td>
 							<td colspan=2><input type="text" id="no_of_likes" name="no_of_likes" autocomplete="off"
+								pattern="^\d{10}$" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+							
+						</tr>
+						<tr>
+							<td>Number of Shares<span style="color: red;">*</span> </td>
+							<td colspan=2><input type="text" id="no_of_shares" name="no_of_shares" autocomplete="off"
 								pattern="^\d{10}$" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							
 						</tr>
@@ -322,10 +335,10 @@ function editChangedata(){
 
 										</tr>
 										<tr>
-											<td>Number of Subscribers<span style="color: red;">*</span></td>
-											<td><input type="text" id="no_of_subscriber"
-												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
-												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" required /></td>
+											<td>Number of Comments<span style="color: red;">*</span></td>
+											<td><input type="text" id="no_of_comments"
+												name="no_of_comments" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofcmnts}" required /></td>
 
 										</tr>
 										<tr>
@@ -333,6 +346,13 @@ function editChangedata(){
 											</td>
 											<td colspan=2><input type="text" id="no_of_likes" name="no_of_likes" autocomplete="off" pattern="^\d{10}$"
 												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${nooflikes}" required /></td>
+
+										</tr>
+										<tr>
+											<td>Number of Shares<span style="color: red;">*</span>
+											</td>
+											<td colspan=2><input type="text" id="no_of_shares" name="no_of_shares" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofshares}" required /></td>
 
 										</tr>
 									</tbody>
@@ -355,8 +375,9 @@ function editChangedata(){
 											<thead>
 												<tr>
 													<th>Number of Views</th>
-													<th>Number of Subscribers</th>
+													<th>Number of Comments</th>
 													<th>Number of Likes</th>
+													<th>Number of Shares</th>
 												<th><c:choose>
 														<c:when test="${mediatype == 'P' || mediatype == 'PB'}">
             												Screenshot of Social Media Image Details 
@@ -373,13 +394,15 @@ function editChangedata(){
 													<th>3</th>
 													<th>4</th>
 													<th>5</th>
+													<th>6</th>
 												</tr>
 											</thead>
 											<tbody>
 												<tr>
 													<td class="text-center"><c:out value="${noofview}" /></td>
-													<td class="text-center"><c:out value="${noofsubs}" /></td>
+													<td class="text-center"><c:out value="${noofcmnts}" /></td>
 													<td class="text-center"><c:out value="${nooflikes}" /></td>
+													<td class="text-center"><c:out value="${noofshares}" /></td>
 													<td class="text-center"><a href="#" class="showImage"
 														data-toggle="modal" style="color: blue;"
 														onclick="showimage('${file}')">Screenshot</a></td>
@@ -422,16 +445,22 @@ function editChangedata(){
 
 										</tr>
 										<tr>
-											<td>Number of Subscribers</td>
-											<td><input type="text" id="no_of_subscriber"
-												name="no_of_subscriber" autocomplete="off" pattern="^\d{10}$"
-												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofsubs}" disabled/></td>
+											<td>Number of Comments</td>
+											<td><input type="text" id="no_of_comments"
+												name="no_of_comments" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofcmnts}" disabled/></td>
 
 										</tr>
 										<tr>
 											<td>Number of Likes	</td>
 											<td colspan=2><input type="text" id="no_of_likes" name="no_of_likes" autocomplete="off" pattern="^\d{10}$"
 												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${nooflikes}" disabled/></td>
+
+										</tr>
+										<tr>
+											<td>Number of Shares	</td>
+											<td colspan=2><input type="text" id="no_of_shares" name="no_of_shares" autocomplete="off" pattern="^\d{10}$"
+												oninput="this.value=this.value.replace(/[^0-9]/g,'');" value = "${noofshares}" disabled/></td>
 
 										</tr>
 									</tbody>

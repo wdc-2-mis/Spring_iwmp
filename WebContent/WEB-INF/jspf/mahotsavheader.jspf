@@ -98,8 +98,8 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 <div class="container-fluid">
     <div class="d-flex justify-content-end gap-2 py-2">
      	<%-- <a href="${pageContext.request.contextPath}/getWMSocialMediaReport" class="btn btn-primary btn-sm">Social Media Status</a> --%>
-        <a href="${pageContext.request.contextPath}/wdcpmksyActivityWork" class="btn btn-primary btn-sm">Find Works</a>
-        <a href="${pageContext.request.contextPath}/registerMahotsav" class="btn btn-outline-primary btn-sm">Registration Form</a>
+        <%-- <a href="${pageContext.request.contextPath}/wdcpmksyActivityWork" class="btn btn-primary btn-sm">Find Works</a>
+        <a href="${pageContext.request.contextPath}/registerMahotsav" class="btn btn-outline-primary btn-sm">Registration Form</a> --%>
        
     </div>
 </div>

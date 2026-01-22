@@ -12,9 +12,11 @@ public class WMMediaViewsDetailsBean {
 
     private Long no_of_views;
 
-    private Long no_of_subscriber;
+    private Long no_of_comments;
 
     private Long no_of_likes;
+    
+    private Long no_of_shares;
     
     private Character status;
     
@@ -52,12 +54,12 @@ public class WMMediaViewsDetailsBean {
 		this.no_of_views = no_of_views;
 	}
 
-	public Long getNo_of_subscriber() {
-		return no_of_subscriber;
+	public Long getNo_of_comments() {
+		return no_of_comments;
 	}
 
-	public void setNo_of_subscriber(Long no_of_subscriber) {
-		this.no_of_subscriber = no_of_subscriber;
+	public void setNo_of_comments(Long no_of_comments) {
+		this.no_of_comments = no_of_comments;
 	}
 
 	public Long getNo_of_likes() {
@@ -66,6 +68,14 @@ public class WMMediaViewsDetailsBean {
 
 	public void setNo_of_likes(Long no_of_likes) {
 		this.no_of_likes = no_of_likes;
+	}
+
+	public Long getNo_of_shares() {
+		return no_of_shares;
+	}
+
+	public void setNo_of_shares(Long no_of_shares) {
+		this.no_of_shares = no_of_shares;
 	}
 
 	public Character getStatus() {

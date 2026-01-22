@@ -12,7 +12,28 @@
     	document.mohotsav.method="post";
     	document.mohotsav.submit();
     }
+    
+    window.onload = function() {
+        if (!sessionStorage.getItem("noBack")) {
+            sessionStorage.setItem("noBack", "true");
+        }
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+    };
 </script>
+<style>
+.table-responsive {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.table {
+  table-layout: fixed;
+  width: max-content;
+}
+</style>
 
 <div class="container mt-5">
 
@@ -25,7 +46,7 @@
         
             <h4 class="text-center text-primary mb-4"><u>Details of the Social Media URLs</u></h4>
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" >
                     <thead>
                         <tr>
                             <th>S.No.</th>
@@ -33,6 +54,7 @@
                             <th>District Name</th>
                             <th>Block Name</th>
                             <th>Village Name</th>
+                            <th>Media Type</th>
                             <th>Media URL</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
@@ -48,6 +70,7 @@
                             <th>7</th>
                             <th>8</th>
                             <th>9</th>
+                            <th>10</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,6 +83,7 @@
                                 <td class="text-center">${row.distname}</td>
                                 <td class="text-center">${row.blkname}</td>
                                 <td class="text-center">${row.villname}</td>
+                                <td class="text-center">${row.mediaid eq 1?'Facebook':row.mediaid eq 2?'Youtube':row.mediaid eq 3?'Instagram':row.mediaid eq 4?'Twitter':'Linkedin'}</td>
                                 <td class="text-center">${row.mediaurl}</td>
                                 <td class="text-center">${row.longitude}</td>
                                 <td class="text-center">${row.latitude}</td>

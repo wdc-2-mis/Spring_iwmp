@@ -30,7 +30,7 @@
 
 <div class="registration-container">
     <h3 class="text-center mb-4 text-primary fw-bold">
-        Add Social Media Form
+        Submit Your Review For Social Media Competition
     </h3>
 
     <form id="registrationForm">
@@ -135,8 +135,21 @@ $(document).ready(function(){
                 $("#detailsSection").fadeIn(400);
                 $("#verifyBtn").hide();
 
-                $("#nextBtn").off("click").on("click", function(){
-                    window.location.href = "uploadAnotherVideo?regNo=" + encodeURIComponent(regNo);
+//                 $("#nextBtn").off("click").on("click", function(){
+//                     window.location.href = "uploadAnotherVideo?regNo=" + encodeURIComponent(regNo);
+//                 });
+                $("#nextBtn").off("click").on("click", function() {
+                    var form = $('<form>', {
+                        action: 'viewWMMediaUrlDetails',
+                        method: 'POST'
+                    }).append($('<input>', {
+                        type: 'hidden',
+                        name: 'regno',
+                        value: regNo
+                    }));
+
+                    $('body').append(form);
+                    form.submit();
                 });
             }
 
@@ -148,6 +161,15 @@ $(document).ready(function(){
     });
 
 });
+window.onload = function() {
+    if (!sessionStorage.getItem("noBack")) {
+        sessionStorage.setItem("noBack", "true");
+    }
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+};
 </script>
 
 <footer class="text-center">

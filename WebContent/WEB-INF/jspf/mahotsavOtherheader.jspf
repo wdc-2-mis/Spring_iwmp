@@ -96,8 +96,8 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
     </div>
 </div>
 
-<c:set var="fromDateStr" value="2025-01-01"/>
-<c:set var="toDateStr" value="2025-12-31"/>
+<c:set var="fromDateStr" value="2026-01-01"/>
+<c:set var="toDateStr" value="2026-12-31"/>
 
 <fmt:parseDate value="${fromDateStr} 00:00:00" pattern="yyyy-MM-dd HH:mm:ss" var="fromDt"/>
 <fmt:parseDate value="${toDateStr} 23:59:59" pattern="yyyy-MM-dd HH:mm:ss" var="toDt"/>
@@ -107,9 +107,10 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
 <div class="container-fluid">
 <jsp:useBean id="now" class="java.util.Date"/>
     <div class="d-flex justify-content-end gap-2 py-2">
-     	<%-- <a href="${pageContext.request.contextPath}/getWMSociaxlMediaReport" class="btn btn-primary btn-sm">Social Media Status</a> --%>
-        <a href="${pageContext.request.contextPath}/wdcpmksyActivityWork" class="btn btn-outline-primary btn-sm">Find Works</a>
-        <a href="${pageContext.request.contextPath}/registerMahotsav" class="btn btn-outline-primary btn-sm">Registration Form</a>
+     	<%--  <a href="${pageContext.request.contextPath}/getWMSociaxlMediaReport" class="btn btn-primary btn-sm">Home</a>  --%>
+     	  
+        <%-- <a href="${pageContext.request.contextPath}/wdcpmksyActivityWork" class="btn btn-outline-primary btn-sm">Find Works</a>
+        <a href="${pageContext.request.contextPath}/registerMahotsav" class="btn btn-outline-primary btn-sm">Registration Form</a> --%>
        <c:if test="${not empty regNo and now.time >= fromDt.time and now.time <= toDt.time}">
         <form action="${pageContext.request.contextPath}/viewWMMediaUrlDetails"
       method="post" class="d-inline m-0 p-0">
@@ -117,11 +118,12 @@ body { background: #f8f9fa; font-family: "Segoe UI", Arial, sans-serif; }
     <input type="hidden" name="regno" value="${regNo}" />
 
     <button type="submit" class="btn btn-primary btn-sm">
-        Social Media Views
+       Home
     </button>
 </form>
 
        </c:if>
+       <a href="${pageContext.request.contextPath}/addWMSocialMedia" class="btn btn-primary btn-sm">Sign Out</a> 
     </div>
 </div>
 
