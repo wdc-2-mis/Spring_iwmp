@@ -112,12 +112,12 @@
 
         <!-- Registration No -->
         <label>Registration No <span class="required">*</span></label>
-        <input type="text" id="regNo" placeholder="Enter Registration No">
+        <input type="text" id="regNo" placeholder="Enter Registration No" autocomplete="off">
         <div id="regNoError" class="form-text text-danger">Please enter Registration No</div>
 
         <!-- Email -->
         <label>Email Id <span class="required">*</span></label>
-        <input type="email" id="emailId" placeholder="Enter Email Id">
+        <input type="email" id="emailId" placeholder="Enter Email Id" autocomplete="off">
         <div id="emailError" class="form-text text-danger">Please enter Email Id</div>
 
         <button type="button" class="btn-primary" id="signInBtn">Sign In</button>
@@ -125,7 +125,7 @@
         <!-- OTP Section -->
         <div id="otpSection">
             <label>Enter OTP <span class="required">*</span></label>
-            <input type="text" id="otpInput" placeholder="Enter OTP">
+            <input type="text" id="otpInput" placeholder="Enter OTP" autocomplete="off">
 
             <button type="button" class="btn-warning" id="verifyOtpBtn">Verify OTP</button>
 
