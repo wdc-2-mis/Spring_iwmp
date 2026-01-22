@@ -2,6 +2,7 @@ package app.mahotsav.daoImpl;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -388,7 +389,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 						vvd.setNoOfComments(bean.getNo_of_comments());
 						vvd.setNoOfViews(bean.getNo_of_views());
 						vvd.setNoOfShares(bean.getNo_of_shares());
-						vvd.setUpdatedDate(LocalDate.now());
+						vvd.setUpdatedDate(LocalDateTime.now());
 						vvd.setRequestedIp(getClientIpAddr(request));
 						session.saveOrUpdate(vvd);
 						session.getTransaction().commit();
@@ -404,7 +405,7 @@ public class WatershedMahotsavDaoImpl implements WatershedMahotsavDao{
 						vvd.setNoOfViews(bean.getNo_of_views());
 						vvd.setNoOfShares(bean.getNo_of_shares());
 						vvd.setStatus('D');
-						vvd.setCreatedDate(LocalDate.now());
+						vvd.setCreatedDate(LocalDateTime.now());
 						vvd.setRequestedIp(getClientIpAddr(request));
 						session.save(vvd);
 						session.getTransaction().commit();

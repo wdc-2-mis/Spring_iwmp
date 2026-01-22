@@ -1,6 +1,7 @@
 package app.mahotsav.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,13 +35,13 @@ public class WatershedMahotsavVideoViewDetails {
     private String updatedBy;
 
     @Column(name = "updated_date")
-    private LocalDate updatedDate;
+    private LocalDateTime updatedDate;
 
     @Column(name = "created_by", length = 25)
     private String createdBy;
 
     @Column(name = "created_date")
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
 
     @Column(name = "no_of_views")
     private Long noOfViews;
@@ -102,11 +103,11 @@ public class WatershedMahotsavVideoViewDetails {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getUpdatedDate() {
+    public LocalDateTime getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(LocalDate updatedDate) {
+    public void setUpdatedDate(LocalDateTime updatedDate) {
         this.updatedDate = updatedDate;
     }
 
@@ -118,11 +119,11 @@ public class WatershedMahotsavVideoViewDetails {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 

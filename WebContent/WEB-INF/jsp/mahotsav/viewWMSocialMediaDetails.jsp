@@ -55,7 +55,7 @@
                             <th>Block Name</th>
                             <th>Village Name</th>
                             <th>Media Type</th>
-                            <th>Media URL</th>
+                            <th>Platform</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
                             <th>Action</th>
