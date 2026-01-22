@@ -3,9 +3,12 @@ package app.daoImpl.outcome;
 import java.math.BigDecimal;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -30,6 +33,7 @@ import app.model.Outcome2Data;
 import app.model.WdcpmksyMQuadIndicators;
 import app.model.master.WdcpmksyMOutcome;
 import app.model.master.WdcpmksyMOutcomeDetail;
+import app.model.project.IwmpProjectPhysicalAssetTemp;
 import app.model.project.WdcpmksyAdditionalBroughtFarmerCrop;
 
 @Repository("AdditionalBroughtFarmerCropAreaDao")
@@ -76,6 +80,27 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 	
 	@Value("${getnothalfyearlyProj}")
 	String getnothalfyearlyProj;
+	
+	@Value("${getAddBroughtProjFromDistList}")
+	String getAddBroughtProjFromDistList;
+	
+	@Value("${getfarmerCropFinYear}")
+	String getfarmerCropFinYear;
+	
+	@Value("${getAdditionalBroughtlatestData}")
+	String getAdditionalBroughtlatestData;
+	
+	@Value("${getSLNAPendingFarmerCropdata}")
+	String getSLNAPendingFarmerCropdata;
+	
+	@Value("${UpdateFarmerCropApproveSLNA}")
+	String UpdateFarmerCropApproveSLNA;
+	
+	@Value("${UpdateFarmerCropRejectSLNA}")
+	String UpdateFarmerCropRejectSLNA;
+	
+	@Value("${getSLNACompleteFarmerCropdata}")
+	String getSLNACompleteFarmerCropdata;
 	
 	@Override
 	public LinkedHashMap<Integer, String> getFinYearonward22() {
@@ -179,6 +204,47 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 		try {
 				session.getTransaction().begin();
 			
+				if (year >= 25) {
+		            // New handling (modify or extend logic as per new format requirement)
+		            if (atype.equals("fy")) {
+		                SQLQuery query = session.createSQLQuery(
+		                    "select additional_brought_id from wdcpmksy_additional_brought_farmer_crop where proj_id=:proj and fin_yr_cd=:finyr and achiev_type='Year-Wise' and status='C'"
+		                );
+		                query.setInteger("proj", projId);
+		                query.setInteger("finyr", year);
+
+		                if (query.list().isEmpty()) {
+		                    if (additionalid > 0) {
+		                        wdcdata = session.get(WdcpmksyAdditionalBroughtFarmerCrop.class, additionalid);
+		                    }
+
+		                    IwmpMProject mproject = new IwmpMProject();
+		                    IwmpMFinYear myear = new IwmpMFinYear();
+		                    InetAddress inet = InetAddress.getLocalHost();
+		                    String ipAddr = inet.getHostAddress();
+
+		                    mproject.setProjectId(projId);
+		                    wdcdata.setIwmpMProject(mproject);
+		                    myear.setFinYrCd(year);
+		                    wdcdata.setIwmpMFinYear(myear);
+		                    wdcdata.setAchievType("Year-Wise");
+		                    wdcdata.setStatus(status);
+		                    wdcdata.setCreatedBy(loginId);
+		                    wdcdata.setCreatedOn(new Date());
+		                    wdcdata.setRequestIp(ipAddr);
+		                    
+		                    wdcdata.setDiversified(diversified);
+		                    wdcdata.setChnagesingle(chnagesingle);
+		                    wdcdata.setChangeCorp(changecorp);
+		                    
+		                    session.saveOrUpdate(wdcdata);
+		                    res = "success";
+		                } else {
+		                    res = "fail";
+		                }
+		            }
+		        } 
+		        else {
 				if(atype.equals("fy")) 
 				{
 					SQLQuery query = session.createSQLQuery("select additional_brought_id from wdcpmksy_additional_brought_farmer_crop  where proj_id=:proj and fin_yr_cd=:finyr and achiev_type='Year-Wise' and status='C'");
@@ -261,6 +327,7 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 			    	res="fail"; 
 			    } 
 			}
+		        }
 			session.getTransaction().commit();
 		
 		}
@@ -400,14 +467,25 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 		Session session = sessionFactory.openSession();
 		try {
 			  String hql=null;
+			  String hqlcurrent=null;
 			  SQLQuery query = null;
 			
 			  @SuppressWarnings("unused")
 			  Transaction tx = session.beginTransaction(); 
 			  hql=getAdditionalBroughtYearComplt;
-			  query = session.createSQLQuery(hql);
-			  query.setInteger("projectId", project);
-			  query.setInteger("year", fyear);
+			  hqlcurrent=getAdditionalBroughtlatestData;
+			  if(fyear >= 25)
+			  {
+				  query = session.createSQLQuery(hqlcurrent);
+				  query.setInteger("projectId", project);
+				  query.setInteger("year", fyear);
+			  }
+			  else {
+				  query = session.createSQLQuery(hql);
+				  query.setInteger("projectId", project);
+				  query.setInteger("year", fyear);
+			  }
+			 
 			  query.setResultTransformer(Transformers.aliasToBean(AdditionalBroughtFarmerCropAreaBean.class));
 			  result = query.list();
 		} 
@@ -638,6 +716,245 @@ public class AdditionalBroughtFarmerCropAreaDaoImpl implements AdditionalBrought
 			ses.getTransaction().commit();
 		}
         return result;
+	}
+
+	@Override
+	public String AdditionalBroughtFarmerSLNAforward(String loginID, Integer additionalid) {
+		Session session = sessionFactory.getCurrentSession();
+		WdcpmksyAdditionalBroughtFarmerCrop wdcdata = new WdcpmksyAdditionalBroughtFarmerCrop();
+		String res="fail";
+		try {
+				session.getTransaction().begin();
+				if(additionalid > 0) 
+				{ 
+					 wdcdata = session.get(WdcpmksyAdditionalBroughtFarmerCrop.class, additionalid); 
+				}
+				
+				InetAddress inet=InetAddress.getLocalHost();
+				String ipAddr=inet.getHostAddress();
+				
+				wdcdata.setSlnastatus('S');;
+				wdcdata.setUpdatedBy(loginID);
+				wdcdata.setUpdatedOn(new Date());
+				wdcdata.setRequestIp(ipAddr);
+				session.saveOrUpdate(wdcdata);
+				
+				session.getTransaction().commit();
+				res="success";
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			res="fail";
+		}
+		return res;
+	}
+
+	@Override
+	public List<Object[]> getAddBroughtProjFromDist(Integer dCode) {
+		String hql=getAddBroughtProjFromDistList;
+		List<Object[]> list = new ArrayList<>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery(hql);
+			query.setInteger("dcode", dCode);
+			list = query.list();
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
+	
+	@Override
+	public LinkedHashMap<Integer, String> getFarmerCropFinYear() {
+		LinkedHashMap<Integer,String> map = new LinkedHashMap<Integer,String>();
+		List<WdcpmksyOutcomeBean> rows = new ArrayList<WdcpmksyOutcomeBean>();
+		
+		String hql=null;
+		try {
+			 Session session = sessionFactory.getCurrentSession();
+			 session.beginTransaction();
+			 
+			     hql=getfarmerCropFinYear;	
+				 SQLQuery query = session.createSQLQuery(hql);
+				 query.setResultTransformer(Transformers.aliasToBean(WdcpmksyOutcomeBean.class));
+				 rows = query.list();
+				 Collections.reverse(rows);
+				 for(WdcpmksyOutcomeBean row : rows)
+				 {
+					 map.put(row.getFin_yr_cd(), row.getFinyear());
+				 }
+			
+			 session.getTransaction().commit();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally {
+		
+		}
+		return map;
+	}
+
+	@Override
+	public AdditionalBroughtFarmerCropAreaBean findByYear(String financialYear) {
+		AdditionalBroughtFarmerCropAreaBean result = null;
+		String hql=null;
+		try {
+			 Session session = sessionFactory.getCurrentSession();
+			 session.beginTransaction();
+			 SQLQuery query = session.createSQLQuery("select start_from as start_from, end_to as end_to from wdcpmksy_additional_m_fin_year where fin_yr_cd = :fy");
+			 		query.setParameter("fy", Integer.parseInt(financialYear));
+			 		query.setResultTransformer(Transformers.aliasToBean(AdditionalBroughtFarmerCropAreaBean.class));
+			 		List<AdditionalBroughtFarmerCropAreaBean> list = query.list();
+			        
+			        if (!list.isEmpty()) {
+			            result = list.get(0);
+			        }
+			        
+				System.out.println("value of result:" +result);
+				 session.getTransaction().commit();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			finally {
+			
+			}
+			
+		return result;
+	}
+
+	@Override
+	public List<AdditionalBroughtFarmerCropAreaBean> getSLNAPendingAddFarmerCrop(Integer projectId, Integer district, Integer fyear) {
+		List<AdditionalBroughtFarmerCropAreaBean> getSLNAPendingdata = new ArrayList<AdditionalBroughtFarmerCropAreaBean>();
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			SQLQuery query = null;
+			String hql = getSLNAPendingFarmerCropdata;
+			query = session.createSQLQuery(hql);
+			
+			query.setInteger("projectId", projectId);
+			query.setInteger("district", district);
+			query.setInteger("fyear", fyear);
+			
+			query.setResultTransformer(Transformers.aliasToBean(AdditionalBroughtFarmerCropAreaBean.class));
+			getSLNAPendingdata = query.list();
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+			session.getTransaction().commit();
+		}
+		return getSLNAPendingdata;
+	}
+
+	@Override
+	public boolean updateAdditionalFarmerCropStatus(
+	        Integer id, String action, String remark, String userId) {
+
+	    Session session = null;
+	    Transaction tx = null;
+
+	    try {
+	        session = sessionFactory.openSession(); 
+	        tx = session.beginTransaction();
+
+	        InetAddress inet = InetAddress.getLocalHost();
+	        String ipAddr = inet.getHostAddress();
+
+	        String hql = UpdateFarmerCropApproveSLNA;
+	        String hqlReject = UpdateFarmerCropRejectSLNA;
+	        Query query;
+
+	        if ("APPROVE".equalsIgnoreCase(action)) {
+
+	            query = session.createQuery(hql);
+	            query.setParameter("remarks", remark);
+	        }
+	        else if ("REJECT".equalsIgnoreCase(action)) {
+
+	            if (remark == null || remark.trim().isEmpty()) {
+	                throw new RuntimeException("Remark is mandatory for rejection");
+	            }
+
+	            query = session.createQuery(hqlReject);
+	            query.setParameter("remarks", remark);
+	        }
+	        else {
+	            return false;
+	        }
+
+	        query.setParameter("updatedOn", new Date());
+	        query.setParameter("updatedBy", userId);
+	        query.setParameter("requestIp", ipAddr);
+	        query.setParameter("id", id);
+
+	        int count = query.executeUpdate();
+
+	        tx.commit();                 
+	        return count > 0;
+
+	    } catch (Exception e) {
+
+	        if (tx != null) {
+	            tx.rollback();           
+	        }
+	        e.printStackTrace();
+	        return false;
+
+	    } finally {
+
+	        if (session != null) {
+	            session.close();         
+	        }
+	    }
+	}
+
+	@Override
+	public List<AdditionalBroughtFarmerCropAreaBean> getSLNACompleteAddBroughtFarmer(Integer stcode) {
+		List<AdditionalBroughtFarmerCropAreaBean> getRecords = new ArrayList<AdditionalBroughtFarmerCropAreaBean>();
+		Session session = sessionFactory.getCurrentSession();
+		
+		try {
+			session.beginTransaction();
+			SQLQuery query = null;
+			String hql = getSLNACompleteFarmerCropdata;
+			query = session.createSQLQuery(hql);
+			
+			query.setInteger("stcode", stcode);
+			
+			query.setResultTransformer(Transformers.aliasToBean(AdditionalBroughtFarmerCropAreaBean.class));
+			getRecords = query.list();
+			session.getTransaction().commit();
+		} catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+
+			ex.printStackTrace();
+			session.getTransaction().commit();
+		}
+		return getRecords;
 	}
 
 

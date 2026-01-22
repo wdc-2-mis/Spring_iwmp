@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
 import app.dao.outcomes.AdditionalBroughtFarmerCropAreaDao;
+import app.model.project.WdcpmksyAdditionalBroughtFarmerCrop;
 import app.service.outcome.AdditionalBroughtFarmerCropAreaServices;
 
 @Service("AdditionalBroughtFarmerCropAreaServices")
@@ -116,6 +117,57 @@ public class AdditionalBroughtFarmerCropAreaServiceImpl implements AdditionalBro
 		// TODO Auto-generated method stub
 		return dao.getmonthidtoclosed();
 	}
+
+
+	@Override
+	public String AdditionalBroughtFarmerSLNAforward(String loginID, Integer additionalid) {
+		// TODO Auto-generated method stub
+		return dao.AdditionalBroughtFarmerSLNAforward(loginID, additionalid);
+	}
+
+
+	@Override
+	public List<Object[]> getAddBroughtProjFromDist(Integer dCode) {
+		// TODO Auto-generated method stub
+		return dao.getAddBroughtProjFromDist(dCode);
+	}
+
+
+	@Override
+	public LinkedHashMap<Integer, String> getFarmerCropFinYear() {
+		// TODO Auto-generated method stub
+		return dao.getFarmerCropFinYear();
+	}
+
+
+	@Override
+	public AdditionalBroughtFarmerCropAreaBean findByYear(String financialYear) {
+		// TODO Auto-generated method stub
+		return dao.findByYear(financialYear);
+	}
+
+
+	@Override
+	public List<AdditionalBroughtFarmerCropAreaBean> getSLNAPendingAddFarmerCrop(Integer projectId, Integer district, Integer fyear) {
+		return dao.getSLNAPendingAddFarmerCrop(projectId, district, fyear);
+	}
+
+
+	@Override
+	public boolean updateAdditionalFarmerCropStatus(Integer id, String action, String remark, String userId) {
+		// TODO Auto-generated method stub
+		return dao.updateAdditionalFarmerCropStatus(id, action, remark, userId);
+	}
+
+
+	@Override
+	public List<AdditionalBroughtFarmerCropAreaBean> getSLNACompleteAddBroughtFarmer(Integer stcode) {
+		// TODO Auto-generated method stub
+		return dao.getSLNACompleteAddBroughtFarmer(stcode);
+	}
+
+
+	
 
 
 }

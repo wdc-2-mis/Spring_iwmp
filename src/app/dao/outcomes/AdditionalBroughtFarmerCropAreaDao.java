@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
+import app.model.project.WdcpmksyAdditionalBroughtFarmerCrop;
 
 public interface AdditionalBroughtFarmerCropAreaDao {
 	
@@ -23,4 +24,11 @@ public interface AdditionalBroughtFarmerCropAreaDao {
 	LinkedHashMap<Integer,String> getFinYearAdditional(Integer project, String atline);
 	//LinkedHashMap<String, Integer> getRemainYear(Integer project, String atline);
 	int getmonthidtoclosed();
+	String AdditionalBroughtFarmerSLNAforward(String loginID, Integer additionalid);
+	List<Object[]> getAddBroughtProjFromDist(Integer dCode);
+	LinkedHashMap<Integer, String> getFarmerCropFinYear();
+	AdditionalBroughtFarmerCropAreaBean findByYear(String financialYear);
+	List<AdditionalBroughtFarmerCropAreaBean> getSLNAPendingAddFarmerCrop(Integer projectId, Integer district, Integer fyear);
+	boolean updateAdditionalFarmerCropStatus(Integer id, String action, String remark, String userId);
+	List<AdditionalBroughtFarmerCropAreaBean> getSLNACompleteAddBroughtFarmer(Integer stcode);
 }

@@ -2,6 +2,7 @@ package app.bean.pfms;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Date;
 
 public class AdditionalBroughtFarmerCropAreaBean {
 	
@@ -26,6 +27,11 @@ public class AdditionalBroughtFarmerCropAreaBean {
 	private BigInteger not_half_yearly;
 	private BigDecimal pulses;
 	private BigDecimal oilseeds;
+	private Character slnastatus;
+	private Date start_from;
+	private Date end_to;
+	private Integer st_code;
+	private String st_name;
 	
 	public int getAdditional_brought_id() {
 		return additional_brought_id;
@@ -147,9 +153,36 @@ public class AdditionalBroughtFarmerCropAreaBean {
 	public void setOilseeds(BigDecimal oilseeds) {
 		this.oilseeds = oilseeds;
 	}
-	
-	
-	
-	
+	public Character getSlnastatus() {
+		return slnastatus;
+	}
+	public void setSlnastatus(Character slnastatus) {
+		this.slnastatus = slnastatus;
+	}
+	public Date getStart_from() {
+		return start_from;
+	}
+	public void setStart_from(Date start_from) {
+		this.start_from = start_from;
+	}
+	public Date getEnd_to() {
+		return end_to;
+	}
+	public void setEnd_to(Date end_to) {
+		this.end_to = end_to;
+	}
+	public Integer getSt_code() {
+		return st_code;
+	}
+	public void setSt_code(Integer st_code) {
+		this.st_code = st_code;
+	}
+	public String getSt_name() {
+		return st_name;
+	}
+	public void setSt_name(String st_name) {
+		this.st_name = st_name;
+	}
+		
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import app.bean.AddOutcomeParaBean;
 import app.bean.pfms.AdditionalBroughtFarmerCropAreaBean;
+import app.model.project.WdcpmksyAdditionalBroughtFarmerCrop;
 
 
 @Service("AdditionalBroughtFarmerCropAreaServices")
@@ -32,6 +33,20 @@ public interface AdditionalBroughtFarmerCropAreaServices {
 	LinkedHashMap<Integer,String> getFinYearAdditional(Integer project, String atline);
 	
 	int getmonthidtoclosed();
+
+	String AdditionalBroughtFarmerSLNAforward(String loginID, Integer additionalid);
+
+	List<Object[]> getAddBroughtProjFromDist(Integer dCode);
+
+	LinkedHashMap<Integer, String> getFarmerCropFinYear();
+
+	AdditionalBroughtFarmerCropAreaBean findByYear(String financialYear);
+
+	List<AdditionalBroughtFarmerCropAreaBean> getSLNAPendingAddFarmerCrop(Integer projectId, Integer district, Integer fyear);
+
+	boolean updateAdditionalFarmerCropStatus(Integer id, String action, String remark, String userId);
+
+	List<AdditionalBroughtFarmerCropAreaBean> getSLNACompleteAddBroughtFarmer(Integer stcode);
 	
 	//LinkedHashMap<String, Integer> getRemainYear(Integer project, String atline);
 	

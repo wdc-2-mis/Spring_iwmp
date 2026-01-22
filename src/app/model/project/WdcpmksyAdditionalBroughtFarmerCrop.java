@@ -40,13 +40,15 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
     private String achievType;
     private BigDecimal pulses;
     private BigDecimal oilseeds;
+    private Character slnastatus;
+    private String remarks;
     
    public WdcpmksyAdditionalBroughtFarmerCrop() {
    }
    public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId) {
        this.additionalBroughtId = additionalBroughtId;
    }
-   public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, IwmpMProject iwmpMProject, BigDecimal diversified,  BigDecimal chnagesingle, BigDecimal farmerIncome, BigDecimal changeCorp, Character status, Date createdOn, Date updatedOn, String requestIp, String createdBy, String updatedBy, String achievType, BigDecimal pulses, BigDecimal oilseeds) {
+   public WdcpmksyAdditionalBroughtFarmerCrop(int additionalBroughtId, IwmpMFinYear iwmpMFinYear, IwmpMMonth iwmpMMonth, IwmpMProject iwmpMProject, BigDecimal diversified,  BigDecimal chnagesingle, BigDecimal farmerIncome, BigDecimal changeCorp, Character status, Character slnastatus, String remarks,  Date createdOn, Date updatedOn, String requestIp, String createdBy, String updatedBy, String achievType, BigDecimal pulses, BigDecimal oilseeds) {
       this.additionalBroughtId = additionalBroughtId;
       this.iwmpMFinYear = iwmpMFinYear;
       this.iwmpMMonth = iwmpMMonth;
@@ -56,6 +58,8 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
       this.farmerIncome = farmerIncome;
       this.changeCorp = changeCorp;
       this.status = status;
+      this.slnastatus = slnastatus;
+      this.remarks = remarks;
       this.createdOn = createdOn;
       this.updatedOn = updatedOn;
       this.requestIp = requestIp;
@@ -143,6 +147,22 @@ public class WdcpmksyAdditionalBroughtFarmerCrop implements java.io.Serializable
 		this.status = status;
 	}
 	
+	
+	@Column(name="slnastatus", length=1)
+	public Character getSlnastatus() {
+		return slnastatus;
+	}
+	public void setSlnastatus(Character slnastatus) {
+		this.slnastatus = slnastatus;
+	}
+	
+	@Column(name="remarks", length=500)
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	@Temporal(TemporalType.DATE)
     @Column(name="created_on", length=13)
 	public Date getCreatedOn() {
