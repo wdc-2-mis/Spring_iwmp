@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -28,8 +29,14 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellUtil;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.BaseColor;
@@ -76,6 +83,12 @@ public class AddWMSocialMediaController {
 	
 	private Map<String, String> blockList;
 	
+	/*
+	 * private static final String OTP_SERVICE_BASE = "http://localhost:8085/otp";
+	 */
+	
+	@Value("${otp.service.base.url}")
+	private String otpServiceBase;
 	
 	 @GetMapping("/getSocialMediaReport")
 	    public ModelAndView getSocialMediaReport(
@@ -98,7 +111,18 @@ public class AddWMSocialMediaController {
 	        mav.addObject("socialMediaList", socialMediaList);
 	        return mav;
 	    }
+	 
+	 
+	 @GetMapping("/getTestPuneServer")
+	 public ModelAndView getTestPuneServer()
+	 {
 
+	        ModelAndView mav = new ModelAndView("mahotsav/getpuneTesting");
+	        return mav;
+	 }
+	 
+	 
+	 
 	    @GetMapping("/getDistrictByState")
 	    @ResponseBody
 	    public Map<String, String> getDistrictByState(@RequestParam("stateCode") int stateCode) {
@@ -125,18 +149,14 @@ public class AddWMSocialMediaController {
                     addWMSocialMediaService.findByUserRegNoAndEmail(regNo, email);
 
             if (reg == null) {
-                return "invalid";   // reg no + email not matching
+                return "invalidReg";   // reg no + email not matching
             }
 
             // store regNo in session
             session.setAttribute("regNo", regNo);
-
+            session.setAttribute("email", email);
             // return pipe-separated response
-            return String.format("%s|%s|%s|%s",
-                    reg.getRegName(),
-                    reg.getPhno(),
-                    reg.getEmail(),
-                    reg.getAddress());
+            return "VALID";
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -144,6 +164,155 @@ public class AddWMSocialMediaController {
         }
     }
 
+     @PostMapping("/sendOtp")
+    @ResponseBody
+    public Map<String, String> sendOtp(HttpSession session) {
+
+        Map<String, String> result = new HashMap<>();
+
+        String email = (String) session.getAttribute("email");
+        if (email == null || email.isEmpty()) {
+            result.put("status", "NO_EMAIL");
+            return result;
+        }
+
+        try {
+            RestTemplate rest = new RestTemplate();
+
+            Map<String, String> body = new HashMap<>();
+            body.put("email", email);
+            body.put("fromEmail", "support-wdcpmksy@nic.in");
+            body.put("fromName", "Watershed Mahotsav");
+            body.put("subject",
+                    "OTP for Watershed Mahotsav Social Media Competition");
+
+            body.put(
+                "message",
+                "Dear User,\n\n" +
+                "Your OTP {{OTP}} for login on Watershed Mahotsav Social Media Competition.\n" +
+                "This OTP is valid for 10 minutes.\n\n" +
+                "Regards,\n" +
+                "WDC-PMKSY2.0 Support Team"
+            );
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Map<String, String>> request =
+                    new HttpEntity<>(body, headers);
+
+            ResponseEntity<Map> resp =
+                    rest.postForEntity(
+                        otpServiceBase + "/send",
+                        request,
+                        Map.class
+                    );
+
+            if (resp.getBody() != null &&
+                "SENT".equals(resp.getBody().get("status"))) {
+
+                result.put("status", "SENT");
+            } else {
+                result.put("status", "FAILED");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("status", "ERROR");
+        }
+
+        return result;
+    }
+
+     
+     
+    
+     /*  @PostMapping("/sendOtp")
+    @ResponseBody
+    public Map<String, String> sendOtp(HttpSession session) {
+
+        Map<String, String> result = new HashMap<>();
+
+        String email = (String) session.getAttribute("email");
+        if (email == null || email.isEmpty()) {
+            result.put("status", "NO_EMAIL");
+            return result;
+        }
+
+        try {
+            RestTemplate rest = new RestTemplate();
+
+            Map<String, String> body = new HashMap<>();
+            body.put("email", email); // only required for testing
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            HttpEntity<Map<String, String>> request =
+                    new HttpEntity<>(body, headers);
+
+            // 🔹 Call Pune server testing API
+            ResponseEntity<String> resp =
+                    rest.postForEntity(
+                            otpServiceBase + "/testing",
+                            request,
+                            String.class
+                    );
+
+            // 🔹 If we reached Pune server successfully
+            if (resp.getStatusCode().is2xxSuccessful()) {
+                result.put("status", "SENT"); // means request reached Pune
+            } else {
+                result.put("status", "FAILED");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.put("status", "ERROR");
+        }
+
+        return result;
+    }
+
+*/
+
+
+    @PostMapping("/verifyOtp")
+    @ResponseBody
+    public String verifyOtp(@RequestParam("otp") String otp, HttpSession session) {
+    String email = (String) session.getAttribute("email");
+    if (email == null || email.isEmpty()) {
+    return "noEmailInSession";
+    }
+
+
+    try {
+    RestTemplate rest = new RestTemplate();
+
+
+    Map<String, String> body = new HashMap<>();
+    body.put("email", email);
+    body.put("otp", otp);
+
+
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(MediaType.APPLICATION_JSON);
+
+
+    HttpEntity<Map<String,String>> request = new HttpEntity<>(body, headers);
+
+
+    ResponseEntity<String> resp = rest.postForEntity(otpServiceBase  + "/verify", request, String.class);
+
+
+    return resp.getBody() != null ? resp.getBody() : "OTP_INVALID";
+
+
+    } catch (Exception ex) {
+    ex.printStackTrace();
+    return "OTP_VERIFY_ERROR";
+    }
+    }
     @RequestMapping(value = "/getWMSocialMediaReport", method = RequestMethod.GET)
 	public ModelAndView getWMSocialMediaReport(HttpServletRequest request) 
 	{

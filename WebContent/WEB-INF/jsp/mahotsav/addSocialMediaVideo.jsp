@@ -1,167 +1,180 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/jspf/mahotsavheader.jspf" %>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Social Media Form</title>
 
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 0;
+    }
+
     .registration-container {
-        max-width: 550px;
+        max-width: 500px;
         margin: 60px auto;
         background: #fff;
-        border-radius: 20px;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-        padding: 40px 45px;
-        transition: all 0.3s ease-in-out;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        padding: 35px;
     }
-    .registration-container:hover { transform: scale(1.01); }
-    .registration-container .form-label { font-weight: 600; color: #0d6efd; }
-    .registration-container .required { color: red; margin-left: 3px; }
 
-    #detailsSection {
-        background: #f1f8ff;
-        border-radius: 10px;
-        padding: 15px;
+    h3 {
+        text-align: center;
+        color: #0d6efd;
+        margin-bottom: 30px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .required {
+        color: red;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        margin-top: 6px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    input:readonly {
+        background: #eee;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
         margin-top: 15px;
     }
-    .detail-label { font-weight: 600; color: #0d47a1; }
+
+    .btn-primary {
+        background: #0d6efd;
+        color: white;
+    }
+
+    .btn-warning {
+        background: #f0ad4e;
+        color: white;
+    }
+
+    button:disabled {
+        background: #999;
+        cursor: not-allowed;
+    }
+
+    .text-danger { color: red; }
+    .text-success { color: green; }
+    .text-info { color: blue; }
+
+    .form-text {
+        font-size: 14px;
+        display: none;
+    }
+
+    #otpSection {
+        margin-top: 25px;
+        display: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #0d6efd;
+        font-size: 14px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
 </style>
 
+</head>
+<body>
+
 <div class="registration-container">
-    <h3 class="text-center mb-4 text-primary fw-bold">
-        Submit Your Review For Social Media Competition
-    </h3>
+    <h3>Add Social Media Form</h3>
 
     <form id="registrationForm">
 
         <!-- Registration No -->
-        <div class="mb-4">
-            <label for="regNo" class="form-label">Registration No.<span class="required">*</span></label>
-            <input type="text" class="form-control form-control-lg"
-                   id="regNo" name="regNo"
-                   placeholder="Enter your Registration No." autocomplete="off">
-
-            <div class="form-text text-danger d-none" id="regNoError">
-                Please enter your Registration No.
-            </div>
-        </div>
+        <label>Registration No <span class="required">*</span></label>
+        <input type="text" id="regNo" placeholder="Enter Registration No">
+        <div id="regNoError" class="form-text text-danger">Please enter Registration No</div>
 
         <!-- Email -->
-        <div class="mb-4">
-            <label for="emailId" class="form-label">Email Id<span class="required">*</span></label>
-            <input type="email" class="form-control form-control-lg"
-                   id="emailId" name="email"
-                   placeholder="Enter your Email Id" autocomplete="off">
+        <label>Email Id <span class="required">*</span></label>
+        <input type="email" id="emailId" placeholder="Enter Email Id">
+        <div id="emailError" class="form-text text-danger">Please enter Email Id</div>
 
-            <div class="form-text text-danger d-none" id="emailError">
-                Please enter your Email Id.
+        <button type="button" class="btn-primary" id="signInBtn">Sign In</button>
+
+        <!-- OTP Section -->
+        <div id="otpSection">
+            <label>Enter OTP <span class="required">*</span></label>
+            <input type="text" id="otpInput" placeholder="Enter OTP">
+
+            <button type="button" class="btn-warning" id="verifyOtpBtn">Verify OTP</button>
+
+            <div class="text-center" style="margin-top:10px;">
+                <a href="#" id="resendOtp">Resend OTP</a>
             </div>
+
+            <div id="otpMsg" class="text-center" style="margin-top:15px;"></div>
         </div>
 
-        <!-- Verify Button -->
-        <button type="button" class="btn btn-primary w-100 mb-3" id="verifyBtn">
-            Verify Registration
-        </button>
-
-        <!-- User Details -->
-        <div id="detailsSection" style="display:none;">
-            <div class="mb-2"><span class="detail-label">Name:</span> <span id="regName"></span></div>
-            <div class="mb-2"><span class="detail-label">Phone:</span> <span id="phno"></span></div>
-            <div class="mb-2"><span class="detail-label">Email:</span> <span id="email"></span></div>
-            <div class="mb-2"><span class="detail-label">Address:</span> <span id="address"></span></div>
-
-            <button type="button" class="btn btn-success w-100 mt-3" id="nextBtn">
-                Proceed to Upload
-            </button>
-        </div>
-
-        <!-- Message Area -->
-        <div id="msgBox" class="text-center mt-4"></div>
+        <div id="msgBox" class="text-center" style="margin-top:20px;"></div>
 
     </form>
 </div>
 
 <script>
-$(document).ready(function(){
+window.onload = function () {
 
-    $("#verifyBtn").click(function(){
+    // 🔒 Target date: 30 Jan 2026 12:00 AM IST
+    var allowedFrom = new Date("2026-01-30T00:00:00+05:30");
+    var now = new Date();
 
-        let regNo = $("#regNo").val().trim();
-        let email = $("#emailId").val().trim();
+    if (now < allowedFrom) {
 
-        // Validation
-        if(regNo === ""){
-            $("#regNoError").removeClass("d-none");
-            return;
-        } else {
-            $("#regNoError").addClass("d-none");
-        }
+        var msg = document.createElement("div");
+        msg.innerHTML =
+            "<b style='color:red;'>This form will be active from 30 January 2026, 12:00 AM</b>";
+        msg.style.textAlign = "center";
+        msg.style.marginBottom = "20px";
 
-        if(email === ""){
-            $("#emailError").removeClass("d-none");
-            return;
-        } else {
-            $("#emailError").addClass("d-none");
-        }
+        document.querySelector(".registration-container")
+                .insertBefore(msg, document.querySelector("form"));
 
-        $("#verifyBtn").prop("disabled", true).text("Verifying...");
-
-        $.post("verifyRegistration", {
-            regNo: regNo,
-            email: email
-        }, function(resp){
-
-            $("#verifyBtn").prop("disabled", false).text("Verify Registration");
-
-            if(resp === "invalid"){
-                $("#msgBox").html("<span class='text-danger'>Invalid Registration No or Email!</span>");
-                $("#detailsSection").hide();
-
-            } else if(resp === "error"){
-                $("#msgBox").html("<span class='text-danger'>Something went wrong. Try again.</span>");
-                $("#detailsSection").hide();
-
-            } else {
-
-                let data = resp.split("|");
-
-                $("#regName").text(data[0]);
-                $("#phno").text(data[1]);
-                $("#email").text(data[2]);
-                $("#address").text(data[3]);
-
-                $("#msgBox").html("<span class='text-success'>Registration verified successfully!</span>");
-                $("#detailsSection").fadeIn(400);
-                $("#verifyBtn").hide();
-
-//                 $("#nextBtn").off("click").on("click", function(){
-//                     window.location.href = "uploadAnotherVideo?regNo=" + encodeURIComponent(regNo);
-//                 });
-                $("#nextBtn").off("click").on("click", function() {
-                    var form = $('<form>', {
-                        action: 'viewWMMediaUrlDetails',
-                        method: 'POST'
-                    }).append($('<input>', {
-                        type: 'hidden',
-                        name: 'regno',
-                        value: regNo
-                    }));
-
-                    $('body').append(form);
-                    form.submit();
-                });
-            }
-
-        }).fail(function(){
-            $("#verifyBtn").prop("disabled", false).text("Verify Registration");
-            $("#msgBox").html("<span class='text-danger'>not responding!</span>");
+        document.querySelectorAll("input").forEach(el => {
+            el.readOnly = true;
         });
 
-    });
+        document.querySelectorAll("button").forEach(btn => {
+            btn.disabled = true;
+        });
 
-});
-window.onload = function() {
+        var resend = document.getElementById("resendOtp");
+        if(resend) {
+            resend.style.pointerEvents = "none";
+            resend.style.color = "#999";
+        }
+    }
+
+    // 🔙 no-back logic
     if (!sessionStorage.getItem("noBack")) {
         sessionStorage.setItem("noBack", "true");
     }
@@ -172,6 +185,144 @@ window.onload = function() {
 };
 </script>
 
+
+<script>
+function $(id){ return document.getElementById(id); }
+
+// SIGN IN
+$("signInBtn").onclick = function(){
+
+    $("msgBox").innerHTML = "";
+
+    let regNo = $("regNo").value.trim();
+    let email = $("emailId").value.trim();
+
+    if(regNo === ""){
+        $("regNoError").style.display = "block";
+        return;
+    } else $("regNoError").style.display = "none";
+
+    if(email === ""){
+        $("emailError").style.display = "block";
+        return;
+    } else $("emailError").style.display = "none";
+
+    this.disabled = true;
+    this.innerText = "Verifying...";
+
+    fetch("verifyRegistration", {
+        method: "POST",
+        headers: {"Content-Type":"application/x-www-form-urlencoded"},
+        body: "regNo=" + encodeURIComponent(regNo) + "&email=" + encodeURIComponent(email)
+    })
+    .then(res => res.text())
+    .then(resp => {
+
+    $("signInBtn").disabled = false;
+    $("signInBtn").innerText = "Sign In";
+
+    if(resp === "NOT_ALLOWED"){
+        $("msgBox").innerHTML =
+          "<span class='text-danger'>⏳ Form will be active from 30 January 2026, 12:00 AM</span>";
+        return;
+    }
+
+    if(resp === "invalid" || resp === "invalidReg"){
+        $("msgBox").innerHTML =
+          "<span class='text-danger'>Invalid Registration No or Email</span>";
+        return;
+    }
+
+    $("regNo").readOnly = true;
+    $("emailId").readOnly = true;
+    $("signInBtn").style.display = "none";
+    $("otpSection").style.display = "block";
+
+    sendOtp();
+})
+
+    .catch(() => {
+        $("signInBtn").disabled = false;
+        $("signInBtn").innerText = "Sign In";
+        $("msgBox").innerHTML = "<span class='text-danger'>Server not responding</span>";
+    });
+};
+
+// SEND OTP
+function sendOtp(){
+    $("otpMsg").innerHTML = "<span class='text-info'>Sending OTP...</span>";
+
+    fetch("sendOtp", { method:"POST" })
+    .then(res => res.json())
+    .then(res => {
+        if(res.status === "SENT")
+            $("otpMsg").innerHTML = "<span class='text-success'>OTP sent to your email</span>";
+        else
+            $("otpMsg").innerHTML = "<span class='text-danger'>Failed to send OTP</span>";
+    })
+    .catch(() => {
+        $("otpMsg").innerHTML = "<span class='text-danger'>OTP server error</span>";
+    });
+}
+
+// VERIFY OTP
+$("verifyOtpBtn").onclick = function(){
+
+    let otp = $("otpInput").value.trim();
+
+    if(otp === ""){
+        $("otpMsg").innerHTML = "<span class='text-danger'>Please enter OTP</span>";
+        return;
+    }
+
+    $("otpMsg").innerHTML = "<span class='text-info'>Verifying OTP...</span>";
+
+    fetch("verifyOtp", {
+        method:"POST",
+        headers:{"Content-Type":"application/x-www-form-urlencoded"},
+        body:"otp=" + encodeURIComponent(otp)
+    })
+    .then(res => res.json())
+    .then(res => {
+        if(res.status === "VERIFIED"){
+            $("otpMsg").innerHTML = "<span class='text-success'>OTP Verified</span>";
+            setTimeout(() => {
+            	var form = document.createElement("form");
+                form.method = "POST";
+                form.action = "viewWMMediaUrlDetails";
+
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "regno";
+                input.value = $("regNo").value;   
+
+                form.appendChild(input);
+                document.body.appendChild(form);
+
+                form.submit();
+
+            }, 800);
+        } else {
+            $("otpMsg").innerHTML = "<span class='text-danger'>Invalid OTP</span>";
+        }
+    })
+    .catch(() => {
+        $("otpMsg").innerHTML = "<span class='text-danger'>OTP verification failed</span>";
+    });
+};
+
+// RESEND OTP
+$("resendOtp").onclick = function(e){
+    e.preventDefault();
+    sendOtp();
+};
+
+
+</script>
+
 <footer class="text-center">
     <%@ include file="/WEB-INF/jspf/mahotsavfooter.jspf" %>
 </footer>
+
+</body>
+</html>
