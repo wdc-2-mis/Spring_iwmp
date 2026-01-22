@@ -24,14 +24,22 @@
     };
 </script>
 <style>
+.container {
+  max-width: 100% !important;  /* full page width */
+}
+
+.card {
+  width: 100%;                 /* card stretches fully */
+}
+
 .table-responsive {
-  overflow-x: auto;
-  white-space: nowrap;
+  overflow-x: visible;   /* allow full width, no scroll */
+  white-space: normal;   /* let text wrap instead of forcing one line */
 }
 
 .table {
-  table-layout: fixed;
-  width: max-content;
+  table-layout: auto;    /* auto sizing instead of fixed */
+  width: 100%;           /* stretch to container width */
 }
 </style>
 
@@ -54,8 +62,8 @@
                             <th>District Name</th>
                             <th>Block Name</th>
                             <th>Village Name</th>
-                            <th>Media Type</th>
                             <th>Platform</th>
+                            <th>Media URL</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
                             <th>Action</th>
