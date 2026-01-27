@@ -106,7 +106,7 @@
 <body>
 
 <div class="registration-container">
-    <h3>Add Social Media Form</h3>
+    <h3>Submit your Review for your Social Media Competition</h3>
 
     <form id="registrationForm">
 
