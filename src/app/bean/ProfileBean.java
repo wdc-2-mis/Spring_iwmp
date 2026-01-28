@@ -9,6 +9,8 @@ public class ProfileBean {
 	private Integer projectcode;
 	private String projectname;
 	private String selected;
+	private Integer state_codelgd;
+	private Integer district_codelgd;
 	
 	public String getSelected() {
 		return selected;
@@ -67,6 +69,23 @@ public class ProfileBean {
 	public void setProjectname(String projectname) {
 		this.projectname = projectname;
 	}
+
+	public Integer getState_codelgd() {
+		return state_codelgd;
+	}
+
+	public void setState_codelgd(Integer state_codelgd) {
+		this.state_codelgd = state_codelgd;
+	}
+
+	public Integer getDistrict_codelgd() {
+		return district_codelgd;
+	}
+
+	public void setDistrict_codelgd(Integer district_codelgd) {
+		this.district_codelgd = district_codelgd;
+	}
 	
 
+	
 }

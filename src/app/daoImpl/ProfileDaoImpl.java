@@ -59,6 +59,9 @@ public class ProfileDaoImpl implements ProfileDao{
 	@Value("${getNewUser}") 
 	String getNewUser;
 	
+	@Value("${getPunarutthanStateDist}") 
+	String getPunarutthanStateDist;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserReg> getUserDetail(Integer regid) {
@@ -304,6 +307,35 @@ public class ProfileDaoImpl implements ProfileDao{
 			ses.getTransaction().commit();
 		}
 		return result;
+	}
+
+	@Override
+	public List<ProfileBean> getPunarutthanStateDist(Integer regid) {
+		
+		List<ProfileBean> result = new ArrayList<>();
+	    Session session = sessionFactory.openSession();
+	    Transaction tx = null;
+
+	    try {
+	        tx = session.beginTransaction();
+	        String hql = null;
+	        SQLQuery query = null;
+	        hql = getPunarutthanStateDist;
+	        if (hql != null) {
+	            query = session.createSQLQuery(hql);
+	            query.setInteger("regid", regid);
+	            query.setResultTransformer(Transformers.aliasToBean(ProfileBean.class));
+	            result = query.list();
+	        }
+	        tx.commit();
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
+	        throw e;
+	    } finally {
+	        session.close();
+	    }
+
+	    return result;
 	}
 	
 }

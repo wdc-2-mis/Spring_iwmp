@@ -18,4 +18,6 @@ public interface ProfileService {
 	Integer saveProfileHistory(Integer regid,String moveBy);
 	Integer deleteInsertDolrState(Integer regid,String [] stateList);
 	List<UserReg> getNewUserDetail(Integer regid);
+	
+	List<ProfileBean> getPunarutthanStateDist(Integer regid);
 }

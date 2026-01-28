@@ -191,5 +191,11 @@ p:basename="classpath:messages/messages">
 	<bean name="MahotsavPrabhatPheriPhoto" class="app.mahotsav.model.MahotsavPrabhatPheriPhoto" />
 	<bean name="WatershedMahotsavProjectLevel" class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
 	<bean name="WatershedMahotsavProjectLvlPhoto" class="app.mahotsav.model.WatershedMahotsavProjectLvlPhoto" />
+	<bean name="Wdcpmksy1ProjectDetail" class="app.punarutthan.model.Wdcpmksy1ProjectDetail" />
+	<bean name="MStructure" class="app.punarutthan.model.MStructure" />
+	<bean name="Wdcpmksy1PunarutthanPlan" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlan" />
+	<bean name="Wdcpmksy1PunarutthanPlanPhoto" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanPhoto" />
+	
+	
 	
 </beans>

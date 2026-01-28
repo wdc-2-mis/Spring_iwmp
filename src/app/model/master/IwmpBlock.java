@@ -22,6 +22,7 @@ import app.mahotsav.model.MahotsavPrabhatPheri;
 import app.mahotsav.model.WatershedMahotsavInauguaration;
 import app.mahotsav.model.WatershedMahotsavVideoDetails;
 import app.model.IwmpDistrict;
+import app.punarutthan.model.Wdcpmksy1ProjectDetail;
 import app.watershedyatra.model.NodalOfficer;
 import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.RoutePlanVanTravel;
@@ -74,6 +75,10 @@ public class IwmpBlock implements java.io.Serializable {
 	private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
 	private Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration = new HashSet<WatershedMahotsavInauguaration>(0);
 	private Set<MahotsavPrabhatPheri> wmPrabhatPheri = new HashSet<MahotsavPrabhatPheri>(0);
+	
+	private Set<Wdcpmksy1ProjectDetail> wdcpmksy1ProjectDetail = new HashSet<Wdcpmksy1ProjectDetail>(0);
+	
+	
 	@Transient
 	private boolean updatestatus;
 
@@ -104,7 +109,7 @@ public class IwmpBlock implements java.io.Serializable {
 			String censusCodePortedData, Integer stateCodelgd, Integer districtCodelgd, Integer blockCodelgd,
 			Boolean active, Set<IwmpGramPanchayat> iwmpGramPanchayats, Set<PfmsEatmisdataDetail> pfmsEatmisdataDetails, Set<NodalOfficer> nodalOfficer,
 			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation> preYatraPreparation, Set<RoutePlanVanTravel> routePlanVanTravel, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails,
-			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration, Set<MahotsavPrabhatPheri> wmPrabhatPheri) {
+			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration, Set<MahotsavPrabhatPheri> wmPrabhatPheri, Set<Wdcpmksy1ProjectDetail> wdcpmksy1ProjectDetail) {
 		this.bcode = bcode;
 		this.iwmpDistrict = iwmpDistrict;
 		this.stCode = stCode;
@@ -140,6 +145,7 @@ public class IwmpBlock implements java.io.Serializable {
 		this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
 		this.watershedMahotsavInauguaration=watershedMahotsavInauguaration;
 		this.wmPrabhatPheri=wmPrabhatPheri;
+		this.wdcpmksy1ProjectDetail=wdcpmksy1ProjectDetail;
 	}
 
 	@Id
@@ -459,5 +465,18 @@ public class IwmpBlock implements java.io.Serializable {
 	public void setMahotsavPrabhatPheri(Set<MahotsavPrabhatPheri> wmPrabhatPheri) {
 		this.wmPrabhatPheri = wmPrabhatPheri;
 	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpBlock")
+	public Set<Wdcpmksy1ProjectDetail> getWdcpmksy1ProjectDetail() {
+		return wdcpmksy1ProjectDetail;
+	}
+
+	public void setWdcpmksy1ProjectDetail(Set<Wdcpmksy1ProjectDetail> wdcpmksy1ProjectDetail) {
+		this.wdcpmksy1ProjectDetail = wdcpmksy1ProjectDetail;
+	}
+	
+	
+	
+	
 
 }

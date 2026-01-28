@@ -61,6 +61,12 @@ public class ProfileServiceImpl implements ProfileService{
 	public List<UserReg> getNewUserDetail(Integer regid) {
 		return dao.getNewUserDetail( regid);
 	}
+
+	@Override
+	public List<ProfileBean> getPunarutthanStateDist(Integer regid) {
+		// TODO Auto-generated method stub
+		return dao.getPunarutthanStateDist(regid);
+	}
 	
 
 }
