@@ -307,6 +307,13 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 	{
 	margin-top: 20px; /* gap between table and pagination */
 }
+
+
+.wrap-cell {
+  word-break: break-word;
+  white-space: normal;
+  max-width: 400px;
+}
 </style>
 
 <%
@@ -495,25 +502,25 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 								</c:if>
 							</td> --%>
 
-							<td class="text-center">
+							<td class="text-center wrap-cell">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.facebook_urls}')">${dt.facebook_urls}</a>
 							</td>
 							
 							<c:if test="${selectedMediaType ne 'P'}">
-							<td class="text-center">
+							<td class="text-center wrap-cell">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.youtube_urls}')">${dt.youtube_urls}</a>
 							</td>
 							</c:if>
 							
-							<td class="text-center">
+							<td class="text-center wrap-cell">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.instagram_urls}')">${dt.instagram_urls}</a>
 							</td>
 
-							<td class="text-center">
+							<td class="text-center wrap-cell">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.twitter_urls}')">${dt.twitter_urls}</a>
 							</td>
 							
-							<td class="text-center">
+							<td class="text-center wrap-cell">
 								<a href="javascript:void(0);" onclick="openVideoPlayer('${dt.linkedin_urls}')">${dt.linkedin_urls}</a>
 							</td>
 							

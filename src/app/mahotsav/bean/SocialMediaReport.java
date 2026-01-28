@@ -30,6 +30,50 @@ public class SocialMediaReport {
 	private BigInteger total_media_uploaded;
 	private BigInteger total_photo_uploaded;
 	
+	private String media_name;
+	private String media_url;
+	private BigInteger no_of_views;
+	private BigInteger no_of_likes;
+	private BigInteger no_of_comments;
+	private BigInteger no_of_shares;
+	
+	
+	public BigInteger getNo_of_views() {
+		return no_of_views;
+	}
+	public void setNo_of_views(BigInteger no_of_views) {
+		this.no_of_views = no_of_views;
+	}
+	public BigInteger getNo_of_likes() {
+		return no_of_likes;
+	}
+	public void setNo_of_likes(BigInteger no_of_likes) {
+		this.no_of_likes = no_of_likes;
+	}
+	public BigInteger getNo_of_comments() {
+		return no_of_comments;
+	}
+	public void setNo_of_comments(BigInteger no_of_comments) {
+		this.no_of_comments = no_of_comments;
+	}
+	public BigInteger getNo_of_shares() {
+		return no_of_shares;
+	}
+	public void setNo_of_shares(BigInteger no_of_shares) {
+		this.no_of_shares = no_of_shares;
+	}
+	public String getMedia_name() {
+		return media_name;
+	}
+	public void setMedia_name(String media_name) {
+		this.media_name = media_name;
+	}
+	public String getMedia_url() {
+		return media_url;
+	}
+	public void setMedia_url(String media_url) {
+		this.media_url = media_url;
+	}
 	public BigInteger getTotal_media_uploaded() {
 		return total_media_uploaded;
 	}
