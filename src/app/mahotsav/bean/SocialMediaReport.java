@@ -36,8 +36,21 @@ public class SocialMediaReport {
 	private BigInteger no_of_likes;
 	private BigInteger no_of_comments;
 	private BigInteger no_of_shares;
+	private String media_view_url;
 	
-	
+	public String getMedia_view_url() {
+		return media_view_url;
+	}
+	public void setMedia_view_url(String media_view_url) {
+		this.media_view_url = media_view_url;
+	}
+    public String getMediaFileName() {
+        if (media_view_url == null || media_view_url.isEmpty()) {
+            return "";
+        }
+        return media_view_url.substring(media_view_url.lastIndexOf("\\") + 1);
+    }
+
 	public BigInteger getNo_of_views() {
 		return no_of_views;
 	}

@@ -10,7 +10,5 @@ public interface WMSocialMediaAnalysisDao {
 	
 	List<IwmpDistrict> getDistrictList(int stateCode);
 	List<WatershedMahotsavMediaMaster> getPlatformList();
-	List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media);
-//	List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media);
-//	List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media, String orderBy);
+	List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media, String orderBy);
 }

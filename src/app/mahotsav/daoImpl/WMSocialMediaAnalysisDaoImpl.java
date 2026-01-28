@@ -79,34 +79,34 @@ public class WMSocialMediaAnalysisDaoImpl implements WMSocialMediaAnalysisDao{
 		    return result;
 		}
 
+		public List<SocialMediaReport> getWMSocialMediaAnalysisReport(
+		        Integer stcd, Integer dcode, Integer media, String orderBy) {
 
-		@Override
-		public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media) {
-			List<SocialMediaReport> getWMSocialMediaReport = new ArrayList<>();
-			String hql = getWmAnalysisReport;
-			Session session = sessionFactory.getCurrentSession();
-			try {
-				session.beginTransaction();
-				SQLQuery query = session.createSQLQuery(hql);
-				query.setInteger("stcd", stcd);
-				query.setInteger("dcode", dcode);
-				query.setInteger("media", media);
-				query.setResultTransformer(Transformers.aliasToBean(SocialMediaReport.class));
-				getWMSocialMediaReport = query.list();
-				session.getTransaction().commit();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				session.getTransaction().rollback();
-			}
-			return getWMSocialMediaReport;
+		    List<SocialMediaReport> list = new ArrayList<>();
+		    Session session = sessionFactory.getCurrentSession();
+
+		    try {
+		        session.beginTransaction();
+
+		        SQLQuery query = session.createSQLQuery(getWmAnalysisReport);
+		        query.setInteger("stcd", stcd);
+		        query.setInteger("dcode", dcode);
+		        query.setInteger("media", media);
+		        query.setString("orderBy", orderBy);
+
+		        query.setResultTransformer(
+		            Transformers.aliasToBean(SocialMediaReport.class));
+
+		        list = query.list();
+		        session.getTransaction().commit();
+
+		    } catch (Exception e) {
+		        session.getTransaction().rollback();
+		        e.printStackTrace();
+		    }
+
+		    return list;
 		}
 
-
-//		@Override
-//		public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media,
-//				String orderBy) {
-//			// TODO Auto-generated method stub
-//			return null;
-//		}
 
 }

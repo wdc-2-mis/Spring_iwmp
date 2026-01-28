@@ -39,19 +39,11 @@ public class WMSocialMediaAnalysisServiceImpl implements WMSocialMediaAnalysisSe
 	        return platformMap;
 	    }
 
+
 	@Override
-	public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media) {
-		return wmDao.getWMSocialMediaAnalysisReport(stcd, dcode, media);
+	public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media,
+			String orderBy) {
+		return wmDao.getWMSocialMediaAnalysisReport(stcd, dcode, media, orderBy);
 	}
 
-//	@Override
-//	public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media) {
-//		return wmDao.getWMSocialMediaAnalysisReport(stcd, dcode, media);
-//	}
-
-//	@Override
-//	public List<SocialMediaReport> getWMSocialMediaAnalysisReport(Integer stcd, Integer dcode, Integer media,
-//			String orderBy) {
-//		return wmDao.getWMSocialMediaAnalysisReport(stcd, dcode, media, orderBy);
-//	}
 }
