@@ -1,6 +1,6 @@
 $('#district').on('change', function (e) {
     e.preventDefault();
-
+  
     const dCode = $(this).val();
     const $ddlProject = $('#pendingProject');
 
