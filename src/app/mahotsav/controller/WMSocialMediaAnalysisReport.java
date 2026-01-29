@@ -19,13 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
@@ -57,7 +61,6 @@ public class WMSocialMediaAnalysisReport {
     @RequestMapping(value = "/getWMSocialMediaAnalysisReport", method = RequestMethod.GET)
     public ModelAndView getWMSocialMediaAnalysisReport(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("mahotsav/WMSocialMediaAnalysisReport");
-
          stateList = stateMasterService.getAllState();
          districtList = new LinkedHashMap<>();
          platformList = wmService.getPlatformList();
@@ -82,7 +85,6 @@ public class WMSocialMediaAnalysisReport {
     public ModelAndView wmSocialMediaAnalysisReport(HttpServletRequest request) {
 
         ModelAndView mav = new ModelAndView("mahotsav/WMSocialMediaAnalysisReport");
-
         int stcd = Integer.parseInt(request.getParameter("state"));
         int dcode = Integer.parseInt(request.getParameter("district"));
         int media = Integer.parseInt(request.getParameter("platform"));
@@ -133,6 +135,9 @@ public class WMSocialMediaAnalysisReport {
     	int stcd = Integer.parseInt(request.getParameter("state"));
         int dcode = Integer.parseInt(request.getParameter("district"));
         int media = Integer.parseInt(request.getParameter("platform"));
+        	String stName = request.getParameter("stName");
+        	String distName = request.getParameter("distName");
+        	String mediaa = request.getParameter("media");
 
         String orderBy = request.getParameter("orderBy");
 
@@ -171,12 +176,13 @@ public class WMSocialMediaAnalysisReport {
 		    CommonFunctions.addHeader(document);
 		    document.add(paragraph2);
 		    document.add(paragraph3);
-		    table = new PdfPTable(11);
-		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table = new PdfPTable(12);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
 		    table.setWidthPercentage(100);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
 		    table.setHeaderRows(4);
+		    CommonFunctions.insertCellHeader(table, "State: "+stcd+" District: "+ dcode+" Platform: "+media, Element.ALIGN_LEFT, 12, 1, bf8Bold);
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -188,6 +194,7 @@ public class WMSocialMediaAnalysisReport {
 			CommonFunctions.insertCellHeader(table, "Likes", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Comments", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "Shares", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Image", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
 			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -200,6 +207,7 @@ public class WMSocialMediaAnalysisReport {
 			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			
 			int k = 1;
 			if(list.size()!=0)
@@ -211,24 +219,21 @@ public class WMSocialMediaAnalysisReport {
 					CommonFunctions.insertCell(table, list.get(i).getUser_reg_no(), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, list.get(i).getReg_name(), Element.ALIGN_RIGHT, 1, 1, bf8);
 			        CommonFunctions.insertCell(table, list.get(i).getMedia_name() , Element.ALIGN_RIGHT, 1, 1, bf8);
-			        CommonFunctions.insertCell(table, list.get(i).getMedia_url(), Element.ALIGN_RIGHT, 1, 1, bf8);
-//			        CommonFunctions.insertCell(table, list.get(i).getNo_of_views().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, (list.get(i).getMedia_url()), Element.ALIGN_RIGHT, 1, 1, bf8);
 			        BigInteger views = list.get(i).getNo_of_views();
-			        CommonFunctions.insertCell(table,views != null ? views.toString() : "0",   Element.ALIGN_RIGHT,1,1,bf8);
-//			        CommonFunctions.insertCell(table, list.get(i).getNo_of_likes().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table,views != null ? views.toString() : "",   Element.ALIGN_RIGHT,1,1,bf8);
 			        BigInteger likes = list.get(i).getNo_of_likes();
-			        CommonFunctions.insertCell(table,likes != null ? likes.toString() : "0",  Element.ALIGN_RIGHT,1, 1,bf8 );
-//			        CommonFunctions.insertCell(table, list.get(i).getNo_of_comments().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table,likes != null ? likes.toString() : "",  Element.ALIGN_RIGHT,1, 1,bf8 );
 			        BigInteger comments = list.get(i).getNo_of_comments();
-			        CommonFunctions.insertCell(   table,  comments != null ? comments.toString() : "0",    Element.ALIGN_RIGHT,1,1,bf8 );
-//			        CommonFunctions.insertCell(table, list.get(i).getNo_of_shares().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(   table,  comments != null ? comments.toString() : "",    Element.ALIGN_RIGHT,1,1,bf8 );
 			        BigInteger shares = list.get(i).getNo_of_shares();
-			        CommonFunctions.insertCell(table,shares != null ? shares.toString() : "0", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table,shares != null ? shares.toString() : "", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, ("view"), Element.ALIGN_RIGHT, 1, 1, bf8);
 			            
 					k++;
 				}
 				if(list.size()==0)
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 11, 1, bf8);
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 12, 1, bf8);
 				
 				
 		document.add(table);

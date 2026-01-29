@@ -53,11 +53,11 @@ $(document).ready(function () {
 function downloadPDF() {
     var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
     var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-//     var media = document.getElementById("platform").options[document.getElementById("platform").selectedIndex].text;
+    var media = document.getElementById("platform").options[document.getElementById("platform").selectedIndex].text;
 
     document.getElementById("stName").value = stName;
     document.getElementById("distName").value = distName;
-//     document.getElementById("media").value = media;
+    document.getElementById("mediaName").value = media;
 
     document.mohotsavRpt.action = "downloadPDFwmSocialMediaAnalysisReport";
     document.mohotsavRpt.method = "post";
@@ -174,9 +174,9 @@ Report WM5 - Watershed Mahotsav Social Media Analysis as per Entries
 </h4>
 
 <form id="mohotsavReport" name="mohotsavRpt" action="wmSocialMediaAnalysisReport" method="post">
-			<input type="hidden" name="stName" id="stName" value="" />
-    		<input type="hidden" name="distName" id="distName" value="" />
-    		<input type="hidden" name="mediaName" id="mediaName" value="" />
+			<input type="hidden" name="stName" id="stName" />
+			<input type="hidden" name="distName" id="distName" />
+			<input type="hidden" name="media" id="media" /> 
 
 	<div class="row mb-3">
 		<div class="col-md-2">
@@ -276,23 +276,19 @@ Report WM5 - Watershed Mahotsav Social Media Analysis as per Entries
 						<td class="text-end">${dt.no_of_likes}</td>
 						<td class="text-end">${dt.no_of_comments}</td>
 						<td class="text-end">${dt.no_of_shares}</td>
-<!-- 						<td class="text-end">view</td> -->
-<!-- 						<td class="text-end"> -->
-<%-- 									<c:choose> --%>
-<%-- 										<c:when test="${dt.media_view_url eq null}"> --%>
-<!-- 											blank -->
-<%-- 										</c:when> --%>
-<%-- 										<c:otherwise> --%>
-<%-- 										<a href="#" data-id="${dt.media_view_url}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="view" /></a> --%>
-<%-- 											<c:out value="${dt.image_count}" /> --%>
-<%-- 										</c:otherwise> --%>
-<%-- 									</c:choose> --%>
-									
-<!-- 								</td> -->
-
-								<td class="text-center"><a href="#" class="showImage"
-														data-toggle="modal" style="color: blue;"
-														onclick="showimage('${dt.mediaFileName}')">view</a></td>
+						<td class="text-center">
+    <c:choose>
+        <c:when test="${not empty dt.mediaFileName}">
+            <a href="#" class="showImage" data-toggle="modal" style="color: blue;"
+               onclick="showimage('${dt.mediaFileName}')">view</a>
+        </c:when>
+        <c:otherwise>
+        </c:otherwise>
+    </c:choose>
+</td>
+<%-- 						<td class="text-center"> <c:if test="${not empty dt.mediaFileName}"> --%>
+<!--         				<a href="#" class="showImage" data-toggle="modal" style="color: blue;" -->
+<%--            				onclick="showimage('${dt.mediaFileName}')">view</a></c:if></td> --%>
 				</tr>
 			</c:forEach>
 </tbody>
