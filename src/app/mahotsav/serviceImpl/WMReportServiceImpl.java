@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
+import app.mahotsav.bean.WMMediaReviewBean;
 import app.mahotsav.dao.WMReportDao;
 import app.mahotsav.service.WMReportService;
 import app.model.IwmpDistrict;
@@ -86,6 +87,13 @@ public class WMReportServiceImpl implements WMReportService{
 	public List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType) {
 		// TODO Auto-generated method stub
 		return WMDao.getImageMahotsavProjAtDistLVL(distCode, imgType);
+	}
+
+	@Override
+	public List<WMMediaReviewBean> getWMSocialMediaComDetails(Integer stcode, Integer dcode, Integer platform,
+			String status) {
+		// TODO Auto-generated method stub
+		return WMDao.getWMSocialMediaComDetails(stcode, dcode, platform, status);
 	}
 	
 

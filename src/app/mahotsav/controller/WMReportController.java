@@ -2,7 +2,14 @@ package app.mahotsav.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +52,9 @@ import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
+import app.mahotsav.bean.WMMediaReviewBean;
 import app.mahotsav.service.WMReportService;
+import app.mahotsav.service.WMSocialMediaAnalysisService;
 import app.service.StateMasterService;
 
 
@@ -60,6 +69,9 @@ public class WMReportController {
 		
 	@Autowired
 	WMReportService WMSerice;
+	
+	@Autowired
+    WMSocialMediaAnalysisService wmService;
 	
 	private Map<Integer, String> stateList;
 	
@@ -1136,6 +1148,266 @@ public class WMReportController {
 		
 		return null;
 	}
+	
+
+    @RequestMapping(value = "/getWMSocialMediaCompAnalysis", method = RequestMethod.GET)
+    public ModelAndView getWMSocialMediaCompAnalysis(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+
+        Map<Integer, String> stateList = stateMasterService.getAllState();
+        mav.addObject("stateList", stateList);
+
+        Map<Integer, String> platformList = wmService.getPlatformList();
+        mav.addObject("platformList", platformList);
+        
+        Map<String, String> statusList = new LinkedHashMap<String, String>();
+        statusList.put("Valid", "Valid");
+        statusList.put("Invalid", "Invalid");
+        statusList.put("Pending", "Pending");
+        mav.addObject("statusList", statusList);
+
+        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(0, 0, 0, "");
+        mav.addObject("wmList", list);
+        mav.addObject("wmListSize", list.size());
+
+        return mav;
+    }
+    
+    @RequestMapping(value = "/getWMSocialMediaCompAnalysis", method = RequestMethod.POST)
+    public ModelAndView getWMSocialMediaCompAnalysis(HttpServletRequest request) {
+
+        ModelAndView mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+
+        int stcd = Integer.parseInt(request.getParameter("state"));
+        int dcode = Integer.parseInt(request.getParameter("district"));
+        int media = Integer.parseInt(request.getParameter("platform"));
+        String status = request.getParameter("status");
+        String userdate= request.getParameter("userdate");
+		String userdateto= request.getParameter("userdateto");
+		String orderBy = request.getParameter("orderBy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+//		for(Map.Entry<Integer, String> map :stateMasterService.getAllState().entrySet()){
+//			if(map.getKey()==stcd) {
+//				stName = map.getValue();
+//			}
+//		}
+		String distcode = dcode+"";
+		String stName = stcd==0?"All":stateMasterService.getAllState().get(stcd);
+		String distName =dcode==0?"All":wmService.getDistrictList(stcd).entrySet().stream().filter(s-> distcode.equals(s.getValue())).map(Map.Entry::getKey).findFirst().orElse(null);
+		String platform = media==0?"All":wmService.getPlatformList().get(media);
+
+        mav.addObject("stateList", stateMasterService.getAllState());
+        mav.addObject("districtList", wmService.getDistrictList(stcd));
+        mav.addObject("platformList", wmService.getPlatformList());
+        Map<String, String> statusList = new LinkedHashMap<String, String>();
+        statusList.put("Valid", "Valid");
+        statusList.put("Invalid", "Invalid");
+        statusList.put("Pending", "Pending");
+        mav.addObject("statusList", statusList);
+
+        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+        
+        if(!userdate.equals("") && !userdateto.equals("")) {
+        	LocalDate fromDate = LocalDate.parse(userdate, formatter);
+        	LocalDate toDate = LocalDate.parse(userdateto, formatter);
+			List<WMMediaReviewBean> filterList = list.stream().filter(bean -> bean.getCreated_date() != null)
+	        	    .filter(bean -> !bean.getCreated_date().before(Date.valueOf(fromDate)) 
+	                        && !bean.getCreated_date().after(Date.valueOf(toDate)))
+	           .collect(Collectors.toList());
+			if (orderBy != null) {
+	            switch (orderBy) {
+	                case "viewsAsc":
+	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+	                    break;
+	                case "viewsDesc":
+	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+	                    break;
+	                case "likesAsc":
+	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+	                    break;
+	                case "likesDesc":
+	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+	                    break;
+	            }
+	        }
+			mav.addObject("wmList", filterList);
+	        mav.addObject("wmListSize", filterList.size());
+	        mav.addObject("orderBy", orderBy);
+		}else {
+			if (orderBy != null) {
+	            switch (orderBy) {
+	                case "viewsAsc":
+	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+	                    break;
+	                case "viewsDesc":
+	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+	                    break;
+	                case "likesAsc":
+	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+	                    break;
+	                case "likesDesc":
+	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+	                    break;
+	            }
+	        }
+			 mav.addObject("wmList", list);
+		     mav.addObject("wmListSize", list.size());
+		     mav.addObject("orderBy", orderBy);
+		}
+
+        mav.addObject("state", stcd);
+        mav.addObject("stName", stName);
+        mav.addObject("district", dcode);
+        mav.addObject("distName", distName);
+        mav.addObject("platform", media);
+        mav.addObject("mediaName", platform);
+        mav.addObject("status",status);
+        mav.addObject("fromdate",userdate);
+        mav.addObject("todate",userdateto);
+        
+
+        return mav;
+    }
+    
+    
+    @RequestMapping(value = "/downloadWMSocialMediaCompAnalysisPDF", method = RequestMethod.POST)
+	public ModelAndView downloadWMSocialMediaCompAnalysisPDF(HttpServletRequest request, HttpServletResponse response)
+	{
+    	int stcd = Integer.parseInt(request.getParameter("state"));
+        int dcode = Integer.parseInt(request.getParameter("district"));
+        int media = Integer.parseInt(request.getParameter("platform"));
+        
+        String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String mediaName= request.getParameter("mediaName");
+        
+		String status = request.getParameter("statusName");
+        String userdate= request.getParameter("fromDate");
+		String userdateto= request.getParameter("toDate");
+		
+		
+
+        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 14, 14, 0);
+			document.addTitle("WM6 - WMSocialMediaAnalysis");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report WM6 - Watershed Mahotsav Social Media Analysis", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(14);
+		    paragraph3.setSpacingAfter(14);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(13);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(3);
+		    CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto, Element.ALIGN_LEFT, 13, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Registration Number", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Platform", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Link", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Views", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Likes", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Number of Comments", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Created Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Updated Date", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Status", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "8", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "9", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "10", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "11", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "12", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "13", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			int k = 1;
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname()!= null?list.get(i).getStname():"", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDistname()!=null?list.get(i).getDistname():"", Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getReg_no(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getReg_name(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getPlatform() , Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getMedia_url(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_of_views() != null ? list.get(i).getNo_of_views().toString() : "0",   Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getNo_of_likes() != null ? list.get(i).getNo_of_likes().toString() : "0",  Element.ALIGN_RIGHT,1, 1,bf8 );
+			        CommonFunctions.insertCell(table, list.get(i).getNo_of_comments() != null ? list.get(i).getNo_of_comments().toString() : "0",    Element.ALIGN_RIGHT,1,1,bf8 );
+			        CommonFunctions.insertCell(table, list.get(i).getCreated_date() != null ? list.get(i).getCreated_date().toString() : "", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getUpdated_date() != null ? list.get(i).getUpdated_date().toString() : "", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getStatus(), Element.ALIGN_RIGHT,1,1,bf8);
+			            
+					k++;
+				}
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 13, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM6- WMSocialMediaAnalysis.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
 	
 	
 }

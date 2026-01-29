@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
+import app.mahotsav.bean.WMMediaReviewBean;
 
 
 @Service("WMReportService")
@@ -27,5 +28,7 @@ public interface WMReportService {
 	List<InaugurationMahotsavBean> getdistWMProjLvlProgRpt(int stcd);
 
 	List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType);
+	
+	List<WMMediaReviewBean> getWMSocialMediaComDetails(Integer stcode, Integer dcode, Integer platform, String status);
 
 }

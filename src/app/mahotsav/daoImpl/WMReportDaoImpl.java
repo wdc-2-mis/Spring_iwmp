@@ -15,8 +15,10 @@ import org.springframework.stereotype.Repository;
 
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.SocialMediaReport;
+import app.mahotsav.bean.WMMediaReviewBean;
 import app.mahotsav.dao.WMReportDao;
 import app.mahotsav.model.MahotsavPrabhatPheriPhoto;
+import app.mahotsav.model.WatershedMahotsavMediaMaster;
 import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
 import app.model.IwmpDistrict;
 import app.model.master.IwmpBlock;
@@ -61,6 +63,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	
 	@Value("${getDistWiseProjLvlPPPhoto}")
 	String getDistWiseProjLvlPPPhoto;
+	
+	@Value("${getWMSocialMediaComDetails}")
+	String getWMSocialMediaComDetails;
 	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
@@ -326,6 +331,41 @@ public class WMReportDaoImpl implements WMReportDao {
 	    }
 
 	    return imgList;
+	}
+
+	@Override
+	public List<WMMediaReviewBean> getWMSocialMediaComDetails(Integer stcode, Integer dcode, Integer platform,
+			String status) {
+		Session session = sessionFactory.getCurrentSession();
+		WatershedMahotsavMediaMaster mediaMaster = new WatershedMahotsavMediaMaster();
+		List<WMMediaReviewBean> list = new ArrayList<WMMediaReviewBean>();
+		String hql = getWMSocialMediaComDetails;
+		String plat = "";
+		String stats = "";
+		Query query = null;
+		try {
+			session.beginTransaction();
+			if(platform !=0) {
+				mediaMaster = session.get(WatershedMahotsavMediaMaster.class,platform);
+				plat = mediaMaster.getMediaName();
+			}
+			if(!status.equals("All"))
+				stats = status;
+			
+			query = session.createSQLQuery(hql);
+			query.setInteger("stcode", stcode);
+			query.setInteger("dcode", dcode);
+			query.setParameter("platform", plat);
+			query.setParameter("status", stats);
+			query.setResultTransformer(Transformers.aliasToBean(WMMediaReviewBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (Exception e){
+			session.getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return list;
 	}
 	
 	
