@@ -59,8 +59,15 @@
         border-radius: 6px;
         border: none;
         cursor: pointer;
-        margin-top: 15px;
+        margin-top: 10px;
     }
+
+button.btn-inline {
+    width: auto;
+    padding: 6px 12px;
+    font-size: 14px;
+    margin-top: 0;
+}
 
     .btn-primary {
         background: #0d6efd;
@@ -125,15 +132,26 @@
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 15px;
-  color: #aaa;
-  float: right;
-  font-size: 40px;
-  font-weight: bold;
+  top: 8px;
+  right: 12px;
+  color: #666;
+  font-size: 25px;   /* smaller size */
+  font-weight: normal;
   cursor: pointer;
+  background: #f0f0f0;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  line-height: 26px;
+  text-align: center;
+  transition: background 0.3s, color 0.3s;
 }
-.close:hover { color: black; }
+
+.close:hover {
+  background: #ddd;
+  color: #000;
+}
+
     
 </style>
 
@@ -179,29 +197,30 @@
 
 
 	
-<div style="text-align:center; margin-top:20px;">
-  <h4 style="display:inline; font-style:italic;">Entry Form Training Video</h4>
-  <button type="button" id="helpBtn" class="btn btn-info" 
-          style="width:auto; height:auto; margin-left:10px; padding:5px 12px; font-size:14px;">
-    Help
+<!-- Help Button Section -->
+<div class="mt-3" style="text-align:center;">
+  <h4 style="display:inline; font-style:italic; margin-right:8px;">
+    How to Submit Your Review:
+  </h4>
+  <button type="button" id="btnHelpVideo" 
+          class="btn btn-info btn-inline">
+    Watch Video
   </button>
 </div>
 
 <br>
 
-
-	<!-- Popup Modal -->
-			<div id="helpModal" class="modal">
-				<div class="modal-content">
-					<span class="close">&times;</span>
-					<h2><b>Help Video</b></h2>
-					<video controls style="width:100%; height:auto; max-height:85vh;">
-						<source
-							src="${pageContext.request.contextPath}/resources/video/Reviews.mp4"
-							type="video/mp4">Video</video>
-				</div>
-			</div>
-
+<!-- Popup Modal -->
+<div id="modalHelpVideo" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-content">
+    <button class="close" id="btnCloseModal" aria-label="Close">&times;</button>
+    <h2><b>Step-by-Step Tutorial</b></h2>
+    <video controls preload="metadata" style="width:100%; height:auto; max-height:85vh;">
+      <source src="${pageContext.request.contextPath}/resources/video/Reviews.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
 		
 
 
@@ -403,25 +422,25 @@ $("resendOtp").onclick = function(e){
 
 
 <script>
-document.getElementById("helpBtn").onclick = function() {
-	var modal = document.getElementById("helpModal");
-    modal.style.display = "flex"; 
-    var video = modal.querySelector("video");
-    video.play();
+document.getElementById("btnHelpVideo").onclick = function() {
+  var modal = document.getElementById("modalHelpVideo");
+  modal.style.display = "flex"; 
+  var video = modal.querySelector("video");
+  video.play();
 };
 
-document.querySelector("#helpModal .close").onclick = function() {
-    var modal = document.getElementById("helpModal");
-    modal.style.display = "none";
-    modal.querySelector("video").pause();
+document.getElementById("btnCloseModal").onclick = function() {
+  var modal = document.getElementById("modalHelpVideo");
+  modal.style.display = "none";
+  modal.querySelector("video").pause();
 };
 
 window.onclick = function(event) {
-    var modal = document.getElementById("helpModal");
-    if (event.target == modal) {
-        modal.style.display = "none";
-        modal.querySelector("video").pause();
-    }
+  var modal = document.getElementById("modalHelpVideo");
+  if (event.target === modal) {
+    modal.style.display = "none";
+    modal.querySelector("video").pause();
+  }
 };
 </script>
 
