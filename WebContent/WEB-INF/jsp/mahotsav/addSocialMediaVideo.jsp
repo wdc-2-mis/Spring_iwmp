@@ -221,6 +221,7 @@ button.btn-inline {
     </video>
   </div>
 </div>
+
 		
 
 
@@ -228,14 +229,14 @@ button.btn-inline {
 window.onload = function () {
 
     // ⏳ Allowed window: 30 Jan 2026 12:00 AM IST → 31 Jan 2026 12:00 AM IST
-    var allowedFrom = new Date("2026-01-30T00:00:00+05:30");
-    var allowedUntil = new Date("2026-01-31T00:00:00+05:30");
+    var allowedFrom = new Date("2026-01-30T12:00:00+05:30");
+    var allowedUntil = new Date("2026-01-31T23:59:00+05:30");
     var now = new Date();
 
     if (now < allowedFrom) {
         // Before opening
         var msg = document.createElement("div");
-        msg.innerHTML = "<b style='color:red;'>This form will be active from 30 January 2026, 12:00 AM</b>";
+        msg.innerHTML = "<b style='color:red;'>This form will be active from 30 January 2026, 12:00 PM</b>";
         msg.style.textAlign = "center";
         msg.style.marginBottom = "20px";
 
@@ -273,7 +274,10 @@ function disableForm() {
     });
 
     document.querySelectorAll("button").forEach(btn => {
-        btn.disabled = true;
+    	if (btn.id !== "btnHelpVideo") {
+            btn.disabled = true;
+        }
+
     });
 
     var resend = document.getElementById("resendOtp");
