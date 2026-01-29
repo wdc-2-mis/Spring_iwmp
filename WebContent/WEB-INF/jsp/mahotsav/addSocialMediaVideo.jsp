@@ -159,7 +159,7 @@ button.btn-inline {
 <body>
 
 <div class="registration-container">
-    <h3>Submit your Review for your Social Media Competition</h3>
+    <h3>Submit screenshot of Views and Engagement data for your Social Media Competition post.</h3>
 
     <form id="registrationForm">
 
