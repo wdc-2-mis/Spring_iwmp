@@ -100,6 +100,41 @@
     .text-center {
         text-align: center;
     }
+    
+    
+    
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  background-color: rgba(0,0,0,0.6);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+  max-width: 90%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: #aaa;
+  float: right;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.close:hover { color: black; }
+    
 </style>
 
 </head>
@@ -136,42 +171,70 @@
             <div id="otpMsg" class="text-center" style="margin-top:15px;"></div>
         </div>
 
-        <div id="msgBox" class="text-center" style="margin-top:20px;"></div>
+        <div id="msgBox" class="text-center" style="margin-top:20px;"></div>.
 
-    </form>
+</form>
 </div>
+
+
+
+	
+<div style="text-align:center; margin-top:20px;">
+  <h4 style="display:inline; font-style:italic;">Entry Form Training Video</h4>
+  <button type="button" id="helpBtn" class="btn btn-info" 
+          style="width:auto; height:auto; margin-left:10px; padding:5px 12px; font-size:14px;">
+    Help
+  </button>
+</div>
+
+<br>
+
+
+	<!-- Popup Modal -->
+			<div id="helpModal" class="modal">
+				<div class="modal-content">
+					<span class="close">&times;</span>
+					<h2><b>Help Video</b></h2>
+					<video controls style="width:100%; height:auto; max-height:85vh;">
+						<source
+							src="${pageContext.request.contextPath}/resources/video/Reviews.mp4"
+							type="video/mp4">Video</video>
+				</div>
+			</div>
+
+		
+
 
 <script>
 window.onload = function () {
 
-    // 🔒 Target date: 30 Jan 2026 12:00 AM IST
+    // ⏳ Allowed window: 30 Jan 2026 12:00 AM IST → 31 Jan 2026 12:00 AM IST
     var allowedFrom = new Date("2026-01-30T00:00:00+05:30");
+    var allowedUntil = new Date("2026-01-31T00:00:00+05:30");
     var now = new Date();
 
     if (now < allowedFrom) {
-
+        // Before opening
         var msg = document.createElement("div");
-        msg.innerHTML =
-            "<b style='color:red;'>This form will be active from 30 January 2026, 12:00 AM</b>";
+        msg.innerHTML = "<b style='color:red;'>This form will be active from 30 January 2026, 12:00 AM</b>";
         msg.style.textAlign = "center";
         msg.style.marginBottom = "20px";
 
         document.querySelector(".registration-container")
                 .insertBefore(msg, document.querySelector("form"));
 
-        document.querySelectorAll("input").forEach(el => {
-            el.readOnly = true;
-        });
+        disableForm();
+    } else if (now >= allowedUntil) {
+        // After closing
+        var msg = document.createElement("div");
+        msg.innerHTML = "<b style='color:red;'>Entries are now closed. Thank you for your participation</b>";
+        msg.style.textAlign = "center";
+        msg.style.marginBottom = "20px";
 
-        document.querySelectorAll("button").forEach(btn => {
-            btn.disabled = true;
-        });
+        document.querySelector(".registration-container")
+                .insertBefore(msg, document.querySelector("form"));
 
-        var resend = document.getElementById("resendOtp");
-        if(resend) {
-            resend.style.pointerEvents = "none";
-            resend.style.color = "#999";
-        }
+        disableForm();
     }
 
     // 🔙 no-back logic
@@ -183,7 +246,25 @@ window.onload = function () {
         history.go(1);
     };
 };
+
+// Helper to disable inputs/buttons/links
+function disableForm() {
+    document.querySelectorAll("input").forEach(el => {
+        el.readOnly = true;
+    });
+
+    document.querySelectorAll("button").forEach(btn => {
+        btn.disabled = true;
+    });
+
+    var resend = document.getElementById("resendOtp");
+    if(resend) {
+        resend.style.pointerEvents = "none";
+        resend.style.color = "#999";
+    }
+}
 </script>
+
 
 
 <script>
@@ -320,9 +401,36 @@ $("resendOtp").onclick = function(e){
 
 </script>
 
+
+<script>
+document.getElementById("helpBtn").onclick = function() {
+	var modal = document.getElementById("helpModal");
+    modal.style.display = "flex"; 
+    var video = modal.querySelector("video");
+    video.play();
+};
+
+document.querySelector("#helpModal .close").onclick = function() {
+    var modal = document.getElementById("helpModal");
+    modal.style.display = "none";
+    modal.querySelector("video").pause();
+};
+
+window.onclick = function(event) {
+    var modal = document.getElementById("helpModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+        modal.querySelector("video").pause();
+    }
+};
+</script>
+
+
 <footer class="text-center">
     <%@ include file="/WEB-INF/jspf/mahotsavfooter.jspf" %>
 </footer>
 
 </body>
+
+
 </html>
