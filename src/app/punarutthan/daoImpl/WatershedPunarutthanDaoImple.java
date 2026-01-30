@@ -189,8 +189,8 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			List list = sess.createQuery("SELECT planId FROM Wdcpmksy1PunarutthanPlan where iwmpVillage.vcode=:villageCode").setInteger("villageCode", userfileup.getVillage1()).list();
 			//result=Integer.parseInt(list.get(0).toString());
-			if(list.isEmpty()) 
-			{
+		//	if(list.isEmpty()) 
+		//	{
 			
 				String filePath="D:\\punarutthan\\planing\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/planing/";
@@ -246,16 +246,16 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
-						if(latitudes.get(i).equalsIgnoreCase(null))
+						if(latitudes.get(i).equalsIgnoreCase(null) && latitudes.get(i).trim().isEmpty())
 							photo.setLatitude(null);
 						else
 							photo.setLatitude(latitudes.get(i));
-						if(longitudes.get(i).equalsIgnoreCase(null))
+						if(longitudes.get(i).equalsIgnoreCase(null) && longitudes.get(i).trim().isEmpty())
 							photo.setLongitute(null);
 						else
 							photo.setLongitute(longitudes.get(i));
 						
-		                if (timestamps.get(i).equalsIgnoreCase(null)) {
+		                if (timestamps.get(i).equalsIgnoreCase(null) && timestamps.get(i).trim().isEmpty()) {
 		                	 photo.setPhoto_timestamp(null);
 		                }	 
 		                else {	
@@ -280,11 +280,11 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			res = "success";
 			sess.getTransaction().commit();
-			}
-			else {
-				res="failexist";
-				sess.getTransaction().commit();
-			}
+		//	}
+		//	else {
+		//		res="failexist";
+		//		sess.getTransaction().commit();
+		//	}
 		}
 		catch (Exception ex) {
 			res = "fail";
@@ -564,8 +564,8 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			//{
 			
 				String filePath="D:\\punarutthan\\Implementation\\";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/Implementation/";
-			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/punarutthan/Implementation/";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/implementation/";
+			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/punarutthan/implementation/";
 			
 			List list1 = sess.createSQLQuery("select value_id from wdcpmksy1_punarutthan_sequence").list();
 			sequence=Integer.parseInt(list1.get(0).toString());
@@ -619,16 +619,16 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
-						if(latitudes.get(i).equalsIgnoreCase(null))
+						if(latitudes.get(i).equalsIgnoreCase(null) && latitudes.get(i).trim().isEmpty())
 							photo.setLatitude(null);
 						else
 							photo.setLatitude(latitudes.get(i));
-						if(longitudes.get(i).equalsIgnoreCase(null))
+						if(longitudes.get(i).equalsIgnoreCase(null) && longitudes.get(i).trim().isEmpty())
 							photo.setLongitute(null);
 						else
 							photo.setLongitute(longitudes.get(i));
 						
-		                if (timestamps.get(i).equalsIgnoreCase(null)) {
+		                if (timestamps.get(i).equalsIgnoreCase(null) && timestamps.get(i).trim().isEmpty()) {
 		                	 photo.setPhoto_timestamp(null);
 		                }	 
 		                else {	
@@ -724,6 +724,139 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			ex.printStackTrace();
 		}
 		return list;
+	}
+
+
+	@Override
+	public String deletePunarutthanImplementation(List<Integer> assetid, String userid) {
+		
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<String>();
+		List<Wdcpmksy1PunarutthanPlanImplementationPhoto> list = new ArrayList<Wdcpmksy1PunarutthanPlanImplementationPhoto>();
+		
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			 Query query1 = session.createQuery("from Wdcpmksy1PunarutthanPlanImplementationPhoto where wdcpmksy1PunarutthanPlanImplementation.implementationPhotoId = :inaugid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				query1.setInteger("inaugid", assetid.get(i));
+				list = query1.list();
+			 }
+			 for (Wdcpmksy1PunarutthanPlanImplementationPhoto photo : list) {
+				   
+				 imgList.add(photo.getPhotoUrl());
+			 }
+			 for (String photo : imgList) 
+			 {
+		            if (photo != null && !photo.isEmpty()) 
+		            {
+		                File file = new File(photo);
+		                if (file.exists()) 
+		                {
+		                    if (file.delete()) {
+		                        System.out.println("Deleted file: " + file.getAbsolutePath());
+		                    } else {
+		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+		                    }
+		                } 
+		                else {
+		                    System.out.println("File not found: " + file.getAbsolutePath());
+		                }
+		            }
+		     }
+			 
+			 SQLQuery query = session.createSQLQuery("delete from wdcpmksy1_punarutthan_plan_implementation_photo where implementation_id=:nrmpkid");
+			 Date d= new Date();
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+			 SQLQuery query2 = session.createSQLQuery("delete from wdcpmksy1_punarutthan_plan_implementation where implementation_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query2.setInteger("nrmpkid", assetid.get(i));
+				 value=query2.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
+
+
+	@Override
+	public String completePunarutthanImplementation(List<Integer> assetid, String userid) {
+		
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("update wdcpmksy1_punarutthan_plan_implementation set status='C' where implementation_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
 	}
 
 }

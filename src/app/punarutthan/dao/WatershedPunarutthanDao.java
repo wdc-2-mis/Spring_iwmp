@@ -23,5 +23,8 @@ public interface WatershedPunarutthanDao {
 	List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(String userid);
 	List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(String userid);
 	
+	String deletePunarutthanImplementation(List<Integer> assetid, String userid);
+	String completePunarutthanImplementation(List<Integer> assetid, String userid);
+	
 
 }

@@ -248,12 +248,6 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				/*
-				 * datlist=ser.getWatershedPunarutthanPlanDraft(session.getAttribute("loginID").
-				 * toString()); mav.addObject("dataList1",datlist);
-				 * mav.addObject("dataListSize1",datlist.size());
-				 */
-				  
 				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
 				  mav.addObject("comdataList",complist);
 				  mav.addObject("comdataListSize",complist.size());
@@ -381,7 +375,7 @@ public class WatershedPunarutthanController {
 					redirectAttributes.addFlashAttribute("result", "Data not saved already exist!");
 				} 
 				else {
-					redirectAttributes.addFlashAttribute("result", "Data not saved!");
+					redirectAttributes.addFlashAttribute("result", "Data not saved or photo should not contain geotag!");
 				}
 				return new ModelAndView("redirect:/getWatershedPunarutthanPlanImplement");
 			} else {
@@ -394,5 +388,46 @@ public class WatershedPunarutthanController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/completePunarutthanImplementation", method = RequestMethod.POST)
+	@ResponseBody
+	public String completePunarutthanImplementation(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=ser.completePunarutthanImplementation(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	@RequestMapping(value="/deletePunarutthanImplementation", method = RequestMethod.POST)
+	@ResponseBody
+	public String deletePunarutthanImplementation(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=ser.deletePunarutthanImplementation(assetid, session.getAttribute("loginID").toString());
+		
+		 
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
 	
 }

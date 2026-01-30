@@ -95,6 +95,18 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 		// TODO Auto-generated method stub
 		return dao.getPunarutthanCompleteImplementation(userid);
 	}
+
+	@Override
+	public String deletePunarutthanImplementation(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deletePunarutthanImplementation(assetid, userid);
+	}
+
+	@Override
+	public String completePunarutthanImplementation(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.completePunarutthanImplementation(assetid, userid);
+	}
 	
 	
 	
