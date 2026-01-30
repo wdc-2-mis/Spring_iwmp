@@ -211,5 +211,76 @@ $('#chkSelectAllkd').on('click', function() {
 				}
 			});
 		});
+		
+		$(document).on('click', '#deleteimpl', function(e) {
+				e.preventDefault();
+				var finalAssetid = new Array();
+
+				$('.chkIndividualkd').each(function() {
+					if ($(this).prop('checked')) {
+						finalAssetid.push($(this).val());
+					}
+				});
+
+				if (confirm("Do you want to Delete ?")) {
+					$.ajax({
+						url: "deletePunarutthanPlanDetails1",
+						type: "post",
+						data: { assetid: finalAssetid.toString() },
+						error: function(xhr, status, er) {
+							console.log(er);
+						},
+						success: function(data) {
+							console.log(data);
+							$('#loading').hide();
+							if (data === 'success') {
+								alert('Deleted Successfully.');
+								window.location.href = 'getWatershedPunarutthanPlan1';
+							}
+							else {
+								alert('Please check at least One Check Box, Data not Delete!');
+								window.location.href = 'getWatershedPunarutthanPlan1';
+							}
+						}
+					});
+				}
+			});
+
+
+
+			$(document).on('click', '#completeimpl', function(e) {
+				e.preventDefault();
+				var finalAssetid = new Array();
+
+				$('.chkIndividualkd').each(function() {
+					if ($(this).prop('checked')) {
+						finalAssetid.push($(this).val());
+					}
+				});
+
+				if (confirm("Do you want to Complete ?")) {
+					$.ajax({
+						url: "completePunarutthanPlanDetails1",
+						type: "post",
+						data: { assetid: finalAssetid.toString() },
+						error: function(xhr, status, er) {
+							console.log(er);
+						},
+						success: function(data) {
+							console.log(data);
+							$('#loading').hide();
+							if (data === 'success') {
+								alert('Complete Successfully.');
+								window.location.href = 'getWatershedPunarutthanPlan1';
+							}
+							else {
+								alert('Please check at least One Check Box, Data not Complete!');
+								window.location.href = 'getWatershedPunarutthanPlan1';
+							}
+						}
+					});
+				}
+			});
+			
 	
 });	

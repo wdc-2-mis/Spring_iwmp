@@ -13,9 +13,9 @@
 function editChangedata(plan_id){
 	
 	document.getElementById('plan_id').value=plan_id
-    document.mahotsav.action="getWatershedPunarutthanPlanEditaa";
-	document.mahotsav.method="post";
-	document.mahotsav.submit();
+    document.punarutthan.action="getWatershedPunarutthanPlanEditaa";
+	document.punarutthan.method="post";
+	document.punarutthan.submit();
 }
 function validateDecimal(input, decimalPlaces) {
     // Allow only numbers and one decimal point
@@ -219,28 +219,7 @@ document.addEventListener("change", function(e) {
 
     // Validation
     window.validation = function() {
-    	
-        var block = document.getElementById("project").value;
-        if (!block) {
-            alert("Please select a project.");
-            document.getElementById("project").focus();
-            return false;
-        }
-
-        var village = document.getElementById("village1").value;
-        if (!village) {
-            alert("Please select a village.");
-            document.getElementById("village1").focus();
-            return false;
-        }
-
-        var structure = document.getElementById("structure").value;
-        if (!structure) {
-            alert("Please select a structure.");
-            document.getElementById("structure").focus();
-            return false;
-        }
-        
+    	             
         var work = document.getElementById("work").value;
         if (!work || parseInt(work) <= 0) {
             alert("Please enter No. of Maintenance work to do");
@@ -291,8 +270,8 @@ document.addEventListener("change", function(e) {
             alert("Maximum 2 photographs allowed.");
             return false;
         }
-        if(confirm("Do you want to save Watershed Punarutthan Planing ?")) {
-       		 document.getElementById("mahotsav").submit();
+        if(confirm("Do you want to save Watershed Punarutthan Implementation ?")) {
+       		 document.getElementById("punarutthan").submit();
         }
     }
 
@@ -474,7 +453,7 @@ display: none; /* Hidden by default */
 <body>
 <div class="maindiv">
     <div class="col formheading">
-        <h4><u>Add/View Watershed Punarutthan Planing</u></h4>
+        <h4><u>Implementation of Watershed Punarutthan Planing</u></h4>
     </div>
     <label>
         <span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
@@ -484,61 +463,50 @@ display: none; /* Hidden by default */
         <script>alert("${result}");</script>
     </c:if>
 
-    <form:form autocomplete="off" name="mahotsav" id="mahotsav" action="saveWatershedPunarutthanPlan" method="post" modelAttribute="useruploadign" enctype="multipart/form-data">
-			
-        <div class="card-body">
+    <form:form autocomplete="off" name="punarutthan" id="punarutthan" action="saveWatershedPunarutthanImplementation" method="post" modelAttribute="useruploadign" enctype="multipart/form-data">
+		<c:forEach items="${dataList}" var="data" varStatus="count">
+		
+			<input type="hidden" id="plan_id" name="plan_id" value="${data.plan_id}"/>
+          <div class="card-body">
 
             <div class="form-row">
               <div class="form-group col-3">
                     <label for="state"><b>State Name:</b></label><br/>
-                    <c:out value="${stateName}"/>
-                    <input type="hidden" name="stCode" value="${stCode}" />
+                    <c:out value="${data.stname}"/>
+                    <input type="hidden" name="stCode" value="${data.st_code}" />
               </div>
                 
               <div class="form-group col-3">
-      			<label for="district"><b>District: </b></label><br/><c:out value="${distName}"></c:out>
-      			<input type="hidden" id="district1" name="district1" value="${distCode}">
+      			<label for="district"><b>District: </b></label><br/><c:out value="${data.distname}"></c:out>
+      			<input type="hidden" id="district1" name="district1" value="${data.dcode}">
+    		</div>
+    		
+    		<div class="form-group col-3">
+      			<label for="district"><b>Project: </b></label><br/><c:out value="${data.proj_name}"></c:out>
+      			<input type="hidden" id="project" name="project" value="${data.project_cd}">
+    		</div>
+    		
+    		<div class="form-group col-3">
+      			<label for="district"><b>Village Name: </b></label><br/><c:out value="${data.villagename}"></c:out>
+      			<input type="hidden" id="village1" name="village1" value="${data.vcode}">
     		</div>
 
-			<div class="form-group col-3">
-    			<label for="activity"><b>Project:</b><span style="color: red;">*</span> </label>
-      			<span class="activityError"></span>
-      			<select class="form-control activity" id="project" name="project" >
-    				<option value="">--Select Project--</option>
-    				<c:forEach items="${projList}" var="dist"> 
-						<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
-					</c:forEach>
-    			</select>
-    		</div>
-
-                <div class="form-group col-3">
-                    <label for="village"><b>Village Name:</b><span style="color:red;">*</span></label>
-                    <select class="form-control" id="village1" name="village1" required>
-                        <option value="">--Select Village Name--</option>
-                    </select>
-                </div>
-            </div>
-
+			
             <table id="tblReport" class="table">
                 <tr>
                     <th colspan="4" class="text-left"></th>
                 </tr>
                 <tr>
-                    <td>Name of Structure<span style="color:red;">*</span></td>
-                    
+                    <td>Name of Structure:</td>
                     <td> 
-	                    <select id="structure" name="structure" style="height:40px" >
-	    				<option value="" >--Select Structure--</option>
-	    				<c:forEach items="${StructureList}" var="dist"> 
-							<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
-						</c:forEach>
-	    				</select>
-                      </td>
-                  </tr>  
-                  <tr>  
-                    <td>No. of Maintenance work to do<span style="color:red;">*</span></td>
+	                    <c:out value="${data.structurename}"></c:out>
+	      				<input type="hidden" id="structure" name="structure" value="${data.structure_id}">
+                    </td>
+                 </tr>  
+                 <tr>  
+                    <td>No. of Maintenance work to be done<span style="color:red;">*</span></td>
                     <td>
-                        <input type="text" id="work" name="work" autocomplete="off"
+                        <input type="text" id="work" name="work" autocomplete="off" value="${data.no_work}"
                                maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
                     </td>
                     </tr>
@@ -548,21 +516,21 @@ display: none; /* Hidden by default */
                     <tr>
                     <td>Estimated Cost from WDF<span style="color:red;">*</span></td>
                     
-                     <td>   <input type="text" id="wdf" name="wdf" autocomplete="off"
+                     <td>   <input type="text" id="wdf" name="wdf" autocomplete="off" value="${data.wdf}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
                     <td>Estimated Cost from VB G RAM G / MGNREGA<span style="color:red;">*</span></td>
                     
-                     <td>   <input type="text" id="mgnrega" name="mgnrega" autocomplete="off"
+                     <td>   <input type="text" id="mgnrega" name="mgnrega" autocomplete="off" value="${data.mgnrega}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
                     <td>Other Source<span style="color:red;">*</span></td>
                     
-                     <td>   <input type="text" id="other" name="other" autocomplete="off"
+                    <td>   <input type="text" id="other" name="other" autocomplete="off" value="${data.other}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
@@ -583,14 +551,15 @@ display: none; /* Hidden by default */
                 </tr>
             </table>
         </div>
-
+	
         <div class="form-group text-left">
-            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Submit"/>
+            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Save"/>
         </div>
-
+        </div>
+		</c:forEach>
     </form:form>
 </div>
-<div class="form-row">
+<%-- <div class="form-row">
          <div class="form-group col">
          <hr/>
          <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Punarutthan Planing Details</h5>
@@ -615,7 +584,7 @@ display: none; /* Hidden by default */
                         <c:set var="proj" value="" />
                         <c:forEach items="${dataList1}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button> --%>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.plan_id}"  name="${data.plan_id}" value="${data.plan_id}"/></td>
  								
    								<c:choose>
@@ -638,8 +607,8 @@ display: none; /* Hidden by default */
  								</c:otherwise>
  								</c:choose> 
  								
-								<%-- <td class="text-left"> <c:out value="${data.distname}" /></td>
- 								<td class="text-left"> <c:out value="${data.proj_name}" /></td> --%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.proj_name}" /></td>
  								<td class="text-right"> <c:out value="${data.villagename}" /></td>
 								<td class="text-right"> <c:out value="${data.structurename}" /></td>
  								<td class="text-right"> <c:out value="${data.no_work}" /></td>
@@ -649,9 +618,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
 								
  								
-							<%--	<td class="text-right">
+								<td class="text-right">
 									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
-								</td> --%>
+								</td>
 					</tr>
  						</c:forEach> 
  						<c:if test="${dataListSize1 gt 0}">
@@ -669,9 +638,9 @@ display: none; /* Hidden by default */
         
         
         </div>
-        </div>
+        </div> --%>
         
-        <div class="form-row">
+        <%-- <div class="form-row">
          <div class="form-group col">
          <hr/>
          <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Completed List of Watershed Punarutthan Planing Details</h5>
@@ -695,8 +664,8 @@ display: none; /* Hidden by default */
                           <c:set var="proj1" value="" />
                         <c:forEach items="${comdataList1}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button> --%>
-								<td><c:out value='${count.count}' /> <%-- &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.plan_id}"  name="${data.plan_id}" value="${data.plan_id}"/> --%></td>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.plan_id}"  name="${data.plan_id}" value="${data.plan_id}"/></td>
  								
    								<c:choose>
   									<c:when test="${dist1 ne data.distname}">
@@ -716,8 +685,8 @@ display: none; /* Hidden by default */
   										<td></td>
  								</c:otherwise>
  								</c:choose> 
-								<%-- <td class="text-left"> <c:out value="${data.distname}" /></td> 
- 								<td class="text-left"> <c:out value="${data.proj_name}" /></td>--%>
+								<td class="text-left"> <c:out value="${data.distname}" /></td> 
+ 								<td class="text-left"> <c:out value="${data.proj_name}" /></td>
  								<td class="text-right"> <c:out value="${data.villagename}" /></td>
 								<td class="text-right"> <c:out value="${data.structurename}" /></td>
  								<td class="text-right"> <c:out value="${data.no_work}" /></td>
@@ -727,9 +696,9 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
 								
  								
-							<%--	<td class="text-right">
+								<td class="text-right">
 									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
-								</td> --%>
+								</td>
 					</tr>
  						</c:forEach> 
  						<c:if test="${comdataListSize1 eq 0}">
@@ -742,7 +711,7 @@ display: none; /* Hidden by default */
         
         
         </div>
-        </div>
+        </div> --%>
         		<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">
 		<div class="popup-content">

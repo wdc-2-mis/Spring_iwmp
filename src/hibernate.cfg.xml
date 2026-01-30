@@ -110,13 +110,15 @@
         <mapping class="app.mahotsav.model.WatershedMahotsavInauguarationActPhoto" />
         <mapping class="app.mahotsav.model.MahotsavPrabhatPheri" />
         <mapping class="app.mahotsav.model.MahotsavPrabhatPheriPhoto" />
-         <mapping class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
+        <mapping class="app.mahotsav.model.WatershedMahotsavProjectLevel" />
         <mapping class="app.mahotsav.model.WatershedMahotsavProjectLvlPhoto" />
         <mapping class="app.mahotsav.model.WatershedMahotsavVideoViewDetails"/>
         <mapping class="app.punarutthan.model.Wdcpmksy1ProjectDetail"/>
         <mapping class="app.punarutthan.model.MStructure"/>
         <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlan"/>
         <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanPhoto"/>
+        <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementation"/>
+        <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementationPhoto"/>
         
 	</session-factory>
 </hibernate-configuration>

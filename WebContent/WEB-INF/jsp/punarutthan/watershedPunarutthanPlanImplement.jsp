@@ -10,12 +10,12 @@
 <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
 
 <script type="text/javascript">
-function editChangedata(plan_id){
+function implementPlaling(plan_id){
 	
 	document.getElementById('plan_id').value=plan_id
-    document.mahotsav.action="getWatershedPunarutthanPlanEditaa";
-	document.mahotsav.method="post";
-	document.mahotsav.submit();
+    document.punarutthan.action="getWatershedPunarutthanPlanImpl";
+	document.punarutthan.method="post";
+	document.punarutthan.submit();
 }
 function validateDecimal(input, decimalPlaces) {
     // Allow only numbers and one decimal point
@@ -472,133 +472,18 @@ display: none; /* Hidden by default */
 
 </style>
 <body>
-<div class="maindiv">
-    <div class="col formheading">
-        <h4><u>Add/View Watershed Punarutthan Planing</u></h4>
-    </div>
-    <label>
-        <span style="color:blue;">Note:- The image size must be under 300KB with Geo-referenced and Time-stamped.</span>
-    </label>
-
-    <c:if test="${not empty result}">
+	<c:if test="${not empty result}">
         <script>alert("${result}");</script>
     </c:if>
 
-    <form:form autocomplete="off" name="mahotsav" id="mahotsav" action="saveWatershedPunarutthanPlan" method="post" modelAttribute="useruploadign" enctype="multipart/form-data">
-			
-        <div class="card-body">
-
-            <div class="form-row">
-              <div class="form-group col-3">
-                    <label for="state"><b>State Name:</b></label><br/>
-                    <c:out value="${stateName}"/>
-                    <input type="hidden" name="stCode" value="${stCode}" />
-              </div>
-                
-              <div class="form-group col-3">
-      			<label for="district"><b>District: </b></label><br/><c:out value="${distName}"></c:out>
-      			<input type="hidden" id="district1" name="district1" value="${distCode}">
-    		</div>
-
-			<div class="form-group col-3">
-    			<label for="activity"><b>Project:</b><span style="color: red;">*</span> </label>
-      			<span class="activityError"></span>
-      			<select class="form-control activity" id="project" name="project" >
-    				<option value="">--Select Project--</option>
-    				<c:forEach items="${projList}" var="dist"> 
-						<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
-					</c:forEach>
-    			</select>
-    		</div>
-
-                <div class="form-group col-3">
-                    <label for="village"><b>Village Name:</b><span style="color:red;">*</span></label>
-                    <select class="form-control" id="village1" name="village1" required>
-                        <option value="">--Select Village Name--</option>
-                    </select>
-                </div>
-            </div>
-
-            <table id="tblReport" class="table">
-                <tr>
-                    <th colspan="4" class="text-left"></th>
-                </tr>
-                <tr>
-                    <td>Name of Structure<span style="color:red;">*</span></td>
-                    
-                    <td> 
-	                    <select id="structure" name="structure" style="height:40px" >
-	    				<option value="" >--Select Structure--</option>
-	    				<c:forEach items="${StructureList}" var="dist"> 
-							<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
-						</c:forEach>
-	    				</select>
-                      </td>
-                  </tr>  
-                  <tr>  
-                    <td>No. of Maintenance work to do<span style="color:red;">*</span></td>
-                    <td>
-                        <input type="text" id="work" name="work" autocomplete="off"
-                               maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
-                    </td>
-                    </tr>
-                    <tr>
-                    		<th colspan="4" class="text-left">Total Estimated Cost (Rs. in Lakhs)  </th>
-                	</tr>
-                    <tr>
-                    <td>Estimated Cost from WDF<span style="color:red;">*</span></td>
-                    
-                     <td>   <input type="text" id="wdf" name="wdf" autocomplete="off"
-                               maxlength="12" oninput="validateDecimal(this, 2)" required/>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Estimated Cost from VB G RAM G / MGNREGA<span style="color:red;">*</span></td>
-                    
-                     <td>   <input type="text" id="mgnrega" name="mgnrega" autocomplete="off"
-                               maxlength="12" oninput="validateDecimal(this, 2)" required/>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Other Source<span style="color:red;">*</span></td>
-                    
-                     <td>   <input type="text" id="other" name="other" autocomplete="off"
-                               maxlength="12" oninput="validateDecimal(this, 2)" required/>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>
-                        <label><b>Upload Photographs<!--  (Minimum 1, Maximum 2) -->:</b></label>
-                        <div id="photoContainer">
-                            <div class="d-flex align-items-center mb-1">
-                                <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
-                                <input type="hidden" name="latitude[]" class="latitude">
-                                <input type="hidden" name="longitute[]" class="longitude">
-                                <input type="hidden" name="photoTimestamp[]" class="photoTimestamp">
-                            </div>
-                        </div>
-                        <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button>
-                        <small class="text-danger" id="photoError"></small>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="form-group text-left">
-            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Submit"/>
-        </div>
-
-    </form:form>
-</div>
-<div class="form-row">
+ <div class="form-row">
          <div class="form-group col">
          <hr/>
-         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Punarutthan Planing Details</h5>
+         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">List of Watershed Punarutthan Planing Details for Implemention</h5>
          <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
                         <thead class ="theadlist" id = "theadlist">
                             <tr>
-                            	<!-- <th>Action</th> -->
-                                <th>S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+                                <th>S.No. </th> 
                                 <th>District Name</th>
                                 <th>Project Name</th>
                                 <th>Village Name</th>
@@ -608,16 +493,15 @@ display: none; /* Hidden by default */
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
                                 <th>Other Source</th>
                                 <th>Total Estimated Cost</th>
+                                <th>Action</th>
                             </tr>
                           
                         </thead>
                         <c:set var="dist" value="" />
                         <c:set var="proj" value="" />
-                        <c:forEach items="${dataList1}" var="data" varStatus="count">
+                        <c:forEach items="${comdataList}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button> --%>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.plan_id}"  name="${data.plan_id}" value="${data.plan_id}"/></td>
- 								
+ 								<td><c:out value='${count.count}' /> </td>
    								<c:choose>
   									<c:when test="${dist ne data.distname}">
   										<c:set var="dist" value="${data.distname}" />
@@ -647,6 +531,95 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
  								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
+								<td><button class="btn btn-warning btn-sm" onclick="implementPlaling(${data.plan_id})"> Implement </button>
+ 								
+							<%--	<td class="text-right">
+									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
+								</td> --%>
+					</tr>
+ 						</c:forEach> 
+ 						
+						<c:if test="${comdataListSize eq 0}">
+							<tr>
+								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
+							</tr>
+						</c:if>
+        </table>
+        
+        
+        </div>
+        </div>
+
+
+
+<div class="maindiv">
+   <!--  <div class="col formheading">
+        <h4><u>View Watershed Punarutthan Planing for Implemention</u></h4>
+    </div>
+    -->
+    <form:form autocomplete="off" name="punarutthan" id="punarutthan" action="getWatershedPunarutthanPlanImpl" method="post" modelAttribute="useruploadign" enctype="multipart/form-data">
+			<input type="hidden" name="plan_id" id="plan_id" />
+
+    </form:form>
+</div>
+
+<div class="form-row">
+         <div class="form-group col">
+         <hr/>
+         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Punarutthan Implementation Details</h5>
+         <table class="table table-bordered table-striped table-highlight w-auto" id="prabhatpheriTable">
+                        <thead class ="theadlist" id = "theadlist">
+                            <tr>
+                            	<!-- <th>Action</th> -->
+                                <th>S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+                                <th>District Name</th>
+                                <th>Project Name</th>
+                                <th>Village Name</th>
+                                <th>Structure Name</th>
+                                <th>No. of Maintenance work to do</th>
+                                <th>Estimated Cost from WDF</th>
+                                <th>Estimated Cost from VB G RAM G / MGNREGA</th>
+                                <th>Other Source</th>
+                                <th>Total Estimated Cost</th>
+                            </tr>
+                          
+                        </thead>
+                        <c:set var="dist1" value="" />
+                        <c:set var="proj1" value="" />
+                        <c:forEach items="${dataListd}" var="data" varStatus="count">
+ 							<tr>
+ 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button> --%>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.implementation_id}"  name="${data.implementation_id}" value="${data.implementation_id}"/></td>
+ 								
+   								<c:choose>
+  									<c:when test="${dist1 ne data.distname}">
+  										<c:set var="dist1" value="${data.distname}" />
+  										<td> <c:out value="${dist1}" /></td>
+  									</c:when>
+  								<c:otherwise> 
+  										<td></td>
+ 								</c:otherwise>
+ 								</c:choose> 
+ 								
+ 								<c:choose>
+  									<c:when test="${proj1 ne data.proj_name}">
+  										<c:set var="proj1" value="${data.proj_name}" />
+  										<td> <c:out value="${proj1}" /></td>
+  									</c:when>
+  								<c:otherwise> 
+  										<td></td>
+ 								</c:otherwise>
+ 								</c:choose> 
+ 								
+								<%-- <td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.proj_name}" /></td> --%>
+ 								<td class="text-right"> <c:out value="${data.villagename}" /></td>
+								<td class="text-right"> <c:out value="${data.structurename}" /></td>
+ 								<td class="text-right"> <c:out value="${data.no_work}" /></td>
+								<td class="text-right"> <c:out value="${data.wdf}" /></td>
+ 								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
+ 								<td class="text-right"> <c:out value="${data.other}" /></td>
+ 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
 								
  								
 							<%--	<td class="text-right">
@@ -654,13 +627,13 @@ display: none; /* Hidden by default */
 								</td> --%>
 					</tr>
  						</c:forEach> 
- 						<c:if test="${dataListSize1 gt 0}">
+ 						<c:if test="${dataListSized gt 0}">
  						<tr>
-								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
-								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
+								<td> <input type="button" class="btn btn-info" id="deleteimpl" name="deleteimpl" value ="Delete"/> </td>
+								<td> <input type="button" class="btn btn-info" id="completeimpl" name="completeimpl" value ="Complete"/> </td>
 							</tr>
 						</c:if>	
-						<c:if test="${dataListSize1 eq 0}">
+						<c:if test="${dataListSized eq 0}">
 							<tr>
 								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
 							</tr>
@@ -674,7 +647,7 @@ display: none; /* Hidden by default */
         <div class="form-row">
          <div class="form-group col">
          <hr/>
-         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Completed List of Watershed Punarutthan Planing Details</h5>
+         <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Completed List of Watershed Punarutthan Implementation Details</h5>
          <table class="table table-bordered table-striped table-highlight w-auto" >
                         <thead class ="theadlist" id = "theadlist">
                             <tr>
@@ -691,26 +664,26 @@ display: none; /* Hidden by default */
                             </tr>
                           
                         </thead>
-                          <c:set var="dist1" value="" />
-                          <c:set var="proj1" value="" />
-                        <c:forEach items="${comdataList1}" var="data" varStatus="count">
+                          <c:set var="dist2" value="" />
+                          <c:set var="proj2" value="" />
+                        <c:forEach items="${comdataListc}" var="data" varStatus="count">
  							<tr>
  								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.plan_id})"> Edit </button> --%>
 								<td><c:out value='${count.count}' /> <%-- &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.plan_id}"  name="${data.plan_id}" value="${data.plan_id}"/> --%></td>
  								
    								<c:choose>
-  									<c:when test="${dist1 ne data.distname}">
-  										<c:set var="dist1" value="${data.distname}" />
-  										<td> <c:out value="${dist1}" /></td>
+  									<c:when test="${dist2 ne data.distname}">
+  										<c:set var="dist2" value="${data.distname}" />
+  										<td> <c:out value="${dist2}" /></td>
   									</c:when>
   								<c:otherwise> 
   										<td></td>
  								</c:otherwise>
  								</c:choose> 
  								<c:choose>
-  									<c:when test="${proj1 ne data.proj_name}">
-  										<c:set var="proj1" value="${data.proj_name}" />
-  										<td> <c:out value="${proj1}" /></td>
+  									<c:when test="${proj2 ne data.proj_name}">
+  										<c:set var="proj2" value="${data.proj_name}" />
+  										<td> <c:out value="${proj2}" /></td>
   									</c:when>
   								<c:otherwise> 
   										<td></td>
@@ -732,7 +705,7 @@ display: none; /* Hidden by default */
 								</td> --%>
 					</tr>
  						</c:forEach> 
- 						<c:if test="${comdataListSize1 eq 0}">
+ 						<c:if test="${comdataListSizec eq 0}">
 							<tr>
 								<td align="center" colspan="10" class="required" style="color:red;">Data Not Found</td>
 							</tr>
@@ -743,6 +716,7 @@ display: none; /* Hidden by default */
         
         </div>
         </div>
+               
         		<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">
 		<div class="popup-content">

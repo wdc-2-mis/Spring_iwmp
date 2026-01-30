@@ -29,6 +29,7 @@ import app.model.master.SlnaStProfile;
 import app.model.master.WdcpmksyMPhyOtherActivity;
 import app.model.project.IwmpApprovelLevel;
 import app.punarutthan.model.Wdcpmksy1PunarutthanPlan;
+import app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementation;
 import app.watershedyatra.model.NodalOfficer;
 import app.watershedyatra.model.PreYatraPreparation;
 import app.watershedyatra.model.WatershedYatVill;
@@ -95,6 +96,8 @@ public class IwmpState implements java.io.Serializable {
 	private Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration = new HashSet<WatershedMahotsavInauguaration>(0);
 	private Set<MahotsavPrabhatPheri> wmPrabhatPheri = new HashSet<MahotsavPrabhatPheri>(0);
 	private Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan = new HashSet<Wdcpmksy1PunarutthanPlan>(0);
+	private Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation = new HashSet<Wdcpmksy1PunarutthanPlanImplementation>(0);
+	
      
 	public IwmpState() {
 	}
@@ -115,7 +118,8 @@ public class IwmpState implements java.io.Serializable {
 			Set<GetGoiReleaseToStateTreasury> getGoiReleaseToStateTreasury, Set<NodalOfficer> nodalOfficer, 
 			Set<WatershedYatraInauguaration> WatershedYatraInauguaration, Set<WatershedYatVill> watershedYatVill, Set<PreYatraPreparation>preYatraPreparation,Set<RoutePlanVanTravel> routePlanVanTravel,
 			Set<JanbhagidariPratiyogita> janbhagidariPratiyogita, Set<JanbhagidariPratiyogitaTypeofWork> janbhagidariPratiyogitaTypeofWork, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails,
-			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration,Set<MahotsavPrabhatPheri> wmPrabhatPheri, Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan) {
+			Set<WatershedMahotsavInauguaration> watershedMahotsavInauguaration,Set<MahotsavPrabhatPheri> wmPrabhatPheri, Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan,
+			Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) {
 		this.stCode = stCode;
 		this.iwmpApprovelLevels = iwmpApprovelLevels;
 		this.stName = stName;
@@ -160,6 +164,7 @@ public class IwmpState implements java.io.Serializable {
 	    this.watershedMahotsavInauguaration=watershedMahotsavInauguaration;
 	    this.wmPrabhatPheri=wmPrabhatPheri;
 	    this.wdcpmksy1PunarutthanPlan=wdcpmksy1PunarutthanPlan;
+	    this.wdcpmksy1PunarutthanPlanImplementation=wdcpmksy1PunarutthanPlanImplementation;
 	}
 
 	@Id
@@ -601,6 +606,16 @@ public class IwmpState implements java.io.Serializable {
 
 	public void setWdcpmksy1PunarutthanPlan(Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan) {
 		this.wdcpmksy1PunarutthanPlan = wdcpmksy1PunarutthanPlan;
+	}
+
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="iwmpState")
+	public Set<Wdcpmksy1PunarutthanPlanImplementation> getWdcpmksy1PunarutthanPlanImplementation() {
+		return wdcpmksy1PunarutthanPlanImplementation;
+	}
+
+	public void setWdcpmksy1PunarutthanPlanImplementation(
+			Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) {
+		this.wdcpmksy1PunarutthanPlanImplementation = wdcpmksy1PunarutthanPlanImplementation;
 	}
 	
 	

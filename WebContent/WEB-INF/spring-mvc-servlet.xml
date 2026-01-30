@@ -195,7 +195,8 @@ p:basename="classpath:messages/messages">
 	<bean name="MStructure" class="app.punarutthan.model.MStructure" />
 	<bean name="Wdcpmksy1PunarutthanPlan" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlan" />
 	<bean name="Wdcpmksy1PunarutthanPlanPhoto" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanPhoto" />
-	
+	<bean name="Wdcpmksy1PunarutthanPlanImplementation" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementation" />
+	<bean name="Wdcpmksy1PunarutthanPlanImplementationPhoto" class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementationPhoto" />
 	
 	
 </beans>

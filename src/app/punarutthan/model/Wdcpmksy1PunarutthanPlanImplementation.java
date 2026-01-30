@@ -18,16 +18,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
 import app.model.IwmpState;
 import app.model.master.IwmpVillage;
 
 @Entity
-@Table(name="wdcpmksy1_punarutthan_plan" ,schema="public")
-public class Wdcpmksy1PunarutthanPlan {
+@Table(name="wdcpmksy1_punarutthan_plan_implementation" ,schema="public")
+public class Wdcpmksy1PunarutthanPlanImplementation {
 	
-	private int planId;
+	private int implementationPhotoId;
+	private Wdcpmksy1PunarutthanPlan wdcpmksy1PunarutthanPlan;
 	private IwmpState iwmpState;
     private IwmpDistrict iwmpDistrict;
     private String projectCd;
@@ -43,24 +43,16 @@ public class Wdcpmksy1PunarutthanPlan {
     private String createdBy;
     private String updatedBy;
     private Character status;
-    private Set<Wdcpmksy1PunarutthanPlanPhoto> wdcpmksy1PunarutthanPlanPhoto = new HashSet<Wdcpmksy1PunarutthanPlanPhoto>(0);
-    private Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation = new HashSet<Wdcpmksy1PunarutthanPlanImplementation>(0);
-    
-    
-    public Wdcpmksy1PunarutthanPlan() { 
-    	
-    }
-    
-    public Wdcpmksy1PunarutthanPlan(int planId) { 
-    	this.planId=planId;
-    }
-    
-    public Wdcpmksy1PunarutthanPlan(int planId, IwmpState iwmpState, IwmpDistrict iwmpDistrict, String projectCd, IwmpVillage iwmpVillage, MStructure mStructure,
-    		Integer noWork, BigDecimal wdf, BigDecimal mgnrega, BigDecimal other, Character status, Set<Wdcpmksy1PunarutthanPlanPhoto> wdcpmksy1PunarutthanPlanPhoto,
-    		Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) { 
-    	
-    	this.planId=planId;
-    	this.iwmpState=iwmpState;
+    private Set<Wdcpmksy1PunarutthanPlanImplementationPhoto> wdcpmksy1PunarutthanPlanImplementationPhoto = new HashSet<Wdcpmksy1PunarutthanPlanImplementationPhoto>(0);
+	
+	public Wdcpmksy1PunarutthanPlanImplementation() {}
+	
+	public Wdcpmksy1PunarutthanPlanImplementation(int implementationPhotoId, Wdcpmksy1PunarutthanPlan wdcpmksy1PunarutthanPlan, IwmpState iwmpState, IwmpDistrict iwmpDistrict, String projectCd, IwmpVillage iwmpVillage, MStructure mStructure,
+    		Integer noWork, BigDecimal wdf, BigDecimal mgnrega, BigDecimal other, Character status, Set<Wdcpmksy1PunarutthanPlanImplementationPhoto> wdcpmksy1PunarutthanPlanImplementationPhoto) {
+		
+		this.implementationPhotoId=implementationPhotoId;
+		this.wdcpmksy1PunarutthanPlan=wdcpmksy1PunarutthanPlan;
+		this.iwmpState=iwmpState;
     	this.iwmpDistrict=iwmpDistrict;
     	this.projectCd=projectCd;
     	this.iwmpVillage=iwmpVillage;
@@ -70,19 +62,29 @@ public class Wdcpmksy1PunarutthanPlan {
     	this.mgnrega=mgnrega;
     	this.other=other;
     	this.status=status;
-    	this.wdcpmksy1PunarutthanPlanPhoto=wdcpmksy1PunarutthanPlanPhoto;
-    	this.wdcpmksy1PunarutthanPlanImplementation=wdcpmksy1PunarutthanPlanImplementation;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="plan_id", unique=true, nullable=false)
-	public int getPlanId() {
-		return planId;
+    	this.wdcpmksy1PunarutthanPlanImplementationPhoto=wdcpmksy1PunarutthanPlanImplementationPhoto;
+		
 	}
 
-	public void setPlanId(int planId) {
-		this.planId = planId;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="implementation_id", unique=true, nullable=false)
+	public int getImplementationPhotoId() {
+		return implementationPhotoId;
+	}
+
+	public void setImplementationPhotoId(int implementationPhotoId) {
+		this.implementationPhotoId = implementationPhotoId;
+	}
+
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "plan_id")
+	public Wdcpmksy1PunarutthanPlan getWdcpmksy1PunarutthanPlan() {
+		return wdcpmksy1PunarutthanPlan;
+	}
+
+	public void setWdcpmksy1PunarutthanPlan(Wdcpmksy1PunarutthanPlan wdcpmksy1PunarutthanPlan) {
+		this.wdcpmksy1PunarutthanPlan = wdcpmksy1PunarutthanPlan;
 	}
 
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -223,28 +225,19 @@ public class Wdcpmksy1PunarutthanPlan {
 		this.status = status;
 	}
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksy1PunarutthanPlan")
-	public Set<Wdcpmksy1PunarutthanPlanPhoto> getWdcpmksy1PunarutthanPlanPhoto() {
-		return wdcpmksy1PunarutthanPlanPhoto;
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksy1PunarutthanPlanImplementation")
+	public Set<Wdcpmksy1PunarutthanPlanImplementationPhoto> getWdcpmksy1PunarutthanPlanImplementationPhoto() {
+		return wdcpmksy1PunarutthanPlanImplementationPhoto;
 	}
 
-	public void setWdcpmksy1PunarutthanPlanPhoto(Set<Wdcpmksy1PunarutthanPlanPhoto> wdcpmksy1PunarutthanPlanPhoto) {
-		this.wdcpmksy1PunarutthanPlanPhoto = wdcpmksy1PunarutthanPlanPhoto;
+	public void setWdcpmksy1PunarutthanPlanImplementationPhoto(
+			Set<Wdcpmksy1PunarutthanPlanImplementationPhoto> wdcpmksy1PunarutthanPlanImplementationPhoto) {
+		this.wdcpmksy1PunarutthanPlanImplementationPhoto = wdcpmksy1PunarutthanPlanImplementationPhoto;
 	}
+	
+	
+	
+	
+	
 
-	@OneToMany(fetch=FetchType.LAZY, mappedBy="wdcpmksy1PunarutthanPlan")
-	public Set<Wdcpmksy1PunarutthanPlanImplementation> getWdcpmksy1PunarutthanPlanImplementation() {
-		return wdcpmksy1PunarutthanPlanImplementation;
-	}
-
-	public void setWdcpmksy1PunarutthanPlanImplementation(
-			Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) {
-		this.wdcpmksy1PunarutthanPlanImplementation = wdcpmksy1PunarutthanPlanImplementation;
-	}
-    
-    
-    
-    
-    
-    
 }

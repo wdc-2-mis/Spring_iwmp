@@ -20,4 +20,5 @@ public interface ProfileService {
 	List<UserReg> getNewUserDetail(Integer regid);
 	
 	List<ProfileBean> getPunarutthanStateDist(Integer regid);
+	
 }

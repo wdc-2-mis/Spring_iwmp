@@ -18,6 +18,10 @@ public interface WatershedPunarutthanDao {
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(String userid);
 	String deletePunarutthanPlanDetails(List<Integer> assetid, String userid);
 	String completePunarutthanPlanDetails(List<Integer> assetid, String userid);
+	List<WatershedPunarutthanBean> getWatershedPunarutthanPlanImpl(Integer plan_id);
+	String saveWatershedPunarutthanImplementation(WatershedPunarutthanBean userfileup, HttpSession session);
+	List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(String userid);
+	List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(String userid);
 	
 
 }

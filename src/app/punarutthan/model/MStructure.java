@@ -21,15 +21,17 @@ public class MStructure implements java.io.Serializable{
 	private Integer structureId;
     private String structureDesc;
     private Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan = new HashSet<Wdcpmksy1PunarutthanPlan>(0);
+    private Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation = new HashSet<Wdcpmksy1PunarutthanPlanImplementation>(0);
     
     public MStructure() {}
     
-    public MStructure(Integer structureId, String structureDesc, Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan) {
+    public MStructure(Integer structureId, String structureDesc, Set<Wdcpmksy1PunarutthanPlan> wdcpmksy1PunarutthanPlan,
+    		Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) {
     	
     	this.structureId=structureId;
     	this.structureDesc=structureDesc;
     	this.wdcpmksy1PunarutthanPlan=wdcpmksy1PunarutthanPlan;
-    	
+    	this.wdcpmksy1PunarutthanPlanImplementation=wdcpmksy1PunarutthanPlanImplementation;
     }
 
     @Id
@@ -61,7 +63,15 @@ public class MStructure implements java.io.Serializable{
 		this.wdcpmksy1PunarutthanPlan = wdcpmksy1PunarutthanPlan;
 	}
     
-    
+	@OneToMany(fetch=FetchType.LAZY, mappedBy="mStructure")
+	public Set<Wdcpmksy1PunarutthanPlanImplementation> getWdcpmksy1PunarutthanPlanImplementation() {
+		return wdcpmksy1PunarutthanPlanImplementation;
+	}
+
+	public void setWdcpmksy1PunarutthanPlanImplementation(
+			Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) {
+		this.wdcpmksy1PunarutthanPlanImplementation = wdcpmksy1PunarutthanPlanImplementation;
+	}
     
     
 

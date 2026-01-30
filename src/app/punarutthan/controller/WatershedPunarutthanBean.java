@@ -38,6 +38,7 @@ public class WatershedPunarutthanBean {
     private String structurename;
     private Integer no_work;
     private BigDecimal totalcost;
+    private Integer implementation_id;
    
 	public Integer getDistrict1() {
 		return district1;
@@ -200,6 +201,12 @@ public class WatershedPunarutthanBean {
 	}
 	public void setTotalcost(BigDecimal totalcost) {
 		this.totalcost = totalcost;
+	}
+	public Integer getImplementation_id() {
+		return implementation_id;
+	}
+	public void setImplementation_id(Integer implementation_id) {
+		this.implementation_id = implementation_id;
 	}
 	 
 	

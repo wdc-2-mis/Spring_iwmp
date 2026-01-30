@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
+import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.WMPrabhatPheriBean;
 import app.punarutthan.service.WatershedPunarutthanService;
 import app.service.ProfileService;
@@ -37,7 +38,7 @@ public class WatershedPunarutthanController {
 	WatershedPunarutthanService ser;
 	
 	@RequestMapping(value = "/getWatershedPunarutthanPlan", method = RequestMethod.GET)
-	public ModelAndView getWatershedYatraHeader(HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView getWatershedPunarutthanPlan(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		List<WatershedPunarutthanBean> datlist = new ArrayList<WatershedPunarutthanBean>();
@@ -210,11 +211,188 @@ public class WatershedPunarutthanController {
 		return res; 
 	}
 	
+	@RequestMapping(value = "/getWatershedPunarutthanPlanImplement", method = RequestMethod.GET)
+	public ModelAndView getWatershedPunarutthanPlanImplement(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedPunarutthanBean> dataListd = new ArrayList<WatershedPunarutthanBean>();
+		List<WatershedPunarutthanBean> comdataListc = new ArrayList<WatershedPunarutthanBean>();
+		List<WatershedPunarutthanBean> complist = new ArrayList<WatershedPunarutthanBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("punarutthan/watershedPunarutthanPlanImplement");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				String username = session.getAttribute("username").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getPunarutthanStateDist(regId);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				int stCodelgd = 0;
+				int distCodelgd = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+					stCodelgd=bean.getState_codelgd();
+					distCodelgd=bean.getDistrict_codelgd();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
+				mav.addObject("StructureList", ser.getStructureListMis());
+				
+				/*
+				 * datlist=ser.getWatershedPunarutthanPlanDraft(session.getAttribute("loginID").
+				 * toString()); mav.addObject("dataList1",datlist);
+				 * mav.addObject("dataListSize1",datlist.size());
+				 */
+				  
+				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  mav.addObject("comdataList",complist);
+				  mav.addObject("comdataListSize",complist.size());
+				  
+				  dataListd=ser.getPunarutthanDraftImplementation(session.getAttribute("loginID").toString());
+				  mav.addObject("dataListd",dataListd);
+				  mav.addObject("dataListSized",dataListd.size());
+				  
+				  comdataListc=ser.getPunarutthanCompleteImplementation(session.getAttribute("loginID").toString());
+				  mav.addObject("comdataListc",comdataListc);
+				  mav.addObject("comdataListSizec",comdataListc.size());
+				 
+			} 
+			else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
+	@RequestMapping(value = "/getWatershedPunarutthanPlanImpl", method = RequestMethod.POST)
+	public ModelAndView getWatershedPunarutthanPlanImpl(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedPunarutthanBean> editlist = new ArrayList<WatershedPunarutthanBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("punarutthan/watershedPunarutthanImplementation");
+				String plan_id=request.getParameter("plan_id");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getPunarutthanStateDist(regId);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				int stCodelgd = 0;
+				int distCodelgd = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+					stCodelgd=bean.getState_codelgd();
+					distCodelgd=bean.getDistrict_codelgd();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
+				mav.addObject("StructureList", ser.getStructureListMis());
+				
+				editlist=ser.getWatershedPunarutthanPlanImpl(Integer.parseInt(plan_id));
+				
+				mav.addObject("dataList",editlist);
+				mav.addObject("dataListSize",editlist.size());
+				
+				
+				
+
+			} else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
-	
-	
-	
+	@RequestMapping(value = "/saveWatershedPunarutthanImplementation", method = RequestMethod.POST)
+	public ModelAndView saveWatershedPunarutthanImplementation(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedPunarutthanBean userfileup)
+			throws Exception {
+		System.out.println("kdy");
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		List<String> imageNames = new ArrayList<>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("punarutthan/watershedPunarutthanPlanImplement");
+				
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm=profileService.getPunarutthanStateDist(regId);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				int stCodelgd = 0;
+				int distCodelgd = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+					stCodelgd=bean.getState_codelgd();
+					distCodelgd=bean.getDistrict_codelgd();
+				}
+
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
+				mav.addObject("StructureList", ser.getStructureListMis());
+				
+				result = ser.saveWatershedPunarutthanImplementation(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
+				} 
+				else if (result.equals("failexist")) {
+					redirectAttributes.addFlashAttribute("result", "Data not saved already exist!");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result", "Data not saved!");
+				}
+				return new ModelAndView("redirect:/getWatershedPunarutthanPlanImplement");
+			} else {
+				return new ModelAndView("redirect:/login");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 	
 	
 }
