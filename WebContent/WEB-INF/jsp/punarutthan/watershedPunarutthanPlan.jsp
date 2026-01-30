@@ -536,10 +536,10 @@ display: none; /* Hidden by default */
                       </td>
                   </tr>  
                   <tr>  
-                    <td>No. of Maintenance work to do<span style="color:red;">*</span></td>
+                    <td>Maintenance work to do<span style="color:red;">*</span></td>
                     <td>
-                        <input type="text" id="work" name="work" autocomplete="off"
-                               maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
+                    	<textarea id="work" name="work" rows="3" cols="50" required></textarea>
+                    
                     </td>
                     </tr>
                     <tr>

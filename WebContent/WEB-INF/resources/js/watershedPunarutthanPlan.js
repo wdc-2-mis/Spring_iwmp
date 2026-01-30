@@ -224,7 +224,7 @@ $('#chkSelectAllkd').on('click', function() {
 
 				if (confirm("Do you want to Delete ?")) {
 					$.ajax({
-						url: "deletePunarutthanPlanDetails1",
+						url: "deletePunarutthanImplementation",
 						type: "post",
 						data: { assetid: finalAssetid.toString() },
 						error: function(xhr, status, er) {
@@ -235,11 +235,11 @@ $('#chkSelectAllkd').on('click', function() {
 							$('#loading').hide();
 							if (data === 'success') {
 								alert('Deleted Successfully.');
-								window.location.href = 'getWatershedPunarutthanPlan1';
+								window.location.href = 'getWatershedPunarutthanPlanImplement';
 							}
 							else {
 								alert('Please check at least One Check Box, Data not Delete!');
-								window.location.href = 'getWatershedPunarutthanPlan1';
+								window.location.href = 'getWatershedPunarutthanPlanImplement';
 							}
 						}
 					});
@@ -260,7 +260,7 @@ $('#chkSelectAllkd').on('click', function() {
 
 				if (confirm("Do you want to Complete ?")) {
 					$.ajax({
-						url: "completePunarutthanPlanDetails1",
+						url: "completePunarutthanImplementation",
 						type: "post",
 						data: { assetid: finalAssetid.toString() },
 						error: function(xhr, status, er) {
@@ -271,11 +271,11 @@ $('#chkSelectAllkd').on('click', function() {
 							$('#loading').hide();
 							if (data === 'success') {
 								alert('Complete Successfully.');
-								window.location.href = 'getWatershedPunarutthanPlan1';
+								window.location.href = 'getWatershedPunarutthanPlanImplement';
 							}
 							else {
-								alert('Please check at least One Check Box, Data not Complete!');
-								window.location.href = 'getWatershedPunarutthanPlan1';
+								//alert('Please check at least One Check Box, Data not Complete!');
+								window.location.href = 'getWatershedPunarutthanPlanImplement';
 							}
 						}
 					});

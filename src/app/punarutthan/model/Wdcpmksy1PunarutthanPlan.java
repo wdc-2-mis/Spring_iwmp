@@ -33,7 +33,7 @@ public class Wdcpmksy1PunarutthanPlan {
     private String projectCd;
     private IwmpVillage iwmpVillage;
     private MStructure mStructure;
-    private Integer noWork;
+    private String noWork;
     private BigDecimal wdf;
     private BigDecimal mgnrega;
     private BigDecimal other;
@@ -56,7 +56,7 @@ public class Wdcpmksy1PunarutthanPlan {
     }
     
     public Wdcpmksy1PunarutthanPlan(int planId, IwmpState iwmpState, IwmpDistrict iwmpDistrict, String projectCd, IwmpVillage iwmpVillage, MStructure mStructure,
-    		Integer noWork, BigDecimal wdf, BigDecimal mgnrega, BigDecimal other, Character status, Set<Wdcpmksy1PunarutthanPlanPhoto> wdcpmksy1PunarutthanPlanPhoto,
+    		String noWork, BigDecimal wdf, BigDecimal mgnrega, BigDecimal other, Character status, Set<Wdcpmksy1PunarutthanPlanPhoto> wdcpmksy1PunarutthanPlanPhoto,
     		Set<Wdcpmksy1PunarutthanPlanImplementation> wdcpmksy1PunarutthanPlanImplementation) { 
     	
     	this.planId=planId;
@@ -135,11 +135,11 @@ public class Wdcpmksy1PunarutthanPlan {
 	}
 
 	@Column(name = "no_work")
-	public Integer getNoWork() {
+	public String getNoWork() {
 		return noWork;
 	}
 
-	public void setNoWork(Integer noWork) {
+	public void setNoWork(String noWork) {
 		this.noWork = noWork;
 	}
 

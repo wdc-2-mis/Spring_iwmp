@@ -14,7 +14,7 @@ public class WatershedPunarutthanBean {
     private String project;       
     private Integer village1;  
     private Integer structure;
-    private Integer work;
+    private String work;
     private BigDecimal wdf;
     private BigDecimal mgnrega;
     private BigDecimal other;
@@ -36,7 +36,7 @@ public class WatershedPunarutthanBean {
     private String villagename;
     private Integer structure_id;
     private String structurename;
-    private Integer no_work;
+    private String no_work;
     private BigDecimal totalcost;
     private Integer implementation_id;
    
@@ -64,10 +64,10 @@ public class WatershedPunarutthanBean {
 	public void setStructure(Integer structure) {
 		this.structure = structure;
 	}
-	public Integer getWork() {
+	public String getWork() {
 		return work;
 	}
-	public void setWork(Integer work) {
+	public void setWork(String work) {
 		this.work = work;
 	}
 	public BigDecimal getWdf() {
@@ -190,10 +190,10 @@ public class WatershedPunarutthanBean {
 	public void setStructurename(String structurename) {
 		this.structurename = structurename;
 	}
-	public Integer getNo_work() {
+	public String getNo_work() {
 		return no_work;
 	}
-	public void setNo_work(Integer no_work) {
+	public void setNo_work(String no_work) {
 		this.no_work = no_work;
 	}
 	public BigDecimal getTotalcost() {

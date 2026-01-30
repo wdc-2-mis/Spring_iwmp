@@ -504,10 +504,9 @@ display: none; /* Hidden by default */
                     </td>
                  </tr>  
                  <tr>  
-                    <td>No. of Maintenance work to be done<span style="color:red;">*</span></td>
+                    <td>Maintenance work to be done<span style="color:red;">*</span></td>
                     <td>
-                        <input type="text" id="work" name="work" autocomplete="off" value="${data.no_work}"
-                               maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required/>
+                        <input type="text" id="work" name="work" autocomplete="off" value="${data.no_work}" required/>
                     </td>
                     </tr>
                     <tr>
