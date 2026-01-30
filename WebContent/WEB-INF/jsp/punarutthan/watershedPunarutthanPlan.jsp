@@ -568,8 +568,8 @@ display: none; /* Hidden by default */
                     </tr>
                     <tr>
                     <td>
-                        <label><b>Upload Photographs<!--  (Minimum 1, Maximum 2) -->:</b></label>
-                        <div id="photoContainer">
+                        <label>Upload Photographs<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
+                     <td>   <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
                                 <input type="hidden" name="latitude[]" class="latitude">
