@@ -1333,7 +1333,7 @@ public class WMReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report WM6 - Watershed Mahotsav Social Media Analysis", f3);
+			paragraph3 = new Paragraph("Report WM2 - Watershed Mahotsav Social Media Analysis", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -1417,7 +1417,7 @@ public class WMReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report WM6- WMSocialMediaAnalysis.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM2- WMSocialMediaAnalysis.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
