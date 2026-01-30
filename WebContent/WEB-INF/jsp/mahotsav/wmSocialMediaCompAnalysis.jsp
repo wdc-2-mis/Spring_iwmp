@@ -54,8 +54,11 @@ function dataAvailableFunction() {
 	});
 	}
 function submitOrderBy() {
+    document.mohotsavRpt.action = "getWMSocialMediaCompAnalysis";
+    document.mohotsavRpt.method = "post";
     document.getElementById("mohotsavReport").submit();
 }
+
 
 function downloadPDF(stName,distName,mediaName){
     document.getElementById("stName").value=stName;
