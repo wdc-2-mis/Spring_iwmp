@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Report WM5 - Watershed Mahotsav Social Media Analysis as per Entries</title>
-
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@include file="/WEB-INF/jspf/header2.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-<%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Report WM1 - Watershed Mahotsav Social Media Analysis as per Entries</title>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"/>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
 <script>
 $(document).ready(function () {
 
-    // Load districts on state change
     $('#state').change(function () {
         $.post('getDistrictsByStateForWM',
             { state: $(this).val() },
@@ -30,39 +27,51 @@ $(document).ready(function () {
             });
     });
 
-    // Get button submit
-    $('#submitBtn').click(function () {
-        $('#mohotsavReport').submit();
-    });
-
-    // Order By auto submit
-    $('#orderBy').change(function () {
-        $('#mohotsavReport').submit();
-    });
-
     $('#stWMR').DataTable({
-   	 "paging": true,          // Enable pagination
-        "pageLength": 10,        // Default rows per page
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],  // Dropdown options with "All"
-        "lengthChange": true,    // Allow changing page size
-        "searching": true,       // Enable search box
-        "ordering": false,        // Disable sorting
-        "info": true             // Show info (e.g., "Showing 1 to 10 of 50 entries")
-   });
+        paging: true,
+        pageLength: 10,
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        searching: true,
+        ordering: false,
+        info: true
+    });
 });
-function downloadPDF() {
-    var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var media = document.getElementById("platform").options[document.getElementById("platform").selectedIndex].text;
+
+
+function downloaddPDF() {
+    var form = document.mohotsavRpt;
+
+    var stSelect = document.getElementById("state");
+    var stName = stSelect.options[stSelect.selectedIndex].text;
+
+    var distSelect = document.getElementById("district");
+    var distValue = distSelect.value; // district code
+    var distName = distSelect.options[distSelect.selectedIndex].text; // district name for PDF
+
+    var platformSelect = document.getElementById("platform");
+    var platformValue = platformSelect.value;
+    var platformName = platformValue === "0" ? "All Platform" : platformSelect.options[platformSelect.selectedIndex].text;
+
+    var orderBySelect = document.getElementById("orderBy");
+    var orderByValue = orderBySelect ? orderBySelect.value : "views";
 
     document.getElementById("stName").value = stName;
     document.getElementById("distName").value = distName;
-    document.getElementById("mediaName").value = media;
+    document.getElementById("mediaName").value = platformName;
 
-    document.mohotsavRpt.action = "downloadPDFwmSocialMediaAnalysisReport";
-    document.mohotsavRpt.method = "post";
-    document.mohotsavRpt.submit();
+    // Set the numeric value for backend
+    distSelect.value = distValue;
+
+    document.getElementById("orderByVal").value = orderByValue;
+
+    form.action = "downloadPDFwmSocialMediaAnalysisReport";
+    form.method = "post";
+    form.submit();
+
+    form.action = "wmSocialMediaAnalysisReport"; // reset
 }
+
+
 
 function closeLargeImagePopup() {
 	document.getElementById('largeImagePopup').style.display = 'none';
@@ -77,6 +86,73 @@ function showimage(file) {
 	document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'	+ file;
 	document.getElementById('largeImagePopup').style.display = 'block';
 }
+// function downloadsPDF() {
+
+//     var stSelect = document.getElementById("state");
+//     var distSelect = document.getElementById("district");
+//     var platSelect = document.getElementById("platform");
+
+//     document.getElementById("stName").value =
+//         stSelect.options[stSelect.selectedIndex].text;
+
+//     document.getElementById("distName").value =
+//         distSelect.options[distSelect.selectedIndex].text;
+
+//     document.getElementById("mediaName").value =
+//         platSelect.options[platSelect.selectedIndex].text;
+
+//     document.getElementById("orderByVal").value =
+//         document.getElementById("orderBy")?.value || "views";
+
+//     document.mohotsavRpt.action = "downloadPDFwmSocialMediaAnalysisReport";
+//     document.mohotsavRpt.method = "post";
+//     document.mohotsavRpt.submit();
+    
+// }
+
+function downloadsPDF() {
+
+    var mainForm = document.mohotsavRpt;
+
+    /* ===== CREATE TEMP FORM ===== */
+    var pdfForm = document.createElement("form");
+    pdfForm.method = "post";
+    pdfForm.action = "downloadPDFwmSocialMediaAnalysisReport";
+
+    /* ===== COPY REQUIRED FIELDS ===== */
+    var fields = [
+        "state", "district", "platform",
+        "stName", "distName", "mediaName",
+        "orderBy", "orderByVal"
+    ];
+
+    fields.forEach(function (name) {
+        var el = document.getElementById(name);
+        if (el) {
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = el.value;
+            pdfForm.appendChild(input);
+        }
+    });
+
+    /* ===== SET DISPLAY NAMES ===== */
+    document.getElementById("stName").value =
+        document.getElementById("state").selectedOptions[0].text;
+
+    document.getElementById("distName").value =
+        document.getElementById("district").selectedOptions[0].text;
+
+    document.getElementById("mediaName").value =
+        document.getElementById("platform").selectedOptions[0].text;
+
+    /* ===== SUBMIT TEMP FORM ===== */
+    document.body.appendChild(pdfForm);
+    pdfForm.submit();
+    document.body.removeChild(pdfForm);
+}
+
 </script>
 
 <style>
@@ -167,75 +243,102 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 <body>
 
 <div class="maindiv">
-<div class="card shadow mt-1 p-5">
+<div class="table-responsive">
 
-<h4 class="text-center text-primary mb-4 text-decoration-underline">
-Report WM5 - Watershed Mahotsav Social Media Analysis as per Entries
+<div class="col formheading" style>
+<h4 class="text-center mb-4 text-decoration-underline"
+    style="color:white;">
+    Report WM1 - Watershed Mahotsav Social Media Analysis as per Entries
 </h4>
 
-<form id="mohotsavReport" name="mohotsavRpt" action="wmSocialMediaAnalysisReport" method="post">
-			<input type="hidden" name="stName" id="stName" />
-			<input type="hidden" name="distName" id="distName" />
-			<input type="hidden" name="media" id="media" /> 
 
-	<div class="row mb-3">
-		<div class="col-md-2">
-				<label>State</label>
-				<select name="state" id="state" class="form-select">
-				<option value="0">--All State--</option>
-					<c:forEach items="${stateList}" var="s">
-					<option value="${s.key}" ${s.key eq state ? 'selected' : ''}>${s.value}</option>
-					</c:forEach>
-					</select>
-					</div>
+</div>
 
-		<div class="col-md-2">
-				<label>District</label>
-				<select name="district" id="district" class="form-select">
-				<option value="0">--All District--</option>
-				<c:forEach items="${districtList}" var="d">
-				<option value="${d.value}" ${d.value eq district ? 'selected' : ''}>${d.key}</option>
-				</c:forEach>
-				</select>
-			</div>
+<form id="mohotsavReport" name="mohotsavRpt"
+      action="wmSocialMediaAnalysisReport" method="post">
 
-			<div class="col-md-2">
-					<label>Platform</label>
-					<select name="platform" class="form-select">
-					<option value="0">--All Platform--</option>
-				<c:forEach items="${platformList}" var="p">
-				<option value="${p.key}" ${p.key eq platform ? 'selected' : ''}>${p.value}</option>
-				</c:forEach>
-				</select>
-			</div>
+<input type="hidden" name="stName" id="stName">
+<input type="hidden" name="distName" id="distName">
+<input type="hidden" name="mediaName" id="mediaName">
+<!-- <input type="hidden" name="orderBy" id="orderByVal"> -->
+<br>
+<div class="row mb-4 align-items-end g-3">
 
-		<div class="col-md-2 d-flex align-items-end">
-			<button type="button" id="submitBtn" class="btn btn-primary px-4">Get</button>
-		</div>
+    <!-- STATE -->
+    <div class="col-lg-3">
+        <label>State</label>
+        <select name="state" id="state" class="form-select">
+            <option value="0">--All State--</option>
+            <c:forEach items="${stateList}" var="s">
+                <option value="${s.key}" ${s.key eq state ? 'selected' : ''}>${s.value}</option>
+            </c:forEach>
+        </select>
+    </div>
+    
+    
 
-	</div>
+    <!-- DISTRICT -->
+    <div class="col-lg-3">
+        <label>District</label>
+        <select name="district" id="district" class="form-select">
+            <option value="0">--All District--</option>
+            <c:forEach items="${districtList}" var="d">
+                <option value="${d.value}" ${d.value eq district ? 'selected' : ''}>${d.key}</option>
+            </c:forEach>
+        </select>
+    </div>
 
-<!-- ORDER BY (ONLY AFTER DATA LOADS) -->
-				<c:if test="${wmListSize > 0}">
-					<div class="row mb-3">
-					<div class="col-md-2">
-					<label>Order By</label>
-					<select name="orderBy" id="orderBy" class="form-select">
-					<option value="views" ${empty orderBy || orderBy eq 'views' ? 'selected' : ''}>Views</option>
-					<option value="likes" ${orderBy eq 'likes' ? 'selected' : ''}>Likes</option>
-					</select>
-					</div>
-					</div>
-				</c:if>
+    <!-- PLATFORM -->
+    <div class="col-lg-3">
+        <label>Platform</label>
+        <select name="platform" id="platform" class="form-select">
+            <option value="0">--All Platform--</option>
+            <c:forEach items="${platformList}" var="p">
+                <option value="${p.key}" ${p.key eq platform ? 'selected' : ''}>${p.value}</option>
+            </c:forEach>
+        </select>
+    </div>
 
-	</form>
+<div class="col-auto d-flex align-items-end">
+    <button type="submit" class="btn btn-primary px-4">
+        Get
+    </button>
+</div>
+
+</div>
+<!-- ORDER BY -->
+<c:if test="${wmListSize gt 0}">
+    <div class="row mb-3">
+        <div class="col-lg-3">
+            <label>Order By</label>
+            <select name="orderBy"
+                    class="form-select"
+                    onchange="this.form.submit();">
+                <option value="views"
+                    ${orderBy eq 'views' ? 'selected' : ''}>
+                    Views
+                </option>
+                <option value="likes"
+                    ${orderBy eq 'likes' ? 'selected' : ''}>
+                    Likes
+                </option>
+            </select>
+        </div>
+    </div>
+</c:if>
+
+
+</form>
+
 <div class="nav-item text-left mb-2">
-<%-- 				<c:if test="${not empty wmList}"> --%>
+				<c:if test="${not empty wmList}">
 <!-- 					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button> -->
-<!-- 					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button> -->
-<%-- 				</c:if> --%>
+			<button type="button" name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadsPDF()">PDF</button>
+					
+				</c:if>
 				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 			</div>
+			
 <c:if test="${wmListSize > 0}">
 <table class="table table-bordered table-striped mt-3" id="stWMR">
 <thead>
@@ -309,8 +412,8 @@ Report WM5 - Watershed Mahotsav Social Media Analysis as per Entries
 	</div>
 
 <br>
-<footer class="text-center">
-<%@ include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
+<footer class=" ">
+	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 </footer>
 
 </body>
