@@ -71,7 +71,7 @@ $(function() {
 		});
 
 
-		$(document).on('change', '#village1', function(e) {
+		$(document).on('change', '#village11', function(e) {
 			e.preventDefault(); //getExistingPunarutthanPlanVillageCodes
 			$villageCode = $('#village1 option:selected').val();
 			$.ajax({

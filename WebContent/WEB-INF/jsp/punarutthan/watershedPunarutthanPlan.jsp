@@ -242,8 +242,8 @@ document.addEventListener("change", function(e) {
         }
         
         var work = document.getElementById("work").value;
-        if (!work || parseInt(work) <= 0) {
-            alert("Please enter No. of Maintenance work to do");
+        if (work==="") {
+            alert("Please enter Maintenance work to do");
             document.getElementById("work").focus();
             return false;
         }
