@@ -4,10 +4,9 @@
 
 <title>Report WM6 - Watershed Mahotsav Social Media Analysis</title>
 
-<%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@ include file="/WEB-INF/jspf/mahotsavReportheader.jspf"%>
+<%@ include file="/WEB-INF/jspf/header2.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" />
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -58,13 +57,13 @@ function submitOrderBy() {
     document.getElementById("mohotsavReport").submit();
 }
 
-function downloadPDF(stName,distName,mediaName,statusName,fromDate,toDate){
+function downloadPDF(stName,distName,mediaName){
     document.getElementById("stName").value=stName;
     document.getElementById("distName").value=distName;
     document.getElementById("mediaName").value=mediaName;
-    document.getElementById("statusName").value=statusName;
-    document.getElementById("fromDate").value=fromDate;
-    document.getElementById("toDate").value=toDate;
+//     document.getElementById("statusName").value=statusName;
+//     document.getElementById("fromDate").value=fromDate;
+//     document.getElementById("toDate").value=toDate;
     document.mohotsavRpt.action="downloadWMSocialMediaCompAnalysisPDF";
 	document.mohotsavRpt.method="post";
 	document.mohotsavRpt.submit();
@@ -91,11 +90,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 	{
 	margin-top: 20px; /* gap between table and pagination */
 }
-.facebook  { color:#1877F2; font-weight:600; }
-.instagram { color:#C13584; font-weight:600; }
-.youtube   { color:#FF0000; font-weight:600; }
-.twitter   { color:#1DA1F2; font-weight:600; }
-.linkedin  { color:#0A66C2; font-weight:600; }
+
 </style>
 <!-- b -->
 </head>
@@ -111,25 +106,23 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 	</c:if>
 	<div class="maindiv">
 
-		<div class="card shadow mt-1 p-5">
+		
 
-			<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-				<h4 class="text-center text-primary mb-4 text-decoration-underline">Report WM6 - Watershed Mahotsav Social Media Analysis</h4>
-			</div>
+			<div class="col formheading" style="text-decoration: underline;"><h4>Report WM2 - Watershed Mahotsav Social Media Analysis</h4> </div>
 
-
+			<br>
 			<form name="mohotsavRpt" id="mohotsavReport" action="getWMSocialMediaCompAnalysis" method="post">
 			
 			<input type="hidden" name="stName" id="stName" value="" />
 			<input type="hidden" name="distName" id="distName" value="" />
 			<input type="hidden" name="mediaName" id="mediaName" value="" />
-			<input type="hidden" name="statusName" id="statusName" value="" />
-			<input type="hidden" name="fromDate" id="fromDate" value="" />
-			<input type="hidden" name="toDate" id="toDate" value="" />
+<!-- 			<input type="hidden" name="statusName" id="statusName" value="" /> -->
+<!-- 			<input type="hidden" name="fromDate" id="fromDate" value="" /> -->
+<!-- 			<input type="hidden" name="toDate" id="toDate" value="" /> -->
 
-				<div class="row mb-3">
+				<div class="row">
 
-					<div class="col-md-2">
+					<div class="form-group col-3">
 						<label>State <span class="required">*</span></label> <select
 							name="state" id="state" class="form-select" onchange ="getDistrictList()">
 							<option value="0">--All State--</option>
@@ -138,11 +131,10 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 									${lists.key eq state ? 'selected' : ''}>${lists.value}</option>
 							</c:forEach>
 						</select>
-						<div id="stateError" class="error-text">Please select state</div>
 					</div>
 
 
-					<div class="col-md-2">
+					<div class="form-group col-3">
 						<label>District <span class="required">*</span></label> <select
 							name="district" id="district" class="form-select">
 							<option value="0">--All District--</option>
@@ -151,11 +143,9 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 									${lists.value eq district ? 'selected' : ''}>${lists.key}</option>
 							</c:forEach>
 						</select>
-						<div id="districtError" class="error-text">Please select
-							district</div>
 					</div>
 
-					<div class="col-md-1">
+					<div class="form-group col-3">
     					<label>Platform <span class="required">*</span></label>
     					<select name="platform" id="platform" class="form-select">
       					  <option value="0">--All Platform--</option>
@@ -164,7 +154,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         							</c:forEach>
    						 </select>
 					</div>
-					<div class="col-md-2">
+					<div class="form-group col-3">
     					<label>Validation Status <span class="required">*</span></label>
     					<select name="status" id="status" class="form-select">
       					  <option value="All">--All Status--</option>
@@ -173,11 +163,13 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         				  </c:forEach>
    						 </select>
 					</div>
-					<div class="col-md-1">
+				</div>
+				<div class="row">
+					<div class="col-md-2">
     					<label>From Date <span class="required">*</span></label>
     					<input type="date" name="userdate" id="userdate" class="form-control activity" style="width: 100%;" value="${fromdate}"/>
 					</div>
-					<div class="col-md-1">
+					<div class="col-md-2">
     					<label>To Date <span class="required">*</span></label>
     					<input type="date" name="userdateto" id="userdateto" class="form-control activity" style="width: 100%;" value="${todate}"/>
 					</div>
@@ -197,14 +189,15 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
     				</select>
 				</div>
 				<br>
-			</form>
-			<div class="nav-item text-left mb-2">
-<%-- 				<c:if test="${wmListSize > 0}"> --%>
-<%-- 					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel('${stName}','${distName}','${mediaName}','${status}','${fromdate}','${todate}')">Excel</button> --%>
-<%-- 					<button type="button" name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF('${stName}','${distName}','${mediaName}','${status}','${fromdate}','${todate}')">PDF</button> --%>
-<%-- 				</c:if> --%>
+				<div class="nav-item text-left mb-2">
+				<c:if test="${wmListSize > 0}">
+<%-- 					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel('${stName}','${distName}','${mediaName}')">Excel</button> --%>
+					<button type="button" name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadPDF('${stName}','${distName}','${mediaName}')">PDF</button>
+				</c:if>
 				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
-			</div>
+				</div>
+			</form>
+			
 
 			<table class="table table-bordered table-striped" id="stWMR">
 				<thead>
@@ -328,11 +321,10 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 			</table>
 
-		</div>
 	</div>
 
-	<footer class="text-center">
-		<%@include file="/WEB-INF/jspf/mahotsavfooter.jspf"%>
+	<footer class=" text-center">
+	<%@include file="/WEB-INF/jspf/footer2.jspf"%>
 	</footer>
 
 </body>

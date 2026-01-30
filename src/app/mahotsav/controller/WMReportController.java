@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -48,6 +49,7 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import app.bean.Login;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
@@ -63,6 +65,8 @@ public class WMReportController {
 	
 	@Autowired(required = true)
 	MenuController menuController;
+	
+	HttpSession session;
 	
 	@Autowired
 	StateMasterService stateMasterService;
@@ -1152,23 +1156,36 @@ public class WMReportController {
 
     @RequestMapping(value = "/getWMSocialMediaCompAnalysis", method = RequestMethod.GET)
     public ModelAndView getWMSocialMediaCompAnalysis(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+    	session = request.getSession(true);
+    	ModelAndView mav = new ModelAndView();
+    	
+		if (session != null && session.getAttribute("loginID") != null) {
+			
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+			Map<Integer, String> stateList = stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
 
-        Map<Integer, String> stateList = stateMasterService.getAllState();
-        mav.addObject("stateList", stateList);
+			Map<Integer, String> platformList = wmService.getPlatformList();
+			mav.addObject("platformList", platformList);
 
-        Map<Integer, String> platformList = wmService.getPlatformList();
-        mav.addObject("platformList", platformList);
-        
-        Map<String, String> statusList = new LinkedHashMap<String, String>();
-        statusList.put("Valid", "Valid");
-        statusList.put("Invalid", "Invalid");
-        statusList.put("Pending", "Pending");
-        mav.addObject("statusList", statusList);
+			Map<String, String> statusList = new LinkedHashMap<String, String>();
+			statusList.put("Valid", "Valid");
+			statusList.put("Invalid", "Invalid");
+			statusList.put("Pending", "Pending");
+			mav.addObject("statusList", statusList);
 
-        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(0, 0, 0, "");
-        mav.addObject("wmList", list);
-        mav.addObject("wmListSize", list.size());
+			List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(0, 0, 0, "");
+			mav.addObject("wmList", list);
+			mav.addObject("wmListSize", list.size());
+			mav.addObject("state",0);
+			mav.addObject("stName", "All");
+			mav.addObject("distName", "All");
+			mav.addObject("mediaName", "All");
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
 
         return mav;
     }
@@ -1176,96 +1193,100 @@ public class WMReportController {
     @RequestMapping(value = "/getWMSocialMediaCompAnalysis", method = RequestMethod.POST)
     public ModelAndView getWMSocialMediaCompAnalysis(HttpServletRequest request) {
 
-        ModelAndView mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+    	session = request.getSession(true);
+    	ModelAndView mav = new ModelAndView();
+    	
+		if (session != null && session.getAttribute("loginID") != null) {
+			mav = new ModelAndView("mahotsav/wmSocialMediaCompAnalysis");
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			int stcd = Integer.parseInt(request.getParameter("state"));
+			int dcode = Integer.parseInt(request.getParameter("district"));
+			int media = Integer.parseInt(request.getParameter("platform"));
+			String status = request.getParameter("status");
+			String userdate = request.getParameter("userdate");
+			String userdateto = request.getParameter("userdateto");
+			String orderBy = request.getParameter("orderBy");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        int stcd = Integer.parseInt(request.getParameter("state"));
-        int dcode = Integer.parseInt(request.getParameter("district"));
-        int media = Integer.parseInt(request.getParameter("platform"));
-        String status = request.getParameter("status");
-        String userdate= request.getParameter("userdate");
-		String userdateto= request.getParameter("userdateto");
-		String orderBy = request.getParameter("orderBy");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		
-//		for(Map.Entry<Integer, String> map :stateMasterService.getAllState().entrySet()){
-//			if(map.getKey()==stcd) {
-//				stName = map.getValue();
-//			}
-//		}
-		String distcode = dcode+"";
-		String stName = stcd==0?"All":stateMasterService.getAllState().get(stcd);
-		String distName =dcode==0?"All":wmService.getDistrictList(stcd).entrySet().stream().filter(s-> distcode.equals(s.getValue())).map(Map.Entry::getKey).findFirst().orElse(null);
-		String platform = media==0?"All":wmService.getPlatformList().get(media);
+			String distcode = dcode + "";
+			String stName = stcd == 0 ? "All" : stateMasterService.getAllState().get(stcd);
+			String distName = dcode == 0 ? "All"
+					: wmService.getDistrictList(stcd).entrySet().stream().filter(s -> distcode.equals(s.getValue()))
+							.map(Map.Entry::getKey).findFirst().orElse(null);
+			String platform = media == 0 ? "All" : wmService.getPlatformList().get(media);
 
-        mav.addObject("stateList", stateMasterService.getAllState());
-        mav.addObject("districtList", wmService.getDistrictList(stcd));
-        mav.addObject("platformList", wmService.getPlatformList());
-        Map<String, String> statusList = new LinkedHashMap<String, String>();
-        statusList.put("Valid", "Valid");
-        statusList.put("Invalid", "Invalid");
-        statusList.put("Pending", "Pending");
-        mav.addObject("statusList", statusList);
+			mav.addObject("stateList", stateMasterService.getAllState());
+			mav.addObject("districtList", wmService.getDistrictList(stcd));
+			mav.addObject("platformList", wmService.getPlatformList());
+			Map<String, String> statusList = new LinkedHashMap<String, String>();
+			statusList.put("Valid", "Valid");
+			statusList.put("Invalid", "Invalid");
+			statusList.put("Pending", "Pending");
+			mav.addObject("statusList", statusList);
 
-        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
-        
-        if(!userdate.equals("") && !userdateto.equals("")) {
-        	LocalDate fromDate = LocalDate.parse(userdate, formatter);
-        	LocalDate toDate = LocalDate.parse(userdateto, formatter);
-			List<WMMediaReviewBean> filterList = list.stream().filter(bean -> bean.getCreated_date() != null)
-	        	    .filter(bean -> !bean.getCreated_date().before(Date.valueOf(fromDate)) 
-	                        && !bean.getCreated_date().after(Date.valueOf(toDate)))
-	           .collect(Collectors.toList());
-			if (orderBy != null) {
-	            switch (orderBy) {
-	                case "viewsAsc":
-	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
-	                    break;
-	                case "viewsDesc":
-	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
-	                    break;
-	                case "likesAsc":
-	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
-	                    break;
-	                case "likesDesc":
-	                	filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
-	                    break;
-	            }
-	        }
-			mav.addObject("wmList", filterList);
-	        mav.addObject("wmListSize", filterList.size());
-	        mav.addObject("orderBy", orderBy);
+			List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+
+			if (!userdate.equals("") && !userdateto.equals("")) {
+				LocalDate fromDate = LocalDate.parse(userdate, formatter);
+				LocalDate toDate = LocalDate.parse(userdateto, formatter);
+				List<WMMediaReviewBean> filterList = list.stream().filter(bean -> bean.getCreated_date() != null)
+						.filter(bean -> !bean.getCreated_date().before(Date.valueOf(fromDate))
+								&& !bean.getCreated_date().after(Date.valueOf(toDate)))
+						.collect(Collectors.toList());
+				if (orderBy != null) {
+					switch (orderBy) {
+					case "viewsAsc":
+						filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+						break;
+					case "viewsDesc":
+						filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+						break;
+					case "likesAsc":
+						filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+						break;
+					case "likesDesc":
+						filterList.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+						break;
+					}
+				}
+				mav.addObject("wmList", filterList);
+				mav.addObject("wmListSize", filterList.size());
+				mav.addObject("orderBy", orderBy);
+			} else {
+				if (orderBy != null) {
+					switch (orderBy) {
+					case "viewsAsc":
+						list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+						break;
+					case "viewsDesc":
+						list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+						break;
+					case "likesAsc":
+						list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+						break;
+					case "likesDesc":
+						list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+						break;
+					}
+				}
+				mav.addObject("wmList", list);
+				mav.addObject("wmListSize", list.size());
+				mav.addObject("orderBy", orderBy);
+			}
+
+			mav.addObject("state", stcd);
+			mav.addObject("stName", stName);
+			mav.addObject("district", dcode);
+			mav.addObject("distName", distName);
+			mav.addObject("platform", media);
+			mav.addObject("mediaName", platform);
+			mav.addObject("status", status);
+			mav.addObject("fromdate", userdate);
+			mav.addObject("todate", userdateto);
 		}else {
-			if (orderBy != null) {
-	            switch (orderBy) {
-	                case "viewsAsc":
-	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
-	                    break;
-	                case "viewsDesc":
-	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
-	                    break;
-	                case "likesAsc":
-	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
-	                    break;
-	                case "likesDesc":
-	                    list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
-	                    break;
-	            }
-	        }
-			 mav.addObject("wmList", list);
-		     mav.addObject("wmListSize", list.size());
-		     mav.addObject("orderBy", orderBy);
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
 		}
-
-        mav.addObject("state", stcd);
-        mav.addObject("stName", stName);
-        mav.addObject("district", dcode);
-        mav.addObject("distName", distName);
-        mav.addObject("platform", media);
-        mav.addObject("mediaName", platform);
-        mav.addObject("status",status);
-        mav.addObject("fromdate",userdate);
-        mav.addObject("todate",userdateto);
-        
 
         return mav;
     }
@@ -1282,9 +1303,9 @@ public class WMReportController {
 		String distName= request.getParameter("distName");
 		String mediaName= request.getParameter("mediaName");
         
-		String status = request.getParameter("statusName");
-        String userdate= request.getParameter("fromDate");
-		String userdateto= request.getParameter("toDate");
+		String status = request.getParameter("status");
+        String userdate= request.getParameter("userdate");
+		String userdateto= request.getParameter("userdateto");
 		
 		
 
@@ -1327,7 +1348,11 @@ public class WMReportController {
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
 		    table.setHeaderRows(3);
-		    CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto, Element.ALIGN_LEFT, 13, 1, bf8Bold);
+		    if(userdate.equals("")) {
+		    	CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status, Element.ALIGN_LEFT, 13, 1, bf8Bold);
+		    }else {
+		    	CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto, Element.ALIGN_LEFT, 13, 1, bf8Bold);
+		    }
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 1, bf8Bold);
