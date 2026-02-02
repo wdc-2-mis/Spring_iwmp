@@ -279,7 +279,7 @@ document.addEventListener("change", function(e) {
         	if(mgnrega===""){
         		
         		if(other===""){
-        			alert("Please Enter Total Estimated Cost (Rs. in Lakhs)");
+        			alert("Please Enter at list one feild for,\n Total Estimated Cost (Rs. in Lakhs)");
         			return false;
             	}
         	}
