@@ -39,6 +39,17 @@ public class WatershedPunarutthanBean {
     private String no_work;
     private BigDecimal totalcost;
     private Integer implementation_id;
+    private Integer plan_work;
+    private Integer impl_work;
+    private Integer not_impl;
+    private BigDecimal wdf_cost;
+    private BigDecimal mgnrega_cost;
+    private BigDecimal other_cost;
+    private BigDecimal totalexp;
+    private BigDecimal wdf_exp;
+    private BigDecimal mgnrega_exp;
+    private BigDecimal other_exp;
+    
    
 	public Integer getDistrict1() {
 		return district1;
@@ -208,7 +219,66 @@ public class WatershedPunarutthanBean {
 	public void setImplementation_id(Integer implementation_id) {
 		this.implementation_id = implementation_id;
 	}
+	public Integer getPlan_work() {
+		return plan_work;
+	}
+	public void setPlan_work(Integer plan_work) {
+		this.plan_work = plan_work;
+	}
+	public Integer getImpl_work() {
+		return impl_work;
+	}
+	public void setImpl_work(Integer impl_work) {
+		this.impl_work = impl_work;
+	}
+	public Integer getNot_impl() {
+		return not_impl;
+	}
+	public void setNot_impl(Integer not_impl) {
+		this.not_impl = not_impl;
+	}
+	public BigDecimal getWdf_cost() {
+		return wdf_cost;
+	}
+	public void setWdf_cost(BigDecimal wdf_cost) {
+		this.wdf_cost = wdf_cost;
+	}
+	public BigDecimal getMgnrega_cost() {
+		return mgnrega_cost;
+	}
+	public void setMgnrega_cost(BigDecimal mgnrega_cost) {
+		this.mgnrega_cost = mgnrega_cost;
+	}
+	public BigDecimal getOther_cost() {
+		return other_cost;
+	}
+	public void setOther_cost(BigDecimal other_cost) {
+		this.other_cost = other_cost;
+	}
+	public BigDecimal getTotalexp() {
+		return totalexp;
+	}
+	public void setTotalexp(BigDecimal totalexp) {
+		this.totalexp = totalexp;
+	}
+	public BigDecimal getWdf_exp() {
+		return wdf_exp;
+	}
+	public void setWdf_exp(BigDecimal wdf_exp) {
+		this.wdf_exp = wdf_exp;
+	}
+	public BigDecimal getMgnrega_exp() {
+		return mgnrega_exp;
+	}
+	public void setMgnrega_exp(BigDecimal mgnrega_exp) {
+		this.mgnrega_exp = mgnrega_exp;
+	}
+	public BigDecimal getOther_exp() {
+		return other_exp;
+	}
+	public void setOther_exp(BigDecimal other_exp) {
+		this.other_exp = other_exp;
+	}
 	 
-	
 
 }

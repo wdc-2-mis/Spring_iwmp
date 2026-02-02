@@ -64,6 +64,15 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	@Value("${getPunarutthanCompleteImplementation}")
 	String getPunarutthanCompleteImplementation;
 	
+	@Value("${getPunarutthanStData}")
+	String getPunarutthanStDetails;
+	
+	@Value("${getPunarutthanDistData}")
+	String getPunarutthanDistDetails;
+	
+	@Value("${getPunarutthanProjData}")
+	String getPunarutthanProjDetails;
+	
 	@Override
 	public LinkedHashMap<String, String> getProjectListMis(int distCodelgd) {
 		
@@ -857,6 +866,71 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		}
 		
 		return str;
+	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptStData() {
+
+		List<WatershedPunarutthanBean> getPunarutthanRptStData = new ArrayList<WatershedPunarutthanBean>();
+		
+		String hql = getPunarutthanStDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+			getPunarutthanRptStData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getPunarutthanRptStData;
+	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptDistData(Integer stcd) {
+
+		List<WatershedPunarutthanBean> getPunarutthanRptDistData = new ArrayList<WatershedPunarutthanBean>();
+		
+		String hql = getPunarutthanDistDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+			getPunarutthanRptDistData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getPunarutthanRptDistData;
+	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode) {
+
+		List<WatershedPunarutthanBean> getPunarutthanRptProjData = new ArrayList<WatershedPunarutthanBean>();
+		
+		String hql = getPunarutthanProjDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("dcode", dcode);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+			getPunarutthanRptProjData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getPunarutthanRptProjData;
 	}
 
 }

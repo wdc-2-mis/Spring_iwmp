@@ -108,7 +108,20 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 		return dao.completePunarutthanImplementation(assetid, userid);
 	}
 	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptStData() {
+		return dao.punarutthanRptStData();
+	}
 	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptDistData(Integer stcd) {
+		return dao.punarutthanRptDistData(stcd);
+	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode) {
+		return dao.punarutthanRptProjData(dcode);
+	}
 	
 
 }
