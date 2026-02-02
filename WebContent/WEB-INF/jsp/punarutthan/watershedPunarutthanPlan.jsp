@@ -584,7 +584,7 @@ display: none; /* Hidden by default */
                     </tr>
                     <tr>
                     <td>
-                        <label>Upload Photographs<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
+                        <label>Upload Photographs of Structure before the Work<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
                      <td> <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>

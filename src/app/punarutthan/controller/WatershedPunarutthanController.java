@@ -272,6 +272,67 @@ public class WatershedPunarutthanController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/getWatershedPunarutthanPlanImplement", method = RequestMethod.POST)
+	public ModelAndView getWatershedPunarutthanPlanImplement1(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedPunarutthanBean> dataListd = new ArrayList<WatershedPunarutthanBean>();
+		List<WatershedPunarutthanBean> comdataListc = new ArrayList<WatershedPunarutthanBean>();
+		List<WatershedPunarutthanBean> complist = new ArrayList<WatershedPunarutthanBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("punarutthan/watershedPunarutthanPlanImplement");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				String username = session.getAttribute("username").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getPunarutthanStateDist(regId);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				int stCodelgd = 0;
+				int distCodelgd = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+					stCodelgd=bean.getState_codelgd();
+					distCodelgd=bean.getDistrict_codelgd();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
+				mav.addObject("StructureList", ser.getStructureListMis());
+				
+				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  mav.addObject("comdataList",complist);
+				  mav.addObject("comdataListSize",complist.size());
+				  
+				  dataListd=ser.getPunarutthanDraftImplementation(session.getAttribute("loginID").toString());
+				  mav.addObject("dataListd",dataListd);
+				  mav.addObject("dataListSized",dataListd.size());
+				  
+				  comdataListc=ser.getPunarutthanCompleteImplementation(session.getAttribute("loginID").toString());
+				  mav.addObject("comdataListc",comdataListc);
+				  mav.addObject("comdataListSizec",comdataListc.size());
+				 
+			} 
+			else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} 
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	@RequestMapping(value = "/getWatershedPunarutthanPlanImpl", method = RequestMethod.POST)
 	public ModelAndView getWatershedPunarutthanPlanImpl(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);

@@ -17,6 +17,13 @@ function editChangedata(plan_id){
 	document.punarutthan.method="post";
 	document.punarutthan.submit();
 }
+
+function editChancel(){
+	
+    document.punarutthan.action="getWatershedPunarutthanPlanImplement";
+	document.punarutthan.method="post";
+	document.punarutthan.submit();
+}
 function validateDecimal(input, decimalPlaces) {
     // Allow only numbers and one decimal point
     const regex = new RegExp(`^\\d*(\\.\\d{0,${decimalPlaces}})?$`);
@@ -468,7 +475,7 @@ display: none; /* Hidden by default */
               <div class="form-group col-3">
                     <label for="state"><b>State Name:</b></label><br/>
                     <c:out value="${data.stname}"/>
-                    <input type="hidden" name="stCode" value="${data.st_code}" />
+                    <input type="hidden" name="stCode" id="stCode" value="${data.st_code}" />
               </div>
                 
               <div class="form-group col-3">
@@ -531,7 +538,7 @@ display: none; /* Hidden by default */
                     </tr>
                     <tr>
                    <td>
-                        <label>Upload Photographs<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
+                        <label>Upload Photographs of Structure after the Work<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
                      <td>   <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
@@ -549,6 +556,8 @@ display: none; /* Hidden by default */
 	
         <div class="form-group text-left">
             <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Save"/>
+        &nbsp;  &nbsp; &nbsp; 
+        <input type="button" class="btn btn-info" id="cancelbtn" name="cancelbtn" onclick="editChancel();"  value ="Cancel"/>
         </div>
         </div>
 		</c:forEach>
