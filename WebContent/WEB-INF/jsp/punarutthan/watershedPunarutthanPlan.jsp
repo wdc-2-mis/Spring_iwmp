@@ -279,7 +279,7 @@ document.addEventListener("change", function(e) {
         	if(mgnrega===""){
         		
         		if(other===""){
-        			alert('At least one entry is required in the "Total Estimated Cost (in lakh rupees)" field.');
+        			alert('At least one entry is required in the "Total Estimated Cost (Rs. in Lakhs)" field.');
         			return false;
             	}
         	}
