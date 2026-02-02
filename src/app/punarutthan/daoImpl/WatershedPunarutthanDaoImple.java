@@ -614,7 +614,7 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		         {
 		             MultipartFile image = photos.get(i);
 		             if (!image.isEmpty()) {
-		            	 Wdcpmksy1PunarutthanPlanImplementationPhoto photo = new Wdcpmksy1PunarutthanPlanImplementationPhoto();
+		            	Wdcpmksy1PunarutthanPlanImplementationPhoto photo = new Wdcpmksy1PunarutthanPlanImplementationPhoto();
 		                photo.setWdcpmksy1PunarutthanPlanImplementation(data);
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));

@@ -177,13 +177,15 @@ document.addEventListener("change", function(e) {
             }
             // ALERT IF GPS OR TIMESTAMP MISSING
             if (!latInput.value || !lngInput.value || !tsInput.value) {
-                if (!confirm("This photo does NOT contain GPS or timestamp.\nContinue?")) {
-                    input.value = ""; // Clear the input if user cancels
-                    latInput.value = "";
-                    lngInput.value = "";
-                    tsInput.value = "";
-                    return;
-                }
+            	alert("This photo does NOT contain Geo-referenced or timestamp.\n Please select correct photo?");
+              //  if (!confirm("This photo does NOT contain GPS or timestamp.\nContinue?")) {
+                 //   input.value = ""; // Clear the input if user cancels
+                 //   latInput.value = "";
+                 //   lngInput.value = "";
+                 //   tsInput.value = "";
+                    e.target.value = "";
+                    return false;
+              //  }
             }
         });
 
@@ -197,8 +199,8 @@ document.addEventListener("change", function(e) {
     window.addPhotoField = function() {
         var container = document.getElementById("photoContainer");
         var inputs = container.getElementsByClassName("photo-input");
-        if (inputs.length >= 2) {
-            alert("Maximum 2 photographs can be uploaded.");
+        if (inputs.length >= 1) {
+            alert("Maximum 1 photographs can be uploaded.");
             return;
         }
         var div = document.createElement("div");
@@ -248,7 +250,7 @@ document.addEventListener("change", function(e) {
             return false;
         }
 
-        var wdf = document.getElementById("wdf").value;
+    /*    var wdf = document.getElementById("wdf").value;
         if (!wdf || wdf <= 0) {
             alert("Please enter Estimated Cost from WDF");
             document.getElementById("wdf").focus();
@@ -267,8 +269,22 @@ document.addEventListener("change", function(e) {
             alert("Please enter Estimated Cost from Other Source");
             document.getElementById("other").focus();
             return false;
-        }
+        }  */
         
+        var wdf = document.getElementById("wdf").value;
+        var mgnrega = document.getElementById("mgnrega").value;
+        var other = document.getElementById("other").value;
+        if (wdf==="") {
+        	
+        	if(mgnrega===""){
+        		
+        		if(other===""){
+        			alert("Please Enter Total Estimated Cost (Rs. in Lakhs)");
+        			return false;
+            	}
+        	}
+            
+        }
         
      // 7. Photo validation (count & size)
         var photoInputs = document.getElementsByClassName("photo-input");
@@ -287,8 +303,8 @@ document.addEventListener("change", function(e) {
             alert("Minimum 1 photographs required.");
             return false;
         }
-        if (totalFiles > 2) {
-            alert("Maximum 2 photographs allowed.");
+        if (totalFiles > 1) {
+            alert("Maximum 1 photographs allowed.");
             return false;
         }
         if(confirm("Do you want to save Watershed Punarutthan Planing ?")) {
@@ -546,21 +562,21 @@ display: none; /* Hidden by default */
                     		<th colspan="4" class="text-left">Total Estimated Cost (Rs. in Lakhs)  </th>
                 	</tr>
                     <tr>
-                    <td>Estimated Cost from WDF<span style="color:red;">*</span></td>
+                    <td>Estimated Cost from WDF</td>
                     
                      <td>   <input type="text" id="wdf" name="wdf" autocomplete="off"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
-                    <td>Estimated Cost from VB G RAM G / MGNREGA<span style="color:red;">*</span></td>
+                    <td>Estimated Cost from VB G RAM G / MGNREGA</td>
                     
                      <td>   <input type="text" id="mgnrega" name="mgnrega" autocomplete="off"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
-                    <td>Other Source<span style="color:red;">*</span></td>
+                    <td>Other Source</td>
                     
                      <td>   <input type="text" id="other" name="other" autocomplete="off"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
@@ -569,24 +585,30 @@ display: none; /* Hidden by default */
                     <tr>
                     <td>
                         <label>Upload Photographs<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
-                     <td>   <div id="photoContainer">
+                     <td> <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
                                 <input type="hidden" name="latitude[]" class="latitude">
                                 <input type="hidden" name="longitute[]" class="longitude">
                                 <input type="hidden" name="photoTimestamp[]" class="photoTimestamp">
                             </div>
-                        </div>
-                        <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button>
+                          </div>
+                        <!-- <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button> -->
                         <small class="text-danger" id="photoError"></small>
                     </td>
+                </tr>
+                <tr>
+	                <td colspan="2">
+	                <div class="form-group text-left">
+            			<input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Save"/>
+        			</div>
+	                </td>
+	                
                 </tr>
             </table>
         </div>
 
-        <div class="form-group text-left">
-            <input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();" value="Submit"/>
-        </div>
+        
 
     </form:form>
 </div>
@@ -603,11 +625,11 @@ display: none; /* Hidden by default */
                                 <th>Project Name</th>
                                 <th>Village Name</th>
                                 <th>Structure Name</th>
-                                <th>No. of Maintenance work to do</th>
+                                <th>Maintenance work to do</th>
                                 <th>Estimated Cost from WDF</th>
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
-                                <th>Other Source</th>
-                                <th>Total Estimated Cost</th>
+                                <th>Estimated Cost from Other Source</th>
+                                
                             </tr>
                           
                         </thead>
@@ -646,7 +668,7 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.wdf}" /></td>
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
+ 								
 								
  								
 							<%--	<td class="text-right">
@@ -683,11 +705,11 @@ display: none; /* Hidden by default */
                                 <th>Project Name</th>
                                 <th>Village Name</th>
                                 <th>Structure Name</th>                                
-                                <th>No. of Maintenance work to do</th>
+                                <th>Maintenance work to do</th>
                                 <th>Estimated Cost from WDF</th>
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
-                                <th>Other Source</th>
-                                <th>Total Estimated Cost</th>
+                                <th>Estimated Cost from Other Source</th>
+                                
                             </tr>
                           
                         </thead>
@@ -724,7 +746,7 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.wdf}" /></td>
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
+ 								
 								
  								
 							<%--	<td class="text-right">

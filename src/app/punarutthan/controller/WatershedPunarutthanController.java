@@ -104,7 +104,7 @@ public class WatershedPunarutthanController {
 	public ModelAndView saveWatershedPunarutthanPlan(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedPunarutthanBean userfileup)
 			throws Exception {
-		System.out.println("kdy");
+		//System.out.println("kdy");
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
 		String result = "fail";

@@ -177,13 +177,15 @@ document.addEventListener("change", function(e) {
             }
             // ALERT IF GPS OR TIMESTAMP MISSING
             if (!latInput.value || !lngInput.value || !tsInput.value) {
-                if (!confirm("This photo does NOT contain GPS or timestamp.\nContinue?")) {
-                    input.value = ""; // Clear the input if user cancels
-                    latInput.value = "";
-                    lngInput.value = "";
-                    tsInput.value = "";
-                    return;
-                }
+            	alert("This photo does NOT contain Geo-referenced or timestamp.\n Please select correct photo?");
+                //  if (!confirm("This photo does NOT contain GPS or timestamp.\nContinue?")) {
+                   //   input.value = ""; // Clear the input if user cancels
+                   //   latInput.value = "";
+                   //   lngInput.value = "";
+                   //   tsInput.value = "";
+                      e.target.value = "";
+                      return false;
+                //  }
             }
         });
 
@@ -228,24 +230,17 @@ document.addEventListener("change", function(e) {
         }
 
         var wdf = document.getElementById("wdf").value;
-        if (!wdf || wdf <= 0) {
-            alert("Please enter Estimated Cost from WDF");
-            document.getElementById("wdf").focus();
-            return false;
-        }
-        
         var mgnrega = document.getElementById("mgnrega").value;
-        if (!mgnrega || mgnrega <= 0) {
-            alert("Please enter Estimated Cost from VB G RAM G / MGNREGA");
-            document.getElementById("mgnrega").focus();
-            return false;
-        }
-        
         var other = document.getElementById("other").value;
-        if (!other || other <= 0) {
-            alert("Please enter Estimated Cost from Other Source");
-            document.getElementById("other").focus();
-            return false;
+        if (wdf==="") {
+        	
+        	if(mgnrega===""){
+        		
+        		if(other===""){
+        			alert("Please Enter Total Estimated Cost (Rs. in Lakhs)");
+        			return false;
+            	}
+        	}
         }
         
         
@@ -506,37 +501,38 @@ display: none; /* Hidden by default */
                  <tr>  
                     <td>Maintenance work to be done<span style="color:red;">*</span></td>
                     <td>
-                        <input type="text" id="work" name="work" autocomplete="off" value="${data.no_work}" required/>
+                    	<textarea id="work" name="work" rows="3" cols="50" required>${data.no_work}</textarea>
+                    
                     </td>
                     </tr>
                     <tr>
                     		<th colspan="4" class="text-left">Total Estimated Cost (Rs. in Lakhs)  </th>
                 	</tr>
                     <tr>
-                    <td>Estimated Cost from WDF<span style="color:red;">*</span></td>
+                    <td>Estimated Cost from WDF</td>
                     
                      <td>   <input type="text" id="wdf" name="wdf" autocomplete="off" value="${data.wdf}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
-                    <td>Estimated Cost from VB G RAM G / MGNREGA<span style="color:red;">*</span></td>
+                    <td>Estimated Cost from VB G RAM G / MGNREGA</td>
                     
                      <td>   <input type="text" id="mgnrega" name="mgnrega" autocomplete="off" value="${data.mgnrega}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
-                    <td>Other Source<span style="color:red;">*</span></td>
+                    <td>Other Source</td>
                     
                     <td>   <input type="text" id="other" name="other" autocomplete="off" value="${data.other}"
                                maxlength="12" oninput="validateDecimal(this, 2)" required/>
                     </td>
                     </tr>
                     <tr>
-                    <td>
-                        <label><b>Upload Photographs<!--  (Minimum 1, Maximum 2) -->:</b></label>
-                        <div id="photoContainer">
+                   <td>
+                        <label>Upload Photographs<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
+                     <td>   <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
                                 <input type="file" name="photos" class="form-control photo-input" accept="image/*" required/>
                                 <input type="hidden" name="latitude[]" class="latitude">

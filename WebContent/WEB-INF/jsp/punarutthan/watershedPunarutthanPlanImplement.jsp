@@ -182,7 +182,7 @@ document.addEventListener("change", function(e) {
                     latInput.value = "";
                     lngInput.value = "";
                     tsInput.value = "";
-                    return;
+                    return false;
                 }
             }
         });
@@ -488,11 +488,10 @@ display: none; /* Hidden by default */
                                 <th>Project Name</th>
                                 <th>Village Name</th>
                                 <th>Structure Name</th>
-                                <th>No. of Maintenance work to do</th>
+                                <th>Maintenance work to do</th>
                                 <th>Estimated Cost from WDF</th>
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
-                                <th>Other Source</th>
-                                <th>Total Estimated Cost</th>
+                                <th>Estimated Cost from Other Source</th>
                                 <th>Action</th>
                             </tr>
                           
@@ -530,7 +529,7 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.wdf}" /></td>
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
+ 								
 								<td><button class="btn btn-warning btn-sm" onclick="implementPlaling(${data.plan_id})"> Implement </button>
  								
 							<%--	<td class="text-right">
@@ -576,11 +575,10 @@ display: none; /* Hidden by default */
                                 <th>Project Name</th>
                                 <th>Village Name</th>
                                 <th>Structure Name</th>
-                                <th>No. of Maintenance work to do</th>
+                                <th>Maintenance work to do</th>
                                 <th>Estimated Cost from WDF</th>
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
-                                <th>Other Source</th>
-                                <th>Total Estimated Cost</th>
+                                <th>Estimated Cost from Other Source</th>
                             </tr>
                           
                         </thead>
@@ -619,8 +617,6 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.wdf}" /></td>
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
-								
  								
 							<%--	<td class="text-right">
 									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
@@ -656,11 +652,11 @@ display: none; /* Hidden by default */
                                 <th>Project Name</th>
                                 <th>Village Name</th>
                                 <th>Structure Name</th>                                
-                                <th>No. of Maintenance work to do</th>
+                                <th>Maintenance work to do</th>
                                 <th>Estimated Cost from WDF</th>
                                 <th>Estimated Cost from VB G RAM G / MGNREGA</th>
-                                <th>Other Source</th>
-                                <th>Total Estimated Cost</th>
+                                <th>Estimated Cost from Other Source</th>
+                                
                             </tr>
                           
                         </thead>
@@ -697,8 +693,6 @@ display: none; /* Hidden by default */
 								<td class="text-right"> <c:out value="${data.wdf}" /></td>
  								<td class="text-right"> <c:out value="${data.mgnrega}" /></td>
  								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.totalcost}" /></td>
-								
  								
 							<%--	<td class="text-right">
 									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
