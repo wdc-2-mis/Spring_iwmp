@@ -30,6 +30,10 @@ public class WMSocialMediaAnalysisDaoImpl implements WMSocialMediaAnalysisDao{
 		@Value("${getWmAnalysisReport}") 
 		String getWmAnalysisReport;
 		
+		@Value("${getWmAnalysisReportScreenshot}") 
+		String getWmAnalysisReportScreenshot;
+		
+		
 		@Override
 		public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -89,6 +93,37 @@ public class WMSocialMediaAnalysisDaoImpl implements WMSocialMediaAnalysisDao{
 		        session.beginTransaction();
 
 		        SQLQuery query = session.createSQLQuery(getWmAnalysisReport);
+		        query.setInteger("stcd", stcd);
+		        query.setInteger("dcode", dcode);
+		        query.setInteger("media", media);
+		        query.setString("orderBy", orderBy);
+
+		        query.setResultTransformer(
+		            Transformers.aliasToBean(SocialMediaReport.class));
+
+		        list = query.list();
+		        session.getTransaction().commit();
+
+		    } catch (Exception e) {
+		        session.getTransaction().rollback();
+		        e.printStackTrace();
+		    }
+
+		    return list;
+		}
+
+
+		@Override
+		public List<SocialMediaReport> getWmAnalysisReportScreenshot(Integer stcd, Integer dcode, Integer media,
+				String orderBy) {
+
+		    List<SocialMediaReport> list = new ArrayList<>();
+		    Session session = sessionFactory.getCurrentSession();
+
+		    try {
+		        session.beginTransaction();
+
+		        SQLQuery query = session.createSQLQuery(getWmAnalysisReportScreenshot);
 		        query.setInteger("stcd", stcd);
 		        query.setInteger("dcode", dcode);
 		        query.setInteger("media", media);

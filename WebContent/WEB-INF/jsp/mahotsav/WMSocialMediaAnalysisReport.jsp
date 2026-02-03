@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Report WM1 - Watershed Mahotsav Social Media Analysis as per Entries</title>
+<title>Report SMC1 - Watershed Mahotsav Social Media Analysis as per Entries</title>
 
 
 
@@ -38,122 +38,96 @@ $(document).ready(function () {
 });
 
 
-function downloaddPDF() {
-    var form = document.mohotsavRpt;
-
-    var stSelect = document.getElementById("state");
-    var stName = stSelect.options[stSelect.selectedIndex].text;
-
-    var distSelect = document.getElementById("district");
-    var distValue = distSelect.value; // district code
-    var distName = distSelect.options[distSelect.selectedIndex].text; // district name for PDF
-
-    var platformSelect = document.getElementById("platform");
-    var platformValue = platformSelect.value;
-    var platformName = platformValue === "0" ? "All Platform" : platformSelect.options[platformSelect.selectedIndex].text;
-
-    var orderBySelect = document.getElementById("orderBy");
-    var orderByValue = orderBySelect ? orderBySelect.value : "views";
-
-    document.getElementById("stName").value = stName;
-    document.getElementById("distName").value = distName;
-    document.getElementById("mediaName").value = platformName;
-
-    // Set the numeric value for backend
-    distSelect.value = distValue;
-
-    document.getElementById("orderByVal").value = orderByValue;
-
-    form.action = "downloadPDFwmSocialMediaAnalysisReport";
-    form.method = "post";
-    form.submit();
-
-    form.action = "wmSocialMediaAnalysisReport"; // reset
-}
-
-
-
 function closeLargeImagePopup() {
 	document.getElementById('largeImagePopup').style.display = 'none';
 }
 
 function showimage(file) {
 
-//		 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
+// 		document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/wmMediaViewsScreenshot/' + file;		
 	// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/wmMediaViewsScreenshot/' + file;
 
 	//local				
 	document.getElementById('largeImage').src = 'resources/images/wmMediaViewsScreenshot/'	+ file;
 	document.getElementById('largeImagePopup').style.display = 'block';
 }
-// function downloadsPDF() {
-
-//     var stSelect = document.getElementById("state");
-//     var distSelect = document.getElementById("district");
-//     var platSelect = document.getElementById("platform");
-
-//     document.getElementById("stName").value =
-//         stSelect.options[stSelect.selectedIndex].text;
-
-//     document.getElementById("distName").value =
-//         distSelect.options[distSelect.selectedIndex].text;
-
-//     document.getElementById("mediaName").value =
-//         platSelect.options[platSelect.selectedIndex].text;
-
-//     document.getElementById("orderByVal").value =
-//         document.getElementById("orderBy")?.value || "views";
-
-//     document.mohotsavRpt.action = "downloadPDFwmSocialMediaAnalysisReport";
-//     document.mohotsavRpt.method = "post";
-//     document.mohotsavRpt.submit();
-    
-// }
 
 function downloadsPDF() {
 
-    var mainForm = document.mohotsavRpt;
-
-    /* ===== CREATE TEMP FORM ===== */
     var pdfForm = document.createElement("form");
     pdfForm.method = "post";
     pdfForm.action = "downloadPDFwmSocialMediaAnalysisReport";
 
-    /* ===== COPY REQUIRED FIELDS ===== */
-    var fields = [
-        "state", "district", "platform",
-        "stName", "distName", "mediaName",
-        "orderBy", "orderByVal"
-    ];
+    function addField(name, value) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        pdfForm.appendChild(input);
+    }
+    addField("state", document.getElementById("state").value);
+    addField("district", document.getElementById("district").value);
+    addField("platform", document.getElementById("platform").value);
 
-    fields.forEach(function (name) {
-        var el = document.getElementById(name);
-        if (el) {
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = name;
-            input.value = el.value;
-            pdfForm.appendChild(input);
-        }
-    });
+    var orderByEl = document.getElementById("orderBy");
+    addField("orderBy", orderByEl ? orderByEl.value : "views");
 
-    /* ===== SET DISPLAY NAMES ===== */
-    document.getElementById("stName").value =
-        document.getElementById("state").selectedOptions[0].text;
+    var screenshotEl = document.getElementById("screenshotOnly");
+    addField("screenshotOnly", screenshotEl && screenshotEl.checked ? "Y" : "");
 
-    document.getElementById("distName").value =
-        document.getElementById("district").selectedOptions[0].text;
+    addField("stName",
+        document.getElementById("state").selectedOptions[0].text);
 
-    document.getElementById("mediaName").value =
-        document.getElementById("platform").selectedOptions[0].text;
+    addField("distName",
+        document.getElementById("district").selectedOptions[0].text);
 
-    /* ===== SUBMIT TEMP FORM ===== */
+    addField("mediaName",
+        document.getElementById("platform").selectedOptions[0].text);
+
     document.body.appendChild(pdfForm);
     pdfForm.submit();
     document.body.removeChild(pdfForm);
 }
 
+function exportExcel() {
+
+    var pdfForm = document.createElement("form");
+    pdfForm.method = "post";
+    pdfForm.action = "downloadExcelwmSocialMediaAnalysisReport";
+
+    function addField(name, value) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.value = value;
+        pdfForm.appendChild(input);
+    }
+    addField("state", document.getElementById("state").value);
+    addField("district", document.getElementById("district").value);
+    addField("platform", document.getElementById("platform").value);
+
+    var orderByEl = document.getElementById("orderBy");
+    addField("orderBy", orderByEl ? orderByEl.value : "views");
+
+    var screenshotEl = document.getElementById("screenshotOnly");
+    addField("screenshotOnly", screenshotEl && screenshotEl.checked ? "Y" : "");
+
+    addField("stName",
+        document.getElementById("state").selectedOptions[0].text);
+
+    addField("distName",
+        document.getElementById("district").selectedOptions[0].text);
+
+    addField("mediaName",
+        document.getElementById("platform").selectedOptions[0].text);
+
+    document.body.appendChild(pdfForm);
+    pdfForm.submit();
+    document.body.removeChild(pdfForm);
+}
 </script>
+
+
 
 <style>
 
@@ -248,7 +222,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 <div class="col formheading" style>
 <h4 class="text-center mb-4 text-decoration-underline"
     style="color:white;">
-    Report WM1 - Watershed Mahotsav Social Media Analysis as per Entries
+    Report SMC1 - Watershed Mahotsav Social Media Analysis as per Entries
 </h4>
 
 
@@ -262,7 +236,9 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 <input type="hidden" name="mediaName" id="mediaName">
 <!-- <input type="hidden" name="orderBy" id="orderByVal"> -->
 <br>
-<div class="row mb-4 align-items-end g-3">
+
+    <!-- STATE -->
+    <div class="row mb-4 align-items-end g-3">
 
     <!-- STATE -->
     <div class="col-lg-3">
@@ -270,12 +246,13 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         <select name="state" id="state" class="form-select">
             <option value="0">--All State--</option>
             <c:forEach items="${stateList}" var="s">
-                <option value="${s.key}" ${s.key eq state ? 'selected' : ''}>${s.value}</option>
+                <option value="${s.key}"
+                    ${s.key eq state ? 'selected' : ''}>
+                    ${s.value}
+                </option>
             </c:forEach>
         </select>
     </div>
-    
-    
 
     <!-- DISTRICT -->
     <div class="col-lg-3">
@@ -283,7 +260,10 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         <select name="district" id="district" class="form-select">
             <option value="0">--All District--</option>
             <c:forEach items="${districtList}" var="d">
-                <option value="${d.value}" ${d.value eq district ? 'selected' : ''}>${d.key}</option>
+                <option value="${d.value}"
+                    ${d.value eq district ? 'selected' : ''}>
+                    ${d.key}
+                </option>
             </c:forEach>
         </select>
     </div>
@@ -294,19 +274,37 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         <select name="platform" id="platform" class="form-select">
             <option value="0">--All Platform--</option>
             <c:forEach items="${platformList}" var="p">
-                <option value="${p.key}" ${p.key eq platform ? 'selected' : ''}>${p.value}</option>
+                <option value="${p.key}"
+                    ${p.key eq platform ? 'selected' : ''}>
+                    ${p.value}
+                </option>
             </c:forEach>
         </select>
     </div>
 
-<div class="col-auto d-flex align-items-end">
-    <button type="submit" class="btn btn-primary px-4">
-        Get
-    </button>
-</div>
+    <!-- CHECKBOX -->
+    <div class="col-lg-2">
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="checkbox"
+                   id="screenshotOnly"
+                   name="screenshotOnly"
+                   value="Y"
+                   ${screenshotOnly eq 'Y' ? 'checked' : ''}>
+            <label class="form-check-label" for="screenshotOnly">
+                Screenshot Uploaded
+            </label>
+        </div>
+    </div>
+
+    <!-- GET BUTTON -->
+    <div class="col-lg-1 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary px-4">
+            Get
+        </button>
+    </div>
 
 </div>
-<!-- ORDER BY -->
 <c:if test="${wmListSize gt 0}">
     <div class="row mb-3">
         <div class="col-lg-3">
@@ -328,15 +326,16 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 </c:if>
 
 
+
 </form>
 
 <div class="nav-item text-left mb-2">
 				<c:if test="${not empty wmList}">
-<!-- 					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()">Excel</button> -->
-			<button type="button" name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadsPDF()">PDF</button>
-					
+					<button type="button" name="exportExcel" id="exportExcel" class="btn btn-info" onclick="exportExcel()">Excel</button>
+					<button type="button" name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadsPDF()">PDF</button>
+					<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
 				</c:if>
-				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
+				
 			</div>
 			
 <c:if test="${wmListSize > 0}">
@@ -389,9 +388,6 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
         </c:otherwise>
     </c:choose>
 </td>
-<%-- 						<td class="text-center"> <c:if test="${not empty dt.mediaFileName}"> --%>
-<!--         				<a href="#" class="showImage" data-toggle="modal" style="color: blue;" -->
-<%--            				onclick="showimage('${dt.mediaFileName}')">view</a></c:if></td> --%>
 				</tr>
 			</c:forEach>
 </tbody>

@@ -46,4 +46,10 @@ public class WMSocialMediaAnalysisServiceImpl implements WMSocialMediaAnalysisSe
 		return wmDao.getWMSocialMediaAnalysisReport(stcd, dcode, media, orderBy);
 	}
 
+	@Override
+	public List<SocialMediaReport> getWmAnalysisReportScreenshot(Integer stcd, Integer dcode, Integer media,
+			String orderBy) {
+		return wmDao.getWmAnalysisReportScreenshot(stcd, dcode, media, orderBy);
+	}
+
 }
