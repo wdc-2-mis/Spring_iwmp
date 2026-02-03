@@ -73,6 +73,9 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	@Value("${getPunarutthanProjData}")
 	String getPunarutthanProjDetails;
 	
+	@Value("${getWatershedPunarutthanPlanCompletetoImpl}")
+	String getWatershedPunarutthanPlanCompletetoImpl;
+	
 	@Override
 	public LinkedHashMap<String, String> getProjectListMis(int distCodelgd) {
 		
@@ -931,6 +934,67 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		}
 			
 		return getPunarutthanRptProjData;
+	}
+
+
+	@Override
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(String userid) {
+		
+		String getReport=getWatershedPunarutthanPlanCompletetoImpl;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		try {
+				session.beginTransaction();
+				Query query= session.createSQLQuery(getReport);
+				query.setString("usrid",userid); 
+				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public List<String> getImageWatershedPunarutthanPlan(Integer planid) {
+		
+		Session session = sessionFactory.getCurrentSession();
+		List<Wdcpmksy1PunarutthanPlanPhoto> list = new ArrayList<Wdcpmksy1PunarutthanPlanPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from Wdcpmksy1PunarutthanPlanPhoto where wdcpmksy1PunarutthanPlan.planId = :planid");
+			query.setInteger("planid", planid);
+			list = query.list();
+			for (Wdcpmksy1PunarutthanPlanPhoto photo : list) 
+			{
+				//server
+				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+			//	imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			//	System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 
 }

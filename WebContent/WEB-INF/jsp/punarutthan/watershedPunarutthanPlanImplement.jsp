@@ -304,9 +304,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/prabhatpheri/' + imageSrc;
-//  	document.getElementById('largeImage').src = 'resources/images/prabhatpheri/' + imageSrc;											
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/planing/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/punarutthan/planing/' + imageSrc;
+//  document.getElementById('largeImage').src = 'resources/images/planing/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -619,7 +619,7 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.other}" /></td>
  								
 							<%--	<td class="text-right">
-									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
+									<a href="#" data-id="${data.plan_id}" class="showImage1" data-toggle="modal" style ="color: blue;">Image</a> 
 								</td> --%>
 					</tr>
  						</c:forEach> 
@@ -695,7 +695,7 @@ display: none; /* Hidden by default */
  								<td class="text-right"> <c:out value="${data.other}" /></td>
  								
 							<%--	<td class="text-right">
-									<a href="#" data-id="${data.plan_id}" class="showImage" data-toggle="modal" style ="color: blue;">Image</a> 
+									<a href="#" data-id="${data.plan_id}" class="showImage1" data-toggle="modal" style ="color: blue;">Image</a> 
 								</td> --%>
 					</tr>
  						</c:forEach> 

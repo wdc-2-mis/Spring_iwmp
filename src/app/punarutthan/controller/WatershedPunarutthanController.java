@@ -211,6 +211,21 @@ public class WatershedPunarutthanController {
 		return res; 
 	}
 	
+	@RequestMapping(value = "/getImageWatershedPunarutthanPlan", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageMahotsavInaugurationId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("planid") Integer planid){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = ser.getImageWatershedPunarutthanPlan(planid);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+	
 	@RequestMapping(value = "/getWatershedPunarutthanPlanImplement", method = RequestMethod.GET)
 	public ModelAndView getWatershedPunarutthanPlanImplement(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
@@ -248,7 +263,8 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session.getAttribute("loginID").toString());
+				  //complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
 				  mav.addObject("comdataList",complist);
 				  mav.addObject("comdataListSize",complist.size());
 				  
@@ -309,7 +325,8 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session.getAttribute("loginID").toString());
+				 // complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
 				  mav.addObject("comdataList",complist);
 				  mav.addObject("comdataListSize",complist.size());
 				  

@@ -182,10 +182,10 @@ $('#chkSelectAllkd').on('click', function() {
 		$(document).on('click', '.showImage', function(e) {
 			
 			$inaugId = e.target.getAttribute('data-id');
-			$.ajax({
+			$.ajax({  // getImageWatershedPunarutthanPlan
 				type: 'POST',
-				url: "getImageMahotsavInaugurationId",
-				data: { inaugId: $inaugId },
+				url: "getImageWatershedPunarutthanPlan",
+				data: { planid: $inaugId },
 				error: function(xhr, status, er) {
 					console.log(er);
 				},
@@ -197,9 +197,9 @@ $('#chkSelectAllkd').on('click', function() {
 						if (data[i] != null) 
 						{
 						//PRD
-							list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/planing/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//TEST
-						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/Inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/punarutthan/planing/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//Local
 						//	list += '<li><img src="resources/images/inauguration/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 

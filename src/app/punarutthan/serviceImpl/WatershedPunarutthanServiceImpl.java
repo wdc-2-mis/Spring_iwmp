@@ -122,6 +122,18 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	public List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode) {
 		return dao.punarutthanRptProjData(dcode);
 	}
+
+	@Override
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(String userid) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedPunarutthanPlanCompletetoImpl(userid);
+	}
+
+	@Override
+	public List<String> getImageWatershedPunarutthanPlan(Integer planid) {
+		// TODO Auto-generated method stub
+		return dao.getImageWatershedPunarutthanPlan(planid);
+	}
 	
 
 }

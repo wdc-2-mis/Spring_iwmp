@@ -320,9 +320,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/prabhatpheri/' + imageSrc;		
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/prabhatpheri/' + imageSrc;
-//  	document.getElementById('largeImage').src = 'resources/images/prabhatpheri/' + imageSrc;											
+	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/planing/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/punarutthan/planing/' + imageSrc;
+//  document.getElementById('largeImage').src = 'resources/images/planing/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
