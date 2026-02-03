@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Report WM6 - Watershed Mahotsav Social Media Analysis</title>
+<title>Report WM2 - Watershed Mahotsav Social Media Analysis</title>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>

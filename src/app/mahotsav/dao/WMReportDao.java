@@ -27,7 +27,7 @@ public interface WMReportDao {
 
 	List<String> getImageMahotsavProjAtDistLVL(Integer distCode, String imgType);
 	
-	
 	List<WMMediaReviewBean> getWMSocialMediaComDetails(Integer stcode, Integer dcode, Integer platform, String status);
+	List<WMMediaReviewBean> getTotNoOfScrnshtUploaded();
 	
 }

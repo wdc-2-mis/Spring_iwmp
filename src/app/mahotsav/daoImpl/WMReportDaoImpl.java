@@ -67,6 +67,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	@Value("${getWMSocialMediaComDetails}")
 	String getWMSocialMediaComDetails;
 	
+	@Value("${getTotNoOfScrnshtUploaded}")
+	String getTotNoOfScrnshtUploaded;
+	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -357,6 +360,26 @@ public class WMReportDaoImpl implements WMReportDao {
 			query.setInteger("dcode", dcode);
 			query.setParameter("platform", plat);
 			query.setParameter("status", stats);
+			query.setResultTransformer(Transformers.aliasToBean(WMMediaReviewBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (Exception e){
+			session.getTransaction().rollback();
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<WMMediaReviewBean> getTotNoOfScrnshtUploaded() {
+		Session session = sessionFactory.getCurrentSession();
+		List<WMMediaReviewBean> list = new ArrayList<WMMediaReviewBean>();
+		String hql = getTotNoOfScrnshtUploaded;
+		Query query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
 			query.setResultTransformer(Transformers.aliasToBean(WMMediaReviewBean.class));
 			list = query.list();
 			session.getTransaction().commit();

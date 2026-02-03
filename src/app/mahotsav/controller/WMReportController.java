@@ -1433,6 +1433,27 @@ public class WMReportController {
 		return null;
 	}
 	
+    @RequestMapping(value = "/getTotNoOfScrnshtUploaded", method = RequestMethod.GET)
+    public ModelAndView getTotNoOfScrnshtUploaded(HttpServletRequest request, HttpServletResponse response) {
+    	session = request.getSession(true);
+    	ModelAndView mav = new ModelAndView();
+    	
+		if (session != null && session.getAttribute("loginID") != null) {
+			
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			mav = new ModelAndView("mahotsav/wmTotNoOfScrnshtUploaded");
+
+			List<WMMediaReviewBean> list = WMSerice.getTotNoOfScrnshtUploaded();
+			mav.addObject("wmList", list);
+			mav.addObject("wmListSize", list.size());
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+
+        return mav;
+    }
+    
 	
 	
 }

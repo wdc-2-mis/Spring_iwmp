@@ -95,6 +95,12 @@ public class WMReportServiceImpl implements WMReportService{
 		// TODO Auto-generated method stub
 		return WMDao.getWMSocialMediaComDetails(stcode, dcode, platform, status);
 	}
+
+	@Override
+	public List<WMMediaReviewBean> getTotNoOfScrnshtUploaded() {
+		
+		return WMDao.getTotNoOfScrnshtUploaded();
+	}
 	
 
 }

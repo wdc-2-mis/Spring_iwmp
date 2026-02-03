@@ -21,6 +21,9 @@ public class WMMediaReviewBean {
 	private Date updated_date;
 	private String media_url;
 	private String status;
+	private Integer totvideos;
+	private Integer totphotos;
+	
 	public Integer getSt_code() {
 		return st_code;
 	}
@@ -122,6 +125,18 @@ public class WMMediaReviewBean {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public Integer getTotvideos() {
+		return totvideos;
+	}
+	public void setTotvideos(Integer totvideos) {
+		this.totvideos = totvideos;
+	}
+	public Integer getTotphotos() {
+		return totphotos;
+	}
+	public void setTotphotos(Integer totphotos) {
+		this.totphotos = totphotos;
 	}
 	
 	
