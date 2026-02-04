@@ -2,6 +2,7 @@ package app.mahotsav.controller;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -49,6 +50,7 @@ import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import app.bean.AssetIdBean;
 import app.bean.Login;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
@@ -1453,6 +1455,234 @@ public class WMReportController {
 
         return mav;
     }
+    
+    @RequestMapping(value = "/downloadWMTotNoOfScrnshtUploadedPDF", method = RequestMethod.POST)
+	public ModelAndView downloadWMTotNoOfScrnshtUploadedPDF(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		
+
+        List<WMMediaReviewBean> list = WMSerice.getTotNoOfScrnshtUploaded();
+		
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 14, 14, 0);
+			document.addTitle("WM6 - WMSocialMediaAnalysis");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(14);
+		    paragraph3.setSpacingAfter(14);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(4);
+		    table.setWidths(new int[]{2, 8, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(3);
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Number of Screenshot Uploaded", Element.ALIGN_CENTER, 2, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Videos", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Photos", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			
+			int k = 1;
+			Integer totvideos = 0;
+			Integer totphotos = 0;
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getStname()!= null?list.get(i).getStname():"", Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotvideos().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getTotphotos().toString(), Element.ALIGN_RIGHT, 1, 1, bf8);
+			            
+					totvideos = totvideos + list.get(i).getTotvideos();
+					totphotos = totphotos + list.get(i).getTotphotos();
+					k++;
+				}
+			CommonFunctions.insertCell(table, "Grand Total", Element.ALIGN_CENTER, 2, 1, bf10Bold);
+			CommonFunctions.insertCell(table, totvideos.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+			CommonFunctions.insertCell(table, totphotos.toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 13, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report WM3- WM Total Uploaded Screenshot.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+    
+    @RequestMapping(value = "/downloadExcelWMTotNoOfScrnshtUploaded", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelWMTotNoOfScrnshtUploaded(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+    	List<WMMediaReviewBean> list = WMSerice.getTotNoOfScrnshtUploaded();
+		
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded";
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 3, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,6,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,6,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(5,5,2,3); 
+	        sheet.addMergedRegion(mergedRegion);
+			mergedRegion = new CellRangeAddress(list.size()+8,list.size()+8,0,1); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State");  
+			cell.setCellStyle(style);
+				
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total Number of Screenshot Uploaded");  
+			cell.setCellStyle(style);
+			
+			rowhead.createCell(3).setCellStyle(style);
+			
+			rowhead = sheet.createRow(6);
+			rowhead.createCell(0).setCellStyle(style);
+			rowhead.createCell(1).setCellStyle(style);
+			cell = rowhead.createCell(2);
+			cell.setCellValue("Total Videos");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Total Photos");  
+			cell.setCellStyle(style);
+			
+			
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int i=0;i<4;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        Integer totvideos = 0;
+	        Integer totphotos = 0;
+	        for(WMMediaReviewBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getStname());
+	        	row.createCell(2).setCellValue(bean.getTotvideos());
+	        	row.createCell(3).setCellValue(bean.getTotphotos());
+	        	
+	        	totvideos = totvideos + bean.getTotvideos();
+	        	totphotos = totphotos + bean.getTotphotos();
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CellStyle style1 = workbook.createCellStyle();
+	        style1.setBorderTop(BorderStyle.THIN); 
+			style1.setBorderBottom(BorderStyle.THIN);
+			style1.setBorderLeft(BorderStyle.THIN);
+			style1.setBorderRight(BorderStyle.THIN);
+	        style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+			org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+			font1.setFontHeightInPoints((short) 12);
+			font1.setBold(true);
+//			font1.setColor(IndexedColors.WHITE.getIndex());
+			style1.setFont(font1);
+			
+			Row row = sheet.createRow(rowno);
+	        cell = row.createCell(0);
+	        cell.setCellValue("Grand Total");
+	        cell.setCellStyle(style1);
+	        CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        cell = row.createCell(1);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(2);
+	        cell.setCellValue(totvideos);
+	        cell.setCellStyle(style1);
+	        
+	        cell = row.createCell(3);
+	        cell.setCellValue(totphotos);
+	        cell.setCellStyle(style1);
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 3);
+	        String fileName = "attachment; filename=Report WM3 - State Wise.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "mahotsav/wmTotNoOfScrnshtUploaded";
+		
+	}
     
 	
 	
