@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Report WM2 - Watershed Mahotsav Social Media Analysis</title>
+<title>Report SMC2 - Watershed Mahotsav Social Media Analysis</title>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -72,6 +72,18 @@ function downloadPDF(stName,distName,mediaName){
 	document.mohotsavRpt.submit();
 }
 
+function downloadExcel(stName,distName,mediaName){
+    document.getElementById("stName").value=stName;
+    document.getElementById("distName").value=distName;
+    document.getElementById("mediaName").value=mediaName;
+//     document.getElementById("statusName").value=statusName;
+//     document.getElementById("fromDate").value=fromDate;
+//     document.getElementById("toDate").value=toDate;
+    document.mohotsavRpt.action="downloadExcelWMSocialMediaCompAnalysis";
+	document.mohotsavRpt.method="post";
+	document.mohotsavRpt.submit();
+}
+
 
 </script>
 <style>
@@ -111,7 +123,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 
 		
 
-			<div class="col formheading" style="text-decoration: underline;"><h4>Report WM2 - Watershed Mahotsav Social Media Analysis</h4> </div>
+			<div class="col formheading" style="text-decoration: underline;"><h4>Report SMC2 - Watershed Mahotsav Social Media Analysis</h4> </div>
 
 			<br>
 			<form name="mohotsavRpt" id="mohotsavReport" action="getWMSocialMediaCompAnalysis" method="post">
@@ -194,7 +206,7 @@ div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTable
 				<br>
 				<div class="nav-item text-left mb-2">
 				<c:if test="${wmListSize > 0}">
-<%-- 					<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel('${stName}','${distName}','${mediaName}')">Excel</button> --%>
+					<button type="button" name="exportExcel" id="exportExcel" class="btn btn-info" onclick="downloadExcel('${stName}','${distName}','${mediaName}')">Excel</button>
 					<button type="button" name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadPDF('${stName}','${distName}','${mediaName}')">PDF</button>
 				</c:if>
 				<p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>

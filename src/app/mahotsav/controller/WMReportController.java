@@ -1309,8 +1309,6 @@ public class WMReportController {
         String userdate= request.getParameter("userdate");
 		String userdateto= request.getParameter("userdateto");
 		
-		
-
         List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
 		
 		try {
@@ -1318,7 +1316,7 @@ public class WMReportController {
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
 			Document document = new Document(layout, 25, 14, 14, 0);
-			document.addTitle("WM6 - WMSocialMediaAnalysis");
+			document.addTitle("SMC2 - WMSocialMediaAnalysis");
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PdfWriter writer=PdfWriter.getInstance(document, baos);
@@ -1335,7 +1333,7 @@ public class WMReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report WM2 - Watershed Mahotsav Social Media Analysis", f3);
+			paragraph3 = new Paragraph("Report SMC2 - Watershed Mahotsav Social Media Analysis", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -1419,7 +1417,7 @@ public class WMReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report WM2- WMSocialMediaAnalysis.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report SMC2- WMSocialMediaAnalysis.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
@@ -1433,6 +1431,152 @@ public class WMReportController {
 		}
 		
 		return null;
+	}
+    
+    @RequestMapping(value = "/downloadExcelWMSocialMediaCompAnalysis", method = RequestMethod.POST)
+	@ResponseBody
+	public String WMSocialMediaCompAnalysis(HttpServletRequest request, HttpServletResponse response) 
+	{
+		
+    	int stcd = Integer.parseInt(request.getParameter("state"));
+        int dcode = Integer.parseInt(request.getParameter("district"));
+        int media = Integer.parseInt(request.getParameter("platform"));
+        
+        String stName= request.getParameter("stName");
+		String distName= request.getParameter("distName");
+		String mediaName= request.getParameter("mediaName");
+        
+		String status = request.getParameter("status");
+        String userdate= request.getParameter("userdate");
+		String userdateto= request.getParameter("userdateto");
+		
+        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+		
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report SMC2 - Watershed Mahotsav Social Media Analysis");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report SMC2 - Watershed Mahotsav Social Media Analysis";
+			String areaAmtValDetail = "";
+			
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 12, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,5,0,12); 
+	        sheet.addMergedRegion(mergedRegion);
+	        sheet.createFreezePane(0, 8);
+			
+	        Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto);
+			cell.setCellStyle(style);
+			
+			for(int i=1;i<13;i++)
+			{
+				rowhead.createCell(i).setCellStyle(style);
+			}
+			
+			rowhead = sheet.createRow(6);
+			
+			cell = rowhead.createCell(0);
+			cell.setCellValue("S.No.");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(2);
+			cell.setCellValue("District");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(3);
+			cell.setCellValue("Registration Number");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(4);
+			cell.setCellValue("Name");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(5);
+			cell.setCellValue("Platform");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(6);
+			cell.setCellValue("Link");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(7);
+			cell.setCellValue("Number of Views");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(8);
+			cell.setCellValue("Number of Likes");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(9);
+			cell.setCellValue("Number of Comments");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(10);
+			cell.setCellValue("Created Date");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(11);
+			cell.setCellValue("Updated Date");  
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(12);
+			cell.setCellValue("Status");  
+			cell.setCellStyle(style);
+			
+			
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int i=0;i<13;i++)
+			{
+				cell =rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+	        
+	        int sno = 1;
+	        int rowno  = 8;
+	        for(WMMediaReviewBean bean: list) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno); 
+	        	row.createCell(1).setCellValue(bean.getStname());
+	        	row.createCell(2).setCellValue(bean.getDistname());
+	        	row.createCell(3).setCellValue(bean.getReg_no());
+	        	
+	        	row.createCell(4).setCellValue(bean.getReg_name()); 
+	        	row.createCell(5).setCellValue(bean.getPlatform());
+	        	row.createCell(6).setCellValue(bean.getMedia_url());
+	        	row.createCell(7).setCellValue(bean.getNo_of_views());
+	        	
+	        	row.createCell(8).setCellValue(bean.getNo_of_likes()); 
+	        	row.createCell(9).setCellValue(bean.getNo_of_comments());
+	        	row.createCell(10).setCellValue(bean.getCreated_date()!=null?bean.getCreated_date().toString():"");
+	        	row.createCell(11).setCellValue(bean.getUpdated_date()!=null?bean.getUpdated_date().toString():"");
+	        	
+	        	row.createCell(12).setCellValue(bean.getStatus()); 
+	        	
+	        	
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 12);
+	        String fileName = "attachment; filename=Report SMC2.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "mahotsav/wmTotNoOfScrnshtUploaded";
+		
 	}
 	
     @RequestMapping(value = "/getTotNoOfScrnshtUploaded", method = RequestMethod.GET)
@@ -1456,16 +1600,13 @@ public class WMReportController {
         return mav;
     }
     
+    
+    
     @RequestMapping(value = "/downloadWMTotNoOfScrnshtUploadedPDF", method = RequestMethod.POST)
 	public ModelAndView downloadWMTotNoOfScrnshtUploadedPDF(HttpServletRequest request, HttpServletResponse response)
 	{
-		
-		
-
         List<WMMediaReviewBean> list = WMSerice.getTotNoOfScrnshtUploaded();
-		
 		try {
-			
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
 			Document document = new Document(layout, 25, 14, 14, 0);
