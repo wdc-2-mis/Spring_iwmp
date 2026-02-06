@@ -41,7 +41,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import app.common.CommonFunctions;
-import app.projectevaluation.bean.ProjectEvaluationBean;
 import app.punarutthan.service.WatershedPunarutthanService;
 
 @Controller("PunarutthanReportController")

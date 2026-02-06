@@ -57,7 +57,7 @@ function exportExcel(){
                             <th colspan="4" class="text-center">Planning</th>
                             
                             <th rowspan="3" class="text-center">Total number of structures where maintenance work Implemented</th>
-                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Not Implemented(3-8)</th>
+                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Not Implemented <br> (3-8)</th>
                             <th colspan="4" class="text-center">Implementation</th>
                         </tr>
                         <tr>
@@ -73,7 +73,7 @@ function exportExcel(){
                             <th class="text-center">Total Expenditure (11+12+13)</th>
                             <th class="text-center">Expenditure from WDF</th>
                             <th class="text-center">Expenditure from VB G RAM G/MGNREGA</th>
-                            <th class="text-center">Expenditure from Other source (if any)</th>
+                            <th class="text-center">Expenditure from Other source <br> (if any)</th>
                         </tr>
                         <tr>
                             <th class="text-center">1</th>
@@ -95,8 +95,8 @@ function exportExcel(){
 						<c:forEach items="${punarutthanRptStDataList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td class="text-left"><c:out value="${dt.stname}" /></td>
-<%-- 								<td><a href = "getDistPunarutthanReport?stcd=${dt.st_code}&stName=${dt.stname}"><c:out value='${dt.stname}'/></a></td> --%>
+<%-- 								<td class="text-left"><c:out value="${dt.stname}" /></td> --%>
+								<td><a href = "getDistPunarutthanReport?stcd=${dt.st_code}&stName=${dt.stname}"><c:out value='${dt.stname}'/></a></td>
  								<td class="text-right"><c:out value="${dt.plan_work}" /></td>
 								<td class="text-right"><c:out value="${dt.totalcost}" /></td>
 								<td class="text-right"><c:out value="${dt.wdf_cost}" /></td>

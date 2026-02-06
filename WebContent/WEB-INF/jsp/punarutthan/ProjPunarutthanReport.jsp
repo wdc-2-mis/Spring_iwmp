@@ -70,7 +70,7 @@ function exportExcel(dcode, dName, stName){
                             <th colspan="4" class="text-center">Planning</th>
                             
                             <th rowspan="3" class="text-center">Total number of structures where maintenance work Implemented</th>
-                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Not Implemented(3-8)</th>
+                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Not Implemented <br> (3-8)</th>
                             <th colspan="4" class="text-center">Implementation</th>
                         </tr>
                         <tr>
@@ -86,7 +86,7 @@ function exportExcel(dcode, dName, stName){
                             <th class="text-center">Total Expenditure (11+12+13)</th>
                             <th class="text-center">Expenditure from WDF</th>
                             <th class="text-center">Expenditure from VB G RAM G/MGNREGA</th>
-                            <th class="text-center">Expenditure from other source (if any)</th>
+                            <th class="text-center">Expenditure from other source <br> (if any)</th>
                         </tr>
                         <tr>
                             <th class="text-center">1</th>
