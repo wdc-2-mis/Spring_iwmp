@@ -228,16 +228,7 @@ function downloadExcel(){
 			</table>
 		</div>
  </form:form>
- </div>
- </div>
-<br>
-	</div>
-	</div>
-	<div class ="card">
-	
-	<div class="row">
-	<div class="col-1" ></div>
-	<div class="col-10"  id="exportHtmlToPdf">
+ 
 <c:if test="${not empty dataList}">
 
 <button name="exportExcel" id="exportExcel" onclick="downloadExcel()" class="btn btn-info">Excel</button>
