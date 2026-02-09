@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -1297,6 +1299,8 @@ public class WMReportController {
     @RequestMapping(value = "/downloadWMSocialMediaCompAnalysisPDF", method = RequestMethod.POST)
 	public ModelAndView downloadWMSocialMediaCompAnalysisPDF(HttpServletRequest request, HttpServletResponse response)
 	{
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
     	int stcd = Integer.parseInt(request.getParameter("state"));
         int dcode = Integer.parseInt(request.getParameter("district"));
         int media = Integer.parseInt(request.getParameter("platform"));
@@ -1308,9 +1312,36 @@ public class WMReportController {
 		String status = request.getParameter("status");
         String userdate= request.getParameter("userdate");
 		String userdateto= request.getParameter("userdateto");
-		
-        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
-		
+		String orderBy = request.getParameter("orderBy");
+		List<WMMediaReviewBean> list = new ArrayList<>();
+//        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (!userdate.equals("") && !userdateto.equals("")) {
+			LocalDate fromDate = LocalDate.parse(userdate, formatter);
+			LocalDate toDate = LocalDate.parse(userdateto, formatter);
+			list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status).stream().filter(bean -> bean.getCreated_date() != null)
+					.filter(bean -> !bean.getCreated_date().before(Date.valueOf(fromDate))
+							&& !bean.getCreated_date().after(Date.valueOf(toDate)))
+					.collect(Collectors.toList());
+		} else {
+			list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+		}
+        if (orderBy != null) {
+			switch (orderBy) {
+			case "viewsAsc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+				break;
+			case "viewsDesc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+				break;
+			case "likesAsc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+				break;
+			case "likesDesc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+				break;
+			}
+		}
 		try {
 			
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
@@ -1343,7 +1374,7 @@ public class WMReportController {
 		    document.add(paragraph2);
 		    document.add(paragraph3);
 		    table = new PdfPTable(13);
-		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidths(new int[]{2, 8, 6, 6, 7, 4, 10, 3, 3, 3, 4, 4, 3});
 		    table.setWidthPercentage(100);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
@@ -1351,7 +1382,9 @@ public class WMReportController {
 		    if(userdate.equals("")) {
 		    	CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status, Element.ALIGN_LEFT, 13, 1, bf8Bold);
 		    }else {
-		    	CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto, Element.ALIGN_LEFT, 13, 1, bf8Bold);
+		    	java.util.Date fromdate = sdf1.parse(userdate);
+				java.util.Date todate = sdf1.parse(userdateto);
+		    	CommonFunctions.insertCellHeader(table,"Platform : "+mediaName+"  Status : "+status +" From Date: "+ sdf.format(fromdate)+" To Date :"+sdf.format(todate), Element.ALIGN_LEFT, 13, 1, bf8Bold);
 		    }
 		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 			CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -1395,8 +1428,8 @@ public class WMReportController {
 			        CommonFunctions.insertCell(table, list.get(i).getNo_of_views() != null ? list.get(i).getNo_of_views().toString() : "0",   Element.ALIGN_RIGHT,1,1,bf8);
 			        CommonFunctions.insertCell(table, list.get(i).getNo_of_likes() != null ? list.get(i).getNo_of_likes().toString() : "0",  Element.ALIGN_RIGHT,1, 1,bf8 );
 			        CommonFunctions.insertCell(table, list.get(i).getNo_of_comments() != null ? list.get(i).getNo_of_comments().toString() : "0",    Element.ALIGN_RIGHT,1,1,bf8 );
-			        CommonFunctions.insertCell(table, list.get(i).getCreated_date() != null ? list.get(i).getCreated_date().toString() : "", Element.ALIGN_RIGHT,1,1,bf8);
-			        CommonFunctions.insertCell(table, list.get(i).getUpdated_date() != null ? list.get(i).getUpdated_date().toString() : "", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getCreated_date() != null ? sdf.format(list.get(i).getCreated_date()) : "", Element.ALIGN_RIGHT,1,1,bf8);
+			        CommonFunctions.insertCell(table, list.get(i).getUpdated_date() != null ? sdf.format(list.get(i).getUpdated_date()) : "", Element.ALIGN_RIGHT,1,1,bf8);
 			        CommonFunctions.insertCell(table, list.get(i).getStatus(), Element.ALIGN_RIGHT,1,1,bf8);
 			            
 					k++;
@@ -1435,9 +1468,10 @@ public class WMReportController {
     
     @RequestMapping(value = "/downloadExcelWMSocialMediaCompAnalysis", method = RequestMethod.POST)
 	@ResponseBody
-	public String WMSocialMediaCompAnalysis(HttpServletRequest request, HttpServletResponse response) 
+	public String WMSocialMediaCompAnalysis(HttpServletRequest request, HttpServletResponse response) throws ParseException 
 	{
-		
+    	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
     	int stcd = Integer.parseInt(request.getParameter("state"));
         int dcode = Integer.parseInt(request.getParameter("district"));
         int media = Integer.parseInt(request.getParameter("platform"));
@@ -1449,8 +1483,36 @@ public class WMReportController {
 		String status = request.getParameter("status");
         String userdate= request.getParameter("userdate");
 		String userdateto= request.getParameter("userdateto");
-		
-        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+		String orderBy = request.getParameter("orderBy");
+		List<WMMediaReviewBean> list = new ArrayList<>();
+//        List<WMMediaReviewBean> list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        if (!userdate.equals("") && !userdateto.equals("")) {
+			LocalDate fromDate = LocalDate.parse(userdate, formatter);
+			LocalDate toDate = LocalDate.parse(userdateto, formatter);
+			list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status).stream().filter(bean -> bean.getCreated_date() != null)
+					.filter(bean -> !bean.getCreated_date().before(Date.valueOf(fromDate))
+							&& !bean.getCreated_date().after(Date.valueOf(toDate)))
+					.collect(Collectors.toList());
+		} else {
+			list = WMSerice.getWMSocialMediaComDetails(stcd, dcode, media, status);
+		}
+        if (orderBy != null) {
+			switch (orderBy) {
+			case "viewsAsc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views));
+				break;
+			case "viewsDesc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_views).reversed());
+				break;
+			case "likesAsc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes));
+				break;
+			case "likesDesc":
+				list.sort(Comparator.comparing(WMMediaReviewBean::getNo_of_likes).reversed());
+				break;
+			}
+		}
 		
 		  
 			Workbook workbook = new XSSFWorkbook();  
@@ -1472,7 +1534,14 @@ public class WMReportController {
 	        Row rowhead = sheet.createRow(5); 
 			
 			Cell cell = rowhead.createCell(0);
-			cell.setCellValue("Platform : "+mediaName+"  Status : "+status +" From Date: "+ userdate+" To Date :"+userdateto);
+			if(userdate.equals("")) {
+				cell.setCellValue("Platform : "+mediaName+"  Status : "+status);
+			}else {
+				java.util.Date fromdate = sdf1.parse(userdate);
+				java.util.Date todate = sdf1.parse(userdateto);
+				cell.setCellValue("Platform : "+mediaName+"  Status : "+status +" From Date: "+ sdf.format(fromdate)+" To Date :"+sdf.format(todate));
+			}
+			
 			cell.setCellStyle(style);
 			
 			for(int i=1;i<13;i++)
@@ -1560,8 +1629,9 @@ public class WMReportController {
 	        	
 	        	row.createCell(8).setCellValue(bean.getNo_of_likes()); 
 	        	row.createCell(9).setCellValue(bean.getNo_of_comments());
-	        	row.createCell(10).setCellValue(bean.getCreated_date()!=null?bean.getCreated_date().toString():"");
-	        	row.createCell(11).setCellValue(bean.getUpdated_date()!=null?bean.getUpdated_date().toString():"");
+
+	        	row.createCell(10).setCellValue(bean.getCreated_date()!=null?sdf.format(bean.getCreated_date()):"");
+	        	row.createCell(11).setCellValue(bean.getUpdated_date()!=null?sdf.format(bean.getUpdated_date()):"");
 	        	
 	        	row.createCell(12).setCellValue(bean.getStatus()); 
 	        	
@@ -1610,7 +1680,7 @@ public class WMReportController {
 			Rectangle layout = new Rectangle(PageSize.A4.rotate());
 			layout.setBackgroundColor(new BaseColor(255, 255, 255));
 			Document document = new Document(layout, 25, 14, 14, 0);
-			document.addTitle("WM6 - WMSocialMediaAnalysis");
+			document.addTitle("SMC3 - WMSocialMediaViewsScrnShot");
 			document.addCreationDate();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			PdfWriter writer=PdfWriter.getInstance(document, baos);
@@ -1627,7 +1697,7 @@ public class WMReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded", f3);
+			paragraph3 = new Paragraph("Report SMC3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -1687,7 +1757,7 @@ public class WMReportController {
 		response.setContentType("application/pdf");
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
-		response.setHeader("Content-Disposition", "attachment;filename=Report WM3- WM Total Uploaded Screenshot.pdf");
+		response.setHeader("Content-Disposition", "attachment;filename=Report SMC3- WM Total Uploaded Screenshot.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();
@@ -1713,11 +1783,11 @@ public class WMReportController {
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
-			Sheet sheet = workbook.createSheet("Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded");   
+			Sheet sheet = workbook.createSheet("Report SMC3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded");   
 			
 			CellStyle style = CommonFunctions.getStyle(workbook);
 	        
-			String rptName = "Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded";
+			String rptName = "Report SMC3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded";
 			String areaAmtValDetail = "";
 			
 			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -1817,7 +1887,7 @@ public class WMReportController {
 	        cell.setCellStyle(style1);
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 3);
-	        String fileName = "attachment; filename=Report WM3 - State Wise.xlsx";
+	        String fileName = "attachment; filename=Report SMC3 - State Wise.xlsx";
 	        
 	        CommonFunctions.downloadExcel(response, workbook, fileName);
 		

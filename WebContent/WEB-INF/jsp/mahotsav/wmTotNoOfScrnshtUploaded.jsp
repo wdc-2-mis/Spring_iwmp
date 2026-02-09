@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<title>Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded </title>
+<title>Report SMC3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded </title>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -35,7 +35,7 @@ function downloadExcel(){
 
 		
 
-			<div class="col formheading" style="text-decoration: underline;"><h4>Report WM3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded</h4> </div>
+			<div class="col formheading" style="text-decoration: underline;"><h4>Report SMC3 - State Wise Total Watershed Mahotsav Social Media Views Screenshot Uploaded</h4> </div>
 
 			<br>
 			<form name="mohotsavRpt" id="mohotsavReport" action="getWMSocialMediaCompAnalysis" method="post">
