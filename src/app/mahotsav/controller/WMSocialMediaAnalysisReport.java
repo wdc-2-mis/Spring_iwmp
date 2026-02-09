@@ -193,7 +193,7 @@ public class WMSocialMediaAnalysisReport {
             document.open();
 
             /* ================= COLORS ================= */
-            BaseColor HEADER_BG = new BaseColor(0, 70, 140);        // NIC Dark Blue
+            BaseColor HEADER_BG = new BaseColor(0, 40, 80);        // NIC Dark Blue
             BaseColor HEADER_TEXT = new BaseColor(255, 255, 240);  // Ivory
 
             /* ================= FONTS ================= */

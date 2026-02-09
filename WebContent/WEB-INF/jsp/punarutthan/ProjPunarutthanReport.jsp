@@ -66,27 +66,27 @@ function exportExcel(dcode, dName, stName){
                         <tr>
                             <th rowspan="3" class="text-center">S.No.</th>
                             <th rowspan="3" class="text-center">Project Name</th>
-                            <th rowspan="3" class="text-center">Total number of structures identified for maintenance</th>
+                            <th rowspan="3" class="text-center">Total Number of Structures Identified for Maintenance</th>
                             <th colspan="4" class="text-center">Planning</th>
                             
-                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Implemented</th>
-                            <th rowspan="3" class="text-center">Total number of structures where maintenance work Not Implemented <br> (3-8)</th>
+                            <th rowspan="3" class="text-center">Total Number of Structures where Maintenance Work Implemented</th>
+                            <th rowspan="3" class="text-center">Total Number of Structures where Maintenance Work Not Implemented <br> (3-8)</th>
                             <th colspan="4" class="text-center">Implementation</th>
                         </tr>
                         <tr>
-                        	<th colspan="4" class="text-center">Estimated cost (Rs in Lakhs) for maintenance works</th>
-                        	<th colspan="4" class="text-center">Expenditure (Rs in Lakhs) for maintenance works</th>
+                        	<th colspan="4" class="text-center">Estimated Cost (Rs in Lakhs) for Maintenance Works</th>
+                        	<th colspan="4" class="text-center">Expenditure (Rs in Lakhs) for Maintenance Works</th>
                         </tr>
                         <tr>
-                        	<th class="text-center">Total Estimated cost</th>
+                        	<th class="text-center">Total Estimated Cost</th>
                             <th class="text-center">Cost from WDF</th>
                             <th class="text-center">Cost from VB G RAM G/MGNREGA</th>
-                            <th class="text-center">Cost from other source (if any)</th>
+                            <th class="text-center">Cost from Other Source (if any)</th>
                             
                             <th class="text-center">Total Expenditure (11+12+13)</th>
                             <th class="text-center">Expenditure from WDF</th>
                             <th class="text-center">Expenditure from VB G RAM G/MGNREGA</th>
-                            <th class="text-center">Expenditure from other source <br> (if any)</th>
+                            <th class="text-center">Expenditure from Other Source <br> (if any)</th>
                         </tr>
                         <tr>
                             <th class="text-center">1</th>
