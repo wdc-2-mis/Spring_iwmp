@@ -372,11 +372,11 @@ public class SateDistrictWithActivityNRMWorkController {
 				table.setWidthPercentage(100);
 				table.setSpacingBefore(0f);
 				table.setSpacingAfter(0f);
-				table.setHeaderRows(2);
+				table.setHeaderRows(3);
 				
-				
-				
-				CommonFunctions.insertCellHeader(table, "Sl. No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				String finyear = "20"+yrcd+"-"+(yrcd+1);
+				CommonFunctions.insertCellHeader(table, "Financial Year: "+finyear, Element.ALIGN_LEFT, 14, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "District", Element.ALIGN_CENTER, 1, 1, bf8Bold);
 				CommonFunctions.insertCellHeader(table, "No. of Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
@@ -519,15 +519,26 @@ public class SateDistrictWithActivityNRMWorkController {
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
 		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 13, areaAmtValDetail, workbook);
 		
+		mergedRegion = new CellRangeAddress(5,5,0,13);
+		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(list.size()+7,list.size()+7,0,2);
 		sheet.addMergedRegion(mergedRegion);
 		
-		
-		
+		String finyear = "20"+yrcd+"-"+(yrcd+1);
 		Row rowhead = sheet.createRow(5);
-		
 		Cell cell = rowhead.createCell(0);
-		cell.setCellValue("Sl. No.");
+		cell.setCellValue("Financial Year: "+finyear);
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<14;i++)
+		{
+			rowhead.createCell(i).setCellStyle(style);
+		}
+		
+		rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
 		cell.setCellStyle(style);
 		
 		cell = rowhead.createCell(1);
@@ -583,7 +594,7 @@ public class SateDistrictWithActivityNRMWorkController {
 		cell.setCellStyle(style);
 		
 			
-		Row rowhead1 = sheet.createRow(6);
+		Row rowhead1 = sheet.createRow(7);
 		
 		for(int i=0;i<14;i++)
 		{
@@ -593,9 +604,9 @@ public class SateDistrictWithActivityNRMWorkController {
 		}
 		
 		// Freeze the top 7 rows (0–6) so headers stay visible
-		sheet.createFreezePane(0, 7);
+		sheet.createFreezePane(0, 8);
 
-		int rowno  = 7;
+		int rowno  = 8;
 		String state = "";
 		int k=1;
 		BigInteger projcountt = BigInteger.ZERO;
