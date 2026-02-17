@@ -130,15 +130,7 @@ document.addEventListener("change", function(e) {
          e.target.value = "";
          return;
      }
-     // Check if this image already uploaded (duplicate)
-     if (window.uploadedFiles.has(fileName)) {
-         alert("This image is already uploaded! Please upload a different image.");
-         e.target.value = ""; // reset file input
-         return;
-     } else {
-         window.uploadedFiles.add(fileName); // Store filename
-     }
-
+    
 
         var fileDiv = e.target.parentElement;
         var latInput = fileDiv.querySelector(".latitude");
@@ -187,6 +179,20 @@ document.addEventListener("change", function(e) {
                     return false;
               //  }
             }
+            
+            
+         // Check if this image already uploaded (duplicate)
+         if (latInput.value || lngInput.value || tsInput.value){
+            if (window.uploadedFiles.has(fileName)) {
+                alert("This image is already uploaded! Please upload a different image.");
+                e.target.value = ""; // reset file input
+                return;
+            } 
+            else {
+                window.uploadedFiles.add(fileName); // Store filename
+            }
+         } 
+            
         });
 
         // Show Add More button

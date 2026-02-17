@@ -137,15 +137,7 @@ document.addEventListener("change", function(e) {
          e.target.value = "";
          return;
      }
-     // Check if this image already uploaded (duplicate)
-     if (window.uploadedFiles.has(fileName)) {
-         alert("This image is already uploaded! Please upload a different image.");
-         e.target.value = ""; // reset file input
-         return;
-     } else {
-         window.uploadedFiles.add(fileName); // Store filename
-     }
-
+    
 
         var fileDiv = e.target.parentElement;
         var latInput = fileDiv.querySelector(".latitude");
@@ -194,6 +186,17 @@ document.addEventListener("change", function(e) {
                       return false;
                 //  }
             }
+            
+            // Check if this image already uploaded (duplicate)
+            if (latInput.value || lngInput.value || tsInput.value){
+            if (window.uploadedFiles.has(fileName)) {
+                alert("This image is already uploaded! Please upload a different image.");
+                e.target.value = ""; // reset file input
+                return;
+            } else {
+                window.uploadedFiles.add(fileName); // Store filename
+            }
+            }
         });
 
         // Show Add More button
@@ -206,8 +209,8 @@ document.addEventListener("change", function(e) {
     window.addPhotoField = function() {
         var container = document.getElementById("photoContainer");
         var inputs = container.getElementsByClassName("photo-input");
-        if (inputs.length >= 1) {
-            alert("Maximum 1 photographs can be uploaded.");
+        if (inputs.length >= 2) {
+            alert("Maximum 2 photographs can be uploaded.");
             return;
         }
         var div = document.createElement("div");
@@ -268,8 +271,8 @@ document.addEventListener("change", function(e) {
             alert("Minimum 1 photographs required.");
             return false;
         }
-        if (totalFiles > 1) {
-            alert("Maximum 1 photographs allowed.");
+        if (totalFiles > 2) {
+            alert("Maximum 2 photographs allowed.");
             return false;
         }
         if(confirm("Do you want to save Watershed Punarutthan Implementation ?")) {
@@ -537,7 +540,7 @@ display: none; /* Hidden by default */
                     </td>
                     </tr>
                     <tr>
-                   <td>
+                   	<td>
                         <label>Upload Photographs of Structure after the Work<span style="color:red;">*</span><!--  (Minimum 1, Maximum 2) -->:</label></td>
                      <td>   <div id="photoContainer">
                             <div class="d-flex align-items-center mb-1">
@@ -547,7 +550,7 @@ display: none; /* Hidden by default */
                                 <input type="hidden" name="photoTimestamp[]" class="photoTimestamp">
                             </div>
                         </div>
-                       <!--  <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button> -->
+                        <button type="button" id="addPhotoBtn" class="btn btn-sm btn-primary mt-2" style="display:none;" onclick="addPhotoField()">Add More</button>
                         <small class="text-danger" id="photoError"></small>
                     </td>
                 </tr>

@@ -73,11 +73,11 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				datlist=ser.getWatershedPunarutthanPlanDraft(session.getAttribute("loginID").toString()); 
+				datlist=ser.getWatershedPunarutthanPlanDraft(session, distCode, stCode); 
 				  mav.addObject("dataList1",datlist);
 				  mav.addObject("dataListSize1",datlist.size());
 				  
-				  complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  complist=ser.getWatershedPunarutthanPlanComplete(session, distCode, stCode);
 				  mav.addObject("comdataList1",complist);
 				  mav.addObject("comdataListSize1",complist.size());
 				 
@@ -147,13 +147,14 @@ public class WatershedPunarutthanController {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 				} 
 				else if (result.equals("failexist")) {
-					redirectAttributes.addFlashAttribute("result", "Data not saved already exist!");
+					redirectAttributes.addFlashAttribute("result", "Data not saved, Geo-referenced with Location already exist!");
 				} 
 				else {
 					redirectAttributes.addFlashAttribute("result", "Data not saved!");
 				}
 				return new ModelAndView("redirect:/getWatershedPunarutthanPlan");
-			} else {
+			} 
+			else {
 				return new ModelAndView("redirect:/login");
 
 			}
@@ -263,16 +264,16 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session.getAttribute("loginID").toString());
-				  //complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
+				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session, distCode, stCode);
+				  //datlist=ser.getWatershedPunarutthanPlanDraft(session, distCode, stCode); 
 				  mav.addObject("comdataList",complist);
 				  mav.addObject("comdataListSize",complist.size());
 				  
-				  dataListd=ser.getPunarutthanDraftImplementation(session.getAttribute("loginID").toString());
+				  dataListd=ser.getPunarutthanDraftImplementation(session, distCode, stCode);
 				  mav.addObject("dataListd",dataListd);
 				  mav.addObject("dataListSized",dataListd.size());
 				  
-				  comdataListc=ser.getPunarutthanCompleteImplementation(session.getAttribute("loginID").toString());
+				  comdataListc=ser.getPunarutthanCompleteImplementation(session, distCode, stCode);
 				  mav.addObject("comdataListc",comdataListc);
 				  mav.addObject("comdataListSizec",comdataListc.size());
 				 
@@ -325,16 +326,16 @@ public class WatershedPunarutthanController {
 				mav.addObject("projList", ser.getProjectListMis(distCodelgd));
 				mav.addObject("StructureList", ser.getStructureListMis());
 				
-				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session.getAttribute("loginID").toString());
+				  complist=ser.getWatershedPunarutthanPlanCompletetoImpl(session, distCode, stCode);
 				 // complist=ser.getWatershedPunarutthanPlanComplete(session.getAttribute("loginID").toString());
 				  mav.addObject("comdataList",complist);
 				  mav.addObject("comdataListSize",complist.size());
 				  
-				  dataListd=ser.getPunarutthanDraftImplementation(session.getAttribute("loginID").toString());
+				  dataListd=ser.getPunarutthanDraftImplementation(session, distCode, stCode);
 				  mav.addObject("dataListd",dataListd);
 				  mav.addObject("dataListSized",dataListd.size());
 				  
-				  comdataListc=ser.getPunarutthanCompleteImplementation(session.getAttribute("loginID").toString());
+				  comdataListc=ser.getPunarutthanCompleteImplementation(session, distCode, stCode);
 				  mav.addObject("comdataListc",comdataListc);
 				  mav.addObject("comdataListSizec",comdataListc.size());
 				 
@@ -450,17 +451,18 @@ public class WatershedPunarutthanController {
 					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
 				} 
 				else if (result.equals("failexist")) {
-					redirectAttributes.addFlashAttribute("result", "Data not saved already exist!");
+					redirectAttributes.addFlashAttribute("result", "Data not saved, Geo-referenced with Location already exist!");
 				} 
 				else {
 					redirectAttributes.addFlashAttribute("result", "Data not saved or photo should not contain geotag!");
 				}
 				return new ModelAndView("redirect:/getWatershedPunarutthanPlanImplement");
-			} else {
+			} 
+			else {
 				return new ModelAndView("redirect:/login");
-
 			}
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		return mav;

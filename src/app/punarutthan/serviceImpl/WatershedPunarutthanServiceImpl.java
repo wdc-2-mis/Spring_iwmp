@@ -49,15 +49,15 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	}
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(HttpSession session, int distcd, int stcd) {
 		// TODO Auto-generated method stub
-		return dao.getWatershedPunarutthanPlanDraft(userid);
+		return dao.getWatershedPunarutthanPlanDraft(session, distcd, stcd);
 	}
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(HttpSession sess, int distcd, int stcd) {
 		// TODO Auto-generated method stub
-		return dao.getWatershedPunarutthanPlanComplete(userid);
+		return dao.getWatershedPunarutthanPlanComplete(sess, distcd, stcd);
 	}
 
 	@Override
@@ -85,15 +85,15 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	}
 
 	@Override
-	public List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(String userid) {
+	public List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(HttpSession session, int distcd, int stcd) {
 		// TODO Auto-generated method stub
-		return dao.getPunarutthanDraftImplementation(userid);
+		return dao.getPunarutthanDraftImplementation(session, distcd, stcd);
 	}
 
 	@Override
-	public List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(String userid) {
+	public List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(HttpSession sess, int distcd, int stcd) {
 		// TODO Auto-generated method stub
-		return dao.getPunarutthanCompleteImplementation(userid);
+		return dao.getPunarutthanCompleteImplementation(sess, distcd, stcd);
 	}
 
 	@Override
@@ -124,9 +124,9 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	}
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd) {
 		// TODO Auto-generated method stub
-		return dao.getWatershedPunarutthanPlanCompletetoImpl(userid);
+		return dao.getWatershedPunarutthanPlanCompletetoImpl(sess, distcd, stcd);
 	}
 
 	@Override

@@ -76,6 +76,21 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	@Value("${getWatershedPunarutthanPlanCompletetoImpl}")
 	String getWatershedPunarutthanPlanCompletetoImpl;
 	
+	@Value("${getWatershedPunarutthandistPlanDraft}")
+	String getWatershedPunarutthandistPlanDraft;
+	
+	@Value("${getWatershedPunarutthandistPlanComplete}")
+	String getWatershedPunarutthandistPlanComplete;
+	
+	@Value("${getWatershedPunarutthandistPlanCompletetoImpl}")
+	String getWatershedPunarutthandistPlanCompletetoImpl;
+	
+	@Value("${getPunarutthandistDraftImplementation}")
+	String getPunarutthandistDraftImplementation;
+	
+	@Value("${getPunarutthandistCompleteImplementation}")
+	String getPunarutthandistCompleteImplementation;
+	
 	@Override
 	public LinkedHashMap<String, String> getProjectListMis(int distCodelgd) {
 		
@@ -198,11 +213,21 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 		//	Date inaugurationDate = formatter.parse(userfileup.getDate());
 			String st_code=session.getAttribute("stateCode").toString();
+			List<MultipartFile> photos = userfileup.getPhotos();
+		    List<String> latitudes = userfileup.getLatitude();
+		    List<String> longitudes = userfileup.getLongitute();
+		    List<String> timestamps = userfileup.getPhotoTimestamp();
+		    String lat=null;
+		    List list =null;
+		    for (int i = 0; i < photos.size(); i++) 
+	        {
+		    		lat=latitudes.get(i);
+	            	list = sess.createQuery("SELECT wdcpmksy1PunarutthanPlan.planId FROM Wdcpmksy1PunarutthanPlanPhoto where latitude=:latt and wdcpmksy1PunarutthanPlan.projectCd=:projcd and wdcpmksy1PunarutthanPlan.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlan.mStructure.structureId=:struct").
+	            	setString("latt", lat).setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
+	        }
 			
-			List list = sess.createQuery("SELECT planId FROM Wdcpmksy1PunarutthanPlan where iwmpVillage.vcode=:villageCode").setInteger("villageCode", userfileup.getVillage1()).list();
-			//result=Integer.parseInt(list.get(0).toString());
-		//	if(list.isEmpty()) 
-		//	{
+			if(list.isEmpty()) 
+			{
 			
 				String filePath="D:\\punarutthan\\planing\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/planing/";
@@ -244,11 +269,7 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			sess.save(data);
 			String code=st_code.toString()+userfileup.getDistrict1().toString()+userfileup.getVillage1().toString();
 			
-			  List<MultipartFile> photos = userfileup.getPhotos();
-		      List<String> latitudes = userfileup.getLatitude();
-		      List<String> longitudes = userfileup.getLongitute();
-		      List<String> timestamps = userfileup.getPhotoTimestamp();
-
+			 
 		         for (int i = 0; i < photos.size(); i++) 
 		         {
 		             MultipartFile image = photos.get(i);
@@ -292,11 +313,11 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			res = "success";
 			sess.getTransaction().commit();
-		//	}
-		//	else {
-		//		res="failexist";
-		//		sess.getTransaction().commit();
-		//	}
+			}
+			else {
+				res="failexist";
+				sess.getTransaction().commit();
+			}
 		}
 		catch (Exception ex) {
 			res = "fail";
@@ -337,15 +358,28 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(HttpSession sess, int distcd, int stcd) {
 		
 		String getReport=getWatershedPunarutthanPlanDraft;
+		String getReport1=getWatershedPunarutthandistPlanDraft;
 		Session session = sessionFactory.getCurrentSession();
 		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		
+		Query query=null;
 		try {
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setString("usrid",userid); 
+				if((sess.getAttribute("userType").toString()).equals("PI")) 
+				{
+					System.out.println("PI");
+					query= session.createSQLQuery(getReport);
+					query.setString("usrid",sess.getAttribute("loginID").toString()); 
+				}
+				if((sess.getAttribute("userType").toString()).equals("DI")) 
+				{
+					System.out.println("DI");
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("dist", distcd); 
+				}
 				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
 				list = query.list();
 				session.getTransaction().commit();
@@ -366,15 +400,28 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(HttpSession sess, int distcd, int stcd) {
 		
 		String getReport=getWatershedPunarutthanPlanComplete;
+		String getReport1=getWatershedPunarutthandistPlanComplete;
 		Session session = sessionFactory.getCurrentSession();
 		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		Query query=null;
 		try {
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setString("usrid",userid); 
+				
+				if((sess.getAttribute("userType").toString()).equals("PI")) 
+				{
+					System.out.println("PI");
+					query= session.createSQLQuery(getReport);
+					query.setString("usrid",sess.getAttribute("loginID").toString()); 
+				}
+				if((sess.getAttribute("userType").toString()).equals("DI")) 
+				{
+					System.out.println("DI");
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("dist", distcd); 
+				}
 				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
 				list = query.list();
 				session.getTransaction().commit();
@@ -570,10 +617,21 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		//	Date inaugurationDate = formatter.parse(userfileup.getDate());
 			String st_code=session.getAttribute("stateCode").toString();
 			
-		//	List list = sess.createQuery("SELECT planId FROM Wdcpmksy1PunarutthanPlan where iwmpVillage.vcode=:villageCode").setInteger("villageCode", userfileup.getVillage1()).list();
-			//result=Integer.parseInt(list.get(0).toString());
-			//if(list.isEmpty()) 
-			//{
+			List<MultipartFile> photos = userfileup.getPhotos();
+		    List<String> latitudes = userfileup.getLatitude();
+		    List<String> longitudes = userfileup.getLongitute();
+		    List<String> timestamps = userfileup.getPhotoTimestamp();
+		    String lat=null;
+		    List list =null;
+		    for (int i = 0; i < photos.size(); i++) 
+	        {
+		    		lat=latitudes.get(i);
+	            	list = sess.createQuery("select wdcpmksy1PunarutthanPlanImplementation.implementationPhotoId from Wdcpmksy1PunarutthanPlanImplementationPhoto where latitude=:latt and wdcpmksy1PunarutthanPlanImplementation.projectCd=:projcd and wdcpmksy1PunarutthanPlanImplementation.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlanImplementation.mStructure.structureId=:struct").
+	            	setString("latt", lat).setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
+	        }
+			
+			if(list.isEmpty()) 
+			{
 			
 				String filePath="D:\\punarutthan\\Implementation\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/implementation/";
@@ -617,11 +675,6 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			sess.save(data);
 			String code=st_code.toString()+userfileup.getDistrict1().toString()+userfileup.getVillage1().toString();
 			
-			  List<MultipartFile> photos = userfileup.getPhotos();
-		      List<String> latitudes = userfileup.getLatitude();
-		      List<String> longitudes = userfileup.getLongitute();
-		      List<String> timestamps = userfileup.getPhotoTimestamp();
-
 		         for (int i = 0; i < photos.size(); i++) 
 		         {
 		             MultipartFile image = photos.get(i);
@@ -665,11 +718,11 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			res = "success";
 			sess.getTransaction().commit();
-		/*	}
+			}
 			else {
 				res="failexist";
 				sess.getTransaction().commit();
-			} */
+			} 
 		}
 		catch (Exception ex) {
 			res = "fail";
@@ -682,15 +735,27 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 
 
 	@Override
-	public List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(String userid) {
+	public List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(HttpSession sess, int distcd, int stcd) {
 		
 		String getReport=getPunarutthanDraftImplementation;
+		String getReport1=getPunarutthandistDraftImplementation;
 		Session session = sessionFactory.getCurrentSession();
 		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		Query query=null;
 		try {
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setString("usrid",userid); 
+				if((sess.getAttribute("userType").toString()).equals("PI")) 
+				{
+					System.out.println("PI");
+					query= session.createSQLQuery(getReport);
+					query.setString("usrid",sess.getAttribute("loginID").toString()); 
+				}
+				if((sess.getAttribute("userType").toString()).equals("DI")) 
+				{
+					System.out.println("DI");
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("dist", distcd); 
+				}
 				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
 				list = query.list();
 				session.getTransaction().commit();
@@ -711,15 +776,27 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 
 
 	@Override
-	public List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(String userid) {
+	public List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(HttpSession sess, int distcd, int stcd) {
 		
 		String getReport=getPunarutthanCompleteImplementation;
+		String getReport1=getPunarutthandistCompleteImplementation;
 		Session session = sessionFactory.getCurrentSession();
 		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		Query query=null;
 		try {
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setString("usrid",userid); 
+				if((sess.getAttribute("userType").toString()).equals("PI")) 
+				{
+					System.out.println("PI");
+					query= session.createSQLQuery(getReport);
+					query.setString("usrid",sess.getAttribute("loginID").toString()); 
+				}
+				if((sess.getAttribute("userType").toString()).equals("DI")) 
+				{
+					System.out.println("DI");
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("dist", distcd); 
+				}
 				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
 				list = query.list();
 				session.getTransaction().commit();
@@ -938,15 +1015,27 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 
 
 	@Override
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(String userid) {
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd) {
 		
 		String getReport=getWatershedPunarutthanPlanCompletetoImpl;
+		String getReport1=getWatershedPunarutthandistPlanCompletetoImpl;
 		Session session = sessionFactory.getCurrentSession();
 		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		Query query=null;
 		try {
 				session.beginTransaction();
-				Query query= session.createSQLQuery(getReport);
-				query.setString("usrid",userid); 
+				if((sess.getAttribute("userType").toString()).equals("PI")) 
+				{
+					System.out.println("PI");
+					query= session.createSQLQuery(getReport);
+					query.setString("usrid",sess.getAttribute("loginID").toString()); 
+				}
+				if((sess.getAttribute("userType").toString()).equals("DI")) 
+				{
+					System.out.println("DI");
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("dist", distcd); 
+				}
 				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
 				list = query.list();
 				session.getTransaction().commit();

@@ -23,9 +23,9 @@ public interface WatershedPunarutthanService {
 	
 	String getExistingPunarutthanPlanVillageCodes(Integer vCode);
 	
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(String userid);
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanDraft(HttpSession session, int distcd, int stcd);
 	
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(String userid);
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanComplete(HttpSession sess, int distcd, int stcd);
 	
 	String deletePunarutthanPlanDetails(List<Integer> assetid, String userid);
 	
@@ -35,9 +35,9 @@ public interface WatershedPunarutthanService {
 	
 	String saveWatershedPunarutthanImplementation(WatershedPunarutthanBean userfileup, HttpSession session);
 	
-	List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(String userid);
+	List<WatershedPunarutthanBean> getPunarutthanDraftImplementation(HttpSession sess, int distcd, int stcd);
 	
-	List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(String userid);
+	List<WatershedPunarutthanBean> getPunarutthanCompleteImplementation(HttpSession sess, int distcd, int stcd);
 	
 	String deletePunarutthanImplementation(List<Integer> assetid, String userid);
 	
@@ -49,7 +49,7 @@ public interface WatershedPunarutthanService {
 	
 	List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode);
 	
-	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(String userid);
+	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd);
 	
 	List<String> getImageWatershedPunarutthanPlan(Integer planid);
 	
