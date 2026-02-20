@@ -49,6 +49,8 @@ public class WatershedPunarutthanBean {
     private BigDecimal wdf_exp;
     private BigDecimal mgnrega_exp;
     private BigDecimal other_exp;
+    private String plan_image;
+    private String imp_image;
     
    
 	public Integer getDistrict1() {
@@ -278,6 +280,18 @@ public class WatershedPunarutthanBean {
 	}
 	public void setOther_exp(BigDecimal other_exp) {
 		this.other_exp = other_exp;
+	}
+	public String getPlan_image() {
+		return plan_image;
+	}
+	public void setPlan_image(String plan_image) {
+		this.plan_image = plan_image;
+	}
+	public String getImp_image() {
+		return imp_image;
+	}
+	public void setImp_image(String imp_image) {
+		this.imp_image = imp_image;
 	}
 	 
 

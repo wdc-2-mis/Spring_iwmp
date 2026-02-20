@@ -122,6 +122,11 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	public List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode) {
 		return dao.punarutthanRptProjData(dcode);
 	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptProjDetailData(String pcode) {
+		return dao.punarutthanRptProjDetailData(pcode);
+	}
 
 	@Override
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd) {

@@ -49,6 +49,8 @@ public interface WatershedPunarutthanService {
 	
 	List<WatershedPunarutthanBean> punarutthanRptProjData(Integer dcode);
 	
+	List<WatershedPunarutthanBean> punarutthanRptProjDetailData(String pcode);
+	
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd);
 	
 	List<String> getImageWatershedPunarutthanPlan(Integer planid);

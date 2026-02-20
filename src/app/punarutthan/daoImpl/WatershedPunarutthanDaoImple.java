@@ -73,6 +73,9 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	@Value("${getPunarutthanProjData}")
 	String getPunarutthanProjDetails;
 	
+	@Value("${getPunarutthanProjDtlData}")
+	String getPunarutthanProjDetailData;
+	
 	@Value("${getWatershedPunarutthanPlanCompletetoImpl}")
 	String getWatershedPunarutthanPlanCompletetoImpl;
 	
@@ -1012,7 +1015,28 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 		return getPunarutthanRptProjData;
 	}
+	
+	@Override
+	public List<WatershedPunarutthanBean> punarutthanRptProjDetailData(String pcode) {
 
+		List<WatershedPunarutthanBean> getPunarutthanRptProjDtlData = new ArrayList<WatershedPunarutthanBean>();
+		
+		String hql = getPunarutthanProjDetailData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setString("pcode", pcode);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+			getPunarutthanRptProjDtlData = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getPunarutthanRptProjDtlData;
+	}
 
 	@Override
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd) {

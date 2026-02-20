@@ -108,8 +108,19 @@ function exportExcel(dcode, dName, stName){
 						<c:forEach items="${punarutthanRptProjDataList}" var="dt" varStatus="sno">
 							<tr>
 								<td class="text-left"><c:out value="${sno.count}" /></td>
-								<td class="text-left"><c:out value="${dt.proj_name}" /></td>
- 								<td class="text-right"><c:out value="${dt.plan_work}" /></td>
+<%-- 								<td class="text-left"><c:out value="${dt.proj_name}" /></td> --%>
+<%-- 								<td><a href = "getProjDetailPunarutthanReport?projcd=${dt.project_cd}&pName=${dt.proj_name}&dName=${dt.distname}&stName=${stName}"><c:out value='${dt.proj_name}'/></a></td> --%>
+
+								<td><c:choose>
+									<c:when test="${dt.plan_work > 0}">
+										<a href = "getProjDetailPunarutthanReport?projcd=${dt.project_cd}&pName=${dt.proj_name}&dName=${dName}&stName=${stName}"><c:out value='${dt.proj_name}'/></a>			
+									</c:when>
+									<c:otherwise>
+										<c:out value="${dt.proj_name}" />
+									</c:otherwise>
+								</c:choose></td>
+
+								<td class="text-right"><c:out value="${dt.plan_work}" /></td>
 								<td class="text-right"><c:out value="${dt.totalcost}" /></td>
 								<td class="text-right"><c:out value="${dt.wdf_cost}" /></td>
 								<td class="text-right"><c:out value="${dt.mgnrega_cost}" /></td>
