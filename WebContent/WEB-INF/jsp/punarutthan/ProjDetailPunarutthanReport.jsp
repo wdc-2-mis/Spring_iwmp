@@ -115,7 +115,7 @@ function getImageUrl(filename, type) {
         if (type === 'plan') {
             baseUrl = 'https://wdcpmksy.dolr.gov.in/TEST/filepath/punarutthan/planing/';
         } else {
-            baseUrl = 'https://wdcpmksy.dolr.gov.in/TEST/filepath/punarutthan/Implementation/';
+            baseUrl = 'https://wdcpmksy.dolr.gov.in/TEST/filepath/punarutthan/implementation/';
         }
     } 
     // Production environment
@@ -123,7 +123,7 @@ function getImageUrl(filename, type) {
         if (type === 'plan') {
             baseUrl = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/planing/';
         } else {
-            baseUrl = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/Implementation/';
+            baseUrl = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/punarutthan/implementation/';
         }
     }
 
