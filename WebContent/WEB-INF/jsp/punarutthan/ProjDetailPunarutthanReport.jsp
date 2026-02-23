@@ -505,7 +505,7 @@ function exportExcel(pcode, pName, dName, stName){
                         <tr>
                             <td class="text-left"><c:out value="${sno.count}" /></td>
                             <td class="text-left"><c:out value="${dt.structurename}" /></td>
-                            <td class="text-right"><c:out value="${dt.work}" /></td>
+                            <td class="text-left"><c:out value="${dt.work}" /></td>
                             <td class="text-right"><c:out value="${dt.totalcost}" /></td>
                             <td class="text-right"><c:out value="${dt.wdf_cost}" /></td>
                             <td class="text-right"><c:out value="${dt.mgnrega_cost}" /></td>
@@ -516,7 +516,7 @@ function exportExcel(pcode, pName, dName, stName){
                                 </c:if>
 
                             </td>
-                            <td class="text-right"><c:out value="${dt.no_work}" /></td>
+                            <td class="text-left"><c:out value="${dt.no_work}" /></td>
                             <td class="text-right"><c:out value="${dt.totalexp}" /></td>
                             <td class="text-right"><c:out value="${dt.wdf_exp}" /></td>
                             <td class="text-right"><c:out value="${dt.mgnrega_exp}" /></td>

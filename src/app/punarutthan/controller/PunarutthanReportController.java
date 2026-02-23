@@ -1986,18 +1986,18 @@ public class PunarutthanReportController {
 				{
 					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getStructurename()), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getWork() != null ? String.valueOf(list.get(i).getWork()) : "", Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getWork() != null ? String.valueOf(list.get(i).getWork()) : "", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalcost()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWdf_cost()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMgnrega_cost()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getOther_cost()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getPlan_image() != null ? String.valueOf("view") : "", Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getNo_work() != null ? String.valueOf(list.get(i).getNo_work()) : "", Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getPlan_image() != null ? String.valueOf("view") : "", Element.ALIGN_CENTER, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getNo_work() != null ? String.valueOf(list.get(i).getNo_work()) : "", Element.ALIGN_LEFT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalexp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWdf_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getMgnrega_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
 					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getOther_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getImp_image() != null ? String.valueOf("view") : "", Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getImp_image() != null ? String.valueOf("view") : "", Element.ALIGN_CENTER, 1, 1, bf8);
 					
 			    	totCost = totCost.add(list.get(i).getTotalcost());
 			    	totWdfCost = totWdfCost.add(list.get(i).getWdf_cost());
