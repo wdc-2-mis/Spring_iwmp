@@ -22,7 +22,7 @@ public class PhysicalActionPlanBean {
 	private BigDecimal activitysequence;
 	private Integer asset;
 	private Integer assetcreated;
-	
+	private BigDecimal achievement;
 	
 	
 	public BigDecimal getHeadsequence() {
@@ -132,6 +132,12 @@ public class PhysicalActionPlanBean {
 	}
 	public void setAssetcreated(Integer assetcreated) {
 		this.assetcreated = assetcreated;
+	}
+	public BigDecimal getAchievement() {
+		return achievement;
+	}
+	public void setAchievement(BigDecimal achievement) {
+		this.achievement = achievement;
 	}
 	
 	
