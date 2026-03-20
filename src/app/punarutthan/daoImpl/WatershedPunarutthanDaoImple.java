@@ -27,6 +27,7 @@ import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.model.WatershedMahotsavInauguaration;
 import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.model.IwmpDistrict;
+import app.model.IwmpMProject;
 import app.model.IwmpState;
 import app.model.master.IwmpBlock;
 import app.model.master.IwmpVillage;
@@ -47,7 +48,6 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	
 	@Autowired
 	private SessionFactory sessionFactory;
-	
 	
 	@Value("${getWatershedPunarutthanPlanDraft}")
 	String getWatershedPunarutthanPlanDraft;
@@ -93,6 +93,19 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 	
 	@Value("${getPunarutthandistCompleteImplementation}")
 	String getPunarutthandistCompleteImplementation;
+	
+	@Value("${districtListByStateCode}") 
+	String distlist;
+	
+	@Value("${getPunarutthanProjectList}") 
+	String projmasterlist;
+	
+	@Value("${getUnfreezePunarutthanPln}") 
+	String getUnfreezePunarutthanPln;
+	
+	@Value("${getUnfreezePunarutthanImp}") 
+	String getUnfreezePunarutthanImp;
+	
 	
 	@Override
 	public LinkedHashMap<String, String> getProjectListMis(int distCodelgd) {
@@ -1108,6 +1121,229 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			ex.printStackTrace();
 		}
 		return imgList;
+	}
+
+
+	@Override
+	public List<IwmpDistrict> getDistrictList(int stateCode) {
+		
+		List<IwmpDistrict> result=new ArrayList<IwmpDistrict>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=distlist;
+			result = ses.createQuery(hql).setParameter("stCode", stateCode).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+
+
+	@Override
+	public List<Wdcpmksy1ProjectDetail> getProjectList(int stateCode, int distCode) {
+
+		List<Wdcpmksy1ProjectDetail> result=new ArrayList<Wdcpmksy1ProjectDetail>();
+		Session ses = sessionFactory.getCurrentSession();
+		try {
+			ses.beginTransaction();	
+			String hql=projmasterlist;
+			result = ses.createQuery(hql).setParameter("distCode", Integer.valueOf(distCode)).list();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			ses.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			ses.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		finally {
+			ses.getTransaction().commit();
+		}
+        return result;
+	}
+
+
+	@Override
+	public List<WatershedPunarutthanBean> getUnfreezePunarutthan(int dist, String projcd, String punatuthan) {
+		
+		String getReport=getUnfreezePunarutthanPln;
+		String getReport1=getUnfreezePunarutthanImp;
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		Query query=null;
+		try {
+				session.beginTransaction();
+				if(punatuthan.equals("pln")) {
+					
+					query= session.createSQLQuery(getReport);
+					query.setInteger("distcd",dist); 
+					query.setString("projcd",projcd);
+				}
+				else {
+					
+					query= session.createSQLQuery(getReport1);
+					query.setInteger("distcd",dist); 
+					query.setString("projcd",projcd);
+				}
+				query.setResultTransformer(Transformers.aliasToBean(WatershedPunarutthanBean.class));
+				list = query.list();
+				session.getTransaction().commit();
+		} 
+		catch (HibernateException e) 
+		{
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex)
+		{
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+
+	@Override
+	public String unfreezeWatershedPunarutthan(List<Integer> assetid, String typeutthan) {
+		
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<String>();
+		List<Wdcpmksy1PunarutthanPlanImplementationPhoto> list = new ArrayList<Wdcpmksy1PunarutthanPlanImplementationPhoto>();
+		
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			 if(typeutthan.equals("pln")) {
+			 
+				 Query query1 = session.createQuery("from Wdcpmksy1PunarutthanPlanImplementationPhoto where wdcpmksy1PunarutthanPlanImplementation.wdcpmksy1PunarutthanPlan.planId = :inaugid");
+				 for(int i=0;i<assetid.size(); i++)
+				 {
+					query1.setInteger("inaugid", assetid.get(i));
+					list = query1.list();
+				 }
+				 for (Wdcpmksy1PunarutthanPlanImplementationPhoto photo : list) {
+					   
+					 imgList.add(photo.getPhotoUrl());
+				 }
+				 for (String photo : imgList) 
+				 {
+			            if (photo != null && !photo.isEmpty()) 
+			            {
+			                File file = new File(photo);
+			                if (file.exists()) 
+			                {
+			                    if (file.delete()) {
+			                        System.out.println("Deleted file: " + file.getAbsolutePath());
+			                    } else {
+			                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+			                    }
+			                } 
+			                else {
+			                    System.out.println("File not found: " + file.getAbsolutePath());
+			                }
+			            }
+			     }
+				 
+				 SQLQuery query = session.createSQLQuery("delete from wdcpmksy1_punarutthan_plan_implementation_photo where implementation_id in(select implementation_id from wdcpmksy1_punarutthan_plan_implementation where plan_id=:nrmpkid)");
+				 Date d= new Date();
+				 for(int i=0;i<assetid.size(); i++)
+				 {
+					 query.setInteger("nrmpkid", assetid.get(i));
+					 value=query.executeUpdate();
+					 if(value>0) {
+						 str="success";
+					 }
+					 else {
+						session.getTransaction().rollback();
+						str="fail";
+					 }
+				 }
+				 SQLQuery query2 = session.createSQLQuery("delete from wdcpmksy1_punarutthan_plan_implementation where plan_id=:nrmpkid");
+				 for(int i=0;i<assetid.size(); i++)
+				 {
+					 query2.setInteger("nrmpkid", assetid.get(i));
+					 value=query2.executeUpdate();
+					 if(value>0) {
+						 str="success";
+					 }
+					 else {
+						session.getTransaction().rollback();
+						str="fail";
+					 }
+				 }
+				 SQLQuery query3 = session.createSQLQuery("update wdcpmksy1_punarutthan_plan set status='D' where plan_id=:nrmpkid");
+				 for(int i=0;i<assetid.size(); i++)
+				 {
+					 query3.setInteger("nrmpkid", assetid.get(i));
+					 value=query3.executeUpdate();
+					 if(value>0) {
+						 str="success";
+					 }
+					 else {
+						session.getTransaction().rollback();
+						str="fail";
+					 }
+				 }
+			 
+			 
+			 }
+			 if(typeutthan.equals("imp"))  {
+				 
+				 SQLQuery query1 = session.createSQLQuery("update wdcpmksy1_punarutthan_plan_implementation set status='D' where implementation_id=:nrmpkid");
+				 for(int i=0;i<assetid.size(); i++)
+				 {
+					 query1.setInteger("nrmpkid", assetid.get(i));
+					 value=query1.executeUpdate();
+					 if(value>0) {
+						 str="success";
+					 }
+					 else {
+						session.getTransaction().rollback();
+						str="fail";
+					 }
+				 }
+				 
+			 }
+			 
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
 	}
 
 }

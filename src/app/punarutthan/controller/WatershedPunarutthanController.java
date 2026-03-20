@@ -3,6 +3,7 @@ package app.punarutthan.controller;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +21,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
+import app.bean.UnfreezeProjectLoactionBean;
+import app.controllers.MenuController;
 import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.WMPrabhatPheriBean;
 import app.punarutthan.service.WatershedPunarutthanService;
 import app.service.ProfileService;
+import app.service.StateMasterService;
+import app.service.UserService;
 import app.watershedyatra.bean.WatershedYatraBean;
 
 @Controller
@@ -36,6 +41,19 @@ public class WatershedPunarutthanController {
 	
 	@Autowired
 	WatershedPunarutthanService ser;
+	
+	@Autowired
+	StateMasterService stateMasterService;
+	
+	@Autowired(required = true)
+	MenuController menuController;
+	
+	@Autowired(required = true)
+	public UserService userService;
+	
+	private Map<Integer, String> stateList;
+	private Map<String, String> districtList;
+	private Map<String, String> ProjectList;
 	
 	@RequestMapping(value = "/getWatershedPunarutthanPlan", method = RequestMethod.GET)
 	public ModelAndView getWatershedPunarutthanPlan(HttpServletRequest request, HttpServletResponse response) {
@@ -504,6 +522,115 @@ public class WatershedPunarutthanController {
 		
 		 
 		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	@RequestMapping(value="/unfreezePunarutthan", method = RequestMethod.GET)
+	public ModelAndView unfreezePunarutthan(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+	//	String st_code=session.getAttribute("stateCode").toString();
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String project= request.getParameter("project");
+		String punarutthan= request.getParameter("punarutthan");
+		
+		if(session!=null && session.getAttribute("loginID")!=null) {
+			
+			mav = new ModelAndView("unfreeze/unfreezePunarutthan");
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+				districtList = ser.getDistrictList(Integer.parseInt(userState));
+				mav.addObject("districtList", districtList);
+			}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				ProjectList = ser.getProjectList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("ProjectList", ProjectList);
+			}
+				mav.addObject("project", project);
+				mav.addObject("punarutthant", punarutthan);
+			
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return mav; 
+	}
+	
+	@RequestMapping(value="/getUnfreezePunarutthan", method = RequestMethod.POST)
+	public ModelAndView getUnfreezePunarutthan(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		
+		ModelAndView mav = new ModelAndView();
+		String userState= request.getParameter("state");
+		String district= request.getParameter("district");
+		String project= request.getParameter("project");
+		String punarutthan= request.getParameter("punarutthan");
+		
+		List<WatershedPunarutthanBean> list = new ArrayList<WatershedPunarutthanBean>();
+		
+		if(session!=null && session.getAttribute("loginID")!=null) {
+			
+			mav = new ModelAndView("unfreeze/unfreezePunarutthan");
+			mav.addObject("menu", menuController.getMenuUserId(request));
+			
+			list=ser.getUnfreezePunarutthan(Integer.parseInt(district), project, punarutthan);
+			mav.addObject("UnfreezeUtthan", list);
+			mav.addObject("UnfreezeUtthanSize", list.size());
+		
+			stateList=stateMasterService.getAllState();
+			mav.addObject("stateList", stateList);
+			mav.addObject("state", userState);
+			
+			if(userState!=null && !userState.equals("") && !userState.equals("0")) {
+				districtList = ser.getDistrictList(Integer.parseInt(userState));
+				mav.addObject("districtList", districtList);
+			}
+			mav.addObject("district", district);
+			
+			if( district!=null && !district.equalsIgnoreCase("") && !district.equals("0")) {
+				ProjectList = ser.getProjectList(Integer.parseInt(userState), Integer.parseInt(district));
+				mav.addObject("ProjectList", ProjectList);
+			}
+			mav.addObject("project", project);
+			mav.addObject("punarutthant", punarutthan);
+			
+		}else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return mav; 
+	}
+	
+	@RequestMapping(value="/unfreezeWatershedPunarutthan", method = RequestMethod.POST)
+	@ResponseBody
+	public String unfreezeWatershedPunarutthan(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam(value ="assetid") List<Integer> assetid, @RequestParam(value ="typeutthan") String typeutthan)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			//System.out.println("kdy="+typeutthan);
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=ser.unfreezeWatershedPunarutthan(assetid, typeutthan);
+		 
+		}
+		else {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}

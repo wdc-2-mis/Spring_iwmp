@@ -2,14 +2,18 @@ package app.punarutthan.serviceImpl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.model.IwmpDistrict;
+import app.model.IwmpMProject;
 import app.punarutthan.controller.WatershedPunarutthanBean;
 import app.punarutthan.dao.WatershedPunarutthanDao;
+import app.punarutthan.model.Wdcpmksy1ProjectDetail;
 import app.punarutthan.service.WatershedPunarutthanService;
 
 @Service("WatershedPunarutthanService")
@@ -138,6 +142,38 @@ public class WatershedPunarutthanServiceImpl implements WatershedPunarutthanServ
 	public List<String> getImageWatershedPunarutthanPlan(Integer planid) {
 		// TODO Auto-generated method stub
 		return dao.getImageWatershedPunarutthanPlan(planid);
+	}
+
+	@Override
+	public Map<String, String> getDistrictList(int stateCode) {
+		Map<String, String> districtList=new LinkedHashMap<String, String>();
+		for (IwmpDistrict temp : dao.getDistrictList(stateCode)) {
+			districtList.put(temp.getDistrictCodelgd()+"", temp.getDistName());
+		}
+		return districtList ;
+	}
+
+	@Override
+	public Map<String, String> getProjectList(int stateCode, int distCode) {
+		
+		Map<String, String> projList=new LinkedHashMap<String, String>();
+		for (Wdcpmksy1ProjectDetail temp : dao.getProjectList(stateCode, distCode)) 
+		{
+			projList.put(temp.getProjectCd()+"", temp.getProjName());
+		}
+		return projList ;
+	}
+
+	@Override
+	public List<WatershedPunarutthanBean> getUnfreezePunarutthan(int dist, String projcd, String punatuthan) {
+		// TODO Auto-generated method stub
+		return dao.getUnfreezePunarutthan(dist, projcd, punatuthan);
+	}
+
+	@Override
+	public String unfreezeWatershedPunarutthan(List<Integer> assetid, String typeutthan) {
+		// TODO Auto-generated method stub
+		return dao.unfreezeWatershedPunarutthan(assetid, typeutthan);
 	}
 	
 

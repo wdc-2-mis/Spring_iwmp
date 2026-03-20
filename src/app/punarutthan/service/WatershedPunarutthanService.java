@@ -2,6 +2,7 @@ package app.punarutthan.service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -54,5 +55,13 @@ public interface WatershedPunarutthanService {
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd);
 	
 	List<String> getImageWatershedPunarutthanPlan(Integer planid);
+	
+	Map<String, String> getDistrictList(int stateCode);
+	
+	Map<String, String>  getProjectList(int stateCode, int distCode);
+	
+	List<WatershedPunarutthanBean> getUnfreezePunarutthan(int dist, String projcd, String punatuthan);
+	
+	String unfreezeWatershedPunarutthan(List<Integer> assetid, String typeutthan);
 	
 }

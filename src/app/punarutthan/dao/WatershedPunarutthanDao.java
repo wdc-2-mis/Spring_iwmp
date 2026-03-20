@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import app.model.IwmpDistrict;
+import app.model.IwmpMProject;
 import app.punarutthan.controller.WatershedPunarutthanBean;
+import app.punarutthan.model.Wdcpmksy1ProjectDetail;
 
 public interface WatershedPunarutthanDao {
 	
@@ -36,5 +39,13 @@ public interface WatershedPunarutthanDao {
 	
 	public List<WatershedPunarutthanBean> getWatershedPunarutthanPlanCompletetoImpl(HttpSession sess, int distcd, int stcd);
 	List<String> getImageWatershedPunarutthanPlan(Integer planid);
+	
+	List<IwmpDistrict> getDistrictList(int stateCode);
+	
+	List<Wdcpmksy1ProjectDetail>  getProjectList(int stateCode, int distCode);
+	
+	List<WatershedPunarutthanBean> getUnfreezePunarutthan(int dist, String projcd, String punatuthan);
+	
+	String unfreezeWatershedPunarutthan(List<Integer> assetid, String typeutthan);
 
 }
