@@ -51,6 +51,9 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 	@Value("${getWatershedMahotsavProjDashboard}")
 	String getWatershedMahotsavProjDashboard;
 	
+	@Value("${getWatershedMahotsavPPDashboard}")
+	String getWatershedMahotsavPPDashboard;
+	
 	@Value("${getWMSocialMediaReport}")
 	String getWMSocialMediaReport;
 	@Override
@@ -206,7 +209,30 @@ public class DashboardMahotsavDaoImpl implements DashboardMahotsavDao{
 		}
 		return list;
 	}
-
+	
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavPrabhatPheriDashboardData() {
+		String hql = getWatershedMahotsavPPDashboard;  // getWatershedMahotsavPrabhatPheriDashboard
+		List<DashboardMahotsavBean> list = new ArrayList<DashboardMahotsavBean>();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = null;
+		try {
+			session.beginTransaction();
+			query = session.createSQLQuery(hql);
+			query.setResultTransformer(Transformers.aliasToBean(DashboardMahotsavBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+		} 
+		catch(Exception ex){
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return list;
+	}
 
 	@Override
 	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavProjectLevelData() {

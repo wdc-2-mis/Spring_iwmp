@@ -122,6 +122,7 @@ public class MahotsavDashboardController {
         List<InagrtnAndWtrShdDashBoardBean> pList = new ArrayList<>();
         List<DashboardMahotsavBean> data = ser.getStWiseWatershedMahotsavProjectLevelData();
         List<DashboardMahotsavBean> data1 = ser.getStWiseWatershedMahotsavDashboardData();
+        List<DashboardMahotsavBean> data2 = ser.getStWiseWatershedMahotsavPrabhatPheriDashboardData();
         List<SocialMediaReport> socialp = ser.getSocialpDashboardData();
         
         stateList=stateMasterService.getAllState();
@@ -164,6 +165,7 @@ public class MahotsavDashboardController {
 		model.addAttribute("wtr",map.get("proj"));
 		model.addAttribute("bean", data);
 		model.addAttribute("bean1", data1);
+		model.addAttribute("bean2", data2);
 		model.addAttribute("listpart", listpart);
 		model.addAttribute("stateWiseData", statePEData);
 		model.addAttribute("socialp", socialp);

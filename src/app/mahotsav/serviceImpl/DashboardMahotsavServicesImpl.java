@@ -58,6 +58,9 @@ public class DashboardMahotsavServicesImpl implements DashboardMahotsavServices{
 		return dao.getSocialpDashboardData();
 	}
 
-	
+	@Override
+	public List<DashboardMahotsavBean> getStWiseWatershedMahotsavPrabhatPheriDashboardData() {
+		return dao.getStWiseWatershedMahotsavPrabhatPheriDashboardData();
+	}
 
 }

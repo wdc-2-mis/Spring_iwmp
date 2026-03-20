@@ -75,7 +75,9 @@ public class DashboardMahotsavBean {
 	private Integer award_janbhagidari;
 	private Integer total_locations;
 	
-	
+	private Integer prabhatpheri;
+	private Integer pp_male;
+	private Integer pp_female;
 	
 	
 	public Integer getTotstates() {
@@ -437,6 +439,24 @@ public class DashboardMahotsavBean {
 	}
 	public void setTotal_locations(Integer total_locations) {
 		this.total_locations = total_locations;
+	}
+	public Integer getPrabhatpheri() {
+		return prabhatpheri;
+	}
+	public void setPrabhatpheri(Integer prabhatpheri) {
+		this.prabhatpheri = prabhatpheri;
+	}
+	public Integer getPp_male() {
+		return pp_male;
+	}
+	public void setPp_male(Integer pp_male) {
+		this.pp_male = pp_male;
+	}
+	public Integer getPp_female() {
+		return pp_female;
+	}
+	public void setPp_female(Integer pp_female) {
+		this.pp_female = pp_female;
 	}
 	
 	

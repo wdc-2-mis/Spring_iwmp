@@ -26,7 +26,7 @@ public interface DashboardMahotsavServices {
 
 	List<SocialMediaReport> getSocialpDashboardData();
 	
-	
+	List<DashboardMahotsavBean> getStWiseWatershedMahotsavPrabhatPheriDashboardData();
 	
 
 }
