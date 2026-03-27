@@ -388,12 +388,12 @@
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/janbhagidaricup.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<p align="center"><b> No. of Watershed Janbhagidari Cup : ${bean.awarddistribution}</b></p>
+    				<p align="center"><b> No. of Watershed Janbhagidari Cup : <a href="javascript:void(0);" onclick="showWyPopup()"> ${bean.awarddistribution}</a> </b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/prapheri.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<p align="center"><b> No. of Prabhat Pheri Organized : ${bean.prapheriorg}</b></p>
+    				<p align="center"><b> No. of Prabhat Pheri Organized : <a href="javascript:void(0);" onclick="showPrabhatPheriPopup()"> ${bean.prapheriorg}</a> </b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
@@ -731,6 +731,57 @@
     </table>
 </div>
 
+
+<!-- Prabhat Pheri Popup Modal -->
+<div id="popPrabhatPheri" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; overflow:auto; height:100vh;">
+    <div style="text-align:right;">
+        <span onclick="closePrabhatPheriPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
+    </div>
+    <h3 style="text-align: center;">State Wise Watershed Mahotsav Prabhat Pheri Data</h3>
+    <table border="1" style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>State Name</th>
+                <th>No. of Prabhat Pheri Organized</th>
+                <th>Male Participants</th>
+                <th>Female Participants</th>
+                <th>Total Participants</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:set var="totalPrabhatPheri" value="0" />
+            <c:set var="totalMale" value="0" />
+            <c:set var="totalFemale" value="0" />
+            <c:set var="totalParticipants" value="0" />
+            
+            <c:forEach var="ppData" items="${bean2}" varStatus="count">
+                <tr>
+                    <td><c:out value='${count.count}' /></td>
+                    <td>${ppData.st_name}</td>
+                    <td class="text-right">${ppData.prabhatpheri}</td>
+                    <td class="text-right">${ppData.pp_male}</td>
+                    <td class="text-right">${ppData.pp_female}</td>
+                    <td class="text-right">${ppData.total_participants}</td>
+                </tr>
+                <c:set var="totalPrabhatPheri" value="${totalPrabhatPheri + ppData.prabhatpheri}" />
+                <c:set var="totalMale" value="${totalMale + ppData.pp_male}" />
+                <c:set var="totalFemale" value="${totalFemale + ppData.pp_female}" />
+                <c:set var="totalParticipants" value="${totalParticipants + ppData.total_participants}" />
+            </c:forEach>
+            
+            <!-- Grand Total Row -->
+            <tr>
+                <th colspan="2" style="text-align: center">Grand Total</th>
+                <th style="text-align: right;">${totalPrabhatPheri}</th>
+                <th style="text-align: right;">${totalMale}</th>
+                <th style="text-align: right;">${totalFemale}</th>
+                <th style="text-align: right;">${totalParticipants}</th>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
 <script>
     function showWyPopup() {
         document.getElementById('popwyup').style.display = 'block';
@@ -746,6 +797,16 @@
     function closeSMPopup() {
         document.getElementById('smpopup').style.display = 'none';
     }
+    
+    function showPrabhatPheriPopup() {
+        document.getElementById('popPrabhatPheri').style.display = 'block';
+    }
+
+    function closePrabhatPheriPopup() {
+        document.getElementById('popPrabhatPheri').style.display = 'none';
+    }
+    
+    
     function showDWyPopup(stcode) {
 
         document.getElementById('popDwyup').style.display = 'block';
