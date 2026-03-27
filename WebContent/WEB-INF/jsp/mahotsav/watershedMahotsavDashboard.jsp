@@ -1102,6 +1102,37 @@ function closeDPopup() {
 			</div>
 		</div>
 	</div> 
+	
+	
+	<div class="piechart-container">
+		<div class="pie-items">
+			<div class="chart-div1kd">
+				<canvas id="locationChartkd"></canvas>
+			</div>
+		</div>
+		<div class="pie-items">
+			<div class="chart-div2kd">
+				<canvas id="activityChartkd"></canvas>
+			</div>
+		</div>
+		
+		<div class="pie-items">
+			<div class="chart-div1kd1">
+				<canvas id="locationChartkd1"></canvas>
+			</div>
+		</div>
+		<%-- <div class="pie-items">
+			<div class="chart-div2kd1">
+				<canvas id="activityChartkd1"></canvas>
+			</div>
+		</div> --%>
+		
+	</div> 
+	
+	
+	
+	
+	
 	<script>
     
     // Labels for the pie chart
@@ -1260,16 +1291,27 @@ var iplantation = Number("${listpart[0].iplantation}");
     var pplantation = ${listpart[0].pplantation};
 
         // Prepare datasets
-        const locData = [ibhumipujan, ilokarpan, ishramdannlocation, ishramdanparticipate, iplantation];
-        const actData = [pbhumipujan, plokarpan, pshramdannlocation, pshramdanparticipate, pplantation];
+        const locDatabh = [ibhumipujan, pbhumipujan];
+        const locDatalk = [ilokarpan, plokarpan];
+        const locDatash = [ishramdannlocation, pshramdannlocation];
+        const locDatashp= [ishramdanparticipate, pshramdanparticipate];
+        const locDatapl = [iplantation, pplantation];
+        
+        
+        var totalBhoomiPoojan=ibhumipujan +pbhumipujan;
+        var totallokarpan =ilokarpan +plokarpan;
+        var totalshramdannlocation=ishramdannlocation+pshramdannlocation;
+        var totalshramdanparticipate=ishramdanparticipate +pshramdanparticipate;
+        var totalplantation=iplantation+pplantation;
+        
 
         // Location Gauge Chart
         new Chart(document.getElementById('locationChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
+            labels: ['Inauguration Bhoomi Poojan', 'Project Level Bhoomi Poojan'],
             datasets: [{
-              data: locData,
+              data: locDatabh,
               backgroundColor: ['#4caf50', '#f44336', '#4BC0C0', '#9966FF', '#FF9F40'],
             }]
           },
@@ -1278,7 +1320,7 @@ var iplantation = Number("${listpart[0].iplantation}");
             plugins: {
               title: {
                     display: true,
-                    text: 'Inauguration Activities',
+                    text: 'Bhoomi Poojan',
                     font: {
                         size: 30 // Adjust this value to increase or decrease the font size
                     }
@@ -1287,30 +1329,13 @@ var iplantation = Number("${listpart[0].iplantation}");
             cutout: '60%',
           }
         });
-        
-        var totalInaugurationActivities =
-            ibhumipujan +
-            ilokarpan +
-            ishramdannlocation +
-            ishramdanparticipate +
-            iplantation;
-
-        var totalProjectActivities =
-            pbhumipujan +
-            plokarpan +
-            pshramdannlocation +
-            pshramdanparticipate +
-            pplantation;
-        
         var container = document.querySelector('.chart-div1');
-        
-
         if (container) {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
             totalElement.style.fontSize = '16px';
-            totalElement.innerHTML = `<strong>Total Activities : \${totalInaugurationActivities}</strong>`;
+            totalElement.innerHTML = `<strong>Total Bhoomi Poojan : \${totalBhoomiPoojan}</strong>`;
             container.appendChild(totalElement);
         } else {
             console.error("Container element '.chart-div1' not found.");
@@ -1321,9 +1346,9 @@ var iplantation = Number("${listpart[0].iplantation}");
         new Chart(document.getElementById('activityChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
+            labels: ['Inauguration Lokarpan', 'Project Level Lokarpan'],
             datasets: [{
-              data: actData,
+              data: locDatalk,
               backgroundColor: ['#2196f3', '#ffc107', '#4caf50', '#f44336', '#4BC0C0'],
             }]
           },
@@ -1332,7 +1357,7 @@ var iplantation = Number("${listpart[0].iplantation}");
               plugins: {
                 title: {
                       display: true,
-                      text: 'Project Level Activities',
+                      text: 'Lokarpan',
                       font: {
                           size: 30 // Adjust this value to increase or decrease the font size
                       }
@@ -1348,13 +1373,126 @@ var iplantation = Number("${listpart[0].iplantation}");
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
             totalElement.style.fontSize = '16px';
-            totalElement.innerHTML = `<strong>Total Activities : \${totalProjectActivities}</strong>`;
+            totalElement.innerHTML = `<strong>Total Lokarpan : \${totallokarpan}</strong>`;
             container.appendChild(totalElement);
         } else {
             console.error("Container element '.piechart-container' not found.");
         }
         
      
+        new Chart(document.getElementById('locationChartkd'), {
+            type: 'doughnut',
+            data: {
+              labels: ['Inauguration Shramdaan Location', 'Project Level Shramdaan Location'],
+              datasets: [{
+                data: locDatabh,
+                backgroundColor: ['#98F527', '#E427F5', ],
+              }]
+            },
+            options: {
+          	responsive: true,
+              plugins: {
+                title: {
+                      display: true,
+                      text: 'Shramdaan Location',
+                      font: {
+                          size: 30 // Adjust this value to increase or decrease the font size
+                      }
+                  }
+              },
+              cutout: '60%',
+            }
+          });
+          var container = document.querySelector('.chart-div1kd');
+          if (container) {
+              var totalElement = document.createElement('div');
+              totalElement.style.textAlign = 'center';
+              totalElement.style.marginTop = '20px';
+              totalElement.style.fontSize = '16px';
+              totalElement.innerHTML = `<strong>Total Shramdaan Location : \${totalshramdannlocation}</strong>`;
+              container.appendChild(totalElement);
+          } else {
+              console.error("Container element '.chart-div1kd' not found.");
+          }
+
+
+          // Activity Gauge Chart
+          new Chart(document.getElementById('activityChartkd'), {
+            type: 'doughnut',
+            data: {
+              labels: ['Inauguration Shramdaan People Participated', 'Project Level Shramdaan People Participated'],
+              datasets: [{
+                data: locDatalk,
+                backgroundColor: ['#f44336', '#4BC0C0'],
+              }]
+            },
+            options: {
+            	responsive: true,
+                plugins: {
+                  title: {
+                        display: true,
+                        text: 'Shramdaan People Participated',
+                        font: {
+                            size: 30 // Adjust this value to increase or decrease the font size
+                        }
+                    }
+                },
+                cutout: '60%',
+              }
+          });
+          
+          var container = document.querySelector('.chart-div2kd');
+          if (container) {
+              var totalElement = document.createElement('div');
+              totalElement.style.textAlign = 'center';
+              totalElement.style.marginTop = '20px';
+              totalElement.style.fontSize = '16px';
+              totalElement.innerHTML = `<strong>Total People Participated : \${totalshramdanparticipate}</strong>`;
+              container.appendChild(totalElement);
+          } else {
+              console.error("Container element '.chart-div2kd' not found.");
+          } 
+        
+        
+          new Chart(document.getElementById('locationChartkd1'), {
+              type: 'doughnut',
+              data: {
+                labels: ['Inauguration Plantation', 'Project Level Plantation'],
+                datasets: [{
+                  data: locDatalk,
+                  backgroundColor: ['#9966FF', '#FF9F40'],
+                }]
+              },
+              options: {
+              	responsive: true,
+                  plugins: {
+                    title: {
+                          display: true,
+                          text: 'Agro forestry/Horticultural Plantation No. of Sapling',
+                          font: {
+                              size: 30 // Adjust this value to increase or decrease the font size
+                          }
+                      }
+                  },
+                  cutout: '60%',
+                }
+            });
+            
+            var container = document.querySelector('.chart-div1kd1');
+            if (container) {
+                var totalElement = document.createElement('div');
+                totalElement.style.textAlign = 'center';
+                totalElement.style.marginTop = '20px';
+                totalElement.style.fontSize = '16px';
+                totalElement.innerHTML = `<strong>Total Plantation : \${totalplantation}</strong>`;
+                container.appendChild(totalElement);
+            } else {
+                console.error("Container element '.chart-div1kd1' not found.");
+            } 
+        
+        
+        
+        
         
         // Data from the backend
         var data = {
