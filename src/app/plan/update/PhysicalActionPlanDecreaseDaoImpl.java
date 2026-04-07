@@ -87,9 +87,9 @@ public class PhysicalActionPlanDecreaseDaoImpl implements PhysicalActionPlanDecr
 				List list1=session.createSQLQuery("select qty_planned from iwmp_project_physical_aap where planid=:plan_id and phy_activity_code=:activity").setInteger("plan_id", result).setInteger("activity", Integer.parseInt(activity)).list();
 				plnact=new BigDecimal(list1.get(0).toString());
 				
-				if(pln.compareTo(plnact)==1) 
+				if(pln.compareTo(plnact)<0) 
 				{
-				
+				//System.out.println("from="+pln +" =tableplan="+plnact);
 					SQLQuery sqlQuery =session.createSQLQuery(update);
 					sqlQuery.setBigDecimal("plan", pln);
 					sqlQuery.setInteger("activity", Integer.parseInt(activity));
