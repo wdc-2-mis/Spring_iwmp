@@ -676,18 +676,21 @@ public class PhysicalAchievementDaoImpl implements PhysicalAchievementDao{
 			tranx.setSenton(new Date());
 			Integer year=ach.getIwmpMFinYear().getFinYrCd();
 			Integer mon=ach.getIwmpMMonth().getMonthId();
-		//	System.out.println(year+" kdy "+mon);
+			Integer projid=ach.getIwmpMProject().getProjectId();
+		//	System.out.println(year+"=kdy= "+mon+"=Proj="+projid );
 			if(action.equals('C'))
 				ach.setStatus(action);
 			
 			session.save(tranx);
 			session.update(ach);
-			
-			SQLQuery query = session.createSQLQuery(sql);
-			query.setInteger("finyr",year);
-			query.setInteger("monid",mon); 
-			query.executeUpdate();
-			
+			if(action.equals('C')) 
+			{
+				SQLQuery query = session.createSQLQuery(sql);
+				query.setInteger("finyr",year);
+				query.setInteger("monid",mon); 
+				query.setInteger("project",projid);
+				query.executeUpdate();
+			}
 			
 			//if(query.list().get(0).toString().equals("success"))
 				res ="success";

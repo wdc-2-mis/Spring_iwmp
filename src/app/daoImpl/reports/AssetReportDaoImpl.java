@@ -149,13 +149,36 @@ public class AssetReportDaoImpl implements AssetReportDao{
 								assetachv=assetachv.add(assetachv);
 						}
 					}
+					if(asset.getIwmpMPhyActivity().getIwmpMUnit().getUnitDesc().equals("Rmt")) {
+						if(fyCode>0) {
+							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getIwmpMFinYear().getFinYrCd()==fyCode
+									&& ach.getIwmpMMonth().getMonthId()==monthid && ach.getStatus() == 'C')
+								assetachv=assetachv.add(ach.getAchievement());
+						}
+						else {	
+							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getStatus() == 'C')
+								assetachv=assetachv.add(ach.getAchievement());
+						}
+					}
+					if(asset.getIwmpMPhyActivity().getIwmpMUnit().getUnitDesc().equals("Cubic meter")) {
+						if(fyCode>0) {
+							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getIwmpMFinYear().getFinYrCd()==fyCode
+									&& ach.getIwmpMMonth().getMonthId()==monthid && ach.getStatus() == 'C')
+								assetachv=assetachv.add(ach.getAchievement());
+						}
+						else {	
+							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getStatus() == 'C')
+								assetachv=assetachv.add(ach.getAchievement());
+						}
+					}
 					else {
 						if(fyCode>0) {
 							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getIwmpMFinYear().getFinYrCd()==fyCode
-									&& ach.getIwmpMMonth().getMonthId()==monthid)
+									&& ach.getIwmpMMonth().getMonthId()==monthid && ach.getStatus() == 'C')
 								assetachv=assetachv.add(ach.getAchievement());
 						}
-						else {	if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid())
+						else {	
+							if(ach.getIwmpProjectPhysicalAsset().getAssetid()==asset.getAssetid() && ach.getStatus() == 'C')
 								assetachv=assetachv.add(ach.getAchievement());
 						}
 					}
