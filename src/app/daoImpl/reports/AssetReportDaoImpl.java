@@ -1,6 +1,7 @@
 package app.daoImpl.reports;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,11 +13,13 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import app.bean.AssetIdBean;
+import app.bean.StateHeadActivityFinBean;
 import app.dao.reports.AssetReportDao;
 import app.model.IwmpProjectAssetStatus;
 import app.model.master.IwmpMPhySubactivity;
@@ -46,6 +49,9 @@ public class AssetReportDaoImpl implements AssetReportDao{
 	 
 	 @Value("${getAssetReportOngoing}") 
 	  String getAssetReportOngoing;
+	 
+	 @Value("${getStwiseActTarAchWorks}")
+	 String getStwiseActTarAchWorks;
 
 	@Override
 	public LinkedHashMap<Integer, String> getSubActivity(Integer activityId) {
@@ -224,6 +230,37 @@ public class AssetReportDaoImpl implements AssetReportDao{
 			ex.printStackTrace();
 		}
 		return finallist;
+	}
+
+	@Override
+	public List<StateHeadActivityFinBean> getStwiseActTarAchWorks(Integer stCode, Integer fyCode,
+			Integer headCode, Integer activityCode) {
+		// TODO Auto-generated method stub
+		String hql="";
+		Session session = sessionFactory.getCurrentSession();
+		
+		List<StateHeadActivityFinBean> list = new ArrayList<StateHeadActivityFinBean>();
+		try {
+			session.beginTransaction();
+			hql=getStwiseActTarAchWorks;
+			Query query= session.createSQLQuery(hql);
+			query.setInteger("stcode",stCode);
+			query.setInteger("fycode",fyCode);
+			query.setInteger("headcode",headCode);
+			query.setResultTransformer(Transformers.aliasToBean(StateHeadActivityFinBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		} 
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }

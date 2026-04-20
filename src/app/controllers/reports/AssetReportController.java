@@ -7,6 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,11 +49,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import app.bean.AssetIdBean;
 import app.bean.Login;
+import app.bean.StateHeadActivityFinBean;
 import app.common.CommonFunctions;
 import app.model.PfmsCgireceiptDetaildata;
 import app.service.PhysicalActionPlanService;
 import app.service.StateMasterService;
 import app.service.reports.AssetReportService;
+import app.service.reports.PhysicalActionAchievementService;
 
 @Controller("AssetReportController")
 public class AssetReportController {
@@ -64,6 +70,9 @@ public class AssetReportController {
 	
 	@Autowired
 	PhysicalActionPlanService physicalActionPlanService;
+	
+	@Autowired
+	PhysicalActionAchievementService pAAservices;
 	
 	@RequestMapping(value="/assetReport", method = RequestMethod.GET)
 	public ModelAndView getAssetReportPage(HttpServletRequest request, HttpServletResponse response)
@@ -105,6 +114,147 @@ public class AssetReportController {
 	//	System.out.println("stCode "+stCode+" distCode "+distCode+" projId "+projId+" fyCode "+fyCode+" headCode "+headCode+" actCode "+activityCode+" subActCode "+subActivityCode);
 		list=assetReportService.getAssetReport(stCode,distCode,projId,fyCode,headCode,activityCode,subActivityCode, monthid, status);
 		return list; 
+	}
+	
+	@RequestMapping(value="/getStateActYearWiseTarAchWorks", method = RequestMethod.GET)
+	public ModelAndView getStateActYearWiseTarAchWorks(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("reports/stateActFinYrWiseAchAndTotWrks");
+		LinkedHashMap<Integer,String> stateList=stateMasterService.getAllState();
+		LinkedHashMap<Integer, String> headList = physicalActionPlanService.getHead();
+		
+		mav.addObject("stateList",stateList);
+		mav.addObject("headList",headList);
+		mav.addObject("yearList",pAAservices.getYearForPhysicalActionAchievementReport(0));
+		
+		return mav;
+		
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@RequestMapping(value="/getStateActYearWiseTarAchWorks", method = RequestMethod.POST)
+	public ModelAndView getStateActYearWiseTarAchWork(HttpServletRequest request, HttpServletResponse response)
+	{
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("reports/stateActFinYrWiseAchAndTotWrks");
+		Integer stcode = Integer.parseInt(request.getParameter("assetstate"));
+		Integer headcode = Integer.parseInt(request.getParameter("head"));
+		Integer year = Integer.parseInt(request.getParameter("year"));
+		List<StateHeadActivityFinBean>  list = new ArrayList<StateHeadActivityFinBean>();
+		Map<Integer,String> headActMap = new LinkedHashMap<Integer, String>();
+		list = assetReportService.getStwiseActTarAchWorks(stcode, year, headcode, 0);
+		Map<Integer,String> headMap = list.stream().collect(Collectors.toMap(StateHeadActivityFinBean::getHeadcode,bean -> bean.getHeadcode() != 8
+                ? bean.getHeaddesc() + " (" + bean.getUnitname() + ")"
+                : bean.getHeaddesc(),(v1,v2)->v1,TreeMap::new));
+		
+		Boolean check = false;
+		if(headMap.containsKey(8))
+			check = true;
+		if(check && headcode ==0 || check) {
+			headActMap = list.stream().filter(s-> s.getHeadcode()==8).collect(Collectors.toMap(StateHeadActivityFinBean::getActivitycode,bean ->bean.getActivitydesc() +" ("+bean.getUnitname()+")",(v1,v2)->v1,TreeMap::new));
+			mav.addObject("headactmap",headActMap);
+			mav.addObject("headactmapsize",headActMap.size());
+		}
+
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
+		Boolean val = false;
+		if(stcode==0 && headcode == 8) {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (bean.getStcode() == state) {
+							if (bean.getActivitycode() == act.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getActivitycode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(act.getKey());
+								beanZero.setHeaddesc(act.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(),
+										beanZero);
+							}
+						} 
+					}
+				}
+			}
+		}else {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> head : headMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (head.getKey() != 8 && bean.getStcode() == state) {
+							if (bean.getHeadcode() == head.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getHeadcode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(head.getKey());
+								beanZero.setHeaddesc(head.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(head.getKey(),
+										beanZero);
+							}
+						} else if(bean.getStcode() == state){
+							for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+								if (bean.getActivitycode() == act.getKey()) {
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+											.put(bean.getActivitycode(), bean);
+									val = true;
+								} else if (!val) {
+									StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+									beanZero.setStcode(bean.getStcode());
+									beanZero.setStname(bean.getStname());
+									beanZero.setHeadcode(bean.getHeadcode());
+									beanZero.setHeaddesc(bean.getHeaddesc());
+									beanZero.setActivitycode(act.getKey());
+									beanZero.setActivitydesc(act.getValue());
+									beanZero.setAchievement(BigDecimal.ZERO);
+									beanZero.setPlan(BigDecimal.ZERO);
+									beanZero.setWorks(0);
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(),
+											beanZero);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		System.out.println("listmap size : "+ listMap.size());
+		mav.addObject("list",list);
+		mav.addObject("listsize",list.size());
+		mav.addObject("headmap",headMap);
+		mav.addObject("headmapsize",headMap.size());
+		mav.addObject("stateList",stateMasterService.getAllState());
+		mav.addObject("headList",physicalActionPlanService.getHead());
+		mav.addObject("yearList",pAAservices.getYearForPhysicalActionAchievementReport(0));
+		mav.addObject("stCode",stcode);
+		mav.addObject("headCode",headcode);
+		mav.addObject("finyr",year);
+		mav.addObject("check",check);
+		mav.addObject("listmap",listMap);
+		mav.addObject("listmapsize",listMap.size());
+		
+		return mav;
+		
 	}
 	
 	

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.bean.AssetIdBean;
+import app.bean.StateHeadActivityFinBean;
 import app.dao.reports.AssetReportDao;
 import app.service.reports.AssetReportService;
 
@@ -27,6 +28,13 @@ public class AssetReportServiceImpl implements AssetReportService{
 			Integer headCode, Integer activityCode, Integer subActivityCode, Integer monthid, String status) {
 		// TODO Auto-generated method stub
 		return dao.getAssetReport(stCode,distCode,projId,fyCode,headCode,activityCode,subActivityCode, monthid, status);
+	}
+
+	@Override
+	public List<StateHeadActivityFinBean> getStwiseActTarAchWorks(Integer stCode, Integer fyCode, Integer headCode,
+			Integer activityCode) {
+		// TODO Auto-generated method stub
+		return dao.getStwiseActTarAchWorks(stCode, fyCode, headCode, activityCode);
 	}
 
 }
