@@ -156,6 +156,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        List<String> latitudeList,
 	        List<String> longitudeList,
 	        String status,
+	        List<String> remarksList,
 	        String createdBy,
 	        HttpServletRequest request) {
 
@@ -219,6 +220,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	            details.setEst_cost(estCostList.get(i));
 	            details.setFfCost(costList.get(i));
 	            details.setStatus(status);
+	            details.setRemark(remarksList.get(i));
 	            details.setCreatedBy(createdBy);
 	            details.setRequestedIp(getClientIpAddr(request));
 
@@ -276,6 +278,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        String hql = "SELECT DISTINCT d FROM FlexiFundDetails d " +
 	                     "LEFT JOIN FETCH d.photos " +
+	                     "LEFT JOIN FETCH d.activity " + // Add this line
 	                     "WHERE d.project.id = :projId AND d.gcode.id = :gcode";
 
 	        result = ses.createQuery(hql, FlexiFundDetails.class)
@@ -303,6 +306,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        List<MultipartFile> photos,
 	        List<Integer> photoRowIndex,
 	        String status,
+	        List<String> remarksList,
 	        String updatedBy) {
 
 	    Session session = sessionFactory.getCurrentSession();
@@ -333,6 +337,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	                entity.setEst_cost(estCostList.get(i));
 	                entity.setFfCost(costList.get(i));
 	                entity.setStatus(status);
+	                entity.setRemark(remarksList.get(i));
 	                entity.setUpdatedBy(updatedBy);
 	                entity.setUpdatedDate(new Date());
 

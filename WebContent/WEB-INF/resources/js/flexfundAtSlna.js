@@ -225,6 +225,7 @@ function loadDraftTable(data) {
                 <div class="photoPreview">${photosHtml}</div>
                 <small class="text-danger photoError"></small>
             </td>
+           <td> <textarea name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200">${item.remark}</textarea> </td>
         </tr>`;
 
         $('#draftTbody').append(row);
@@ -254,11 +255,12 @@ function loadCompleteTable(data) {
 
         let row = `
         <tr>
-            <td>${item.actId}</td>
+            <td>${item.actName}</td>
             <td>${item.workDesc}</td>
             <td>${item.est_cost}</td>
             <td>${item.ffCost}</td>
             <td>${photosHtml}</td>
+            <td>${item.remark}</td>
         </tr>`;
 
         $('#completeTbody').append(row);
@@ -446,6 +448,7 @@ let newRow = `
             <small class="text-danger photoError"></small>
             <div class="photoPreview"></div>
         </td>
+        <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea></td>
         <td>
             <button type="button" class="btn btn-success addRow">+</button>
         </td>
@@ -536,6 +539,7 @@ $(document).on('click', '#draft, #complete', function (e) {
         let details = $(this).find('input[name="details[]"]');
         let totalest = $(this).find('input[name="totalest[]"]');
         let cost = $(this).find('input[name="cost[]"]');
+        let remark = $(this).find('input[name="remark[]"]');
 
         if (!activity.val()) {
             alert('Please select Activity in row ' + (index + 1));
@@ -588,11 +592,13 @@ $('#tbodyReport tr').each(function (index) {
     let details = $(this).find('input[name="details[]"]').val();
     let totalest = $(this).find('input[name="totalest[]"]').val();
     let cost = $(this).find('input[name="cost[]"]').val();
+    let remark = $(this).find('textarea[name="remark[]"]').val() || '';
 
     formData.append("activity[]", activity);
     formData.append("details[]", details);
     formData.append("totalest[]", totalest);
     formData.append("cost[]", cost);
+    formData.append("remark[]", remark);
 });
 
 // ✅ PHOTO DATA (SEPARATE LOOP)
@@ -665,7 +671,7 @@ function resetForm() {
     $('#tbodyReport').html(`
         <tr data-row-id="0">
             <td>
-                <select name="activity[]" class="form-control activityDropdown" style="width:300px;">
+                <select name="activity[]" class="form-control activityDropdown" style="width:250px;">
                     ${getFilteredActivityOptions()}
                 </select>
             </td>
@@ -681,6 +687,7 @@ function resetForm() {
                 <small class="text-danger photoError"></small>
                 <div class="photoPreview"></div>
             </td>
+            <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea></td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>
             </td>
@@ -820,9 +827,9 @@ if (files.length >= 6) {
 $(document).on('click', '#updateDraft, #updateComplete', function (e) {
 
     e.preventDefault();
-
+    let isDraft = $(this).attr('id') === 'updateDraft';
     let status = ($(this).attr('id') === 'updateDraft') ? 'D' : 'C';
-
+    let actionText = isDraft ? "update this as a Draft?" : "mark this as Complete?";
     let selectedRows = [];
 
     $('#draftTbody tr').each(function () {
@@ -837,6 +844,9 @@ $(document).on('click', '#updateDraft, #updateComplete', function (e) {
         return;
     }
 
+    if (!confirm("Do you want to " + actionText)) {
+        return; // User clicked 'Cancel', so stop the function
+    }
     let formData = new FormData();
 
     selectedRows.forEach(function (row) {
@@ -847,13 +857,14 @@ $(document).on('click', '#updateDraft, #updateComplete', function (e) {
         let details = row.find('input[type="text"]').eq(0).val();
         let totalest = row.find('input[type="text"]').eq(1).val();
         let cost = row.find('input[type="text"]').eq(2).val();
-alert(rowId);
+        let remark = row.find('textarea[name="remark[]"]').val() || ''; 
 
         formData.append("rowIds[]", rowId);
         formData.append("activity[]", activity);
         formData.append("details[]", details);
         formData.append("totalest[]", totalest);
         formData.append("cost[]", cost);
+        formData.append("remark[]", remark);
 
 
         let files = rowFilesMap.get(row.data('row-id')) || [];

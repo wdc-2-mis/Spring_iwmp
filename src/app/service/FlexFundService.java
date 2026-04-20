@@ -19,13 +19,13 @@ public interface FlexFundService {
 
 	boolean saveFlexiFundData(Integer projId, Integer gcode, List<Integer> activityList, List<String> detailsList, List<Double> estCostList,
 			List<Double> costList, List<MultipartFile> photos, List<Integer> photoCountList, List<String> latitudeList, List<String> longitudeList,
-			String status, String createdBy, HttpServletRequest request);
+			String status, List<String> remarksList, String createdBy, HttpServletRequest request);
 
 	List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode);
 
 	boolean updateFlexiFundData(List<Integer> rowIds, List<Integer> activityList, List<String> detailsList,
 			List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoRowIndex,
-			String status, String user);
+			String status, List<String> remarksList, String user);
 	
 	
 }

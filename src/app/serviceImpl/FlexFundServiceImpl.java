@@ -33,9 +33,9 @@ public class FlexFundServiceImpl implements FlexFundService{
 	@Override
 	public boolean saveFlexiFundData(Integer projId, Integer gcode, List<Integer> activityList,
 			List<String> detailsList, List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoCountList, List<String> latitudeList,
-			List<String> longitudeList, String status, String createdBy, HttpServletRequest request) {
+			List<String> longitudeList, String status, List<String> remarksList, String createdBy, HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		return dao.saveFlexiFundData(projId, gcode, activityList, detailsList, estCostList, costList, photos, photoCountList, latitudeList, longitudeList, status, createdBy, request);
+		return dao.saveFlexiFundData(projId, gcode, activityList, detailsList, estCostList, costList, photos, photoCountList, latitudeList, longitudeList, status, remarksList, createdBy, request);
 	}
 
 	@Override
@@ -47,9 +47,9 @@ public class FlexFundServiceImpl implements FlexFundService{
 	@Override
 	public boolean updateFlexiFundData(List<Integer> rowIds, List<Integer> activityList, List<String> detailsList,
 			List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoRowIndex,
-			String status, String user) {
+			String status, List<String> remarksList, String user) {
 		// TODO Auto-generated method stub
-		return dao.updateFlexiFundData(rowIds, activityList, detailsList, estCostList, costList, photos, photoRowIndex, status, user);
+		return dao.updateFlexiFundData(rowIds, activityList, detailsList, estCostList, costList, photos, photoRowIndex, status, remarksList, user);
 	}
 	
 	

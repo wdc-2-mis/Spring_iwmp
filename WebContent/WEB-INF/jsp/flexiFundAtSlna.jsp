@@ -47,7 +47,7 @@ var activityList = [
 </div>
 
 <div class="form-group col-3">
-    <label for="district"><b>District Name:</b></label><br/>
+    <label for="district"><b>District Name: <span style="color:red;">*</span></b></label><br/>
   <span class="projectError"></span>
         <select class="form-control district" id="district" name="district">
             <option value="">--Select District--</option>
@@ -60,7 +60,7 @@ var activityList = [
 </div>
 
 <div class="form-group col-3">
-    <label for="projid"><b>Project Name:</b></label><br/>
+    <label for="projid"><b>Project Name: <span style="color:red;">*</span></b></label><br/>
 
      <span class="activityError"></span>
         <select class="form-control activity" id="projid" name="projid">
@@ -69,7 +69,7 @@ var activityList = [
 </div>
 
 <div class="form-group col-3">
-    <label for="panchayat"><b>Gram Panchayat:</b></label><br/>
+    <label for="panchayat"><b>Gram Panchayat: <span style="color:red;">*</span></b></label><br/>
     <span class="panchatError"></span>
         <select class="form-control panchayat" id="panchayat" name="panchayat">
             <option value="">--Select Gram Panchayat--</option>
@@ -82,11 +82,12 @@ var activityList = [
 <table class="table table-bordered">
     <thead>
         <tr>
-            <th>Activity Name</th>
-            <th>Details</th>
-            <th>Total Est.(Rs. in Lakhs)</th>
-            <th>Expenditure(Rs. in Lakhs)</th>
-            <th style="width:250px;">Photos</th>
+            <th>Activity Name <span style="color:red;">*</span></th>
+            <th>Details of Work Done <span style="color:red;">*</span></th>
+            <th>Total Estimated Cost(As per plan) <span style="color:red;">*</span></th>
+            <th>Expenditure till date(Rs. in Lakhs)<span style="color:red;">*</span></th>
+            <th style="width:250px;">Photos (Max 6)</th>
+            <th>Remarks</th>
             <th>Add</th>
         </tr>
     </thead>
@@ -94,7 +95,7 @@ var activityList = [
     <tbody id="tbodyReport">
         <tr data-row-id="0">
             <td>
-                <select name="activity[]" class="form-control activityDropdown" style="width:300px;">
+                <select name="activity[]" class="form-control activityDropdown" style="width:250px;">
                     <option value="">--Select Activity--</option>
                     <c:forEach items="${activity}" var="act">
                         <option value="${act.key}">${act.value}</option>
@@ -110,12 +111,14 @@ var activityList = [
                 <div class="customFileWrapper">
                     <button type="button" class="btn btn-secondary browseBtn">Browse</button>
                     <span class="fileCount">No file selected</span>
-                    <input type="file" name="photos" class="photoInput d-none" multiple style="width:200px;"/>
+                    <input type="file" name="photos" class="photoInput d-none" multiple/>
                 </div>
 
                 <div class="photoPreview"></div>
             </td>
-
+             <td>
+            <textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea>
+            </td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>
             </td>
@@ -124,7 +127,7 @@ var activityList = [
 </table>
 <div class="text-center">
     <button type="button" id="draft" class="btn btn-primary">Draft</button>
-    <button type="button" id="complete" class="btn btn-success">Complete</button>
+    <!-- <button type="button" id="complete" class="btn btn-success">Complete</button> -->
 </div>
 </div>
 <!-- ================= DRAFT DATA ================= -->
@@ -135,11 +138,12 @@ var activityList = [
         <thead>
             <tr>
                 <th>Select</th>
-                <th>Activity</th>
-                <th>Details</th>
-                <th>Total Est.(Rs. in Lakhs)</th>
-                <th>Expenditure(Rs. in Lakhs)</th>
+                <th>Activity Name</th>
+                <th>Details of Work Done</th>
+                <th>Total Estimated Cost(As per plan)</th>
+                <th>Expenditure till date(Rs. in Lakhs)</th>
                 <th style="width:300px;">Photos</th>
+                <th>Remarks</th>
             </tr>
         </thead>
         <tbody id="draftTbody"></tbody>
@@ -159,11 +163,12 @@ var activityList = [
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Activity</th>
-                <th>Details</th>
+                <th style="width:250px;">Activity</th>
+                <th style="width:250px;">Details</th>
                 <th>Total Est.(Rs. in Lakhs)</th>
                 <th>Expenditure(Rs. in Lakhs)</th>
-                <th style="width:400px;">Photos</th>
+                <th style="width:300px;">Photos</th>
+                <th style="width:200px;">Remarks</th>
             </tr>
         </thead>
         <tbody id="completeTbody"></tbody>

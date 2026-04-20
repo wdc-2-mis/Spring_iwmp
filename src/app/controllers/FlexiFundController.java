@@ -132,11 +132,14 @@ public class FlexiFundController {
 	        Map<String, Object> dto = new HashMap<>();
 
 	        dto.put("actId", d.getActivity().getActId());
+	        dto.put("actName", d.getActivity().getActName());
 	        dto.put("workDesc", d.getWorkDesc());
 	        dto.put("est_cost", d.getEst_cost());
 	        dto.put("ffCost", d.getFfCost());
             dto.put("ffId", d.getFfId());
-	        List<Map<String, Object>> photos = new ArrayList<>();
+            dto.put("remark", d.getRemark());
+	       System.out.println("himanshu remark" +d.getRemark());
+            List<Map<String, Object>> photos = new ArrayList<>();
 
 	        if (d.getPhotos() != null) {
 	            for (FlexiFundPhoto p : d.getPhotos()) {
@@ -214,7 +217,8 @@ public class FlexiFundController {
 	        @RequestParam(value = "longitude[]", required = false) List<String> longitudeList,
 	        @RequestParam("projid") Integer projId,
 	        @RequestParam("panchayat") Integer gcode,
-	        @RequestParam("status") String status) {
+	        @RequestParam("status") String status,
+	        @RequestParam("remark[]") List<String> remarksList) {
 
 	    try {
 
@@ -223,9 +227,6 @@ public class FlexiFundController {
 	        if (latitudeList == null) latitudeList = new ArrayList<>();
 	        if (longitudeList == null) longitudeList = new ArrayList<>();
 
-	        System.out.println("Photos size: " + photos.size());
-	        System.out.println("PhotoRowIndex: " + photoCountList);
-
 	        String createdBy = request.getSession().getAttribute("loginID").toString();
 
 	        boolean result = service.saveFlexiFundData(
@@ -233,7 +234,7 @@ public class FlexiFundController {
 	                activityList, detailsList, estCostList, costList,
 	                photos, photoCountList,
 	                latitudeList, longitudeList,
-	                status, createdBy, request
+	                status, remarksList, createdBy, request
 	        );
 
 	        return result ? "success" : "fail";
@@ -255,6 +256,7 @@ public class FlexiFundController {
 	        @RequestParam(value = "photos[]", required = false) List<MultipartFile> photos,
 	        @RequestParam(value = "photoRowIndex[]", required = false) List<Integer> photoRowIndex,
 	        @RequestParam("status") String status,
+	        @RequestParam("remark[]") List<String> remarksList,
 	        HttpServletRequest request) {
 
 	    try {
@@ -270,6 +272,7 @@ public class FlexiFundController {
 	                photos,
 	                photoRowIndex,
 	                status,
+	                remarksList,
 	                user
 	        );
 

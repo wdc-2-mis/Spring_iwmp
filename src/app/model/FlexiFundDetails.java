@@ -39,7 +39,7 @@ public class FlexiFundDetails implements Serializable {
     @JoinColumn(name = "gcode")
     private IwmpGramPanchayat gcode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "act_id")
     private FlexFundActivityMaster activity;
     
@@ -68,6 +68,12 @@ public class FlexiFundDetails implements Serializable {
     @Column(name = "updated_date")
     private Date updatedDate;
 
+    @Column(name ="remark")
+    private String remark;
+    
+    @Column(name="exp_status")
+    private String expStatus;
+    
     @OneToMany(mappedBy = "flexiFundDetails", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<FlexiFundPhoto> photos;
 
@@ -178,6 +184,22 @@ public class FlexiFundDetails implements Serializable {
 
 	public void setEst_cost(Double est_cost) {
 		this.est_cost = est_cost;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public String getExpStatus() {
+		return expStatus;
+	}
+
+	public void setExpStatus(String expStatus) {
+		this.expStatus = expStatus;
 	}
 
    
