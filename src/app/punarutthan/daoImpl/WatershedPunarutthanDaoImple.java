@@ -1277,7 +1277,6 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						 str="success";
 					 }
 					 else {
-						session.getTransaction().rollback();
 						str="fail";
 					 }
 				 }
@@ -1290,7 +1289,7 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						 str="success";
 					 }
 					 else {
-						session.getTransaction().rollback();
+						
 						str="fail";
 					 }
 				 }
@@ -1303,7 +1302,7 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						 str="success";
 					 }
 					 else {
-						session.getTransaction().rollback();
+						
 						str="fail";
 					 }
 				 }
@@ -1321,7 +1320,7 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						 str="success";
 					 }
 					 else {
-						session.getTransaction().rollback();
+						
 						str="fail";
 					 }
 				 }
