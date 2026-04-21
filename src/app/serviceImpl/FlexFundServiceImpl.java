@@ -61,13 +61,19 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 
 	@Override
-	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon) {
+	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
 		// TODO Auto-generated method stub
-		return dao.savePhoto(file, flexiFundId, lat, lon);
+		return dao.savePhoto(file, flexiFundId, lat, lon, projId, gcode);
 	}
 	 
 	@Override
 	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
 		return dao.getStateWiseFlexiFundReport();
+	}
+
+	@Override
+	public boolean deleteFlexiFundRow(int id) {
+		return dao.deleteFlexiFundRow(id);
+		
 	}
 }

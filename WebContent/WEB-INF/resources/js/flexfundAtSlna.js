@@ -156,7 +156,13 @@ function convertDMSToDD(dms, ref) {
 }
 
 function getActualFileName(name) {
-    return name.includes('_') ? name.split('_').pop() : name;
+    if (!name) return "";   // ✅ prevent crash
+
+    if (name.includes('_')) {
+        return name.substring(name.lastIndexOf('_') + 1);
+    }
+
+    return name;
 }
 
 function loadDraftTable(data) {
@@ -216,9 +222,12 @@ function loadDraftTable(data) {
             <td><input type="checkbox" class="draftCheckbox"></td>
 
             <td>
-                <select class="form-control activityDropdown">
+            
+                <select class="form-control activityDropdown" disabled>
                     ${getFilteredActivityOptions(item.actId.toString(), "draft", rowKey)}
                 </select>
+                
+                <input type="hidden" name="activity[]" value="${item.actId}">
             </td>
 
             <td><input type="text" value="${item.workDesc}" class="form-control"></td>
@@ -236,6 +245,10 @@ function loadDraftTable(data) {
                 <small class="text-danger photoError"></small>
             </td>
            <td> <textarea name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200">${item.remark}</textarea> </td>
+        
+        <td>
+        <button type="button" class="btn btn-danger deleteDraftRow">-</button>
+    </td>
         </tr>`;
 
         $('#draftTbody').append(row);
@@ -539,25 +552,22 @@ $(document).on('click', '.addRow', function () {
     let availableActivities = getAvailableActivityCount();
     let currentRows = $('#tbodyReport tr').length;
 
-   if (currentRows >= availableActivities) {
-    alert("Only " + availableActivities + " activity(s) left to add");
+   /*if (currentRows > availableActivities) {
+    alert("All Activities selected. Please use current row instead of adding new.");
     return;
-}
+}*/
 
     // 🔥 NEW VALIDATION (IMPORTANT)
     let remainingActivities = getRemainingActivitiesCount();
 
 
-    if (remainingActivities <= 1) {
+    if (remainingActivities < 1) {
         alert("Only one activity left. Please use current row instead of adding new.");
         return;
     }
 
     // ✅ Convert + to -
-    $(this)
-        .removeClass('btn-success addRow')
-        .addClass('btn-danger removeRow')
-        .text('-');
+    
 
     rowCounter++;
     let rowId = "entry_" + rowCounter;
@@ -584,11 +594,30 @@ $(document).on('click', '.addRow', function () {
         <td><textarea name="remark[]" rows="2" cols="22" maxlength="200"></textarea></td>
         <td>
             <button type="button" class="btn btn-success addRow">+</button>
+            <button type="button" class="btn btn-danger removeRow">-</button>
         </td>
     </tr>`;
 
     $('#tbodyReport').append(newRow);
+    setTimeout(function () {
+    fixButtons();
+}, 0);
 });
+
+function fixButtons() {
+
+    let rows = $('#tbodyReport tr');
+
+    rows.find('.addRow').hide();
+    rows.find('.removeRow').hide();
+
+    if (rows.length > 1) {
+        rows.find('.removeRow').show();
+    }
+
+    rows.last().find('.addRow').show();
+}	
+
 
 function getRemainingActivitiesCount() {
     let selected = [];
@@ -660,27 +689,21 @@ $(document).on('click', '.browseDraftBtn', function () {
 });
 
 $(document).on('click', '.removeRow', function () {
-    let currentRow = $(this).closest('tr');
-    currentRow.remove();
 
-    // Always ensure last row has ADD button
-    let lastRow = $('#tbodyReport tr:last');
-    if (lastRow.length) {
-        lastRow.find('td:last').html(`
-            <button type="button" class="btn btn-success addRow">+</button>
-        `);
-    }
+    $(this).closest('tr').remove();
 
-    // Refresh ALL dropdowns after row removal
-    // Refresh entry row dropdowns
+    // ✅ Fix buttons again
+    fixButtons();
+
+    // ================= REFRESH DROPDOWNS =================
+
     $('#tbodyReport tr').each(function() {
         let dropdown = $(this).find('.activityDropdown');
         let dropdownRowId = $(this).data('row-id');
         let selectedValue = dropdown.val();
         dropdown.html(getFilteredActivityOptions(selectedValue, "entry", dropdownRowId));
     });
-    
-    // Refresh draft row dropdowns
+
     $('#draftTbody tr').each(function() {
         let dropdown = $(this).find('.activityDropdown');
         let dropdownRowId = $(this).data('row-id');
@@ -737,14 +760,14 @@ $(document).on('click', '#draft, #complete', function (e) {
         let remark = $(this).find('input[name="remark[]"]');
 
         if (!activity.val()) {
-            alert('Please select Activity in row ' + (index + 1));
+            alert('Please select Activity Name in row ' + (index + 1));
             activity.focus();
             isRowValid = false;
             return false;
         }
 
         if (!details.val().trim()) {
-            alert('Please enter Details in row ' + (index + 1));
+            alert('Please enter Details of Work Done in row ' + (index + 1));
             details.focus();
             isRowValid = false;
             return false;
@@ -856,10 +879,32 @@ $(document).on("input", "input[name='totalest[]'], input[name='cost[]']", functi
 
     const regex = /^\d*(\.\d{0,4})?$/;
 
+    // ✅ Step 1: format validation (your existing logic)
     if (!regex.test(this.value)) {
         this.value = this.dataset.lastValidValue || "";
+        return;
     } else {
         this.dataset.lastValidValue = this.value;
+    }
+
+    // ✅ Step 2: cross validation (NEW)
+    let row = $(this).closest('tr');
+
+    let total = parseFloat(row.find("input[name='totalest[]']").val()) || 0;
+    let cost = parseFloat(row.find("input[name='cost[]']").val()) || 0;
+
+    // 🔥 MAIN CONDITION
+    if (total > 0 && cost > total) {
+
+        if ($(this).attr('name') === 'cost[]') {
+            // user is typing in cost
+            alert("Expenditure cannot be greater than Total Estimated Cost");
+            this.value = "";
+        } else {
+            // user changed totalest
+            alert("Total Estimated Cost cannot be less than Expenditure");
+            row.find("input[name='cost[]']").val("");
+        }
     }
 });
 function resetForm() {
@@ -888,6 +933,7 @@ function resetForm() {
             <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea></td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>
+                <button type="button" class="btn btn-danger removeRow" style="display:none;">-</button>
             </td>
         </tr>
     `);
@@ -896,6 +942,7 @@ function resetForm() {
     
     setTimeout(function() {
         refreshAllDropdowns();
+        fixButtons();
     }, 100);
 }
 
@@ -973,6 +1020,29 @@ function isDuplicateWithExisting(fileName, files) {
         return;
     }
 
+// 🔥 CHECK DUPLICATE WITH DB IMAGES (FROM PREVIEW)
+let isDuplicateInDB = false;
+
+row.find('.photoPreview img').each(function () {
+    let src = $(this).attr('src'); // getImage?name=proj_gcode_name.jpg
+
+    if (src) {
+        let dbName = src.split("name=")[1]; // proj_gcode_name.jpg
+        let actualDbName = getActualFileName(dbName); // only name.jpg
+
+        if (actualDbName === actualName) {
+            isDuplicateInDB = true;
+            return false; // break loop
+        }
+    }
+});
+
+if (isDuplicateInDB) {
+    errorSpan.text("This image already exists in database");
+    $(this).val('');
+    return;
+}
+    
     // ================= EXIF + SAVE =================
 
     
@@ -1033,6 +1103,9 @@ $(document).on('change', '.photoDraftInput', function () {
     let dbId = row.data('db-id'); // 🔥 IMPORTANT (flexi_fund_id)
     let errorSpan = row.find('.photoError');
     let countLabel = row.find('.fileCount');
+    let projid = $('#projid').val();
+    let panchayat = $('#panchayat').val();
+
 
 
     errorSpan.text("");
@@ -1074,11 +1147,27 @@ $(document).on('change', '.photoDraftInput', function () {
 
     let actualName = getActualFileName(file.name);
 
-    if (globalImageSet.has(actualName)) {
-        errorSpan.text("Image already exists");
-        $(this).val('');
-        return;
+    let isDuplicateInDB = false;
+
+row.find('.photoPreview img').each(function () {
+    let src = $(this).attr('src'); // getImage?name=proj_gcode_name.jpg
+
+    if (src) {
+        let dbName = src.split("name=")[1]; // proj_gcode_name.jpg
+        let actualDbName = getActualFileName(dbName); // only name.jpg
+
+        if (actualDbName === actualName) {
+            isDuplicateInDB = true;
+            return false; // break loop
+        }
     }
+});
+
+if (isDuplicateInDB) {
+    errorSpan.text("This image already exists in database");
+    $(this).val('');
+    return;
+}
 
     let files = rowFilesMap.get(rowId) || [];
 
@@ -1127,7 +1216,8 @@ if (totalPhotos >= 6) {
         formData.append("flexiFundId", dbId);
         formData.append("latitude", latitude);
         formData.append("longitude", longitude);
-
+        formData.append("projid", projid);
+        formData.append("panchayat", panchayat);
         $.ajax({
             url: "uploadFlexiFundPhoto",
             type: "POST",
@@ -1247,6 +1337,52 @@ $(document).on('click', '#updateDraft, #updateComplete', function (e) {
             } else {
                 alert("Issue on updated records");
             }
+        }
+    });
+});
+
+$(document).on('click', '.deleteDraftRow', function () {
+
+    let row = $(this).closest('tr');
+    let rowId = row.data('row-id');   
+    let dbId = row.data('db-id');     
+
+    if (!dbId) {
+        alert("Invalid record");
+        return;
+    }
+
+    // ✅ Confirmation before delete
+    if (!confirm("Are you sure you want to delete this record?")) {
+        return;
+    }
+
+    $.ajax({
+        url: "deleteFlexiFundRow",
+        type: "POST",
+        data: { id: dbId },
+
+        success: function (res) {
+
+            if (res === "success") {
+
+                // ✅ Remove row from UI
+                row.remove();
+
+                // ✅ Remove from map
+                rowFilesMap.delete(rowId);
+
+                // ✅ Refresh dropdown
+                refreshAllDropdowns();
+
+                alert("Record deleted successfully");
+
+            } else {
+                alert("Failed to delete record");
+            }
+        },
+        error: function () {
+            alert("Server error while deleting");
         }
     });
 });

@@ -31,8 +31,10 @@ public interface FlexFundService {
 
 	boolean deletePhotoById(int photoId);
 
-	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon);
+	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode);
 	
 	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
+
+	boolean deleteFlexiFundRow(int id);
 	
 }

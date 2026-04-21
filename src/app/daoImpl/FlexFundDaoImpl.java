@@ -456,20 +456,15 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 
 	@Override
-	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon) {
+	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
 
-	    Map<String, Object> response = new HashMap<>();
-
+		Map<String, Object> response = new HashMap<>();
 	    Session session = sessionFactory.getCurrentSession();
 
 	    try {
-
 	        session.beginTransaction();
 
-	        // ================= FILE SAVE =================
 	        String uploadDir = "D:\\FlexiFund\\";
-
-	        // create folder if not exists
 	        File dir = new File(uploadDir);
 	        if (!dir.exists()) {
 	            dir.mkdirs();
@@ -477,40 +472,32 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        String originalName = file.getOriginalFilename();
 
-	        // 🔥 UNIQUE FILE NAME (important)
-	        String uniqueName = System.currentTimeMillis() + "_" + originalName;
+	        // ✅ NEW FORMAT
+	        String uniqueName = projId + "_" + gcode + "_" + originalName;
 
 	        File destination = new File(uploadDir + uniqueName);
 
 	        file.transferTo(destination);
 
 	        // ================= DB SAVE =================
-
-	        // get parent flexi fund
 	        FlexiFundDetails flex = session.get(FlexiFundDetails.class, flexiFundId);
 
 	        FlexiFundPhoto photo = new FlexiFundPhoto();
 	        photo.setFlexiFundDetails(flex);
 	        photo.setPhotoUrl(uniqueName);
-
-	        // if you have lat/lon columns → set here
-	        // photo.setLatitude(lat);
-	        // photo.setLongitude(lon);
+	        photo.setLatitude(lat);
+	        photo.setLongitude(lon);
 
 	        Integer photoId = (Integer) session.save(photo);
 
 	        session.getTransaction().commit();
 
-	        // ================= RESPONSE =================
 	        response.put("photoId", photoId);
 	        response.put("photoUrl", uniqueName);
 
 	    } catch (Exception e) {
-
 	        e.printStackTrace();
-
 	        session.getTransaction().rollback();
-
 	        response.put("error", "fail");
 	    }
 
@@ -538,5 +525,46 @@ public class FlexFundDaoImpl implements FlexFundDao{
         return getStateWiseFlexiFundReport;
 	}
 	
-	
+	public boolean deleteFlexiFundRow(int id) {
+	    Session session = sessionFactory.getCurrentSession();
+	    Transaction tx = null; // Track transaction to commit/rollback
+
+	    try {
+	        tx = session.beginTransaction();
+
+	        // 1. Get photo list to delete physical files
+	        Query<FlexiFundPhoto> photoQuery = session.createQuery(
+	                "FROM FlexiFundPhoto WHERE flexiFundDetails.id = :id", FlexiFundPhoto.class);
+	        photoQuery.setParameter("id", id);
+	        List<FlexiFundPhoto> photos = photoQuery.getResultList();
+
+	        // 2. Delete files from disk
+	        for (FlexiFundPhoto photo : photos) {
+	            String filePath = "D:" + File.separator + "FlexiFund" + File.separator + photo.getPhotoUrl();
+	            File file = new File(filePath);
+	            if (file.exists()) {
+	                file.delete();
+	            }
+	        }
+
+	        // 3. Delete photo records from DB
+	        session.createQuery("DELETE FROM FlexiFundPhoto WHERE flexiFundDetails.id = :id")
+	               .setParameter("id", id)
+	               .executeUpdate();
+
+	        // 4. Delete main FlexiFund record
+	        int mainDeleted = session.createQuery("DELETE FROM FlexiFundDetails WHERE ffId = :id")
+	                                .setParameter("id", id)
+	                                .executeUpdate();
+
+	        // 5. COMMIT the changes
+	        tx.commit();
+	        return mainDeleted > 0;
+
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback(); // Undo DB changes if anything fails
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
 }

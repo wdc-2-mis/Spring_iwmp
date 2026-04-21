@@ -27,7 +27,25 @@ var activityList = [
 <style>
 .previewImg {
     cursor: pointer !important;
+
+.btn-group-custom {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
 }
+
+.btn-group-custom button {
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    font-size: 18px;
+}
+
+}
+
+
+
 </style>
 </head>
 
@@ -121,6 +139,7 @@ var activityList = [
             </td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>
+                <button type="button" class="btn btn-danger removeRow" style="display:none;">-</button>
             </td>
         </tr>
     </tbody>
@@ -139,17 +158,18 @@ var activityList = [
             <tr>
                 <th>Select</th>
                 <th>Activity Name</th>
-                <th>Details of Work Done</th>
+                <th style="width:200px;">Details of Work Done</th>
                 <th>Total Estimated Cost(As per plan)</th>
                 <th>Expenditure till date(Rs. in Lakhs)</th>
                 <th style="width:300px;">Photos</th>
                 <th>Remarks</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody id="draftTbody"></tbody>
     </table>
     <div class="text-center">
-    <button type="button" id="updateDraft" class="btn btn-primary">Draft</button>
+    <button type="button" id="updateDraft" class="btn btn-primary">Update</button>
     <button type="button" id="updateComplete" class="btn btn-success">Complete</button>
 </div>
 </div>

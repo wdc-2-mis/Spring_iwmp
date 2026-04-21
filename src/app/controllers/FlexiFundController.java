@@ -192,10 +192,23 @@ public class FlexiFundController {
 	        @RequestParam("photo") MultipartFile file,
 	        @RequestParam("flexiFundId") int flexiFundId,
 	        @RequestParam(value = "latitude", required = false) String lat,
-	        @RequestParam(value = "longitude", required = false) String lon) {
+	        @RequestParam(value = "longitude", required = false) String lon,
+	        @RequestParam("projid") Integer projId,
+	        @RequestParam("panchayat") Integer gcode) {
 
-	    return service.savePhoto(file, flexiFundId, lat, lon);
+	    return service.savePhoto(file, flexiFundId, lat, lon, projId, gcode);
 	}
+	
+	
+	@RequestMapping(value = "/deleteFlexiFundRow", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteFlexiFundRow(@RequestParam("id") int id) {
+
+		boolean isDeleted = service.deleteFlexiFundRow(id);
+
+	    return isDeleted ? "success" : "fail";
+	}
+	
 	
 	@RequestMapping("/getImage")
 	public void getImage(@RequestParam String name,
