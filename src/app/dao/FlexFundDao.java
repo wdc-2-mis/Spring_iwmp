@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import app.bean.FlexiFundMActivityBean;
 import app.model.FlexiFundDetails;
 
 public interface FlexFundDao {
@@ -31,6 +32,6 @@ public interface FlexFundDao {
 
 	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon);
 
-	
+	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
 
 }

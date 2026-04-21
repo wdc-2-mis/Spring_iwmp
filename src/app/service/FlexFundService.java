@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import app.bean.FlexiFundMActivityBean;
 import app.model.FlexiFundDetails;
 
 @Service("FlexFundService")
@@ -32,5 +33,6 @@ public interface FlexFundService {
 
 	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon);
 	
+	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
 	
 }

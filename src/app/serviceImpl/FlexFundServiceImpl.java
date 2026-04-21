@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import app.bean.FlexiFundMActivityBean;
 import app.dao.FlexFundDao;
 import app.model.FlexiFundDetails;
 import app.service.FlexFundService;
@@ -65,5 +66,8 @@ public class FlexFundServiceImpl implements FlexFundService{
 		return dao.savePhoto(file, flexiFundId, lat, lon);
 	}
 	 
-	
+	@Override
+	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
+		return dao.getStateWiseFlexiFundReport();
+	}
 }

@@ -13,14 +13,17 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import app.bean.FlexiFundMActivityBean;
 import app.dao.FlexFundDao;
 import app.model.FlexFundActivityMaster;
 import app.model.FlexiFundDetails;
@@ -38,6 +41,10 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	
 	@Value("${getFlexiFundGramPanchayat}")
 	String getFlexiFundGramPanchayat;
+	
+	@Value("${flexiFundUtilizationRpt}")
+    String flexiFundUtilizationRptData;
+	
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -511,7 +518,25 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 
 
-
+	@Override
+	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
+		List<FlexiFundMActivityBean> getStateWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
+        
+        String hql = flexiFundUtilizationRptData;
+        Session session = sessionFactory.getCurrentSession();
+       
+        try {
+            session.beginTransaction();
+            SQLQuery query = session.createSQLQuery(hql);
+            query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+            getStateWiseFlexiFundReport = query.list();
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        return getStateWiseFlexiFundReport;
+	}
 	
 	
 }
