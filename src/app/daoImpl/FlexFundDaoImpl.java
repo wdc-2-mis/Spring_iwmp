@@ -42,8 +42,8 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	@Value("${getFlexiFundGramPanchayat}")
 	String getFlexiFundGramPanchayat;
 	
-	@Value("${flexiFundUtilizationRpt}")
-    String flexiFundUtilizationRptData;
+	@Value("${flexiFundUtilizationStRpt}")
+    String flexiFundUtilizationStRptData;
 	
 	
 	@Autowired
@@ -522,7 +522,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
 		List<FlexiFundMActivityBean> getStateWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
         
-        String hql = flexiFundUtilizationRptData;
+        String hql = flexiFundUtilizationStRptData;
         Session session = sessionFactory.getCurrentSession();
        
         try {
