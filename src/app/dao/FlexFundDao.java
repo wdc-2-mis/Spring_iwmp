@@ -2,6 +2,7 @@ package app.dao;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,5 +25,12 @@ public interface FlexFundDao {
 	boolean updateFlexiFundData(List<Integer> rowIds, List<Integer> activityList, List<String> detailsList,
 			List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoRowIndex,
 			String status, List<String> remarksList, String user);
+
+	
+	boolean deletePhotoById(Integer photoId);
+
+	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon);
+
+	
 
 }

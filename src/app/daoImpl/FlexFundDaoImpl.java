@@ -220,7 +220,11 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	            details.setEst_cost(estCostList.get(i));
 	            details.setFfCost(costList.get(i));
 	            details.setStatus(status);
-	            details.setRemark(remarksList.get(i));
+	            String remark = "";
+	            if (remarksList != null && remarksList.size() > i) {
+	                remark = remarksList.get(i);
+	            }
+	            details.setRemark(remark);
 	            details.setCreatedBy(createdBy);
 	            details.setRequestedIp(getClientIpAddr(request));
 
@@ -337,7 +341,12 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	                entity.setEst_cost(estCostList.get(i));
 	                entity.setFfCost(costList.get(i));
 	                entity.setStatus(status);
-	                entity.setRemark(remarksList.get(i));
+	                String remark = "";
+		            if (remarksList != null && remarksList.size() > i) {
+		                remark = remarksList.get(i);
+		            }
+		            entity.setRemark(remark);
+		            
 	                entity.setUpdatedBy(updatedBy);
 	                entity.setUpdatedDate(new Date());
 
@@ -391,5 +400,118 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	    return flag;
 	}
+	
+	@Override
+	public boolean deletePhotoById(Integer photoId) {
+
+		Session session = sessionFactory.getCurrentSession();
+	    boolean flag = false;
+
+	    try {
+	        session.beginTransaction();
+
+	        // ✅ STEP 1: Get photo URL using correct column
+	        String photoUrl = (String) session.createNativeQuery(
+	                "SELECT photo_url FROM flexi_fund_photo WHERE ff_photo_id = :id")
+	                .setParameter("id", photoId)
+	                .uniqueResult();
+
+	        if (photoUrl != null) {
+
+	            // ✅ STEP 2: Delete file from folder
+	            String filePath = "D:\\FlexiFund\\" + photoUrl;
+
+	            File file = new File(filePath);
+	            if (file.exists()) {
+	                file.delete();
+	                System.out.println("File deleted: " + filePath);
+	            } else {
+	                System.out.println("File not found: " + filePath);
+	            }
+
+	            // ✅ STEP 3: Delete DB record
+	            session.createNativeQuery(
+	                    "DELETE FROM flexi_fund_photo WHERE ff_photo_id = :id")
+	                    .setParameter("id", photoId)
+	                    .executeUpdate();
+
+	            flag = true;
+	        }
+
+	        session.getTransaction().commit();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+
+	    return flag;
+	}
+
+	@Override
+	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon) {
+
+	    Map<String, Object> response = new HashMap<>();
+
+	    Session session = sessionFactory.getCurrentSession();
+
+	    try {
+
+	        session.beginTransaction();
+
+	        // ================= FILE SAVE =================
+	        String uploadDir = "D:\\FlexiFund\\";
+
+	        // create folder if not exists
+	        File dir = new File(uploadDir);
+	        if (!dir.exists()) {
+	            dir.mkdirs();
+	        }
+
+	        String originalName = file.getOriginalFilename();
+
+	        // 🔥 UNIQUE FILE NAME (important)
+	        String uniqueName = System.currentTimeMillis() + "_" + originalName;
+
+	        File destination = new File(uploadDir + uniqueName);
+
+	        file.transferTo(destination);
+
+	        // ================= DB SAVE =================
+
+	        // get parent flexi fund
+	        FlexiFundDetails flex = session.get(FlexiFundDetails.class, flexiFundId);
+
+	        FlexiFundPhoto photo = new FlexiFundPhoto();
+	        photo.setFlexiFundDetails(flex);
+	        photo.setPhotoUrl(uniqueName);
+
+	        // if you have lat/lon columns → set here
+	        // photo.setLatitude(lat);
+	        // photo.setLongitude(lon);
+
+	        Integer photoId = (Integer) session.save(photo);
+
+	        session.getTransaction().commit();
+
+	        // ================= RESPONSE =================
+	        response.put("photoId", photoId);
+	        response.put("photoUrl", uniqueName);
+
+	    } catch (Exception e) {
+
+	        e.printStackTrace();
+
+	        session.getTransaction().rollback();
+
+	        response.put("error", "fail");
+	    }
+
+	    return response;
+	}
+
+
+
+	
 	
 }

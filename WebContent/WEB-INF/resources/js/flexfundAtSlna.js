@@ -59,13 +59,23 @@ let globalImageSet = new Set();
 		});
 	});
 	
-	$(document).on('change', '#panchayat', function () {
+$(document).on('change', '#panchayat', function () {
 
     let projid = $('#projid').val();
     let panchayat = $(this).val();
 
     if (!projid || !panchayat) return;
-globalImageSet.clear();
+    
+	globalImageSet.clear();
+	rowFilesMap.clear();
+    rowCounter = 0;
+    
+    $('#draftTbody').empty();
+    $('#completeTbody').empty();
+    
+    $('#draftSection').hide();
+    $('#completeSection').hide();
+	
     $.ajax({
         url: "getFlexiFundData",
         type: "POST",
@@ -122,7 +132,6 @@ globalImageSet.clear();
     
 
 });
-
 
 function convertDMSToDD(dms, ref) {
 
@@ -213,14 +222,14 @@ function loadDraftTable(data) {
             </td>
 
             <td><input type="text" value="${item.workDesc}" class="form-control"></td>
-            <td><input type="text" value="${item.est_cost}" class="form-control"></td>
-            <td><input type="text" value="${item.ffCost}" class="form-control"></td>
+            <td><input type="text" name="totalest[]" value="${item.est_cost}" class="form-control"></td>
+            <td><input type="text" name="cost[]" value="${item.ffCost}" class="form-control"></td>
 
             <td>
                 <div class="customFileWrapper">
-                    <button type="button" class="btn btn-secondary browseBtn">Browse</button>
+                    <button type="button" class="btn btn-secondary browseDraftBtn">Browse</button>
                     <span class="fileCount">${files.length} file(s) selected</span>
-                    <input type="file" class="photoInput d-none"/>
+                    <input type="file" class="photoDraftInput d-none"/>
                 </div>
 
                 <div class="photoPreview">${photosHtml}</div>
@@ -513,9 +522,11 @@ function getFilteredActivityOptions(currentValue = "", context = "entry", curren
 }
 
 $(document).on('click', '.addRow', function () {
+
     let currentRow = $(this).closest('tr');
     let activity = currentRow.find('.activityDropdown').val();
 
+    // ❌ Activity not selected
     if (!activity) {
         currentRow.find('.activityDropdown').addClass('is-invalid');
         alert("Please select activity first");
@@ -525,14 +536,24 @@ $(document).on('click', '.addRow', function () {
     currentRow.find('.activityDropdown').removeClass('is-invalid');
     currentRow.find('.photoError').text("");
 
-    let totalActivities = activityList.length;
+    let availableActivities = getAvailableActivityCount();
     let currentRows = $('#tbodyReport tr').length;
 
-    if (currentRows >= totalActivities) {
-        alert("You cannot add more rows than total activities");
+   if (currentRows >= availableActivities) {
+    alert("Only " + availableActivities + " activity(s) left to add");
+    return;
+}
+
+    // 🔥 NEW VALIDATION (IMPORTANT)
+    let remainingActivities = getRemainingActivitiesCount();
+
+
+    if (remainingActivities <= 1) {
+        alert("Only one activity left. Please use current row instead of adding new.");
         return;
     }
 
+    // ✅ Convert + to -
     $(this)
         .removeClass('btn-success addRow')
         .addClass('btn-danger removeRow')
@@ -545,7 +566,7 @@ $(document).on('click', '.addRow', function () {
     <tr data-row-id="${rowId}">
         <td>
             <select name="activity[]" class="form-control activityDropdown" style="width:300px;">
-                ${getFilteredActivityOptions("", "entry", rowId)}
+                ${getFilteredActivityOptions()}
             </select>
         </td>
         <td><input type="text" name="details[]" class="form-control"/></td>
@@ -560,7 +581,7 @@ $(document).on('click', '.addRow', function () {
             <small class="text-danger photoError"></small>
             <div class="photoPreview"></div>
         </td>
-        <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea></td>
+        <td><textarea name="remark[]" rows="2" cols="22" maxlength="200"></textarea></td>
         <td>
             <button type="button" class="btn btn-success addRow">+</button>
         </td>
@@ -568,6 +589,35 @@ $(document).on('click', '.addRow', function () {
 
     $('#tbodyReport').append(newRow);
 });
+
+function getRemainingActivitiesCount() {
+    let selected = [];
+
+    $('#tbodyReport .activityDropdown').each(function () {
+        let val = $(this).val();
+        if (val) {
+            selected.push(val);
+        }
+    });
+
+    return activityList.length - selected.length;
+}
+
+function getAvailableActivityCount() {
+    let selectedActivities = getSelectedActivities();
+
+    let count = 0;
+
+    activityList.forEach(function (act) {
+        let actId = act.id.toString();
+
+        if (!selectedActivities.includes(actId)) {
+            count++;
+        }
+    });
+
+    return count;
+}
 
 $(document).on('change', '.activityDropdown', function () {
     $(this).removeClass('is-invalid');
@@ -603,6 +653,10 @@ $(document).on('change', '.activityDropdown', function () {
 
 $(document).on('click', '.browseBtn', function () {
     $(this).closest('.customFileWrapper').find('.photoInput').click();
+});
+
+$(document).on('click', '.browseDraftBtn', function () {
+    $(this).closest('.customFileWrapper').find('.photoDraftInput').click();
 });
 
 $(document).on('click', '.removeRow', function () {
@@ -810,6 +864,7 @@ $(document).on("input", "input[name='totalest[]'], input[name='cost[]']", functi
 });
 function resetForm() {
     rowFilesMap.clear();
+    globalImageSet.clear();
 
     $('#tbodyReport').html(`
         <tr data-row-id="0">
@@ -839,7 +894,9 @@ function resetForm() {
 
     rowCounter = 0;
     
-    refreshAllDropdowns();
+    setTimeout(function() {
+        refreshAllDropdowns();
+    }, 100);
 }
 
 function isDuplicateWithExisting(fileName, files) {
@@ -964,6 +1021,160 @@ if (files.length >= 6) {
         renderPreview(row, files);
 
         errorSpan.text("");
+    });
+
+    $(this).val('');
+});
+
+$(document).on('change', '.photoDraftInput', function () {
+
+    let row = $(this).closest('tr');
+    let rowId = row.data('row-id');
+    let dbId = row.data('db-id'); // 🔥 IMPORTANT (flexi_fund_id)
+    let errorSpan = row.find('.photoError');
+    let countLabel = row.find('.fileCount');
+
+
+    errorSpan.text("");
+
+    let file = this.files[0];
+    if (!file) return;
+
+    let fileName = file.name;
+
+    // ================= VALIDATION =================
+
+    let allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+    if (!allowedTypes.includes(file.type)) {
+        errorSpan.text("Only JPG, JPEG, PNG allowed");
+        $(this).val('');
+        return;
+    }
+
+    if (fileName.includes(" ")) {
+        errorSpan.text("No spaces allowed in filename");
+        $(this).val('');
+        return;
+    }
+
+    let regex = /^[a-zA-Z0-9._-]+$/;
+
+    if (!regex.test(fileName)) {
+        errorSpan.text("Invalid filename");
+        $(this).val('');
+        return;
+    }
+
+    if (file.size > 400 * 1024) {
+        errorSpan.text("Max size 400KB");
+        $(this).val('');
+        return;
+    }
+
+    let actualName = getActualFileName(file.name);
+
+    if (globalImageSet.has(actualName)) {
+        errorSpan.text("Image already exists");
+        $(this).val('');
+        return;
+    }
+
+    let files = rowFilesMap.get(rowId) || [];
+
+// 🔥 COUNT EXISTING IMAGES FROM UI
+let existingCount = row.find('.photoPreview img').length;
+
+// 🔥 TOTAL COUNT
+let totalPhotos = files.length + existingCount;
+
+if (totalPhotos >= 6) {
+    errorSpan.text("Maximum 6 photos allowed");
+    $(this).val('');
+    return;
+}
+
+    let isDuplicate = files.some(f =>
+        getActualFileName(f.name) === actualName
+    );
+
+    if (isDuplicate) {
+        errorSpan.text("Duplicate in same row");
+        $(this).val('');
+        return;
+    }
+
+    // ================= EXIF =================
+
+    EXIF.getData(file, function () {
+
+        let lat = EXIF.getTag(this, "GPSLatitude");
+        let lon = EXIF.getTag(this, "GPSLongitude");
+        let latRef = EXIF.getTag(this, "GPSLatitudeRef");
+        let lonRef = EXIF.getTag(this, "GPSLongitudeRef");
+
+        let latitude = "", longitude = "";
+
+        if (lat && lon) {
+            latitude = convertDMSToDD(lat, latRef);
+            longitude = convertDMSToDD(lon, lonRef);
+        }
+
+        // ================= AJAX UPLOAD =================
+
+        let formData = new FormData();
+        formData.append("photo", file);
+        formData.append("flexiFundId", dbId);
+        formData.append("latitude", latitude);
+        formData.append("longitude", longitude);
+
+        $.ajax({
+            url: "uploadFlexiFundPhoto",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+
+            success: function (res) {
+
+    if (res && res.photoId) {
+
+        // ✅ Add to map
+        let newFile = {
+            name: res.photoUrl,
+            existing: true,
+            photoId: res.photoId
+        };
+
+        files.push(newFile);
+        rowFilesMap.set(rowId, files);
+
+        // ✅ Global set
+        globalImageSet.add(getActualFileName(res.photoUrl));
+
+        // ✅ UI update
+        countLabel.text(files.length + " file(s) selected");
+
+        renderPreview(row, files);
+
+        errorSpan.text("");
+
+        // 🔥 NEW PART
+        alert("Photo added successfully");
+
+        // small delay (better UX)
+        setTimeout(function () {
+            window.location.href = 'flexiFundAtSlna';
+        }, 500);
+
+    } else {
+        errorSpan.text("Upload failed");
+    }
+}
+
+            
+        });
+
     });
 
     $(this).val('');

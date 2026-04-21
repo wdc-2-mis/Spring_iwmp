@@ -138,15 +138,14 @@ public class FlexiFundController {
 	        dto.put("ffCost", d.getFfCost());
             dto.put("ffId", d.getFfId());
             dto.put("remark", d.getRemark());
-	       System.out.println("himanshu remark" +d.getRemark());
-            List<Map<String, Object>> photos = new ArrayList<>();
+	        List<Map<String, Object>> photos = new ArrayList<>();
 
 	        if (d.getPhotos() != null) {
 	            for (FlexiFundPhoto p : d.getPhotos()) {
 
 	                Map<String, Object> photo = new HashMap<>();
 	                photo.put("photoUrl", p.getPhotoUrl());
-
+                    photo.put("photoId", p.getFfPhotoId());
 	                photos.add(photo);
 	            }
 	        }
@@ -175,6 +174,27 @@ public class FlexiFundController {
 	    }
 	    
 	    return response;
+	}
+	
+	
+	
+	@RequestMapping(value = "/deleteFlexiFundPhoto", method = RequestMethod.POST)
+	@ResponseBody
+	public String deletePhoto(@RequestParam("photoId") int photoId) {
+		boolean result = service.deletePhotoById(photoId);
+        return result ? "success" : "fail"; 
+		}
+	
+	
+	@RequestMapping(value = "/uploadFlexiFundPhoto", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> uploadPhoto(
+	        @RequestParam("photo") MultipartFile file,
+	        @RequestParam("flexiFundId") int flexiFundId,
+	        @RequestParam(value = "latitude", required = false) String lat,
+	        @RequestParam(value = "longitude", required = false) String lon) {
+
+	    return service.savePhoto(file, flexiFundId, lat, lon);
 	}
 	
 	@RequestMapping("/getImage")
@@ -218,7 +238,7 @@ public class FlexiFundController {
 	        @RequestParam("projid") Integer projId,
 	        @RequestParam("panchayat") Integer gcode,
 	        @RequestParam("status") String status,
-	        @RequestParam("remark[]") List<String> remarksList) {
+	        @RequestParam(value = "remark[]", required = false) List<String> remarksList) {
 
 	    try {
 
@@ -256,7 +276,7 @@ public class FlexiFundController {
 	        @RequestParam(value = "photos[]", required = false) List<MultipartFile> photos,
 	        @RequestParam(value = "photoRowIndex[]", required = false) List<Integer> photoRowIndex,
 	        @RequestParam("status") String status,
-	        @RequestParam("remark[]") List<String> remarksList,
+	        @RequestParam(value = "remark[]", required = false) List<String> remarksList,
 	        HttpServletRequest request) {
 
 	    try {

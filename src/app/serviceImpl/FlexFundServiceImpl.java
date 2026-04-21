@@ -2,6 +2,7 @@ package app.serviceImpl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,6 +52,18 @@ public class FlexFundServiceImpl implements FlexFundService{
 		// TODO Auto-generated method stub
 		return dao.updateFlexiFundData(rowIds, activityList, detailsList, estCostList, costList, photos, photoRowIndex, status, remarksList, user);
 	}
-	
+
+	@Override
+	public boolean deletePhotoById(int photoId) {
+		return dao.deletePhotoById(photoId);
+		
+	}
+
+	@Override
+	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon) {
+		// TODO Auto-generated method stub
+		return dao.savePhoto(file, flexiFundId, lat, lon);
+	}
+	 
 	
 }
