@@ -188,8 +188,9 @@ function loadDraftTable(data) {
                          class="previewImg"
                          style="width:60px;height:60px;margin:5px;cursor:pointer;">
                     
-                    <span class="deletePhoto"
+                    <span class="deleteDraftPhoto"
                           data-index="${files.length - 1}"
+                          data-id="${photo.photoId}"
                           data-name="${photo.photoUrl}"
                           style="position:absolute;top:0;right:0;color:red;cursor:pointer;">
                           ❌
@@ -207,7 +208,7 @@ function loadDraftTable(data) {
 
             <td>
                 <select class="form-control activityDropdown">
-                    ${getFilteredActivityOptions(item.actId)}
+                    ${getFilteredActivityOptions(item.actId.toString(), "draft", rowKey)}
                 </select>
             </td>
 
@@ -232,9 +233,54 @@ function loadDraftTable(data) {
 
         rowId++;
     });
+    refreshAllDropdowns();
 }
 
 
+$(document).on('click', '.deleteDraftPhoto', function () {
+
+    let row = $(this).closest('tr');
+    let rowId = row.data('row-id');
+    let photoId = $(this).data('id');
+
+    let files = rowFilesMap.get(rowId) || [];
+
+    if (!confirm("Delete this photo permanently?")) return;
+
+    $.ajax({
+        url: "deleteFlexiFundPhoto",
+        type: "POST",
+        data: { photoId: photoId },
+
+        success: function (res) {
+
+            if (res === "success") {
+
+                // ✅ REMOVE USING photoId (NOT INDEX)
+                files = files.filter(f => f.photoId !== photoId);
+
+                // ✅ Update global set
+                globalImageSet.clear();
+                files.forEach(f => {
+                    let actual = getActualFileName(f.name);
+                    globalImageSet.add(actual);
+                });
+
+                // ✅ Update map
+                rowFilesMap.set(rowId, files);
+
+                // ✅ Re-render properly
+                renderPreview(row, files);
+
+                alert("Photo deleted successfully");
+                location.reload();
+
+            } else {
+                alert("Failed to delete photo");
+            }
+        }
+    });
+});
 
 function loadCompleteTable(data) {
 
@@ -264,6 +310,28 @@ function loadCompleteTable(data) {
         </tr>`;
 
         $('#completeTbody').append(row);
+    });
+}
+
+function refreshAllDropdowns() {
+    // Refresh entry row dropdowns
+    $('#tbodyReport tr').each(function() {
+        let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
+        let selectedValue = dropdown.val();
+        if (dropdown.length) {
+            dropdown.html(getFilteredActivityOptions(selectedValue, "entry", dropdownRowId));
+        }
+    });
+    
+    // Refresh draft row dropdowns
+    $('#draftTbody tr').each(function() {
+        let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
+        let selectedValue = dropdown.val();
+        if (dropdown.length) {
+            dropdown.html(getFilteredActivityOptions(selectedValue, "draft", dropdownRowId));
+        }
     });
 }
 
@@ -324,6 +392,12 @@ $(document).on('click', '.deletePhoto', function () {
     $('#imgModal').modal('show');
 });
 	
+	$(document).on('click', '.previewImg', function () {
+    let src = $(this).attr('src');
+    $('#modalImg').attr('src', src);
+    $('#imgModal').modal('show');
+});
+	
 	function renderPreview(row, files) {
 
     let previewDiv = row.find('.photoPreview');
@@ -356,6 +430,8 @@ $(document).on('click', '.deletePhoto', function () {
 
         previewDiv.append(html);
     });
+    let countLabel = row.find('.fileCount');
+    countLabel.text(files.length + " file(s) selected");
 }
 	
 	function getSelectedActivities() {
@@ -371,46 +447,84 @@ $(document).on('click', '.deletePhoto', function () {
     return selected;
 }
 
-function getFilteredActivityOptions(currentValue = "") {
-    let selectedActivities = getSelectedActivities();
+function getFilteredActivityOptions(currentValue = "", context = "entry", currentRowId = null) {
+    
+    let usedActivities = new Set();
+    
+    // ===== 1. CHECK COMPLETE ROWS (Always excluded from everywhere) =====
+    $('#completeTbody tr').each(function() {
+        let activityName = $(this).find('td:first').text().trim();
+        if (activityName && activityName !== "") {
+            let foundAct = activityList.find(act => act.name === activityName);
+            if (foundAct) {
+                usedActivities.add(foundAct.id.toString());
+            }
+        }
+    });
+    
+    // ===== 2. CHECK DRAFT ROWS =====
+    $('#draftTbody tr').each(function() {
+        let activityVal = $(this).find('.activityDropdown').val();
+        let rowId = $(this).data('row-id');
+        
+        // If we're editing a draft row, skip its own value
+        if (context === "draft" && currentRowId === rowId) {
+            return;
+        }
+        
+        if (activityVal && activityVal !== "") {
+            usedActivities.add(activityVal.toString());
+        }
+    });
+    
+    // ===== 3. CHECK NEW ENTRY ROWS (Only for new entry context) =====
+    if (context === "entry") {
+        $('#tbodyReport tr').each(function() {
+            let activityVal = $(this).find('.activityDropdown').val();
+            let rowId = $(this).data('row-id');
+            
+            // Skip current row
+            if (currentRowId === rowId) {
+                return;
+            }
+            
+            if (activityVal && activityVal !== "") {
+                usedActivities.add(activityVal.toString());
+            }
+        });
+    }
+    
+    // Generate dropdown options
     let options = '<option value="">--Select Activity--</option>';
-
+    
     activityList.forEach(function (act) {
-
         let actId = act.id.toString();
-
-        if (!selectedActivities.includes(actId) || actId == currentValue) {
-
+        
+        // Show if not used OR it's the current value
+        if (!usedActivities.has(actId) || actId === currentValue) {
             options += `<option value="${act.id}" 
                 ${act.id == currentValue ? 'selected' : ''}>
                 ${act.name}
             </option>`;
         }
     });
-
+    
     return options;
 }
 
 $(document).on('click', '.addRow', function () {
-
     let currentRow = $(this).closest('tr');
     let activity = currentRow.find('.activityDropdown').val();
 
-    // ❌ VALIDATION
     if (!activity) {
         currentRow.find('.activityDropdown').addClass('is-invalid');
-
-        let errorSpan = currentRow.find('.photoError');
         alert("Please select activity first");
-
         return;
     }
 
-    // remove error if valid
     currentRow.find('.activityDropdown').removeClass('is-invalid');
     currentRow.find('.photoError').text("");
 
-    // 🔢 CHECK MAX ACTIVITIES
     let totalActivities = activityList.length;
     let currentRows = $('#tbodyReport tr').length;
 
@@ -419,21 +533,19 @@ $(document).on('click', '.addRow', function () {
         return;
     }
 
-    // ✅ Convert current + to -
     $(this)
         .removeClass('btn-success addRow')
         .addClass('btn-danger removeRow')
         .text('-');
 
     rowCounter++;
+    let rowId = "entry_" + rowCounter;
 
-let rowId = "entry_" + rowCounter;
-
-let newRow = `
-<tr data-row-id="${rowId}">
+    let newRow = `
+    <tr data-row-id="${rowId}">
         <td>
             <select name="activity[]" class="form-control activityDropdown" style="width:300px;">
-                ${getFilteredActivityOptions()}
+                ${getFilteredActivityOptions("", "entry", rowId)}
             </select>
         </td>
         <td><input type="text" name="details[]" class="form-control"/></td>
@@ -459,15 +571,33 @@ let newRow = `
 
 $(document).on('change', '.activityDropdown', function () {
     $(this).removeClass('is-invalid');
-
+    
     let row = $(this).closest('tr');
+    let currentRowId = row.data('row-id');
+    let currentValue = $(this).val();
+    
+    // Determine if this is entry or draft row
+    let isDraftRow = currentRowId && currentRowId.toString().startsWith('draft_');
+    let context = isDraftRow ? "draft" : "entry";
+    
     row.find('.photoError').text("");
-
-    // refresh dropdown filter (your existing logic)
-    $('#tbodyReport tr').each(function () {
+    
+    // Refresh ALL entry row dropdowns
+    $('#tbodyReport tr').each(function() {
         let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
         let selectedValue = dropdown.val();
-        dropdown.html(getFilteredActivityOptions(selectedValue));
+        
+        dropdown.html(getFilteredActivityOptions(selectedValue, "entry", dropdownRowId));
+    });
+    
+    // Refresh ALL draft row dropdowns
+    $('#draftTbody tr').each(function() {
+        let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
+        let selectedValue = dropdown.val();
+        
+        dropdown.html(getFilteredActivityOptions(selectedValue, "draft", dropdownRowId));
     });
 });
 
@@ -476,21 +606,32 @@ $(document).on('click', '.browseBtn', function () {
 });
 
 $(document).on('click', '.removeRow', function () {
+    let currentRow = $(this).closest('tr');
+    currentRow.remove();
 
-    $(this).closest('tr').remove();
-
-    // 👉 Always ensure last row has ADD button
+    // Always ensure last row has ADD button
     let lastRow = $('#tbodyReport tr:last');
+    if (lastRow.length) {
+        lastRow.find('td:last').html(`
+            <button type="button" class="btn btn-success addRow">+</button>
+        `);
+    }
 
-    // Remove existing buttons
-    lastRow.find('td:last').html(`
-        <button type="button" class="btn btn-success addRow">+</button>
-    `);
-
-    // Refresh dropdown filtering
-    $('.activityDropdown').each(function () {
-        let selectedValue = $(this).val();
-        $(this).html(getFilteredActivityOptions(selectedValue));
+    // Refresh ALL dropdowns after row removal
+    // Refresh entry row dropdowns
+    $('#tbodyReport tr').each(function() {
+        let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
+        let selectedValue = dropdown.val();
+        dropdown.html(getFilteredActivityOptions(selectedValue, "entry", dropdownRowId));
+    });
+    
+    // Refresh draft row dropdowns
+    $('#draftTbody tr').each(function() {
+        let dropdown = $(this).find('.activityDropdown');
+        let dropdownRowId = $(this).data('row-id');
+        let selectedValue = dropdown.val();
+        dropdown.html(getFilteredActivityOptions(selectedValue, "draft", dropdownRowId));
     });
 });
 
@@ -604,18 +745,21 @@ $('#tbodyReport tr').each(function (index) {
 // ✅ PHOTO DATA (SEPARATE LOOP)
 rowFilesMap.forEach((files, rowId) => {
 
-    if (rowId === undefined || rowId === null) {
-        rowId = 0;  // fallback for first row
+    let numericRowId = rowId;
+    if (typeof rowId === 'string' && rowId.startsWith('entry_')) {
+        numericRowId = parseInt(rowId.split('_')[1]);
+        console.log("Converting rowId:", rowId, "->", numericRowId);
+    } else if (rowId === undefined || rowId === null) {
+        numericRowId = 0;
     }
 
     files.forEach((file) => {
-
         formData.append("photos[]", file);
         formData.append("latitude[]", file.latitude || '');
         formData.append("longitude[]", file.longitude || '');
-        formData.append("photoRowIndex[]", rowId);
+        formData.append("photoRowIndex[]", numericRowId);  // Use numericRowId here
     });
-console.log("Final RowId Sent:", rowId);
+    console.log("Final RowId Sent:", numericRowId);
 });
 
 
@@ -665,14 +809,13 @@ $(document).on("input", "input[name='totalest[]'], input[name='cost[]']", functi
     }
 });
 function resetForm() {
-
     rowFilesMap.clear();
 
     $('#tbodyReport').html(`
         <tr data-row-id="0">
             <td>
                 <select name="activity[]" class="form-control activityDropdown" style="width:250px;">
-                    ${getFilteredActivityOptions()}
+                    ${getFilteredActivityOptions("", "entry", 0)}
                 </select>
             </td>
             <td><input type="text" name="details[]" class="form-control"/></td>
@@ -695,6 +838,8 @@ function resetForm() {
     `);
 
     rowCounter = 0;
+    
+    refreshAllDropdowns();
 }
 
 function isDuplicateWithExisting(fileName, files) {
