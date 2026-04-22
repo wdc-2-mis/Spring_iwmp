@@ -5,11 +5,14 @@ import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -361,9 +364,55 @@ public ModelAndView getEnteredConWorksRecord(HttpServletRequest request)
 	ModelAndView mav = new ModelAndView("reports/EnteredConvergedWorks");
 	
 	list = convergenceWorksService.getEnteredConWorks();
+	
+	Map<Integer,String> schemeMap = convergenceWorksService.getAllSchemes();
+	List<Integer> statelist = list.stream().map(ConvergenceWorksBean::getSt_code).collect(Collectors.toList());
+	Map<String, Map<Integer, Integer>> mapList = new LinkedHashMap<String, Map<Integer,Integer>>();
+	for(Integer stcode : statelist) {
+		for(Map.Entry<Integer, String> map: schemeMap.entrySet()) {
+			for(ConvergenceWorksBean bean :list) {
+				if(bean.getSt_code() == stcode) {
+					if(bean.getScheme_id()==null?false:bean.getScheme_id() ==  map.getKey()) {
+						if(mapList.containsKey(bean.getSt_name())) {
+							Map<Integer,Integer> oldmap = mapList.get(bean.getSt_name());
+							oldmap.put(bean.getScheme_id(), bean.getEnteredcon());
+							mapList.put(bean.getSt_name(),oldmap);
+						}else {
+							Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+							oldmap.put(bean.getScheme_id(),bean.getEnteredcon());
+							mapList.put(bean.getSt_name(), oldmap);
+						}
+					}else {
+						Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+						oldmap = mapList.get(bean.getSt_name());
+						if(oldmap==null?true:!oldmap.containsKey(map.getKey())) {
+							mapList.computeIfAbsent(bean.getSt_name(), k-> new LinkedHashMap<Integer, Integer>()).put(map.getKey(),0);
+						}
+					}
+				}
+			}
+		}
+	}
+	Map<Integer, Integer> enteredwrks = new HashMap<>();
+	for(Map.Entry<String, Map<Integer, Integer>> schMap : mapList.entrySet()) {
+		for(Map.Entry<Integer, Integer> mapid : schMap.getValue().entrySet()) {
+			if(enteredwrks.containsKey(mapid.getKey()))
+				enteredwrks.put(mapid.getKey(), enteredwrks.get(mapid.getKey()) + mapid.getValue());
+			else
+				enteredwrks.put(mapid.getKey(), mapid.getValue());
+		}
+	}
+	
+	mav.addObject("enteredwrks", enteredwrks);
 			
 	mav.addObject("enteredConList",list);
 	mav.addObject("enteredConListSize",list.size());
+	mav.addObject("schemeMap",schemeMap);
+	mav.addObject("schemeMapSize",schemeMap.size());
+	mav.addObject("mapList",mapList);
+	mav.addObject("mapListSize",mapList.size());
+	mav.addObject("SchemeList",convergenceWorksService.getAllSchemes());
+	mav.addObject("SchemeListSize",convergenceWorksService.getAllSchemes().size());
 	
 	return mav;
 }
@@ -3089,6 +3138,44 @@ return null;
 		List<ConvergenceWorksBean> list = new ArrayList<ConvergenceWorksBean>();
 
 		list = convergenceWorksService.getEnteredConWorks();
+		
+		Map<Integer,String> schemeMap = convergenceWorksService.getAllSchemes();
+		List<Integer> statelist = list.stream().map(ConvergenceWorksBean::getSt_code).collect(Collectors.toList());
+		Map<String, Map<Integer, Integer>> mapList = new LinkedHashMap<String, Map<Integer,Integer>>();
+		for(Integer stcode : statelist) {
+			for(Map.Entry<Integer, String> map: schemeMap.entrySet()) {
+				for(ConvergenceWorksBean bean :list) {
+					if(bean.getSt_code() == stcode) {
+						if(bean.getScheme_id()==null?false:bean.getScheme_id() ==  map.getKey()) {
+							if(mapList.containsKey(bean.getSt_name())) {
+								Map<Integer,Integer> oldmap = mapList.get(bean.getSt_name());
+								oldmap.put(bean.getScheme_id(), bean.getEnteredcon());
+								mapList.put(bean.getSt_name(),oldmap);
+							}else {
+								Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+								oldmap.put(bean.getScheme_id(),bean.getEnteredcon());
+								mapList.put(bean.getSt_name(), oldmap);
+							}
+						}else {
+							Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+							oldmap = mapList.get(bean.getSt_name());
+							if(oldmap==null?true:!oldmap.containsKey(map.getKey())) {
+								mapList.computeIfAbsent(bean.getSt_name(), k-> new LinkedHashMap<Integer, Integer>()).put(map.getKey(),0);
+							}
+						}
+					}
+				}
+			}
+		}
+		Map<Integer, Integer> enteredwrks = new HashMap<>();
+		for(Map.Entry<String, Map<Integer, Integer>> schMap : mapList.entrySet()) {
+			for(Map.Entry<Integer, Integer> mapid : schMap.getValue().entrySet()) {
+				if(enteredwrks.containsKey(mapid.getKey()))
+					enteredwrks.put(mapid.getKey(), enteredwrks.get(mapid.getKey()) + mapid.getValue());
+				else
+					enteredwrks.put(mapid.getKey(), mapid.getValue());
+			}
+		}
 			
 		Workbook workbook = new XSSFWorkbook();  
 		//invoking creatSheet() method and passing the name of the sheet to be created   
@@ -3100,8 +3187,22 @@ return null;
 		String areaAmtValDetail ="";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
-		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 6, areaAmtValDetail, workbook);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 5+schemeMap.size(), areaAmtValDetail, workbook);
 		
+		mergedRegion = new CellRangeAddress(5,6,0,0); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,1,1); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,2,2); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,3,3); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,4,4); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,6,5,5); 
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,6,5+schemeMap.size()); 
+		sheet.addMergedRegion(mergedRegion);
 		mergedRegion = new CellRangeAddress(list.size()+7,list.size()+7,0,1); 
 		sheet.addMergedRegion(mergedRegion);
 		
@@ -3135,45 +3236,64 @@ return null;
 		cell = rowhead.createCell(6);
 		cell.setCellValue("Total No. of Works Entered Convergence Detail");  
 		cell.setCellStyle(style);
+		for(int i = 1;i<schemeMap.size();i++) {
+			rowhead.createCell(6+i).setCellStyle(style);
+		}
 		
 		
 		Row rowhead1 = sheet.createRow(6);
 		
-		for(int i=0;i<7;i++)
+		for(int i=0;i<6;i++)
 		{
-			cell =rowhead1.createCell(i);
-			cell.setCellValue(i+1);
+			rowhead1.createCell(i).setCellStyle(style);
+		}
+		for(Map.Entry<Integer,String> map : schemeMap.entrySet()) {
+			cell = rowhead1.createCell(map.getKey()+5);
+			cell.setCellValue(map.getValue());  
+			cell.setCellStyle(style);
+		}
+		rowhead1 = sheet.createRow(7);
+		for(int i =0;i<schemeMap.size()+6;i++) {
+			cell = rowhead1.createCell(i);
+			cell.setCellValue(i+1);  
 			cell.setCellStyle(style);
 		}
 		
 		int sno = 1;
-		int rowno  = 7;
+		int rowno  = 8;
 		int totdist = 0;
 		int totproj = 0;
 		int totwrks = 0;
 		int conwrks = 0;
-		int enteredwrks = 0;
 		
-		
+		String state = "";
 	    for(ConvergenceWorksBean bean: list) 
 	    {
-	    	Row row = sheet.createRow(rowno);
-	    	row.createCell(0).setCellValue(sno); 
-	    	row.createCell(1).setCellValue(bean.getSt_name());
-	    	row.createCell(2).setCellValue(bean.getTotaldist());
-	    	row.createCell(3).setCellValue(bean.getTotalproject());
-	    	row.createCell(4).setCellValue(bean.getTotalworks());
-	    	row.createCell(5).setCellValue(bean.getConvergedworks());
-	    	row.createCell(6).setCellValue(bean.getEnteredcon());
-	    	
+	    	if(!bean.getSt_name().equals(state)) {
+	    		Row row = sheet.createRow(rowno);
+		    	row.createCell(0).setCellValue(sno); 
+		    	row.createCell(1).setCellValue(bean.getSt_name());
+		    	row.createCell(2).setCellValue(bean.getTotaldist());
+		    	row.createCell(3).setCellValue(bean.getTotalproject());
+		    	row.createCell(4).setCellValue(bean.getTotalworks());
+		    	row.createCell(5).setCellValue(bean.getConvergedworks());
+		    	for(Map.Entry<String, Map<Integer,Integer>> nest : mapList.entrySet()) {
+		    		if(bean.getSt_name().equals(nest.getKey())) {
+		    			int k = 1;
+		    			for(Map.Entry<Integer, Integer> map : nest.getValue().entrySet()) {
+		    				row.createCell(5+k).setCellValue(map.getValue());
+		    				k++;
+		    			}
+		    		}
+		    	}
+		    	state = bean.getSt_name();
+		    	sno++;
+		    	rowno++;
+	    	}
 	    	totdist = totdist + bean.getTotaldist();
 	    	totproj = totproj + bean.getTotalproject();
 	    	totwrks = totwrks + bean.getTotalworks();
 	    	conwrks = conwrks + bean.getConvergedworks();
-	    	enteredwrks = enteredwrks + bean.getEnteredcon();
-
-	    	sno++;
-	    	rowno++;
 	    }
 	    
 	    
@@ -3209,12 +3329,15 @@ return null;
 		cell = row.createCell(5);
 		cell.setCellValue(conwrks);
 		cell.setCellStyle(style1);
-		cell = row.createCell(6);
-		cell.setCellValue(enteredwrks);
-		cell.setCellStyle(style1);
+		for(Map.Entry<Integer, Integer> enter : enteredwrks.entrySet()) {
+			cell = row.createCell(5+enter.getKey());
+			cell.setCellValue(enter.getValue());
+			cell.setCellStyle(style1);
+		}
+
 
 		
-	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 6);
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 5+schemeMap.size());
 	    String fileName = "attachment; filename=Report CW1- State.xlsx";
 	    
 	    CommonFunctions.downloadExcel(response, workbook, fileName);
@@ -3230,6 +3353,44 @@ return null;
 		List<ConvergenceWorksBean> list = new ArrayList<ConvergenceWorksBean>();
 
 		list = convergenceWorksService.getEnteredConWorks();
+		
+		Map<Integer,String> schemeMap = convergenceWorksService.getAllSchemes();
+		List<Integer> statelist = list.stream().map(ConvergenceWorksBean::getSt_code).collect(Collectors.toList());
+		Map<String, Map<Integer, Integer>> mapList = new LinkedHashMap<String, Map<Integer,Integer>>();
+		for(Integer stcode : statelist) {
+			for(Map.Entry<Integer, String> map: schemeMap.entrySet()) {
+				for(ConvergenceWorksBean bean :list) {
+					if(bean.getSt_code() == stcode) {
+						if(bean.getScheme_id()==null?false:bean.getScheme_id() ==  map.getKey()) {
+							if(mapList.containsKey(bean.getSt_name())) {
+								Map<Integer,Integer> oldmap = mapList.get(bean.getSt_name());
+								oldmap.put(bean.getScheme_id(), bean.getEnteredcon());
+								mapList.put(bean.getSt_name(),oldmap);
+							}else {
+								Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+								oldmap.put(bean.getScheme_id(),bean.getEnteredcon());
+								mapList.put(bean.getSt_name(), oldmap);
+							}
+						}else {
+							Map<Integer,Integer> oldmap = new LinkedHashMap<>();
+							oldmap = mapList.get(bean.getSt_name());
+							if(oldmap==null?true:!oldmap.containsKey(map.getKey())) {
+								mapList.computeIfAbsent(bean.getSt_name(), k-> new LinkedHashMap<Integer, Integer>()).put(map.getKey(),0);
+							}
+						}
+					}
+				}
+			}
+		}
+		Map<Integer, Integer> enteredwrks = new HashMap<>();
+		for(Map.Entry<String, Map<Integer, Integer>> schMap : mapList.entrySet()) {
+			for(Map.Entry<Integer, Integer> mapid : schMap.getValue().entrySet()) {
+				if(enteredwrks.containsKey(mapid.getKey()))
+					enteredwrks.put(mapid.getKey(), enteredwrks.get(mapid.getKey()) + mapid.getValue());
+				else
+					enteredwrks.put(mapid.getKey(), mapid.getValue());
+			}
+		}
 		
 		try {
 			
@@ -3262,58 +3423,64 @@ return null;
 		    CommonFunctions.addHeader(document);
 		    document.add(paragraph2);
 		    document.add(paragraph3);
-		    table = new PdfPTable(7);
-		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5});
+		    table = new PdfPTable(6+schemeMap.size());
+		    int[] arr = new int[6+schemeMap.size()];
+		    for(int i =0; i<schemeMap.size()+6;i++) {
+				arr[i] = i==0?2:i==1?8:5;
+			}
+		    table.setWidths(arr);
 		    table.setWidthPercentage(60);
 		    table.setSpacingBefore(0f);
 		    table.setSpacingAfter(0f);
-		    table.setHeaderRows(2);
+		    table.setHeaderRows(3);
 		        
-		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total No. of District", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total No. of Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total No. of Converged Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "Total No. of Works Entered Convergence Detail", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "State Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of District", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Project", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Works", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Converged Works", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total No. of Works Entered Convergence Detail", Element.ALIGN_CENTER, schemeMap.size(), 1, bf8Bold);
+			
+			for(Map.Entry<Integer,String> map : schemeMap.entrySet()) {
+				CommonFunctions.insertCellHeader(table, map.getValue(), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
 				
-		        
-			CommonFunctions.insertCellHeader(table, "1", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "2", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "3", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "4", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "5", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "6", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-			CommonFunctions.insertCellHeader(table, "7", Element.ALIGN_CENTER, 1, 1, bf8Bold);
-
+		    for(int i = 0;i<schemeMap.size()+6;i++) {
+		    	CommonFunctions.insertCellHeader(table, String.valueOf(i+1), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+		    }
 				
 			int k = 1;
 			int totdist = 0;
 			int totproj = 0;
 			int totwrks = 0;
 			int conwrks = 0;
-			int enteredwrks = 0;
-
+			String state = "";
 				
 			if(list.size()!=0)
 				for(int i=0;i<list.size();i++) 
 				{
-					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, list.get(i).getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotaldist()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalproject()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalworks()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getConvergedworks()), Element.ALIGN_RIGHT, 1, 1, bf8);
-					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getEnteredcon()), Element.ALIGN_RIGHT, 1, 1, bf8);
-						
-				    	
+					if(!list.get(i).getSt_name().equals(state)) {
+						CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, list.get(i).getSt_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotaldist()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalproject()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotalworks()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						CommonFunctions.insertCell(table, String.valueOf(list.get(i).getConvergedworks()), Element.ALIGN_RIGHT, 1, 1, bf8);
+						for(Map.Entry<String, Map<Integer,Integer>> nest : mapList.entrySet()) {
+				    		if(list.get(i).getSt_name().equals(nest.getKey())) {
+				    			for(Map.Entry<Integer, Integer> map : nest.getValue().entrySet()) {
+				    				CommonFunctions.insertCell(table, String.valueOf(map.getValue()), Element.ALIGN_RIGHT, 1, 1, bf8);
+				    			}
+				    		}
+				    	}
+						k++;
+						state = list.get(i).getSt_name();
+					}
 				    totdist = totdist + list.get(i).getTotaldist();
 				    totproj = totproj + list.get(i).getTotalproject();
 				    totwrks = totwrks + list.get(i).getTotalworks();
 				    conwrks = conwrks + list.get(i).getConvergedworks();
-				    enteredwrks = enteredwrks + list.get(i).getEnteredcon();
-						
-					k++;
 				}
 				
 				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
@@ -3321,10 +3488,10 @@ return null;
 				CommonFunctions.insertCell3(table, String.valueOf(totproj), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(totwrks), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
 				CommonFunctions.insertCell3(table, String.valueOf(conwrks), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
-				CommonFunctions.insertCell3(table, String.valueOf(enteredwrks), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				for(Map.Entry<Integer, Integer> enter : enteredwrks.entrySet()) {
+					CommonFunctions.insertCell3(table, String.valueOf(enter.getValue()), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				}
 				
-				if(list.size()==0) 
-					CommonFunctions.insertCell(table, "Data not found", Element.ALIGN_CENTER, 7, 1, bf8);
 				
 				
 		document.add(table);

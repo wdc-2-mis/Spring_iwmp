@@ -12,6 +12,7 @@
 
 <script type="text/javascript">
 
+
 function downloadPDF(){
 		document.getConWorksDetails.action="downloadPDFEnteredConWorks";
 		document.getConWorksDetails.method="post";
@@ -68,13 +69,18 @@ function exportExcel(){
 	<table id = "tblReport" class = "table">
 		<thead>
 			<tr>
-				<th>S.No.</th>
-				<th>State Name</th>
-				<th>Total No. of District</th>
-				<th>Total No. of Project</th>
-				<th>Total No. of Works</th>
-				<th>Total No. of Converged Works</th>
-				<th>Total No. of Works Entered Convergence Detail</th>
+				<th class="text-center" rowspan ="2">S.No.</th>
+				<th class="text-center" rowspan ="2">State Name</th>
+				<th class="text-center" rowspan ="2">Total No. of District</th>
+				<th class="text-center" rowspan ="2">Total No. of Project</th>
+				<th class="text-center" rowspan ="2">Total No. of Works</th>
+				<th class="text-center" rowspan ="2">Total No. of Converged Works</th>
+				<th class="text-center" colspan = "${SchemeListSize}">Total No. of Works Entered Convergence Detail</th>
+			</tr>
+			<tr>
+				<c:forEach items="${SchemeList}" var="schList">
+					<th class="text-center" ><c:out value ="${schList.value}"/></th>
+				</c:forEach>
 			</tr>
 		</thead>
 		<tbody id = "convergedWorksRptTbody">
@@ -85,18 +91,40 @@ function exportExcel(){
 				<th class="text-center">4</th>
 				<th class="text-center">5</th>
 				<th class="text-center">6</th>
-				<th class="text-center">7</th>
+				<c:forEach var ="i" begin="1" end="${SchemeListSize}">
+					<th class="text-center"><c:out value ="${i + 6}"/></th>
+				</c:forEach>
+				
 			</tr>
+			<c:set var ="state" value = ""/>
+			<c:set var ="count" value = "1"/>
+			<c:set var="totdist" value="0"/>
+			<c:set var="totproj" value="0"/>
+			<c:set var="totwrks" value="0"/>
+			<c:set var="conwrks" value="0"/>
 			<c:forEach items="${enteredConList}" var="dt" varStatus="sno">
-				<tr>
-					<td class="text-left"><c:out value="${sno.count}" /></td>
-					<td class="text-left"><c:out value="${dt.st_name}" /></td>
-					<td class="text-right"><c:out value="${dt.totaldist}" /></td>
-					<td class="text-right"><c:out value="${dt.totalproject}" /></td>
-					<td class="text-right"><c:out value="${dt.totalworks}" /></td>
-					<td class="text-right"><c:out value="${dt.convergedworks}" /></td>
-					<td class="text-right"><c:out value="${dt.enteredcon}" /></td>
-				</tr>
+				<c:if test ="${dt.st_name ne state}">
+					<tr>
+						<td class="text-left"><c:out value="${count}" /></td>
+						<td class="text-left"><c:out value="${dt.st_name}" /></td>
+						<td class="text-right"><c:out value="${dt.totaldist}" /></td>
+						<td class="text-right"><c:out value="${dt.totalproject}" /></td>
+						<td class="text-right"><c:out value="${dt.totalworks}" /></td>
+						<td class="text-right"><c:out value="${dt.convergedworks}" /></td>
+						
+						<c:set var ="state" value = "${dt.st_name}"/>
+						<c:set var ="count" value = "${count + 1}"/>
+				
+					<c:forEach items="${mapList}" var="map">
+							<c:if test="${map.key eq dt.st_name}">
+								<c:forEach items="${map.value}" var="mapsch">
+									<td class="text-right"><c:out value="${mapsch.value}" /></td>
+								</c:forEach>
+							</c:if>
+					</c:forEach>
+					</tr>
+				</c:if>
+				
 			
  				<c:set var = "totdist" 
  				value = "${totdist + dt.totaldist}" />
@@ -106,8 +134,6 @@ function exportExcel(){
  				value = "${totwrks + dt.totalworks}" />
  				<c:set var = "conwrks" 
  				value = "${conwrks + dt.convergedworks}" /> 
- 				<c:set var = "enteredwrks" 
- 				value = "${enteredwrks + dt.enteredcon}" /> 
 
 			</c:forEach>
 			<c:if test="${enteredConListSize>0}">
@@ -117,12 +143,15 @@ function exportExcel(){
 					<td align="right" class="table-primary"><b><c:out value="${totproj}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${totwrks}" /></b></td>
 					<td align="right" class="table-primary"><b><c:out value="${conwrks}" /></b></td>
-					<td align="right" class="table-primary"><b><c:out value="${enteredwrks}" /></b></td>
+					<c:forEach var="entry" items="${enteredwrks}">
+    					<td align="right" class="table-primary"><b><c:out value="${entry.value}"/></b></td>
+					</c:forEach>
+
 				</tr>
 			</c:if>
 			<c:if test="${enteredConListSize==0}">
 				<tr>
-					<td align="center" colspan="7" class="required" style="color:red;"><b>Data Not Found</b></td>
+					<td align="center" colspan="${7 + SchemeListSize}" class="required" style="color:red;"><b>Data Not Found</b></td>
 				</tr>
 			</c:if>
 		</tbody>
