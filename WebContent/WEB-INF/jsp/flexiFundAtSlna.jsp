@@ -157,7 +157,7 @@ var activityList = [
         <thead>
             <tr>
                 <th>Select</th>
-                <th>Activity Name</th>
+                <th style="width:300px;">Activity Name</th>
                 <th style="width:200px;">Details of Work Done</th>
                 <th>Total Estimated Cost(As per plan)</th>
                 <th>Expenditure till date(Rs. in Lakhs)</th>
