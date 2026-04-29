@@ -1,5 +1,7 @@
 package app.serviceImpl;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,4 +78,19 @@ public class FlexFundServiceImpl implements FlexFundService{
 		return dao.deleteFlexiFundRow(id);
 		
 	}
+
+	@Override
+	public List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat) {
+		// TODO Auto-generated method stub
+		return dao.getCompleteFlexiFundData(projid, panchayat);
+	}
+
+	@Override
+	public boolean saveProgress(List<Integer> ffIds, List<BigDecimal> ffCosts, List<String> statusList,
+			List<String> completionDates, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		return dao.saveProgress(ffIds, ffCosts, statusList, completionDates, request);
+	}
+
+	
 }

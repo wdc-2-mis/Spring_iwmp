@@ -1,5 +1,7 @@
 package app.dao;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,11 @@ public interface FlexFundDao {
 	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
 
 	boolean deleteFlexiFundRow(int id);
+
+	List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat);
+
+	boolean saveProgress(List<Integer> ffIds, List<BigDecimal> ffCosts, List<String> statusList,
+			List<String> completionDates, HttpServletRequest request);
 
 	
 

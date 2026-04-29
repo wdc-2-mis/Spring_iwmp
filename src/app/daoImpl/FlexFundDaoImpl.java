@@ -1,6 +1,8 @@
 package app.daoImpl;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import app.bean.FlexiFundMActivityBean;
 import app.dao.FlexFundDao;
 import app.model.FlexFundActivityMaster;
+import app.model.FlexiFundActivityExpProgress;
 import app.model.FlexiFundDetails;
 import app.model.FlexiFundPhoto;
 import app.model.IwmpDistrict;
@@ -45,6 +48,11 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	@Value("${flexiFundUtilizationStRpt}")
     String flexiFundUtilizationStRptData;
 	
+	@Value("${completeFlexiFund}")
+    String completeFlexiFund;
+	
+	@Value("${progressFlexiFund}")
+    String progressFlexiFund;
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -181,7 +189,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        IwmpMProject project = sess.get(IwmpMProject.class, projId);
 	        IwmpGramPanchayat panchayat = sess.get(IwmpGramPanchayat.class, gcode);
 
-	        // ✅ STEP 1: SAVE FILES
 	        List<String> savedFileNames = new ArrayList<>();
 
 	        for (MultipartFile file : photos) {
@@ -199,7 +206,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	            }
 	        }
 
-	        // ✅ STEP 2: MAP rowId → photo indexes
 	        Map<Integer, List<Integer>> rowPhotoMap = new HashMap<>();
 
 	        for (int i = 0; i < photoCountList.size(); i++) {
@@ -211,7 +217,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	                .add(i);
 	        }
 
-	        // ✅ STEP 3: LOOP ROWS
 	        for (int i = 0; i < activityList.size(); i++) {
 
 	            FlexiFundDetails details = new FlexiFundDetails();
@@ -237,7 +242,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	            sess.save(details);
 
-	            // 🔥 IMPORTANT: match using ROW ID (same as JS)
 	            List<Integer> photoIndexes = rowPhotoMap.get(i);
 
 	            if (photoIndexes != null) {
@@ -335,7 +339,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	            Integer id = rowIds.get(i);
 
-	            // 🔥 FETCH EXISTING RECORD
 	            FlexiFundDetails entity = session.get(FlexiFundDetails.class, id);
 
 	            if (entity != null) {
@@ -359,7 +362,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	                session.update(entity);
 
-	                // ================= PHOTO UPDATE =================
 	                if (photos != null && photoRowIndex != null) {
 
 	                    for (int j = 0; j < photos.size(); j++) {
@@ -417,7 +419,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	        session.beginTransaction();
 
-	        // ✅ STEP 1: Get photo URL using correct column
 	        String photoUrl = (String) session.createNativeQuery(
 	                "SELECT photo_url FROM flexi_fund_photo WHERE ff_photo_id = :id")
 	                .setParameter("id", photoId)
@@ -425,7 +426,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        if (photoUrl != null) {
 
-	            // ✅ STEP 2: Delete file from folder
 	            String filePath = "D:\\FlexiFund\\" + photoUrl;
 
 	            File file = new File(filePath);
@@ -436,7 +436,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	                System.out.println("File not found: " + filePath);
 	            }
 
-	            // ✅ STEP 3: Delete DB record
 	            session.createNativeQuery(
 	                    "DELETE FROM flexi_fund_photo WHERE ff_photo_id = :id")
 	                    .setParameter("id", photoId)
@@ -472,14 +471,12 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        String originalName = file.getOriginalFilename();
 
-	        // ✅ NEW FORMAT
 	        String uniqueName = projId + "_" + gcode + "_" + originalName;
 
 	        File destination = new File(uploadDir + uniqueName);
 
 	        file.transferTo(destination);
 
-	        // ================= DB SAVE =================
 	        FlexiFundDetails flex = session.get(FlexiFundDetails.class, flexiFundId);
 
 	        FlexiFundPhoto photo = new FlexiFundPhoto();
@@ -532,13 +529,11 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	        tx = session.beginTransaction();
 
-	        // 1. Get photo list to delete physical files
 	        Query<FlexiFundPhoto> photoQuery = session.createQuery(
 	                "FROM FlexiFundPhoto WHERE flexiFundDetails.id = :id", FlexiFundPhoto.class);
 	        photoQuery.setParameter("id", id);
 	        List<FlexiFundPhoto> photos = photoQuery.getResultList();
 
-	        // 2. Delete files from disk
 	        for (FlexiFundPhoto photo : photos) {
 	            String filePath = "D:" + File.separator + "FlexiFund" + File.separator + photo.getPhotoUrl();
 	            File file = new File(filePath);
@@ -547,22 +542,192 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	            }
 	        }
 
-	        // 3. Delete photo records from DB
 	        session.createQuery("DELETE FROM FlexiFundPhoto WHERE flexiFundDetails.id = :id")
 	               .setParameter("id", id)
 	               .executeUpdate();
 
-	        // 4. Delete main FlexiFund record
 	        int mainDeleted = session.createQuery("DELETE FROM FlexiFundDetails WHERE ffId = :id")
 	                                .setParameter("id", id)
 	                                .executeUpdate();
 
-	        // 5. COMMIT the changes
 	        tx.commit();
 	        return mainDeleted > 0;
 
 	    } catch (Exception e) {
-	        if (tx != null) tx.rollback(); // Undo DB changes if anything fails
+	        if (tx != null) tx.rollback(); 
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+
+	@Override
+	public List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat) {
+
+	    List<Map<String, Object>> resultList = new ArrayList<>();
+
+	    Session session = sessionFactory.getCurrentSession();
+	    Transaction tx = session.beginTransaction();
+
+	    try {
+	    	SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    	
+	    	String hql = completeFlexiFund;
+	        List<FlexiFundDetails> list = session.createQuery(hql, FlexiFundDetails.class)
+	                .setParameter("projid", projid)
+	                .setParameter("panchayat", panchayat)
+	                .getResultList();
+
+	        for (FlexiFundDetails item : list) {
+
+	            Map<String, Object> map = new HashMap<>();
+
+	            map.put("ffId", item.getFfId());
+	            map.put("actName", item.getActivity().getActName());
+	            map.put("workDesc", item.getWorkDesc());
+	            map.put("est_cost", item.getEst_cost());
+	            map.put("remark", item.getRemark());
+                Double ffcost = item.getFfCost();
+                BigDecimal baseCost = BigDecimal.valueOf(ffcost);
+
+	            String progressHql = progressFlexiFund;
+
+	            List<FlexiFundActivityExpProgress> progressList =
+	                    session.createQuery(progressHql, FlexiFundActivityExpProgress.class)
+	                            .setParameter("ffId", item.getFfId())
+	                            .getResultList();
+
+	            if (!progressList.isEmpty()) {
+
+	                BigDecimal totalProgressCost = BigDecimal.ZERO;
+	                Date latestDate = null;
+	                Date completionDate = null;
+
+	                for (FlexiFundActivityExpProgress p : progressList) {
+
+	                     if (p.getFfCost() != null) {
+	                        totalProgressCost = totalProgressCost.add(p.getFfCost());
+	                    }
+
+	                    if (latestDate == null || p.getUpdatedDate().after(latestDate)) {
+	                        latestDate = p.getUpdatedDate();
+	                    }
+
+	                    if (p.getCompletionDate() != null) {
+	                        completionDate = p.getCompletionDate();
+	                    }
+	                }
+
+	                map.put("ffCost", baseCost.add(totalProgressCost));
+
+	               if (completionDate != null) {
+	                    map.put("status", "C");
+	                    map.put("completionDate", completionDate);
+	                } else {
+	                    map.put("status", "O");
+	                    map.put("completionDate", null);
+	                }
+
+	                map.put("compDate", latestDate);
+	                map.put("comp_Date", latestDate);
+
+	            } else {
+
+	                map.put("ffCost", item.getFfCost());
+	                map.put("status", "O");
+	                map.put("completionDate", null);
+
+	                map.put("compDate",
+	                    item.getUpdatedDate() != null
+	                        ? displayFormat.format(item.getUpdatedDate())
+	                        : "");
+
+	                map.put("comp_Date", item.getUpdatedDate());
+	            }
+	            
+	            String photoHql = "FROM FlexiFundPhoto p WHERE p.flexiFundDetails.ffId = :ffId";
+
+	            List<FlexiFundPhoto> photos = session.createQuery(photoHql, FlexiFundPhoto.class)
+	                    .setParameter("ffId", item.getFfId())
+	                    .getResultList();
+
+	            List<Map<String, Object>> photoList = new ArrayList<>();
+
+	            for (FlexiFundPhoto p : photos) {
+	                Map<String, Object> photoMap = new HashMap<>();
+	                photoMap.put("photoId", p.getFfPhotoId());
+	                photoMap.put("photoUrl", p.getPhotoUrl());
+	                photoList.add(photoMap);
+	            }
+
+	            map.put("photos", photoList);
+
+	            resultList.add(map);
+	        }
+
+	        tx.commit();
+
+	    } catch (Exception e) {
+	        tx.rollback();
+	        e.printStackTrace();
+	    }
+
+	    return resultList;
+	}
+
+	@Override
+	public boolean saveProgress(List<Integer> ffIds,
+	                           List<BigDecimal> ffCosts,
+	                           List<String> statusList,
+	                           List<String> completionDates,
+	                           HttpServletRequest request) {
+
+	    Session session = sessionFactory.getCurrentSession();
+	    Transaction tx = null;
+	    String createdBy = request.getSession().getAttribute("loginID").toString();
+	    try {
+	        tx = session.beginTransaction();
+
+	        for (int i = 0; i < ffIds.size(); i++) {
+
+	            Integer ffId = ffIds.get(i);
+	            BigDecimal newCost = ffCosts.get(i);
+	            String status = statusList.get(i);
+	            
+	            String compDateStr = "";
+	            if (completionDates != null && completionDates.size() > i) {
+	                compDateStr = completionDates.get(i);
+	            }
+
+	            FlexiFundDetails flex = session.get(FlexiFundDetails.class, ffId);
+
+	            FlexiFundActivityExpProgress progress = new FlexiFundActivityExpProgress();
+
+	            progress.setFlexiFundDetails(flex);
+	            progress.setFfCost(newCost);
+
+	            if ("C".equals(status) && compDateStr != null && !compDateStr.isEmpty()) {
+
+	                Date compDate = new SimpleDateFormat("yyyy-MM-dd").parse(compDateStr);
+	                progress.setCompletionDate(compDate);
+	                flex.setExpStatus("C");
+
+	            } else {
+	                progress.setCompletionDate(null);
+	            }
+
+	            progress.setUpdatedDate(new Date());
+	            progress.setRequestedIp(getClientIpAddr(request));
+	            progress.setCreatedBy(createdBy);
+	            progress.setUpdatedBy(createdBy);
+
+	            session.save(progress);
+	        }
+
+	        tx.commit();
+	        return true;
+
+	    } catch (Exception e) {
+	        if (tx != null) tx.rollback();
 	        e.printStackTrace();
 	        return false;
 	    }

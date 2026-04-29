@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,7 @@ import app.service.FlexFundService;
 import app.service.ProfileService;
 import app.watershedyatra.service.WatershedYatraService;
 import java.io.OutputStream;
+import java.math.BigDecimal;
 
 @Controller("flexiFundController")
 public class FlexiFundController {
@@ -314,6 +317,76 @@ public class FlexiFundController {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return "fail";
+	    }
+	}
+	
+	@RequestMapping(value = "/flexiFundUpdationAtSlna", method = RequestMethod.GET)
+	public ModelAndView flexiFundUpdationAtSlna(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				
+				mav = new ModelAndView("flexiFundUpdationAtSlna");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+				mav.addObject("userType", userType);
+				mav.addObject("stateName", stateName);
+				mav.addObject("distList", ser.getDistrictList(stcd));
+				mav.addObject("distName", distName);
+			}
+			else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return mav;
+}
+	
+	
+	@RequestMapping(value = "/getFlexiFundCompleteData", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Map<String, Object>> getFlexiFundCompleteData(
+	        @RequestParam("projid") int projid,
+	        @RequestParam("panchayat") int panchayat) {
+
+	    return service.getCompleteFlexiFundData(projid, panchayat);
+	}
+	
+	@RequestMapping(value = "/saveFlexiFundProgress", method = RequestMethod.POST)
+	@ResponseBody
+	public String saveFlexiFundProgress(
+	        @RequestParam("ffId[]") List<Integer> ffIds,
+	        @RequestParam("ffCost[]") List<BigDecimal> ffCosts,
+	        @RequestParam("status[]") List<String> statusList,
+	        @RequestParam("completionDate[]") List<String> completionDates,
+	        HttpServletRequest request) {
+
+	    try {
+	        boolean result = service.saveProgress(ffIds, ffCosts, statusList, completionDates, request);
+
+	        return result ? "success" : "fail";
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "error";
 	    }
 	}
 }
