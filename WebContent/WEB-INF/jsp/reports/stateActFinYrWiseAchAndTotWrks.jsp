@@ -13,7 +13,7 @@
 <script type="text/javascript">
 
 
-	function showReport(e){
+$(document).on( 'click', '#btnGetReport2', function (e) {
 		e.preventDefault();
 		$stCode = $('#assetstate option:selected').val();
 		$fyCode = $('#year option:selected').val();
@@ -45,32 +45,32 @@
 		document.assetrpt.method="post";
 		document.assetrpt.submit();
 		
-	}
+	});
 	
 	function downloadPDF(){
-		var stCode = $('#assetstate').val();
-		var fyCode = $('#year').val();
-		var headCode = $('#head').val();
-		
-		document.getElementById("stCode").value=stCode;
-	    document.getElementById("fyCode").value=fyCode;
-	    document.getElementById("headCode").value=headCode;
+		var stName = document.getElementById("assetstate").options[document.getElementById("assetstate").selectedIndex].text;
+		var fnYear = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+		var headDesc = document.getElementById("head").options[document.getElementById("head").selectedIndex].text;
 	    
-	    document.assetrpt.action="downloadAssetReportPDF";
+		document.getElementById("stName").value=stName;
+		document.getElementById("fnYear").value=fnYear;
+		document.getElementById("headDesc").value=headDesc;
+	    
+	    document.assetrpt.action="stActYearWiseTarAchWorksPDF";
 		document.assetrpt.method="post";
 		document.assetrpt.submit();
 		}
 
 	function exportExcell(){
-		var stCode = $('#assetstate').val();
-		var fyCode = $('#year').val();
-		var headCode = $('#head').val();
-		
-		document.getElementById("stCode").value=stCode;
-	    document.getElementById("fyCode").value=fyCode;
-	    document.getElementById("headCode").value=headCode;
+		var stName = document.getElementById("assetstate").options[document.getElementById("assetstate").selectedIndex].text;
+		var fnYear = document.getElementById("year").options[document.getElementById("year").selectedIndex].text;
+		var headDesc = document.getElementById("head").options[document.getElementById("head").selectedIndex].text;
 	    
-	    document.assetrpt.action="downloadExcelassetReport";
+		document.getElementById("stName").value=stName;
+		document.getElementById("fnYear").value=fnYear;
+		document.getElementById("headDesc").value=headDesc;
+		
+	    document.assetrpt.action="stActYearWiseTarAchWorksExcel";
 		document.assetrpt.method="post";
 		document.assetrpt.submit();
 		}
@@ -92,9 +92,9 @@
 <div class="col-12">
 <form action="getStateActYearWiseTarAchWorks" method="post" name="assetrpt" id="assetrpt">
 	
-	<input type="hidden" name="stCode" id="stCode" value="" />
-	<input type="hidden" name="fyCode" id="fyCode" value="" />
-	<input type="hidden" name="headCode" id="headCode" value="" />
+	<input type="hidden" name="stName" id="stName" value="" />
+	<input type="hidden" name="fnYear" id="fnYear" value="" />
+	<input type="hidden" name="headDesc" id="headDesc" value="" />
 <div class="form-row">
 <div class="col-md-2"></div>
   <div class="form-group col-md-2">
@@ -136,8 +136,8 @@
   
   <div class="form-group col-md-2">
   	<label for="button">&nbsp;</label>
-  	<!-- <input type="submit" class="btn btn-info form-control" id="btnGetAssetReport" name="btnGetAssetReport" value="Get Report"> -->
-  		<button class="btn btn-info form-control" id="btnGetAssetReport" name="btnGetAssetReport" onclick="showReport(this);">Get Report</button>
+  	<input type="submit" class="btn btn-info form-control" id="btnGetReport2" name="btnGetAssetReport" value="Get Report">
+<!--   		<button class="btn btn-info form-control" id="btnGetAssetReport" name="btnGetAssetReport" onclick="showReport(this);">Get Report</button> -->
   </div>
   
   
@@ -152,8 +152,8 @@
  <div class="col-1"></div>
  <c:if test ="${not empty list}">
 <div class="col" id="reportDiv">
-<!-- <button name="exportExcel" id="exportExcel" onclick="exportExcell()" class="btn btn-info">Excel</button> -->
-<!-- <button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button> -->
+<button name="exportExcel" id="exportExcel" onclick="exportExcell()" class="btn btn-info">Excel</button>
+<button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
 <p align="right"> Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
 
 <table id="tblReport" class="table">

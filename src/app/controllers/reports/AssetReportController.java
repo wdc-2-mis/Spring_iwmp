@@ -3,6 +3,7 @@ package app.controllers.reports;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -182,8 +183,7 @@ public class AssetReportController {
 								beanZero.setAchievement(BigDecimal.ZERO);
 								beanZero.setPlan(BigDecimal.ZERO);
 								beanZero.setWorks(0);
-								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(),
-										beanZero);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
 							}
 						} 
 					}
@@ -208,8 +208,7 @@ public class AssetReportController {
 								beanZero.setAchievement(BigDecimal.ZERO);
 								beanZero.setPlan(BigDecimal.ZERO);
 								beanZero.setWorks(0);
-								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(head.getKey(),
-										beanZero);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(head.getKey(), beanZero);
 							}
 						} else if(bean.getStcode() == state){
 							for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
@@ -228,8 +227,7 @@ public class AssetReportController {
 									beanZero.setAchievement(BigDecimal.ZERO);
 									beanZero.setPlan(BigDecimal.ZERO);
 									beanZero.setWorks(0);
-									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(),
-											beanZero);
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
 								}
 							}
 						}
@@ -593,5 +591,540 @@ public class AssetReportController {
 		return "reports/assetReport";
 		
 	}
+	
+	@RequestMapping(value = "/stActYearWiseTarAchWorksExcel", method = RequestMethod.POST)
+	@ResponseBody
+	public String stActYearWiseTarAchWorksExcel(HttpServletRequest request, HttpServletResponse response) 
+	{
+		Integer stcode = Integer.parseInt(request.getParameter("assetstate"));
+		Integer headcode = Integer.parseInt(request.getParameter("head"));
+		Integer year = Integer.parseInt(request.getParameter("year"));
+		String stName = request.getParameter("stName");
+		String headDesc = request.getParameter("headDesc");
+		String fnYear = request.getParameter("fnYear");
+		List<StateHeadActivityFinBean>  list = new ArrayList<StateHeadActivityFinBean>();
+		Map<Integer,String> headActMap = new LinkedHashMap<Integer, String>();
+		list = assetReportService.getStwiseActTarAchWorks(stcode, year, headcode, 0);
+		Map<Integer,String> headMap = list.stream().collect(Collectors.toMap(StateHeadActivityFinBean::getHeadcode,bean -> bean.getHeadcode() != 8
+                ? bean.getHeaddesc() + " (" + bean.getUnitname() + ")"
+                : bean.getHeaddesc(),(v1,v2)->v1,TreeMap::new));
+		
+		Boolean check = false;
+		if(headMap.containsKey(8))
+			check = true;
+		if(check && headcode ==0 || check) {
+			headActMap = list.stream().filter(s-> s.getHeadcode()==8).collect(Collectors.toMap(StateHeadActivityFinBean::getActivitycode,bean ->bean.getActivitydesc() +" ("+bean.getUnitname()+")",(v1,v2)->v1,TreeMap::new));
+		}
+
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
+		Boolean val = false;
+		if(stcode==0 && headcode == 8) {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (bean.getStcode() == state) {
+							if (bean.getActivitycode() == act.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getActivitycode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(act.getKey());
+								beanZero.setHeaddesc(act.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
+							}
+						} 
+					}
+				}
+			}
+		}else {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> head : headMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (head.getKey() != 8 && bean.getStcode() == state) {
+							if (bean.getHeadcode() == head.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getHeadcode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(head.getKey());
+								beanZero.setHeaddesc(head.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(head.getKey(), beanZero);
+							}
+						} else if(bean.getStcode() == state){
+							for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+								if (bean.getActivitycode() == act.getKey()) {
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+											.put(bean.getActivitycode(), bean);
+									val = true;
+								} else if (!val) {
+									StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+									beanZero.setStcode(bean.getStcode());
+									beanZero.setStname(bean.getStname());
+									beanZero.setHeadcode(bean.getHeadcode());
+									beanZero.setHeaddesc(bean.getHeaddesc());
+									beanZero.setActivitycode(act.getKey());
+									beanZero.setActivitydesc(act.getValue());
+									beanZero.setAchievement(BigDecimal.ZERO);
+									beanZero.setPlan(BigDecimal.ZERO);
+									beanZero.setWorks(0);
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		  
+			Workbook workbook = new XSSFWorkbook();  
+			//invoking creatSheet() method and passing the name of the sheet to be created   
+			Sheet sheet = workbook.createSheet("Report A4 - State-wise, Activities Wise and Year-wise Details of Target and Achievements and Total Work as per List of Activities");   
+			
+			CellStyle style = CommonFunctions.getStyle(workbook);
+	        
+			String rptName = "Report A4 - State-wise, Activities Wise and Year-wise Details of Target and Achievements and Total Work as per List of Activities";
+			String areaAmtValDetail = "";
+			int colLength = check ? (2 + 4 * ((headMap.size() - 1) + headActMap.size()) - 1) : (2 + 4 * headMap.size() - 1);
+			CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+			CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, colLength, areaAmtValDetail, workbook);
+			
+			mergedRegion = new CellRangeAddress(5,5,0,colLength); 
+	        sheet.addMergedRegion(mergedRegion);
+			
+			mergedRegion = new CellRangeAddress(6,check?8:7,0,0); 
+	        sheet.addMergedRegion(mergedRegion);
+	        mergedRegion = new CellRangeAddress(6,check?8:7,1,1); 
+	        sheet.addMergedRegion(mergedRegion);
+	        
+	        if(check) {
+	        	int col = 2;
+	        	int actcol = 0;
+	        	boolean actCheck = true;
+	        	for(Map.Entry<Integer, String> map : headMap.entrySet()) {
+	        		if(map.getKey()!=8) {
+	        			mergedRegion = new CellRangeAddress(6,7,col,col+3); 
+				        sheet.addMergedRegion(mergedRegion);
+				        col = col + 4;
+	        		}else {
+	        			if(actCheck) {
+	        				actcol = col;
+	        				actCheck = false;
+	        			}
+	        			mergedRegion = new CellRangeAddress(6,6,col,col + (headActMap.size() * 4 - 1)); 
+				        sheet.addMergedRegion(mergedRegion);
+				        col = col + headActMap.size() * 4;
+				        for(Map.Entry<Integer, String> actmap : headActMap.entrySet()) {
+				        	mergedRegion = new CellRangeAddress(7,7,actcol,actcol + 3); 
+					        sheet.addMergedRegion(mergedRegion);
+					        actcol = actcol + 4;
+				        }
+	        		}
+	        	}
+	        }else {
+	        	int col = 2;
+	        	for(Map.Entry<Integer, String> map : headMap.entrySet()) {
+        			mergedRegion = new CellRangeAddress(6,6,col,col+3); 
+			        sheet.addMergedRegion(mergedRegion);
+			        col = col + 4;
+	        	}
+	        }
+	        	
+	        
+			
+//			mergedRegion = new CellRangeAddress(listMap.size()+8,listMap.size()+8,0,8); 
+//	        sheet.addMergedRegion(mergedRegion);
+			
+			Row rowhead = sheet.createRow(5); 
+			
+			Cell cell = rowhead.createCell(0);
+			cell.setCellValue("State: "+stName+"  Head: "+headDesc+"  Financial Year: "+fnYear);
+			cell.setCellStyle(style);
+			
+			for(int i = 0; i < colLength; i++) {
+				rowhead.createCell(i+1).setCellStyle(style);
+			}
+			
+			rowhead = sheet.createRow(6); 
+			cell = rowhead.createCell(0);
+			cell.setCellValue("S No.");
+			cell.setCellStyle(style);
+			
+			cell = rowhead.createCell(1);
+			cell.setCellValue("State");  
+			cell.setCellStyle(style);
+			int cellval = 2;	
+			for(Map.Entry<Integer, String> headmap : headMap.entrySet()) {
+				if(headmap.getKey()==8) {
+					cell = rowhead.createCell(cellval);
+					cell.setCellValue(headmap.getValue());  
+					cell.setCellStyle(style);
+					CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+					for(int i = 1; i < 4 * headActMap.size(); i++) {
+						rowhead.createCell(i+cellval).setCellStyle(style);
+					}
+					cellval = cellval + 4 * headActMap.size();
+				}else {
+					cell = rowhead.createCell(cellval);
+					cell.setCellValue(headmap.getValue());  
+					cell.setCellStyle(style);
+					CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+					for(int i = 1; i < 4; i++) {
+						rowhead.createCell(i+cellval).setCellStyle(style);
+					}
+					cellval = cellval + 4;
+				}
+			}
+			
+			Row rowhead1 = sheet.createRow(7);
+			for(int i = 0; i < 2; i++)
+				rowhead1.createCell(i).setCellStyle(style);
+			cellval = 2;
+			if(check) {
+				for(Map.Entry<Integer, String> headmap : headMap.entrySet()) {
+					if(headmap.getKey()!=8) {
+						for(int i = 0; i < 4; i++) {
+							rowhead1.createCell(i+cellval).setCellStyle(style);
+						}
+						cellval = cellval + 4;
+					}else {
+						for(Map.Entry<Integer, String> actmap : headActMap.entrySet()) {
+							cell = rowhead1.createCell(cellval);
+							cell.setCellValue(actmap.getValue());  
+							cell.setCellStyle(style);
+							CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+							for(int i = 1; i < 4; i++) {
+								rowhead1.createCell(i+cellval).setCellStyle(style);
+							}
+							cellval = cellval + 4;
+						}
+					}
+				}
+			}else {
+				for(Map.Entry<Integer, String> headmap : headMap.entrySet()) {
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Physical Target");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Physical Achievement");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Achievement %");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Total Works");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+				}
+			}
+			if(check) {
+				rowhead1 = sheet.createRow(8);
+				for(int i = 0; i < 2; i++)
+					rowhead1.createCell(i).setCellStyle(style);
+				cellval = 2;
+				for(int i = 0; i < headMap.size() + headActMap.size() - 1; i++)
+				{
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Physical Target");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Physical Achievement");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Achievement %");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+					cell = rowhead1.createCell(cellval);
+					cell.setCellValue("Total Works");  
+					cell.setCellStyle(style);
+					cellval = cellval + 1;
+				}
+			}
+			rowhead1 = sheet.createRow(check ? 9 : 8);
+			for(int i = 0; i < (check ? (2 + 4 * (headMap.size() - 1 + headActMap.size())): (2 + 4 * headMap.size())); i++)
+			{
+				cell = rowhead1.createCell(i);
+				cell.setCellValue(i+1);
+				cell.setCellStyle(style);
+			}
+			
+			
+	        
+	        int sno = 1;
+	        int rowno  = check ? 10 : 9;
+	        DecimalFormat df = new DecimalFormat("#.00");
+	        for(Map.Entry<String,Map<Integer, StateHeadActivityFinBean>> beanMap : listMap.entrySet()) {
+	        	Row row = sheet.createRow(rowno);
+	        	row.createCell(0).setCellValue(sno);
+	        	row.createCell(1).setCellValue(beanMap.getKey());
+	        	cellval = 2;
+	        	for(Map.Entry<Integer, StateHeadActivityFinBean> headbean : beanMap.getValue().entrySet()) {
+	        		row.createCell(cellval).setCellValue(headbean.getValue().getPlan().doubleValue());
+	        		cellval = cellval + 1;
+	        		row.createCell(cellval).setCellValue(headbean.getValue().getAchievement().doubleValue());
+	        		cellval = cellval + 1;
+	        		double result = headbean.getValue().getPlan().doubleValue() > 0 ? (headbean.getValue().getAchievement().doubleValue() * 100 / headbean.getValue().getPlan().doubleValue()) : 0;
+	        		row.createCell(cellval).setCellValue(df.format(result));
+	        		cellval = cellval + 1;
+	        		row.createCell(cellval).setCellValue(headbean.getValue().getWorks());
+	        		cellval = cellval + 1;
+	        	}
+	        	sno++;
+	        	rowno++;
+	        }
+	        
+	        
+	        CommonFunctions.getExcelFooter(sheet, mergedRegion, statelist.size(), colLength);
+	        String fileName = "attachment; filename=Report A4.xlsx";
+	        
+	        CommonFunctions.downloadExcel(response, workbook, fileName);
+		
+		return "reports/stateActFinYrWiseAchAndTotWrks";
+		
+	}
+	
+	@RequestMapping(value = "/stActYearWiseTarAchWorksPDF", method = RequestMethod.POST)
+	public ModelAndView stActYearWiseTarAchWorksPDF(HttpServletRequest request, HttpServletResponse response) 
+	{
+		Integer stcode = Integer.parseInt(request.getParameter("assetstate"));
+		Integer headcode = Integer.parseInt(request.getParameter("head"));
+		Integer year = Integer.parseInt(request.getParameter("year"));
+		String stName = request.getParameter("stName");
+		String headDesc = request.getParameter("headDesc");
+		String fnYear = request.getParameter("fnYear");
+		List<StateHeadActivityFinBean>  list = new ArrayList<StateHeadActivityFinBean>();
+		Map<Integer,String> headActMap = new LinkedHashMap<Integer, String>();
+		list = assetReportService.getStwiseActTarAchWorks(stcode, year, headcode, 0);
+		Map<Integer,String> headMap = list.stream().collect(Collectors.toMap(StateHeadActivityFinBean::getHeadcode,bean -> bean.getHeadcode() != 8
+                ? bean.getHeaddesc() + " (" + bean.getUnitname() + ")"
+                : bean.getHeaddesc(),(v1,v2)->v1,TreeMap::new));
+		
+		Boolean check = false;
+		if(headMap.containsKey(8))
+			check = true;
+		if(check && headcode ==0 || check) {
+			headActMap = list.stream().filter(s-> s.getHeadcode()==8).collect(Collectors.toMap(StateHeadActivityFinBean::getActivitycode,bean ->bean.getActivitydesc() +" ("+bean.getUnitname()+")",(v1,v2)->v1,TreeMap::new));
+		}
+
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
+		Boolean val = false;
+		if(stcode==0 && headcode == 8) {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (bean.getStcode() == state) {
+							if (bean.getActivitycode() == act.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getActivitycode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(act.getKey());
+								beanZero.setHeaddesc(act.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
+							}
+						} 
+					}
+				}
+			}
+		}else {
+			for (Integer state : statelist) {
+				for (Map.Entry<Integer, String> head : headMap.entrySet()) {
+					val = false;
+					for (StateHeadActivityFinBean bean : list) {
+						if (head.getKey() != 8 && bean.getStcode() == state) {
+							if (bean.getHeadcode() == head.getKey()) {
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+										.put(bean.getHeadcode(), bean);
+								val = true;
+							} else if (!val) {
+								StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+								beanZero.setStcode(bean.getStcode());
+								beanZero.setStname(bean.getStname());
+								beanZero.setHeadcode(head.getKey());
+								beanZero.setHeaddesc(head.getValue());
+								beanZero.setAchievement(BigDecimal.ZERO);
+								beanZero.setPlan(BigDecimal.ZERO);
+								beanZero.setWorks(0);
+								listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(head.getKey(), beanZero);
+							}
+						} else if(bean.getStcode() == state){
+							for (Map.Entry<Integer, String> act : headActMap.entrySet()) {
+								if (bean.getActivitycode() == act.getKey()) {
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>())
+											.put(bean.getActivitycode(), bean);
+									val = true;
+								} else if (!val) {
+									StateHeadActivityFinBean beanZero = new StateHeadActivityFinBean();
+									beanZero.setStcode(bean.getStcode());
+									beanZero.setStname(bean.getStname());
+									beanZero.setHeadcode(bean.getHeadcode());
+									beanZero.setHeaddesc(bean.getHeaddesc());
+									beanZero.setActivitycode(act.getKey());
+									beanZero.setActivitydesc(act.getValue());
+									beanZero.setAchievement(BigDecimal.ZERO);
+									beanZero.setPlan(BigDecimal.ZERO);
+									beanZero.setWorks(0);
+									listMap.computeIfAbsent(bean.getStname(), k -> new LinkedHashMap<>()).put(act.getKey(), beanZero);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		try {
+			
+			int colLength = check ? (2 + 4 * ((headMap.size() - 1) + headActMap.size())) : (2 + 4 * headMap.size());
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("AssetReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			 PdfWriter writer=PdfWriter.getInstance(document, baos);
+			
+			document.open(); 
+	       
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null; 
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+				paragraph3 = new Paragraph("Report A4 - State-wise, Activities Wise and Year-wise Details of Target and Achievements and Total Work as per List of Activities", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+			paragraph3.setAlignment(Element.ALIGN_CENTER);
+			paragraph2.setSpacingAfter(10);
+			paragraph3.setSpacingAfter(10);
+			CommonFunctions.addHeader(document);
+			document.add(paragraph2);
+			document.add(paragraph3);
+			
+				table = new PdfPTable(colLength);
+				int[] arr = new int[colLength];
+				 for(int i =0; i < colLength; i++) {
+						arr[i] = i==0?3:i==1?10:5;
+					}
+				table.setWidths(arr);
+				table.setWidthPercentage(70);
+			
+				table.setWidthPercentage(100);
+				table.setSpacingBefore(0f);
+				table.setSpacingAfter(0f);
+				table.setHeaderRows(5);
+				
+				CommonFunctions.insertCellHeader(table, "State: "+stName+"  Head: "+headDesc+"  Financial Year: "+fnYear, Element.ALIGN_LEFT, colLength, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "S No.", Element.ALIGN_CENTER, 1, check?3:2, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "State", Element.ALIGN_CENTER, 1, check?3:2, bf8Bold);
+				for(Map.Entry<Integer, String> headmap : headMap.entrySet()) {
+					if(headmap.getKey() == 8) {
+						CommonFunctions.insertCellHeader(table, headmap.getValue(), Element.ALIGN_CENTER, 4 * headActMap.size(), 1, bf8Bold);
+					}else {
+						CommonFunctions.insertCellHeader(table, headmap.getValue(), Element.ALIGN_CENTER, 4, check ? 2 : 1, bf8Bold);
+					}
+				}
+				if(check) {
+					for(Map.Entry<Integer, String> actmap : headActMap.entrySet()) {
+						CommonFunctions.insertCellHeader(table, actmap.getValue(), Element.ALIGN_CENTER, 4, 1, bf8Bold);
+					}
+					for(int i = 0; i < headMap.size() + headActMap.size() - 1; i++) {
+						CommonFunctions.insertCellHeader(table, "Physical Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Physical Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Achievement %", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Total Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					}
+				}else {
+					for(Map.Entry<Integer, String> headmap : headMap.entrySet()) {
+						CommonFunctions.insertCellHeader(table, "Physical Target", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Physical Achievement", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Achievement %", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+						CommonFunctions.insertCellHeader(table, "Total Works", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+					}
+				}
+				
+				for(int i = 0; i < colLength; i++) {
+					CommonFunctions.insertCellHeader(table, String.valueOf(i+1), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				}
+				
+				int sno = 1;
+		        DecimalFormat df = new DecimalFormat("#.00");
+		        for(Map.Entry<String,Map<Integer, StateHeadActivityFinBean>> beanMap : listMap.entrySet()) {
+		        	CommonFunctions.insertCell(table, String.valueOf(sno), Element.ALIGN_LEFT, 1, 1, bf8);
+		        	CommonFunctions.insertCell(table, beanMap.getKey(), Element.ALIGN_LEFT, 1, 1, bf8);
+		        	
+		        	for(Map.Entry<Integer, StateHeadActivityFinBean> headbean : beanMap.getValue().entrySet()) {
+		        		CommonFunctions.insertCell(table, headbean.getValue().getPlan().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+		        		CommonFunctions.insertCell(table, headbean.getValue().getAchievement().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+		        		
+		        		double result = headbean.getValue().getPlan().doubleValue() > 0 ? (headbean.getValue().getAchievement().doubleValue() * 100 / headbean.getValue().getPlan().doubleValue()) : 0;
+		        		CommonFunctions.insertCell(table, df.format(result), Element.ALIGN_LEFT, 1, 1, bf8);
+		        		CommonFunctions.insertCell(table,headbean.getValue().getWorks().toString(), Element.ALIGN_LEFT, 1, 1, bf8);
+		        	}
+		        	sno++;
+		        }
+				
+					
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=A4-Report.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+	
+	} 
+	catch (Exception ex) 
+	{
+		ex.printStackTrace();
+	} 
+	
+	return null;
+}
 
 }
