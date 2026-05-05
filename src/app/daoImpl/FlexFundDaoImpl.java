@@ -45,14 +45,27 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	@Value("${getFlexiFundGramPanchayat}")
 	String getFlexiFundGramPanchayat;
 	
-	@Value("${flexiFundUtilizationStRpt}")
-    String flexiFundUtilizationStRptData;
-	
 	@Value("${completeFlexiFund}")
     String completeFlexiFund;
 	
 	@Value("${progressFlexiFund}")
     String progressFlexiFund;
+	
+	@Value("${flexiFundUtilizationStRpt}")
+    String flexiFundUtilizationStRptData;
+	
+	@Value("${flexiFundUtilizationDistRpt}")
+    String flexiFundUtilizationDistRptData;
+	
+	@Value("${flexiFundUtilizationProjRpt}")
+    String flexiFundUtilizationProjRptData;
+	
+	@Value("${flexiFundUtilizationProjDtlRpt}")
+    String flexiFundUtilizationProjDtlRptData;
+	
+	@Value("${flexiFundExpenditureHistoryRpt}")
+    String flexiFundExpenditureHistoryData;
+	
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -182,7 +195,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        sess.beginTransaction();
 
-	        String filePath = "D:\\FlexiFund\\";
+//	        String filePath = "D:\\FlexiFund\\";
+	        
+	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
 	        if (!dir.exists()) dir.mkdirs();
 
@@ -340,7 +355,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        session.beginTransaction();
 
-	        String filePath = "D:\\FlexiFund\\";
+//	        String filePath = "D:\\FlexiFund\\";
+	        
+	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
 	        if (!dir.exists()) dir.mkdirs();
 
@@ -435,7 +452,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        if (photoUrl != null) {
 
-	            String filePath = "D:\\FlexiFund\\" + photoUrl;
+//	            String filePath = "D:\\FlexiFund\\" + photoUrl;
+	            
+	            String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + photoUrl;
 
 	            File file = new File(filePath);
 	            if (file.exists()) {
@@ -472,7 +491,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	        session.beginTransaction();
 
-	        String uploadDir = "D:\\FlexiFund\\";
+//	        String uploadDir = "D:\\FlexiFund\\";
+	        
+	        String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(uploadDir);
 	        if (!dir.exists()) {
 	            dir.mkdirs();
@@ -510,27 +531,6 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    return response;
 	}
 
-
-	@Override
-	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
-		List<FlexiFundMActivityBean> getStateWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
-        
-        String hql = flexiFundUtilizationStRptData;
-        Session session = sessionFactory.getCurrentSession();
-       
-        try {
-            session.beginTransaction();
-            SQLQuery query = session.createSQLQuery(hql);
-            query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
-            getStateWiseFlexiFundReport = query.list();
-            session.getTransaction().commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            session.getTransaction().rollback();
-        }
-        return getStateWiseFlexiFundReport;
-	}
-	
 	public boolean deleteFlexiFundRow(int id) {
 	    Session session = sessionFactory.getCurrentSession();
 	    Transaction tx = null; // Track transaction to commit/rollback
@@ -748,4 +748,113 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        return false;
 	    }
 	}
+	
+	
+	@Override
+	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
+		List<FlexiFundMActivityBean> getStateWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
+        
+        String hql = flexiFundUtilizationStRptData;
+        Session session = sessionFactory.getCurrentSession();
+       
+        try {
+            session.beginTransaction();
+            SQLQuery query = session.createSQLQuery(hql);
+            query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+            getStateWiseFlexiFundReport = query.list();
+            session.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            session.getTransaction().rollback();
+        }
+        return getStateWiseFlexiFundReport;
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getDistWiseFlexiFundReport(Integer stcd) {
+
+		List<FlexiFundMActivityBean> getDistWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
+		
+		String hql = flexiFundUtilizationDistRptData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+			getDistWiseFlexiFundReport = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getDistWiseFlexiFundReport;
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getProjWiseFlexiFundReport(Integer dcode) {
+
+		List<FlexiFundMActivityBean> getProjWiseFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
+		
+		String hql = flexiFundUtilizationProjRptData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("dcode", dcode);
+			query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+			getProjWiseFlexiFundReport = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getProjWiseFlexiFundReport;
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode) {
+
+		List<FlexiFundMActivityBean> getProjDetailFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
+		
+		String hql = flexiFundUtilizationProjDtlRptData;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("pcode", pcode);
+			query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+			getProjDetailFlexiFundReport = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+			
+		return getProjDetailFlexiFundReport;
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid) {
+	    List<FlexiFundMActivityBean> expenditureList = new ArrayList<FlexiFundMActivityBean>();
+	    
+	    String hql = flexiFundExpenditureHistoryData;
+	    Session session = sessionFactory.getCurrentSession();
+	    try {
+	        session.beginTransaction();
+	        SQLQuery query = session.createSQLQuery(hql);
+	        query.setInteger("ffid", ffid);
+	        query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
+	        expenditureList = query.list();
+	        session.getTransaction().commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace();
+	        session.getTransaction().rollback();
+	    }
+	    
+	    return expenditureList;
+	}
+	
 }

@@ -4,18 +4,22 @@
 <%@ include file="/WEB-INF/jspf/header.jspf"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<title>FF1 - State-wise Watershed Flexi Fund Details Report</title>
+<title>Report FF1 - District-wise Watershed Flexi Fund Details</title>
 
 <html>
 <script type="text/javascript">
-function downloadPDF(){
-    document.getElementById('ffForm').action = "downloadPDFStateWiseFlexiFundRpt";
+function downloadPDF(stcd, stName){
+	document.getElementById("stcd").value=stcd;
+	document.getElementById("stName").value=stName;
+    document.getElementById('ffForm').action = "downloadPDFDistWiseFlexiFundRpt";
     document.getElementById('ffForm').method = "post";
     document.getElementById('ffForm').submit();
 }
 
-function exportExcel(){
-    document.getElementById('ffForm').action = "downloadExcelStateWiseFlexiFundRpt";
+function exportExcel(stcd, stName){
+	document.getElementById("stcd").value=stcd;
+	document.getElementById("stName").value=stName;
+    document.getElementById('ffForm').action = "downloadExcelDistWiseFlexiFundRpt";
     document.getElementById('ffForm').method = "post";
     document.getElementById('ffForm').submit();
 }
@@ -29,30 +33,35 @@ function exportExcel(){
 <body>
 <div class="maindiv">
     <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        <h5>FF1 - State-wise Watershed Flexi Fund Details Report</h5>
+        <h5>Report FF1 - District-wise Watershed Flexi Fund Details</h5>
     </div>
     <br>
     <div class="container-fluid">
 	<div class="row">
 		<div class="col text-left">
                 <br>
-                <c:if test="${not empty flexiFundReportList}">
-                    <button name="exportExcel" id="exportExcel" onclick="exportExcel()" class="btn btn-info">Excel</button>
-                    <button name="exportPDF" id="exportPDF" onclick="downloadPDF()" class="btn btn-info">PDF</button>
+                <c:if test="${not empty flexiFundDistReportList}">
+                    <button name="exportExcel" id="exportExcel" onclick="exportExcel('${stcd}', '${stName}')" class="btn btn-info">Excel</button>
+                    <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${stcd}', '${stName}')" class="btn btn-info">PDF</button>
                 </c:if>
                 <p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
    		</div>
    	</div>
    	</div>         
-                <form action="downloadExcelStateWiseFlexiFundRpt" name="ffForm" id="ffForm" method="post">
+                <form action="downloadExcelDistWiseFlexiFundRpt" name="ffForm" id="ffForm" method="post">
+                
+                <input type="hidden" name="stcd" id="stcd" value="" />
+				<input type="hidden" name="stName" id="stName" value="" />
+                
                     <table class="table table-bordered" id="ffTable">
                         <thead>
                         <tr>
-                        <th colspan="20" class="text-right">All Amount is Rs in Lakhs</th>
+                        	<th colspan="12" class="text-left">State Name : ${stName}</th>
+                        	<th colspan="8" class="text-right">All Amount is Rs in Lakhs</th>
                         </tr>
                             <tr class="bg-primary text-white">
                                 <th rowspan="2" class="text-center">S.No.</th>
-                                <th rowspan="2" class="text-center">State Name</th>
+                                <th rowspan="2" class="text-center">District Name</th>
                                 <th rowspan="2" class="text-center">No. of Projects</th>
                                 <th colspan="3" class="text-center">Cactus</th> 
                                 <th colspan="3" class="text-center">Spring shed PPR Preparation</th>
@@ -78,11 +87,11 @@ function exportExcel(){
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${flexiFundReportList}" var="dt" varStatus="sno">
+                            <c:forEach items="${flexiFundDistReportList}" var="dt" varStatus="sno">
                                 <tr>
                                     <td class="text-center"><c:out value="${sno.count}" /></td>
-<%--                                     <td class="text-left"><c:out value="${dt.st_name}" /></td> --%>
-                                    <td><a href = "getDistWiseFlexiFundReport?stcd=${dt.st_code}&stName=${dt.st_name}"><c:out value='${dt.st_name}'/></a></td>
+<%--                                     <td class="text-left"><c:out value="${dt.dist_name}" /></td> --%>
+                                    <td><a href = "getProjWiseFlexiFundReport?distcd=${dt.dcode}&dName=${dt.dist_name}&stName=${stName}"><c:out value='${dt.dist_name}'/></a></td>
                                     <td class="text-right"><c:out value="${dt.project}" /></td>
                                     <td class="text-right"><c:out value="${dt.cactus}" /></td>
                                     <td class="text-right"><c:out value="${dt.cactus_est}" /></td>
@@ -125,7 +134,7 @@ function exportExcel(){
                             </c:forEach>
                             
                             
-                            <c:if test="${flexiFundReportListSize > 0}">
+                            <c:if test="${flexiFundDistReportListSize > 0}">
                                 <tr class="table-primary">
                                     <td colspan="2" align="right"><b>Grand Total</b></td>
                                     <td align="right"><b><c:out value="${totProjects}" /></b></td>
@@ -150,7 +159,7 @@ function exportExcel(){
                             </c:if>
                             
                             
-                            <c:if test="${flexiFundReportListSize == 0}">
+                            <c:if test="${flexiFundDistReportListSize == 0}">
                                 <tr>
                                     <td align="center" colspan="20" class="required" style="color: red;"><b>Data Not Found</b></td>
                                 </tr>

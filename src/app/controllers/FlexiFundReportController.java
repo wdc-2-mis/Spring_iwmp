@@ -1,6 +1,9 @@
 package app.controllers;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,6 +68,123 @@ public class FlexiFundReportController {
 	    return mav;
 	}
 	
+	@RequestMapping(value = "/getDistWiseFlexiFundReport", method = RequestMethod.GET)
+	public ModelAndView distWiseFlexiFundReport(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		ModelAndView mav = new ModelAndView("reports/distFlexiFundReport");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getDistWiseFlexiFundReport(Integer.parseInt(stcd));
+		
+		mav.addObject("stcd",stcd);
+		mav.addObject("stName",stName);
+		mav.addObject("flexiFundDistReportList",list);
+		mav.addObject("flexiFundDistReportListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getProjWiseFlexiFundReport", method = RequestMethod.GET)
+	public ModelAndView projWiseFlexiFundReport(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("dName");
+		String dcode = request.getParameter("distcd");
+		
+		ModelAndView mav = new ModelAndView("reports/projFlexiFundReport");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjWiseFlexiFundReport(Integer.parseInt(dcode));
+		
+		mav.addObject("dcode",dcode);
+		mav.addObject("dName",distName);
+		mav.addObject("stName",stName);
+		mav.addObject("flexiFundProjReportList",list);
+		mav.addObject("flexiFundProjReportListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getProjDetailFlexiFundReport", method = RequestMethod.GET)
+	public ModelAndView projDetailFlexiFundReport(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stName = request.getParameter("stName");
+		String distName = request.getParameter("dName");
+		String projName = request.getParameter("pName");
+		String pcode = request.getParameter("projcd");
+		
+		ModelAndView mav = new ModelAndView("reports/projDetailFlexiFundReport");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+		
+		mav.addObject("pcode",pcode);
+		mav.addObject("dName",distName);
+		mav.addObject("stName",stName);
+		mav.addObject("pName",projName);
+		mav.addObject("flexiFundProjDtlReportList",list);
+		mav.addObject("flexiFundProjDtlReportListSize",list.size());
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/getExpenditureHistory", method = RequestMethod.POST)
+	@ResponseBody
+	public List<FlexiFundMActivityBean> getExpenditureHistory(HttpServletRequest request, HttpServletResponse response) {
+	    
+	    String ffid = request.getParameter("flexiFundId");
+	    
+	    List<FlexiFundMActivityBean> expenditureList = new ArrayList<FlexiFundMActivityBean>();
+	    
+	    if (ffid != null && !ffid.isEmpty()) {
+	        expenditureList = ffService.getExpenditureHistory(Integer.parseInt(ffid));
+	    }
+	    
+	    return expenditureList;
+	}
+	
+	@RequestMapping("/getFlexiFundImage")
+	public void getFlexiFundImage(@RequestParam String name, HttpServletResponse response) throws IOException {
+	    
+	    // Server path
+	    String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + name;
+	    
+	    // For local testing
+//	     String filePath = "D:\\FlexiFund\\" + name;
+	    
+	    File file = new File(filePath);
+	    
+	    if (file.exists()) {
+	        FileInputStream fis = new FileInputStream(file);
+	        OutputStream os = response.getOutputStream();
+	        
+	        // Set content type
+	        String fileName = file.getName().toLowerCase();
+	        if (fileName.endsWith(".png")) {
+	            response.setContentType("image/png");
+	        } else {
+	            response.setContentType("image/jpeg");
+	        }
+	        
+	        byte[] buffer = new byte[1024];
+	        int len;
+	        while ((len = fis.read(buffer)) != -1) {
+	            os.write(buffer, 0, len);
+	        }
+	        fis.close();
+	        os.close();
+	    } else {
+	        response.setContentType("text/plain");
+	        response.getWriter().write("Image not found: " + name);
+	    }
+	}
+	
 	
 	@RequestMapping(value = "/downloadExcelStateWiseFlexiFundRpt", method = RequestMethod.POST)
 	@ResponseBody
@@ -76,11 +197,11 @@ public class FlexiFundReportController {
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
-		Sheet sheet = workbook.createSheet("Report FF1 - State-wise Watershed Flexi Fund Details Report");
+		Sheet sheet = workbook.createSheet("Report FF1 - State-wise Watershed Flexi Fund Details");
 		
 		CellStyle style = CommonFunctions.getStyle(workbook);
 	    
-		String rptName = "Report FF1 - State-wise Watershed Flexi Fund Details Report";
+		String rptName = "Report FF1 - State-wise Watershed Flexi Fund Details";
 		String areaAmtValDetail ="All Amount is Rs in Lakhs";
 		
 		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
@@ -435,7 +556,7 @@ public class FlexiFundReportController {
 			Paragraph paragraph3 = null;
 			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
 			
-			paragraph3 = new Paragraph("Report FF1 - State-wise Watershed Flexi Fund Details Report", f3);
+			paragraph3 = new Paragraph("Report FF1 - State-wise Watershed Flexi Fund Details", f3);
 			
 			paragraph2.setAlignment(Element.ALIGN_CENTER);
 		    paragraph3.setAlignment(Element.ALIGN_CENTER);
@@ -534,9 +655,9 @@ public class FlexiFundReportController {
 					totWatershed = totWatershed + list.get(i).getWatershed();
 					totWatershedEst = totWatershedEst.add(list.get(i).getWatershed_est());
 					totWatershedExp = totWatershedExp.add(list.get(i).getWatershed_exp());
-					totWaterbodies = totWaterbodies + list.get(i).getWatershed();
-					totWaterbodiesEst = totWaterbodiesEst.add(list.get(i).getWatershed_est());
-					totWaterbodiesExp = totWaterbodiesExp.add(list.get(i).getWatershed_est());
+					totWaterbodies = totWaterbodies + list.get(i).getWaterbodies();
+					totWaterbodiesEst = totWaterbodiesEst.add(list.get(i).getWaterbodies_est());
+					totWaterbodiesExp = totWaterbodiesExp.add(list.get(i).getWaterbodies_exp());
 					totJanbhagidari = totJanbhagidari + list.get(i).getJanbhagidari();
 			    	totJanbhagidariEst = totJanbhagidariEst.add(list.get(i).getJanbhagidari_est());
 			    	totJanbhagidariExp = totJanbhagidariExp.add(list.get(i).getJanbhagidari_exp());
@@ -583,6 +704,1641 @@ public class FlexiFundReportController {
 		response.setHeader("Expires", "0");
 		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
 		response.setHeader("Content-Disposition", "attachment;filename=Report FF1 - State.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelDistWiseFlexiFundRpt", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelDistWiseFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getDistWiseFlexiFundReport(Integer.parseInt(stcd));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report FF1 - District-wise Watershed Flexi Fund Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report FF1 - District-wise Watershed Flexi Fund Details";
+		String areaAmtValDetail ="All Amount is Rs in Lakhs";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 19, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,19);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,6,8);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,9,11);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,12,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,15,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,18,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,19,19);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<20;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("District Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("No. of Projects");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Cactus");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Spring shed PPR Preparation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=7;i<9;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Model Watershed");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=10;i<12;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(12);
+		cell.setCellValue("Restoration of Waterbodies");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=13;i<15;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Watershed Janbhagidari Cup (Prize Money)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=16;i<18;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(18);
+		cell.setCellValue("Total Estimated Cost (5+8+11+14+17)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(19);
+		cell.setCellValue("Total Expenditure Cost (6+9+12+15+18)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		int startCol = 3;
+
+		for (int i = 0; i < 5; i++) {
+		    int colIndex = startCol + (i * 3);
+
+		    cell = rowhead1.createCell(colIndex);
+		    cell.setCellValue("Work");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 1);
+		    cell.setCellValue("Estimated Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 2);
+		    cell.setCellValue("Expenditure Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		}
+		
+		for(int i=0;i<2;i++)
+		{
+			int colIndex = startCol + (5 * 3) + i; // continue from where the loop ended
+
+			cell =rowhead1.createCell(colIndex);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<20;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 9;
+		int totProjects = 0;
+		Integer totCactus = 0;
+		BigDecimal totCactusEst = BigDecimal.ZERO;
+		BigDecimal totCactusExp = BigDecimal.ZERO;
+		Integer totSpringshed = 0;
+		BigDecimal totSpringshedEst = BigDecimal.ZERO;
+		BigDecimal totSpringshedExp = BigDecimal.ZERO;
+		Integer totWatershed = 0;
+		BigDecimal totWatershedEst = BigDecimal.ZERO;
+		BigDecimal totWatershedExp = BigDecimal.ZERO;
+		Integer totWaterbodies = 0;
+		BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+		BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+		Integer totJanbhagidari = 0;
+		BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+		BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+		BigDecimal totEstimation = BigDecimal.ZERO;
+		BigDecimal totExpenditure = BigDecimal.ZERO;
+		
+		
+	    for(FlexiFundMActivityBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getDist_name());
+	    	row.createCell(2).setCellValue(bean.getProject());
+	    	row.createCell(3).setCellValue(bean.getCactus());
+	    	row.createCell(4).setCellValue(bean.getCactus_est().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getCactus_exp().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getSpringshed());
+	    	row.createCell(7).setCellValue(bean.getSpringshed_est().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getSpringshed_exp().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getWatershed());
+	    	row.createCell(10).setCellValue(bean.getWatershed_est().doubleValue());
+	    	row.createCell(11).setCellValue(bean.getWatershed_exp().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getWaterbodies());
+	    	row.createCell(13).setCellValue(bean.getWaterbodies_est().doubleValue());
+	    	row.createCell(14).setCellValue(bean.getWaterbodies_exp().doubleValue());
+	    	row.createCell(15).setCellValue(bean.getJanbhagidari());
+	    	row.createCell(16).setCellValue(bean.getJanbhagidari_est().doubleValue());
+	    	row.createCell(17).setCellValue(bean.getJanbhagidari_exp().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getTotal_estimation().doubleValue());
+	    	row.createCell(19).setCellValue(bean.getTotal_expenditure().doubleValue());
+	    	
+	    	totProjects = totProjects + bean.getProject();
+	    	totCactus = totCactus + bean.getCactus();
+	    	totCactusEst = totCactusEst.add(bean.getCactus_est());
+	    	totCactusExp = totCactusExp.add(bean.getCactus_exp());
+	    	totSpringshed = totSpringshed + bean.getSpringshed();
+	    	totSpringshedEst = totSpringshedEst.add(bean.getSpringshed_est());
+	    	totSpringshedExp = totSpringshedExp.add(bean.getSpringshed_exp());
+	    	totWatershed = totWatershed + bean.getWatershed();
+	    	totWatershedEst = totWatershedEst.add(bean.getWatershed_est());
+	    	totWatershedExp = totWatershedExp.add(bean.getWatershed_exp());
+	    	totWaterbodies = totWaterbodies + bean.getWaterbodies();
+	    	totWaterbodiesEst = totWaterbodiesEst.add(bean.getWaterbodies_est());
+	    	totWaterbodiesExp = totWaterbodiesExp.add(bean.getWaterbodies_exp());
+	    	totJanbhagidari = totJanbhagidari + bean.getJanbhagidari();
+	    	totJanbhagidariEst = totJanbhagidariEst.add(bean.getJanbhagidari_est());
+	    	totJanbhagidariExp = totJanbhagidariExp.add(bean.getJanbhagidari_exp());
+	    	totEstimation = totEstimation.add(bean.getTotal_estimation());
+	    	totExpenditure = totExpenditure.add(bean.getTotal_expenditure());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totProjects);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totCactus);
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totCactusEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totCactusExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totSpringshed);
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totSpringshedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(totSpringshedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totWatershed);
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totWatershedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totWatershedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totWaterbodies);
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totWaterbodiesEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(totWaterbodiesExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(totJanbhagidari);
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(totJanbhagidariEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue(totJanbhagidariExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(18);
+		cell.setCellValue(totEstimation.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(19);
+		cell.setCellValue(totExpenditure.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 19);
+	    String fileName = "attachment; filename=Report FF1 - District.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "reports/distFlexiFundReport";
+	}
+	
+	@RequestMapping(value = "/downloadPDFDistWiseFlexiFundRpt", method = RequestMethod.POST)
+	public ModelAndView downloadPDFDistWiseFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getDistWiseFlexiFundReport(Integer.parseInt(stcd));
+			
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("DistFlexiFundReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report FF1 - District-wise Watershed Flexi Fund Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(20);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName, Element.ALIGN_LEFT, 12, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "All Amount is Rs in Lakhs", Element.ALIGN_RIGHT, 8, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "District Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of Projects", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cactus", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Spring shed PPR Preparation", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Model Watershed", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Restoration of Waterbodies", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Watershed Janbhagidari Cup (Prize Money)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Estimated Cost (5+8+11+14+17)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Expenditure Cost (6+9+12+15+18)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			
+			for(int i=1; i <= 5; i++)
+			{
+				CommonFunctions.insertCellHeader(table, "Work", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Estimated Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Expenditure Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			
+			for (int i = 1; i <= 20; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			Integer totProjects = 0;
+			Integer totCactus = 0;
+			BigDecimal totCactusEst = BigDecimal.ZERO;
+			BigDecimal totCactusExp = BigDecimal.ZERO;
+			Integer totSpringshed = 0;
+			BigDecimal totSpringshedEst = BigDecimal.ZERO;
+			BigDecimal totSpringshedExp = BigDecimal.ZERO;
+			Integer totWatershed = 0;
+			BigDecimal totWatershedEst = BigDecimal.ZERO;
+			BigDecimal totWatershedExp = BigDecimal.ZERO;
+			Integer totWaterbodies = 0;
+			BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+			BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+			Integer totJanbhagidari = 0;
+			BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+			BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+			BigDecimal totEstimation = BigDecimal.ZERO;
+			BigDecimal totExpenditure = BigDecimal.ZERO;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getDist_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getProject()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_estimation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_expenditure()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					totProjects = totProjects + list.get(i).getProject();
+					totCactus = totCactus + list.get(i).getCactus();
+					totCactusEst = totCactusEst.add(list.get(i).getCactus_est());
+					totCactusExp = totCactusExp.add(list.get(i).getCactus_exp());
+					totSpringshed = totSpringshed + list.get(i).getSpringshed();
+					totSpringshedEst = totSpringshedEst.add(list.get(i).getSpringshed_est());
+					totSpringshedExp = totSpringshedExp.add(list.get(i).getSpringshed_exp());
+					totWatershed = totWatershed + list.get(i).getWatershed();
+					totWatershedEst = totWatershedEst.add(list.get(i).getWatershed_est());
+					totWatershedExp = totWatershedExp.add(list.get(i).getWatershed_exp());
+					totWaterbodies = totWaterbodies + list.get(i).getWaterbodies();
+					totWaterbodiesEst = totWaterbodiesEst.add(list.get(i).getWaterbodies_est());
+					totWaterbodiesExp = totWaterbodiesExp.add(list.get(i).getWaterbodies_exp());
+					totJanbhagidari = totJanbhagidari + list.get(i).getJanbhagidari();
+			    	totJanbhagidariEst = totJanbhagidariEst.add(list.get(i).getJanbhagidari_est());
+			    	totJanbhagidariExp = totJanbhagidariExp.add(list.get(i).getJanbhagidari_exp());
+			    	totEstimation = totEstimation.add(list.get(i).getTotal_estimation());
+			    	totExpenditure = totExpenditure.add(list.get(i).getTotal_expenditure());
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totProjects), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactus), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshed), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershed), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodies), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidari), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totEstimation), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totExpenditure), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data Not Found", Element.ALIGN_CENTER, 20, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report FF1 - District.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelProjWiseFlexiFundRpt", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelProjWiseFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stName = request.getParameter("stName");
+		String dcode = request.getParameter("dcode");
+		String dName = request.getParameter("dName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjWiseFlexiFundReport(Integer.parseInt(dcode));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report FF1 - Project-wise Watershed Flexi Fund Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report FF1 - Project-wise Watershed Flexi Fund Details";
+		String areaAmtValDetail ="All Amount is Rs in Lakhs";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 19, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,19);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,2,2);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,3,5);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,6,8);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,9,11);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,12,14);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,15,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,18,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,19,19);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName+",   District Name : "+dName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<20;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Project Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("No. of Gram Panchayat");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(3);
+		cell.setCellValue("Cactus");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=4;i<6;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(6);
+		cell.setCellValue("Spring shed PPR Preparation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=7;i<9;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(9);
+		cell.setCellValue("Model Watershed");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=10;i<12;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(12);
+		cell.setCellValue("Restoration of Waterbodies");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=13;i<15;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(15);
+		cell.setCellValue("Watershed Janbhagidari Cup (Prize Money)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=16;i<18;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(18);
+		cell.setCellValue("Total Estimated Cost (5+8+11+14+17)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(19);
+		cell.setCellValue("Total Expenditure Cost (6+9+12+15+18)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<3;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		int startCol = 3;
+
+		for (int i = 0; i < 5; i++) {
+		    int colIndex = startCol + (i * 3);
+
+		    cell = rowhead1.createCell(colIndex);
+		    cell.setCellValue("Work");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 1);
+		    cell.setCellValue("Estimated Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 2);
+		    cell.setCellValue("Expenditure Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		}
+		
+		for(int i=0;i<2;i++)
+		{
+			int colIndex = startCol + (5 * 3) + i; // continue from where the loop ended
+
+			cell =rowhead1.createCell(colIndex);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<20;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 9;
+		int totGP = 0;
+		Integer totCactus = 0;
+		BigDecimal totCactusEst = BigDecimal.ZERO;
+		BigDecimal totCactusExp = BigDecimal.ZERO;
+		Integer totSpringshed = 0;
+		BigDecimal totSpringshedEst = BigDecimal.ZERO;
+		BigDecimal totSpringshedExp = BigDecimal.ZERO;
+		Integer totWatershed = 0;
+		BigDecimal totWatershedEst = BigDecimal.ZERO;
+		BigDecimal totWatershedExp = BigDecimal.ZERO;
+		Integer totWaterbodies = 0;
+		BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+		BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+		Integer totJanbhagidari = 0;
+		BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+		BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+		BigDecimal totEstimation = BigDecimal.ZERO;
+		BigDecimal totExpenditure = BigDecimal.ZERO;
+		
+		
+	    for(FlexiFundMActivityBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getProj_name());
+	    	row.createCell(2).setCellValue(bean.getGrampanchayat());
+	    	row.createCell(3).setCellValue(bean.getCactus());
+	    	row.createCell(4).setCellValue(bean.getCactus_est().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getCactus_exp().doubleValue());
+	    	row.createCell(6).setCellValue(bean.getSpringshed());
+	    	row.createCell(7).setCellValue(bean.getSpringshed_est().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getSpringshed_exp().doubleValue());
+	    	row.createCell(9).setCellValue(bean.getWatershed());
+	    	row.createCell(10).setCellValue(bean.getWatershed_est().doubleValue());
+	    	row.createCell(11).setCellValue(bean.getWatershed_exp().doubleValue());
+	    	row.createCell(12).setCellValue(bean.getWaterbodies());
+	    	row.createCell(13).setCellValue(bean.getWaterbodies_est().doubleValue());
+	    	row.createCell(14).setCellValue(bean.getWaterbodies_exp().doubleValue());
+	    	row.createCell(15).setCellValue(bean.getJanbhagidari());
+	    	row.createCell(16).setCellValue(bean.getJanbhagidari_est().doubleValue());
+	    	row.createCell(17).setCellValue(bean.getJanbhagidari_exp().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getTotal_estimation().doubleValue());
+	    	row.createCell(19).setCellValue(bean.getTotal_expenditure().doubleValue());
+	    	
+	    	totGP = totGP + bean.getGrampanchayat();
+	    	totCactus = totCactus + bean.getCactus();
+	    	totCactusEst = totCactusEst.add(bean.getCactus_est());
+	    	totCactusExp = totCactusExp.add(bean.getCactus_exp());
+	    	totSpringshed = totSpringshed + bean.getSpringshed();
+	    	totSpringshedEst = totSpringshedEst.add(bean.getSpringshed_est());
+	    	totSpringshedExp = totSpringshedExp.add(bean.getSpringshed_exp());
+	    	totWatershed = totWatershed + bean.getWatershed();
+	    	totWatershedEst = totWatershedEst.add(bean.getWatershed_est());
+	    	totWatershedExp = totWatershedExp.add(bean.getWatershed_exp());
+	    	totWaterbodies = totWaterbodies + bean.getWaterbodies();
+	    	totWaterbodiesEst = totWaterbodiesEst.add(bean.getWaterbodies_est());
+	    	totWaterbodiesExp = totWaterbodiesExp.add(bean.getWaterbodies_exp());
+	    	totJanbhagidari = totJanbhagidari + bean.getJanbhagidari();
+	    	totJanbhagidariEst = totJanbhagidariEst.add(bean.getJanbhagidari_est());
+	    	totJanbhagidariExp = totJanbhagidariExp.add(bean.getJanbhagidari_exp());
+	    	totEstimation = totEstimation.add(bean.getTotal_estimation());
+	    	totExpenditure = totExpenditure.add(bean.getTotal_expenditure());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue(totGP);
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totCactus);
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totCactusEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue(totCactusExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totSpringshed);
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totSpringshedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue(totSpringshedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totWatershed);
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totWatershedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue(totWatershedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totWaterbodies);
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totWaterbodiesEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue(totWaterbodiesExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(totJanbhagidari);
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(totJanbhagidariEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue(totJanbhagidariExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(18);
+		cell.setCellValue(totEstimation.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(19);
+		cell.setCellValue(totExpenditure.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 19);
+	    String fileName = "attachment; filename=Report FF1 - Project.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "reports/projFlexiFundReport";
+	}
+	
+	@RequestMapping(value = "/downloadPDFProjWiseFlexiFundRpt", method = RequestMethod.POST)
+	public ModelAndView downloadPDFProjWiseFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stName = request.getParameter("stName");
+		String dcode = request.getParameter("dcode");
+		String dName = request.getParameter("dName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjWiseFlexiFundReport(Integer.parseInt(dcode));
+			
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("ProjFlexiFundReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report FF1 - Project-wise Watershed Flexi Fund Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(20);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName + ", District Name : "+dName, Element.ALIGN_LEFT, 12, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "All Amount is Rs in Lakhs", Element.ALIGN_RIGHT, 8, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Project Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "No. of Gram Panchayat", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cactus", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Spring shed PPR Preparation", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Model Watershed", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Restoration of Waterbodies", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Watershed Janbhagidari Cup (Prize Money)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Estimated Cost (5+8+11+14+17)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Expenditure Cost (6+9+12+15+18)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			
+			for(int i=1; i <= 5; i++)
+			{
+				CommonFunctions.insertCellHeader(table, "Work", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Estimated Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Expenditure Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			
+			for (int i = 1; i <= 20; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			Integer totGP = 0;
+			Integer totCactus = 0;
+			BigDecimal totCactusEst = BigDecimal.ZERO;
+			BigDecimal totCactusExp = BigDecimal.ZERO;
+			Integer totSpringshed = 0;
+			BigDecimal totSpringshedEst = BigDecimal.ZERO;
+			BigDecimal totSpringshedExp = BigDecimal.ZERO;
+			Integer totWatershed = 0;
+			BigDecimal totWatershedEst = BigDecimal.ZERO;
+			BigDecimal totWatershedExp = BigDecimal.ZERO;
+			Integer totWaterbodies = 0;
+			BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+			BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+			Integer totJanbhagidari = 0;
+			BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+			BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+			BigDecimal totEstimation = BigDecimal.ZERO;
+			BigDecimal totExpenditure = BigDecimal.ZERO;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, list.get(i).getProj_name(), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGrampanchayat()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_estimation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_expenditure()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					totGP = totGP + list.get(i).getGrampanchayat();
+					totCactus = totCactus + list.get(i).getCactus();
+					totCactusEst = totCactusEst.add(list.get(i).getCactus_est());
+					totCactusExp = totCactusExp.add(list.get(i).getCactus_exp());
+					totSpringshed = totSpringshed + list.get(i).getSpringshed();
+					totSpringshedEst = totSpringshedEst.add(list.get(i).getSpringshed_est());
+					totSpringshedExp = totSpringshedExp.add(list.get(i).getSpringshed_exp());
+					totWatershed = totWatershed + list.get(i).getWatershed();
+					totWatershedEst = totWatershedEst.add(list.get(i).getWatershed_est());
+					totWatershedExp = totWatershedExp.add(list.get(i).getWatershed_exp());
+					totWaterbodies = totWaterbodies + list.get(i).getWaterbodies();
+					totWaterbodiesEst = totWaterbodiesEst.add(list.get(i).getWaterbodies_est());
+					totWaterbodiesExp = totWaterbodiesExp.add(list.get(i).getWaterbodies_exp());
+					totJanbhagidari = totJanbhagidari + list.get(i).getJanbhagidari();
+			    	totJanbhagidariEst = totJanbhagidariEst.add(list.get(i).getJanbhagidari_est());
+			    	totJanbhagidariExp = totJanbhagidariExp.add(list.get(i).getJanbhagidari_exp());
+			    	totEstimation = totEstimation.add(list.get(i).getTotal_estimation());
+			    	totExpenditure = totExpenditure.add(list.get(i).getTotal_expenditure());
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totGP), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactus), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshed), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershed), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodies), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidari), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totEstimation), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totExpenditure), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data Not Found", Element.ALIGN_CENTER, 20, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report FF1 - Project.pdf");
+		response.setHeader("Pragma", "public");
+		response.setContentLength(baos.size());
+		OutputStream os = response.getOutputStream();
+		baos.writeTo(os);
+		os.flush();
+		os.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	@RequestMapping(value = "/downloadExcelProjDtlFlexiFundRpt", method = RequestMethod.POST)
+	@ResponseBody
+	public String downloadExcelProjDtlFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stName = request.getParameter("stName");
+		String pcode = request.getParameter("pcode");
+		String dName = request.getParameter("dName");
+		String pName = request.getParameter("pName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+			
+		Workbook workbook = new XSSFWorkbook();
+		//invoking creatSheet() method and passing the name of the sheet to be created
+		Sheet sheet = workbook.createSheet("Report FF1 - Project Detail wise Watershed Flexi Fund Details");
+		
+		CellStyle style = CommonFunctions.getStyle(workbook);
+	    
+		String rptName = "Report FF1 - Project Detail wise Watershed Flexi Fund Details";
+		String areaAmtValDetail ="All Amount is Rs in Lakhs";
+		
+		CellRangeAddress mergedRegion = new CellRangeAddress(0,0,0,0);
+		CommonFunctions.getExcelHeader(sheet, mergedRegion, rptName, 18, areaAmtValDetail, workbook);
+		
+		mergedRegion = new CellRangeAddress(list.size()+9,list.size()+9,0,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(5,5,0,18);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,0,0);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,1,1);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,2,4);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,5,7);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,8,10);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,11,13);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,6,14,16);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,17,17);
+		sheet.addMergedRegion(mergedRegion);
+		mergedRegion = new CellRangeAddress(6,7,18,18);
+		sheet.addMergedRegion(mergedRegion);
+		
+		
+		
+		Row rowDetail = sheet.createRow(5);
+		
+		Cell cell = rowDetail.createCell(0);
+		cell.setCellValue("State Name : "+ stName+",   District Name : "+dName+",   Project Name : "+pName);  
+		cell.setCellStyle(style);
+		
+		for(int i=1;i<19;i++)
+		{
+			cell = rowDetail.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead = sheet.createRow(6);
+		
+		cell = rowhead.createCell(0);
+		cell.setCellValue("S.No.");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(1);
+		cell.setCellValue("Gram Panchayat Name");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(2);
+		cell.setCellValue("Cactus");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=3;i<5;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(5);
+		cell.setCellValue("Spring shed PPR Preparation");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=6;i<8;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(8);
+		cell.setCellValue("Model Watershed");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=9;i<11;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(11);
+		cell.setCellValue("Restoration of Waterbodies");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=12;i<14;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(14);
+		cell.setCellValue("Watershed Janbhagidari Cup (Prize Money)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		for(int i=15;i<17;i++)
+		{
+			cell =rowhead.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		
+		cell = rowhead.createCell(17);
+		cell.setCellValue("Total Estimated Cost (4+7+10+13+16)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		cell = rowhead.createCell(18);
+		cell.setCellValue("Total Expenditure Cost (5+8+11+14+17)");
+		cell.setCellStyle(style);
+		CellUtil.setCellStyleProperty(cell, CellUtil.VERTICAL_ALIGNMENT, VerticalAlignment.CENTER);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		
+		
+		Row rowhead1 = sheet.createRow(7);
+		
+		for(int i=0;i<2;i++)
+		{
+			cell =rowhead1.createCell(i);
+			cell.setCellStyle(style);
+		}
+		
+		int startCol = 2;
+
+		for (int i = 0; i < 5; i++) {
+		    int colIndex = startCol + (i * 3);
+
+		    cell = rowhead1.createCell(colIndex);
+		    cell.setCellValue("Work");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 1);
+		    cell.setCellValue("Estimated Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+
+		    cell = rowhead1.createCell(colIndex + 2);
+		    cell.setCellValue("Expenditure Cost");
+		    cell.setCellStyle(style);
+		    CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.CENTER);
+		}
+		
+		for(int i=0;i<2;i++)
+		{
+			int colIndex = startCol + (5 * 3) + i; // continue from where the loop ended
+
+			cell =rowhead1.createCell(colIndex);
+			cell.setCellStyle(style);
+		}
+		
+		
+		Row rowhead2 = sheet.createRow(8);
+		
+		for(int i=0;i<19;i++)
+		{
+			cell =rowhead2.createCell(i);
+			cell.setCellValue(i+1);
+			cell.setCellStyle(style);
+		}
+		
+		
+		int sno = 1;
+		int rowno  = 9;
+		BigDecimal totCactusEst = BigDecimal.ZERO;
+		BigDecimal totCactusExp = BigDecimal.ZERO;
+		BigDecimal totSpringshedEst = BigDecimal.ZERO;
+		BigDecimal totSpringshedExp = BigDecimal.ZERO;
+		BigDecimal totWatershedEst = BigDecimal.ZERO;
+		BigDecimal totWatershedExp = BigDecimal.ZERO;
+		BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+		BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+		BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+		BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+		BigDecimal totEstimation = BigDecimal.ZERO;
+		BigDecimal totExpenditure = BigDecimal.ZERO;
+		
+		
+	    for(FlexiFundMActivityBean bean: list)
+	    {
+	    	Row row = sheet.createRow(rowno);
+	    	row.createCell(0).setCellValue(sno);
+	    	row.createCell(1).setCellValue(bean.getGp_name());
+	    	row.createCell(2).setCellValue(bean.getCactus_desc());
+	    	row.createCell(3).setCellValue(bean.getCactus_est().doubleValue());
+	    	row.createCell(4).setCellValue(bean.getCactus_exp().doubleValue());
+	    	row.createCell(5).setCellValue(bean.getSpringshed_desc());
+	    	row.createCell(6).setCellValue(bean.getSpringshed_est().doubleValue());
+	    	row.createCell(7).setCellValue(bean.getSpringshed_exp().doubleValue());
+	    	row.createCell(8).setCellValue(bean.getWatershed_desc());
+	    	row.createCell(9).setCellValue(bean.getWatershed_est().doubleValue());
+	    	row.createCell(10).setCellValue(bean.getWatershed_exp().doubleValue());
+	    	row.createCell(11).setCellValue(bean.getWaterbodies_desc());
+	    	row.createCell(12).setCellValue(bean.getWaterbodies_est().doubleValue());
+	    	row.createCell(13).setCellValue(bean.getWaterbodies_exp().doubleValue());
+	    	row.createCell(14).setCellValue(bean.getJanbhagidari_desc());
+	    	row.createCell(15).setCellValue(bean.getJanbhagidari_est().doubleValue());
+	    	row.createCell(16).setCellValue(bean.getJanbhagidari_exp().doubleValue());
+	    	row.createCell(17).setCellValue(bean.getTotal_estimation().doubleValue());
+	    	row.createCell(18).setCellValue(bean.getTotal_expenditure().doubleValue());
+	    	
+	    	totCactusEst = totCactusEst.add(bean.getCactus_est());
+	    	totCactusExp = totCactusExp.add(bean.getCactus_exp());
+	    	totSpringshedEst = totSpringshedEst.add(bean.getSpringshed_est());
+	    	totSpringshedExp = totSpringshedExp.add(bean.getSpringshed_exp());
+	    	totWatershedEst = totWatershedEst.add(bean.getWatershed_est());
+	    	totWatershedExp = totWatershedExp.add(bean.getWatershed_exp());
+	    	totWaterbodiesEst = totWaterbodiesEst.add(bean.getWaterbodies_est());
+	    	totWaterbodiesExp = totWaterbodiesExp.add(bean.getWaterbodies_exp());
+	    	totJanbhagidariEst = totJanbhagidariEst.add(bean.getJanbhagidari_est());
+	    	totJanbhagidariExp = totJanbhagidariExp.add(bean.getJanbhagidari_exp());
+	    	totEstimation = totEstimation.add(bean.getTotal_estimation());
+	    	totExpenditure = totExpenditure.add(bean.getTotal_expenditure());
+	    	
+	    	sno++;
+	    	rowno++;
+	    }
+	    
+	    
+	    CellStyle style1 = workbook.createCellStyle();
+		style1.setBorderTop(BorderStyle.THIN); 
+		style1.setBorderBottom(BorderStyle.THIN);
+		style1.setBorderLeft(BorderStyle.THIN);
+		style1.setBorderRight(BorderStyle.THIN);
+		style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());
+		style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+		org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+		font1.setFontHeightInPoints((short) 12);
+		font1.setBold(true);
+		//			font1.setColor(IndexedColors.WHITE.getIndex());
+		style1.setFont(font1);
+		
+		Row row = sheet.createRow(list.size()+9);
+		cell = row.createCell(0);
+		cell.setCellValue("Grand Total");
+		cell.setCellStyle(style1);
+		CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+		cell = row.createCell(1);
+		cell.setCellStyle(style1);
+		cell = row.createCell(2);
+		cell.setCellValue("");
+		cell.setCellStyle(style1);
+		cell = row.createCell(3);
+		cell.setCellValue(totCactusEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(4);
+		cell.setCellValue(totCactusExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(5);
+		cell.setCellValue("");
+		cell.setCellStyle(style1);
+		cell = row.createCell(6);
+		cell.setCellValue(totSpringshedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(7);
+		cell.setCellValue(totSpringshedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(8);
+		cell.setCellValue("");
+		cell.setCellStyle(style1);
+		cell = row.createCell(9);
+		cell.setCellValue(totWatershedEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(10);
+		cell.setCellValue(totWatershedExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(11);
+		cell.setCellValue("");
+		cell.setCellStyle(style1);
+		cell = row.createCell(12);
+		cell.setCellValue(totWaterbodiesEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(13);
+		cell.setCellValue(totWaterbodiesExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(14);
+		cell.setCellValue("");
+		cell.setCellStyle(style1);
+		cell = row.createCell(15);
+		cell.setCellValue(totJanbhagidariEst.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(16);
+		cell.setCellValue(totJanbhagidariExp.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(17);
+		cell.setCellValue(totEstimation.doubleValue());
+		cell.setCellStyle(style1);
+		cell = row.createCell(18);
+		cell.setCellValue(totExpenditure.doubleValue());
+		cell.setCellStyle(style1);
+		
+		
+	    CommonFunctions.getExcelFooter(sheet, mergedRegion, list.size(), 18);
+	    String fileName = "attachment; filename=Report FF1 - Project Detail.xlsx";
+	    
+	    CommonFunctions.downloadExcel(response, workbook, fileName);
+	    
+	    return "reports/projDetailFlexiFundReport";
+	}
+	
+	@RequestMapping(value = "/downloadPDFProjDtlFlexiFundRpt", method = RequestMethod.POST)
+	public ModelAndView downloadPDFProjDtlFlexiFundRpt(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String stName = request.getParameter("stName");
+		String pcode = request.getParameter("pcode");
+		String dName = request.getParameter("dName");
+		String pName = request.getParameter("pName");
+		
+		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
+		
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+			
+		try {
+			
+			Rectangle layout = new Rectangle(PageSize.A4.rotate());
+			layout.setBackgroundColor(new BaseColor(255, 255, 255));
+			Document document = new Document(layout, 25, 10, 10, 0);
+			document.addTitle("ProjDtlFlexiFundReport");
+			document.addCreationDate();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			PdfWriter writer=PdfWriter.getInstance(document, baos);
+			document.open();
+			
+			Font f1 = new Font(FontFamily.HELVETICA, 11.0f, Font.BOLDITALIC );
+			Font f3 = new Font(FontFamily.HELVETICA, 13.0f, Font.BOLD );
+			Font bf8 = new Font(FontFamily.HELVETICA, 8);
+			Font bf8Bold = new Font(FontFamily.HELVETICA, 8, Font.BOLD, new BaseColor(255, 255, 240));
+			Font bf10Bold = new Font(FontFamily.HELVETICA, 8.0f, Font.BOLD);
+			
+			PdfPTable table = null;
+			document.newPage();
+			Paragraph paragraph3 = null;
+			Paragraph paragraph2 = new Paragraph("Department of Land Resources, Ministry of Rural Development\n", f1);
+			
+			paragraph3 = new Paragraph("Report FF1 - Project Detail wise Watershed Flexi Fund Details", f3);
+			
+			paragraph2.setAlignment(Element.ALIGN_CENTER);
+		    paragraph3.setAlignment(Element.ALIGN_CENTER);
+		    paragraph2.setSpacingAfter(10);
+		    paragraph3.setSpacingAfter(10);
+		    CommonFunctions.addHeader(document);
+		    document.add(paragraph2);
+		    document.add(paragraph3);
+		    table = new PdfPTable(19);
+		    table.setWidths(new int[]{2, 8, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5});
+		    table.setWidthPercentage(100);
+		    table.setSpacingBefore(0f);
+		    table.setSpacingAfter(0f);
+		    table.setHeaderRows(4);
+		    
+		    CommonFunctions.insertCellHeader(table, "State Name : "+stName + ", District Name : "+dName + ", Project Name : "+pName, Element.ALIGN_LEFT, 11, 1, bf8Bold);
+		    CommonFunctions.insertCellHeader(table, "All Amount is Rs in Lakhs", Element.ALIGN_RIGHT, 9, 1, bf8Bold);
+		    
+		    CommonFunctions.insertCellHeader(table, "S.No.", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Gram Panchayat Name", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Cactus", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Spring shed PPR Preparation", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Model Watershed", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Restoration of Waterbodies", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Watershed Janbhagidari Cup (Prize Money)", Element.ALIGN_CENTER, 3, 1, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Estimated Cost (4+7+10+13+16)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			CommonFunctions.insertCellHeader(table, "Total Expenditure Cost (5+8+11+14+17)", Element.ALIGN_CENTER, 1, 2, bf8Bold);
+			
+			
+			for(int i=1; i <= 5; i++)
+			{
+				CommonFunctions.insertCellHeader(table, "Work", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Estimated Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+				CommonFunctions.insertCellHeader(table, "Expenditure Cost", Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			
+			for (int i = 1; i <= 19; i++) {
+			    CommonFunctions.insertCellHeader(table, String.valueOf(i), Element.ALIGN_CENTER, 1, 1, bf8Bold);
+			}
+			
+			
+			int k = 1;
+			BigDecimal totCactusEst = BigDecimal.ZERO;
+			BigDecimal totCactusExp = BigDecimal.ZERO;
+			BigDecimal totSpringshedEst = BigDecimal.ZERO;
+			BigDecimal totSpringshedExp = BigDecimal.ZERO;
+			BigDecimal totWatershedEst = BigDecimal.ZERO;
+			BigDecimal totWatershedExp = BigDecimal.ZERO;
+			BigDecimal totWaterbodiesEst = BigDecimal.ZERO;
+			BigDecimal totWaterbodiesExp = BigDecimal.ZERO;
+			BigDecimal totJanbhagidariEst = BigDecimal.ZERO;
+			BigDecimal totJanbhagidariExp = BigDecimal.ZERO;
+			BigDecimal totEstimation = BigDecimal.ZERO;
+			BigDecimal totExpenditure = BigDecimal.ZERO;
+			
+				
+			if(list.size()!=0)
+				for(int i=0;i<list.size();i++)
+				{
+					CommonFunctions.insertCell(table, String.valueOf(k), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getGp_name()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_desc()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getCactus_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_desc()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getSpringshed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_desc()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWatershed_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_desc()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getWaterbodies_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_desc()), Element.ALIGN_LEFT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_est()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getJanbhagidari_exp()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_estimation()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					CommonFunctions.insertCell(table, String.valueOf(list.get(i).getTotal_expenditure()), Element.ALIGN_RIGHT, 1, 1, bf8);
+					
+					totCactusEst = totCactusEst.add(list.get(i).getCactus_est());
+					totCactusExp = totCactusExp.add(list.get(i).getCactus_exp());
+					totSpringshedEst = totSpringshedEst.add(list.get(i).getSpringshed_est());
+					totSpringshedExp = totSpringshedExp.add(list.get(i).getSpringshed_exp());
+					totWatershedEst = totWatershedEst.add(list.get(i).getWatershed_est());
+					totWatershedExp = totWatershedExp.add(list.get(i).getWatershed_exp());
+					totWaterbodiesEst = totWaterbodiesEst.add(list.get(i).getWaterbodies_est());
+					totWaterbodiesExp = totWaterbodiesExp.add(list.get(i).getWaterbodies_exp());
+			    	totJanbhagidariEst = totJanbhagidariEst.add(list.get(i).getJanbhagidari_est());
+			    	totJanbhagidariExp = totJanbhagidariExp.add(list.get(i).getJanbhagidari_exp());
+			    	totEstimation = totEstimation.add(list.get(i).getTotal_estimation());
+			    	totExpenditure = totExpenditure.add(list.get(i).getTotal_expenditure());
+					
+					k++;
+				}
+				
+				CommonFunctions.insertCell3(table, "Grand Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totCactusExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totSpringshedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWatershedExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totWaterbodiesExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(""), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariEst), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totJanbhagidariExp), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totEstimation), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				CommonFunctions.insertCell3(table, String.valueOf(totExpenditure), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+				
+				if(list.size()==0)
+					CommonFunctions.insertCell(table, "Data Not Found", Element.ALIGN_CENTER, 19, 1, bf8);
+				
+				
+		document.add(table);
+		table = new PdfPTable(1);
+		table.setWidthPercentage(70);
+		table.setSpacingBefore(15f);
+		table.setSpacingAfter(0f);
+		CommonFunctions.insertCellPageHeader(table,"wdcpmksy 2.0 - MIS Website hosted and maintained by National Informatics Center. Data presented in this site has been updated by respective State Govt./UT Administration and DoLR "+ 
+		CommonFunctions.dateToString(null, "dd/MM/yyyy hh:mm aaa"), Element.ALIGN_LEFT, 1, 4, bf8);
+		document.add(table);
+		document.close();
+		response.setContentType("application/pdf");
+		response.setHeader("Expires", "0");
+		response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
+		response.setHeader("Content-Disposition", "attachment;filename=Report FF1 - Project Detail.pdf");
 		response.setHeader("Pragma", "public");
 		response.setContentLength(baos.size());
 		OutputStream os = response.getOutputStream();

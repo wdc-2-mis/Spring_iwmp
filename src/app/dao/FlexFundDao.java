@@ -34,8 +34,6 @@ public interface FlexFundDao {
 
 	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode);
 
-	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
-
 	boolean deleteFlexiFundRow(int id);
 
 	List<Map<String, Object>> getCompleteFlexiFundData(Integer projid, Integer panchayat, Integer district);
@@ -43,6 +41,14 @@ public interface FlexFundDao {
 	boolean saveProgress(List<Integer> ffIds, List<BigDecimal> ffCosts, List<String> statusList,
 			List<String> completionDates, HttpServletRequest request);
 
+	List<FlexiFundMActivityBean> getStateWiseFlexiFundReport();
 	
+	List<FlexiFundMActivityBean> getDistWiseFlexiFundReport(Integer stcd);
+	
+	List<FlexiFundMActivityBean> getProjWiseFlexiFundReport(Integer dcode);
+	
+	List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode);
+	
+	List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid);
 
 }

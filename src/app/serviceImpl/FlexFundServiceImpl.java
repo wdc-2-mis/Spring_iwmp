@@ -69,11 +69,6 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 	 
 	@Override
-	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
-		return dao.getStateWiseFlexiFundReport();
-	}
-
-	@Override
 	public boolean deleteFlexiFundRow(int id) {
 		return dao.deleteFlexiFundRow(id);
 		
@@ -90,6 +85,31 @@ public class FlexFundServiceImpl implements FlexFundService{
 			List<String> completionDates, HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		return dao.saveProgress(ffIds, ffCosts, statusList, completionDates, request);
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getStateWiseFlexiFundReport() {
+		return dao.getStateWiseFlexiFundReport();
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getDistWiseFlexiFundReport(Integer stcd) {
+		return dao.getDistWiseFlexiFundReport(stcd);
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getProjWiseFlexiFundReport(Integer dcode) {
+		return dao.getProjWiseFlexiFundReport(dcode);
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode) {
+		return dao.getProjDetailFlexiFundReport(pcode);
+	}
+	
+	@Override
+	public List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid) {
+	    return dao.getExpenditureHistory(ffid);
 	}
 
 	
