@@ -161,7 +161,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 	
 	@Override
-	public boolean saveFlexiFundData(Integer projId, Integer gcode,
+	public boolean saveFlexiFundData(Integer projId, Integer gcode, Integer dcode,
 	        List<Integer> activityList,
 	        List<String> detailsList,
 	        List<Double> estCostList,
@@ -188,6 +188,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        IwmpMProject project = sess.get(IwmpMProject.class, projId);
 	        IwmpGramPanchayat panchayat = sess.get(IwmpGramPanchayat.class, gcode);
+	        IwmpDistrict district = sess.get(IwmpDistrict.class, dcode);
 
 	        List<String> savedFileNames = new ArrayList<>();
 
@@ -223,7 +224,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	            details.setProject(project);
 	            details.setGcode(panchayat);
-
+                details.setDcode(district);
 	            FlexFundActivityMaster activity =
 	                    sess.get(FlexFundActivityMaster.class, activityList.get(i));
 
@@ -282,7 +283,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 
 	@Override
-	public List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode) {
+	public List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode, Integer district) {
 	    List<FlexiFundDetails> result = new ArrayList<>();
 	    Session ses = null;
 	    Transaction tx = null;
@@ -291,14 +292,22 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        ses = sessionFactory.openSession();
 	        tx = ses.beginTransaction();
 
+	        if(projId == 99999 || gcode == 99999999)
+	        {
+	        	projId = null;
+	        	gcode = null;
+	        }
 	        String hql = "SELECT DISTINCT d FROM FlexiFundDetails d " +
 	                     "LEFT JOIN FETCH d.photos " +
-	                     "LEFT JOIN FETCH d.activity " + // Add this line
-	                     "WHERE d.project.id = :projId AND d.gcode.id = :gcode";
+	                     "LEFT JOIN FETCH d.activity " + 
+	                     "WHERE ( (:projId IS NOT NULL AND :gcode IS NOT NULL AND d.project.id = :projId AND d.gcode.id = :gcode) " +
+                         "OR (:projId IS NULL OR :gcode IS NULL) AND d.dcode.id = :district )";
+
 
 	        result = ses.createQuery(hql, FlexiFundDetails.class)
 	                    .setParameter("projId", projId)
 	                    .setParameter("gcode", gcode)
+	                    .setParameter("district", district)
 	                    .getResultList();
 
 	        tx.commit();
@@ -561,7 +570,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 
 	@Override
-	public List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat) {
+	public List<Map<String, Object>> getCompleteFlexiFundData(Integer projid, Integer panchayat, Integer district) {
 
 	    List<Map<String, Object>> resultList = new ArrayList<>();
 
@@ -571,10 +580,17 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	    	SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    	
+	    	if(projid == 99999 || panchayat == 99999999)
+	        {
+	        	projid = null;
+	        	panchayat = null;
+	        }
+	    	
 	    	String hql = completeFlexiFund;
 	        List<FlexiFundDetails> list = session.createQuery(hql, FlexiFundDetails.class)
 	                .setParameter("projid", projid)
 	                .setParameter("panchayat", panchayat)
+	                .setParameter("district", district)
 	                .getResultList();
 
 	        for (FlexiFundDetails item : list) {

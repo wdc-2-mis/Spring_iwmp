@@ -39,6 +39,10 @@ public class FlexiFundDetails implements Serializable {
     @JoinColumn(name = "gcode")
     private IwmpGramPanchayat gcode;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dcode")
+    private IwmpDistrict dcode;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "act_id")
     private FlexFundActivityMaster activity;
@@ -176,6 +180,15 @@ public class FlexiFundDetails implements Serializable {
 
 	public void setGcode(IwmpGramPanchayat gcode) {
 		this.gcode = gcode;
+	}
+
+	
+	public IwmpDistrict getDcode() {
+		return dcode;
+	}
+
+	public void setDcode(IwmpDistrict dcode) {
+		this.dcode = dcode;
 	}
 
 	public Double getEst_cost() {

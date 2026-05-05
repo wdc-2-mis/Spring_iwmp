@@ -19,11 +19,11 @@ public interface FlexFundDao {
 
 	LinkedHashMap<String, Integer> getFlexiFundGM(int pCode);
 
-	boolean saveFlexiFundData(Integer projId, Integer gcode, List<Integer> activityList, List<String> detailsList, List<Double> estCostList,
+	boolean saveFlexiFundData(Integer projId, Integer gcode, Integer dcode, List<Integer> activityList, List<String> detailsList, List<Double> estCostList,
 			List<Double> costList, List<MultipartFile> photos, List<Integer> photoCountList, List<String> latitudeList, List<String> longitudeList,
 			String status, List<String> remarksList, String createdBy, HttpServletRequest request);
 
-	List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode);
+	List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode, Integer district);
 
 	boolean updateFlexiFundData(List<Integer> rowIds, List<Integer> activityList, List<String> detailsList,
 			List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoRowIndex,
@@ -38,7 +38,7 @@ public interface FlexFundDao {
 
 	boolean deleteFlexiFundRow(int id);
 
-	List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat);
+	List<Map<String, Object>> getCompleteFlexiFundData(Integer projid, Integer panchayat, Integer district);
 
 	boolean saveProgress(List<Integer> ffIds, List<BigDecimal> ffCosts, List<String> statusList,
 			List<String> completionDates, HttpServletRequest request);

@@ -112,12 +112,12 @@ public class FlexiFundController {
 	@ResponseBody
 	public Map<String, Object> getFlexiFundData(
 	        @RequestParam Integer projid,
-	        @RequestParam Integer panchayat) {
+	        @RequestParam Integer panchayat, @RequestParam Integer district) {
 
 	    Map<String, Object> response = new HashMap<>();
 
 	    List<FlexiFundDetails> detailsList =
-	            service.getFlexiFundByProjectAndGcode(projid, panchayat);
+	            service.getFlexiFundByProjectAndGcode(projid, panchayat, district);
 
 	    if (detailsList == null || detailsList.isEmpty()) {
 	        response.put("status", "NEW");
@@ -253,6 +253,7 @@ public class FlexiFundController {
 	        @RequestParam(value = "longitude[]", required = false) List<String> longitudeList,
 	        @RequestParam("projid") Integer projId,
 	        @RequestParam("panchayat") Integer gcode,
+	        @RequestParam("district") Integer dcode,
 	        @RequestParam("status") String status,
 	        @RequestParam(value = "remark[]", required = false) List<String> remarksList) {
 
@@ -266,7 +267,7 @@ public class FlexiFundController {
 	        String createdBy = request.getSession().getAttribute("loginID").toString();
 
 	        boolean result = service.saveFlexiFundData(
-	                projId, gcode,
+	                projId, gcode, dcode,
 	                activityList, detailsList, estCostList, costList,
 	                photos, photoCountList,
 	                latitudeList, longitudeList,
@@ -364,10 +365,10 @@ public class FlexiFundController {
 	@RequestMapping(value = "/getFlexiFundCompleteData", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Map<String, Object>> getFlexiFundCompleteData(
-	        @RequestParam("projid") int projid,
-	        @RequestParam("panchayat") int panchayat) {
+	        @RequestParam("projid") Integer projid,
+	        @RequestParam("panchayat") Integer panchayat, @RequestParam("district") Integer district) {
 
-	    return service.getCompleteFlexiFundData(projid, panchayat);
+	    return service.getCompleteFlexiFundData(projid, panchayat, district);
 	}
 	
 	@RequestMapping(value = "/saveFlexiFundProgress", method = RequestMethod.POST)

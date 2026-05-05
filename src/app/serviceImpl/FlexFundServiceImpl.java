@@ -35,17 +35,17 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 
 	@Override
-	public boolean saveFlexiFundData(Integer projId, Integer gcode, List<Integer> activityList,
+	public boolean saveFlexiFundData(Integer projId, Integer gcode, Integer dcode, List<Integer> activityList,
 			List<String> detailsList, List<Double> estCostList, List<Double> costList, List<MultipartFile> photos, List<Integer> photoCountList, List<String> latitudeList,
 			List<String> longitudeList, String status, List<String> remarksList, String createdBy, HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		return dao.saveFlexiFundData(projId, gcode, activityList, detailsList, estCostList, costList, photos, photoCountList, latitudeList, longitudeList, status, remarksList, createdBy, request);
+		return dao.saveFlexiFundData(projId, gcode, dcode, activityList, detailsList, estCostList, costList, photos, photoCountList, latitudeList, longitudeList, status, remarksList, createdBy, request);
 	}
 
 	@Override
-	public List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode) {
+	public List<FlexiFundDetails> getFlexiFundByProjectAndGcode(Integer projId, Integer gcode, Integer district) {
 		// TODO Auto-generated method stub
-		return dao.getFlexiFundByProjectAndGcode(projId, gcode);
+		return dao.getFlexiFundByProjectAndGcode(projId, gcode, district);
 	}
 
 	@Override
@@ -80,9 +80,9 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getCompleteFlexiFundData(int projid, int panchayat) {
+	public List<Map<String, Object>> getCompleteFlexiFundData(Integer projid, Integer panchayat, Integer district) {
 		// TODO Auto-generated method stub
-		return dao.getCompleteFlexiFundData(projid, panchayat);
+		return dao.getCompleteFlexiFundData(projid, panchayat, district);
 	}
 
 	@Override

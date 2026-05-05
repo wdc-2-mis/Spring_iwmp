@@ -26,50 +26,64 @@ $(function() {
 							$ddlDistrict.append('<option value="' + data[key] + '">' + key + '</option>');
 					}
 				}
+				$ddlDistrict.append('<option value="99999">OTHER</option>');
 			}
 		});
 	});
 	
 	$(document).on('change', '#projid', function(e) {
-		e.preventDefault();
-		$pcode = $('#projid option:selected').val();
-		$.ajax({
-			url: "getFlexFundGramPanchayat",
-			type: "post",
-			data: { pCode: $pcode },
-			error: function(xhr, status, er) {
-				console.log(er);
-			},
-			success: function(data) {
-				console.log(data);
-				$selectedProj = $('#projid').val();
-				$ddlPanchayat = $('#panchayat');
-				$ddlPanchayat.empty();
-				$ddlPanchayat.append('<option value=""> --Select Gram Panchayat-- </option>');
-				for (var key in data) {
-					if (data.hasOwnProperty(key)) {
-						if (data[key] == $selectedProj)
-							$ddlPanchayat.append('<option value="' + data[key] + '" selected>' + key + '</option>');
-						else
-							$ddlPanchayat.append('<option value="' + data[key] + '">' + key + '</option>');
-					}
-				}
-			}
-		});
-	});
+    e.preventDefault();
+    let $pcode = $('#projid option:selected').val();
+    let $ddlPanchayat = $('#panchayat');
+    $ddlPanchayat.empty();
+
+    // Always add default option first
+    $ddlPanchayat.append('<option value=""> --Select Gram Panchayat-- </option>');
+
+    // If project is OTHER, just add OTHER as an option (not selected)
+    if ($pcode === "99999") {
+        $ddlPanchayat.append('<option value="99999999">OTHER</option>');
+        return; // Skip AJAX call
+    }
+
+    // Otherwise, load Gram Panchayats via AJAX
+    $.ajax({
+        url: "getFlexFundGramPanchayat",
+        type: "post",
+        data: { pCode: $pcode},
+        error: function(xhr, status, er) {
+            console.log(er);
+        },
+        success: function(data) {
+            console.log(data);
+            let $selectedProj = $('#projid').val();
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if (data[key] == $selectedProj) {
+                        $ddlPanchayat.append('<option value="' + data[key] + '" selected>' + key + '</option>');
+                    } else {
+                        $ddlPanchayat.append('<option value="' + data[key] + '">' + key + '</option>');
+                    }
+                }
+            }
+        }
+    });
+});
 	
 	
 	$(document).on('change', '#panchayat', function () {
 
     let projid = $('#projid').val();
     let panchayat = $(this).val();
-
+    let district = $('#district').val();
+    
     if (!projid || !panchayat) return;
 
     $.ajax({
         url: "getFlexiFundCompleteData",   
         type: "POST",
-        data: { projid: projid, panchayat: panchayat },
+        data: { projid: projid, panchayat: panchayat, district: district },
 
         success: function (res) {
 
