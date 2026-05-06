@@ -161,7 +161,7 @@ public class AssetReportController {
 			mav.addObject("headactmapsize",headActMap.size());
 		}
 
-		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).distinct().collect(Collectors.toList());
 		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
 		Boolean val = false;
 		if(stcode==0 && headcode == 8) {
@@ -236,7 +236,21 @@ public class AssetReportController {
 			}
 		}
 		
-		System.out.println("listmap size : "+ listMap.size());
+		Map<Integer,StateHeadActivityFinBean> totMap = new LinkedHashMap<>();
+		for(Map.Entry<String, Map<Integer, StateHeadActivityFinBean>> map : listMap.entrySet()) {
+			for(Map.Entry<Integer, StateHeadActivityFinBean> nestMap : map.getValue().entrySet()) {
+				if(totMap.containsKey(nestMap.getKey())) {
+					StateHeadActivityFinBean bean = new StateHeadActivityFinBean();
+					bean.setPlan(totMap.get(nestMap.getKey()).getPlan().add(nestMap.getValue().getPlan()));
+					bean.setAchievement(totMap.get(nestMap.getKey()).getAchievement().add(nestMap.getValue().getAchievement()));
+					bean.setWorks(totMap.get(nestMap.getKey()).getWorks() + nestMap.getValue().getWorks());
+					totMap.put(nestMap.getKey(),bean);
+				}else {
+					totMap.put(nestMap.getKey(),nestMap.getValue());
+				}
+			}
+		}
+		
 		mav.addObject("list",list);
 		mav.addObject("listsize",list.size());
 		mav.addObject("headmap",headMap);
@@ -250,6 +264,9 @@ public class AssetReportController {
 		mav.addObject("check",check);
 		mav.addObject("listmap",listMap);
 		mav.addObject("listmapsize",listMap.size());
+		mav.addObject("totmap",totMap);
+		mav.addObject("totmapsize",totMap.size());
+		
 		
 		return mav;
 		
@@ -616,7 +633,7 @@ public class AssetReportController {
 			headActMap = list.stream().filter(s-> s.getHeadcode()==8).collect(Collectors.toMap(StateHeadActivityFinBean::getActivitycode,bean ->bean.getActivitydesc() +" ("+bean.getUnitname()+")",(v1,v2)->v1,TreeMap::new));
 		}
 
-		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).distinct().collect(Collectors.toList());
 		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
 		Boolean val = false;
 		if(stcode==0 && headcode == 8) {
@@ -690,6 +707,21 @@ public class AssetReportController {
 				}
 			}
 		}
+		
+		Map<Integer,StateHeadActivityFinBean> totMap = new LinkedHashMap<>();
+		for(Map.Entry<String, Map<Integer, StateHeadActivityFinBean>> map : listMap.entrySet()) {
+			for(Map.Entry<Integer, StateHeadActivityFinBean> nestMap : map.getValue().entrySet()) {
+				if(totMap.containsKey(nestMap.getKey())) {
+					StateHeadActivityFinBean bean = new StateHeadActivityFinBean();
+					bean.setPlan(totMap.get(nestMap.getKey()).getPlan().add(nestMap.getValue().getPlan()));
+					bean.setAchievement(totMap.get(nestMap.getKey()).getAchievement().add(nestMap.getValue().getAchievement()));
+					bean.setWorks(totMap.get(nestMap.getKey()).getWorks() + nestMap.getValue().getWorks());
+					totMap.put(nestMap.getKey(),bean);
+				}else {
+					totMap.put(nestMap.getKey(),nestMap.getValue());
+				}
+			}
+		}
 		  
 			Workbook workbook = new XSSFWorkbook();  
 			//invoking creatSheet() method and passing the name of the sheet to be created   
@@ -745,9 +777,10 @@ public class AssetReportController {
 	        }
 	        	
 	        
-			
-//			mergedRegion = new CellRangeAddress(listMap.size()+8,listMap.size()+8,0,8); 
-//	        sheet.addMergedRegion(mergedRegion);
+			if(stcode == 0) {
+				mergedRegion = new CellRangeAddress(listMap.size()+(check?10:9),listMap.size()+(check?10:9),0,1); 
+				sheet.addMergedRegion(mergedRegion);
+			}
 			
 			Row rowhead = sheet.createRow(5); 
 			
@@ -892,6 +925,48 @@ public class AssetReportController {
 	        	rowno++;
 	        }
 	        
+	        if(stcode == 0) {
+	        	CellStyle style1 = workbook.createCellStyle();
+	        	style1.setBorderTop(BorderStyle.THIN); 
+				style1.setBorderBottom(BorderStyle.THIN);
+				style1.setBorderLeft(BorderStyle.THIN);
+				style1.setBorderRight(BorderStyle.THIN);
+	        	style1.setFillForegroundColor(IndexedColors.LIGHT_YELLOW.getIndex());  
+	        	style1.setFillPattern(FillPatternType.SOLID_FOREGROUND);  
+				org.apache.poi.ss.usermodel.Font font1 = workbook.createFont();
+				font1.setFontHeightInPoints((short) 12);
+				font1.setBold(true);
+//				font1.setColor(IndexedColors.WHITE.getIndex());
+				style1.setFont(font1);
+			
+				cellval = 2;
+				Row row = sheet.createRow(rowno);
+	        	cell = row.createCell(0);
+	        	cell.setCellValue("Total");
+	        	cell.setCellStyle(style1);
+	        	CellUtil.setCellStyleProperty(cell, CellUtil.ALIGNMENT, HorizontalAlignment.RIGHT);
+	        	row.createCell(1).setCellStyle(style1);
+	        	for(Map.Entry<Integer, StateHeadActivityFinBean> map : totMap.entrySet()) {
+	        		cell = row.createCell(cellval);
+	        		cell.setCellValue(map.getValue().getPlan().doubleValue());
+	        		cell.setCellStyle(style1);
+	        		cellval = cellval + 1;
+		        	cell = row.createCell(cellval);
+		        	cell.setCellValue(map.getValue().getAchievement().doubleValue());
+		        	cell.setCellStyle(style1);
+		        	cellval = cellval + 1;
+		        	double result = map.getValue().getPlan().doubleValue() > 0 ? (map.getValue().getAchievement().doubleValue() * 100 / map.getValue().getPlan().doubleValue()) : 0;
+		        	cell = row.createCell(cellval);
+		        	cell.setCellValue(df.format(result));
+		        	cell.setCellStyle(style1);
+		        	cellval = cellval + 1;
+		        	cell = row.createCell(cellval);
+		        	cell.setCellValue(map.getValue().getWorks());
+		        	cell.setCellStyle(style1);
+		        	cellval = cellval + 1;
+	        	}
+	        }
+	        
 	        
 	        CommonFunctions.getExcelFooter(sheet, mergedRegion, statelist.size(), colLength);
 	        String fileName = "attachment; filename=Report A4.xlsx";
@@ -925,7 +1000,7 @@ public class AssetReportController {
 			headActMap = list.stream().filter(s-> s.getHeadcode()==8).collect(Collectors.toMap(StateHeadActivityFinBean::getActivitycode,bean ->bean.getActivitydesc() +" ("+bean.getUnitname()+")",(v1,v2)->v1,TreeMap::new));
 		}
 
-		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).collect(Collectors.toList());
+		List<Integer> statelist = list.stream().map(StateHeadActivityFinBean::getStcode).distinct().collect(Collectors.toList());
 		Map<String,Map<Integer, StateHeadActivityFinBean>> listMap = new LinkedHashMap<String, Map<Integer,StateHeadActivityFinBean>>();
 		Boolean val = false;
 		if(stcode==0 && headcode == 8) {
@@ -996,6 +1071,21 @@ public class AssetReportController {
 							}
 						}
 					}
+				}
+			}
+		}
+		
+		Map<Integer,StateHeadActivityFinBean> totMap = new LinkedHashMap<>();
+		for(Map.Entry<String, Map<Integer, StateHeadActivityFinBean>> map : listMap.entrySet()) {
+			for(Map.Entry<Integer, StateHeadActivityFinBean> nestMap : map.getValue().entrySet()) {
+				if(totMap.containsKey(nestMap.getKey())) {
+					StateHeadActivityFinBean bean = new StateHeadActivityFinBean();
+					bean.setPlan(totMap.get(nestMap.getKey()).getPlan().add(nestMap.getValue().getPlan()));
+					bean.setAchievement(totMap.get(nestMap.getKey()).getAchievement().add(nestMap.getValue().getAchievement()));
+					bean.setWorks(totMap.get(nestMap.getKey()).getWorks() + nestMap.getValue().getWorks());
+					totMap.put(nestMap.getKey(),bean);
+				}else {
+					totMap.put(nestMap.getKey(),nestMap.getValue());
 				}
 			}
 		}
@@ -1096,6 +1186,17 @@ public class AssetReportController {
 		        	}
 		        	sno++;
 		        }
+		        if(stcode == 0) {
+		        	CommonFunctions.insertCell3(table, " Total", Element.ALIGN_RIGHT, 2, 1, bf10Bold);
+		        	for(Map.Entry<Integer, StateHeadActivityFinBean> map : totMap.entrySet()) {
+		        		CommonFunctions.insertCell3(table, map.getValue().getPlan().toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		        		CommonFunctions.insertCell3(table, map.getValue().getAchievement().toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		        		double result = map.getValue().getPlan().doubleValue() > 0 ? (map.getValue().getAchievement().doubleValue() * 100 / map.getValue().getPlan().doubleValue()) : 0;
+		        		CommonFunctions.insertCell3(table, df.format(result), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		        		CommonFunctions.insertCell3(table, map.getValue().getWorks().toString(), Element.ALIGN_RIGHT, 1, 1, bf10Bold);
+		        	}
+		        }
+				
 				
 					
 		document.add(table);

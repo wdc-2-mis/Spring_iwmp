@@ -226,6 +226,18 @@ $(document).on( 'click', '#btnGetReport2', function (e) {
   				<c:set var ="count" value = "${count + 1}"/>
   			</tr>
   		</c:forEach>
+  		<c:if test = "${stCode eq 0}">
+  			<tr>
+  				<td class="table-primary"></td>
+				<td align="right" class="table-primary"><b>Grand Total </b></td>
+				<c:forEach items ="${totmap}" var ="tot">
+					<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value="${tot.value.plan}" /></fmt:formatNumber></b></td>
+					<td align="right" class="table-primary"><b><fmt:formatNumber type="number" minFractionDigits="2"><c:out value="${tot.value.achievement}" /></fmt:formatNumber></b></td>
+					<td align="right" class="table-primary"><b><fmt:formatNumber value="${tot.value.plan > 0 ? (tot.value.achievement*100/tot.value.plan) : 0}" type="number" maxFractionDigits="2"/></b></td>
+					<td align="right" class="table-primary"><b><c:out value="${tot.value.works}" /></b></td>
+				</c:forEach>
+  			</tr>
+  		</c:if>
   		
 	</tbody>
 </table>
