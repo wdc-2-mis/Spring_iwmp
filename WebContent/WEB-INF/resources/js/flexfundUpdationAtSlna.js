@@ -35,6 +35,7 @@ $(function() {
     e.preventDefault();
     let $pcode = $('#projid option:selected').val();
     let $ddlPanchayat = $('#panchayat');
+    let district =  $('#district').val();
     $ddlPanchayat.empty();
 
     // Always add default option first
@@ -42,8 +43,28 @@ $(function() {
 
     // If project is OTHER, just add OTHER as an option (not selected)
     if ($pcode === "99999") {
-        $ddlPanchayat.append('<option value="99999999">OTHER</option>');
-        return; // Skip AJAX call
+        $.ajax({
+        url: "getFlexFundGramPanchayatOther",
+        type: "post",
+        data: { dCode: district },
+        error: function(xhr, status, er) {
+            console.log(er);
+        },
+        success: function(data) {
+            console.log(data);
+            let $selectedProj = $('#projid').val();
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if (data[key] == $selectedProj) {
+                        $ddlPanchayat.append('<option value="' + data[key] + '" selected>' + key + '</option>');
+                    } else {
+                        $ddlPanchayat.append('<option value="' + data[key] + '">' + key + '</option>');
+                    }
+                }
+            }
+        }
+    });
     }
 
     // Otherwise, load Gram Panchayats via AJAX

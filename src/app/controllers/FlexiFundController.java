@@ -108,6 +108,12 @@ public class FlexiFundController {
 		return service.getFlexiFundGM(pCode);
 	}
 	
+	@RequestMapping(value = "/getFlexFundGramPanchayatOther", method = RequestMethod.POST)
+	@ResponseBody
+	public LinkedHashMap<String, Integer> getFlexFundGramPanchayatOther(HttpServletRequest request, @RequestParam("dCode") int dCode) {
+		return service.getFlexiFundGPOther(dCode);
+	}
+	
 	@RequestMapping(value = "/getFlexiFundData", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> getFlexiFundData(
@@ -191,7 +197,7 @@ public class FlexiFundController {
 	
 	@RequestMapping(value = "/uploadFlexiFundPhoto", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> uploadPhoto(
+	public Map<String, Object> uploadPhoto(HttpServletRequest request,
 	        @RequestParam("photo") MultipartFile file,
 	        @RequestParam("flexiFundId") int flexiFundId,
 	        @RequestParam(value = "latitude", required = false) String lat,
@@ -199,7 +205,7 @@ public class FlexiFundController {
 	        @RequestParam("projid") Integer projId,
 	        @RequestParam("panchayat") Integer gcode) {
 
-	    return service.savePhoto(file, flexiFundId, lat, lon, projId, gcode);
+	    return service.savePhoto(request, file, flexiFundId, lat, lon, projId, gcode);
 	}
 	
 	
@@ -217,8 +223,8 @@ public class FlexiFundController {
 	public void getImage(@RequestParam String name,
 	                     HttpServletResponse response) throws IOException {
 
-	    String filePath = "D:\\FlexiFund\\" + name;
-
+	  //  String filePath = "D:\\FlexiFund\\" + name;
+	    String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + name;
 	    File file = new File(filePath);
 
 	    if (file.exists()) {

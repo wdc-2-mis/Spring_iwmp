@@ -63,9 +63,9 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 
 	@Override
-	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
+	public Map<String, Object> savePhoto(HttpServletRequest request, MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
 		// TODO Auto-generated method stub
-		return dao.savePhoto(file, flexiFundId, lat, lon, projId, gcode);
+		return dao.savePhoto(request, file, flexiFundId, lat, lon, projId, gcode);
 	}
 	 
 	@Override
@@ -110,6 +110,11 @@ public class FlexFundServiceImpl implements FlexFundService{
 	@Override
 	public List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid) {
 	    return dao.getExpenditureHistory(ffid);
+	}
+
+	@Override
+	public LinkedHashMap<String, Integer> getFlexiFundGPOther(int dCode) {
+		return dao.getFlexiFundGPOther(dCode);
 	}
 
 	

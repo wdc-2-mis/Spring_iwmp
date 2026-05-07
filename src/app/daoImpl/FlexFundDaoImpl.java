@@ -66,6 +66,8 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	@Value("${flexiFundExpenditureHistoryRpt}")
     String flexiFundExpenditureHistoryData;
 	
+	@Value("${getFlexiFundGramPanchayatOther}")
+    String getFlexiFundGramPanchayatOther;
 	
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -195,7 +197,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        sess.beginTransaction();
 
-//	        String filePath = "D:\\FlexiFund\\";
+	    //    String filePath = "D:\\FlexiFund\\";
 	        
 	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
@@ -307,16 +309,15 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        ses = sessionFactory.openSession();
 	        tx = ses.beginTransaction();
 
-	        if(projId == 99999 || gcode == 99999999)
+	        if(projId == 99999)
 	        {
 	        	projId = null;
-	        	gcode = null;
 	        }
 	        String hql = "SELECT DISTINCT d FROM FlexiFundDetails d " +
 	                     "LEFT JOIN FETCH d.photos " +
 	                     "LEFT JOIN FETCH d.activity " + 
-	                     "WHERE ( (:projId IS NOT NULL AND :gcode IS NOT NULL AND d.project.id = :projId AND d.gcode.id = :gcode) " +
-                         "OR (:projId IS NULL OR :gcode IS NULL) AND d.dcode.id = :district )";
+	                     "WHERE ( (:projId IS NOT NULL AND d.project.id = :projId AND d.gcode.id = :gcode) " +
+                         "OR (:projId IS NULL) AND d.gcode.id = :gcode AND d.dcode.id = :district )";
 
 
 	        result = ses.createQuery(hql, FlexiFundDetails.class)
@@ -355,7 +356,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        session.beginTransaction();
 
-//	        String filePath = "D:\\FlexiFund\\";
+	//        String filePath = "D:\\FlexiFund\\";
 	        
 	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
@@ -452,7 +453,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        if (photoUrl != null) {
 
-//	            String filePath = "D:\\FlexiFund\\" + photoUrl;
+	//            String filePath = "D:\\FlexiFund\\" + photoUrl;
 	            
 	            String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + photoUrl;
 
@@ -483,11 +484,11 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 
 	@Override
-	public Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
+	public Map<String, Object> savePhoto(HttpServletRequest request, MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode) {
 
 		Map<String, Object> response = new HashMap<>();
 	    Session session = sessionFactory.getCurrentSession();
-
+	    String createdBy = request.getSession().getAttribute("loginID").toString();
 	    try {
 	        session.beginTransaction();
 
@@ -514,7 +515,8 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        photo.setPhotoUrl(uniqueName);
 	        photo.setLatitude(lat);
 	        photo.setLongitude(lon);
-
+            photo.setCreatedBy(createdBy);
+            photo.setRequestedIp(getClientIpAddr(request));
 	        Integer photoId = (Integer) session.save(photo);
 
 	        session.getTransaction().commit();
@@ -533,8 +535,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	public boolean deleteFlexiFundRow(int id) {
 	    Session session = sessionFactory.getCurrentSession();
-	    Transaction tx = null; // Track transaction to commit/rollback
-
+	    Transaction tx = null; 
+//	    String uploadDir = "D:\\FlexiFund\\";
+	    String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	    try {
 	        tx = session.beginTransaction();
 
@@ -544,7 +547,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	        List<FlexiFundPhoto> photos = photoQuery.getResultList();
 
 	        for (FlexiFundPhoto photo : photos) {
-	            String filePath = "D:" + File.separator + "FlexiFund" + File.separator + photo.getPhotoUrl();
+	        	String filePath = uploadDir + photo.getPhotoUrl();
 	            File file = new File(filePath);
 	            if (file.exists()) {
 	                file.delete();
@@ -580,10 +583,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	    	SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy-MM-dd");
 	    	
-	    	if(projid == 99999 || panchayat == 99999999)
+	    	if(projid == 99999)
 	        {
 	        	projid = null;
-	        	panchayat = null;
 	        }
 	    	
 	    	String hql = completeFlexiFund;
@@ -856,5 +858,38 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    
 	    return expenditureList;
 	}
+
+	@Override
+	public LinkedHashMap<String, Integer> getFlexiFundGPOther(int dCode) {
+		List<IwmpGramPanchayat> gpList=new ArrayList<IwmpGramPanchayat>();
+		String hql=getFlexiFundGramPanchayatOther;
+		LinkedHashMap<String, Integer> gpMap=new LinkedHashMap<String, Integer>();
+		Session session = sessionFactory.getCurrentSession();
+		Transaction tx = null;
+		try {
+			 tx = session.beginTransaction();
+			Query query = session.createQuery(hql);
+			query.setInteger("dcode", dCode);
+			gpList = query.list();
+			
+			for (IwmpGramPanchayat gp : gpList) {
+				gpMap.put( gp.getGramPanchayatName(), gp.getGcode());
+			}
+			tx.commit();
+		} 
+		catch (HibernateException e) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	    } catch (Exception ex) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        ex.printStackTrace();
+	    }
+        return gpMap;
+	}
+
 	
 }

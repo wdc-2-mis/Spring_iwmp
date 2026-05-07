@@ -33,7 +33,7 @@ public interface FlexFundService {
 
 	boolean deletePhotoById(int photoId);
 
-	Map<String, Object> savePhoto(MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode);
+	Map<String, Object> savePhoto(HttpServletRequest request, MultipartFile file, int flexiFundId, String lat, String lon, Integer projId, Integer gcode);
 	
 	boolean deleteFlexiFundRow(int id);
 
@@ -52,5 +52,7 @@ public interface FlexFundService {
 	List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode);
 	
 	List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid);
+
+	LinkedHashMap<String, Integer> getFlexiFundGPOther(int dCode);
 	
 }

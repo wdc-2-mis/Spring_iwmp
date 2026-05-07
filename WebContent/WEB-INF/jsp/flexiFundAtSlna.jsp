@@ -135,7 +135,7 @@ var activityList = [
                 <div class="photoPreview"></div>
             </td>
              <td>
-            <textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea>
+            <textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="2000"></textarea>
             </td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>

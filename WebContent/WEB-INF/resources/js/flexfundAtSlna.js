@@ -36,6 +36,7 @@ let globalImageSet = new Set();
     e.preventDefault();
     let $pcode = $('#projid option:selected').val();
     let $ddlPanchayat = $('#panchayat');
+    let district =  $('#district').val();
     $ddlPanchayat.empty();
 
     // Always add default option first
@@ -43,8 +44,28 @@ let globalImageSet = new Set();
 
     // If project is OTHER, just add OTHER as an option (not selected)
     if ($pcode === "99999") {
-        $ddlPanchayat.append('<option value="99999999">OTHER</option>');
-        return; // Skip AJAX call
+        $.ajax({
+        url: "getFlexFundGramPanchayatOther",
+        type: "post",
+        data: { dCode: district },
+        error: function(xhr, status, er) {
+            console.log(er);
+        },
+        success: function(data) {
+            console.log(data);
+            let $selectedProj = $('#projid').val();
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    if (data[key] == $selectedProj) {
+                        $ddlPanchayat.append('<option value="' + data[key] + '" selected>' + key + '</option>');
+                    } else {
+                        $ddlPanchayat.append('<option value="' + data[key] + '">' + key + '</option>');
+                    }
+                }
+            }
+        }
+    });
     }
 
     // Otherwise, load Gram Panchayats via AJAX
@@ -257,7 +278,7 @@ function loadDraftTable(data) {
                 <div class="photoPreview">${photosHtml}</div>
                 <small class="text-danger photoError"></small>
             </td>
-           <td> <textarea name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200">${item.remark}</textarea> </td>
+           <td> <textarea name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="2000">${item.remark}</textarea> </td>
         
         <td>
         <button type="button" class="btn btn-danger deleteDraftRow">-</button>
@@ -604,7 +625,7 @@ $(document).on('click', '.addRow', function () {
             <small class="text-danger photoError"></small>
             <div class="photoPreview"></div>
         </td>
-        <td><textarea name="remark[]" rows="2" cols="22" maxlength="200"></textarea></td>
+        <td><textarea name="remark[]" rows="2" cols="22" maxlength="2000"></textarea></td>
         <td>
             <button type="button" class="btn btn-success addRow">+</button>
             <button type="button" class="btn btn-danger removeRow">-</button>
@@ -944,7 +965,7 @@ function resetForm() {
                 <small class="text-danger photoError"></small>
                 <div class="photoPreview"></div>
             </td>
-            <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="200"></textarea></td>
+            <td><textarea id="remark" name="remark[]" autocomplete="off" rows="2" cols="22" maxlength="2000"></textarea></td>
             <td>
                 <button type="button" class="btn btn-success addRow">+</button>
                 <button type="button" class="btn btn-danger removeRow" style="display:none;">-</button>
