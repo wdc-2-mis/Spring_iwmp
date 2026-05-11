@@ -97,7 +97,7 @@ function exportExcel(dcode, dName, stName){
                                     
                                     <td><c:choose>
 									<c:when test="${dt.grampanchayat > 0}">
-										<a href = "getProjDetailFlexiFundReport?projcd=${dt.proj_id}&pName=${dt.proj_name}&dName=${dName}&stName=${stName}">
+										<a href = "getProjDetailFlexiFundReport?projcd=${dt.proj_id}&pName=${dt.proj_name}&dcode=${dt.dcode}&dName=${dName}&stName=${stName}">
 										<c:out value='${dt.proj_name}'/></a>			
 									</c:when>
 									<c:otherwise>

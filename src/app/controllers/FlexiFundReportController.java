@@ -115,16 +115,19 @@ public class FlexiFundReportController {
 		
 		String stName = request.getParameter("stName");
 		String distName = request.getParameter("dName");
+		String dcode = request.getParameter("dcode");
 		String projName = request.getParameter("pName");
 		String pcode = request.getParameter("projcd");
+		
 		
 		ModelAndView mav = new ModelAndView("reports/projDetailFlexiFundReport");
 		
 		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
 		
-		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode), Integer.parseInt(dcode));
 		
 		mav.addObject("pcode",pcode);
+		mav.addObject("dcode",dcode);
 		mav.addObject("dName",distName);
 		mav.addObject("stName",stName);
 		mav.addObject("pName",projName);
@@ -1840,12 +1843,13 @@ public class FlexiFundReportController {
 		
 		String stName = request.getParameter("stName");
 		String pcode = request.getParameter("pcode");
+		String dcode = request.getParameter("dcode");
 		String dName = request.getParameter("dName");
 		String pName = request.getParameter("pName");
 		
 		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
 		
-		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode), Integer.parseInt(dcode));
 			
 		Workbook workbook = new XSSFWorkbook();
 		//invoking creatSheet() method and passing the name of the sheet to be created
@@ -2176,12 +2180,13 @@ public class FlexiFundReportController {
 		
 		String stName = request.getParameter("stName");
 		String pcode = request.getParameter("pcode");
+		String dcode = request.getParameter("dcode");
 		String dName = request.getParameter("dName");
 		String pName = request.getParameter("pName");
 		
 		List<FlexiFundMActivityBean> list = new ArrayList<FlexiFundMActivityBean>();
 		
-		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode));
+		list = ffService.getProjDetailFlexiFundReport(Integer.parseInt(pcode), Integer.parseInt(dcode));
 			
 		try {
 			

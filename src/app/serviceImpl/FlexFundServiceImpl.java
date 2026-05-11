@@ -103,8 +103,8 @@ public class FlexFundServiceImpl implements FlexFundService{
 	}
 	
 	@Override
-	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode) {
-		return dao.getProjDetailFlexiFundReport(pcode);
+	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode, Integer dcode) {
+		return dao.getProjDetailFlexiFundReport(pcode, dcode);
 	}
 	
 	@Override

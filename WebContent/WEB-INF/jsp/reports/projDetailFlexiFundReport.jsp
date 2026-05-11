@@ -212,9 +212,10 @@ function closeExpenditureModal() {
     $('#expenditureModal').modal('hide');
 }
 
-function downloadPDF(pcode, pName, dName, stName){
+function downloadPDF(pcode, pName, dcode, dName, stName){
 	document.getElementById("pcode").value=pcode;
     document.getElementById("pName").value=pName;
+    document.getElementById("dcode").value=dcode;
     document.getElementById("dName").value=dName;
     document.getElementById("stName").value=stName;
     document.getElementById('ffForm').action = "downloadPDFProjDtlFlexiFundRpt";
@@ -222,9 +223,10 @@ function downloadPDF(pcode, pName, dName, stName){
     document.getElementById('ffForm').submit();
 }
 
-function exportExcel(pcode, pName, dName, stName){
+function exportExcel(pcode, pName, dcode, dName, stName){
 	document.getElementById("pcode").value=pcode;
     document.getElementById("pName").value=pName;
+    document.getElementById("dcode").value=dcode;
     document.getElementById("dName").value=dName;
     document.getElementById("stName").value=stName;
     document.getElementById('ffForm').action = "downloadExcelProjDtlFlexiFundRpt";
@@ -523,8 +525,8 @@ function exportExcel(pcode, pName, dName, stName){
 		<div class="col text-left">
                 <br>
                 <c:if test="${not empty flexiFundProjDtlReportList}">
-                    <button name="exportExcel" id="exportExcel" onclick="exportExcel('${pcode}', '${pName}', '${dName}', '${stName}')" class="btn btn-info">Excel</button>
-                    <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${pcode}', '${pName}', '${dName}', '${stName}')" class="btn btn-info">PDF</button>
+                    <button name="exportExcel" id="exportExcel" onclick="exportExcel('${pcode}', '${pName}', '${dcode}', '${dName}', '${stName}')" class="btn btn-info">Excel</button>
+                    <button name="exportPDF" id="exportPDF" onclick="downloadPDF('${pcode}', '${pName}', '${dcode}', '${dName}', '${stName}')" class="btn btn-info">PDF</button>
                 </c:if>
                 <p align="right">Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%></p>
    		</div>
@@ -534,6 +536,7 @@ function exportExcel(pcode, pName, dName, stName){
                 
                 <input type="hidden" name="pcode" id="pcode" value="" />
             	<input type="hidden" name="pName" id="pName" value="" />
+            	<input type="hidden" name="dcode" id="dcode" value="" />
             	<input type="hidden" name="dName" id="dName" value="" />
             	<input type="hidden" name="stName" id="stName" value="" />
                 

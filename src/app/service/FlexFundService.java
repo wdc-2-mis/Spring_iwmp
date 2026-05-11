@@ -49,7 +49,7 @@ public interface FlexFundService {
 	
 	List<FlexiFundMActivityBean> getProjWiseFlexiFundReport(Integer dcode);
 	
-	List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode);
+	List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode, Integer dcode);
 	
 	List<FlexiFundMActivityBean> getExpenditureHistory(Integer ffid);
 

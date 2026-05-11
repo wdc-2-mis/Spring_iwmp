@@ -817,7 +817,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	}
 	
 	@Override
-	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode) {
+	public List<FlexiFundMActivityBean> getProjDetailFlexiFundReport(Integer pcode, Integer dcode) {
 
 		List<FlexiFundMActivityBean> getProjDetailFlexiFundReport = new ArrayList<FlexiFundMActivityBean>();
 		
@@ -827,6 +827,7 @@ public class FlexFundDaoImpl implements FlexFundDao{
 			session.beginTransaction();
 			SQLQuery query = session.createSQLQuery(hql);
 			query.setInteger("pcode", pcode);
+			query.setInteger("dcode", dcode);
 			query.setResultTransformer(Transformers.aliasToBean(FlexiFundMActivityBean.class));
 			getProjDetailFlexiFundReport = query.list();
 			session.getTransaction().commit();
