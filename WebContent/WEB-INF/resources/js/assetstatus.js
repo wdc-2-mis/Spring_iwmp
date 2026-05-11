@@ -13,9 +13,10 @@ var date = day+'-'+month+'-'+today.getFullYear();
 	$(this).datepicker({
     	 changeMonth: true,
          changeYear: true, 
+         minDate: new Date(2022, 3, 1), // 01-04-2022 (months are 0-based, so 3 = April)
          maxDate: date, 
          dateFormat: "dd-mm-yy",
-         yearRange: "2000:2041",
+         yearRange: "2022:2041",
          onClose: function(){
 	var dt=new Date($.datepicker.parseDate('dd-mm-yy', $(this).val()));
 	var todaydt=new Date($.datepicker.parseDate('dd-mm-yy',date));
@@ -100,7 +101,7 @@ var date = day+'-'+month+'-'+today.getFullYear();
 						minDate: yrdt1,
 						maxDate: date,
 						dateFormat: "dd-mm-yy",
-						yearRange: "2000:2041",
+						yearRange: "2022:2041",
 						onClose: function() {
 							var dt = new Date($.datepicker.parseDate('dd-mm-yy', $(this).val()));
 //							alert('cjeck1 '+dt);
