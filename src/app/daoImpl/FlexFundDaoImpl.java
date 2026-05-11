@@ -197,9 +197,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        sess.beginTransaction();
 
-	    //    String filePath = "D:\\FlexiFund\\";
+	        String filePath = "D:\\FlexiFund\\";
 	        
-	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
+	  //      String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
 	        if (!dir.exists()) dir.mkdirs();
 
@@ -356,9 +356,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        session.beginTransaction();
 
-	//        String filePath = "D:\\FlexiFund\\";
+	        String filePath = "D:\\FlexiFund\\";
 	        
-	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
+//	        String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(filePath);
 	        if (!dir.exists()) dir.mkdirs();
 
@@ -453,9 +453,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 
 	        if (photoUrl != null) {
 
-	//            String filePath = "D:\\FlexiFund\\" + photoUrl;
+	            String filePath = "D:\\FlexiFund\\" + photoUrl;
 	            
-	            String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + photoUrl;
+//	            String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + photoUrl;
 
 	            File file = new File(filePath);
 	            if (file.exists()) {
@@ -492,9 +492,9 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	    try {
 	        session.beginTransaction();
 
-//	        String uploadDir = "D:\\FlexiFund\\";
+	        String uploadDir = "D:\\FlexiFund\\";
 	        
-	        String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
+//	        String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	        File dir = new File(uploadDir);
 	        if (!dir.exists()) {
 	            dir.mkdirs();
@@ -536,8 +536,8 @@ public class FlexFundDaoImpl implements FlexFundDao{
 	public boolean deleteFlexiFundRow(int id) {
 	    Session session = sessionFactory.getCurrentSession();
 	    Transaction tx = null; 
-//	    String uploadDir = "D:\\FlexiFund\\";
-	    String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
+	    String uploadDir = "D:\\FlexiFund\\";
+	//    String uploadDir = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/";
 	    try {
 	        tx = session.beginTransaction();
 

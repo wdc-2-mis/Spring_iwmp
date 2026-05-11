@@ -223,8 +223,8 @@ public class FlexiFundController {
 	public void getImage(@RequestParam String name,
 	                     HttpServletResponse response) throws IOException {
 
-	  //  String filePath = "D:\\FlexiFund\\" + name;
-	    String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + name;
+	    String filePath = "D:\\FlexiFund\\" + name;
+	   // String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/FlexiFund/photos/" + name;
 	    File file = new File(filePath);
 
 	    if (file.exists()) {
