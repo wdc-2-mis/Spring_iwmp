@@ -4,7 +4,7 @@
 
 
 <div class="container">
-<div class="col" style="text-align:center;"><h5>Add Physical Achievement for Remaining Plan</h5></div>
+<div class="col" style="text-align:center;"><h5>Add Physical Achievement as per Previous Plan</h5></div>
   <form name="addPhysicalAchievement" id="addPhysicalAchievement">
      <lable class="message badge badge-danger error"></lable>
      <input type="hidden" value="" id="finYr" />

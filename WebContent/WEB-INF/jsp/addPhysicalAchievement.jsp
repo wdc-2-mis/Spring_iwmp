@@ -37,7 +37,14 @@
      </div>
      
      
-     <div class="form-row">Note<span style="color: red;">*</span>&nbsp; :- Click and Confirm Activity blue link before Submitting the Achievement. </div>
+     <div class="form-row">Note<span style="color: red;">* &nbsp;</span> <span style="color: blue; font-weight: bold;">
+  			1. Click and Confirm Activity blue link before Submitting the Achievement. 
+  		<br/>
+  		
+    		2. If the Physical Action Plan for the current financial year has not been submitted, 
+    			then use the option ` Add Physical Achievement as per Previous Plan `.
+  		</span>
+	</div>
   
      <br>
      
