@@ -498,9 +498,9 @@ public class WatershedPunarutthanController {
 			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
 			String userType= session.getAttribute("userType").toString();
 			res=ser.completePunarutthanImplementation(assetid, session.getAttribute("loginID").toString());
-		
 		 
-		}else {
+		}
+		else {
 			mav = new ModelAndView("login");
 			mav.addObject("login", new Login());
 		}

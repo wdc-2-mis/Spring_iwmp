@@ -175,7 +175,7 @@ document.addEventListener("change", function(e) {
                 tsInput.value = "";
             }
             // ALERT IF GPS OR TIMESTAMP MISSING
-            if (!latInput.value || !lngInput.value || !tsInput.value) {
+           /*  if (!latInput.value || !lngInput.value || !tsInput.value) {
             	alert("This photo does NOT contain Geo-referenced or timestamp.\n Please select correct photo?");
                 //  if (!confirm("This photo does NOT contain GPS or timestamp.\nContinue?")) {
                    //   input.value = ""; // Clear the input if user cancels
@@ -185,7 +185,7 @@ document.addEventListener("change", function(e) {
                       e.target.value = "";
                       return false;
                 //  }
-            }
+            } */
             
             // Check if this image already uploaded (duplicate)
             if (latInput.value || lngInput.value || tsInput.value){
