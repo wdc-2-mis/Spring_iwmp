@@ -236,16 +236,16 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		    List<String> timestamps = userfileup.getPhotoTimestamp();
 		    String lat=null;
 		    List list =null;
-		    for (int i = 0; i < photos.size(); i++) 
-	        {
+		 //   for (int i = 0; i < photos.size(); i++) 
+	     //   {
 		    		//lat=latitudes.get(i);
-	            	list = sess.createQuery("SELECT wdcpmksy1PunarutthanPlan.planId FROM Wdcpmksy1PunarutthanPlanPhoto where  wdcpmksy1PunarutthanPlan.projectCd=:projcd and wdcpmksy1PunarutthanPlan.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlan.mStructure.structureId=:struct").
-	            	setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
+	     //       	list = sess.createQuery("SELECT wdcpmksy1PunarutthanPlan.planId FROM Wdcpmksy1PunarutthanPlanPhoto where  wdcpmksy1PunarutthanPlan.projectCd=:projcd and wdcpmksy1PunarutthanPlan.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlan.mStructure.structureId=:struct").
+	     //       	setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
 	            	//latitude=:latt and  setString("latt", lat).
-	        }
+	     //   }
 			
-			if(list.isEmpty()) 
-			{
+		//	if(list.isEmpty()) 
+		//	{
 			
 				String filePath="D:\\punarutthan\\planing\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/planing/";
@@ -291,13 +291,15 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		         for (int i = 0; i < photos.size(); i++) 
 		         {
 		             MultipartFile image = photos.get(i);
-		             if (!image.isEmpty()) {
-		            	 Wdcpmksy1PunarutthanPlanPhoto photo = new Wdcpmksy1PunarutthanPlanPhoto();
+		             if (!image.isEmpty()) 
+		             {
+		            	Wdcpmksy1PunarutthanPlanPhoto photo = new Wdcpmksy1PunarutthanPlanPhoto();
 		                photo.setWdcpmksy1PunarutthanPlan(data);
 				        photo.setCreatedBy(session.getAttribute("loginID").toString());
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
-						if (latitudes != null && i < latitudes.size()) {
+						if (latitudes != null && i < latitudes.size()) 
+						{
 						    String latitude = latitudes.get(i);
 						    if (latitude == null || latitude.trim().isEmpty()) {
 						        photo.setLatitude(null);
@@ -310,33 +312,40 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						    
 						    photo.setLatitude(null);
 						}
-						if (longitudes != null && i < longitudes.size()) {
+						if (longitudes != null && i < longitudes.size()) 
+						{
 						    String longitude = longitudes.get(i);
 						    if (longitude == null || longitude.trim().isEmpty()) {
 						        photo.setLongitute(null);
 						    } else {
 						        photo.setLongitute(longitude);
 						    }
-						} else {
+						} 
+						else {
 						    photo.setLongitute(null);
 						}
 
-						if (timestamps != null && i < timestamps.size()) {
+						if (timestamps != null && i < timestamps.size()) 
+						{
 						    String ts = timestamps.get(i);
-						    if (ts == null || ts.trim().isEmpty()) {
+						    if (ts == null || ts.trim().isEmpty()) 
+						    {
 						        photo.setPhoto_timestamp(null);
-						    } else {
+						    } 
+						    else {
 						        try {
 						            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						            java.util.Date parsedDate = sdf.parse(ts);
 						            Timestamp timestamp = new Timestamp(parsedDate.getTime());
 						            photo.setPhoto_timestamp(timestamp);
-						        } catch (ParseException e) {
+						        } 
+						        catch (ParseException e) {
 						            // Handle invalid date format gracefully
 						            photo.setPhoto_timestamp(null);
 						        }
 						    }
-						} else {
+						} 
+						else {
 						    photo.setPhoto_timestamp(null);
 						}
 		                 // Upload the file
@@ -355,11 +364,11 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			res = "success";
 			sess.getTransaction().commit();
-			}
-			else {
-				res="failexist";
-				sess.getTransaction().commit();
-			}
+		//	}
+			//else {
+			//	res="failexist";
+			//	sess.getTransaction().commit();
+			//}
 		}
 		catch (Exception ex) {
 			res = "fail";
@@ -665,16 +674,16 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 		    List<String> timestamps = userfileup.getPhotoTimestamp();
 		    String lat=null;
 		    List list =null;
-		    for (int i = 0; i < photos.size(); i++) 
-	        {
+		//    for (int i = 0; i < photos.size(); i++) 
+	    //    {
 		    		//lat=latitudes.get(i);
-	            	list = sess.createQuery("select wdcpmksy1PunarutthanPlanImplementation.implementationPhotoId from Wdcpmksy1PunarutthanPlanImplementationPhoto where wdcpmksy1PunarutthanPlanImplementation.projectCd=:projcd and wdcpmksy1PunarutthanPlanImplementation.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlanImplementation.mStructure.structureId=:struct").
-	            	setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
+	     //       	list = sess.createQuery("select wdcpmksy1PunarutthanPlanImplementation.implementationPhotoId from Wdcpmksy1PunarutthanPlanImplementationPhoto where wdcpmksy1PunarutthanPlanImplementation.projectCd=:projcd and wdcpmksy1PunarutthanPlanImplementation.iwmpVillage.vcode=:village and wdcpmksy1PunarutthanPlanImplementation.mStructure.structureId=:struct").
+	     //       	setString("projcd", userfileup.getProject()).setInteger("village", userfileup.getVillage1()).setInteger("struct", userfileup.getStructure()).list();
 	            	// setString("latt", lat).   latitude=:latt and
-	        }
+	     //   }
 			
-			if(list.isEmpty()) 
-			{
+		//	if(list.isEmpty()) 
+		//	{
 			
 				String filePath="D:\\punarutthan\\Implementation\\";
 			// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/punarutthan/implementation/";
@@ -728,7 +737,8 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						photo.setCreated_date(new Timestamp(new java.util.Date().getTime()));
 						photo.setRequestedIp(ipAddr);
 						
-						if (latitudes != null && i < latitudes.size()) {
+						if (latitudes != null && i < latitudes.size()) 
+						{
 						    String latitude = latitudes.get(i);
 						    if (latitude == null || latitude.trim().isEmpty()) {
 						        photo.setLatitude(null);
@@ -741,7 +751,8 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						    
 						    photo.setLatitude(null);
 						}
-						if (longitudes != null && i < longitudes.size()) {
+						if (longitudes != null && i < longitudes.size()) 
+						{
 						    String longitude = longitudes.get(i);
 						    if (longitude == null || longitude.trim().isEmpty()) {
 						        photo.setLongitute(null);
@@ -752,22 +763,27 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 						    photo.setLongitute(null);
 						}
 
-						if (timestamps != null && i < timestamps.size()) {
+						if (timestamps != null && i < timestamps.size()) 
+						{
 						    String ts = timestamps.get(i);
 						    if (ts == null || ts.trim().isEmpty()) {
 						        photo.setPhoto_timestamp(null);
-						    } else {
+						    } 
+						    else {
 						        try {
+						        	
 						            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						            java.util.Date parsedDate = sdf.parse(ts);
 						            Timestamp timestamp = new Timestamp(parsedDate.getTime());
 						            photo.setPhoto_timestamp(timestamp);
-						        } catch (ParseException e) {
+						        } 
+						        catch (ParseException e) {
 						            // Handle invalid date format gracefully
 						            photo.setPhoto_timestamp(null);
 						        }
 						    }
-						} else {
+						} 
+						else {
 						    photo.setPhoto_timestamp(null);
 						}
 		                 // Upload the file
@@ -786,11 +802,11 @@ public class WatershedPunarutthanDaoImple implements WatershedPunarutthanDao{
 			
 			res = "success";
 			sess.getTransaction().commit();
-			}
-			else {
-				res="failexist";
-				sess.getTransaction().commit();
-			} 
+		//	}
+		//	else {
+		//		res="failexist";
+		//		sess.getTransaction().commit();
+		//	} 
 		}
 		catch (Exception ex) {
 			res = "fail";
