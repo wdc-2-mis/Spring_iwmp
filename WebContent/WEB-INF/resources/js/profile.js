@@ -93,6 +93,12 @@ for (var i = 0; i < fields.length; i++) {
         btn.disabled = true;
         btn.value = "Updating...";
 
+console.log("Submitting Mobile :",
+    document.getElementById("userMobileNo").value);
+
+console.log("Submitting Name :",
+    document.getElementById("userName").value);
+    
         document.getElementById("editprofile").submit();
 	}    
 }

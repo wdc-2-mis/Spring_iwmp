@@ -10,24 +10,97 @@
 });
 
 
-function onlyAlphabets(e) {
+// Allow typing only alphabets and space
+function onlyAlphabetsKey(e) {
 
-    var charCode = e.which ? e.which : e.keyCode;
+    var key = e.which || e.keyCode;
 
-    // Allow Backspace, Tab, Delete, Arrow keys
-    if (charCode == 8 || charCode == 9 || charCode == 46 ||
-        charCode == 37 || charCode == 39) {
+    // Backspace, Tab, Delete, Left, Right
+    if (key == 8 || key == 9 || key == 46 || key == 37 || key == 39) {
         return true;
     }
 
-    // Allow A-Z, a-z and Space
-    if ((charCode >= 65 && charCode <= 90) ||
-        (charCode >= 97 && charCode <= 122) ||
-        charCode == 32) {
+    // A-Z
+    if ((key >= 65 && key <= 90) ||
+        (key >= 97 && key <= 122) ||
+        key == 32) {
         return true;
     }
 
     return false;
+}
+
+// Remove invalid characters after typing/paste
+function onlyAlphabets(input) {
+
+    input.value = input.value.replace(/[^a-zA-Z ]/g, '');
+}
+
+function onlyAlphaNumericKey(e) {
+
+    var key = e.which || e.keyCode;
+
+    if (key == 8 || key == 9 || key == 46 || key == 37 || key == 39)
+        return true;
+
+    return /^[A-Za-z0-9\/\- ]$/.test(String.fromCharCode(key));
+}
+
+function onlyAlphaNumeric(input){
+
+    input.value = input.value.replace(/[^A-Za-z0-9\/\- ]/g,'');
+
+}
+
+function onlyNumericKey(e){
+
+    var key = e.which || e.keyCode;
+
+    if (key == 8 || key == 9 || key == 46 || key == 37 || key == 39)
+        return true;
+
+    return /^[0-9]$/.test(String.fromCharCode(key));
+}
+
+function onlyNumeric(input){
+
+    input.value=input.value.replace(/[^0-9]/g,'');
+
+}
+
+function onlyDecimalKey(e){
+
+    var key=e.which||e.keyCode;
+
+    if(key==8||key==9||key==46||key==37||key==39)
+        return true;
+
+    if(key==46 && e.target.value.indexOf('.')==-1)
+        return true;
+
+    return /^[0-9]$/.test(String.fromCharCode(key));
+}
+
+function onlyDecimal(input){
+
+    input.value=input.value.replace(/[^0-9.]/g,'');
+
+    var parts=input.value.split('.');
+
+    if(parts.length>2){
+        input.value=parts[0]+'.'+parts.slice(1).join('');
+    }
+
+}
+
+function validateDate(input){
+
+    var pattern=/^\d{2}-\d{2}-\d{4}$/;
+
+    if(!pattern.test(input.value)){
+        input.value='';
+    }
+
 }
 
 $( document ).ready(function(){
@@ -285,13 +358,13 @@ $('#tblFPODetails').removeClass('d-none');
 		$tblSHGTBody ="<tbody>";
 		$tblSHGTHead ='<thead ><tr><th class="text-center" rowspan="1">S.No.</th><th rowspan="2" class="text-center">Name of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Department/ Organisation/ Scheme</th><th rowspan="2" class="text-center">Registration No.</th><th rowspan="1" class="text-center">Date of Registration</th><th rowspan="2" class="text-center">No. of members of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Core Activity</th><th class="text-center" rowspan="2" style="width: 150px;">Avg. turnover of FPO(in rs.)</th><th class="text-center" rowspan="2" style="width: 150px;">No of Farmer associated with FPO</th></tr></thead>';
 		for($i=1;$i<=$noOf;$i++){
-		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input class="col-11" style="width: auto;" type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabets(event)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input class="col-lg-11" style="width: 150px;" type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker" style="width: 120px;"></td><td><input type="text" class="col-11" style="width: 150px;" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="col-11" style="width: 140px;" onmousedown="decimalCheck(event)" maxlength="10"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="col-11" style="width: 140px;" onmousedown="numericOnly(event)" maxlength="10"></td></tr>';
+		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input class="col-11" style="width: auto;" type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabetsKey(event)" oninput="onlyAlphabets(this)" onpaste="setTimeout(() => onlyAlphabets(this), 0)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input class="col-lg-11" style="width: 150px;" type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50" onkeypress="return onlyAlphaNumericKey(event)" oninput="onlyAlphaNumeric(this)" onpaste="setTimeout(() => onlyAlphaNumeric(this), 0)"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker" style="width: 120px;" onblur="validateDate(this)"></td><td><input type="text" class="col-11" style="width: 150px;" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8" onkeypress="return onlyNumericKey(event)" oninput="onlyNumeric(this)" onpaste="setTimeout(() => onlyNumeric(this), 0)"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="col-11" style="width: 140px;" onmousedown="decimalCheck(event)" maxlength="10" onkeypress="return onlyDecimalKey(event)" oninput="onlyDecimal(this)" onpaste="setTimeout(() => onlyDecimal(this), 0)"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="col-11" style="width: 140px;" onmousedown="numericOnly(event)" maxlength="10" onkeypress="return onlyNumericKey(event)" oninput="onlyNumeric(this)" onpaste="setTimeout(() => onlyNumeric(this), 0)"></td></tr>';
 		}
 		}
 		else{
 		$tblSHGTHead ='<thead ><tr><th class="text-center" rowspan="1">S.No.</th><th rowspan="1" class="text-center">Name of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Department /Organisation /Scheme</th><th rowspan="1" class="text-center">Registration No.</th><th rowspan="1" class="text-center">Date of Registration</th><th rowspan="2" class="text-center">No. of members of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Core Activity</th><th class="text-center" rowspan="2" style="width: 150px;">Avg. turnover of FPO(in rs.)</th><th class="text-center" rowspan="2" style="width: 150px;">No of Farmer associated with FPO</th></tr></thead>';
 		for($i=1;$i<=$noOf;$i++){
-		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabets(event)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker"></td><td><input type="text" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="form-control input" onmousedown="decimalCheck(event)" maxlength="10"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="form-control input" onmousedown="numericOnly(event)" maxlength="10"></td></tr>';
+		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabetsKey(event)" oninput="onlyAlphabets(this)" onpaste="setTimeout(() => onlyAlphabets(this), 0)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50" onkeypress="return onlyAlphaNumericKey(event)" oninput="onlyAlphaNumeric(this)" onpaste="setTimeout(() => onlyAlphaNumeric(this), 0)"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker" onblur="validateDate(this)"></td><td><input type="text" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8" onkeypress="return onlyNumericKey(event)" oninput="onlyNumeric(this)" onpaste="setTimeout(() => onlyNumeric(this), 0)"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="form-control input" onmousedown="decimalCheck(event)" maxlength="10" onkeypress="return onlyDecimalKey(event)" oninput="onlyDecimal(this)" onpaste="setTimeout(() => onlyDecimal(this), 0)"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="form-control input" onmousedown="numericOnly(event)" maxlength="10" onkeypress="return onlyNumericKey(event)" oninput="onlyNumeric(this)" onpaste="setTimeout(() => onlyNumeric(this), 0)"></td></tr>';
 		}
 		}
 		
