@@ -15,6 +15,26 @@ function validatenumber() {
 	} 
 }
 
+function onlyAlphabets(e) {
+
+    var charCode = e.which ? e.which : e.keyCode;
+
+    // Allow Backspace, Tab, Delete, Arrow keys
+    if (charCode == 8 || charCode == 9 || charCode == 46 ||
+        charCode == 37 || charCode == 39) {
+        return true;
+    }
+
+    // Allow A-Z, a-z and Space
+    if ((charCode >= 65 && charCode <= 90) ||
+        (charCode >= 97 && charCode <= 122) ||
+        charCode == 32) {
+        return true;
+    }
+
+    return false;
+}
+
 function validateEmail(emailField)
 {
    // var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
@@ -163,14 +183,14 @@ input[type=email] {
 			
 			<div class="form-group col-3">
       			<label for="district"><b>Name : </b></label>
-      			 <input type="text" id="name" name="name" placeholder="Enter Name" autocomplete="off" required>
+      			 <input type="text" id="name" name="name" placeholder="Enter Name" autocomplete="off" required maxlength="50" onkeypress="return onlyAlphabets(event)">
       			
     		</div>
     		
 			<div class="form-group col-3">
 				<label for="state"><b>	Designation:</b> </label>
 				<span class="projectError"></span>
-				<input type="text" id="designation" name="designation" placeholder="Enter Designation" autocomplete="off" required>
+				<input type="text" id="designation" name="designation" placeholder="Enter Designation" autocomplete="off" maxlength="150" required onkeypress="return onlyAlphabets(event)">
 			
 			</div>
 			

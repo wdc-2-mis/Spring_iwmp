@@ -10,6 +10,25 @@
 });
 
 
+function onlyAlphabets(e) {
+
+    var charCode = e.which ? e.which : e.keyCode;
+
+    // Allow Backspace, Tab, Delete, Arrow keys
+    if (charCode == 8 || charCode == 9 || charCode == 46 ||
+        charCode == 37 || charCode == 39) {
+        return true;
+    }
+
+    // Allow A-Z, a-z and Space
+    if ((charCode >= 65 && charCode <= 90) ||
+        (charCode >= 97 && charCode <= 122) ||
+        charCode == 32) {
+        return true;
+    }
+
+    return false;
+}
 
 $( document ).ready(function(){
 
@@ -266,13 +285,13 @@ $('#tblFPODetails').removeClass('d-none');
 		$tblSHGTBody ="<tbody>";
 		$tblSHGTHead ='<thead ><tr><th class="text-center" rowspan="1">S.No.</th><th rowspan="2" class="text-center">Name of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Department/ Organisation/ Scheme</th><th rowspan="2" class="text-center">Registration No.</th><th rowspan="1" class="text-center">Date of Registration</th><th rowspan="2" class="text-center">No. of members of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Core Activity</th><th class="text-center" rowspan="2" style="width: 150px;">Avg. turnover of FPO(in rs.)</th><th class="text-center" rowspan="2" style="width: 150px;">No of Farmer associated with FPO</th></tr></thead>';
 		for($i=1;$i<=$noOf;$i++){
-		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input class="col-11" style="width: auto;" type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input class="col-lg-11" style="width: 150px;" type="text" id="regno'+$i+'" name="regno" class="form-control input"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker" style="width: 120px;"></td><td><input type="text" class="col-11" style="width: 150px;" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="col-11" style="width: 140px;" onmousedown="decimalCheck(event)"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="col-11" style="width: 140px;" onmousedown="numericOnly(event)"></td></tr>';
+		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input class="col-11" style="width: auto;" type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabets(event)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input class="col-lg-11" style="width: 150px;" type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker" style="width: 120px;"></td><td><input type="text" class="col-11" style="width: 150px;" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="col-11" style="width: 140px;" onmousedown="decimalCheck(event)" maxlength="10"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="col-11" style="width: 140px;" onmousedown="numericOnly(event)" maxlength="10"></td></tr>';
 		}
 		}
 		else{
 		$tblSHGTHead ='<thead ><tr><th class="text-center" rowspan="1">S.No.</th><th rowspan="1" class="text-center">Name of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Department /Organisation /Scheme</th><th rowspan="1" class="text-center">Registration No.</th><th rowspan="1" class="text-center">Date of Registration</th><th rowspan="2" class="text-center">No. of members of FPO</th><th class="text-center" rowspan="3" style="width: 350px;">Core Activity</th><th class="text-center" rowspan="2" style="width: 150px;">Avg. turnover of FPO(in rs.)</th><th class="text-center" rowspan="2" style="width: 150px;">No of Farmer associated with FPO</th></tr></thead>';
 		for($i=1;$i<=$noOf;$i++){
-		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input type="text" id="regno'+$i+'" name="regno" class="form-control input"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker"></td><td><input type="text" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="form-control input" onmousedown="decimalCheck(event)"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="form-control input" onmousedown="numericOnly(event)"></td></tr>';
+		$tblSHGTBody +='<tr><td>'+$i+'</td><td><input type="text" id="nameoffpo'+$i+'" name="nameoffpo" class="form-control input" maxlength="150" onkeypress="return onlyAlphabets(event)"></td><td><select id="dept_org'+$i+'"  class="form-control">'+$fpoDepartmentOption+'</select></td><td><input type="text" id="regno'+$i+'" name="regno" class="form-control input" maxlength="50"></td><td><input type="text"  id="datepicker'+$i+'" name="datepicker" class="datepicker"></td><td><input type="text" id="noofmembers'+$i+'" name="noofmembers" class="form-control input" onmousedown="numericOnly(event)" maxlength="8"></td><td><select id="coreactivity'+$i+'"  name="multicheckbox" class="form-control" multiple >'+a+'</select></td><td class="halfwidth"><input type="text" id="avgturnover'+$i+'" name="avgturnover" class="form-control input" onmousedown="decimalCheck(event)" maxlength="10"></td><td class="halfwidth"><input type="text" id="farmasso'+$i+'" name="farmasso" class="form-control input" onmousedown="numericOnly(event)" maxlength="10"></td></tr>';
 		}
 		}
 		

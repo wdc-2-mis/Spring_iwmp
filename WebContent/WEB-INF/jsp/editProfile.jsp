@@ -4,19 +4,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script> -->
 
- <%-- <link rel="stylesheet" type="text/css"
-	href="<c:url  value="/resources/css/afterlogin.css" />"> --%>
-	<%-- <script src='<c:url value="/resources/js/userRoleMap.js" />'></script> --%>
   
 
  <link rel="stylesheet" type="text/css"
-	href="<c:url  value="/resources/css/afterlogin.css" />">
-	<script src='<c:url value="/resources/js/userRoleMap.js" />'></script>
-  <script src='<c:url value="/resources/js/cpas.js" />'></script>
+      href="<c:url value='/resources/css/afterlogin.css'/>">
 
-<link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/afterlogin.css" />">
-<script src='<c:url value="/resources/js/userRoleMap.js" />'></script>
- <script src='<c:url value="/resources/js/profile.js" />'></script> 
+<script src="<c:url value='/resources/js/userRoleMap.js'/>"></script>
+<script src="<c:url value='/resources/js/cpas.js'/>"></script>
+<script src="<c:url value='/resources/js/profile.js'/>"></script>
 
 <div class ="card">
 <div class="offset-md-2"></div>
@@ -25,8 +20,19 @@
 
 
  <form:form id="editprofile" name="editprofile" modelAttribute="userReg" action="profileSave" method="post">
+ <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
  		<table width="100%" border="0" cellspacing="0" cellpadding="0">
- 		<tr><c:if test="${message ne null}"><p class="badge badge-success"> ${message} </p></c:if></tr>
+ 		<c:if test="${message ne null}">
+<tr>
+    <td colspan="2">
+        <span class="badge badge-success">
+            <c:out value="${message}"/>
+        </span>
+    </td>
+</tr>
+</c:if>
+ 		
+ 		
           <tr class="tabs">
             <td width="162%" colspan="2" style="padding-left:20px">Request For Level User Account </td>
             <td width="19%" class="tabs">&nbsp;</td>
@@ -180,35 +186,35 @@
      	<c:forEach items="${list}" var="item">
         <tr>
           <td class="label">Name <span style="color: red;">*</span></td>
-          <td class="field"><input type="text" name="userName" id="userName" value="<c:out value="${item.userName}" />" /></td>
+          <td class="field"><input type="text" name="userName" id="userName" value="<c:out value="${item.userName}" />" maxlength="100" autocomplete="name" pattern="[A-Za-z ]{3,100}"/></td>
         </tr>
         <tr>
           <td class="label">Designation <span style="color: red;">*</span></td>
-          <td class="field"> <input type="text" name="userDesignation" id="userDesignation" value="<c:out value="${item.designation}" />" /></td>
+          <td class="field"> <input type="text" name="userDesignation" id="userDesignation" value="<c:out value="${item.designation}" />" maxlength="100" autocomplete="organization-title"/></td>
         </tr>
         <tr>
           <td class="label">Department <span style="color: red;">*</span></td>
-          <td class="field"> <input type="text" name="userDepartment" id="userDepartment" value="<c:out value="${item.department}" />" /></td>
+          <td class="field"> <input type="text" name="userDepartment" id="userDepartment" value="<c:out value="${item.department}" />" maxlength="100" autocomplete="organization"/></td>
        </tr>
        <tr>
           <td class="label">Email ID <span style="color: red;">*</span> </td>
-          <td class="field"><input type="text" name="userEmailId" id="userEmailId" value="<c:out value="${item.email}" />"  onblur="validateEmail(this);" /> </td>
+          <td class="field"><input type="email" name="userEmailId" id="userEmailId" value="<c:out value="${item.email}" />"  onblur="validateEmail(this);" maxlength="100" autocomplete="email" /> </td>
        </tr>
        <tr>
           <td class="label">Phone No. </td>
-          <td class="field"><input type="text" name="userPhoneNo" id="userPhoneNo" maxlength="11" min="11" value="<c:out value="${item.phoneNo}" />" onchange="PhoneNoValidation();" /> </td>
+          <td class="field"><input type="tel" name="userPhoneNo" id="userPhoneNo" maxlength="11"  value="<c:out value="${item.phoneNo}" />" onchange="PhoneNoValidation();" pattern="[0-9]{10,11}" /> </td>
        </tr>
        <tr>
           <td class="label">Mobile No. <span style="color: red;">*</span></td>
-          <td class="field"><input type="text" name="userMobileNo" id="userMobileNo" maxlength="10" min="10" value="<c:out value="${item.mobileNo}" />" onkeypress="return isNumberKey(event);" onblur="mobile1();"/> </td>
+          <td class="field"><input type="tel" name="userMobileNo" id="userMobileNo" maxlength="10"  pattern="[6-9][0-9]{9}" value="<c:out value="${item.mobileNo}" />" onkeypress="return isNumberKey(event);" onblur="mobile1();"/> </td>
        </tr>
        <tr>
           <td class="label">Fax No.:</td>
-          <td class="field"><input type="text" name="userFaxNo" id="userFaxNo" value="<c:out value="${item.faxNo}" />" onkeypress="return isNumberKey(event)" /> </td>
+          <td class="field"><input type="tel" name="userFaxNo" pattern="[0-9+\\- ]*" maxlength="15" id="userFaxNo" value="<c:out value="${item.faxNo}" />" onkeypress="return isNumberKey(event)" /> </td>
        </tr>
        <tr>
           <td class="label">Address <span style="color: red;">*</span></td>
-          <td> <textarea id="userAddres" name="userAddres"><c:out value="${item.curAddress}" /> </textarea> </td>
+          <td> <textarea id="userAddres" name="userAddres" maxlength="500" rows="4"><c:out value="${item.curAddress}" /> </textarea> </td>
        </tr>
        
      </c:forEach>

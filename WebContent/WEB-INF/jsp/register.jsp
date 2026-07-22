@@ -35,6 +35,25 @@
 	        }
 	    });
 	});
+ function onlyAlphabets(e) {
+
+	    var charCode = e.which ? e.which : e.keyCode;
+
+	    // Allow Backspace, Tab, Delete, Arrow keys
+	    if (charCode == 8 || charCode == 9 || charCode == 46 ||
+	        charCode == 37 || charCode == 39) {
+	        return true;
+	    }
+
+	    // Allow A-Z, a-z and Space
+	    if ((charCode >= 65 && charCode <= 90) ||
+	        (charCode >= 97 && charCode <= 122) ||
+	        charCode == 32) {
+	        return true;
+	    }
+
+	    return false;
+	}
  
  function PhoneNoValidation() {
 
@@ -239,7 +258,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="inputAddress"><spring:message code="label.address"/><span style="color: red;">*</span></label>
-						<textarea id="userAddres" class="form-control" name="userAddres" placeholder="Address" rows=5 style="height:100%" maxlength="200"></textarea>
+						<textarea id="userAddres" class="form-control" name="userAddres" placeholder="Address" rows=5 style="height:100%" maxlength="200" onkeypress="return onlyAlphabets(event)"></textarea>
 					</div>
 					<div class="form-group col-md-6">&nbsp;
 					</div>

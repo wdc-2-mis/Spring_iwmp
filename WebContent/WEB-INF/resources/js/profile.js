@@ -35,12 +35,13 @@ function saveprofile()
 		document.getElementById("userMobileNo").focus();
 		return false;
 	}
-	if(j!=10 )
-	{
-		alert("Enter mobile number only 10 digits!");
-		document.getElementById("userMobileNo").focus();
-		return false;
-	}
+	var mobile = document.getElementById("userMobileNo").value.trim();
+
+if (!/^[6-9][0-9]{9}$/.test(mobile)) {
+    alert("Enter a valid 10-digit mobile number.");
+    document.getElementById("userMobileNo").focus();
+    return false;
+}
 	
 	/*if(document.getElementById("userPhoneNo").value=='' )
 	{
@@ -63,11 +64,36 @@ function saveprofile()
 		return false;
 	}
 	
+	function containsInvalidChars(value) {
+    return /[<>\"'`;]/.test(value);
+}
+
+var fields = [
+    "userName",
+    "userDepartment",
+    "userDesignation",
+    "userAddres"
+];
+
+for (var i = 0; i < fields.length; i++) {
+    var value = document.getElementById(fields[i]).value.trim();
+
+    if (containsInvalidChars(value)) {
+        alert("Special characters like < > ' \" ; are not allowed.");
+        document.getElementById(fields[i]).focus();
+        return false;
+    }
+}
+
  	if(confirm("Do you want to Update profile ?"))
 	{
 	    document.getElementById('editprofile').action = "profileSave";
 	    document.getElementById('editprofile').method="post";
-	    document.getElementById('editprofile').submit();
+	    var btn = document.getElementById("edit");
+        btn.disabled = true;
+        btn.value = "Updating...";
+
+        document.getElementById("editprofile").submit();
 	}    
 }
 
@@ -93,17 +119,19 @@ function isNumberKey(evt){
 
 function PhoneNoValidation() {
 
-    var numbers = /^[0-9]+([,-][0-9]+)?$/;
-    var txt = document.getElementById('userPhoneNo');
-    if (txt.value.match(numbers)) 
-    {
+    var phone = document.getElementById("userPhoneNo").value.trim();
+
+    if (phone === "")
         return true;
-    }
-    else {
-        
-        document.getElementById("userPhoneNo").value="";
+
+    if (!/^[0-9]{10,11}$/.test(phone)) {
+
+        alert("Enter valid phone number.");
+        document.getElementById("userPhoneNo").focus();
         return false;
     }
+
+    return true;
 }
 
 function phone1()
@@ -142,7 +170,7 @@ function phone1()
 function validateEmail(emailField)
 {
    // var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    var reg =  /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var reg = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     if (reg.test(emailField.value) == false) 
     {

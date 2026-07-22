@@ -29,7 +29,7 @@ import app.model.UserMap;
 import app.model.UserReg;
 import app.service.ProfileService;
 import app.service.UserService;
-
+import java.util.regex.Pattern;
 
 @Controller("profileController")
 public class ProfileController 
@@ -150,73 +150,193 @@ public class ProfileController
 	}
 	
 	// profileSave use to update the user details
+	private static final Pattern INVALID_PATTERN = Pattern.compile("[<>\"';`]");
+
 	@RequestMapping(value = "/profileSave", method = RequestMethod.POST)
-	public ModelAndView profileSave(HttpServletRequest request, HttpServletResponse response, 
-			 @ModelAttribute("userReg") UserBean userReg, @RequestParam(value ="userType") String utype) throws UnknownHostException 
-	{
-		session = request.getSession(true);
-		ModelAndView mav;
-		Integer regid=Integer.parseInt(userReg.getRegID());
-		List<UserReg> list=new  ArrayList<UserReg>();
-		String uname=userReg.getUserName().toUpperCase();
-		String tbUName=null;
-		int his=0;
-		String captcha = request.getParameter("CAPTCHAcode");
-//		if(app.util.Util.getCSRFflag(captcha, session, request) == false)
-//		{
-//			System.out.println("csrf error >>>>>>>>>>");
-//			mav =  new ModelAndView("CSRFerror");
-//		}
-//		else {
-	//	String sutype=session.getAttribute("userType").toString().toUpperCase();
-		//String utype=request.getParameter("userType");
-		int j=0;
-	//	String stList =request.getParameter("userState").toString();
-		
-		if(userReg.getUserType().equals("ADMIN") || userReg.getUserType().equals("DL"))
-		{	
-			String [] stateList=userReg.getUserState().split(",");
-			j=profileService.deleteInsertDolrState(regid, stateList);
-		}
-		
-		if(session!=null && session.getAttribute("loginID")!=null) 
-		{
-			list=profileService.getUserDetail(regid);
-			for(int i=0;i<list.size();i++) 
-			{
-				tbUName=list.get(i).getUserName().toUpperCase();
-				if(!uname.equals(tbUName))
-				{
-					 his =profileService.saveProfileHistory(regid,session.getAttribute("loginID").toString());
-				}
-			}
-			Integer res =profileService.saveProfile(userReg);
-			mav = getProfileData(request,response,Integer.toString(regid),userReg.getUserType(), userReg.getUserid());
-			
-			if(res==1 && !(userReg.getUserType().equals("ADMIN") && utype.equals("DL"))) 
-			{
-				mav.addObject("message", "Profile updated Successfully.");
-			}
-			if(j==1 && (userReg.getUserType().equals("ADMIN") || utype.equals("DL"))) 
-			{
-				mav.addObject("message", "Profile/State updated Successfully. ");
-			}
-			if(res!=1)
-			{ 
-				mav.addObject("message", "Profile Update Failed. Please try again !");
-			}
-			 
-			mav.addObject("menu", menuController.getMenuUserId(request));
-		}
-		else {
-			mav = new ModelAndView("login");
-			mav.addObject("login", new Login());
-		}
-//		}
-		//mav.addObject("menu", menuController.getMenuUserId(request));
-		mav.addObject("loginId", session.getAttribute("loginID"));
-		
-		return mav;
+	public ModelAndView profileSave(HttpServletRequest request,
+	                                HttpServletResponse response,
+	                                @ModelAttribute("userReg") UserBean userReg,
+	                                @RequestParam(value = "userType") String utype)
+	        throws UnknownHostException {
+
+	    HttpSession session = request.getSession(false);
+
+	    if (session == null || session.getAttribute("loginID") == null) {
+	        ModelAndView mav = new ModelAndView("login");
+	        mav.addObject("login", new Login());
+	        return mav;
+	    }
+
+	    ModelAndView mav;
+	    Integer regid;
+
+	    try {
+	        regid = Integer.parseInt(userReg.getRegID());
+	    } catch (NumberFormatException ex) {
+	        mav = new ModelAndView("login");
+	        mav.addObject("message", "Invalid request.");
+	        return mav;
+	    }
+
+	    // Trim input values
+	    userReg.setUserName(userReg.getUserName() != null ? userReg.getUserName().trim() : "");
+	    userReg.setUserDepartment(userReg.getUserDepartment() != null ? userReg.getUserDepartment().trim() : "");
+	    userReg.setUserDesignation(userReg.getUserDesignation() != null ? userReg.getUserDesignation().trim() : "");
+	    userReg.setUserEmailId(userReg.getUserEmailId() != null ? userReg.getUserEmailId().trim() : "");
+	    userReg.setUserMobileNo(userReg.getUserMobileNo() != null ? userReg.getUserMobileNo().trim() : "");
+	    userReg.setUserPhoneNo(userReg.getUserPhoneNo() != null ? userReg.getUserPhoneNo().trim() : "");
+	    userReg.setUserFaxNo(userReg.getUserFaxNo() != null ? userReg.getUserFaxNo().trim() : "");
+	    userReg.setUserAddres(userReg.getUserAddres() != null ? userReg.getUserAddres().trim() : "");
+
+	    // Required field validation
+	    if (userReg.getUserName().isEmpty()
+	            || userReg.getUserDepartment().isEmpty()
+	            || userReg.getUserDesignation().isEmpty()
+	            || userReg.getUserEmailId().isEmpty()
+	            || userReg.getUserMobileNo().isEmpty()
+	            || userReg.getUserAddres().isEmpty()) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "All mandatory fields are required.");
+	        return mav;
+	    }
+
+	    // Length validation
+	    if (userReg.getUserName().length() > 100
+	            || userReg.getUserDepartment().length() > 100
+	            || userReg.getUserDesignation().length() > 100
+	            || userReg.getUserEmailId().length() > 100
+	            || userReg.getUserAddres().length() > 500) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "Input exceeds maximum allowed length.");
+	        return mav;
+	    }
+
+	    // Email validation
+	    if (!userReg.getUserEmailId()
+	            .matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "Invalid email address.");
+	        return mav;
+	    }
+
+	    // Mobile validation
+	    if (!userReg.getUserMobileNo().matches("^[6-9][0-9]{9}$")) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "Invalid mobile number.");
+	        return mav;
+	    }
+
+	    // Optional Phone validation
+	    if (userReg.getUserPhoneNo() != null
+	            && !userReg.getUserPhoneNo().trim().isEmpty()
+	            && !userReg.getUserPhoneNo().matches("^[0-9\\- ]{6,15}$")) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "Invalid phone number.");
+	        return mav;
+	    }
+
+	    // XSS validation
+	    if (INVALID_PATTERN.matcher(userReg.getUserName()).find()
+	            || INVALID_PATTERN.matcher(userReg.getUserDepartment()).find()
+	            || INVALID_PATTERN.matcher(userReg.getUserDesignation()).find()
+	            || INVALID_PATTERN.matcher(userReg.getUserAddres()).find()) {
+
+	        mav = getProfileData(request, response,
+	                Integer.toString(regid),
+	                userReg.getUserType(),
+	                userReg.getUserid());
+
+	        mav.addObject("message", "Invalid characters detected.");
+	        return mav;
+	    }
+
+	    // Update State Mapping
+	    int j = 0;
+
+	    if ("ADMIN".equals(userReg.getUserType())
+	            || "DL".equals(userReg.getUserType())) {
+
+	        if (userReg.getUserState() != null
+	                && !userReg.getUserState().trim().isEmpty()) {
+
+	            String[] stateList = userReg.getUserState().split(",");
+	            j = profileService.deleteInsertDolrState(regid, stateList);
+	        }
+	    }
+
+	    // Save Profile History
+	    List<UserReg> list = profileService.getUserDetail(regid);
+
+	    String newUserName = userReg.getUserName().toUpperCase();
+
+	    for (UserReg user : list) {
+
+	        String existingUserName = user.getUserName().toUpperCase();
+
+	        if (!newUserName.equals(existingUserName)) {
+
+	            profileService.saveProfileHistory(
+	                    regid,
+	                    session.getAttribute("loginID").toString());
+
+	            break;
+	        }
+	    }
+
+	    // Save Profile
+	    Integer res = profileService.saveProfile(userReg);
+
+	    mav = getProfileData(
+	            request,
+	            response,
+	            Integer.toString(regid),
+	            userReg.getUserType(),
+	            userReg.getUserid());
+
+	    if (res == 1 && !("ADMIN".equals(userReg.getUserType()) && "DL".equals(utype))) {
+
+	        mav.addObject("message", "Profile updated Successfully.");
+	    }
+
+	    if (j == 1 && ("ADMIN".equals(userReg.getUserType()) || "DL".equals(utype))) {
+
+	        mav.addObject("message", "Profile/State updated Successfully.");
+	    }
+
+	    if (res != 1) {
+
+	        mav.addObject("message", "Profile Update Failed. Please try again!");
+	    }
+
+	    mav.addObject("menu", menuController.getMenuUserId(request));
+	    mav.addObject("loginId", session.getAttribute("loginID"));
+
+	    return mav;
 	}
 	
 	
