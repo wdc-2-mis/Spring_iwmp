@@ -15,24 +15,29 @@ function validatenumber() {
 	} 
 }
 
-function onlyAlphabets(e) {
+function onlyAlphabetsKey(e) {
 
-    var charCode = e.which ? e.which : e.keyCode;
+    var key = e.which || e.keyCode;
 
-    // Allow Backspace, Tab, Delete, Arrow keys
-    if (charCode == 8 || charCode == 9 || charCode == 46 ||
-        charCode == 37 || charCode == 39) {
+    // Backspace, Tab, Delete, Left, Right
+    if (key == 8 || key == 9 || key == 46 || key == 37 || key == 39) {
         return true;
     }
 
-    // Allow A-Z, a-z and Space
-    if ((charCode >= 65 && charCode <= 90) ||
-        (charCode >= 97 && charCode <= 122) ||
-        charCode == 32) {
+    // A-Z
+    if ((key >= 65 && key <= 90) ||
+        (key >= 97 && key <= 122) ||
+        key == 32) {
         return true;
     }
 
     return false;
+}
+
+// Remove invalid characters after typing/paste
+function onlyAlphabets(input) {
+
+    input.value = input.value.replace(/[^a-zA-Z ]/g, '');
 }
 
 function validateEmail(emailField)
@@ -183,14 +188,14 @@ input[type=email] {
 			
 			<div class="form-group col-3">
       			<label for="district"><b>Name : </b></label>
-      			 <input type="text" id="name" name="name" placeholder="Enter Name" autocomplete="off" required maxlength="50" onkeypress="return onlyAlphabets(event)">
+      			 <input type="text" id="name" name="name" placeholder="Enter Name" autocomplete="off" required maxlength="50" onkeypress="return onlyAlphabetsKey(event)" oninput="onlyAlphabets(this)" onpaste="setTimeout(() => onlyAlphabets(this), 0)">
       			
     		</div>
     		
 			<div class="form-group col-3">
 				<label for="state"><b>	Designation:</b> </label>
 				<span class="projectError"></span>
-				<input type="text" id="designation" name="designation" placeholder="Enter Designation" autocomplete="off" maxlength="150" required onkeypress="return onlyAlphabets(event)">
+				<input type="text" id="designation" name="designation" placeholder="Enter Designation" autocomplete="off" maxlength="150" required onkeypress="return onlyAlphabetsKey(event)" oninput="onlyAlphabets(this)" onpaste="setTimeout(() => onlyAlphabets(this), 0)">
 			
 			</div>
 			

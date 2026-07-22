@@ -35,24 +35,20 @@
 	        }
 	    });
 	});
- function onlyAlphabets(e) {
+ function onlyAlphaNumericKey(e) {
 
-	    var charCode = e.which ? e.which : e.keyCode;
+	    var key = e.which || e.keyCode;
 
-	    // Allow Backspace, Tab, Delete, Arrow keys
-	    if (charCode == 8 || charCode == 9 || charCode == 46 ||
-	        charCode == 37 || charCode == 39) {
+	    if (key == 8 || key == 9 || key == 46 || key == 37 || key == 39)
 	        return true;
-	    }
 
-	    // Allow A-Z, a-z and Space
-	    if ((charCode >= 65 && charCode <= 90) ||
-	        (charCode >= 97 && charCode <= 122) ||
-	        charCode == 32) {
-	        return true;
-	    }
+	    return /^[A-Za-z0-9\/\- ]$/.test(String.fromCharCode(key));
+	}
 
-	    return false;
+	function onlyAlphaNumeric(input){
+
+	    input.value = input.value.replace(/[^A-Za-z0-9\/\- ]/g,'');
+
 	}
  
  function PhoneNoValidation() {
@@ -258,7 +254,7 @@
 				<div class="form-row">
 					<div class="form-group col-md-6">
 						<label for="inputAddress"><spring:message code="label.address"/><span style="color: red;">*</span></label>
-						<textarea id="userAddres" class="form-control" name="userAddres" placeholder="Address" rows=5 style="height:100%" maxlength="200" onkeypress="return onlyAlphabets(event)"></textarea>
+						<textarea id="userAddres" class="form-control" name="userAddres" placeholder="Address" rows=5 style="height:100%" maxlength="200" onkeypress="return onlyAlphaNumericKey(event)" oninput="onlyAlphaNumeric(this)" onpaste="setTimeout(() => onlyAlphaNumeric(this), 0)"></textarea>
 					</div>
 					<div class="form-group col-md-6">&nbsp;
 					</div>
