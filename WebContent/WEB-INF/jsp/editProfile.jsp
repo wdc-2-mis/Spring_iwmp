@@ -20,7 +20,8 @@
 
 
  <form:form id="editprofile" name="editprofile" modelAttribute="userReg" action="profileSave" method="post">
- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+ <input type="hidden" name="csrfToken" value="${CSRF_TOKEN}" />
+
  		<table width="100%" border="0" cellspacing="0" cellpadding="0">
  		<c:if test="${message ne null}">
 <tr>

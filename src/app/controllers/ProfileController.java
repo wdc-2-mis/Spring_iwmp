@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -79,6 +80,14 @@ public class ProfileController
 			list=profileService.getUserDetail(Integer.parseInt(regid));
 			listm=profileService.getMapstate(Integer.parseInt(regid), userType);
 			List<ProfileBean> sublist = new ArrayList<ProfileBean>();
+			String csrfToken = (String) session.getAttribute("CSRF_TOKEN");
+			if (csrfToken == null) {
+			    csrfToken = UUID.randomUUID().toString();
+			    session.setAttribute("CSRF_TOKEN", csrfToken);
+			}
+			mav.addObject("CSRF_TOKEN", csrfToken);
+
+
 			if(userType.equals("ADMIN") || userType.equals("DL") )
 			{
 				sublist = new ArrayList<ProfileBean>();
@@ -144,6 +153,7 @@ public class ProfileController
 			mav.addObject("regId",regid);
 			mav.addObject("userType",userType);
 			mav.addObject("userId",userId);
+			
 			//session.removeAttribute("editRegId");
 		return mav;
 		
@@ -160,7 +170,16 @@ public class ProfileController
 	        throws UnknownHostException {
 
 	    HttpSession session = request.getSession(false);
-
+	    String sessionToken = (String) session.getAttribute("CSRF_TOKEN");
+	    String requestToken = request.getParameter("csrfToken");
+	    
+	    System.out.println("himanshu sessionToken:" +sessionToken);
+	    System.err.println("himanshu token:" +requestToken);
+	    
+	    if (sessionToken == null || !sessionToken.equals(requestToken)) {
+	        throw new SecurityException("Invalid CSRF token");
+	    }
+	    
 	    if (session == null || session.getAttribute("loginID") == null) {
 	        ModelAndView mav = new ModelAndView("login");
 	        mav.addObject("login", new Login());
