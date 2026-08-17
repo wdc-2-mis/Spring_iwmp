@@ -281,7 +281,8 @@ function exportExcel()
     var media = document.querySelector('input[name="mediaType"]:checked').value;
     var mediaText = document.querySelector('input[name="mediaType"]:checked').nextSibling.textContent.trim();
     
-    
+    alert(media);
+    alert(mediaText);
     document.getElementById("stName").value = stName;
     document.getElementById("distName").value = distName;
     document.getElementById("blkName").value = blkName;

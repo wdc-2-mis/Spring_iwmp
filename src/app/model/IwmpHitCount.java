@@ -9,59 +9,47 @@ import javax.persistence.*;
  * The persistent class for the iwmp_hit_count database table.
  * 
  */
+
 @Entity
-@Table(name="iwmp_hit_count")
-@NamedQuery(name="IwmpHitCount.findAll", query="SELECT i FROM IwmpHitCount i")
+@Table(name = "iwmp_hit_count")
 public class IwmpHitCount implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	
-	@Column(name="count")
-	private BigInteger count;
+    private static final long serialVersionUID = 1L;
 
-	@Column(name="inserteddate")
-	private Timestamp inserteddate;
-	
-	@Column(name="session_id")
-	private String sessionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
+    @Column(name = "count", nullable = false)
+    private Long count;
 
-	public IwmpHitCount() {
-	}
+    @Column(name = "inserteddate", nullable = false)
+    private Timestamp inserteddate;
 
-	public Integer getId() {
-		return this.id;
-	}
+    public IwmpHitCount() {
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public BigInteger getCount() {
-		return this.count;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setCount(BigInteger count) {
-		this.count = count;
-	}
-	
-	public Timestamp getInserteddate() {
-		return this.inserteddate;
-	}
+    public Long getCount() {
+        return count;
+    }
 
-	public void setInserteddate(Timestamp insertDate) {
-		this.inserteddate = insertDate;
-	}
-	
-	public String getSessionId() {
-		return this.sessionId;
-	}
+    public void setCount(Long count) {
+        this.count = count;
+    }
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
+    public Timestamp getInserteddate() {
+        return inserteddate;
+    }
 
+    public void setInserteddate(Timestamp inserteddate) {
+        this.inserteddate = inserteddate;
+    }
 }

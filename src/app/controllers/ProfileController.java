@@ -172,10 +172,7 @@ public class ProfileController
 	    HttpSession session = request.getSession(false);
 	    String sessionToken = (String) session.getAttribute("CSRF_TOKEN");
 	    String requestToken = request.getParameter("csrfToken");
-	    
-	    System.out.println("himanshu sessionToken:" +sessionToken);
-	    System.err.println("himanshu token:" +requestToken);
-	    
+	      
 	    if (sessionToken == null || !sessionToken.equals(requestToken)) {
 	        throw new SecurityException("Invalid CSRF token");
 	    }
@@ -354,8 +351,10 @@ public class ProfileController
 
 	    mav.addObject("menu", menuController.getMenuUserId(request));
 	    mav.addObject("loginId", session.getAttribute("loginID"));
-
-	    return mav;
+	    String newToken = UUID.randomUUID().toString();
+	    session.setAttribute("CSRF_TOKEN", newToken);
+	    
+	    return new ModelAndView("redirect:/editprofile");
 	}
 	
 	

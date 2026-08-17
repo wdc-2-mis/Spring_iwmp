@@ -101,6 +101,12 @@ public class WMReportServiceImpl implements WMReportService{
 		
 		return WMDao.getTotNoOfScrnshtUploaded();
 	}
+
+	@Override
+	public List<SocialMediaReport> getWMSocialMediaWinnerReport(Integer stcd) {
+		// TODO Auto-generated method stub
+		return WMDao.getWMSocialMediaWinnerReport(stcd);
+	}
 	
 
 }

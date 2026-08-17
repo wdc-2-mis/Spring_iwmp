@@ -70,6 +70,9 @@ public class WMReportDaoImpl implements WMReportDao {
 	@Value("${getTotNoOfScrnshtUploaded}")
 	String getTotNoOfScrnshtUploaded;
 	
+	@Value("${getWMSocialMediaWinnerReportDetails}")
+	String getWMSocialMediaWinnerReportDetails;
+	
 	@Override
 	public List<IwmpDistrict> getDistrictList(int stateCode) {
 		
@@ -389,6 +392,25 @@ public class WMReportDaoImpl implements WMReportDao {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	@Override
+	public List<SocialMediaReport> getWMSocialMediaWinnerReport(Integer stcd) {
+		List<SocialMediaReport> getWMSocialMediaWinnerReport = new ArrayList<>();
+		String hql = getWMSocialMediaWinnerReportDetails;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(hql);
+			query.setInteger("stcd", stcd);
+			query.setResultTransformer(Transformers.aliasToBean(SocialMediaReport.class));
+			getWMSocialMediaWinnerReport = query.list();
+			session.getTransaction().commit();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		return getWMSocialMediaWinnerReport;
 	}
 	
 	

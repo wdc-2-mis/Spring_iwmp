@@ -29,5 +29,7 @@ public interface WMReportDao {
 	
 	List<WMMediaReviewBean> getWMSocialMediaComDetails(Integer stcode, Integer dcode, Integer platform, String status);
 	List<WMMediaReviewBean> getTotNoOfScrnshtUploaded();
+
+	List<SocialMediaReport> getWMSocialMediaWinnerReport(Integer stcd);
 	
 }

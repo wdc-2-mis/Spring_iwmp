@@ -43,20 +43,6 @@ if (!/^[6-9][0-9]{9}$/.test(mobile)) {
     return false;
 }
 	
-	/*if(document.getElementById("userPhoneNo").value=='' )
-	{
-		alert("Enter phone number !");
-		document.getElementById("userPhoneNo").focus();
-		return false ;
-	}
-	
-	if(ph!=11 )
-	{
-		alert("Enter numeric phone number only 11 digits!");
-		document.getElementById("userPhoneNo").focus();
-		return false;
-	}*/
-	
 	if(document.getElementById("userAddres").value=='')
 	{
 		alert("Enter User Address !");

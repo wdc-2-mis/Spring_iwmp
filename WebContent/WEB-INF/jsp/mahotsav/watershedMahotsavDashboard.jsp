@@ -388,12 +388,12 @@
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/janbhagidaricup.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<p align="center"><b> No. of Watershed Janbhagidari Cup : <a href="javascript:void(0);" onclick="showWyPopup()"> ${bean.awarddistribution}</a> </b></p>
+    				<p align="center"><b> No. of Watershed Janbhagidari Cup : ${bean.awarddistribution}</b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
     					<img src="<c:url value="/resources/images/mahotsav/prapheri.png" />" class="w-100 h-100" style="object-fit:cover;">
-    				<p align="center"><b> No. of Prabhat Pheri Organized : <a href="javascript:void(0);" onclick="showPrabhatPheriPopup()"> ${bean.prapheriorg}</a> </b></p>
+    				<p align="center"><b> No. of Prabhat Pheri Organized : ${bean.prapheriorg}</b></p>
 				</div>
 				
 				 <div class="rounded-circle overflow-hidden" style="width:200px;height:200px;">
@@ -731,57 +731,6 @@
     </table>
 </div>
 
-
-<!-- Prabhat Pheri Popup Modal -->
-<div id="popPrabhatPheri" style="display:none; position:fixed; top:0%; left:18%; width:70%; background:#fff; border:1px solid #ccc; padding:20px; z-index:1000; overflow:auto; height:100vh;">
-    <div style="text-align:right;">
-        <span onclick="closePrabhatPheriPopup()" style="cursor:pointer; font-size:16px; font-weight:bold;">&#10006;</span>
-    </div>
-    <h3 style="text-align: center;">State Wise Watershed Mahotsav Prabhat Pheri Data</h3>
-    <table border="1" style="width:100%; border-collapse:collapse;">
-        <thead>
-            <tr>
-                <th>S.No.</th>
-                <th>State Name</th>
-                <th>No. of Prabhat Pheri Organized</th>
-                <th>Male Participants</th>
-                <th>Female Participants</th>
-                <th>Total Participants</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:set var="totalPrabhatPheri" value="0" />
-            <c:set var="totalMale" value="0" />
-            <c:set var="totalFemale" value="0" />
-            <c:set var="totalParticipants" value="0" />
-            
-            <c:forEach var="ppData" items="${bean2}" varStatus="count">
-                <tr>
-                    <td><c:out value='${count.count}' /></td>
-                    <td>${ppData.st_name}</td>
-                    <td class="text-right">${ppData.prabhatpheri}</td>
-                    <td class="text-right">${ppData.pp_male}</td>
-                    <td class="text-right">${ppData.pp_female}</td>
-                    <td class="text-right">${ppData.total_participants}</td>
-                </tr>
-                <c:set var="totalPrabhatPheri" value="${totalPrabhatPheri + ppData.prabhatpheri}" />
-                <c:set var="totalMale" value="${totalMale + ppData.pp_male}" />
-                <c:set var="totalFemale" value="${totalFemale + ppData.pp_female}" />
-                <c:set var="totalParticipants" value="${totalParticipants + ppData.total_participants}" />
-            </c:forEach>
-            
-            <!-- Grand Total Row -->
-            <tr>
-                <th colspan="2" style="text-align: center">Grand Total</th>
-                <th style="text-align: right;">${totalPrabhatPheri}</th>
-                <th style="text-align: right;">${totalMale}</th>
-                <th style="text-align: right;">${totalFemale}</th>
-                <th style="text-align: right;">${totalParticipants}</th>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
 <script>
     function showWyPopup() {
         document.getElementById('popwyup').style.display = 'block';
@@ -797,16 +746,6 @@
     function closeSMPopup() {
         document.getElementById('smpopup').style.display = 'none';
     }
-    
-    function showPrabhatPheriPopup() {
-        document.getElementById('popPrabhatPheri').style.display = 'block';
-    }
-
-    function closePrabhatPheriPopup() {
-        document.getElementById('popPrabhatPheri').style.display = 'none';
-    }
-    
-    
     function showDWyPopup(stcode) {
 
         document.getElementById('popDwyup').style.display = 'block';
@@ -1163,37 +1102,6 @@ function closeDPopup() {
 			</div>
 		</div>
 	</div> 
-	
-	
-	<div class="piechart-container">
-		<div class="pie-items">
-			<div class="chart-div1kd">
-				<canvas id="locationChartkd"></canvas>
-			</div>
-		</div>
-		<div class="pie-items">
-			<div class="chart-div2kd">
-				<canvas id="activityChartkd"></canvas>
-			</div>
-		</div>
-		
-		<div class="pie-items">
-			<div class="chart-div1kd1">
-				<canvas id="locationChartkd1"></canvas>
-			</div>
-		</div>
-		<%-- <div class="pie-items">
-			<div class="chart-div2kd1">
-				<canvas id="activityChartkd1"></canvas>
-			</div>
-		</div> --%>
-		
-	</div> 
-	
-	
-	
-	
-	
 	<script>
     
     // Labels for the pie chart
@@ -1352,27 +1260,16 @@ var iplantation = Number("${listpart[0].iplantation}");
     var pplantation = ${listpart[0].pplantation};
 
         // Prepare datasets
-        const locDatabh = [ibhumipujan, pbhumipujan];
-        const locDatalk = [ilokarpan, plokarpan];
-        const locDatash = [ishramdannlocation, pshramdannlocation];
-        const locDatashp= [ishramdanparticipate, pshramdanparticipate];
-        const locDatapl = [iplantation, pplantation];
-        
-        
-        var totalBhoomiPoojan=ibhumipujan +pbhumipujan;
-        var totallokarpan =ilokarpan +plokarpan;
-        var totalshramdannlocation=ishramdannlocation+pshramdannlocation;
-        var totalshramdanparticipate=ishramdanparticipate +pshramdanparticipate;
-        var totalplantation=iplantation+pplantation;
-        
+        const locData = [ibhumipujan, ilokarpan, ishramdannlocation, ishramdanparticipate, iplantation];
+        const actData = [pbhumipujan, plokarpan, pshramdannlocation, pshramdanparticipate, pplantation];
 
         // Location Gauge Chart
         new Chart(document.getElementById('locationChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Inauguration Bhoomi Poojan', 'Project Level Bhoomi Poojan'],
+            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
             datasets: [{
-              data: locDatabh,
+              data: locData,
               backgroundColor: ['#4caf50', '#f44336', '#4BC0C0', '#9966FF', '#FF9F40'],
             }]
           },
@@ -1381,7 +1278,7 @@ var iplantation = Number("${listpart[0].iplantation}");
             plugins: {
               title: {
                     display: true,
-                    text: 'Bhoomi Poojan',
+                    text: 'Inauguration Activities',
                     font: {
                         size: 30 // Adjust this value to increase or decrease the font size
                     }
@@ -1390,13 +1287,30 @@ var iplantation = Number("${listpart[0].iplantation}");
             cutout: '60%',
           }
         });
+        
+        var totalInaugurationActivities =
+            ibhumipujan +
+            ilokarpan +
+            ishramdannlocation +
+            ishramdanparticipate +
+            iplantation;
+
+        var totalProjectActivities =
+            pbhumipujan +
+            plokarpan +
+            pshramdannlocation +
+            pshramdanparticipate +
+            pplantation;
+        
         var container = document.querySelector('.chart-div1');
+        
+
         if (container) {
             var totalElement = document.createElement('div');
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
             totalElement.style.fontSize = '16px';
-            totalElement.innerHTML = `<strong>Total Bhoomi Poojan : \${totalBhoomiPoojan}</strong>`;
+            totalElement.innerHTML = `<strong>Total Activities : \${totalInaugurationActivities}</strong>`;
             container.appendChild(totalElement);
         } else {
             console.error("Container element '.chart-div1' not found.");
@@ -1407,9 +1321,9 @@ var iplantation = Number("${listpart[0].iplantation}");
         new Chart(document.getElementById('activityChart'), {
           type: 'doughnut',
           data: {
-            labels: ['Inauguration Lokarpan', 'Project Level Lokarpan'],
+            labels: ['Bhoomi Poojan Works', 'Lokarpan Works', 'Shramdaan Location', 'Shramdaan People Participated', 'Agro forestry / Horticultural Plantation No. of Sapling'],
             datasets: [{
-              data: locDatalk,
+              data: actData,
               backgroundColor: ['#2196f3', '#ffc107', '#4caf50', '#f44336', '#4BC0C0'],
             }]
           },
@@ -1418,7 +1332,7 @@ var iplantation = Number("${listpart[0].iplantation}");
               plugins: {
                 title: {
                       display: true,
-                      text: 'Lokarpan',
+                      text: 'Project Level Activities',
                       font: {
                           size: 30 // Adjust this value to increase or decrease the font size
                       }
@@ -1434,126 +1348,13 @@ var iplantation = Number("${listpart[0].iplantation}");
             totalElement.style.textAlign = 'center';
             totalElement.style.marginTop = '20px';
             totalElement.style.fontSize = '16px';
-            totalElement.innerHTML = `<strong>Total Lokarpan : \${totallokarpan}</strong>`;
+            totalElement.innerHTML = `<strong>Total Activities : \${totalProjectActivities}</strong>`;
             container.appendChild(totalElement);
         } else {
             console.error("Container element '.piechart-container' not found.");
         }
         
      
-        new Chart(document.getElementById('locationChartkd'), {
-            type: 'doughnut',
-            data: {
-              labels: ['Inauguration Shramdaan Location', 'Project Level Shramdaan Location'],
-              datasets: [{
-                data: locDatabh,
-                backgroundColor: ['#98F527', '#E427F5', ],
-              }]
-            },
-            options: {
-          	responsive: true,
-              plugins: {
-                title: {
-                      display: true,
-                      text: 'Shramdaan Location',
-                      font: {
-                          size: 30 // Adjust this value to increase or decrease the font size
-                      }
-                  }
-              },
-              cutout: '60%',
-            }
-          });
-          var container = document.querySelector('.chart-div1kd');
-          if (container) {
-              var totalElement = document.createElement('div');
-              totalElement.style.textAlign = 'center';
-              totalElement.style.marginTop = '20px';
-              totalElement.style.fontSize = '16px';
-              totalElement.innerHTML = `<strong>Total Shramdaan Location : \${totalshramdannlocation}</strong>`;
-              container.appendChild(totalElement);
-          } else {
-              console.error("Container element '.chart-div1kd' not found.");
-          }
-
-
-          // Activity Gauge Chart
-          new Chart(document.getElementById('activityChartkd'), {
-            type: 'doughnut',
-            data: {
-              labels: ['Inauguration Shramdaan People Participated', 'Project Level Shramdaan People Participated'],
-              datasets: [{
-                data: locDatalk,
-                backgroundColor: ['#f44336', '#4BC0C0'],
-              }]
-            },
-            options: {
-            	responsive: true,
-                plugins: {
-                  title: {
-                        display: true,
-                        text: 'Shramdaan People Participated',
-                        font: {
-                            size: 30 // Adjust this value to increase or decrease the font size
-                        }
-                    }
-                },
-                cutout: '60%',
-              }
-          });
-          
-          var container = document.querySelector('.chart-div2kd');
-          if (container) {
-              var totalElement = document.createElement('div');
-              totalElement.style.textAlign = 'center';
-              totalElement.style.marginTop = '20px';
-              totalElement.style.fontSize = '16px';
-              totalElement.innerHTML = `<strong>Total People Participated : \${totalshramdanparticipate}</strong>`;
-              container.appendChild(totalElement);
-          } else {
-              console.error("Container element '.chart-div2kd' not found.");
-          } 
-        
-        
-          new Chart(document.getElementById('locationChartkd1'), {
-              type: 'doughnut',
-              data: {
-                labels: ['Inauguration Plantation', 'Project Level Plantation'],
-                datasets: [{
-                  data: locDatalk,
-                  backgroundColor: ['#9966FF', '#FF9F40'],
-                }]
-              },
-              options: {
-              	responsive: true,
-                  plugins: {
-                    title: {
-                          display: true,
-                          text: 'Agro forestry/Horticultural Plantation No. of Sapling',
-                          font: {
-                              size: 30 // Adjust this value to increase or decrease the font size
-                          }
-                      }
-                  },
-                  cutout: '60%',
-                }
-            });
-            
-            var container = document.querySelector('.chart-div1kd1');
-            if (container) {
-                var totalElement = document.createElement('div');
-                totalElement.style.textAlign = 'center';
-                totalElement.style.marginTop = '20px';
-                totalElement.style.fontSize = '16px';
-                totalElement.innerHTML = `<strong>Total Plantation : \${totalplantation}</strong>`;
-                container.appendChild(totalElement);
-            } else {
-                console.error("Container element '.chart-div1kd1' not found.");
-            } 
-        
-        
-        
-        
         
         // Data from the backend
         var data = {

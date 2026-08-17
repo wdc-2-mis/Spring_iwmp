@@ -30,6 +30,8 @@ import app.service.ProfileService;
 import app.service.StateMasterService;
 import app.service.UserService;
 import app.watershedyatra.bean.WatershedYatraBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class WatershedPunarutthanController {
@@ -54,11 +56,13 @@ public class WatershedPunarutthanController {
 	private Map<Integer, String> stateList;
 	private Map<String, String> districtList;
 	private Map<String, String> ProjectList;
+	private static final Logger logger = LoggerFactory.getLogger(WatershedPunarutthanController.class);
 	
 	@RequestMapping(value = "/getWatershedPunarutthanPlan", method = RequestMethod.GET)
 	public ModelAndView getWatershedPunarutthanPlan(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
+		
 		List<WatershedPunarutthanBean> datlist = new ArrayList<WatershedPunarutthanBean>();
 		List<WatershedPunarutthanBean> complist = new ArrayList<WatershedPunarutthanBean>();
 		try {
@@ -106,7 +110,10 @@ public class WatershedPunarutthanController {
 			}
 		} 
 		catch (Exception e) {
-			e.printStackTrace();
+		    logger.error("Error while loading Watershed Punarutthan Plan.", e);
+
+		    mav = new ModelAndView("error/genericError");
+		    mav.addObject("message", "Unable to process your request. Please try again later.");
 		}
 		return mav;
 	}

@@ -33,4 +33,6 @@ public interface WMReportService {
 	
 	List<WMMediaReviewBean> getTotNoOfScrnshtUploaded();
 
+	List<SocialMediaReport> getWMSocialMediaWinnerReport(Integer stcd);
+
 }

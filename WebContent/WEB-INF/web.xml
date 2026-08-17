@@ -59,7 +59,12 @@ id="WebApp_ID" version="4.0">
   
     <error-page>
     <error-code>404</error-code>
-    <location>/handleError404</location>
+    <location>/WEB-INF/jsp/pagenotfound.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>405</error-code>
+    <location>/WEB-INF/jsp/pagenotfound.jsp</location>
   </error-page>
   
   <error-page>
@@ -67,6 +72,10 @@ id="WebApp_ID" version="4.0">
     <location>/WEB-INF/jsp/pagenotfound.jsp</location>
   </error-page>
 
+<error-page>
+  <error-code>400</error-code>
+  <location>/pagenotfound.jsp</location>
+</error-page>
 
 
  <session-config>

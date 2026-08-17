@@ -23,6 +23,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     private Date updatedDate;
     private String createdBy;
     private Date createdDate;
+    private String winner;
     private Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails = new HashSet<WatershedMahotsavVideoDetails>(0);
     
     public static long getSerialversionuid() {
@@ -33,7 +34,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
     }
 
     public WatershedMahotsavRegistration(Integer mahotsavRegId, String regName, String phno, String email, String address, String user_reg_no, 
-    		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) 
+    		String requestedIp , String updatedBy, Date updatedDate, String createdBy, Date createdDate, String winner, Set<WatershedMahotsavVideoDetails> watershedMahotsavVideoDetails) 
     {
         this.mahotsavRegId = mahotsavRegId;
         this.regName = regName;
@@ -46,6 +47,7 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
         this.updatedDate = updatedDate;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
+        this.winner = winner;
         this.watershedMahotsavVideoDetails = watershedMahotsavVideoDetails;
     }
     
@@ -153,6 +155,15 @@ public class WatershedMahotsavRegistration implements java.io.Serializable {
 		this.createdDate = createdDate;
 	}
 	
+	@Column(name="winner", length=1)
+	public String getWinner() {
+		return winner;
+	}
+
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
+
 	@OneToMany(fetch=FetchType.LAZY, mappedBy="mahotsavReg")
 	public Set<WatershedMahotsavVideoDetails> getWatershedMahotsavVideoDetails() {
 		return watershedMahotsavVideoDetails;

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.math.BigInteger;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -221,7 +222,7 @@ public class CommonController {
 
 		/* System.out.println("value of locale:" +locale); */
 		List<String> list = indexCircleDataController.getData();
-		String hitCount = "0";
+		
 		ModelAndView mav = new ModelAndView("index3");
 		if (alertController.getAlert(locale) != null)
 			mav.addObject("alert", alertController.getAlert(locale));
@@ -269,13 +270,12 @@ public class CommonController {
 			mav.addObject("images", galleryController.getIndexImages());
 		else
 			mav.addObject("images", null);
-		String Count = hitCountController.getHitCount(request).toString();
-		for (int i = 7; i > Count.length(); i--) {
-			hitCount += "0";
-			if (i - 1 == Count.length())
-				hitCount += Count;
-		}
+		BigInteger count = hitCountController.getHitCount(request);
+
+		 String hitCount = String.format("%07d", count.longValue());
+
 		mav.addObject("hitCount", hitCount);
+		
 		return mav;
 	}
 
