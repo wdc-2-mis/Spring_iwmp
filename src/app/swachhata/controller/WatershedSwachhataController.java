@@ -22,6 +22,7 @@ import app.bean.Login;
 import app.bean.ProfileBean;
 import app.common.CommonFunctions;
 import app.controllers.MenuController;
+import app.mahotsav.bean.InaugurationMahotsavBean;
 import app.mahotsav.bean.WatershedMahotsavProjectLevelBean;
 import app.service.ProfileService;
 import app.service.outcome.BaseLineOutcomeService;
@@ -327,6 +328,54 @@ public class WatershedSwachhataController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/getWatershedSwachhataReport", method = RequestMethod.GET)
+	public ModelAndView getWatershedYatraReport(HttpServletRequest request, HttpServletResponse response)
+	{
+		ModelAndView mav = new ModelAndView();
+		mav = new ModelAndView("mahotsav/watershedSwachhataReport");
+		
+		List<WatershedSwachhataBean> list = serv.getProjectLevelSwachhataStateWise(0);
+		mav.addObject("projLvlWSPrgList", list);
+		mav.addObject("projLvlWSPrgListSize", list.size());
+		
+		return mav; 
+	}
+	
+	@RequestMapping(value = "/getImageByStcode", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageByStcode(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("stCode") Integer stcode){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = serv.getImageByStcode(stcode);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+	
+	@RequestMapping(value = "/distWSProjLvlProgRpt", method = RequestMethod.GET)
+	public ModelAndView distWSProjLvlProgRpt(HttpServletRequest request, HttpServletResponse response) {
+		
+		String stcd = request.getParameter("stcd");
+		String stName = request.getParameter("stName");
+		
+		List<WatershedSwachhataBean> list = new ArrayList<WatershedSwachhataBean>();
+		
+		ModelAndView mav = new ModelAndView("mahotsav/watershedSwachhataReport");
+		
+		list = serv.getdistWSProjLvlProgRpt(Integer.parseInt(stcd));
+		
+		mav.addObject("stcd",stcd);
+		mav.addObject("stName",stName);
+		mav.addObject("distWSProjList",list);
+		mav.addObject("distWSProjListSize",list.size());
+		
 		return mav;
 	}
 

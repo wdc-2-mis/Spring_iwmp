@@ -18,5 +18,8 @@ public interface WatershedSwachhataService {
 	public List<String> getImageSwachhataProjLvlId(Integer swachhataid);
 	public List<WatershedSwachhataBean> getWatershedSwachhataidProjLvlEdit(Integer id);
 	public String updateWatershedSwachhataDetails(WatershedSwachhataBean userfileup, HttpSession session);
+	List<WatershedSwachhataBean> getProjectLevelSwachhataStateWise(Integer stCode);
+	public List<String> getImageByStcode(Integer stcode);
+	public List<WatershedSwachhataBean> getdistWSProjLvlProgRpt(int stCode);
 
 }

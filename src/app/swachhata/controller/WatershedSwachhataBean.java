@@ -5,10 +5,9 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class WatershedSwachhataBean {
-	
-	
 	private Integer st_code;
     private String stname;
+    private Integer dcode;
     private String distname;
     private String blockname;
     private String projname;
@@ -31,7 +30,7 @@ public class WatershedSwachhataBean {
     private Integer total;
     
     private Integer usg;
-    
+    private Integer total_photos;
 
     private Integer sapling;
     private Integer no_sapling;
@@ -70,12 +69,6 @@ public class WatershedSwachhataBean {
     
     private Integer swachhata_id;
     
-    
-    
-    
-    
-    
-    
 	public Integer getSt_code() {
 		return st_code;
 	}
@@ -87,6 +80,12 @@ public class WatershedSwachhataBean {
 	}
 	public void setStname(String stname) {
 		this.stname = stname;
+	}
+	public Integer getDcode() {
+		return dcode;
+	}
+	public void setDcode(Integer dcode) {
+		this.dcode = dcode;
 	}
 	public String getDistname() {
 		return distname;
@@ -195,6 +194,12 @@ public class WatershedSwachhataBean {
 	}
 	public void setTotal(Integer total) {
 		this.total = total;
+	}
+	public Integer getTotal_photos() {
+		return total_photos;
+	}
+	public void setTotal_photos(Integer total_photos) {
+		this.total_photos = total_photos;
 	}
 	public Integer getSapling() {
 		return sapling;

@@ -56,6 +56,12 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 	@Value("${getWatershedSwachhataAtProj}")
 	String getWatershedSwachhataAtProj;
 	
+	@Value("${getWatershedSwachhataDetailsRpt}")
+	String getWatershedSwachhataDetailsRpt;
+	
+	@Value("${getDistWatershedSwachhataDetailsRpt}")
+	String getDistWatershedSwachhataDetailsRpt;
+	
 	
 	@Override
 	public LinkedHashMap<Integer, String> getVillagebyProjIdBlock(Integer projid, Integer block) {
@@ -1063,6 +1069,81 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			sess.getTransaction().rollback();
 		}
 		return res;
+	}
+	
+	@Override
+	public List<WatershedSwachhataBean> getProjectLevelSwachhataStateWise(Integer stCode) {
+		String sql = getWatershedSwachhataDetailsRpt;
+		List<WatershedSwachhataBean> list = new ArrayList<WatershedSwachhataBean>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setInteger("stCode", stCode);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedSwachhataBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+
+
+
+	@Override
+	public List<String> getImageByStcode(Integer stcode) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedSwachhataProjectLevelPhoto> list = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.state.stCode = :id");
+			query.setInteger("id", stcode);
+			list = query.list();
+			for (WatershedSwachhataProjectLevelPhoto photo : list) 
+			{
+				//server
+				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+
+
+
+
+	@Override
+	public List<WatershedSwachhataBean> getdistWSProjLvlProgRpt(int stCode) {
+		String sql = getDistWatershedSwachhataDetailsRpt;
+		List<WatershedSwachhataBean> list = new ArrayList<WatershedSwachhataBean>();
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setInteger("stCode", stCode);
+			query.setResultTransformer(Transformers.aliasToBean(WatershedSwachhataBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		}catch(Exception ex){
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
 	}
 
 }

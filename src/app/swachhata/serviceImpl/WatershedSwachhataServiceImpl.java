@@ -65,5 +65,23 @@ public class WatershedSwachhataServiceImpl implements WatershedSwachhataService{
 		// TODO Auto-generated method stub
 		return dao.updateWatershedSwachhataDetails(userfileup, session);
 	}
+	
+	@Override
+	public List<WatershedSwachhataBean> getProjectLevelSwachhataStateWise(Integer stCode) {
+		// TODO Auto-generated method stub
+		return dao.getProjectLevelSwachhataStateWise(stCode);
+	}
+
+	@Override
+	public List<String> getImageByStcode(Integer stcode) {
+		// TODO Auto-generated method stub
+		return dao.getImageByStcode(stcode);
+	}
+
+	@Override
+	public List<WatershedSwachhataBean> getdistWSProjLvlProgRpt(int stCode) {
+		// TODO Auto-generated method stub
+		return dao.getdistWSProjLvlProgRpt(stCode);
+	}
 
 }
