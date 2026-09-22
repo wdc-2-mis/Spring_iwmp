@@ -79,11 +79,13 @@ public class WatershedSwachhataController {
 				mav.addObject("stateName",stateName);
 				mav.addObject("projectList",baseLineOutcomeService.getProjectByRegId(regId));
 				
-		/*		list = serProj.getWatershedSwachhataAtProj(regId.toString());
-				for(WatershedSwachhataBean bean :list) {
+				list = serv.getWatershedSwachhataAtProj(regId.toString());
+				for(WatershedSwachhataBean bean :list) 
+				{
 					if(bean.getStatus().equals('D')) {
 						dlist.add(bean);
-					}else {
+					}
+					else {
 						comlist.add(bean);
 					}
 				}
@@ -91,7 +93,7 @@ public class WatershedSwachhataController {
 				mav.addObject("dataListSize",dlist.size());
 				
 				mav.addObject("compdataList",comlist);
-				mav.addObject("compdataListSize",comlist.size()); */
+				mav.addObject("compdataListSize",comlist.size()); 
 				
 
 			} else {
@@ -167,6 +169,48 @@ public class WatershedSwachhataController {
 			e.printStackTrace();
 		}
 		return mav;
+	}
+	
+	@RequestMapping(value="/completeWatershedSwachhataDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String completeWatershedSwachhataDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serv.completeWatershedSwachhataDetails(assetid, session.getAttribute("loginID").toString());
+		 
+		}
+		else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
+	}
+	
+	@RequestMapping(value="/deleteWatershedSwachhataDetails", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteWatershedSwachhataDetails(HttpServletRequest request, HttpServletResponse response, @RequestParam(value ="assetid") List<Integer> assetid)
+	{
+		ModelAndView mav = new ModelAndView();
+		String res="";
+		session = request.getSession(true);
+		if(session!=null && session.getAttribute("loginID")!=null) 
+		{
+			Integer sentfrom = Integer.parseInt(session.getAttribute("regId").toString());
+			String userType= session.getAttribute("userType").toString();
+			res=serv.deleteWatershedSwachhataDetails(assetid, session.getAttribute("loginID").toString());
+		 
+		}
+		else {
+			mav = new ModelAndView("login");
+			mav.addObject("login", new Login());
+		}
+		return res; 
 	}
 	
 

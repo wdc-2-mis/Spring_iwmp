@@ -1,5 +1,6 @@
 package app.swachhata.daoImpl;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -7,20 +8,26 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import app.common.CommonFunctions;
+import app.mahotsav.bean.WatershedMahotsavProjectLevelBean;
+import app.mahotsav.model.WatershedMahotsavInauguarationActPhoto;
 import app.mahotsav.model.WatershedMahotsavInauguarationActivityMaster;
 import app.mahotsav.model.WatershedMahotsavProjectLevel;
 import app.mahotsav.model.WatershedMahotsavProjectLvlPhoto;
@@ -44,6 +51,9 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 	
 	@Autowired
 	CommonFunctions commonFunction;
+	
+	@Value("${getWatershedSwachhataAtProj}")
+	String getWatershedSwachhataAtProj;
 	
 	
 	@Override
@@ -142,6 +152,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			data.setFpo(userfileup.getFpo());
 			data.setStudent(userfileup.getYouth());
 			data.setOther(userfileup.getOther());
+			data.setTotal(userfileup.getTotal());
 			data.setSapling(userfileup.getNo_sapling());
 			data.setLokarpan(userfileup.getNo_works_lokarpan());
 			data.setShramdaan(userfileup.getNo_location_shramdaan());
@@ -151,9 +162,6 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			sess.save(data);
 			String code=st_code.toString()+userfileup.getVillage()+"_"+data.getSwachhataId();
 			
-//			for(String lang : userfileup.getPhotos_bhoomipoojan_lat()) {
-//				System.out.println("yogesh = "+lang);
-//			}
 			List<String> saplinglat = userfileup.getPhotos_sapling_lat();
 			List<String> saplinglng = userfileup.getPhotos_sapling_lng();
 			List<String> saplingtime = userfileup.getPhotos_sapling_time();
@@ -325,6 +333,164 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			sess.getTransaction().rollback();
 		}
 		return res;
+	}
+
+	@Override
+	public List<WatershedSwachhataBean> getWatershedSwachhataAtProj(String loginId) {
+		
+		List<WatershedSwachhataBean> list = new ArrayList<WatershedSwachhataBean>();
+		String hql = getWatershedSwachhataAtProj;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.beginTransaction();
+			Query query= session.createSQLQuery(hql);
+			query.setInteger("loginid", Integer.parseInt(loginId));
+			query.setResultTransformer(Transformers.aliasToBean(WatershedSwachhataBean.class));
+			list = query.list();
+			session.getTransaction().commit();
+		} catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return list;
+	}
+
+
+
+
+	@Override
+	public String completeWatershedSwachhataDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 SQLQuery query = session.createSQLQuery("update watershed_swachhata_project_level set status='C' where swachhata_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
+	}
+
+
+
+
+	@Override
+	public String deleteWatershedSwachhataDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		String str="fail";
+		Integer value=0;
+		Session session = sessionFactory.getCurrentSession();
+		List<String> imgList = new ArrayList<String>();
+		List<WatershedSwachhataProjectLevelPhoto> list = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
+		
+		try {
+			 
+			 session.beginTransaction();
+			 InetAddress inetAddress = InetAddress.getLocalHost(); 
+			 String ipadd=inetAddress.getHostAddress(); 
+			 
+			 @SuppressWarnings("rawtypes")
+			 Query query1 = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :swid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				query1.setInteger("swid", assetid.get(i));
+				list = query1.list();
+			 }
+			 for (WatershedSwachhataProjectLevelPhoto photo : list) {
+				   
+				 imgList.add(photo.getPhotoUrl());
+			 }
+			 for (String photo : imgList) 
+			 {
+		            if (photo != null && !photo.isEmpty()) 
+		            {
+		                File file = new File(photo);
+		                if (file.exists()) 
+		                {
+		                    if (file.delete()) {
+		                        System.out.println("Deleted file: " + file.getAbsolutePath());
+		                    } else {
+		                        System.out.println("Failed to delete file: " + file.getAbsolutePath());
+		                    }
+		                } 
+		                else {
+		                    System.out.println("File not found: " + file.getAbsolutePath());
+		                }
+		            }
+		     }
+			 
+			 SQLQuery query = session.createSQLQuery("delete from watershed_swachhata_project_level_photo where swachhata_id=:nrmpkid");
+			 Date d= new Date();
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query.setInteger("nrmpkid", assetid.get(i));
+				 value=query.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+			 SQLQuery query2 = session.createSQLQuery("delete from watershed_swachhata_project_level where swachhata_id=:nrmpkid");
+			 for(int i=0;i<assetid.size(); i++)
+			 {
+				 query2.setInteger("nrmpkid", assetid.get(i));
+				 value=query2.executeUpdate();
+				 if(value>0) {
+					 str="success";
+				 }
+				 else {
+					session.getTransaction().rollback();
+					str="fail";
+				 }
+			 }
+		}
+		catch (HibernateException e) {
+			System.err.print("Hibernate error");
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		} 
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			session.getTransaction().rollback();
+		}
+		finally {
+			session.getTransaction().commit();
+		}
+		
+		return str;
 	}
 
 }

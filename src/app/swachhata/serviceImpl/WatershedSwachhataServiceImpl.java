@@ -1,6 +1,7 @@
 package app.swachhata.serviceImpl;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -27,6 +28,24 @@ public class WatershedSwachhataServiceImpl implements WatershedSwachhataService{
 	public String saveWatershedSwachhataDetails(WatershedSwachhataBean userfileup, HttpSession session) {
 		// TODO Auto-generated method stub
 		return dao.saveWatershedSwachhataDetails(userfileup, session);
+	}
+
+	@Override
+	public List<WatershedSwachhataBean> getWatershedSwachhataAtProj(String loginId) {
+		// TODO Auto-generated method stub
+		return dao.getWatershedSwachhataAtProj(loginId);
+	}
+
+	@Override
+	public String completeWatershedSwachhataDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.completeWatershedSwachhataDetails(assetid, userid);
+	}
+
+	@Override
+	public String deleteWatershedSwachhataDetails(List<Integer> assetid, String userid) {
+		// TODO Auto-generated method stub
+		return dao.deleteWatershedSwachhataDetails(assetid, userid);
 	}
 
 }

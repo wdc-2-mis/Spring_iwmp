@@ -21,6 +21,7 @@ public class WatershedSwachhataBean {
     private Integer block;
     private Integer village;
     private String location;
+    private String villagename;
 
     private Integer shg;
     private Integer ug;
@@ -28,6 +29,9 @@ public class WatershedSwachhataBean {
     private Integer youth;
     private Integer other;
     private Integer total;
+    
+    private Integer usg;
+    
 
     private Integer sapling;
     private Integer no_sapling;
@@ -63,6 +67,15 @@ public class WatershedSwachhataBean {
     private List<String> photos_awareness_lat;
     private List<String> photos_awareness_lng;
     private List<String> photos_awareness_time;
+    
+    private Integer swachhata_id;
+    
+    
+    
+    
+    
+    
+    
 	public Integer getSt_code() {
 		return st_code;
 	}
@@ -363,6 +376,26 @@ public class WatershedSwachhataBean {
 	public void setPhotos_awareness_time(List<String> photos_awareness_time) {
 		this.photos_awareness_time = photos_awareness_time;
 	}
+	public String getVillagename() {
+		return villagename;
+	}
+	public void setVillagename(String villagename) {
+		this.villagename = villagename;
+	}
+	public Integer getSwachhata_id() {
+		return swachhata_id;
+	}
+	public void setSwachhata_id(Integer swachhata_id) {
+		this.swachhata_id = swachhata_id;
+	}
+	public Integer getUsg() {
+		return usg;
+	}
+	public void setUsg(Integer usg) {
+		this.usg = usg;
+	}
+	
+	
     
     
 

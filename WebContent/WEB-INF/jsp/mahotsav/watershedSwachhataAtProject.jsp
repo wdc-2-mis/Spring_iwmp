@@ -770,18 +770,18 @@ display: none; /* Hidden by default */
     		</div>
 			</div>
 			<div class="row">
-			<div class="form-group col-2">
+			<div class="form-group col-4">
 			
 				State Name:</br> <c:out value="${stateName}"></c:out>
 			
 			</div>
-    		<div class="form-group col-2">
+    		<div class="form-group col-4">
       			District Name: </br> <c:out value="${distName}"></c:out>
       			
       		<input type="hidden" id="district" name="district" value="${distCode}">
       			
     		</div>
-				<div class="form-group col-2">
+				<div class="form-group col-4">
 					<label for="project">Project Name:<span style="color: red;">*</span> </label> <select	class="form-control project" id="project" name="project">
 						<option value="">--Select Project--</option>
 						<c:forEach items="${projectList}" var="proj">
@@ -794,7 +794,7 @@ display: none; /* Hidden by default */
 						</c:forEach>
 					</select>
 				</div>
-				<div class="form-group col-2">
+				<div class="form-group col-4">
     			<label for="block">Block Name:<span style="color: red;">*</span> </label>
       			<select class="form-control activity" id="block" name="block">
     				<option value="">--Select Block--</option>
@@ -809,7 +809,7 @@ display: none; /* Hidden by default */
     			</select>
     		</div>
     		
-    		<div class="form-group col-2">
+    		<div class="form-group col-4">
     			<label for="block">Village Name:<span style="color: red;">*</span> </label>
       			<select class="form-control activity" id="village" name="village">
     				<option value="">--Select Village--</option>
@@ -817,12 +817,13 @@ display: none; /* Hidden by default */
     			</select>
     		</div>
     		
-    		<div class="form-group col-2">
+    		<div class="form-group col-4">
     			<label for="location">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
-    <input type="text" class="form-control activity" name="location" id="location"  style="width: 100%; max-width: 800px;" value="${location}" />
+    			<input type="text" class="form-control activity" name="location" id="location"  
+    					style="width: 100%; max-width: 800px;" value="${location}" />
 			</div>
 
-    		
+    		<br/>
     		</div>
     		
      		<div class="form-row">
@@ -1035,52 +1036,44 @@ display: none; /* Hidden by default */
 	
 	<div class="form-row">
 	     <div class="form-group col">
-	     <hr/>
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Mahotsav at Project Level Details</h5>
+	    
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Swachhata at Project Level Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="3">Action</th>
-								<th rowspan="3">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
-								<th rowspan="3">Date</th>
+								<th rowspan="2">Action</th>
+								<th rowspan="2">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
+								<th rowspan="2">Date of Activity</th>
 <!-- 								<th rowspan="3">State Name</th> -->
-								<th rowspan="3">District Name</th>
-								<th rowspan="3">Block Name</th>
-								<th rowspan="3">Location</th>
-								
-								<th colspan="9">Number of Participation</th>
-								<th colspan="7">Activities</th>
-							</tr>
-							<tr>
-								<th colspan="2">Number of Participants</th>
-								<th colspan="2">Number of Ministers</th>
-								<th rowspan="2">Member of Parliament</th>
-								<th colspan="2">Number of Members</th>
-								<th rowspan="2">Number of other Public Representatives</th>
-								<th rowspan="2">Number of Government Officials</th>
-								<th rowspan="2">Number of Works for Bhoomi Poojan </th>
-								<th rowspan="2">Number of Works for Lokarpan</th>
-								<th colspan="2">Shramdaan</th>
-								<th rowspan="2">Agro forestry / Horticultural Plantation Number of Sapling </th>
+								<th rowspan="2">District Name</th>
+								<th rowspan="2">Project Name</th>
+								<th rowspan="2">Block Name</th>
+								<th rowspan="2">Village Name</th>
+								<th rowspan="2">Location</th>
+								<th colspan="6">Total No. of People Participated </th>
+								<th colspan="5">Activities</th>
 								<th rowspan="2">Photos</th>
 							</tr>
 							<tr>
-								<th>Male</th>
-								<th>Female</th>
-								<th>Central Level</th>
-								<th>State Level</th>
-								<th>Legislative Assembly</th>
-								<th>Legislative Council</th>
-								<th>No. of Locations</th>
-								<th>No. of people participated</th>
+								<th>SHG</th>
+								<th>User Group</th>
+								<th>FPOs</th>
+								<th>Youth/Students</th>
+								<th>Others</th>
+								<th>Total </th>
+								<th>No. of Sapling Planted</th>
+								<th>No. of Works for Lokarpan</th>
+								<th>No. of Location Shramdaan Undertaken</th>
+								<th>No. of Cleanliness drives Organised</th>
+								<th>No. of Awareness Sessions Organised</th>
 							</tr>
 						</thead>
 						
  						<c:set var="st" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.waterid})"> Edit </button>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.waterid}"  name="${data.waterid}" value="${data.waterid}"/></td>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button>
+								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.swachhata_id}"  name="${data.swachhata_id}" value="${data.swachhata_id}"/></td>
 								<td> <c:out value="${data.datetime}" /></td>
  								<%-- <c:choose>
  									<c:when test="${st ne data.stname}">
@@ -1092,34 +1085,26 @@ display: none; /* Hidden by default */
  								</c:otherwise>
  								</c:choose> --%>
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.projname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.villagename}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.maleparticipants}" /></td>
-								<td class="text-right"> <c:out value="${data.femaleparticipants}" /></td>
- 								<td class="text-right"> <c:out value="${data.centralministers}" /></td>
-								<td class="text-right"> <c:out value="${data.stateministers}" /></td>
- 								<td class="text-right"> <c:out value="${data.membersofparliament}" /></td>
- 								<td class="text-right"> <c:out value="${data.legassemblymembers}" /></td>
- 								<td class="text-right"> <c:out value="${data.legcouncilmembers}" /></td>
-								<td class="text-right"> <c:out value="${data.publicreps}" /></td>
- 								<td class="text-right"> <c:out value="${data.govofficials}" /></td>
- 								
-								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
- 								
- 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
-								
- 								
- 								
+ 								<td class="text-right"> <c:out value="${data.shg}" /></td>
+								<td class="text-right"> <c:out value="${data.usg}" /></td>
+ 								<td class="text-right"> <c:out value="${data.fpo}" /></td>
+								<td class="text-right"> <c:out value="${data.youth}" /></td>
+ 								<td class="text-right"> <c:out value="${data.other}" /></td>
+ 								<td class="text-right"> <c:out value="${data.total}" /></td>
+ 								<td class="text-right"> <c:out value="${data.sapling}" /></td>
+								<td class="text-right"> <c:out value="${data.lokarpan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.cleanliness}" /></td>
+ 								<td class="text-right"> <c:out value="${data.awareness}" /></td>
 								<td class="text-right">
 <%-- 									<c:out value="${data.image_count}" /> --%>
 <%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> --%>
-									<a href="#" data-id="${data.waterid}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.swachhata_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
@@ -1127,8 +1112,7 @@ display: none; /* Hidden by default */
  						</c:forEach> 
  						<c:if test="${dataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
-								<td colspan="16" ></td>
+								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 						</c:if>
  						<c:if test="${dataListSize ne 0 && dataListSize >0}">
@@ -1146,43 +1130,36 @@ display: none; /* Hidden by default */
 		
 		<div class="form-row">
 	     <div class="form-group col">
-	     <hr/>
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Mahotsav at Project Level Details</h5>
+	    
+	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Swachhata at Project Level Details</h5>
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="3">S.No.</th> 
-								<th rowspan="3">Date</th>
-<!-- 								<th rowspan="3">State Name</th> -->
-								<th rowspan="3">District Name</th>
-								<th rowspan="3">Block Name</th>
-								<th rowspan="3">Location</th>
 								
-								<th colspan="9">Number of Participation</th>
-								<th colspan="7">Activities</th>
-							</tr>
-							<tr>
-								<th colspan="2">Number of Participants</th>
-								<th colspan="2">Number of Ministers</th>
-								<th rowspan="2">Member of Parliament</th>
-								<th colspan="2">Number of Members</th>
-								<th rowspan="2">Number of other Public Representatives</th>
-								<th rowspan="2">Number of Government Officials</th>
-								<th rowspan="2">Number of Works for Bhoomi Poojan </th>
-								<th rowspan="2">Number of Works for Lokarpan</th>
-								<th colspan="2">Shramdaan</th>
-								<th rowspan="2">Agro forestry / Horticultural Plantation Number of Sapling </th>
+								<th rowspan="2">S.No.</th> 
+								<th rowspan="2">Date of Activity</th>
+<!-- 								<th rowspan="3">State Name</th> -->
+								<th rowspan="2">District Name</th>
+								<th rowspan="2">Project Name</th>
+								<th rowspan="2">Block Name</th>
+								<th rowspan="2">Village Name</th>
+								<th rowspan="2">Location</th>
+								<th colspan="6">Total No. of People Participated </th>
+								<th colspan="5">Activities</th>
 								<th rowspan="2">Photos</th>
 							</tr>
 							<tr>
-								<th>Male</th>
-								<th>Female</th>
-								<th>Central Level</th>
-								<th>State Level</th>
-								<th>Legislative Assembly</th>
-								<th>Legislative Council</th>
-								<th>No. of Locations</th>
-								<th>No. of people participated</th>
+								<th>SHG</th>
+								<th>User Group</th>
+								<th>FPOs</th>
+								<th>Youth/Students</th>
+								<th>Others</th>
+								<th>Total </th>
+								<th>No. of Sapling Planted</th>
+								<th>No. of Works for Lokarpan</th>
+								<th>No. of Location Shramdaan Undertaken</th>
+								<th>No. of Cleanliness drives Organised</th>
+								<th>No. of Awareness Sessions Organised</th>
 							</tr>
 						</thead>
 						
@@ -1193,32 +1170,27 @@ display: none; /* Hidden by default */
 								<td> <c:out value="${data.datetime}" /></td>
  								
 								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.projname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
+ 								<td class="text-left"> <c:out value="${data.villagename}" /></td>
 								<td class="text-left"> <c:out value="${data.location}" /></td>
 								
- 								<td class="text-right"> <c:out value="${data.maleparticipants}" /></td>
-								<td class="text-right"> <c:out value="${data.femaleparticipants}" /></td>
- 								<td class="text-right"> <c:out value="${data.centralministers}" /></td>
-								<td class="text-right"> <c:out value="${data.stateministers}" /></td>
- 								<td class="text-right"> <c:out value="${data.membersofparliament}" /></td>
- 								<td class="text-right"> <c:out value="${data.legassemblymembers}" /></td>
- 								<td class="text-right"> <c:out value="${data.legcouncilmembers}" /></td>
-								<td class="text-right"> <c:out value="${data.publicreps}" /></td>
- 								<td class="text-right"> <c:out value="${data.govofficials}" /></td>
- 								
-								<td class="text-right"> <c:out value="${data.no_works_bhoomipoojan}" /></td>
- 								
- 								<td class="text-right"> <c:out value="${data.no_works_lokarpan}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.no_location_shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.no_people_shramdaan}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.area_plantation}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shg}" /></td>
+								<td class="text-right"> <c:out value="${data.usg}" /></td>
+ 								<td class="text-right"> <c:out value="${data.fpo}" /></td>
+								<td class="text-right"> <c:out value="${data.youth}" /></td>
+ 								<td class="text-right"> <c:out value="${data.other}" /></td>
+ 								<td class="text-right"> <c:out value="${data.total}" /></td>
+ 								<td class="text-right"> <c:out value="${data.sapling}" /></td>
+								<td class="text-right"> <c:out value="${data.lokarpan}" /></td>
+ 								<td class="text-right"> <c:out value="${data.shramdaan}" /></td>
+								<td class="text-right"> <c:out value="${data.cleanliness}" /></td>
+ 								<td class="text-right"> <c:out value="${data.awareness}" /></td>
  								
 								<td class="text-right">
 <%-- 									<c:out value="${data.image_count}" />  --%>
 <%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /> </a> --%>
-									<a href="#" data-id="${data.waterid}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
+									<a href="#" data-id="${data.swachhata_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
 								</td>
 					</tr>
 							
@@ -1227,8 +1199,7 @@ display: none; /* Hidden by default */
  						
 						<c:if test="${compdataListSize eq 0}">
 							<tr>
-								<td align="center" colspan="17" class="required" style="color:red;">Data Not Found</td>
-								<td colspan="16" ></td>
+								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
 							</tr>
 						</c:if>
 		</table>

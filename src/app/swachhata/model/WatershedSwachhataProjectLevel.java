@@ -68,6 +68,9 @@ public class WatershedSwachhataProjectLevel {
 
 	@Column(name = "other")
 	private Integer other;
+	
+	@Column(name = "total")
+	private Integer total;
 
 	@Column(name = "sapling")
 	private Integer sapling;
@@ -205,6 +208,14 @@ public class WatershedSwachhataProjectLevel {
 	public void setOther(Integer other) {
 		this.other = other;
 	}
+	
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 
 	public Integer getSapling() {
 		return sapling;
@@ -293,4 +304,7 @@ public class WatershedSwachhataProjectLevel {
 	public void setCreatedDate(LocalDate createdDate) {
 		this.createdDate = createdDate;
 	}
+
+	
+	
 }
