@@ -306,10 +306,7 @@ function validation() {
 	
 	var allowedFiles = [".jpg", ".jpeg",".png"];
 
-	$project = $('#project option:selected').val();
-    $block = $('#block option:selected').val();
-    $village = $('#village option:selected').val();
-    $datetime = $('#datetime').val();
+	
 	$location = $('#location').val();
 	$shg = $('#shg').val();
 	$ug = $('#ug').val();
@@ -331,30 +328,7 @@ function validation() {
 	$no_awareness = $('#no_awareness').val();
 	$photos_awareness = $('#photos_awareness').val();
 	
-	if ($datetime === '' || typeof $datetime === 'undefined') {
-		alert('Please select a Date and Time');
-		$('#datetime').focus();
-		allValid = false;
-		return false;
-	}
-	if ($project === '' || typeof $project === 'undefined') {
-		alert('Please select Project');
-		$('#project').focus();
-		allValid = false;
-		return false;
-	}
-	if ($block === '' || typeof $block === 'undefined') {
-		alert('Please select Block');
-		$('#block').focus();
-		allValid = false;
-		return false;
-	}
-	if ($village === '' || typeof $village === 'undefined') {
-		alert('Please select Village');
-		$('#village').focus();
-		allValid = false;
-		return false;
-	}
+	
 	if ($location === '' || typeof $location === 'undefined') {
 		alert('Please enter Location');
 		$('#location').focus();
@@ -423,87 +397,45 @@ function validation() {
 		return false;
 	}
 	
-	if ($no_sapling > 0) {
-		if ($photos_sapling === '' || typeof $photos_sapling === 'undefined') {
-			alert('Please upload photo for Sapling Planted');
-//	 		$('#bhoomipoojan_photo1').focus();
-			document.getElementById('photos_sapling').click();
-			allValid = false;
-			return false;
-		}
-	}
-	if ($no_works_lokarpan > 0) {
-		if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
-			alert('Please upload photo for Lokarpan');
-//	 		$('#lokarpan_photo1').focus();
-			document.getElementById('photos_lokarpan').click();
-			allValid = false;
-			return false;
-		}
-	}
-	if ($no_location_shramdaan > 0) {
-		if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
-			alert('Please upload photo for Shramdaan');
-//	 		$('#shramdaan_photo1').focus();
-			document.getElementById('photos_shramdaan').click();
-			allValid = false;
-			return false;
-		}
-	}
-	if ($no_cleanliness > 0) {
-		if ($photos_cleanliness === '' || typeof $photos_cleanliness === 'undefined') {
-			alert('Please upload photo for Cleanliness drives Organised');
-//	 		$('#plantation_photo1').focus();
-			document.getElementById('photos_cleanliness').click();
-			allValid = false;
-			return false;
-		}
-	}
-	if ($no_awareness > 0) {
-		if ($photos_awareness === '' || typeof $photos_awareness === 'undefined') {
-			alert('Please upload photo for Awareness Sessions Organised');
-//	 		$('#plantation_photo1').focus();
-			document.getElementById('photos_awareness').click();
-			allValid = false;
-			return false;
-		}
-	}
-	// For each activity block
-    document.querySelectorAll(".photo-block").forEach(block => {
+	 $(".photo-block").each(function () {
+	        let container = $(this).find(".photoContainer");
+	        let photos = container.find("input[type='file']");
+	        let uploaded = 0;
+	        let errorDiv = $(this).find(".photoError");
+	        errorDiv.html("");
+	        photos.each(function () {
+	            if ($(this).val() !== "") {
+	                uploaded++;
+	            }
+	        });
 
-        let container = block.querySelector(".photoContainer");
-        let errorDiv = block.querySelector(".photoError");
-        let inputs = container.querySelectorAll("input[type='file']");
-        let totalFiles = 0;
-        let minPhotos = 2;
-        errorDiv.innerHTML = ""; // clear old errors
-        inputs.forEach(inp => {
-            if (inp.files.length > 0) {
-                totalFiles++;
-            }
-        });
+	        // If user uploaded photos then validate min/max
+	        if (uploaded > 0) {
+	            let label = $(this).find("label").text();
 
-        let activityInput = block.closest("tr").querySelector("input[type='text']");
-        let activityValue = activityInput ? parseInt(activityInput.value || 0) : 0;
-        if (activityValue > 0 && totalFiles < minPhotos) {
-            errorDiv.innerHTML = "Please upload minimum " +minPhotos+" photos.";
-            alert(`Minimum `+minPhotos+` photos required for this activity.`);
-            allValid = false;
-            return false;
-        }
+	            let min = 2, max = 2;
 
-    });
-	
+	            // Janbhagidari rule: min 4 max 10
+	           
+
+	            if (uploaded < min || uploaded > max) {
+	            	errorDiv.html("Please upload minimum " + min + " photos.");
+	                alert(label + "\nPlease upload minimum " + min + " photos required for this activity.");
+	                isValid = false;
+	                return false; // break loop
+	            }
+	        }
+	    });
 
     if (allValid) {
 
-        if (!confirm("Do you want to save Watershed Swachhata at Project Level?")) {
+        if (!confirm("Do you want to Update Watershed Swachhata at Project Level?")) {
             return false;
         }
 
         window.formSubmitted = true;
 
-        document.saveWatershed.action = "saveWatershedSwachhataDetails";
+        document.saveWatershed.action = "updateWatershedSwachhataDetails";
         document.saveWatershed.method = "post";
         document.saveWatershed.submit();
 
@@ -551,11 +483,10 @@ function validation() {
 	
 } */
 
-function editChangedata(waterid){
+function editChancel(){
 	
-	document.getElementById('waterid').value=waterid;
-    document.saveWatershed.action="getWatershedSwachhataidProjLvlEdit";
-	document.saveWatershed.method="post";
+    document.saveWatershed.action="getWatershedSwachhataAtProj";
+	document.saveWatershed.method="get";
 	document.saveWatershed.submit();
 }
 
@@ -756,74 +687,53 @@ display: none; /* Hidden by default */
 	</script>
 </c:if>
 	<div class="maindiv">
-		<div class="col formheading" style="text-decoration: underline;"><h4>Watershed Swachhata at Project Level</h4> </div>
+		<div class="col formheading" style="text-decoration: underline;"><h4>Update Watershed Swachhata at Project Level</h4> </div>
 		<!-- 	<label>
 		<span style="color:blue;">Note:- The Image size must be under 300KB with Geo-referenced and Time-stamped.</span>
 		</label> -->
-		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="saveWatershedSwachhata" modelAttribute="useruploadsl" enctype="multipart/form-data">
-			 <input type="hidden" id="waterid" name="waterid" />
+		<form:form autocomplete="off" method="post" name="saveWatershed" id="saveWatershed" action="updateWatershedSwachhataDetails" modelAttribute="useruploadsl" enctype="multipart/form-data">
+			 <c:forEach items="${dataList}" var="data" varStatus="count">
+				<input type="hidden" id="waterid" name="waterid" value="${data.swachhata_id}"/>
+				<input type="hidden" id="datetime" name="datetime" value="${data.datetime}"/>
+				<input type="hidden" id="district" name="district" value="${data.district}"/>
+				<input type="hidden" id="project" name="project" value="${data.project}"/>
+				<input type="hidden" id="block" name="block" value="${data.block}"/>
+			 	<input type="hidden" id="village" name="village" value="${data.village}"/>
 			<hr/>
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date of Activity:<span style="color: red;">*</span> </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
+       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" class="form-control activity" style="width: 100%;" value="${data.datetime}" />
     		</div>
 			</div>
 			<div class="row">
-			<div class="form-group col-4">
-			
-				State Name:</br> <c:out value="${stateName}"></c:out>
-			
-			</div>
-    		<div class="form-group col-4">
-      			District Name: </br> <c:out value="${distName}"></c:out>
-      			
-      		<input type="hidden" id="district" name="district" value="${distCode}">
-      			
-    		</div>
-				<div class="form-group col-4">
-					<label for="project">Project Name:<span style="color: red;">*</span> </label> <select	class="form-control project" id="project" name="project">
-						<option value="">--Select Project--</option>
-						<c:forEach items="${projectList}" var="proj">
-							<c:if test="${proj.key == project}">
-								<option value="${proj.key}" selected>${proj.value}</option>
-							</c:if>
-							<c:if test="${proj.key != project}">
-								<option value="${proj.key}">${proj.value}</option>
-							</c:if>
-						</c:forEach>
-					</select>
+				<div class="form-group col-2">
+				State Name: &nbsp; <c:out value="${stateName}"></c:out>
 				</div>
-				<div class="form-group col-4">
-    			<label for="block">Block Name:<span style="color: red;">*</span> </label>
-      			<select class="form-control activity" id="block" name="block">
-    				<option value="">--Select Block--</option>
-    				<c:forEach items="${blkList}" var="dist"> 
-    				<c:if test ="${dist.key == blkcode}">
-						<option value="<c:out value="${dist.key}"/>" selected><c:out value="${dist.value}" /></option>
-					</c:if>
-					<c:if test ="${dist.key != blkcode}">
-						<option value="<c:out value="${dist.key}"/>" ><c:out value="${dist.value}" /></option>
-					</c:if>
-					</c:forEach>
-    			</select>
-    		</div>
-    		
-    		<div class="form-group col-4">
-    			<label for="block">Village Name:<span style="color: red;">*</span> </label>
-      			<select class="form-control activity" id="village" name="village">
-    				<option value="">--Select Village--</option>
-    				
-    			</select>
-    		</div>
-    		
-    		<div class="form-group col-4">
-    			<label for="location">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
-    			<input type="text" class="form-control activity" name="location" id="location"  
-    					style="width: 100%; max-width: 800px;" value="${location}" />
-			</div>
-
-    		<br/>
+	    		<div class="form-group col-2">
+	      			<label for="district">District: </label>
+	      			<span class="districtError"></span>
+	      			 <c:out value="${data.distname}" />
+	    		</div>
+	    		<div class="form-group col-2">
+	    			<label for="project">Project: </label>
+	      			<span class="projectError"></span>
+	      			<c:out value="${data.projname}" />
+	    		</div>
+	    		<div class="form-group col-2">
+	    			<label for="block">Block: </label>
+	      			<span class="blockError"></span>
+	      			<c:out value="${data.blockname}" />
+	    		</div>
+	    		<div class="form-group col-2">
+	    			<label for="block">Village: </label>
+	      			<span class="blockError"></span>
+	      			<c:out value="${data.villagename}" />
+	    		</div>
+	    		<div class="form-group col-4">
+	    			<label for="activity">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
+	    			<input type="text" class="form-control activity" name="location" id="location" value="${data.location}" style="width: 100%; max-width: 800px;" />
+	    		</div>
     		</div>
     		
      		<div class="form-row">
@@ -836,19 +746,19 @@ display: none; /* Hidden by default */
      	<tr>
      		
      		<td>SHG<span style="color: red;">*</span><br><input type="text" id="shg" name="shg" autocomplete="off" onblur="calculateTotal();"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.shg}" required /></td>
      		<td>User Group<span style="color: red;">*</span> <br><input type="text" id="ug" name="ug" autocomplete="off" onblur="calculateTotal();"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.usg}" required /></td>
      		<td colspan=2>FPOs<span style="color: red;">*</span> <br><input type="text" id="fpo" name="fpo" autocomplete="off" onblur="calculateTotal();"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.fpo}" required /></td>
 		</tr>
 		<tr>					 
      		<td>Youth/Students<span style="color: red;">*</span><br><input type="text" id="youth" name="youth" autocomplete="off" onblur="calculateTotal();"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.youth}" required /></td>
 			<td>Others<span style="color: red;">*</span> <br><input type="text" id="other" name="other" autocomplete="off" onblur="calculateTotal();"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>	
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.other}" required /></td>	
 			<td colspan=2>Total <br><input type="text" id="total" name="total" autocomplete="off"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly="readonly" /></td>						 				 					 
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" value="${data.total}" readonly="readonly" /></td>						 				 					 
      	</tr>
      	
      	
@@ -857,7 +767,7 @@ display: none; /* Hidden by default */
      	</tr>
 						<tr>
 							<td>Total No. of Sapling Planted<span style="color: red;">*</span> <input type="hidden" name="sapling" id="sapling" value="1"/></td>
-							<td colspan=2><input type="text" id="no_sapling" name="no_sapling" autocomplete="off"
+							<td colspan=2><input type="text" id="no_sapling" name="no_sapling" autocomplete="off" value="${data.no_sapling}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
 								<div class="photo-block" data-name="photos_sapling">
@@ -890,7 +800,7 @@ display: none; /* Hidden by default */
 							<td>Total No. of Works for Lokarpan<span style="color: red;">*</span> <input type="hidden" name="lokarpan" id="lokarpan" value="2"/></td>
 							<td colspan=2><input type="text" id="no_works_lokarpan"
 								name="no_works_lokarpan" autocomplete="off" pattern="^\d{10}$"
-								maxlength="5"
+								maxlength="5" value="${data.no_works_lokarpan}"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
 								<div class="photo-block" data-name="photos_lokarpan">
@@ -921,7 +831,7 @@ display: none; /* Hidden by default */
 						</tr>
 						<tr>
 							<td>Total No. of Location Shramdaan Undertaken<span style="color: red;">*</span><input type="hidden" name="shramdaan" id="shramdaan" value="3"/> </td>
-							<td colspan=2> <input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off"
+							<td colspan=2> <input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off" value="${data.no_location_shramdaan}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
 							</td>
 							<td>
@@ -953,7 +863,7 @@ display: none; /* Hidden by default */
 						<tr>
 							<td>Total No. of Cleanliness drives Organised<span style="color: red;">*</span> <input type="hidden" name="cleanliness" id="cleanliness" value="4"/></td>
 							<td colspan=2><input type="text" id="no_cleanliness" name="no_cleanliness" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5"
+								pattern="^\d{10}$" maxlength="5" value="${data.no_cleanliness}"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
 								<div class="photo-block" data-name="photos_cleanliness">
@@ -984,7 +894,7 @@ display: none; /* Hidden by default */
 						
 						<tr>
 							<td>Awareness Sessions Organised<span style="color: red;">*</span> <input type="hidden" name="awareness" id="awareness" value="5"/></td>
-							<td colspan=2><input type="text" id="no_awareness" name="no_awareness" autocomplete="off"
+							<td colspan=2><input type="text" id="no_awareness" name="no_awareness" autocomplete="off" value="${data.no_awareness}"
 								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
 								<div class="photo-block" data-name="photos_awareness">
@@ -1012,9 +922,16 @@ display: none; /* Hidden by default */
 								</div>
 							</td>
 						</tr>
+						
+						<tr>
+     					<td colspan=4 class="text-left">
+							<input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="return validation();"  value ="Update"/>
+     						<input type="button" class="btn btn-info" id="cancelbtn" name="cancelbtn" onclick="return editChancel();"  value ="Cancel"/>
+     					</td>
+     					</tr>
 
 					</table>
-		<c:if test ="${!check}">
+		<%-- <c:if test ="${!check}">
         <div class="form-row">
 				<div class="form-group col-8">
 				<label for="btnGetDetails"> &nbsp;</label>
@@ -1026,187 +943,17 @@ display: none; /* Hidden by default */
 					       value="Save" />
      			</div>
      		</div> 
-     	</c:if>
+     	</c:if> --%>
      </div>
 		</div>
 	<br/>
-     		
+     		</c:forEach>
 		</form:form>
 	</div> 
 	
-	<div class="form-row">
-	     <div class="form-group col">
-	    
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Draft List of Watershed Swachhata at Project Level Details</h5>
-	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
-						<thead class ="theadlist" id = "theadlist">
-							<tr>
-								<th rowspan="2">Action</th>
-								<th rowspan="2">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
-								<th rowspan="2">Date of Activity</th>
-<!-- 								<th rowspan="3">State Name</th> -->
-								<th rowspan="2">District Name</th>
-								<th rowspan="2">Project Name</th>
-								<th rowspan="2">Block Name</th>
-								<th rowspan="2">Village Name</th>
-								<th rowspan="2">Location</th>
-								<th colspan="6">Total No. of People Participated </th>
-								<th colspan="5">Activities</th>
-								<th rowspan="2">Photos</th>
-							</tr>
-							<tr>
-								<th>SHG</th>
-								<th>User Group</th>
-								<th>FPOs</th>
-								<th>Youth/Students</th>
-								<th>Others</th>
-								<th>Total </th>
-								<th>No. of Sapling Planted</th>
-								<th>No. of Works for Lokarpan</th>
-								<th>No. of Location Shramdaan Undertaken</th>
-								<th>No. of Cleanliness drives Organised</th>
-								<th>No. of Awareness Sessions Organised</th>
-							</tr>
-						</thead>
-						
- 						<c:set var="st" value="" />
- 					 	<c:forEach items="${dataList}" var="data" varStatus="count">
- 							<tr>
- 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button>
-								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.swachhata_id}"  name="${data.swachhata_id}" value="${data.swachhata_id}"/></td>
-								<td> <c:out value="${data.datetime}" /></td>
- 								<%-- <c:choose>
- 									<c:when test="${st ne data.stname}">
- 										<c:set var="st" value="${data.stname}" />
- 										<td> <c:out value="${data.stname}" /></td>
- 									</c:when>
- 								<c:otherwise>
-<!--  										<td></td> -->
- 								</c:otherwise>
- 								</c:choose> --%>
-								<td class="text-left"> <c:out value="${data.distname}" /></td>
- 								<td class="text-left"> <c:out value="${data.projname}" /></td>
- 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
- 								<td class="text-left"> <c:out value="${data.villagename}" /></td>
-								<td class="text-left"> <c:out value="${data.location}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.shg}" /></td>
-								<td class="text-right"> <c:out value="${data.usg}" /></td>
- 								<td class="text-right"> <c:out value="${data.fpo}" /></td>
-								<td class="text-right"> <c:out value="${data.youth}" /></td>
- 								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.total}" /></td>
- 								<td class="text-right"> <c:out value="${data.sapling}" /></td>
-								<td class="text-right"> <c:out value="${data.lokarpan}" /></td>
- 								<td class="text-right"> <c:out value="${data.shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.cleanliness}" /></td>
- 								<td class="text-right"> <c:out value="${data.awareness}" /></td>
-								<td class="text-right">
-<%-- 									<c:out value="${data.image_count}" /> --%>
-<%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /></a> --%>
-									<a href="#" data-id="${data.swachhata_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
-								</td>
-					</tr>
-							
-					
- 						</c:forEach> 
- 						<c:if test="${dataListSize eq 0}">
-							<tr>
-								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
-							</tr>
-						</c:if>
- 						<c:if test="${dataListSize ne 0 && dataListSize >0}">
- 						<tr>
-								<td> <input type="button" class="btn btn-info" id="delete" name="delete" value ="Delete"/> </td>
-								<td> <input type="button" class="btn btn-info" id="complete" name="complete" value ="Complete"/> </td>
-							</tr>
-						</c:if>
-						
-		</table>
+	
 		
 		
-		</div>
-		</div>
-		
-		<div class="form-row">
-	     <div class="form-group col">
-	    
-	     <h5 class="text-center font-weight-bold" style="text-decoration: underline;">Complete List of Watershed Swachhata at Project Level Details</h5>
-	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
-						<thead class ="theadlist" id = "theadlist">
-							<tr>
-								
-								<th rowspan="2">S.No.</th> 
-								<th rowspan="2">Date of Activity</th>
-<!-- 								<th rowspan="3">State Name</th> -->
-								<th rowspan="2">District Name</th>
-								<th rowspan="2">Project Name</th>
-								<th rowspan="2">Block Name</th>
-								<th rowspan="2">Village Name</th>
-								<th rowspan="2">Location</th>
-								<th colspan="6">Total No. of People Participated </th>
-								<th colspan="5">Activities</th>
-								<th rowspan="2">Photos</th>
-							</tr>
-							<tr>
-								<th>SHG</th>
-								<th>User Group</th>
-								<th>FPOs</th>
-								<th>Youth/Students</th>
-								<th>Others</th>
-								<th>Total </th>
-								<th>No. of Sapling Planted</th>
-								<th>No. of Works for Lokarpan</th>
-								<th>No. of Location Shramdaan Undertaken</th>
-								<th>No. of Cleanliness drives Organised</th>
-								<th>No. of Awareness Sessions Organised</th>
-							</tr>
-						</thead>
-						
- 						<c:set var="st" value="" />
- 					 	<c:forEach items="${compdataList}" var="data" varStatus="count">
- 							<tr>
-								<td><c:out value='${count.count}' /> &nbsp;</td>
-								<td> <c:out value="${data.datetime}" /></td>
- 								
-								<td class="text-left"> <c:out value="${data.distname}" /></td>
- 								<td class="text-left"> <c:out value="${data.projname}" /></td>
- 								<td class="text-left"> <c:out value="${data.blockname}" /></td>
- 								<td class="text-left"> <c:out value="${data.villagename}" /></td>
-								<td class="text-left"> <c:out value="${data.location}" /></td>
-								
- 								<td class="text-right"> <c:out value="${data.shg}" /></td>
-								<td class="text-right"> <c:out value="${data.usg}" /></td>
- 								<td class="text-right"> <c:out value="${data.fpo}" /></td>
-								<td class="text-right"> <c:out value="${data.youth}" /></td>
- 								<td class="text-right"> <c:out value="${data.other}" /></td>
- 								<td class="text-right"> <c:out value="${data.total}" /></td>
- 								<td class="text-right"> <c:out value="${data.sapling}" /></td>
-								<td class="text-right"> <c:out value="${data.lokarpan}" /></td>
- 								<td class="text-right"> <c:out value="${data.shramdaan}" /></td>
-								<td class="text-right"> <c:out value="${data.cleanliness}" /></td>
- 								<td class="text-right"> <c:out value="${data.awareness}" /></td>
- 								
-								<td class="text-right">
-<%-- 									<c:out value="${data.image_count}" />  --%>
-<%-- 									<a href="#" data-id="${data.waterid}" class="showImage" style="color:blue;"><c:out value="${data.image_count}" /> </a> --%>
-									<a href="#" data-id="${data.swachhata_id}" class="showImage" data-toggle="modal" style ="color: blue;"><c:out value="${data.image_count}" /></a> 
-								</td>
-					</tr>
-							
-					
- 						</c:forEach> 
- 						
-						<c:if test="${compdataListSize eq 0}">
-							<tr>
-								<td align="center" colspan="20" class="required" style="color:red;">Data Not Found</td>
-							</tr>
-						</c:if>
-		</table>
-		
-		
-		</div>
-		</div>
 	
 	<!-- Show Image Modal HTML -->
 	<div id="imagePopup" class="popup" style="display:none;">

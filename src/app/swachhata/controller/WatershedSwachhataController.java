@@ -213,5 +213,121 @@ public class WatershedSwachhataController {
 		return res; 
 	}
 	
+	@RequestMapping(value = "/getImageSwachhataProjLvlId", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageSwachhataProjLvlId(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("swachhataid") Integer swachhataid){
+		List<String> imgList = new ArrayList<>();
+		try {
+			imgList = serv.getImageSwachhataProjLvlId(swachhataid);
+			
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
+	}
+	
+	@RequestMapping(value = "/getWatershedSwachhataidProjLvlEdit", method = RequestMethod.POST)
+	public ModelAndView getWatershedSwachhataidProjLvlEdit(HttpServletRequest request, HttpServletResponse response) {
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		List<WatershedSwachhataBean> editlist = new ArrayList<WatershedSwachhataBean>();
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+				mav = new ModelAndView("mahotsav/updateWatershedSwachhataAtProject");
+				String waterid=request.getParameter("waterid");
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
+				listm=profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				for(ProfileBean bean : listm) {
+					distName =bean.getDistrictname();
+					distCode = bean.getDistrictcode()==null?0:bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode()==null?0:bean.getStatecode();
+				}
+				mav.addObject("userType",userType);
+				mav.addObject("distName",distName);
+				mav.addObject("stateName",stateName);
+				//mav.addObject("distList", ser.getDistrictList(stcd));
+				
+				editlist=serv.getWatershedSwachhataidProjLvlEdit(Integer.parseInt(waterid));
+				
+				mav.addObject("dataList",editlist);
+				mav.addObject("dataListSize",editlist.size());
+
+			} 
+			else {
+				mav = new ModelAndView("login");
+				mav.addObject("login", new Login());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value = "/updateWatershedSwachhataDetails", method = RequestMethod.POST)
+	public ModelAndView updateWatershedSwachhataDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedSwachhataBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("mahotsav/watershedSwachhataAtProject");
+				int projid = Integer.parseInt(request.getParameter("project"));
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+				
+				mav.addObject("userType", userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+			//	mav.addObject("blkList", serProj.getBlockbyProjId(projid));
+
+				result = serv.updateWatershedSwachhataDetails(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data Updated Successfully");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result", "Data Updation failed!");
+				} 
+				/*else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved!");
+				}*/
+				return new ModelAndView("redirect:/getWatershedSwachhataAtProj");
+			} else {
+				return new ModelAndView("redirect:/login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
 
 }

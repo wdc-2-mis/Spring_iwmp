@@ -15,5 +15,7 @@ public interface WatershedSwachhataDao {
 	String completeWatershedSwachhataDetails(List<Integer> assetid, String userid);
 	String deleteWatershedSwachhataDetails(List<Integer> assetid, String userid);
 	public List<String> getImageSwachhataProjLvlId(Integer swachhataid);
+	public List<WatershedSwachhataBean> getWatershedSwachhataidProjLvlEdit(Integer id);
+	public String updateWatershedSwachhataDetails(WatershedSwachhataBean userfileup, HttpSession session);
 
 }
