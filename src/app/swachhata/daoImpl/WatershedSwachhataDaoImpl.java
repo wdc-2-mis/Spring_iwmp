@@ -114,8 +114,8 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			
 
 			String filePath="D:\\ProjectLevel\\";
-		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/mahotsavdoc/projectLevel/";
-		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/mahotsavdoc/projectLevel/";
+		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/swachhata/projectLevel/";
+		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/swachhata/projectLevel/";
 			
 			WatershedSwachhataProjectLevel data = new WatershedSwachhataProjectLevel();
 			
@@ -491,6 +491,40 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		}
 		
 		return str;
+	}
+
+
+
+
+	@Override
+	public List<String> getImageSwachhataProjLvlId(Integer swachhataid) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedSwachhataProjectLevelPhoto> list = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :id");
+			query.setInteger("id", swachhataid);
+			list = query.list();
+			for (WatershedSwachhataProjectLevelPhoto photo : list) 
+			{
+				//server
+				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 
 }

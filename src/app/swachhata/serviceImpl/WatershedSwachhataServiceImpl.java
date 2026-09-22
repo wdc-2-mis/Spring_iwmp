@@ -48,4 +48,10 @@ public class WatershedSwachhataServiceImpl implements WatershedSwachhataService{
 		return dao.deleteWatershedSwachhataDetails(assetid, userid);
 	}
 
+	@Override
+	public List<String> getImageSwachhataProjLvlId(Integer swachhataid) {
+		// TODO Auto-generated method stub
+		return dao.getImageSwachhataProjLvlId(swachhataid);
+	}
+
 }

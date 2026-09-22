@@ -513,7 +513,7 @@ function validation() {
 //     document.getElementById("saveWatershed").submit();
 }
 
-function displaydata(){
+/*function displaydata(){
 	allValid = true;
 	$datetime = $('#datetime').val();
 	$projId = $('#project').val();
@@ -549,12 +549,12 @@ function displaydata(){
 		return false;
 	}
 	
-}
+} */
 
 function editChangedata(waterid){
 	
 	document.getElementById('waterid').value=waterid;
-    document.saveWatershed.action="getWatershedMahotsavProjLvlEdit";
+    document.saveWatershed.action="getWatershedSwachhataidProjLvlEdit";
 	document.saveWatershed.method="post";
 	document.saveWatershed.submit();
 }
@@ -565,8 +565,8 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/mahotsavdoc/projectLevel/' + imageSrc;		
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/mahotsavdoc/projectLevel/' + imageSrc;
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + imageSrc;		
+// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/swachhata/projectLevel/' + imageSrc;
  	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;

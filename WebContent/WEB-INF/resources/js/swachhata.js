@@ -146,11 +146,11 @@ $(document).on('click', '#complete', function(e) {
 
 $(document).on('click', '.showImage', function(e) {
 			
-			$waterId = e.target.getAttribute('data-id');
+			$swachhataid = e.target.getAttribute('data-id');
 			$.ajax({
 				type: 'POST',
-				url: "getImageMahotsavProjLvlId",
-				data: { waterId: $waterId },
+				url: "getImageSwachhataProjLvlId",
+				data: { swachhataid: $swachhataid },
 				error: function(xhr, status, er) {
 					console.log(er);
 				},

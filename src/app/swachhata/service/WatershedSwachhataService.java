@@ -14,5 +14,6 @@ public interface WatershedSwachhataService {
 	public List<WatershedSwachhataBean> getWatershedSwachhataAtProj(String loginId);
 	String completeWatershedSwachhataDetails(List<Integer> assetid, String userid);
 	String deleteWatershedSwachhataDetails(List<Integer> assetid, String userid);
+	public List<String> getImageSwachhataProjLvlId(Integer swachhataid);
 
 }
