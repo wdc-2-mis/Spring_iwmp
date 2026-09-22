@@ -10,11 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import app.bean.Login;
 import app.bean.ProfileBean;
@@ -50,13 +52,14 @@ public class WatershedSwachhataController {
 	public ModelAndView getWatershedSwachhataAtProj(HttpServletRequest request, HttpServletResponse response) {
 		session = request.getSession(true);
 		ModelAndView mav = new ModelAndView();
-		List<WatershedMahotsavProjectLevelBean> list = new ArrayList<WatershedMahotsavProjectLevelBean>();
-		List<WatershedMahotsavProjectLevelBean> dlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
-		List<WatershedMahotsavProjectLevelBean> comlist = new ArrayList<WatershedMahotsavProjectLevelBean>();
+		List<WatershedSwachhataBean> list = new ArrayList<WatershedSwachhataBean>();
+		List<WatershedSwachhataBean> dlist = new ArrayList<WatershedSwachhataBean>();
+		List<WatershedSwachhataBean> comlist = new ArrayList<WatershedSwachhataBean>();
 		try {
 			if (session != null && session.getAttribute("loginID") != null) {
 				mav = new ModelAndView("mahotsav/watershedSwachhataAtProject");
 				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				String loginId = session.getAttribute("loginID").toString();
 				String userType = session.getAttribute("userType").toString();
 				List<ProfileBean> listm=new  ArrayList<ProfileBean>();
 				listm=profileService.getMapstate(regId, userType);
@@ -76,8 +79,8 @@ public class WatershedSwachhataController {
 				mav.addObject("stateName",stateName);
 				mav.addObject("projectList",baseLineOutcomeService.getProjectByRegId(regId));
 				
-			/*	list = serProj.getBlksWiseWatershedMahotsavAtProjLvl(regId.toString());
-				for(WatershedMahotsavProjectLevelBean bean :list) {
+		/*		list = serProj.getWatershedSwachhataAtProj(regId.toString());
+				for(WatershedSwachhataBean bean :list) {
 					if(bean.getStatus().equals('D')) {
 						dlist.add(bean);
 					}else {
@@ -88,7 +91,7 @@ public class WatershedSwachhataController {
 				mav.addObject("dataListSize",dlist.size());
 				
 				mav.addObject("compdataList",comlist);
-				mav.addObject("compdataListSize",comlist.size());*/
+				mav.addObject("compdataListSize",comlist.size()); */
 				
 
 			} else {
@@ -107,6 +110,63 @@ public class WatershedSwachhataController {
 			@RequestParam("projid") int projid, @RequestParam("bokckid") int bokckid) {
 		session = request.getSession(true);
 		return serv.getVillagebyProjIdBlock(projid, bokckid);
+	}
+	
+	@RequestMapping(value = "/saveWatershedSwachhataDetails", method = RequestMethod.POST)
+	public ModelAndView saveWatershedSwachhataDetails(HttpServletRequest request, HttpServletResponse response,
+			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedSwachhataBean userfileup)
+			throws Exception {
+
+		session = request.getSession(true);
+		ModelAndView mav = new ModelAndView();
+		String result = "fail";
+		try {
+			if (session != null && session.getAttribute("loginID") != null) {
+
+				mav = new ModelAndView("mahotsav/watershedSwachhataAtProject");
+				int projid = Integer.parseInt(request.getParameter("project"));
+				Integer regId = Integer.parseInt(session.getAttribute("regId").toString());
+				Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+				String userType = session.getAttribute("userType").toString();
+				List<ProfileBean> listm = new ArrayList<ProfileBean>();
+				listm = profileService.getMapstate(regId, userType);
+				String distName = "";
+				String stateName = "";
+				int stCode = 0;
+				int distCode = 0;
+				
+				for (ProfileBean bean : listm) {
+					distName = bean.getDistrictname();
+					distCode = bean.getDistrictcode() == null ? 0 : bean.getDistrictcode();
+					stateName = bean.getStatename();
+					stCode = bean.getStatecode() == null ? 0 : bean.getStatecode();
+				}
+				
+				mav.addObject("userType", userType);
+				mav.addObject("distName",distName);
+				mav.addObject("distCode",distCode);
+				mav.addObject("stateName",stateName);
+			//	mav.addObject("blkList", serProj.getBlockbyProjId(projid));
+
+				result = serv.saveWatershedSwachhataDetails(userfileup, session);
+
+				if (result.equals("success")) {
+					redirectAttributes.addFlashAttribute("result", "Data saved Successfully");
+				} 
+				else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved ");
+				} 
+				/*else {
+					redirectAttributes.addFlashAttribute("result1", "Data not saved!");
+				}*/
+				return new ModelAndView("redirect:/getWatershedSwachhataAtProj");
+			} else {
+				return new ModelAndView("redirect:/login");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return mav;
 	}
 	
 

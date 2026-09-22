@@ -119,6 +119,9 @@
         <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanPhoto"/>
         <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementation"/>
         <mapping class="app.punarutthan.model.Wdcpmksy1PunarutthanPlanImplementationPhoto"/>
+        <mapping class="app.swachhata.model.WatershedSwachhataProjectLevel" />
+		<mapping class="app.swachhata.model.WatershedSwachhataProjectLevelPhoto" />
+		<mapping class="app.swachhata.model.WatershedSwachhataActivityMaster" />
         
 	</session-factory>
 </hibernate-configuration>

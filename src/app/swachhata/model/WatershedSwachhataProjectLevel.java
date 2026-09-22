@@ -85,7 +85,7 @@ public class WatershedSwachhataProjectLevel {
 	private Integer awareness;
 
 	@Column(name = "status", length = 1)
-	private String status;
+	private Character status;
 
 	@Column(name = "requested_ip", length = 25)
 	private String requestedIp;
@@ -246,11 +246,11 @@ public class WatershedSwachhataProjectLevel {
 		this.awareness = awareness;
 	}
 
-	public String getStatus() {
+	public Character getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Character status) {
 		this.status = status;
 	}
 

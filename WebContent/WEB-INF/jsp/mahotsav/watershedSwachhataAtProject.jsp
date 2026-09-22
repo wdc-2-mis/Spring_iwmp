@@ -19,6 +19,20 @@
 
 <script>
 //Show Add More button when a file is chosen
+
+/* document.getElementById("datetime").addEventListener("change", function () {
+
+    const selectedDate = new Date(this.value);
+    const minDate = new Date("2026-09-20T00:00");
+    const maxDate = new Date("2026-10-02T23:59");
+
+    if (selectedDate < minDate || selectedDate > maxDate) {
+        alert("Please select date between 20/09/2026 and 02/10/2026.");
+        this.value = "";
+        this.focus();
+    }
+}); */
+
 document.addEventListener("change", function(e) {
     if (e.target.classList.contains("photo-input")) {
         
@@ -45,11 +59,11 @@ function addPhotoField1(btn) {
     div.className = "d-flex align-items-center mb-1";
 
     div.innerHTML = `
-        <input type="file" name="photos_bhoomipoojan" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
+        <input type="file" name="photos_sapling" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)" required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = ""/>
-        <input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/>
-        <input type="hidden" id="photos_bhoomipoojan_time" name="photos_bhoomipoojan_time" value = "0"/>
+        <input type="hidden" id="photos_sapling_lat" name="photos_sapling_lat" value = ""/>
+        <input type="hidden" id="photos_sapling_lng" name="photos_sapling_lng" value = "0"/>
+        <input type="hidden" id="photos_sapling_time" name="photos_sapling_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -117,11 +131,36 @@ function addPhotoField4(btn) {
     div.className = "d-flex align-items-center mb-1";
 
     div.innerHTML = `
-        <input type="file" name="photos_forestry" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
+        <input type="file" name="photos_cleanliness" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
         <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
-        <input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value = "0"/>
-	    <input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value = "0"/>
-	    <input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value = "0"/>
+        <input type="hidden" id="photos_cleanliness_lat" name="photos_cleanliness_lat" value = "0"/>
+	    <input type="hidden" id="photos_cleanliness_lng" name="photos_cleanliness_lng" value = "0"/>
+	    <input type="hidden" id="photos_cleanliness_time" name="photos_cleanliness_time" value = "0"/>
+    `;
+
+    container.appendChild(div);
+}
+
+function addPhotoField5(btn) {
+
+    let block = btn.closest(".photo-block");
+    let container = block.querySelector(".photoContainer");
+    let inputs = container.getElementsByClassName("photo-input");
+
+    if (inputs.length >=4) {
+        alert("Maximum 4 photographs allowed for this activity.");
+        return;
+    }
+
+    let div = document.createElement("div");
+    div.className = "d-flex align-items-center mb-1";
+
+    div.innerHTML = `
+        <input type="file" name="photos_awareness" class="form-control photo-input" accept="image/*" onchange="validatePhoto(this)"  required />
+        <button type="button" class="btn btn-danger btn-sm ml-2" onclick="removePhotoField(this)">X</button>
+        <input type="hidden" id="photos_awareness_lat" name="photos_awareness_lat" value = "0"/>
+	    <input type="hidden" id="photos_awareness_lng" name="photos_awareness_lng" value = "0"/>
+	    <input type="hidden" id="photos_awareness_time" name="photos_awareness_time" value = "0"/>
     `;
 
     container.appendChild(div);
@@ -256,43 +295,51 @@ function getImageHash(file, callback) {
 }
 
 
-let formSubmitted = false;
-let allValid = true;
-function validation() 
-{
-	if (formSubmitted) return false;
-	allValid = true;
+window.formSubmitted = false;
+function validation() {
+
+    if (window.formSubmitted) {
+        return false;
+    }
+
+    let allValid = true;
 	
 	var allowedFiles = [".jpg", ".jpeg",".png"];
 
+	$project = $('#project option:selected').val();
     $block = $('#block option:selected').val();
+    $village = $('#village option:selected').val();
     $datetime = $('#datetime').val();
 	$location = $('#location').val();
-	$maleParticipants = $('#maleparticipants').val();
-	$femaleParticipants = $('#femaleparticipants').val();
-	$centralMinisters = $('#centralministers').val();
-	$stateMinisters = $('#stateministers').val();
-	$membersOfParliament = $('#membersofparliament').val();
-	$legAssemblyMembers = $('#legassemblymembers').val();
-	$legCouncilMembers = $('#legcouncilmembers').val();
-	$publicReps = $('#publicreps').val();
-	$govOfficials = $('#govofficials').val();
-	$no_works_bhoomipoojan = $('#no_works_bhoomipoojan').val();
-	$bhoomipoojan_photo1 = $('#photos_bhoomipoojan').val();
+	$shg = $('#shg').val();
+	$ug = $('#ug').val();
+	$fpo = $('#fpo').val();
+	$youth = $('#youth').val();
+	$other = $('#other').val();
+	$no_sapling = $('#no_sapling').val();
+	$photos_sapling = $('#photos_sapling').val();
 	
 	$no_works_lokarpan = $('#no_works_lokarpan').val();
 	$lokarpan_photo1 = $('#photos_lokarpan').val();
 	
 	$no_location_shramdaan = $('#no_location_shramdaan').val();
-	$no_people_shramdaan = $('#no_people_shramdaan').val();
 	$shramdaan_photo1 = $('#photos_shramdaan').val();
 	
-	$area_plantation = $('#area_plantation').val();
-	$plantation_photo1 = $('#photos_forestry').val();
+	$no_cleanliness = $('#no_cleanliness').val();
+	$photos_cleanliness = $('#photos_cleanliness').val();
+	
+	$no_awareness = $('#no_awareness').val();
+	$photos_awareness = $('#photos_awareness').val();
 	
 	if ($datetime === '' || typeof $datetime === 'undefined') {
 		alert('Please select a Date and Time');
 		$('#datetime').focus();
+		allValid = false;
+		return false;
+	}
+	if ($project === '' || typeof $project === 'undefined') {
+		alert('Please select Project');
+		$('#project').focus();
 		allValid = false;
 		return false;
 	}
@@ -302,87 +349,88 @@ function validation()
 		allValid = false;
 		return false;
 	}
+	if ($village === '' || typeof $village === 'undefined') {
+		alert('Please select Village');
+		$('#village').focus();
+		allValid = false;
+		return false;
+	}
 	if ($location === '' || typeof $location === 'undefined') {
 		alert('Please enter Location');
 		$('#location').focus();
 		allValid = false;
 		return false;
 	}
-	if ($maleParticipants === '' || typeof $maleParticipants === 'undefined') {
-		alert('Please enter the Number Of Male Participants/Villagers');
-		$('#maleparticipants').focus();
+	if ($shg === '' || typeof $shg === 'undefined') {
+		alert('Please enter the Number Of SHG');
+		$('#shg').focus();
 		allValid = false;
 		return false;
 	}
-	if ($femaleParticipants === '' || typeof $femaleParticipants === 'undefined') {
-		alert('Please enter the Number Of Female Participants/Villagers');
-		$('#femaleparticipants').focus();
+	if ($ug === '' || typeof $ug === 'undefined') {
+		alert('Please enter the Number Of User Group');
+		$('#ug').focus();
 		allValid = false;
 		return false;
 	}
-	if ($centralMinisters === '' || typeof $centralMinisters === 'undefined') {
-		alert('Please enter the Number of Central Ministers');
-		$('#centralministers').focus();
+	if ($fpo === '' || typeof $fpo === 'undefined') {
+		alert('Please enter the Number of FPO');
+		$('#fpo').focus();
 		allValid = false;
 		return false;
 	}
-	if ($stateMinisters === '' || typeof $stateMinisters === 'undefined') {
-		alert('Please enter the Number of State Ministers');
-		$('#stateministers').focus();
+	if ($youth === '' || typeof $youth === 'undefined') {
+		alert('Please enter the Number of Youth Participant');
+		$('#youth').focus();
 		allValid = false;
 		return false;
 	}
-	if ($membersOfParliament === '' || typeof $membersOfParliament === 'undefined') {
-		alert('Please enter the Number of Members of Parliament');
-		$('#membersofparliament').focus();
+	if ($other === '' || typeof $other === 'undefined') {
+		alert('Please enter the Number of Other Participant');
+		$('#other').focus();
 		allValid = false;
 		return false;
 	}
-	if ($legAssemblyMembers === '' || typeof $legAssemblyMembers === 'undefined') {
-		alert('Please enter the Number of Legislative Assembly Members');
-		$('#legassemblymembers').focus();
+	if ($no_sapling === '' || typeof $no_sapling === 'undefined') {
+		alert('Please enter Total No. of Sapling Planted');
+		$('#no_sapling').focus();
 		allValid = false;
 		return false;
 	}
-	if ($legCouncilMembers === '' || typeof $legCouncilMembers === 'undefined') {
-		alert('Please enter the Number of Legislative Council Members');
-		$('#legcouncilmembers').focus();
+	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
+		alert('Please enter Total No. of Works for Lokarpan');
+		$('#no_works_lokarpan').focus();
 		allValid = false;
 		return false;
 	}
-	if ($publicReps === '' || typeof $publicReps === 'undefined') {
-		alert('Please enter the Number of other Public Representatives');
-		$('#publicreps').focus();
+	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
+		alert('Please enter Total No. of Location Shramdaan Undertaken');
+		$('#no_location_shramdaan').focus();
 		allValid = false;
 		return false;
 	}
-	if ($govOfficials === '' || typeof $govOfficials === 'undefined') {
-		alert('Please enter the Number of Government Officials');
-		$('#govofficials').focus();
+	if ($no_cleanliness === '' || typeof $no_cleanliness === 'undefined') {
+		alert('Please enter Total No. of Cleanliness drives Organised');
+		$('#no_cleanliness').focus();
 		allValid = false;
 		return false;
 	}
 	
-	if ($no_works_bhoomipoojan === '' || typeof $no_works_bhoomipoojan === 'undefined') {
-		alert('Please enter Number of Works of Bhoomi Poojan');
-		$('#no_works_bhoomipoojan').focus();
+	if ($no_awareness === '' || typeof $no_awareness === 'undefined') {
+		alert('Please enter Awareness Sessions Organised');
+		$('#no_awareness').focus();
 		allValid = false;
 		return false;
 	}
-	if ($no_works_bhoomipoojan > 0) {
-		if ($bhoomipoojan_photo1 === '' || typeof $bhoomipoojan_photo1 === 'undefined') {
-			alert('Please upload photo for Bhoomi Poojan');
+	
+	if ($no_sapling > 0) {
+		if ($photos_sapling === '' || typeof $photos_sapling === 'undefined') {
+			alert('Please upload photo for Sapling Planted');
 //	 		$('#bhoomipoojan_photo1').focus();
-			document.getElementById('photos_bhoomipoojan').click();
+			document.getElementById('photos_sapling').click();
 			allValid = false;
 			return false;
 		}
-	}
-	if ($no_works_lokarpan === '' || typeof $no_works_lokarpan === 'undefined') {
-		alert('Please enter the Number of Works of Lokarpan');
-		$('#no_works_lokarpan').focus();
-		allValid = false;
-		return false;
 	}
 	if ($no_works_lokarpan > 0) {
 		if ($lokarpan_photo1 === '' || typeof $lokarpan_photo1 === 'undefined') {
@@ -393,18 +441,6 @@ function validation()
 			return false;
 		}
 	}
-	if ($no_location_shramdaan === '' || typeof $no_location_shramdaan === 'undefined') {
-		alert('Please enter the Number of Locations of Shramdaan');
-		$('#no_location_shramdaan').focus();
-		allValid = false;
-		return false;
-	}
-	if ($no_people_shramdaan === '' || typeof $no_people_shramdaan === 'undefined') {
-		alert('Please enter No of people participated in Shramdaan');
-		$('#no_people_shramdaan').focus();
-		allValid = false;
-		return false;
-	}
 	if ($no_location_shramdaan > 0) {
 		if ($shramdaan_photo1 === '' || typeof $shramdaan_photo1 === 'undefined') {
 			alert('Please upload photo for Shramdaan');
@@ -414,22 +450,24 @@ function validation()
 			return false;
 		}
 	}
-	if ($area_plantation === '' || typeof $area_plantation === 'undefined') {
-		alert('Please enter the Plantation Area in hectares');
-		$('#area_plantation').focus();
-		allValid = false;
-		return false;
-	}
-	if ($area_plantation > 0) {
-		if ($plantation_photo1 === '' || typeof $plantation_photo1 === 'undefined') {
-			alert('Please upload photo for Plantation');
+	if ($no_cleanliness > 0) {
+		if ($photos_cleanliness === '' || typeof $photos_cleanliness === 'undefined') {
+			alert('Please upload photo for Cleanliness drives Organised');
 //	 		$('#plantation_photo1').focus();
-			document.getElementById('photos_forestry').click();
+			document.getElementById('photos_cleanliness').click();
 			allValid = false;
 			return false;
 		}
 	}
-	
+	if ($no_awareness > 0) {
+		if ($photos_awareness === '' || typeof $photos_awareness === 'undefined') {
+			alert('Please upload photo for Awareness Sessions Organised');
+//	 		$('#plantation_photo1').focus();
+			document.getElementById('photos_awareness').click();
+			allValid = false;
+			return false;
+		}
+	}
 	// For each activity block
     document.querySelectorAll(".photo-block").forEach(block => {
 
@@ -457,17 +495,21 @@ function validation()
     });
 	
 
-	if (allValid) {
-		if(confirm("Do you want to save Watershed Mahotsav at Project Level?")) {
-	    formSubmitted = true; 
-		document.saveWatershed.action="saveWatershedMahotsavProjLvlDetails";
-		document.saveWatershed.method="post";
-		document.saveWatershed.submit();
-		}
-		return true;
-	}else{
-		return false;
-	}
+    if (allValid) {
+
+        if (!confirm("Do you want to save Watershed Swachhata at Project Level?")) {
+            return false;
+        }
+
+        window.formSubmitted = true;
+
+        document.saveWatershed.action = "saveWatershedSwachhataDetails";
+        document.saveWatershed.method = "post";
+        document.saveWatershed.submit();
+
+        return false;
+    }
+    return false;
 //     document.getElementById("saveWatershed").submit();
 }
 
@@ -550,7 +592,17 @@ function showPrevImage() {
 		document.getElementById('largeImage').src = prevImageSrc;
 	}
 }
+function calculateTotal() {
+    let shg   = parseInt(document.getElementById("shg").value) || 0;
+    let ug    = parseInt(document.getElementById("ug").value) || 0;
+    let fpo   = parseInt(document.getElementById("fpo").value) || 0;
+    let youth = parseInt(document.getElementById("youth").value) || 0;
+    let other = parseInt(document.getElementById("other").value) || 0;
 
+    let total = shg + ug + fpo + youth + other;
+
+    document.getElementById("total").value = total;
+}
 
 </script>
 
@@ -714,7 +766,7 @@ display: none; /* Hidden by default */
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date of Activity:<span style="color: red;">*</span> </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
+       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
     		</div>
 			</div>
 			<div class="row">
@@ -767,7 +819,7 @@ display: none; /* Hidden by default */
     		
     		<div class="form-group col-2">
     			<label for="location">Location (Nearby/Milestone)<span style="color: red;">*</span></label>
-    <input type="text" class="form-control activity" name="location" id="location" onblur="displaydata()" style="width: 100%; max-width: 800px;" value="${location}" />
+    <input type="text" class="form-control activity" name="location" id="location"  style="width: 100%; max-width: 800px;" value="${location}" />
 			</div>
 
     		
@@ -778,21 +830,24 @@ display: none; /* Hidden by default */
      
      <table id = "tblReport" class = "table">
      	<tr>
-     		<th colspan=5 class="text-left">Participation :</th>
+     		<th colspan=4 class="text-left">Total No. of People Participated :</th>
      	</tr>
      	<tr>
      		
-     		<td>SHG<br><input type="text" id="shg" name="shg" autocomplete="off"
+     		<td>SHG<span style="color: red;">*</span><br><input type="text" id="shg" name="shg" autocomplete="off" onblur="calculateTotal();"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>User Group <br><input type="text" id="ug" name="ug" autocomplete="off"
+     		<td>User Group<span style="color: red;">*</span> <br><input type="text" id="ug" name="ug" autocomplete="off" onblur="calculateTotal();"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			
-     		<td>FPOs <br><input type="text" id="fpo" name="fpo" autocomplete="off"
+     		<td colspan=2>FPOs<span style="color: red;">*</span> <br><input type="text" id="fpo" name="fpo" autocomplete="off" onblur="calculateTotal();"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-     		<td>Youth/Students<br><input type="text" id="youth" name="youth" autocomplete="off"
+		</tr>
+		<tr>					 
+     		<td>Youth/Students<span style="color: red;">*</span><br><input type="text" id="youth" name="youth" autocomplete="off" onblur="calculateTotal();"
 								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
-			<td>Others <br><input type="text" id="total" name="total" autocomplete="off"
-								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>					 					 
+			<td>Others<span style="color: red;">*</span> <br><input type="text" id="other" name="other" autocomplete="off" onblur="calculateTotal();"
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>	
+			<td colspan=2>Total <br><input type="text" id="total" name="total" autocomplete="off"
+								 maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" readonly="readonly" /></td>						 				 					 
      	</tr>
      	
      	
@@ -801,23 +856,21 @@ display: none; /* Hidden by default */
      	</tr>
 						<tr>
 							<td>Total No. of Sapling Planted<span style="color: red;">*</span> <input type="hidden" name="sapling" id="sapling" value="1"/></td>
-							<td colspan=2><input type="text" id="no_sapling"
-								name="no_sapling" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5"
-								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+							<td colspan=2><input type="text" id="no_sapling" name="no_sapling" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
-								<div class="photo-block" data-name="photos_bhoomipoojan">
+								<div class="photo-block" data-name="photos_sapling">
 
 									<label><b>Upload Photographs (Min 2):</b></label>
 
 									<div class="photoContainer">
 										<div class="d-flex align-items-center mb-1">
-											<input type="file" name="photos_bhoomipoojan"
-												id="photos_bhoomipoojan" class="form-control photo-input"
+											<input type="file" name="photos_sapling"
+												id="photos_sapling" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="photos_bhoomipoojan_lat" name="photos_bhoomipoojan_lat" value = "0"/> 
-											<input type="hidden" id="photos_bhoomipoojan_lng" name="photos_bhoomipoojan_lng" value = "0"/> 
-											<input type="hidden" id="photos_bhoomipoojan_time"	name="photos_bhoomipoojan_time" value = "0"/>
+											<input type="hidden" id="photos_sapling_lat" name="photos_sapling_lat" value = "0"/> 
+											<input type="hidden" id="photos_sapling_lng" name="photos_sapling_lng" value = "0"/> 
+											<input type="hidden" id="photos_sapling_time" name="photos_sapling_time" value = "0"/>
 										</div>
 									</div>
 
@@ -868,7 +921,8 @@ display: none; /* Hidden by default */
 						<tr>
 							<td>Total No. of Location Shramdaan Undertaken<span style="color: red;">*</span><input type="hidden" name="shramdaan" id="shramdaan" value="3"/> </td>
 							<td colspan=2> <input type="text" id="no_location_shramdaan" name="no_location_shramdaan" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required />
+							</td>
 							<td>
 								<div class="photo-block" data-name="photos_shramdaan">
 
@@ -897,22 +951,22 @@ display: none; /* Hidden by default */
 						</tr>
 						<tr>
 							<td>Total No. of Cleanliness drives Organised<span style="color: red;">*</span> <input type="hidden" name="cleanliness" id="cleanliness" value="4"/></td>
-							<td colspan=2><input type="text" id="Cleanliness" name="Cleanliness" autocomplete="off"
+							<td colspan=2><input type="text" id="no_cleanliness" name="no_cleanliness" autocomplete="off"
 								pattern="^\d{10}$" maxlength="5"
 								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
-								<div class="photo-block" data-name="photos_forestry">
+								<div class="photo-block" data-name="photos_cleanliness">
 
 									<label><b>Upload Photographs (Min 2):</b></label>
 
 									<div class="photoContainer">
 										<div class="d-flex align-items-center mb-1">
-											<input type="file" name="photos_forestry"
-												id="photos_forestry" class="form-control photo-input"
+											<input type="file" name="photos_cleanliness"
+												id="photos_cleanliness" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value = "0"/>
-											<input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value = "0"/>
-											<input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value = "0"/>
+											<input type="hidden" id="photos_cleanliness_lat" name="photos_cleanliness_lat" value = "0"/>
+											<input type="hidden" id="photos_cleanliness_lng" name="photos_cleanliness_lng" value = "0"/>
+											<input type="hidden" id="photos_cleanliness_time" name="photos_cleanliness_time" value = "0"/>
 										</div>
 									</div>
 
@@ -929,28 +983,27 @@ display: none; /* Hidden by default */
 						
 						<tr>
 							<td>Awareness Sessions Organised<span style="color: red;">*</span> <input type="hidden" name="awareness" id="awareness" value="4"/></td>
-							<td colspan=2><input type="text" id="area_plantation" name="area_plantation" autocomplete="off"
-								pattern="^\d{10}$" maxlength="5"
-								oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
+							<td colspan=2><input type="text" id="no_awareness" name="no_awareness" autocomplete="off"
+								pattern="^\d{10}$" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/g,'');" required /></td>
 							<td>
-								<div class="photo-block" data-name="photos_forestry">
+								<div class="photo-block" data-name="photos_awareness">
 
 									<label><b>Upload Photographs (Min 2):</b></label>
 
 									<div class="photoContainer">
 										<div class="d-flex align-items-center mb-1">
-											<input type="file" name="photos_forestry"
-												id="photos_forestry" class="form-control photo-input"
+											<input type="file" name="photos_awareness"
+												id="photos_awareness" class="form-control photo-input"
 												accept="image/*" onchange="validatePhoto(this)" required />
-											<input type="hidden" id="photos_forestry_lat" name="photos_forestry_lat" value = "0"/>
-											<input type="hidden" id="photos_forestry_lng" name="photos_forestry_lng" value = "0"/>
-											<input type="hidden" id="photos_forestry_time" name="photos_forestry_time" value = "0"/>
+											<input type="hidden" id="photos_awareness_lat" name="photos_awareness_lat" value = "0"/>
+											<input type="hidden" id="photos_awareness_lng" name="photos_awareness_lng" value = "0"/>
+											<input type="hidden" id="photos_awareness_time" name="photos_awareness_time" value = "0"/>
 										</div>
 									</div>
 
 									<button type="button"
 										class="btn btn-sm btn-primary mt-2 addPhotoBtn"
-										style="display: none;" onclick="addPhotoField4(this)">
+										style="display: none;" onclick="addPhotoField5(this)">
 										+ Add More</button>
 
 									<small class="text-danger photoError"></small>
@@ -964,7 +1017,12 @@ display: none; /* Hidden by default */
         <div class="form-row">
 				<div class="form-group col-8">
 				<label for="btnGetDetails"> &nbsp;</label>
-     				<input type="button" class="btn btn-info" id="submitbtn" name="submitbtn" onclick="validation();"  value ="Save"/>
+     				<input type="button"
+					       class="btn btn-info"
+					       id="submitbtn"
+					       name="submitbtn"
+					       onclick="return validation();"
+					       value="Save" />
      			</div>
      		</div> 
      	</c:if>
