@@ -22,38 +22,32 @@
 
 <script type="text/javascript">
 
-function downloadPDF(state, district, blkd, udate, udateto){
-	
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var blkName = document.getElementById("blockk").options[document.getElementById("blockk").selectedIndex].text;
- 
-    document.getElementById("stName").value=stName;
-    document.getElementById("distName").value=distName;
-    document.getElementById("blkName").value=blkName;
-    document.getElementById("udate").value=udate;
-    document.getElementById("userdate2").value=udateto;
-	
-    document.inauguration.action="downloadPDFInaugurationReport";
-	document.inauguration.method="post";
-	document.inauguration.submit();
+function downloadPDF(){
+	document.getWSProjLvlDetails.action="downloadPDFStSwachhataProgram";
+	document.getWSProjLvlDetails.method="post";
+	document.getWSProjLvlDetails.submit();
 }
 
-function downloadExcel(state, district, blkd, udate, udateto){
-	
-	var stName = document.getElementById("state").options[document.getElementById("state").selectedIndex].text;
-    var distName = document.getElementById("district").options[document.getElementById("district").selectedIndex].text;
-    var blkName = document.getElementById("blockk").options[document.getElementById("blockk").selectedIndex].text;
- 
-    document.getElementById("stName").value=stName;
-    document.getElementById("distName").value=distName;
-    document.getElementById("blkName").value=blkName;
-    document.getElementById("udate").value=udate;
-    document.getElementById("userdate2").value=udateto;
-	
-    document.inauguration.action="downloadExcelInaugurationReport";
-	document.inauguration.method="post";
-	document.inauguration.submit();
+function exportExcel(){
+	document.getWSProjLvlDetails.action="downloadExcelStSwachhataProgram";
+	document.getWSProjLvlDetails.method="post";
+	document.getWSProjLvlDetails.submit();
+}
+
+function downloadDPDF(stcd, stName){
+document.getElementById("stcd").value=stcd;
+document.getElementById("stName").value=stName;
+document.getWSProjLvlDetails.action="downloadDistPDFSwachhataProgram";
+document.getWSProjLvlDetails.method="post";
+document.getWSProjLvlDetails.submit();
+}
+
+function exportDExcel(stcd, stName){
+document.getElementById("stcd").value=stcd;
+document.getElementById("stName").value=stName;
+document.getWSProjLvlDetails.action="downloadDistExcelSwachhataProgram";
+document.getWSProjLvlDetails.method="post";
+document.getWSProjLvlDetails.submit();
 }
 
 $(document).on('click', '.showImage', function(e) {
@@ -328,14 +322,15 @@ display: none; /* Hidden by default */
         </c:if>
         
         <c:if test="${not empty distWSProjListSize}">
-    	    <button type="button" name="exportDExcel" id="exportDExcel" class="btn pdf-gradient" onclick="exportDExcel('${stcd}')"> Excel </button> 
-        	<button type="button"  name="exportDPDF" id="exportDPDF" class="btn pdf-gradient" onclick="downloadDPDF('${stcd}')">PDF</button>
+    	    <button type="button" name="exportDExcel" id="exportDExcel" class="btn pdf-gradient" onclick="exportDExcel('${stcd}','${stName}')"> Excel </button> 
+        	<button type="button"  name="exportDPDF" id="exportDPDF" class="btn pdf-gradient" onclick="downloadDPDF('${stcd}','${stName}')">PDF</button>
         </c:if>   
         <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
     </div>
         
-        <form id="getWSProjLvlDetails">
+        <form action="downloadExcelStSwachhataProgram" name="getWSProjLvlDetails"  id="getWSProjLvlDetails" method="post">
         <input type="hidden" name="stcd" id="stcd" value="" />
+        <input type="hidden" name="stName" id="stName" value="" />
         <c:if test="${projLvlWSPrgListSize > 0}">
                 <table class="table table-bordered table-striped" id="stWMI" >
                     <thead>
