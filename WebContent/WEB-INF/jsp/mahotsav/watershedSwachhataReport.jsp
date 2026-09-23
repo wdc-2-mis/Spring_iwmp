@@ -375,15 +375,9 @@ display: none; /* Hidden by default */
  								<td class="text-end"><c:out value="${dt.other}"/></td>
  								<td class="text-end"><c:out value="${dt.total}"/></td>
 								<td class="text-end">
-									<c:choose>
-										<c:when test="${dt.total_photos == 0}">
-										</c:when>
-										<c:otherwise>
 											<a href="#" data-id="${dt.st_code}" data-type="projectlvl" class="showImage" data-toggle="modal" style="color: blue;">
 												<c:out value="${dt.total_photos}" />
 											</a>
-										</c:otherwise>
-									</c:choose>
 								</td>
 								<td class="text-end"><c:out value="${dt.no_sapling}"/></td>
  								<td class="text-end"><c:out value="${dt.no_works_lokarpan}"/></td>
@@ -484,6 +478,7 @@ display: none; /* Hidden by default */
 								<td class="text-end">
 									<c:choose>
 										<c:when test="${dt.total_photos == 0}">
+										0
 										</c:when>
 										<c:otherwise>
 											<a href="#" data-id="${dt.dcode}" data-type="projectlvl" class="showDistImage" data-toggle="modal" style="color: blue;">
