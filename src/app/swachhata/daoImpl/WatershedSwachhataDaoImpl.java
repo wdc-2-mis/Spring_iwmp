@@ -1101,7 +1101,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		List<String> imgList = new ArrayList<>();
 		try {
 			session.beginTransaction();
-			Query query = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.state.stCode = :id");
+			Query query = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.state.stCode = :id and swachhata.status ='C'");
 			query.setInteger("id", stcode);
 			list = query.list();
 			for (WatershedSwachhataProjectLevelPhoto photo : list) 
@@ -1144,6 +1144,40 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			ex.printStackTrace();
 		}
 		return list;
+	}
+
+
+
+
+	@Override
+	public List<String> getImageByDcode(Integer dcode) {
+		// TODO Auto-generated method stub
+		Session session = sessionFactory.getCurrentSession();
+		List<WatershedSwachhataProjectLevelPhoto> list = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
+		List<String> imgList = new ArrayList<>();
+		try {
+			session.beginTransaction();
+			Query query = session.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.district.dcode = :id and swachhata.status ='C'");
+			query.setInteger("id", dcode);
+			list = query.list();
+			for (WatershedSwachhataProjectLevelPhoto photo : list) 
+			{
+				//server
+				imgList.add(photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				//System.out.println(" kdy= "+photo.getPhotoUrl().substring(photo.getPhotoUrl().lastIndexOf("/")+1));
+				
+				//local
+				//imgList.add(photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+//				System.out.println(" kdy= "+photo.getPhotoUrl().replaceAll(".*\\\\", ""));
+			}
+			
+			session.getTransaction().commit();
+		}
+		catch(Exception ex) {
+			session.getTransaction().rollback();
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 
 }

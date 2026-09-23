@@ -351,7 +351,6 @@ public class WatershedSwachhataController {
 		List<String> imgList = new ArrayList<>();
 		try {
 			imgList = serv.getImageByStcode(stcode);
-			
 		}
 		catch(Exception ex) {
 			ex.printStackTrace();
@@ -377,6 +376,21 @@ public class WatershedSwachhataController {
 		mav.addObject("distWSProjListSize",list.size());
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/getImageByDcode", method = RequestMethod.POST)
+	@ResponseBody
+	public List<String> getImageByDcode(HttpServletRequest request, HttpServletResponse response, 
+			@RequestParam("dcode") Integer dcode){
+		List<String> imgList = new ArrayList<>();
+		System.out.println("check it.");
+		try {
+			imgList = serv.getImageByDcode(dcode);
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		return imgList;
 	}
 
 }

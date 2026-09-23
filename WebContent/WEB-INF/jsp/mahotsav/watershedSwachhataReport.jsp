@@ -20,7 +20,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
 
-<script src='<c:url value="/resources/js/swachhata.js" />'></script>
 <script type="text/javascript">
 
 function downloadPDF(state, district, blkd, udate, udateto){
@@ -64,6 +63,40 @@ $(document).on('click', '.showImage', function(e) {
 		type: 'POST',
 		url: "getImageByStcode",
 		data: { stCode: stCode},
+		error: function(xhr, status, er) {
+			console.log(er);
+		},
+		success: function(data) {
+//			var imageContainer = $('.image-container');
+//			imageContainer.empty();
+			let list = '<ul>';
+			for (let i = 0; i < data.length; i++) {
+				if (data[i] != null) 
+				{
+				//PRD
+//					list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				//TEST
+				//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/swachhata/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+				//Local
+					list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+
+				}
+			}
+			list += '</ul>';
+			document.getElementById('imageList').innerHTML = list;
+			document.getElementById('imagePopup').style.display = 'block';
+		}
+	});
+});
+
+$(document).on('click', '.showDistImage', function(e) {
+	
+	let dcode = e.target.getAttribute('data-id');
+	alert(dcode);
+	$.ajax({
+		type: 'POST',
+		url: "getImageByDcode",
+		data: { dcode: dcode},
 		error: function(xhr, status, er) {
 			console.log(er);
 		},
@@ -458,7 +491,7 @@ display: none; /* Hidden by default */
 										<c:when test="${dt.total_photos == 0}">
 										</c:when>
 										<c:otherwise>
-											<a href="#" data-id="${dt.st_code}" data-type="projectlvl" class="showImage" data-toggle="modal" style="color: blue;">
+											<a href="#" data-id="${dt.dcode}" data-type="projectlvl" class="showDistImage" data-toggle="modal" style="color: blue;">
 												<c:out value="${dt.total_photos}" />
 											</a>
 										</c:otherwise>

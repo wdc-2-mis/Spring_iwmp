@@ -84,4 +84,10 @@ public class WatershedSwachhataServiceImpl implements WatershedSwachhataService{
 		return dao.getdistWSProjLvlProgRpt(stCode);
 	}
 
+	@Override
+	public List<String> getImageByDcode(Integer dcode) {
+		// TODO Auto-generated method stub
+		return dao.getImageByDcode(dcode);
+	}
+
 }
