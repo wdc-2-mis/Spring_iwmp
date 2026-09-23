@@ -50,8 +50,8 @@ function addPhotoField1(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -74,8 +74,8 @@ function addPhotoField2(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -98,8 +98,8 @@ function addPhotoField3(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -122,8 +122,8 @@ function addPhotoField4(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -147,8 +147,8 @@ function addPhotoField5(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -604,6 +604,23 @@ function calculateTotal() {
     document.getElementById("total").value = total;
 }
 
+
+	function datecheck(){
+		
+	//let dt=	document.getElementById("datetime").value
+    const selectedDate = new Date(document.getElementById("datetime").value);
+    const minDate = new Date("2026-09-20T00:00");
+    const maxDate = new Date("2026-10-02T23:59");
+
+    if (selectedDate < minDate || selectedDate > maxDate) {
+        alert("Please select date between 20/09/2026 and 02/10/2026.");
+        this.value = "";
+        this.focus();
+    }
+
+	}
+
+
 </script>
 
 <style>
@@ -766,7 +783,8 @@ display: none; /* Hidden by default */
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date of Activity:<span style="color: red;">*</span> </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
+       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" 
+       		  	onblur="datecheck();" class="form-control activity" style="width: 100%;" value="${datetimeValue}" />
     		</div>
 			</div>
 			<div class="row">
@@ -1041,7 +1059,7 @@ display: none; /* Hidden by default */
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<th rowspan="2">Action</th>
+								<!-- <th rowspan="2">Action</th> -->
 								<th rowspan="2">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="2">Date of Activity</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -1069,22 +1087,22 @@ display: none; /* Hidden by default */
 							</tr>
 						</thead>
 						
- 						<c:set var="st" value="" />
+ 						<c:set var="dist" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button>
+ 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button> --%>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.swachhata_id}"  name="${data.swachhata_id}" value="${data.swachhata_id}"/></td>
 								<td> <c:out value="${data.datetime}" /></td>
- 								<%-- <c:choose>
- 									<c:when test="${st ne data.stname}">
- 										<c:set var="st" value="${data.stname}" />
- 										<td> <c:out value="${data.stname}" /></td>
+ 							 	<c:choose>
+ 									<c:when test="${dist ne data.distname}">
+ 										<c:set var="dist" value="${data.distname}" />
+ 										<td> <c:out value="${data.distname}" /></td>
  									</c:when>
  								<c:otherwise>
-<!--  										<td></td> -->
+ 										<td></td>
  								</c:otherwise>
- 								</c:choose> --%>
-								<td class="text-left"> <c:out value="${data.distname}" /></td>
+ 								</c:choose> 
+								<%-- <td class="text-left"> <c:out value="${data.distname}" /></td> --%>
  								<td class="text-left"> <c:out value="${data.projname}" /></td>
  								<td class="text-left"> <c:out value="${data.blockname}" /></td>
  								<td class="text-left"> <c:out value="${data.villagename}" /></td>

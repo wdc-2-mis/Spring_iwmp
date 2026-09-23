@@ -58,6 +58,23 @@
 			});
 	});
 	
+	$(document).on('change', '#village', function(e) {
+				e.preventDefault();
+				$vCode = $('#village option:selected').val();
+				$.ajax({
+				            url: 'checkWatershedSwachhataVillageExits',
+				            type: 'POST',
+				            data: {village:$vCode},
+				            success: function(exists) {
+				                if (exists) {
+									alert('Village Data Already Exists. Only One Entry Allow for That Village !');
+										$("select#village")[0].selectedIndex = 0;
+				                }
+				            }
+				});
+				
+			});
+	
 $('#chkSelectAllkd').on('click', function() {
 		$chkValue = 0;
 		if (this.checked) {

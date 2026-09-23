@@ -21,4 +21,6 @@ public interface WatershedSwachhataDao {
 	public List<String> getImageByStcode(Integer stcode);
 	public List<WatershedSwachhataBean> getdistWSProjLvlProgRpt(int stCode);
 	public List<String> getImageByDcode(Integer dcode);
+	boolean checkWatershedSwachhataVillageExits(Integer vCode);
+
 }

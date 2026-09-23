@@ -89,5 +89,12 @@ public class WatershedSwachhataServiceImpl implements WatershedSwachhataService{
 		// TODO Auto-generated method stub
 		return dao.getImageByDcode(dcode);
 	}
+	
+	@Override
+	public boolean checkWatershedSwachhataVillageExits(Integer vCode) {
+		// TODO Auto-generated method stub
+		return dao.checkWatershedSwachhataVillageExits(vCode);
+	}
+
 
 }

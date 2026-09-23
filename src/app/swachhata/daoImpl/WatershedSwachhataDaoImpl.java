@@ -20,6 +20,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -169,11 +170,18 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			sess.save(data);
 			String code=st_code.toString()+userfileup.getVillage()+"_"+data.getSwachhataId();
 			
+			List<MultipartFile> photos_sapling = userfileup.getPhotos_sapling();
+			List<MultipartFile> photos_lokarpan = userfileup.getPhotos_lokarpan();
+			List<MultipartFile> photos_shramdaan = userfileup.getPhotos_shramdaan();
+			List<MultipartFile> photos_cleanliness = userfileup.getPhotos_cleanliness();
+			List<MultipartFile> photos_awareness = userfileup.getPhotos_awareness();
+			
 			List<String> saplinglat = userfileup.getPhotos_sapling_lat();
 			List<String> saplinglng = userfileup.getPhotos_sapling_lng();
 			List<String> saplingtime = userfileup.getPhotos_sapling_time();
 			sequence= 1;
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+			if(photos_sapling.size()>1) {
 			for (MultipartFile image : userfileup.getPhotos_sapling()) {
 				WatershedSwachhataProjectLevelPhoto photo = new WatershedSwachhataProjectLevelPhoto();
 		        if (!image.isEmpty()) {
@@ -204,10 +212,12 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		        	sess.save(photo);
 		        }
 			}
+			}
 			sequence= 1;
 			List<String> lokarpanLat = userfileup.getPhotos_lokarpan_lat();
 			List<String> lokarpanLng = userfileup.getPhotos_lokarpan_lng();
 			List<String> lokarpanTime = userfileup.getPhotos_lokarpan_time();
+			if(photos_lokarpan.size()>1) {
 			for (MultipartFile image : userfileup.getPhotos_lokarpan()) {
 				WatershedSwachhataProjectLevelPhoto photo = new WatershedSwachhataProjectLevelPhoto();
 		        if (!image.isEmpty()) {
@@ -234,10 +244,12 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		        	sess.save(photo);
 		        }
 			}
+			}
 			sequence= 1;
 			List<String> shramLat = userfileup.getPhotos_shramdaan_lat();
 			List<String> shramLng = userfileup.getPhotos_shramdaan_lng();
 			List<String> shramTime = userfileup.getPhotos_shramdaan_time();
+			if(photos_shramdaan.size()>1) {
 			for (MultipartFile image : userfileup.getPhotos_shramdaan()) {
 				WatershedSwachhataProjectLevelPhoto photo = new WatershedSwachhataProjectLevelPhoto();
 		        if (!image.isEmpty()) {
@@ -265,10 +277,12 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		        	sess.save(photo);
 		        }
 			}
+			}
 			sequence= 1;
 			List<String> cleanlinesslat = userfileup.getPhotos_cleanliness_lat();
 			List<String> cleanlinesslng = userfileup.getPhotos_cleanliness_lng();
 			List<String> cleanlinesstime = userfileup.getPhotos_cleanliness_time();
+			if(photos_cleanliness.size()>1) {
 			for (MultipartFile image : userfileup.getPhotos_cleanliness()) {
 				WatershedSwachhataProjectLevelPhoto photo = new WatershedSwachhataProjectLevelPhoto();
 		        if (!image.isEmpty()) {
@@ -296,11 +310,12 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		        }
 		        
 			}
-			
+			}
 			sequence= 1;
 			List<String> awarenesslat = userfileup.getPhotos_awareness_lat();
 			List<String> awarenesslng = userfileup.getPhotos_awareness_lng();
 			List<String> awarenesstime = userfileup.getPhotos_awareness_time();
+			if(photos_awareness.size()>1) {
 			for (MultipartFile image : userfileup.getPhotos_awareness()) {
 				WatershedSwachhataProjectLevelPhoto photo = new WatershedSwachhataProjectLevelPhoto();
 		        if (!image.isEmpty()) {
@@ -326,7 +341,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		        	sequence = sequence+1;
 		        	sess.save(photo);
 		        }
-		        
+			} 
 			}
 			sess.flush();
 			sess.clear();
@@ -1179,5 +1194,31 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		}
 		return imgList;
 	}
+	
+	@Override
+	public boolean checkWatershedSwachhataVillageExits(Integer vCode) {
+		// TODO Auto-generated method stub
+		Integer value = 0;
+	    Boolean status = false; // Default to false in case no results found
+	    
+	    try (Session session = sessionFactory.openSession()) {
+	        Transaction tx = session.beginTransaction();
+	        
+	        SQLQuery query = session.createSQLQuery("select count(*) from watershed_swachhata_project_level where vcode = :vCode");
+	        query.setInteger("vCode", vCode);
+	        value = ((Number) query.uniqueResult()).intValue();
+
+	        if (value > 0) {
+	            status = true;
+	        }
+	        
+	        tx.commit();
+	    } catch (Exception ex) {
+	        ex.printStackTrace(); // Log exception for debugging
+	    }
+
+	    return status;
+	}
+
 
 }

@@ -115,6 +115,16 @@ public class WatershedSwachhataController {
 		return serv.getVillagebyProjIdBlock(projid, bokckid);
 	}
 	
+	@RequestMapping(value="/checkWatershedSwachhataVillageExits", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean checkWatershedSwachhataVillageExits(HttpServletRequest request, HttpServletResponse response
+    		,@RequestParam("village") int vcode) {
+		session = request.getSession(true);
+		Integer stcd = Integer.parseInt(session.getAttribute("stateCode").toString());
+        return serv.checkWatershedSwachhataVillageExits(vcode);
+    }
+
+	
 	@RequestMapping(value = "/saveWatershedSwachhataDetails", method = RequestMethod.POST)
 	public ModelAndView saveWatershedSwachhataDetails(HttpServletRequest request, HttpServletResponse response,
 			RedirectAttributes redirectAttributes, @ModelAttribute("useruploadign") WatershedSwachhataBean userfileup)
@@ -392,5 +402,8 @@ public class WatershedSwachhataController {
 		}
 		return imgList;
 	}
+	
+	
+	
 
 }
