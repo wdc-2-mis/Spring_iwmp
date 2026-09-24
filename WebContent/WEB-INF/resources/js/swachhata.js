@@ -179,11 +179,11 @@ $(document).on('click', '.showImage', function(e) {
 						if (data[i] != null) 
 						{
 						//PRD
-//							list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+							list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//TEST
 						//	list += '<li><img src="https://wdcpmksy.dolr.gov.in/filepath/TESTING/swachhata/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 						//Local
-							list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
+						//	list += '<li><img src="resources/images/projectLevel/' + data[i] + '" alt="Image" onclick="openLargeImage(\'' + data[i] + '\', ' + i + ', ' + data.length + ')" /></li>';
 
 						}
 					}

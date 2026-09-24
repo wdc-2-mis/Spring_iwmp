@@ -121,8 +121,8 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			String loginId = session.getAttribute("loginID").toString();
 			
 
-			String filePath="D:\\ProjectLevel\\";
-		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/swachhata/projectLevel/";
+		//	String filePath="D:\\ProjectLevel\\";
+			String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/swachhata/projectLevel/";
 		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/swachhata/projectLevel/";
 			
 			WatershedSwachhataProjectLevel data = new WatershedSwachhataProjectLevel();
@@ -623,7 +623,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 		try {
 			sess.beginTransaction();
 			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME; 
-			LocalDateTime localDateTime = LocalDateTime.parse(userfileup.getDatetime(), formatter); 
+			LocalDateTime localDateTime = LocalDateTime.parse(userfileup.getDatetime1(), formatter); 
 			Timestamp mahotsavDate = Timestamp.valueOf(localDateTime); 
 
 //			Date mahotsavDate = formatter.parse(userfileup.getDatetime());
@@ -669,8 +669,8 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			else {
 			
 
-			String filePath="D:\\ProjectLevel\\";
-		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/swachhata/projectLevel/";
+			//String filePath="D:\\ProjectLevel\\";
+		    String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/PRD/swachhata/projectLevel/";
 		// String filePath = "/usr/local/apache-tomcat90-nic/webapps/filepath/TESTING/swachhata/projectLevel/";
 			
 			WatershedSwachhataProjectLevel data = (WatershedSwachhataProjectLevel) sess.get(WatershedSwachhataProjectLevel.class, userfileup.getWaterid());
@@ -709,7 +709,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			 if(photos.size()>1) {
 		    	  List<String> imgList = new ArrayList<String>();
 		    	  List<WatershedSwachhataProjectLevelPhoto> listSapling = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
-		    	  Query querySapling = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and actId=:act");
+		    	  Query querySapling = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and activity.actId=:act");
 		    	  querySapling.setInteger("inaugid", userfileup.getWaterid());
 		    	  querySapling.setInteger("act", userfileup.getSapling());
 				  listSapling = querySapling.list();
@@ -785,7 +785,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			if(photosl.size()>1) {
 		    	  List<String> imgList = new ArrayList<String>();
 		    	  List<WatershedSwachhataProjectLevelPhoto> listlokarpan = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
-		    	  Query querylokarpan = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and actId=:act");
+		    	  Query querylokarpan = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and activity.actId=:act");
 		    	  querylokarpan.setInteger("inaugid", userfileup.getWaterid());
 		    	  querylokarpan.setInteger("act", userfileup.getLokarpan());
 				  listlokarpan = querylokarpan.list();
@@ -858,7 +858,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			if(photoss.size()>1) {
 		    	  List<String> imgList = new ArrayList<String>();
 		    	  List<WatershedSwachhataProjectLevelPhoto> listshramdaan = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
-		    	  Query queryshramdaan = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and actId=:act");
+		    	  Query queryshramdaan = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and activity.actId=:act");
 		    	  queryshramdaan.setInteger("inaugid", userfileup.getWaterid());
 		    	  queryshramdaan.setInteger("act", userfileup.getShramdaan());
 				  listshramdaan = queryshramdaan.list();
@@ -932,7 +932,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			if(photosc.size()>1) {
 		    	  List<String> imgList = new ArrayList<String>();
 		    	  List<WatershedSwachhataProjectLevelPhoto> listcleanliness = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
-		    	  Query querycleanliness = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and actId=:act");
+		    	  Query querycleanliness = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and activity.actId=:act");
 		    	  querycleanliness.setInteger("inaugid", userfileup.getWaterid());
 		    	  querycleanliness.setInteger("act", userfileup.getCleanliness());
 				  listcleanliness = querycleanliness.list();
@@ -1006,7 +1006,7 @@ public class WatershedSwachhataDaoImpl implements WatershedSwachhataDao{
 			if(photosa.size()>1) {
 		    	  List<String> imgList = new ArrayList<String>();
 		    	  List<WatershedSwachhataProjectLevelPhoto> listawareness = new ArrayList<WatershedSwachhataProjectLevelPhoto>();
-		    	  Query queryawareness = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and actId=:act");
+		    	  Query queryawareness = sess.createQuery("from WatershedSwachhataProjectLevelPhoto where swachhata.swachhataId = :inaugid and activity.actId=:act");
 		    	  queryawareness.setInteger("inaugid", userfileup.getWaterid());
 		    	  queryawareness.setInteger("act", userfileup.getAwareness());
 				  listawareness = queryawareness.list();

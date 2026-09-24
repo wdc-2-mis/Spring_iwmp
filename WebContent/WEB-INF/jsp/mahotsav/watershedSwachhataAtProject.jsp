@@ -565,10 +565,10 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + imageSrc;		
+ 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/swachhata/projectLevel/' + imageSrc;
  	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
-	document.getElementById('largeImagePopup').style.display = 'block';
+//	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
 }
@@ -1059,7 +1059,7 @@ display: none; /* Hidden by default */
 	     <table class="table table-bordered table-striped table-highlight w-auto" id="inaugurationTable">
 						<thead class ="theadlist" id = "theadlist">
 							<tr>
-								<!-- <th rowspan="2">Action</th> -->
+								<th rowspan="2">Action</th>
 								<th rowspan="2">S.No.  &nbsp; <input type="checkbox" id="chkSelectAllkd" name="chkSelectAllkd" /></th> 
 								<th rowspan="2">Date of Activity</th>
 <!-- 								<th rowspan="3">State Name</th> -->
@@ -1090,7 +1090,7 @@ display: none; /* Hidden by default */
  						<c:set var="dist" value="" />
  					 	<c:forEach items="${dataList}" var="data" varStatus="count">
  							<tr>
- 								<%-- <td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button> --%>
+ 								<td><button class="btn btn-warning btn-sm" onclick="editChangedata(${data.swachhata_id})"> Edit </button>
 								<td><c:out value='${count.count}' /> &nbsp;<input type="checkbox" class="chkIndividualkd" id="${data.swachhata_id}"  name="${data.swachhata_id}" value="${data.swachhata_id}"/></td>
 								<td> <c:out value="${data.datetime}" /></td>
  							 	<c:choose>

@@ -50,8 +50,8 @@ function addPhotoField1(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -74,8 +74,8 @@ function addPhotoField2(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -98,8 +98,8 @@ function addPhotoField3(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -122,8 +122,8 @@ function addPhotoField4(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -147,8 +147,8 @@ function addPhotoField5(btn) {
     let container = block.querySelector(".photoContainer");
     let inputs = container.getElementsByClassName("photo-input");
 
-    if (inputs.length >=4) {
-        alert("Maximum 4 photographs allowed for this activity.");
+    if (inputs.length >=2) {
+        alert("Maximum 2 photographs allowed for this activity.");
         return;
     }
 
@@ -397,35 +397,43 @@ function validation() {
 		return false;
 	}
 	
-	 $(".photo-block").each(function () {
-	        let container = $(this).find(".photoContainer");
-	        let photos = container.find("input[type='file']");
-	        let uploaded = 0;
-	        let errorDiv = $(this).find(".photoError");
-	        errorDiv.html("");
-	        photos.each(function () {
-	            if ($(this).val() !== "") {
-	                uploaded++;
-	            }
-	        });
+	//let isValid = true;
 
-	        // If user uploaded photos then validate min/max
-	        if (uploaded > 0) {
-	            let label = $(this).find("label").text();
+	$(".photo-block").each(function () {
 
-	            let min = 2, max = 2;
+	    let block = $(this);
+	    let container = block.find(".photoContainer");
+	    let photos = container.find("input[type='file']");
+	    let uploaded = 0;
+	    let errorDiv = block.find(".photoError");
 
-	            // Janbhagidari rule: min 4 max 10
-	           
+	    errorDiv.html("");
 
-	            if (uploaded < min || uploaded > max) {
-	            	errorDiv.html("Please upload minimum " + min + " photos.");
-	                alert(label + "\nPlease upload minimum " + min + " photos required for this activity.");
-	                isValid = false;
-	                return false; // break loop
-	            }
+	    // Count selected photos
+	    photos.each(function () {
+	        if ($(this).val() !== "") {
+	            uploaded++;
 	        }
 	    });
+
+	    // If at least one photo is selected,
+	    // exactly 2 photos are required
+	    if (uploaded > 0 && uploaded !== 2) {
+
+	        let label = block.find("label").first().text().trim();
+
+	        errorDiv.html("Please upload exactly 2 photos.");
+
+	        alert(
+	            label +
+	            "\nPlease upload exactly 2 photos required for this activity."
+	        );
+
+	        allValid = false;
+
+	        return false; // stop .each()
+	    }
+	});
 
     if (allValid) {
 
@@ -496,9 +504,9 @@ function closePopup() {
   
 function openLargeImage(imageSrc, index, total) {
 	document.getElementById('imagePopup').style.display = 'none';
-// 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + imageSrc;		
+ 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/PRD/swachhata/projectLevel/' + imageSrc;		
 // 	document.getElementById('largeImage').src = 'https://wdcpmksy.dolr.gov.in/filepath/TESTING/swachhata/projectLevel/' + imageSrc;
- 	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
+ //	document.getElementById('largeImage').src = 'resources/images/projectLevel/' + imageSrc;											
 	document.getElementById('largeImagePopup').style.display = 'block';
 	currentIndex = index;
 	totalImages = total;
@@ -703,7 +711,8 @@ display: none; /* Hidden by default */
 			  <div class="row">
     			<div class="form-group col-3">
       		  <label for="datetime">Date of Activity:<span style="color: red;">*</span> </label>
-       		 <input type="datetime-local" name="datetime" id="datetime" min="2026-09-20T00:00" max="2026-10-02T23:59" class="form-control activity" style="width: 100%;" value="${data.datetime}" />
+       		 <input type="datetime-local" name="datetime1" id="datetime1" min="2026-09-20T00:00" max="2026-10-02T23:59" 
+       		 		class="form-control activity" style="width: 100%;" value="${data.datetime}" />
     		</div>
 			</div>
 			<div class="row">

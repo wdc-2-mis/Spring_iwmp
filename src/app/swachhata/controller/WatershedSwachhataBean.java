@@ -28,6 +28,7 @@ public class WatershedSwachhataBean {
     private Integer youth;
     private Integer other;
     private Integer total;
+    private String datetime1;
     
     private Integer usg;
     private Integer total_photos;
@@ -398,6 +399,12 @@ public class WatershedSwachhataBean {
 	}
 	public void setUsg(Integer usg) {
 		this.usg = usg;
+	}
+	public String getDatetime1() {
+		return datetime1;
+	}
+	public void setDatetime1(String datetime1) {
+		this.datetime1 = datetime1;
 	}
 	
 	
