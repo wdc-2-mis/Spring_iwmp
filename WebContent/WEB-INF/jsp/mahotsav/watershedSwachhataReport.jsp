@@ -1,6 +1,10 @@
-
+<!DOCTYPE html>
+<html>
+<head>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" errorPage="error.jsp"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:choose>
 	<c:when test="${sessionScope.loginid eq null }">
 		<%@include file="/WEB-INF/jspf/header.jspf"%>
@@ -10,15 +14,11 @@
 	</c:otherwise>
 </c:choose>
 
-<!DOCTYPE html>
-<html>
-<head>
+<title>Report WS1 - State Wise Project Level Watershed Swachhata hi Seva Program</title>
 <meta charset="ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="<c:url  value="/resources/css/report.css" />">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js" ></script>
 
 <script type="text/javascript">
 
@@ -86,7 +86,6 @@ $(document).on('click', '.showImage', function(e) {
 $(document).on('click', '.showDistImage', function(e) {
 	
 	let dcode = e.target.getAttribute('data-id');
-	alert(dcode);
 	$.ajax({
 		type: 'POST',
 		url: "getImageByDcode",
@@ -305,25 +304,21 @@ display: none; /* Hidden by default */
 <div class="card">
     <div class="card shadow mt-1 p-5"> 
          <c:if test="${projLvlWSPrgListSize ne null}">
-         <div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        	<h4 class="text-center text-primary mb-4"><u>Report WS1 - State Wise Project Level Watershed Swachhata hi Seva Program</u></h4>
-    	</div>
+         <div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>Report WS1 - State Wise Project Level Watershed Swachhata hi Seva Program</h5></div>
     	</c:if>
     	
     	<c:if test="${distWSProjListSize ne null}">
-    	<div class="offset-md-3 col-6 formheading" style="text-align: center;">
-        	<h4 class="text-center text-primary mb-4"><u>Report WS1 - District Wise Project Level Watershed Swachhata hi Seva Program</u></h4>
-    	</div>
+    	<div class="offset-md-3 col-6 formheading" style="text-align:center;"  ><h5>Report WS1 - District Wise Project Level Watershed Swachhata hi Seva Program</h5></div>
     	</c:if>
     <div class="nav-item text-left mb-2">
     	<c:if test="${not empty projLvlWSPrgListSize}">
-    		<button type="button" name="exportExcel" id="exportExcel" class="btn pdf-gradient" onclick="exportExcel()"> Excel </button>
-        	<button type="button"  name="exportPDF" id="exportPDF" class="btn pdf-gradient" onclick="downloadPDF()">PDF</button>
+    		<button type="button" name="exportExcel" id="exportExcel" class="btn btn-info" onclick="exportExcel()"> Excel </button>
+        	<button type="button"  name="exportPDF" id="exportPDF" class="btn btn-info" onclick="downloadPDF()">PDF</button>
         </c:if>
         
         <c:if test="${not empty distWSProjListSize}">
-    	    <button type="button" name="exportDExcel" id="exportDExcel" class="btn pdf-gradient" onclick="exportDExcel('${stcd}','${stName}')"> Excel </button> 
-        	<button type="button"  name="exportDPDF" id="exportDPDF" class="btn pdf-gradient" onclick="downloadDPDF('${stcd}','${stName}')">PDF</button>
+    	    <button type="button" name="exportDExcel" id="exportDExcel" class="btn btn-info" onclick="exportDExcel('${stcd}','${stName}')"> Excel </button> 
+        	<button type="button"  name="exportDPDF" id="exportDPDF" class="btn btn-info" onclick="downloadDPDF('${stcd}','${stName}')">PDF</button>
         </c:if>   
         <p align="right">  Report as on: <%=app.util.Util.dateToString(null,"dd/MM/yyyy hh:mm aaa")%> </p>
     </div>
@@ -332,7 +327,7 @@ display: none; /* Hidden by default */
         <input type="hidden" name="stcd" id="stcd" value="" />
         <input type="hidden" name="stName" id="stName" value="" />
         <c:if test="${projLvlWSPrgListSize > 0}">
-                <table class="table table-bordered table-striped" id="stWMI" >
+                <table class="table" id="stWMI" >
                     <thead>
                         <tr>
 						<th rowspan="2" style="text-align:center; vertical-align: middle;">S.No.</th>
